@@ -1,4 +1,3 @@
-import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -38,18 +37,8 @@ class _Page1State extends State<Page1> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Container(
-                  margin: const EdgeInsets.only(left: 12, top: 40),
-                  alignment: Alignment.centerLeft,
-                  child: CircularPercentIndicator(
-                    radius: 20,
-                    percent: 0.3,
-                    progressColor: buttonColor,
-                    center: Text('30%'),
-                  ),
-                ),
                 Column(
                   children: [
                     Container(

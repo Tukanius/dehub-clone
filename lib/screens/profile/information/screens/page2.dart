@@ -1,5 +1,5 @@
-import 'package:dehub/screens/profile/information/partner_info1.dart';
-import 'package:dehub/screens/profile/information/partner_info2.dart';
+import 'package:dehub/screens/profile/information/partner_info.dart';
+
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -15,15 +15,15 @@ class Page2 extends StatefulWidget {
 class _Page2State extends State<Page2> {
   int currentIndex = 1;
 
-  pageChange() {
-    switch (currentIndex) {
-      case 1:
-        return PartnerInfo1();
-      case 2:
-        return PartnerInfo2();
-      default:
-    }
-  }
+  // pageChange() {
+  //   switch (currentIndex) {
+  //     case 1:
+  //       return PartnerInfo1();
+  //     case 2:
+  //       return PartnerInfo2();
+  //     default:
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -324,10 +324,7 @@ class _Page2State extends State<Page2> {
               ),
             ),
             SizedBox(
-              height: 30,
-            ),
-            SizedBox(
-              height: 30,
+              height: 42,
             ),
           ],
         ),

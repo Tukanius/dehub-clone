@@ -1,8 +1,7 @@
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/auth/login_page.dart';
 import 'package:dehub/screens/main/main_page.dart';
-import 'package:dehub/screens/profile/information/partner_info1.dart';
-import 'package:dehub/screens/profile/information/partner_info2.dart';
+import 'package:dehub/screens/profile/information/partner_info.dart';
 import 'package:dehub/screens/profile/profile_page.dart';
 import 'package:dehub/screens/splash/splash_page.dart';
 import 'package:dehub/services/dialog.dart';
@@ -65,10 +64,7 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return PartnerInfo1();
                     });
-                  case PartnerInfo2.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return PartnerInfo2();
-                    });
+
                   default:
                     return MaterialPageRoute(
                       builder: (_) => const MainPage(),

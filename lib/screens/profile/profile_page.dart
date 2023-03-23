@@ -1,7 +1,7 @@
-import 'package:dehub/screens/profile/information/partner_info1.dart';
-import 'package:dehub/screens/profile/information/partner_info2.dart';
+import 'package:dehub/screens/profile/information/partner_info.dart';
 import 'package:dehub/screens/profile/information/personal_info.dart';
-import 'package:dehub/screens/profile/information/partner_info3.dart';
+import 'package:dehub/screens/profile/information/settings_page.dart';
+import 'package:dehub/screens/profile/information/system_users.dart';
 import 'package:dehub/screens/profile/information/screens/page2.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +50,27 @@ class _ProfilePageState extends State<ProfilePage>
         backgroundColor: buttonColor,
         iconTheme: IconThemeData(color: white),
         elevation: 0,
+        centerTitle: true,
+        actions: [
+          tabController.index == 2
+              ? Ink(
+                  decoration: ShapeDecoration(
+                    color: Colors.orange,
+                    shape: CircleBorder(),
+                  ),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.add,
+                      size: 30,
+                      color: white,
+                    ),
+                    onPressed: () {
+                      print('pressed');
+                    },
+                  ),
+                )
+              : SizedBox(),
+        ],
         title: tabController.index == 0
             ? Text(
                 'Миний мэдээлэл',
@@ -232,8 +253,8 @@ class _ProfilePageState extends State<ProfilePage>
             children: [
               PersonalInfo(),
               PartnerInfo1(),
-              TestPage2(),
-              TestPage2(),
+              SystemUsersPage(),
+              SettingsPage(),
             ],
           ),
         ),

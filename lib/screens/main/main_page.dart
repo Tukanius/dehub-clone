@@ -3,6 +3,7 @@ import 'package:dehub/screens/home/home_page.dart';
 import 'package:dehub/screens/profile/profile_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class MainPage extends StatefulWidget {
   static const routeName = '/MainPage';
@@ -94,7 +95,7 @@ class _MainPageState extends State<MainPage> {
             label: 'Нэхэмжлэх',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.paypal),
+            icon: SvgPicture.asset('images/tolbor.svg'),
             backgroundColor: black,
             label: 'Төлбөр',
           ),
