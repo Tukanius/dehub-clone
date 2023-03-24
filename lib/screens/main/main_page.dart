@@ -1,5 +1,6 @@
 import 'package:dehub/components/header/custom_appbar.dart';
 import 'package:dehub/screens/home/home_page.dart';
+import 'package:dehub/screens/invoice/invoice.dart';
 import 'package:dehub/screens/profile/profile_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +22,7 @@ class _MainPageState extends State<MainPage> {
   );
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    Text(
-      'Index 1: Нэхэмжлэх',
-      style: optionStyle,
-    ),
+    InvoicePage(),
     Text(
       'Index 2: Төлбөр',
       style: optionStyle,

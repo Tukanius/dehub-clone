@@ -53,20 +53,26 @@ class _ProfilePageState extends State<ProfilePage>
         centerTitle: true,
         actions: [
           tabController.index == 2
-              ? Ink(
-                  decoration: ShapeDecoration(
-                    color: Colors.orange,
-                    shape: CircleBorder(),
-                  ),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.add,
-                      size: 30,
-                      color: white,
+              ? Container(
+                  margin: const EdgeInsets.only(right: 20),
+                  child: Ink(
+                    height: 30,
+                    width: 30,
+                    decoration: ShapeDecoration(
+                      color: Colors.orange,
+                      shape: CircleBorder(),
                     ),
-                    onPressed: () {
-                      print('pressed');
-                    },
+                    child: IconButton(
+                      iconSize: 30,
+                      icon: Icon(
+                        Icons.add,
+                        size: 15,
+                        color: white,
+                      ),
+                      onPressed: () {
+                        print('pressed');
+                      },
+                    ),
                   ),
                 )
               : SizedBox(),
