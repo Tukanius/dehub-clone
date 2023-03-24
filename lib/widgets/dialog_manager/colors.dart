@@ -23,10 +23,11 @@ const Color yellow = Color(0xffF89938);
 const Color tod = Color(0xffF6931A);
 const Color neonGreen = Color(0xff90FF8D);
 const Color orange = Color(0xffffb822);
-const Color backgroundColor = Color(0xffF5F8FA);
+const Color backgroundColor = Color(0xffF5F5FF);
 const Color moodyblue = Color(0xffA9A9E2);
 const Color textColor = Color(0xffABA5D1);
 const Color buttonColor = Color(0xff261EF0);
+Color fillColor = Color(0xff44566C).withOpacity(0.3);
 const gradient2 = LinearGradient(colors: [
   Color(0xff5D7128),
   Color.fromARGB(255, 35, 82, 20),
