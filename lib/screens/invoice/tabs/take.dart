@@ -1,6 +1,7 @@
 import 'package:dehub/screens/invoice/tabs/gives_tabbars/all.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class TakePage extends StatefulWidget {
   const TakePage({Key? key}) : super(key: key);
@@ -70,9 +71,7 @@ class _TakePageState extends State<TakePage> {
                         padding: EdgeInsets.symmetric(horizontal: 18),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
-                          color: currentIndex == selectedIndex
-                              ? buttonColor
-                              : Colors.grey.shade100,
+                          color: buttonColor2,
                         ),
                         child: InkWell(
                           onTap: () {
@@ -100,7 +99,20 @@ class _TakePageState extends State<TakePage> {
       },
       body: TabBarView(
         children: [
-          currentIndex == 1 ? All() : SizedBox(),
+          currentIndex == 0
+              ? Container(
+                  width: 100,
+                  height: 100,
+                  color: yellow,
+                )
+              : SizedBox(),
+          currentIndex == 1
+              ? Container(
+                  width: 100,
+                  height: 100,
+                  color: black,
+                )
+              : SizedBox()
         ],
       ),
     );

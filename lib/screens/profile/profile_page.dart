@@ -1,3 +1,4 @@
+import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/screens/profile/information/partner_info.dart';
 import 'package:dehub/screens/profile/information/personal_info.dart';
 import 'package:dehub/screens/profile/information/settings_page.dart';
@@ -54,26 +55,8 @@ class _ProfilePageState extends State<ProfilePage>
         actions: [
           tabController.index == 2
               ? Container(
-                  margin: const EdgeInsets.only(right: 20),
-                  child: Ink(
-                    height: 30,
-                    width: 30,
-                    decoration: ShapeDecoration(
-                      color: Colors.orange,
-                      shape: CircleBorder(),
-                    ),
-                    child: IconButton(
-                      iconSize: 30,
-                      icon: Icon(
-                        Icons.add,
-                        size: 15,
-                        color: white,
-                      ),
-                      onPressed: () {
-                        print('pressed');
-                      },
-                    ),
-                  ),
+                  margin: const EdgeInsets.only(right: 15),
+                  child: AddButton(),
                 )
               : SizedBox(),
         ],

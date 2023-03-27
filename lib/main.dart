@@ -1,5 +1,8 @@
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/auth/login_page.dart';
+import 'package:dehub/screens/invoice/invoice.dart';
+import 'package:dehub/screens/invoice/new_invoice/customer_choose.dart';
+import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
 import 'package:dehub/screens/main/main_page.dart';
 import 'package:dehub/screens/profile/information/partner_info.dart';
 import 'package:dehub/screens/profile/profile_page.dart';
@@ -64,7 +67,18 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return PartnerInfo1();
                     });
-
+                  case NewInvoice.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return NewInvoice();
+                    });
+                  case InvoicePage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return InvoicePage();
+                    });
+                  case CustomerChoose.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return CustomerChoose();
+                    });
                   default:
                     return MaterialPageRoute(
                       builder: (_) => const MainPage(),

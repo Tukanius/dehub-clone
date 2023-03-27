@@ -1,5 +1,7 @@
+import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/screens/home/home_page.dart';
 import 'package:dehub/screens/invoice/invoice.dart';
+import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
 import 'package:dehub/screens/profile/profile_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -57,23 +59,32 @@ class _MainPageState extends State<MainPage> {
           SizedBox(
             width: 15,
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed(ProfilePage.routeName);
-            },
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(100),
-              child: Image(
-                image: AssetImage('images/icon.png'),
-                height: 30,
-                width: 30,
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 15,
-          ),
+          _selectedIndex == 1
+              ? AddButton(
+                  onClick: () {
+                    Navigator.of(context).pushNamed(NewInvoice.routeName);
+                  },
+                )
+              : Container(
+                  margin: const EdgeInsets.only(right: 20),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(ProfilePage.routeName);
+                    },
+                    child: Ink(
+                      height: 30,
+                      width: 30,
+                      decoration: ShapeDecoration(
+                        shape: CircleBorder(),
+                      ),
+                      child: Image(
+                        image: AssetImage(
+                          'images/icon.png',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
         ],
       ),
       body: Center(

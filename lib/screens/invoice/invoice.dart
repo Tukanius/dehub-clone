@@ -4,6 +4,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class InvoicePage extends StatefulWidget {
+  static const routeName = '/invoicepage';
   const InvoicePage({Key? key}) : super(key: key);
 
   @override
@@ -40,14 +41,15 @@ class _InvoicePageState extends State<InvoicePage>
             color: white,
             height: 50.0,
             child: TabBar(
-              indicatorColor: buttonColor,
+              unselectedLabelColor: grey3,
+              indicatorColor: buttonColor2,
+              labelColor: buttonColor2,
               tabs: [
                 Tab(
                   child: Container(
                     child: Text(
                       'Таны авах',
                       style: TextStyle(
-                        color: buttonColor,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
@@ -59,7 +61,6 @@ class _InvoicePageState extends State<InvoicePage>
                     child: Text(
                       'Таны өгөх',
                       style: TextStyle(
-                        color: Colors.grey.shade400,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
