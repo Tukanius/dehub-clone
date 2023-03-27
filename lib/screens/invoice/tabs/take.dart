@@ -18,19 +18,9 @@ var menu = [
 ];
 
 class _TakePageState extends State<TakePage> {
-  bool selectedIndex = false;
+  int? selectedIndex;
 
   int currentIndex = 0;
-
-  color() {
-    if (currentIndex == selectedIndex) {
-      setState(() {
-        selectedIndex = true;
-      });
-    } else {
-      Colors.grey.shade100;
-    }
-  }
 
   click(item) {
     switch (item) {
@@ -50,6 +40,12 @@ class _TakePageState extends State<TakePage> {
     }
   }
 
+  void onItemTapped() {
+    setState(() {
+      selectedIndex == currentIndex;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return NestedScrollView(
@@ -67,13 +63,14 @@ class _TakePageState extends State<TakePage> {
                 scrollDirection: Axis.horizontal,
                 children: menu
                     .map(
-                      (item) => Container(
+                      (item) => AnimatedContainer(
+                        duration: Duration(milliseconds: 300),
                         margin: EdgeInsets.only(
                             top: 10, bottom: 10, right: 5, left: 5),
                         padding: EdgeInsets.symmetric(horizontal: 18),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
-                          color: currentIndex == 0
+                          color: currentIndex == selectedIndex
                               ? buttonColor
                               : Colors.grey.shade100,
                         ),
@@ -88,7 +85,7 @@ class _TakePageState extends State<TakePage> {
                               item,
                               style: TextStyle(
                                 fontSize: 12,
-                                color: color(),
+                                color: black,
                               ),
                             ),
                           ),

@@ -19,6 +19,7 @@ const Color grey3 = Color(0XFF44566C);
 const Color green = Color(0xff24E12F);
 const Color black = Colors.black;
 const Color accentColor = Color(0xff5C78FF);
+const Color buttonColor2 = Color(0xff907532);
 const Color yellow = Color(0xffF89938);
 const Color tod = Color(0xffF6931A);
 const Color neonGreen = Color(0xff90FF8D);

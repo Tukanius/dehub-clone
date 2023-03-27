@@ -1,4 +1,3 @@
-import 'package:dehub/components/header/custom_appbar.dart';
 import 'package:dehub/screens/home/home_page.dart';
 import 'package:dehub/screens/invoice/invoice.dart';
 import 'package:dehub/screens/profile/profile_page.dart';
@@ -17,7 +16,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle = TextStyle(
-    color: buttonColor,
+    color: black,
     fontSize: 10,
   );
   static const List<Widget> _widgetOptions = <Widget>[
@@ -44,7 +43,7 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: buttonColor,
+        backgroundColor: _selectedIndex == 1 ? buttonColor2 : buttonColor,
         elevation: 0,
         automaticallyImplyLeading: false,
         leading: Icon(Icons.menu_outlined),
@@ -84,12 +83,12 @@ class _MainPageState extends State<MainPage> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
-            backgroundColor: black,
+            backgroundColor: buttonColor,
             label: 'Нүүр',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.playlist_add_check_rounded),
-            backgroundColor: black,
+            backgroundColor: buttonColor2,
             label: 'Нэхэмжлэх',
           ),
           BottomNavigationBarItem(

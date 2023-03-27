@@ -4,7 +4,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class InvoicePage extends StatefulWidget {
-  const InvoicePage({super.key});
+  const InvoicePage({Key? key}) : super(key: key);
 
   @override
   State<InvoicePage> createState() => _InvoicePageState();
@@ -13,7 +13,20 @@ class InvoicePage extends StatefulWidget {
 class _InvoicePageState extends State<InvoicePage>
     with SingleTickerProviderStateMixin {
   int currentIndex = 0;
-  ScrollController scrollController = ScrollController();
+
+  var menu = [
+    'Таны авах',
+    'Таны өгөх',
+  ];
+  click(item) {
+    switch (item) {
+      case 'Таны авах':
+        return print('12');
+      case 'Таны өгөх':
+        return currentIndex = 1;
+      default:
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
