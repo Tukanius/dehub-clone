@@ -1,7 +1,16 @@
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/auth/login_page.dart';
 import 'package:dehub/screens/invoice/invoice.dart';
-import 'package:dehub/screens/invoice/new_invoice/customer_choose.dart';
+import 'package:dehub/screens/invoice/new_invoice/add_product/add_product_tabs/bagtsaar.dart';
+import 'package:dehub/screens/invoice/new_invoice/add_product/add_product_tabs/shirhegeer.dart';
+import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose.dart';
+import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/bugd.dart';
+import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet.dart';
+import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet_bish.dart';
+import 'package:dehub/screens/invoice/new_invoice/customer_choose/salbar_songoh.dart';
+import 'package:dehub/screens/invoice/new_invoice/harah/harah.dart';
+import 'package:dehub/screens/invoice/new_invoice/harah/index1.dart';
+import 'package:dehub/screens/invoice/new_invoice/harah/pdf_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
 import 'package:dehub/screens/main/main_page.dart';
 import 'package:dehub/screens/profile/information/partner_info.dart';
@@ -78,6 +87,42 @@ class MyApp extends StatelessWidget {
                   case CustomerChoose.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return CustomerChoose();
+                    });
+                  case SalbarSongoh.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return SalbarSongoh();
+                    });
+                  case Bugd.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return Bugd();
+                    });
+                  case Gereet.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return Gereet();
+                    });
+                  case GereetBish.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return GereetBish();
+                    });
+                  case Bagtsaar.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return Bagtsaar();
+                    });
+                  case Shirhegeer.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return Shirhegeer();
+                    });
+                  case Harah.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return Harah();
+                    });
+                  case PdfPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return PdfPage();
+                    });
+                  case Index1.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return Index1();
                     });
                   default:
                     return MaterialPageRoute(

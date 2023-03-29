@@ -1,6 +1,10 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/bugd.dart';
+import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet.dart';
+import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet_bish.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomerChoose extends StatefulWidget {
   static const routeName = '/customerchoose';
@@ -23,12 +27,17 @@ class _CustomerChooseState extends State<CustomerChoose> {
           backgroundColor: backgroundColor,
           appBar: AppBar(
             backgroundColor: buttonColor2,
-            leading: IconButton(
-              onPressed: () {
+            leading: InkWell(
+              onTap: () {
                 Navigator.of(context).pop();
               },
-              icon: Icon(
-                Icons.close_rounded,
+              child: Container(
+                color: buttonColor2,
+                padding: const EdgeInsets.all(13),
+                child: SvgPicture.asset(
+                  'images/close.svg',
+                  height: 30,
+                ),
               ),
             ),
             title: Text(
@@ -75,6 +84,7 @@ class _CustomerChooseState extends State<CustomerChoose> {
                         ),
                       ),
                       Container(
+                        margin: const EdgeInsets.only(bottom: 10),
                         color: white,
                         height: 50,
                         padding: const EdgeInsets.only(
@@ -82,13 +92,22 @@ class _CustomerChooseState extends State<CustomerChoose> {
                         child: Row(
                           children: [
                             Container(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              margin: const EdgeInsets.only(right: 10),
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   color: grey3.withOpacity(0.3),
                                 ),
                                 borderRadius: BorderRadius.circular(5),
                               ),
-                              child: Icon(Icons.search),
+                              child: Container(
+                                margin: const EdgeInsets.only(left: 10),
+                                alignment: Alignment.centerLeft,
+                                child: Icon(
+                                  Icons.search,
+                                  size: 20,
+                                ),
+                              ),
                             ),
                             Container(
                               width: 30,
@@ -97,6 +116,13 @@ class _CustomerChooseState extends State<CustomerChoose> {
                                   color: grey3.withOpacity(0.3),
                                 ),
                                 borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 7, vertical: 8),
+                                child: SvgPicture.asset(
+                                  'images/yuluur.svg',
+                                ),
                               ),
                             ),
                           ],
@@ -108,7 +134,11 @@ class _CustomerChooseState extends State<CustomerChoose> {
               ];
             },
             body: TabBarView(
-              children: [],
+              children: [
+                Bugd(),
+                Gereet(),
+                GereetBish(),
+              ],
             ),
           ),
         ),

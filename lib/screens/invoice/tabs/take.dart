@@ -1,3 +1,4 @@
+import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/screens/invoice/tabs/gives_tabbars/all.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -99,13 +100,8 @@ class _TakePageState extends State<TakePage> {
       },
       body: TabBarView(
         children: [
-          currentIndex == 0
-              ? Container(
-                  width: 100,
-                  height: 100,
-                  color: yellow,
-                )
-              : SizedBox(),
+          // SearchButton(),
+          currentIndex != 3 ? SearchButton() : SizedBox(),
           currentIndex == 1
               ? Container(
                   width: 100,

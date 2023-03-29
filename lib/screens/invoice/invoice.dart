@@ -41,6 +41,7 @@ class _InvoicePageState extends State<InvoicePage>
             color: white,
             height: 50.0,
             child: TabBar(
+              physics: NeverScrollableScrollPhysics(),
               unselectedLabelColor: grey3,
               indicatorColor: buttonColor2,
               labelColor: buttonColor2,

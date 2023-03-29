@@ -55,7 +55,6 @@ class _ProfilePageState extends State<ProfilePage>
         actions: [
           tabController.index == 2
               ? Container(
-                  margin: const EdgeInsets.only(right: 15),
                   child: AddButton(),
                 )
               : SizedBox(),
@@ -145,7 +144,7 @@ class _ProfilePageState extends State<ProfilePage>
                               width: 40,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
-                                border: Border.all(color: grey3),
+                                border: Border.all(color: grey3, width: 0.5),
                                 color: tabController.index == 0
                                     ? buttonColor
                                     : white,
@@ -168,7 +167,7 @@ class _ProfilePageState extends State<ProfilePage>
                               width: 40,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
-                                border: Border.all(color: grey3),
+                                border: Border.all(color: grey3, width: 0.5),
                                 color: tabController.index == 1
                                     ? buttonColor
                                     : white,
@@ -191,7 +190,7 @@ class _ProfilePageState extends State<ProfilePage>
                               width: 40,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
-                                border: Border.all(color: grey3),
+                                border: Border.all(color: grey3, width: 0.5),
                                 color: tabController.index == 2
                                     ? buttonColor
                                     : white,
@@ -214,7 +213,7 @@ class _ProfilePageState extends State<ProfilePage>
                               width: 40,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(100),
-                                  border: Border.all(color: grey3),
+                                  border: Border.all(color: grey3, width: 0.5),
                                   color: tabController.index == 3
                                       ? buttonColor
                                       : white),

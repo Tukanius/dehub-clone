@@ -24,10 +24,7 @@ class _MainPageState extends State<MainPage> {
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     InvoicePage(),
-    Text(
-      'Index 2: Төлбөр',
-      style: optionStyle,
-    ),
+    VerticalDivider(),
     Text(
       'Index 3: Захиалга',
       style: optionStyle,

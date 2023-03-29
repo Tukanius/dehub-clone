@@ -1,6 +1,9 @@
-import 'package:dehub/screens/invoice/new_invoice/customer_choose.dart';
+import 'package:dehub/screens/invoice/new_invoice/add_product/add_product.dart';
+import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose.dart';
+import 'package:dehub/screens/invoice/new_invoice/harah/harah.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class NewInvoice extends StatefulWidget {
   static const routeName = '/newinvoice';
@@ -455,41 +458,51 @@ class _NewInvoiceState extends State<NewInvoice> {
                 SizedBox(
                   height: 10,
                 ),
-                Container(
-                  color: white,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(
-                          left: 20,
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              child: Icon(
-                                Icons.download_for_offline_outlined,
-                                color: buttonColor,
+                InkWell(
+                  onTap: () {
+                    showModalBottomSheet(
+                      useSafeArea: true,
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (context) => buildProduct(),
+                    );
+                  },
+                  child: Container(
+                    color: white,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(
+                            left: 20,
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                child: Icon(
+                                  Icons.download_for_offline_outlined,
+                                  color: buttonColor,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              'Мөр нэмэх',
-                              style: TextStyle(color: buttonColor),
-                            ),
-                          ],
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Мөр нэмэх',
+                                style: TextStyle(color: buttonColor),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 12,
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.arrow_forward_ios,
+                            size: 12,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -901,6 +914,108 @@ class _NewInvoiceState extends State<NewInvoice> {
                     ],
                   ),
                 ),
+                SizedBox(
+                  height: 70,
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 37),
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: black,
+                  ),
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(Harah.routeName);
+                        },
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.visibility_outlined,
+                              color: white,
+                              size: 20,
+                            ),
+                            Text(
+                              'Харах',
+                              style: TextStyle(
+                                color: white,
+                                fontSize: 10,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 50,
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: Column(
+                          children: [
+                            SvgPicture.asset(
+                              'images/save.svg',
+                              height: 20,
+                            ),
+                            Text(
+                              'Хадгалах',
+                              style: TextStyle(
+                                color: white,
+                                fontSize: 10,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 50,
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.send,
+                              color: white,
+                              size: 20,
+                            ),
+                            Text(
+                              'Илгээх',
+                              style: TextStyle(
+                                color: white,
+                                fontSize: 10,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 50,
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: Column(
+                          children: [
+                            SvgPicture.asset(
+                              'images/cancel.svg',
+                              height: 20,
+                            ),
+                            Text(
+                              'Цуцлах',
+                              style: TextStyle(
+                                color: white,
+                                fontSize: 10,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -914,5 +1029,12 @@ class _NewInvoiceState extends State<NewInvoice> {
         minChildSize: 0.5,
         maxChildSize: 1,
         builder: (context, scrollController) => CustomerChoose(),
+      );
+
+  Widget buildProduct() => DraggableScrollableSheet(
+        initialChildSize: 1,
+        minChildSize: 0.5,
+        maxChildSize: 1,
+        builder: (context, scrollController) => AddProduct(),
       );
 }
