@@ -372,6 +372,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         Navigator.of(context).pushNamed(LoginPage.routeName);
                       },
                       labelText: 'Системээс гарах',
+                      labelColor: buttonColor,
                     ),
                     SizedBox(
                       height: 20,

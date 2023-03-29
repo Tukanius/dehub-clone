@@ -42,7 +42,11 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: _selectedIndex == 1 ? buttonColor2 : buttonColor,
+        backgroundColor: _selectedIndex == 1
+            ? buttonColor2
+            : _selectedIndex == 2
+                ? buttonColor3
+                : buttonColor,
         elevation: 0,
         automaticallyImplyLeading: false,
         leading: Icon(Icons.menu_outlined),
@@ -101,7 +105,7 @@ class _MainPageState extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset('images/tolbor.svg'),
-            backgroundColor: black,
+            backgroundColor: buttonColor3,
             label: 'Төлбөр',
           ),
           BottomNavigationBarItem(

@@ -11,6 +11,7 @@ import 'package:dehub/screens/invoice/new_invoice/customer_choose/salbar_songoh.
 import 'package:dehub/screens/invoice/new_invoice/harah/harah.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/index1.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/pdf_page.dart';
+import 'package:dehub/screens/invoice/new_invoice/harah/send_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
 import 'package:dehub/screens/main/main_page.dart';
 import 'package:dehub/screens/profile/information/partner_info.dart';
@@ -123,6 +124,10 @@ class MyApp extends StatelessWidget {
                   case Index1.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return Index1();
+                    });
+                  case SendPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return SendPage();
                     });
                   default:
                     return MaterialPageRoute(

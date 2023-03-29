@@ -50,7 +50,7 @@ class _SearchButtonState extends State<SearchButton> {
                   ),
                   child: Container(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 7, vertical: 8),
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                     child: SvgPicture.asset(
                       'images/yuluur.svg',
                     ),

@@ -1,5 +1,6 @@
 import 'package:dehub/screens/invoice/new_invoice/harah/index1.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/pdf_page.dart';
+import 'package:dehub/screens/invoice/new_invoice/harah/send_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -165,6 +166,13 @@ class _HarahState extends State<Harah> with SingleTickerProviderStateMixin {
                       setState(() {
                         currentIndex = 3;
                       });
+                      showModalBottomSheet(
+                        backgroundColor: transparent,
+                        isScrollControlled: true,
+                        useSafeArea: true,
+                        context: context,
+                        builder: (context) => sendSheet(),
+                      );
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 15),
@@ -201,5 +209,11 @@ class _HarahState extends State<Harah> with SingleTickerProviderStateMixin {
         minChildSize: 0.5,
         maxChildSize: 0.8,
         builder: (context, scrollController) => PdfPage(),
+      );
+  Widget sendSheet() => DraggableScrollableSheet(
+        initialChildSize: 1,
+        minChildSize: 0.5,
+        maxChildSize: 1,
+        builder: (context, scrollController) => SendPage(),
       );
 }

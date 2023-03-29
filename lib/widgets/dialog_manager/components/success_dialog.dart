@@ -47,16 +47,6 @@ class SuccessDialog {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 30.0),
-              // CustomButton(
-              //   color: primaryGreen,
-              //   textColor: white,
-              //   fontSize: 16,
-              //   labelText: "Close",
-              //   width: MediaQuery.of(context).size.width,
-              //   onClick: () {
-              //     Navigator.of(context).pop();
-              //   },
-              // ),
             ],
           ),
         );

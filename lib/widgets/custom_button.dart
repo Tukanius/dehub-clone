@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 class CustomButton extends StatefulWidget {
   final String labelText;
   final Function()? onClick;
+  final Color? labelColor;
   CustomButton({
+    this.labelColor,
     this.onClick,
     this.labelText = '',
     Key? key,
@@ -28,8 +30,8 @@ class _CustomButtonState extends State<CustomButton> {
             style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
           ),
           style: ElevatedButton.styleFrom(
-            backgroundColor: buttonColor,
             shadowColor: Colors.transparent,
+            backgroundColor: widget.labelColor,
           ),
         ),
       ),

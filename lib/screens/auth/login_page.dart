@@ -257,6 +257,7 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.of(context).pushNamed(MainPage.routeName);
                       },
                       labelText: "Нэвтрэх",
+                      labelColor: buttonColor,
                     ),
                   ],
                 ),

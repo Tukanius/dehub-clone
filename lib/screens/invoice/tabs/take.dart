@@ -1,3 +1,4 @@
+import 'package:dehub/components/invoice_card/invoice_card.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/screens/invoice/tabs/gives_tabbars/all.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -19,9 +20,10 @@ var menu = [
   'Батлуулах',
 ];
 
-class _TakePageState extends State<TakePage> {
+class _TakePageState extends State<TakePage>
+    with SingleTickerProviderStateMixin {
   int? selectedIndex;
-
+  late TabController tabController = TabController(length: 5, vsync: this);
   int currentIndex = 0;
 
   click(item) {
@@ -44,7 +46,7 @@ class _TakePageState extends State<TakePage> {
 
   void onItemTapped() {
     setState(() {
-      selectedIndex == currentIndex;
+      tabController.index == currentIndex;
     });
   }
 
@@ -63,36 +65,148 @@ class _TakePageState extends State<TakePage> {
               child: ListView(
                 physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
-                children: menu
-                    .map(
-                      (item) => AnimatedContainer(
-                        duration: Duration(milliseconds: 300),
-                        margin: EdgeInsets.only(
-                            top: 10, bottom: 10, right: 5, left: 5),
-                        padding: EdgeInsets.symmetric(horizontal: 18),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: buttonColor2,
-                        ),
-                        child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              click(item);
-                            });
-                          },
-                          child: Center(
-                            child: Text(
-                              item,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: black,
-                              ),
-                            ),
+                children: [
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 300),
+                    margin:
+                        EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 18),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: currentIndex == 0
+                          ? buttonColor2
+                          : Colors.grey.shade100,
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          currentIndex = 0;
+                        });
+                      },
+                      child: Center(
+                        child: Text(
+                          'Бүгд',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: currentIndex == 0 ? white : black,
                           ),
                         ),
                       ),
-                    )
-                    .toList(),
+                    ),
+                  ),
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 300),
+                    margin:
+                        EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 18),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: currentIndex == 1
+                          ? buttonColor2
+                          : Colors.grey.shade100,
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          currentIndex = 1;
+                        });
+                      },
+                      child: Center(
+                        child: Text(
+                          'Төлбөр хүлээгдэж буй',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: currentIndex == 1 ? white : black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 300),
+                    margin:
+                        EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 18),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: currentIndex == 2
+                          ? buttonColor2
+                          : Colors.grey.shade100,
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          currentIndex = 2;
+                        });
+                      },
+                      child: Center(
+                        child: Text(
+                          'Хаагдсан',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: currentIndex == 2 ? white : black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 300),
+                    margin:
+                        EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 18),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: currentIndex == 3
+                          ? buttonColor2
+                          : Colors.grey.shade100,
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          currentIndex = 3;
+                        });
+                      },
+                      child: Center(
+                        child: Text(
+                          'Драфт',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: currentIndex == 3 ? white : black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 300),
+                    margin:
+                        EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 18),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: currentIndex == 4
+                          ? buttonColor2
+                          : Colors.grey.shade100,
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          currentIndex = 4;
+                        });
+                      },
+                      child: Center(
+                        child: Text(
+                          'Батлуулах',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: currentIndex == 4 ? white : black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -100,15 +214,27 @@ class _TakePageState extends State<TakePage> {
       },
       body: TabBarView(
         children: [
-          // SearchButton(),
-          currentIndex != 3 ? SearchButton() : SizedBox(),
-          currentIndex == 1
-              ? Container(
-                  width: 100,
-                  height: 100,
-                  color: black,
-                )
-              : SizedBox()
+          InvoiceCard(),
+          Container(
+            height: 100,
+            width: 100,
+            color: black,
+          ),
+          Container(
+            height: 100,
+            width: 100,
+            color: orange,
+          ),
+          Container(
+            height: 100,
+            width: 100,
+            color: yellow,
+          ),
+          Container(
+            height: 100,
+            width: 100,
+            color: red,
+          ),
         ],
       ),
     );

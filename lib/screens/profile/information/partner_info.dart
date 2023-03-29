@@ -147,6 +147,7 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                                   currentIndex = 2;
                                 });
                               },
+                              labelColor: buttonColor,
                             ),
                           ),
               ),
