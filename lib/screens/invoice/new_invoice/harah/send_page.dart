@@ -18,13 +18,13 @@ class _SendPageState extends State<SendPage> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: buttonColor2,
+        backgroundColor: brownButtonColor,
         leading: InkWell(
           onTap: () {
             Navigator.of(context).pop();
           },
           child: Container(
-            color: buttonColor2,
+            color: brownButtonColor,
             padding: const EdgeInsets.all(13),
             child: SvgPicture.asset(
               'images/close.svg',
@@ -74,7 +74,7 @@ class _SendPageState extends State<SendPage> {
                             Text(
                               'Bolor Store',
                               style: TextStyle(
-                                color: buttonColor2,
+                                color: brownButtonColor,
                               ),
                             ),
                             SizedBox(
@@ -111,7 +111,7 @@ class _SendPageState extends State<SendPage> {
                             Text(
                               'bolor@gmail.com',
                               style: TextStyle(
-                                color: buttonColor2,
+                                color: brownButtonColor,
                               ),
                             ),
                             SizedBox(
@@ -148,7 +148,7 @@ class _SendPageState extends State<SendPage> {
                             Text(
                               '417,450.00 ₮',
                               style: TextStyle(
-                                color: buttonColor2,
+                                color: brownButtonColor,
                               ),
                             ),
                             SizedBox(
@@ -185,7 +185,7 @@ class _SendPageState extends State<SendPage> {
                             Text(
                               'Invoice-23987.PDF',
                               style: TextStyle(
-                                color: buttonColor2,
+                                color: brownButtonColor,
                               ),
                             ),
                             SizedBox(
@@ -241,7 +241,7 @@ class _SendPageState extends State<SendPage> {
                         Container(
                           child: Icon(
                             Icons.perm_contact_cal_outlined,
-                            color: buttonColor2,
+                            color: brownButtonColor,
                           ),
                         ),
                         SizedBox(
@@ -249,7 +249,7 @@ class _SendPageState extends State<SendPage> {
                         ),
                         Text(
                           'Supplier Business Name',
-                          style: TextStyle(color: buttonColor2),
+                          style: TextStyle(color: brownButtonColor),
                         ),
                       ],
                     ),
@@ -275,7 +275,7 @@ class _SendPageState extends State<SendPage> {
                       children: [
                         Text(
                           'Партнер нэр',
-                          style: TextStyle(color: buttonColor2),
+                          style: TextStyle(color: brownButtonColor),
                         ),
                         IconButton(
                           onPressed: () {},
@@ -301,7 +301,7 @@ class _SendPageState extends State<SendPage> {
                       children: [
                         Text(
                           'Салбарын нэр',
-                          style: TextStyle(color: buttonColor2),
+                          style: TextStyle(color: brownButtonColor),
                         ),
                         IconButton(
                           onPressed: () {},
@@ -350,7 +350,7 @@ class _SendPageState extends State<SendPage> {
           CustomButton(
             labelText: 'Нэхэмжлэл илгээх',
             onClick: () {},
-            labelColor: buttonColor2,
+            labelColor: brownButtonColor,
           ),
         ],
       ),

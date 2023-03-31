@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SearchButton extends StatefulWidget {
-  const SearchButton({super.key});
+  final Color? color;
+
+  const SearchButton({
+    Key? key,
+    this.color,
+  }) : super(key: key);
 
   @override
   State<SearchButton> createState() => _SearchButtonState();
@@ -53,6 +58,7 @@ class _SearchButtonState extends State<SearchButton> {
                         const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                     child: SvgPicture.asset(
                       'images/yuluur.svg',
+                      color: widget.color,
                     ),
                   ),
                 ),

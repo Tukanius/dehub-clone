@@ -13,21 +13,7 @@ class InvoicePage extends StatefulWidget {
 
 class _InvoicePageState extends State<InvoicePage>
     with SingleTickerProviderStateMixin {
-  int currentIndex = 0;
-
-  var menu = [
-    'Таны авах',
-    'Таны өгөх',
-  ];
-  click(item) {
-    switch (item) {
-      case 'Таны авах':
-        return print('12');
-      case 'Таны өгөх':
-        return currentIndex = 1;
-      default:
-    }
-  }
+  late TabController tabController = TabController(length: 2, vsync: this);
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +29,8 @@ class _InvoicePageState extends State<InvoicePage>
             child: TabBar(
               physics: NeverScrollableScrollPhysics(),
               unselectedLabelColor: grey3,
-              indicatorColor: buttonColor2,
-              labelColor: buttonColor2,
+              indicatorColor: brownButtonColor,
+              labelColor: brownButtonColor,
               tabs: [
                 Tab(
                   child: Container(

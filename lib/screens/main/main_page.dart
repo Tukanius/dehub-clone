@@ -43,9 +43,9 @@ class _MainPageState extends State<MainPage> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: _selectedIndex == 1
-            ? buttonColor2
+            ? brownButtonColor
             : _selectedIndex == 2
-                ? buttonColor3
+                ? buttonColorPurple
                 : buttonColor,
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -100,12 +100,12 @@ class _MainPageState extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.playlist_add_check_rounded),
-            backgroundColor: buttonColor2,
+            backgroundColor: brownButtonColor,
             label: 'Нэхэмжлэх',
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset('images/tolbor.svg'),
-            backgroundColor: buttonColor3,
+            backgroundColor: buttonColorPurple,
             label: 'Төлбөр',
           ),
           BottomNavigationBarItem(

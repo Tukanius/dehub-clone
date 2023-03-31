@@ -1,4 +1,5 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/bugd.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet_bish.dart';
@@ -26,13 +27,13 @@ class _CustomerChooseState extends State<CustomerChoose> {
         child: Scaffold(
           backgroundColor: backgroundColor,
           appBar: AppBar(
-            backgroundColor: buttonColor2,
+            backgroundColor: brownButtonColor,
             leading: InkWell(
               onTap: () {
                 Navigator.of(context).pop();
               },
               child: Container(
-                color: buttonColor2,
+                color: brownButtonColor,
                 padding: const EdgeInsets.all(13),
                 child: SvgPicture.asset(
                   'images/close.svg',
@@ -65,9 +66,9 @@ class _CustomerChooseState extends State<CustomerChoose> {
                         margin: const EdgeInsets.only(top: 10, bottom: 10),
                         color: white,
                         child: TabBar(
-                          labelColor: buttonColor2,
+                          labelColor: brownButtonColor,
                           unselectedLabelColor: grey3,
-                          indicatorColor: buttonColor2,
+                          indicatorColor: brownButtonColor,
                           tabs: [
                             Container(
                               alignment: Alignment.center,
@@ -83,51 +84,7 @@ class _CustomerChooseState extends State<CustomerChoose> {
                           ],
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 10),
-                        color: white,
-                        height: 50,
-                        padding: const EdgeInsets.only(
-                            left: 16, top: 10, bottom: 10),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.8,
-                              margin: const EdgeInsets.only(right: 10),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: grey3.withOpacity(0.3),
-                                ),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Container(
-                                margin: const EdgeInsets.only(left: 10),
-                                alignment: Alignment.centerLeft,
-                                child: Icon(
-                                  Icons.search,
-                                  size: 20,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 30,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: grey3.withOpacity(0.3),
-                                ),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 7, vertical: 8),
-                                child: SvgPicture.asset(
-                                  'images/yuluur.svg',
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      SearchButton(),
                     ],
                   ),
                 ),

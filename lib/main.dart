@@ -13,6 +13,8 @@ import 'package:dehub/screens/invoice/new_invoice/harah/index1.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/pdf_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/send_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
+import 'package:dehub/screens/invoice/payment_page/payment_approval_page.dart';
+import 'package:dehub/screens/invoice/product_return/product_return.dart';
 import 'package:dehub/screens/main/main_page.dart';
 import 'package:dehub/screens/profile/information/partner_info.dart';
 import 'package:dehub/screens/profile/profile_page.dart';
@@ -128,6 +130,14 @@ class MyApp extends StatelessWidget {
                   case SendPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return SendPage();
+                    });
+                  case ProductReturnPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return ProductReturnPage();
+                    });
+                  case PaymentApprovalPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return PaymentApprovalPage();
                     });
                   default:
                     return MaterialPageRoute(

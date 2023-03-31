@@ -1,41 +1,30 @@
+import 'package:dehub/components/add_product_card/add_product_card.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product.dart';
-import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/harah.dart';
+import 'package:dehub/screens/invoice/payment_page/payment_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class NewInvoice extends StatefulWidget {
-  static const routeName = '/newinvoice';
-  const NewInvoice({
-    Key? key,
-  }) : super(key: key);
+class ProductReturnPage extends StatefulWidget {
+  static const routeName = '/productreturnpage';
+  const ProductReturnPage({super.key});
 
   @override
-  State<NewInvoice> createState() => _NewInvoiceState();
+  State<ProductReturnPage> createState() => _ProductReturnPageState();
 }
 
-class _NewInvoiceState extends State<NewInvoice> {
+class _ProductReturnPageState extends State<ProductReturnPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: brownButtonColor,
         elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: white,
-          ),
-        ),
+        backgroundColor: brownButtonColor,
         title: Text(
-          'Шинэ нэхэмжлэл',
+          'Буцах',
           style: TextStyle(
-            color: white,
             fontSize: 18,
             fontWeight: FontWeight.w500,
           ),
@@ -77,160 +66,6 @@ class _NewInvoiceState extends State<NewInvoice> {
                       ),
                       SizedBox(
                         height: 20,
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 15),
-                  child: Text(
-                    'ХАРИЛЦАГЧ',
-                    style: TextStyle(
-                      color: grey3,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  padding: const EdgeInsets.only(left: 20),
-                  color: white,
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                child: Icon(
-                                  Icons.perm_contact_cal_outlined,
-                                  color: brownButtonColor,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Харилцагч сонгох',
-                                style: TextStyle(color: brownButtonColor),
-                              ),
-                            ],
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              showModalBottomSheet(
-                                useSafeArea: true,
-                                isScrollControlled: true,
-                                context: context,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(20),
-                                  ),
-                                ),
-                                builder: (context) => buildSheet(),
-                              );
-                            },
-                            icon: Icon(
-                              Icons.arrow_forward_ios,
-                              size: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: Text(
-                              'Хүргэлтийн хаяг',
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Text('-'),
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: Text(
-                              'Нэхэмжлэх илгээх',
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Text('-'),
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: Text(
-                              'Нэхэмжлэх статус',
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'Үүссэн',
-                                style: TextStyle(color: brownButtonColor),
-                              ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: Text(
-                              'Баталсан',
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Text('-'),
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
                       ),
                     ],
                   ),
@@ -347,6 +182,163 @@ class _NewInvoiceState extends State<NewInvoice> {
                 Container(
                   margin: const EdgeInsets.only(left: 15),
                   child: Text(
+                    'ХАРИЛЦАГЧ',
+                    style: TextStyle(
+                      color: grey3,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  padding: const EdgeInsets.only(left: 20),
+                  color: white,
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                child: Icon(
+                                  Icons.perm_contact_cal_outlined,
+                                  color: brownButtonColor,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Харилцагч сонгох',
+                                style: TextStyle(color: brownButtonColor),
+                              ),
+                            ],
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              // showModalBottomSheet(
+                              //   useSafeArea: true,
+                              //   isScrollControlled: true,
+                              //   context: context,
+                              //   shape: RoundedRectangleBorder(
+                              //     borderRadius: BorderRadius.vertical(
+                              //       top: Radius.circular(20),
+                              //     ),
+                              //   ),
+                              //   builder: (context) => buildSheet(),
+                              // );
+                            },
+                            icon: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            child: Text(
+                              'Хүргэлтийн хаяг',
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Text('-'),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            child: Text(
+                              'Нэхэмжлэх илгээх',
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Text('-'),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            child: Text(
+                              'Нэхэмжлэх статус',
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                'Үүссэн',
+                                style: TextStyle(color: brownButtonColor),
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            child: Text(
+                              'Баталсан',
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Text('-'),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 15),
+                  child: Text(
                     'ЗАХИАЛГА',
                     style: TextStyle(
                       color: grey3,
@@ -425,7 +417,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                             children: [
                               Text(
                                 '-',
-                                style: TextStyle(color: buttonColor),
+                                style: TextStyle(color: brownButtonColor),
                               ),
                               IconButton(
                                 onPressed: () {},
@@ -458,52 +450,8 @@ class _NewInvoiceState extends State<NewInvoice> {
                 SizedBox(
                   height: 10,
                 ),
-                InkWell(
-                  onTap: () {
-                    showModalBottomSheet(
-                      useSafeArea: true,
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (context) => buildProduct(),
-                    );
-                  },
-                  child: Container(
-                    color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(
-                            left: 20,
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                child: Icon(
-                                  Icons.download_for_offline_outlined,
-                                  color: brownButtonColor,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Мөр нэмэх',
-                                style: TextStyle(color: brownButtonColor),
-                              ),
-                            ],
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.arrow_forward_ios,
-                            size: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                AddProductCard(
+                  color: brownButtonColor,
                 ),
                 SizedBox(
                   height: 10,
@@ -953,15 +901,29 @@ class _NewInvoiceState extends State<NewInvoice> {
                         width: 50,
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          showModalBottomSheet(
+                            isScrollControlled: true,
+                            useSafeArea: true,
+                            backgroundColor: transparent,
+                            context: context,
+                            builder: (context) => buildSheet(),
+                          );
+                        },
                         child: Column(
                           children: [
+                            SizedBox(
+                              height: 3,
+                            ),
                             SvgPicture.asset(
-                              'images/save.svg',
-                              height: 20,
+                              'images/tuloh.svg',
+                              height: 14,
+                            ),
+                            SizedBox(
+                              height: 3,
                             ),
                             Text(
-                              'Хадгалах',
+                              'Төлөх',
                               style: TextStyle(
                                 color: white,
                                 fontSize: 10,
@@ -972,46 +934,6 @@ class _NewInvoiceState extends State<NewInvoice> {
                       ),
                       SizedBox(
                         width: 50,
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.send,
-                              color: white,
-                              size: 20,
-                            ),
-                            Text(
-                              'Илгээх',
-                              style: TextStyle(
-                                color: white,
-                                fontSize: 10,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 50,
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Column(
-                          children: [
-                            SvgPicture.asset(
-                              'images/cancel.svg',
-                              height: 20,
-                            ),
-                            Text(
-                              'Цуцлах',
-                              style: TextStyle(
-                                color: white,
-                                fontSize: 10,
-                              ),
-                            )
-                          ],
-                        ),
                       ),
                     ],
                   ),
@@ -1025,16 +947,9 @@ class _NewInvoiceState extends State<NewInvoice> {
   }
 
   Widget buildSheet() => DraggableScrollableSheet(
-        initialChildSize: 1,
         minChildSize: 0.5,
         maxChildSize: 1,
-        builder: (context, scrollController) => CustomerChoose(),
-      );
-
-  Widget buildProduct() => DraggableScrollableSheet(
         initialChildSize: 1,
-        minChildSize: 0.5,
-        maxChildSize: 1,
-        builder: (context, scrollController) => AddProduct(),
+        builder: (context, innerBoxIsScrolled) => PaymentPage(),
       );
 }

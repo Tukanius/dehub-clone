@@ -45,7 +45,7 @@ class _HarahState extends State<Harah> with SingleTickerProviderStateMixin {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: buttonColor2,
+        backgroundColor: brownButtonColor,
         elevation: 0,
         centerTitle: true,
         title: Text(
@@ -67,7 +67,7 @@ class _HarahState extends State<Harah> with SingleTickerProviderStateMixin {
             Text(
               '417,450 ₮',
               style: TextStyle(
-                color: buttonColor2,
+                color: brownButtonColor,
                 fontWeight: FontWeight.bold,
                 fontSize: 24,
               ),
@@ -104,7 +104,7 @@ class _HarahState extends State<Harah> with SingleTickerProviderStateMixin {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
                         border: Border.all(color: grey3, width: 0.5),
-                        color: currentIndex == 0 ? buttonColor2 : white,
+                        color: currentIndex == 0 ? brownButtonColor : white,
                       ),
                       child: Icon(
                         Icons.edit,
@@ -126,7 +126,7 @@ class _HarahState extends State<Harah> with SingleTickerProviderStateMixin {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
                           border: Border.all(color: grey3, width: 0.5),
-                          color: currentIndex == 1 ? buttonColor2 : white),
+                          color: currentIndex == 1 ? brownButtonColor : white),
                       child: Icon(
                         Icons.visibility_outlined,
                         color: currentIndex != 1 ? grey3 : white,
@@ -154,7 +154,7 @@ class _HarahState extends State<Harah> with SingleTickerProviderStateMixin {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
                           border: Border.all(color: grey3, width: 0.5),
-                          color: currentIndex == 2 ? buttonColor2 : white),
+                          color: currentIndex == 2 ? brownButtonColor : white),
                       child: Icon(
                         Icons.picture_as_pdf_outlined,
                         color: currentIndex == 2 ? white : grey3,
@@ -182,7 +182,7 @@ class _HarahState extends State<Harah> with SingleTickerProviderStateMixin {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
                         border: Border.all(color: grey3, width: 0.5),
-                        color: currentIndex == 3 ? buttonColor2 : white,
+                        color: currentIndex == 3 ? brownButtonColor : white,
                       ),
                       child: Icon(
                         Icons.mail_outlined,

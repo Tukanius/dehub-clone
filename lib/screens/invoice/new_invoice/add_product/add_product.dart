@@ -26,13 +26,13 @@ class _AddProductState extends State<AddProduct> {
         child: Scaffold(
           backgroundColor: backgroundColor,
           appBar: AppBar(
-            backgroundColor: buttonColor2,
+            backgroundColor: brownButtonColor,
             leading: InkWell(
               onTap: () {
                 Navigator.of(context).pop();
               },
               child: Container(
-                color: buttonColor2,
+                color: brownButtonColor,
                 padding: const EdgeInsets.all(13),
                 child: SvgPicture.asset(
                   'images/close.svg',
@@ -65,9 +65,9 @@ class _AddProductState extends State<AddProduct> {
                         margin: const EdgeInsets.only(top: 10, bottom: 10),
                         color: white,
                         child: TabBar(
-                          labelColor: buttonColor2,
+                          labelColor: brownButtonColor,
                           unselectedLabelColor: grey3,
-                          indicatorColor: buttonColor2,
+                          indicatorColor: brownButtonColor,
                           tabs: [
                             Container(
                               alignment: Alignment.center,

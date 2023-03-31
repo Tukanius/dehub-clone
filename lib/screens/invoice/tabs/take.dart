@@ -1,48 +1,23 @@
 import 'package:dehub/components/invoice_card/invoice_card.dart';
 import 'package:dehub/components/search_button/search_button.dart';
-import 'package:dehub/screens/invoice/tabs/gives_tabbars/all.dart';
+import 'package:dehub/screens/invoice/product_return/product_return.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class TakePage extends StatefulWidget {
-  const TakePage({Key? key}) : super(key: key);
+  const TakePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<TakePage> createState() => _TakePageState();
 }
-
-var menu = [
-  'Бүгд',
-  'Төлбөр хүлээж буй',
-  'Хаагдсан',
-  'Драфт',
-  'Батлуулах',
-];
 
 class _TakePageState extends State<TakePage>
     with SingleTickerProviderStateMixin {
   int? selectedIndex;
   late TabController tabController = TabController(length: 5, vsync: this);
   int currentIndex = 0;
-
-  click(item) {
-    switch (item) {
-      case 'Бүгд':
-        return currentIndex = 0;
-      case 'Төлбөр хүлээж буй':
-        return currentIndex = 1;
-      case 'Хаагдсан':
-        return currentIndex = 2;
-      case 'Драфт':
-        return currentIndex = 3;
-
-      case 'Батлуулах':
-        return currentIndex = 4;
-
-      default:
-    }
-  }
 
   void onItemTapped() {
     setState(() {
@@ -74,7 +49,7 @@ class _TakePageState extends State<TakePage>
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                       color: currentIndex == 0
-                          ? buttonColor2
+                          ? brownButtonColor
                           : Colors.grey.shade100,
                     ),
                     child: InkWell(
@@ -102,7 +77,7 @@ class _TakePageState extends State<TakePage>
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                       color: currentIndex == 1
-                          ? buttonColor2
+                          ? brownButtonColor
                           : Colors.grey.shade100,
                     ),
                     child: InkWell(
@@ -130,7 +105,7 @@ class _TakePageState extends State<TakePage>
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                       color: currentIndex == 2
-                          ? buttonColor2
+                          ? brownButtonColor
                           : Colors.grey.shade100,
                     ),
                     child: InkWell(
@@ -158,7 +133,7 @@ class _TakePageState extends State<TakePage>
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                       color: currentIndex == 3
-                          ? buttonColor2
+                          ? brownButtonColor
                           : Colors.grey.shade100,
                     ),
                     child: InkWell(
@@ -186,7 +161,7 @@ class _TakePageState extends State<TakePage>
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                       color: currentIndex == 4
-                          ? buttonColor2
+                          ? brownButtonColor
                           : Colors.grey.shade100,
                     ),
                     child: InkWell(
@@ -210,32 +185,17 @@ class _TakePageState extends State<TakePage>
               ),
             ),
           ),
+          SliverToBoxAdapter(
+            child: SearchButton(
+              color: brownButtonColor,
+            ),
+          )
         ];
       },
-      body: TabBarView(
-        children: [
-          InvoiceCard(),
-          Container(
-            height: 100,
-            width: 100,
-            color: black,
-          ),
-          Container(
-            height: 100,
-            width: 100,
-            color: orange,
-          ),
-          Container(
-            height: 100,
-            width: 100,
-            color: yellow,
-          ),
-          Container(
-            height: 100,
-            width: 100,
-            color: red,
-          ),
-        ],
+      body: InvoiceCard(
+        onClick: () {
+          Navigator.of(context).pushNamed(ProductReturnPage.routeName);
+        },
       ),
     );
   }
