@@ -4,15 +4,15 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class Bugd extends StatefulWidget {
-  static const routeName = '/bugd';
-  const Bugd({super.key});
+class All extends StatefulWidget {
+  static const routeName = '/All';
+  const All({super.key});
 
   @override
-  State<Bugd> createState() => _BugdState();
+  State<All> createState() => _AllState();
 }
 
-class _BugdState extends State<Bugd> {
+class _AllState extends State<All> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,17 +20,18 @@ class _BugdState extends State<Bugd> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SupplierCard(
-              shoppingCard: false,
-              onClick: () {
-                showModalBottomSheet(
-                  useSafeArea: true,
-                  isScrollControlled: true,
-                  context: context,
-                  builder: (context) => buildSheet(),
-                );
-              },
-            )
+            for (var i = 0; i < 10; i++)
+              SupplierCard(
+                shoppingCard: true,
+                onClick: () {
+                  showModalBottomSheet(
+                    useSafeArea: true,
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) => buildSheet(),
+                  );
+                },
+              )
           ],
         ),
       ),

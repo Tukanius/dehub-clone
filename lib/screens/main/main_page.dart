@@ -2,6 +2,7 @@ import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/screens/home/home_page.dart';
 import 'package:dehub/screens/invoice/invoice.dart';
 import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
+import 'package:dehub/screens/menu/menu_page.dart';
 import 'package:dehub/screens/profile/profile_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -45,11 +46,21 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: _selectedIndex == 1
             ? brownButtonColor
             : _selectedIndex == 2
-                ? buttonColorPurple
+                ? purpleButtonColor
                 : buttonColor,
         elevation: 0,
         automaticallyImplyLeading: false,
-        leading: Icon(Icons.menu_outlined),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pushNamed(MenuPage.routeName);
+          },
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: SvgPicture.asset(
+              'images/menu.svg',
+            ),
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () {},
@@ -105,7 +116,7 @@ class _MainPageState extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset('images/tolbor.svg'),
-            backgroundColor: buttonColorPurple,
+            backgroundColor: purpleButtonColor,
             label: 'Төлбөр',
           ),
           BottomNavigationBarItem(
