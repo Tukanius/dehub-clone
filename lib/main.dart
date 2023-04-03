@@ -17,6 +17,7 @@ import 'package:dehub/screens/invoice/payment_page/payment_approval_page.dart';
 import 'package:dehub/screens/invoice/product_return/product_return.dart';
 import 'package:dehub/screens/main/main_page.dart';
 import 'package:dehub/screens/menu/menu_page.dart';
+import 'package:dehub/screens/shopping/shopping_page.dart';
 import 'package:dehub/screens/menu/suppliers/suppliers_page.dart';
 import 'package:dehub/screens/menu/tabs/purchase_page.dart';
 import 'package:dehub/screens/menu/tabs/sales_page.dart';
@@ -158,6 +159,10 @@ class MyApp extends StatelessWidget {
                   case SuppliersPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return SuppliersPage();
+                    });
+                  case ShoppingPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return ShoppingPage();
                     });
                   default:
                     return MaterialPageRoute(

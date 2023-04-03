@@ -44,6 +44,7 @@ class _SuppliersPageState extends State<SuppliersPage> {
                 fontSize: 16,
               ),
             ),
+            centerTitle: false,
           ),
           body: NestedScrollView(
             headerSliverBuilder:

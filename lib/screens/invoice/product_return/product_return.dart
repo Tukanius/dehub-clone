@@ -1,4 +1,4 @@
-import 'package:dehub/components/add_product_card/add_product_card.dart';
+import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/harah.dart';
 import 'package:dehub/screens/invoice/payment_page/payment_page.dart';
@@ -450,7 +450,7 @@ class _ProductReturnPageState extends State<ProductReturnPage> {
                 SizedBox(
                   height: 10,
                 ),
-                AddProductCard(
+                InvoiceProductCard(
                   color: brownButtonColor,
                 ),
                 SizedBox(

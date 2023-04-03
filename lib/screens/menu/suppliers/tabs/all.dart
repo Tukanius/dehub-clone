@@ -1,12 +1,13 @@
 import 'package:dehub/components/supplier_card/supplier_card.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/salbar_songoh.dart';
+import 'package:dehub/screens/shopping/shopping_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class All extends StatefulWidget {
   static const routeName = '/All';
-  const All({super.key});
+  const All({Key? key}) : super(key: key);
 
   @override
   State<All> createState() => _AllState();
@@ -24,12 +25,7 @@ class _AllState extends State<All> {
               SupplierCard(
                 shoppingCard: true,
                 onClick: () {
-                  showModalBottomSheet(
-                    useSafeArea: true,
-                    isScrollControlled: true,
-                    context: context,
-                    builder: (context) => buildSheet(),
-                  );
+                  Navigator.of(context).pushNamed(ShoppingPage.routeName);
                 },
               )
           ],
@@ -38,10 +34,10 @@ class _AllState extends State<All> {
     );
   }
 
-  Widget buildSheet() => DraggableScrollableSheet(
-        initialChildSize: 1,
-        minChildSize: 0.5,
-        maxChildSize: 1,
-        builder: (context, scrollController) => SalbarSongoh(),
-      );
+  // Widget buildSheet() => DraggableScrollableSheet(
+  //       initialChildSize: 1,
+  //       minChildSize: 0.5,
+  //       maxChildSize: 1,
+  //       builder: (context, scrollController) => SalbarSongoh(),
+  //     );
 }

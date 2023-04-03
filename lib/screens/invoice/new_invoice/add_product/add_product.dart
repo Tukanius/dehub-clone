@@ -80,7 +80,9 @@ class _AddProductState extends State<AddProduct> {
                           ],
                         ),
                       ),
-                      SearchButton(),
+                      SearchButton(
+                        color: brownButtonColor,
+                      ),
                     ],
                   ),
                 ),

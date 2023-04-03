@@ -2,18 +2,18 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class AddProductCard extends StatefulWidget {
+class InvoiceProductCard extends StatefulWidget {
   final Color? color;
-  const AddProductCard({
+  const InvoiceProductCard({
     this.color,
     Key? key,
   }) : super(key: key);
 
   @override
-  State<AddProductCard> createState() => _AddProductCardState();
+  State<InvoiceProductCard> createState() => _InvoiceProductCardState();
 }
 
-class _AddProductCardState extends State<AddProductCard> {
+class _InvoiceProductCardState extends State<InvoiceProductCard> {
   int price = 9500;
   int amount = 1000;
   int percent = 5;

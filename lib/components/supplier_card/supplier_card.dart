@@ -105,15 +105,15 @@ class _SupplierCardState extends State<SupplierCard> {
                                       ratingWidget: RatingWidget(
                                         full: Icon(
                                           Icons.star,
-                                          color: Colors.yellow,
+                                          color: orange,
                                         ),
                                         half: Icon(
                                           Icons.star_half,
-                                          color: Colors.yellow,
+                                          color: orange,
                                         ),
                                         empty: Icon(
                                           Icons.star_border,
-                                          color: Colors.yellow,
+                                          color: orange,
                                         ),
                                       ),
                                       itemPadding:

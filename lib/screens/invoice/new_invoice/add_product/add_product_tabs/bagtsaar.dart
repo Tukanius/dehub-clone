@@ -1,4 +1,4 @@
-import 'package:dehub/components/add_product_card/add_product_card.dart';
+import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,7 +26,7 @@ class _BagtsaarState extends State<Bagtsaar> {
         child: Column(
           children: [
             for (var i = 0; i < 10; i++)
-              AddProductCard(
+              InvoiceProductCard(
                 color: brownButtonColor,
               ),
             SizedBox(
