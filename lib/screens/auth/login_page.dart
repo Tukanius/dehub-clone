@@ -1,10 +1,13 @@
-import 'package:dehub/screens/main/main_page.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/screens/splash/splash_page.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/loginpage';
@@ -15,8 +18,29 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   bool _isVisible = true;
   bool isCheck = false;
+  bool saveUserName = false;
+  bool isSubmit = false;
+
+  onSubmit() async {
+    if (fbKey.currentState!.saveAndValidate()) {
+      try {
+        setState(() {
+          isSubmit = true;
+        });
+        User save = User.fromJson(fbKey.currentState!.value);
+        await Provider.of<UserProvider>(context, listen: false).login(save);
+        Navigator.of(context).pushNamed(SplashPage.routeName);
+      } catch (e) {
+        debugPrint(e.toString());
+        setState(() {
+          isSubmit = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: 40,
                     ),
                     FormBuilder(
+                      key: fbKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -67,8 +92,8 @@ class _LoginPageState extends State<LoginPage> {
                             height: 8,
                           ),
                           Container(
-                            height: 50,
-                            child: TextFormField(
+                            child: FormTextField(
+                              name: "code",
                               decoration: InputDecoration(
                                 contentPadding:
                                     const EdgeInsets.symmetric(horizontal: 10),
@@ -77,7 +102,6 @@ class _LoginPageState extends State<LoginPage> {
                                 hintText: "Системд нэвтрэх бизнесийн код",
                                 hintStyle: TextStyle(
                                   color: grey2,
-                                  fontWeight: FontWeight.w500,
                                   fontSize: 14,
                                 ),
                                 enabledBorder: OutlineInputBorder(
@@ -112,9 +136,9 @@ class _LoginPageState extends State<LoginPage> {
                             height: 8,
                           ),
                           Container(
-                            height: 50,
-                            child: TextFormField(
-                              keyboardType: TextInputType.text,
+                            child: FormTextField(
+                              name: "email",
+                              inputType: TextInputType.text,
                               decoration: InputDecoration(
                                 contentPadding:
                                     const EdgeInsets.symmetric(horizontal: 10),
@@ -123,7 +147,6 @@ class _LoginPageState extends State<LoginPage> {
                                 hintText: "Хэрэглэгчийн нэрээ оруулна уу",
                                 hintStyle: TextStyle(
                                   color: grey2,
-                                  fontWeight: FontWeight.w500,
                                   fontSize: 14,
                                 ),
                                 enabledBorder: OutlineInputBorder(
@@ -157,55 +180,52 @@ class _LoginPageState extends State<LoginPage> {
                           SizedBox(
                             height: 8,
                           ),
-                          Container(
-                            height: 50,
-                            child: TextFormField(
-                              keyboardType: TextInputType.text,
-                              obscureText: _isVisible,
-                              decoration: InputDecoration(
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                suffixIcon: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _isVisible = !_isVisible;
-                                    });
-                                  },
-                                  icon: _isVisible == true
-                                      ? Icon(
-                                          Icons.visibility_off_outlined,
-                                          color: Color(0xff44566C),
-                                        )
-                                      : Icon(
-                                          Icons.visibility_outlined,
-                                          color: Color(0xff44566C),
-                                        ),
-                                ),
-                                fillColor: Colors.white,
-                                filled: true,
-                                hintText: "Нууц үгээ оруулна уу",
-                                hintStyle: TextStyle(
-                                  color: grey2,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0xff44566C30),
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blue,
-                                  ),
+                          FormTextField(
+                            name: "password",
+                            inputType: TextInputType.text,
+                            obscureText: _isVisible,
+                            decoration: InputDecoration(
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _isVisible = !_isVisible;
+                                  });
+                                },
+                                icon: _isVisible == true
+                                    ? Icon(
+                                        Icons.visibility_off_outlined,
+                                        color: grey2,
+                                      )
+                                    : Icon(
+                                        Icons.visibility_outlined,
+                                        color: grey2,
+                                      ),
+                              ),
+                              fillColor: Colors.white,
+                              filled: true,
+                              hintText: "Нууц үгээ оруулна уу",
+                              hintStyle: TextStyle(
+                                color: grey2,
+                                fontSize: 14,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xff44566C30),
                                 ),
                               ),
-                              validator: FormBuilderValidators.compose([
-                                FormBuilderValidators.required(
-                                  errorText: 'Нууц үгээ оруулна уу',
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.blue,
                                 ),
-                              ]),
+                              ),
                             ),
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                errorText: 'Нууц үгээ оруулна уу',
+                              ),
+                            ]),
                           ),
                           SizedBox(
                             height: 20,
@@ -229,13 +249,12 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       children: [
                         Checkbox(
-                          // checkColor: buttonColor,
                           fillColor: MaterialStateProperty.resolveWith(
                               (states) => buttonColor),
-                          value: isCheck,
+                          value: saveUserName,
                           onChanged: (bool? value) {
                             setState(() {
-                              isCheck = value!;
+                              saveUserName = value!;
                             });
                           },
                         ),
@@ -254,7 +273,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     CustomButton(
                       onClick: () {
-                        Navigator.of(context).pushNamed(MainPage.routeName);
+                        onSubmit();
                       },
                       labelText: "Нэвтрэх",
                       labelColor: buttonColor,

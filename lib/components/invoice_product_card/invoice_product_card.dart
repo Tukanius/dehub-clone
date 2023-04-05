@@ -196,8 +196,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                 ),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 10),
-                  padding: const EdgeInsets.only(
-                      left: 46, right: 5, top: 8, bottom: 11),
+                  padding: const EdgeInsets.only(right: 5, top: 8, bottom: 11),
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: Color(0xffD9DCDE),

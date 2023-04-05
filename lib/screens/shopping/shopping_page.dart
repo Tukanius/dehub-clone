@@ -5,6 +5,7 @@ import 'package:dehub/components/supplier_card/supplier_card.dart';
 import 'package:dehub/screens/shopping/tabs/invoice.dart';
 import 'package:dehub/screens/shopping/tabs/order.dart';
 import 'package:dehub/screens/shopping/tabs/payment.dart';
+import 'package:dehub/screens/shopping/tabs/product.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -126,7 +127,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
           },
           body: TabBarView(
             children: [
-              ProductCard(),
+              Product(),
               Invoice(),
               Order(),
               Payment(),
