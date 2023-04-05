@@ -10,10 +10,10 @@ import 'http_handler.dart';
 import '../main.dart';
 
 class HttpRequest {
-  // static const host = 'https://dev-edar.zto.mn';
+  // static const host = 'https://dev-de-dehub.zto.mn';
   static const host = 'http://192.168.1.220:30550';
 
-  // static const s3host = 'http://192.168.1.17:5002/s3';
+  // static const s3host = 'https://dev-de-dehub.zto.mn/s3';
   static const s3host = 'http://192.168.1.220:30550/s3';
   static const version = '/app';
 

@@ -31,6 +31,7 @@ class _LoginPageState extends State<LoginPage> {
           isSubmit = true;
         });
         User save = User.fromJson(fbKey.currentState!.value);
+
         await Provider.of<UserProvider>(context, listen: false).login(save);
         Navigator.of(context).pushNamed(SplashPage.routeName);
       } catch (e) {

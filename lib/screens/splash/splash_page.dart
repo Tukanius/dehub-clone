@@ -16,23 +16,19 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage>
     with AfterLayoutMixin<SplashPage> {
-  User user = User();
   @override
   afterFirstLayout(BuildContext context) async {
-    try {
-      if (user.id == null) {
-        Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
-      } else {
-        Navigator.of(context).pushNamed(MainPage.routeName);
-      }
-    } catch (e) {
-      Navigator.of(context).pushReplacementNamed(MainPage.routeName);
-    }
+    var accessToken = await UserProvider.getAccessToken();
+
+    if (accessToken != null) {
+      try {
+        await Provider.of<UserProvider>(context, listen: false).me(false);
+      } catch (e) {}
+    } else {}
   }
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserProvider>(context, listen: true).user;
     return Scaffold(
       body: Center(),
     );

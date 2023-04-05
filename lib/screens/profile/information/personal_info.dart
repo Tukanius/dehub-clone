@@ -1,7 +1,11 @@
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/auth/login_page.dart';
+import 'package:dehub/screens/splash/splash_page.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PersonalInfo extends StatefulWidget {
   static const routeName = '/personalinfo';
@@ -12,10 +16,21 @@ class PersonalInfo extends StatefulWidget {
 }
 
 class _PersonalInfoState extends State<PersonalInfo> {
+  logout() async {
+    await Provider.of<UserProvider>(context, listen: false).logout();
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const SplashPage()),
+        (Route<dynamic> route) => false);
+  }
+
   late TabController tabController;
 
   @override
   Widget build(BuildContext context) {
+    User user = User();
+
+    user = Provider.of<UserProvider>(context, listen: true).user;
+
     return SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),
       child: Container(
@@ -369,7 +384,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     ),
                     CustomButton(
                       onClick: () {
-                        Navigator.of(context).pushNamed(LoginPage.routeName);
+                        logout();
                       },
                       labelText: 'Системээс гарах',
                       labelColor: buttonColor,

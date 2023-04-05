@@ -8,6 +8,11 @@ class UserProvider extends ChangeNotifier {
   final DefaultCacheManager cacheManager = DefaultCacheManager();
   User user = User();
 
+  me(bool handler) async {
+    user = await AuthApi().me(handler);
+    notifyListeners();
+  }
+
   login(User data) async {
     user = await AuthApi().login(data);
     notifyListeners();
@@ -21,7 +26,16 @@ class UserProvider extends ChangeNotifier {
   static Future<String?> getAccessToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("ACCESS_TOKEN");
-
     return token;
+  }
+
+  logout() async {
+    user = User();
+    clearAccessToken();
+  }
+
+  clearAccessToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('ACESS_TOKEN');
   }
 }
