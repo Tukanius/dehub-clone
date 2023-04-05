@@ -92,35 +92,34 @@ class _LoginPageState extends State<LoginPage> {
                           SizedBox(
                             height: 8,
                           ),
-                          Container(
-                            child: FormTextField(
-                              name: "code",
-                              decoration: InputDecoration(
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                fillColor: Colors.white,
-                                filled: true,
-                                hintText: "Системд нэвтрэх бизнесийн код",
-                                hintStyle: TextStyle(
-                                  color: grey2,
-                                  fontSize: 14,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0xff44566C30),
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blue,
-                                  ),
+                          FormTextField(
+                            name: "code",
+                            decoration: InputDecoration(
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              fillColor: Colors.white,
+                              filled: true,
+                              hintText: "Системд нэвтрэх бизнесийн код",
+                              hintStyle: TextStyle(
+                                color: grey2,
+                                fontSize: 14,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xff44566C30),
                                 ),
                               ),
-                              validator: FormBuilderValidators.compose([
-                                FormBuilderValidators.required(
-                                    errorText: 'Бизнесийн код оруулна уу'),
-                              ]),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.blue,
+                                ),
+                              ),
                             ),
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                errorText: 'Бизнесийн код оруулна уу',
+                              ),
+                            ]),
                           ),
                           SizedBox(
                             height: 25,
@@ -136,36 +135,35 @@ class _LoginPageState extends State<LoginPage> {
                           SizedBox(
                             height: 8,
                           ),
-                          Container(
-                            child: FormTextField(
-                              name: "email",
-                              inputType: TextInputType.text,
-                              decoration: InputDecoration(
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                fillColor: Colors.white,
-                                filled: true,
-                                hintText: "Хэрэглэгчийн нэрээ оруулна уу",
-                                hintStyle: TextStyle(
-                                  color: grey2,
-                                  fontSize: 14,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0xff44566C30),
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blue,
-                                  ),
+                          FormTextField(
+                            name: "email",
+                            inputType: TextInputType.text,
+                            decoration: InputDecoration(
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              fillColor: Colors.white,
+                              filled: true,
+                              hintText: "Хэрэглэгчийн нэрээ оруулна уу",
+                              hintStyle: TextStyle(
+                                color: grey2,
+                                fontSize: 14,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xff44566C30),
                                 ),
                               ),
-                              validator: FormBuilderValidators.compose([
-                                FormBuilderValidators.required(
-                                    errorText: 'Хэрэглэгчийн нэр оруулна уу'),
-                              ]),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.blue,
+                                ),
+                              ),
                             ),
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                errorText: 'Хэрэглэгчийн нэр оруулна уу',
+                              ),
+                            ]),
                           ),
                           SizedBox(
                             height: 25,
@@ -188,13 +186,13 @@ class _LoginPageState extends State<LoginPage> {
                             decoration: InputDecoration(
                               contentPadding:
                                   const EdgeInsets.symmetric(horizontal: 10),
-                              suffixIcon: IconButton(
-                                onPressed: () {
+                              suffixIcon: GestureDetector(
+                                onTap: () {
                                   setState(() {
                                     _isVisible = !_isVisible;
                                   });
                                 },
-                                icon: _isVisible == true
+                                child: _isVisible == true
                                     ? Icon(
                                         Icons.visibility_off_outlined,
                                         color: grey2,
