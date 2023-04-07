@@ -1,6 +1,9 @@
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:provider/provider.dart';
 
 class Page1 extends StatefulWidget {
   const Page1({
@@ -26,8 +29,15 @@ class _Page1State extends State<Page1> {
     });
   }
 
+  User user = User();
+
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).user;
+    print("=====================USER=======================");
+    // print(user.partner);
+    print("=====================USER=======================");
+
     return SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),
       child: Container(

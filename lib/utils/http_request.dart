@@ -41,9 +41,9 @@ class HttpRequest {
 
       var token = await UserProvider.getAccessToken();
       var deviceToken = "";
-      debugPrint('++++++++++++++++++++++deviceToken+++++++++++++++ ');
-      debugPrint(deviceToken);
-      debugPrint('+++++++++++++++++++++++deviceToken++++++++++++++ ');
+      // debugPrint('++++++++++++++++++++++deviceToken+++++++++++++++ ');
+      // debugPrint(deviceToken);
+      // debugPrint('+++++++++++++++++++++++deviceToken++++++++++++++ ');
 
       dio.options.headers = {
         'authorization': 'Bearer $token',

@@ -19,6 +19,7 @@ class ShoppingPage extends StatefulWidget {
 }
 
 class _ShoppingPageState extends State<ShoppingPage> {
+  bool gridview = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,15 +120,73 @@ class _ShoppingPageState extends State<ShoppingPage> {
                 ),
               ),
               SliverToBoxAdapter(
-                child: SearchButton(
-                  color: grey2,
+                child: Container(
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        color: white,
+                        height: 50,
+                        padding: const EdgeInsets.only(
+                            left: 16, top: 10, bottom: 10),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              margin: const EdgeInsets.only(right: 10),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: grey3.withOpacity(0.3),
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Container(
+                                margin: const EdgeInsets.only(left: 10),
+                                alignment: Alignment.centerLeft,
+                                child: Icon(
+                                  Icons.search,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 30,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: grey3.withOpacity(0.3),
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    gridview = !gridview;
+                                  });
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 5),
+                                  child: SvgPicture.asset(
+                                    'images/filter.svg',
+                                    color: grey2,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ];
           },
           body: TabBarView(
             children: [
-              Product(),
+              Product(
+                gridview: gridview,
+              ),
               Invoice(),
               Order(),
               Payment(),

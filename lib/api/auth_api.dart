@@ -4,9 +4,6 @@ import '../models/user.dart';
 class AuthApi extends HttpRequest {
   login(User user) async {
     var res = await post('/auth/login', data: user.toJson(), handler: true);
-    print('===================USER======================');
-    print(user);
-    print('===================USER======================');
     return User.fromJson(res as Map<String, dynamic>);
   }
 

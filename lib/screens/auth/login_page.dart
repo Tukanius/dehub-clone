@@ -35,7 +35,9 @@ class _LoginPageState extends State<LoginPage> {
         await Provider.of<UserProvider>(context, listen: false).login(save);
         Navigator.of(context).pushNamed(SplashPage.routeName);
       } catch (e) {
+        print('============ERROR================');
         debugPrint(e.toString());
+        print('============ERROR================');
         setState(() {
           isSubmit = false;
         });

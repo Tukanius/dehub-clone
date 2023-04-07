@@ -1,8 +1,12 @@
+import 'package:dehub/models/partner.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/profile/information/partner_info.dart';
 
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:provider/provider.dart';
 
 class Page2 extends StatefulWidget {
   static const routeName = '/Page2';
@@ -25,8 +29,13 @@ class _Page2State extends State<Page2> {
   //   }
   // }
 
+  User user = User();
+  Partner partner = Partner();
+
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: false).user;
+
     return SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),
       child: Container(
@@ -136,6 +145,9 @@ class _Page2State extends State<Page2> {
               decoration: BoxDecoration(
                 color: Colors.grey,
                 borderRadius: BorderRadius.circular(5),
+                // image: DecorationImage(
+                //   image: NetworkImage("${user.logo}"),
+                // ),
               ),
             ),
             SizedBox(

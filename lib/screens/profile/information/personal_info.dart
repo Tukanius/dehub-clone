@@ -1,21 +1,26 @@
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/auth/login_page.dart';
 import 'package:dehub/screens/splash/splash_page.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:after_layout/after_layout.dart';
 
 class PersonalInfo extends StatefulWidget {
   static const routeName = '/personalinfo';
-  const PersonalInfo({super.key});
+  const PersonalInfo({Key? key}) : super(key: key);
 
   @override
   State<PersonalInfo> createState() => _PersonalInfoState();
 }
 
-class _PersonalInfoState extends State<PersonalInfo> {
+class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
+  @override
+  User user = User();
+
+  afterFirstLayout(BuildContext context) async {}
+
   logout() async {
     await Provider.of<UserProvider>(context, listen: false).logout();
     Navigator.of(context).pushAndRemoveUntil(
@@ -23,12 +28,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
         (Route<dynamic> route) => false);
   }
 
-  late TabController tabController;
-
   @override
   Widget build(BuildContext context) {
-    User user = User();
-
     user = Provider.of<UserProvider>(context, listen: true).user;
 
     return SingleChildScrollView(
@@ -78,7 +79,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         border: Border.all(color: grey3),
                       ),
                       child: Text(
-                        'bbolormaa@gmail.com',
+                        user.username.toString(),
                         style: TextStyle(
                           fontSize: 14,
                           color: grey3,
@@ -111,7 +112,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         border: Border.all(color: grey3),
                       ),
                       child: Text(
-                        'GG321564',
+                        user.phone.toString(),
                         style: TextStyle(
                           fontSize: 14,
                           color: grey3,
@@ -144,7 +145,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         border: Border.all(color: grey3),
                       ),
                       child: Text(
-                        'Дамдин',
+                        '${user.lastName}',
                         style: TextStyle(
                           fontSize: 14,
                           color: grey3,
@@ -177,7 +178,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         border: Border.all(color: grey3),
                       ),
                       child: Text(
-                        'Болормаа',
+                        '${user.firstName}',
                         style: TextStyle(
                           fontSize: 14,
                           color: grey3,
@@ -212,24 +213,38 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             border: Border.all(color: grey3),
                           ),
                           child: Text(
-                            '9999-9999',
+                            '${user.phone}',
                             style: TextStyle(
                               fontSize: 14,
                               color: grey3,
                             ),
                           ),
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 5, right: 10),
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            'Баталгаажсан',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.green,
-                            ),
-                          ),
-                        )
+                        // user.isPhoneVerified == null
+                        //     ? Container(
+                        //         margin:
+                        //             const EdgeInsets.only(top: 5, right: 10),
+                        //         alignment: Alignment.centerRight,
+                        //         child: Text(
+                        //           'Баталгаажаагүй',
+                        //           style: TextStyle(
+                        //             fontSize: 12,
+                        //             color: Colors.red,
+                        //           ),
+                        //         ),
+                        //       )
+                        //     : Container(
+                        //         margin:
+                        //             const EdgeInsets.only(top: 5, right: 10),
+                        //         alignment: Alignment.centerRight,
+                        //         child: Text(
+                        //           'Баталгаажсан',
+                        //           style: TextStyle(
+                        //             fontSize: 12,
+                        //             color: Colors.green,
+                        //           ),
+                        //         ),
+                        //       ),
                       ],
                     ),
                     SizedBox(
@@ -260,24 +275,38 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             border: Border.all(color: grey3),
                           ),
                           child: Text(
-                            'Bbolormaa@gmail.com',
+                            '${user.email}',
                             style: TextStyle(
                               fontSize: 14,
                               color: grey3,
                             ),
                           ),
                         ),
-                        Container(
-                          alignment: Alignment.centerRight,
-                          margin: const EdgeInsets.only(top: 5, right: 10),
-                          child: Text(
-                            'Баталгаажсан',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.green,
-                            ),
-                          ),
-                        )
+                        // user.isEmailVerified == true
+                        //     ? Container(
+                        //         alignment: Alignment.centerRight,
+                        //         margin:
+                        //             const EdgeInsets.only(top: 5, right: 10),
+                        //         child: Text(
+                        //           'Баталгаажсан',
+                        //           style: TextStyle(
+                        //             fontSize: 12,
+                        //             color: Colors.green,
+                        //           ),
+                        //         ),
+                        //       )
+                        //     : Container(
+                        //         alignment: Alignment.centerRight,
+                        //         margin:
+                        //             const EdgeInsets.only(top: 5, right: 10),
+                        //         child: Text(
+                        //           'Баталгаажаагүй',
+                        //           style: TextStyle(
+                        //             fontSize: 12,
+                        //             color: Colors.red,
+                        //           ),
+                        //         ),
+                        //       )
                       ],
                     ),
                     SizedBox(
@@ -338,13 +367,13 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(color: grey3),
                       ),
-                      child: Text(
-                        'У И 970111111',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: grey3,
-                        ),
-                      ),
+                      // child: Text(
+                      //   '${user.registerStatus}',
+                      //   style: TextStyle(
+                      //     fontSize: 14,
+                      //     color: grey3,
+                      //   ),
+                      // ),
                     ),
                     SizedBox(
                       height: 10,

@@ -15,6 +15,7 @@ class UserProvider extends ChangeNotifier {
 
   login(User data) async {
     user = await AuthApi().login(data);
+    setAccessToken(user.accessToken);
     notifyListeners();
   }
 
@@ -36,6 +37,6 @@ class UserProvider extends ChangeNotifier {
 
   clearAccessToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('ACESS_TOKEN');
+    await prefs.remove('ACCESS_TOKEN');
   }
 }
