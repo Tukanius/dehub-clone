@@ -1,13 +1,16 @@
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:dehub/models/invoice.dart';
 
 class InvoiceCard extends StatefulWidget {
   static const routeName = '/invoicecard';
   final Function()? onClick;
+  final Invoice? data;
   const InvoiceCard({
     Key? key,
     this.onClick,
+    this.data,
   }) : super(key: key);
 
   @override
@@ -15,6 +18,88 @@ class InvoiceCard extends StatefulWidget {
 }
 
 class _InvoiceCardState extends State<InvoiceCard> {
+  invoiceStatus() {
+    switch (widget.data!.invoiceStatus) {
+      case "CONFIRMED":
+        return "Баталгаажсан";
+      case "DRAFT":
+        return "Түр Төлөв";
+      case "SENT":
+        return "Илгээсэн";
+      case "REJECTED":
+        return "Татгалзсан";
+      case "RETURNED":
+        return "Буцаасан";
+      case "CLOSED":
+        return "Хаасан";
+      default:
+    }
+  }
+
+  paymentStatus() {
+    switch (widget.data!.paymentStatus) {
+      case "PENDING":
+        return "Хүлээгдэж буй";
+      case "DIVIDED":
+        return "Хуваасан";
+      case "OVER_DUE":
+        return "Хугацаа хэтэрсэн";
+      case "CLOSED":
+        return "Хаасан";
+      case "PENDING":
+        return "Хүлээгдэж буй";
+      default:
+    }
+  }
+
+  fillColor() {
+    switch (widget.data!.paymentStatus) {
+      case "PENDING":
+        return brownButtonColor.withOpacity(0.3);
+      case "DIVIDED":
+        return lightYellow.withOpacity(0.5);
+      case "OVER_DUE":
+        return lightRed.withOpacity(0.5);
+      case "CLOSED":
+        return green.withOpacity(0.4);
+      case "PENDING":
+        return buttonColor.withOpacity(0.3);
+      default:
+    }
+  }
+
+  borderColor() {
+    switch (widget.data!.paymentStatus) {
+      case "PENDING":
+        return grey3.withOpacity(0.4);
+      case "DIVIDED":
+        return lightYellow;
+      case "OVER_DUE":
+        return lightRed;
+      case "CLOSED":
+        return grey3.withOpacity(0.4);
+      case "PENDING":
+        return grey3.withOpacity(0.4);
+      default:
+    }
+  }
+
+  textColor() {
+    switch (widget.data!.paymentStatus) {
+      case "PENDING":
+        return brownButtonColor;
+      case "DIVIDED":
+        return grey3;
+      case "OVER_DUE":
+        return Colors.red;
+      case "CLOSED":
+        return green;
+      case "PENDING":
+        return buttonColor;
+      default:
+    }
+  }
+
   bool value = false;
   @override
   Widget build(BuildContext context) {
@@ -25,7 +110,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
           Container(
             margin: const EdgeInsets.only(left: 15, top: 10),
             child: Text(
-              '2021-12-01',
+              "${widget.data!.getPostDate()}",
               style: TextStyle(
                 color: Color(0xff636E72),
                 fontWeight: FontWeight.w600,
@@ -74,7 +159,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                   height: 13,
                                 ),
                                 Text(
-                                  'Buyer Business Name',
+                                  '${widget.data!.receiverBusiness!.partner!.businessNameEng}',
                                   style: TextStyle(
                                     color: black,
                                     fontWeight: FontWeight.w500,
@@ -84,7 +169,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                   height: 10,
                                 ),
                                 Text(
-                                  '2021-12-01 15:05 PM',
+                                  '${widget.data!.getsentDate()}',
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Color(0xff555555),
@@ -94,7 +179,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                   height: 7,
                                 ),
                                 Text(
-                                  'Баталгаажсан',
+                                  invoiceStatus(),
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: brownButtonColor,
@@ -103,12 +188,23 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                Text(
-                                  'Төлөх: 2021-12-02',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xff555555),
-                                  ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Төлөх: ',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff555555),
+                                      ),
+                                    ),
+                                    Text(
+                                      '${widget.data!.getPaymentDate()}',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff555555),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 SizedBox(
                                   height: 5,
@@ -123,7 +219,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                       width: 5,
                                     ),
                                     Text(
-                                      'INV 23897',
+                                      '${widget.data!.refCode}',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         color: black,
@@ -148,7 +244,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                               height: 10,
                             ),
                             Text(
-                              '417,450.00 ₮',
+                              '${widget.data!.confirmedAmount}',
                               style: TextStyle(
                                 color: black,
                                 fontWeight: FontWeight.w500,
@@ -161,29 +257,40 @@ class _InvoiceCardState extends State<InvoiceCard> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 5, vertical: 3),
                               decoration: BoxDecoration(
-                                color: brownButtonColor.withOpacity(0.3),
+                                color: fillColor(),
                                 borderRadius: BorderRadius.circular(5),
                                 border: Border.all(
-                                  color: grey3.withOpacity(0.4),
+                                  color: borderColor(),
                                 ),
                               ),
                               child: Text(
-                                'Төлөлт хүлээж буй',
+                                paymentStatus(),
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: brownButtonColor,
+                                  color: textColor(),
                                 ),
                               ),
                             ),
                             SizedBox(
                               height: 5,
                             ),
-                            Text(
-                              'Төлбөл зохих: 417,450.00 ₮',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Color(0xff555555),
-                              ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Төлбөл зохих: ',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Color(0xff555555),
+                                  ),
+                                ),
+                                Text(
+                                  '${widget.data!.amountToPay}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Color(0xff555555),
+                                  ),
+                                ),
+                              ],
                             ),
                             SizedBox(
                               height: 5,
@@ -197,13 +304,21 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                     color: Color(0xff555555),
                                   ),
                                 ),
-                                Text(
-                                  'Хэвийн',
-                                  style: TextStyle(
-                                    color: Color(0xff33A853),
-                                    fontSize: 12,
-                                  ),
-                                )
+                                widget.data!.overDueStatus == "NORMAL"
+                                    ? Text(
+                                        'Хэвийн',
+                                        style: TextStyle(
+                                          color: green,
+                                          fontSize: 12,
+                                        ),
+                                      )
+                                    : Text(
+                                        'Хугацаа хэтэрсэн',
+                                        style: TextStyle(
+                                          color: buttonColor,
+                                          fontSize: 12,
+                                        ),
+                                      )
                               ],
                             ),
                             SizedBox(
@@ -222,7 +337,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                   width: 5,
                                 ),
                                 Text(
-                                  '417,450.00',
+                                  widget.data!.totalAmount.toString(),
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: grey2,

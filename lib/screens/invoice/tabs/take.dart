@@ -1,23 +1,48 @@
+import 'dart:async';
+
+import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/invoice_card/invoice_card.dart';
+import 'package:dehub/components/invoice_empty/invoice_empty.dart';
 import 'package:dehub/components/search_button/search_button.dart';
+import 'package:dehub/models/result.dart';
+import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
 import 'package:dehub/screens/invoice/product_return/product_return.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:after_layout/after_layout.dart';
+import 'package:lottie/lottie.dart';
 
 class TakePage extends StatefulWidget {
-  const TakePage({
-    Key? key,
-  }) : super(key: key);
+  const TakePage({Key? key}) : super(key: key);
 
   @override
   State<TakePage> createState() => _TakePageState();
 }
 
 class _TakePageState extends State<TakePage>
-    with SingleTickerProviderStateMixin {
+    with AfterLayoutMixin, SingleTickerProviderStateMixin {
   int? selectedIndex;
+  bool isLoading = true;
   late TabController tabController = TabController(length: 5, vsync: this);
   int currentIndex = 0;
+  Result invoice = Result(rows: [], count: 0);
+
+  @override
+  afterFirstLayout(BuildContext context) async {
+    await list(1, 10);
+  }
+
+  list(int page, int limit) async {
+    Filter filter = Filter();
+    Offset offset = Offset(limit: limit, page: page);
+    Result res = await InvoiceApi()
+        .list(ResultArguments(filter: filter, offset: offset));
+    setState(() {
+      invoice = res;
+      isLoading = false;
+    });
+  }
 
   void onItemTapped() {
     setState(() {
@@ -189,13 +214,34 @@ class _TakePageState extends State<TakePage>
             child: SearchButton(
               color: brownButtonColor,
             ),
-          )
+          ),
         ];
       },
-      body: InvoiceCard(
-        onClick: () {
-          Navigator.of(context).pushNamed(ProductReturnPage.routeName);
-        },
+      body: SingleChildScrollView(
+        child: isLoading == true
+            ? Center(
+                child: CircularProgressIndicator(
+                  color: brownButtonColor,
+                ),
+              )
+            : invoice.rows!.length != 0
+                ? Column(
+                    children: invoice.rows!
+                        .map(
+                          (item) => InvoiceCard(
+                            data: item,
+                            onClick: () {
+                              Navigator.of(context).pushNamed(
+                                ProductReturnPage.routeName,
+                                arguments:
+                                    ProductReturnPageArguments(id: item.id),
+                              );
+                            },
+                          ),
+                        )
+                        .toList(),
+                  )
+                : InvoiceEmpty(),
       ),
     );
   }

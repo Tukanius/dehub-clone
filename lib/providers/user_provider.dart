@@ -7,9 +7,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserProvider extends ChangeNotifier {
   final DefaultCacheManager cacheManager = DefaultCacheManager();
   User user = User();
+  User partnerUser = User();
 
   me(bool handler) async {
     user = await AuthApi().me(handler);
+    notifyListeners();
+  }
+
+  partnerMe(bool handler) async {
+    partnerUser = await AuthApi().partnerMe(handler);
     notifyListeners();
   }
 
@@ -24,19 +30,20 @@ class UserProvider extends ChangeNotifier {
     if (token != null) prefs.setString("ACCESS_TOKEN", token);
   }
 
+  clearAccessToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove("ACCESS_TOKEN");
+  }
+
   static Future<String?> getAccessToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("ACCESS_TOKEN");
+
     return token;
   }
 
   logout() async {
     user = User();
     clearAccessToken();
-  }
-
-  clearAccessToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('ACCESS_TOKEN');
   }
 }

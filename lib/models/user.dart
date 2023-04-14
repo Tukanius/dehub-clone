@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:dehub/models/business.dart';
+import 'package:dehub/models/partner.dart';
 part '../parts/user.dart';
 
 class User {
-  final GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
-
+  User? user;
   String? id;
   String? createdAt;
   String? updatedAt;
@@ -15,7 +14,7 @@ class User {
   String? email;
   String? username;
   bool? isEmailVerified;
-  bool? emailVerifiedDate;
+  String? emailVerifiedDate;
   String? phone;
   bool? isPhoneVerified;
   String? phoneVerifiedDate;
@@ -89,9 +88,13 @@ class User {
   String? profileInfo;
   bool? isConfirmed;
   bool? isAnchorBusiness;
+  Partner? partner;
+  List<BusinessStaffs>? businessStaffs;
 
   User({
     this.userId,
+    this.user,
+    this.businessStaffs,
     this.accessToken,
     this.refreshToken,
     this.tokenType,
@@ -174,6 +177,7 @@ class User {
     this.profileInfo,
     this.isConfirmed,
     this.isAnchorBusiness,
+    this.partner,
   });
 
   static $fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 part '../parts/partner.dart';
 
 class Partner {
-  GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   String? id;
   String? createdAt;
   String? updatedAt;
@@ -41,8 +38,8 @@ class Partner {
   String? khashaaDavkhar;
   String? khaalgaDugaar;
   String? businessAddress;
-  String? locationLat;
-  String? locationLng;
+  double? locationLat;
+  double? locationLng;
   bool? isAnchor;
   bool? isBuyer;
   bool? isSupplier;

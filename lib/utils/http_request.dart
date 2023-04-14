@@ -12,6 +12,8 @@ import '../main.dart';
 class HttpRequest {
   // static const host = 'https://dev-de-dehub.zto.mn';
   static const host = 'http://192.168.1.220:30550';
+  static const partnerHost = 'http://192.168.1.220:30556';
+  static const invoiceHost = 'http://192.168.1.220:30553';
 
   // static const s3host = 'https://dev-de-dehub.zto.mn/s3';
   static const s3host = 'http://192.168.1.220:30550/s3';
@@ -21,10 +23,18 @@ class HttpRequest {
 
   Dio dio = Dio();
 
-  Future<dynamic> request(String api, String method, dynamic data,
+  Future<dynamic> request(String api, String method, dynamic data, String? type,
       {bool handler = true, bool approve = false}) async {
     Response? response;
-    final String uri = '$host$version$api';
+    final String uri;
+
+    if (type == "PARTNER") {
+      uri = '$partnerHost$version$api';
+    } else if (type == "INVOICE") {
+      uri = '$invoiceHost$version$api';
+    } else {
+      uri = '$host$version$api';
+    }
 
     debugPrint(uri);
 
@@ -114,22 +124,24 @@ class HttpRequest {
     }
   }
 
-  Future<dynamic> get(String url, {dynamic data, bool handler = true}) async {
+  Future<dynamic> get(String url, String type,
+      {dynamic data, bool handler = true}) async {
     try {
-      return await request(url, 'GET', data, handler: handler);
+      return await request(url, 'GET', data, type, handler: handler);
     } catch (e) {
       debugPrint("GET =>" + e.toString());
       rethrow;
     }
   }
 
-  Future<dynamic> post(String url,
+  Future<dynamic> post(String url, String type,
       {dynamic data, bool handler = true, bool approve = false}) async {
     try {
       return await request(
         url,
         'POST',
         data,
+        type,
         handler: handler,
         approve: approve,
       );
@@ -139,16 +151,18 @@ class HttpRequest {
     }
   }
 
-  Future<dynamic> put(String url, {dynamic data, bool handler = true}) async {
+  Future<dynamic> put(String url, String type,
+      {dynamic data, bool handler = true}) async {
     try {
-      return await request(url, 'PUT', data, handler: handler);
+      return await request(url, 'PUT', data, type, handler: handler);
     } catch (e) {
       debugPrint(e.toString());
       rethrow;
     }
   }
 
-  Future<dynamic> del(String url, {dynamic data, bool handler = true}) async {
-    return await request(url, 'DELETE', data, handler: handler);
+  Future<dynamic> del(String url, String type,
+      {dynamic data, bool handler = true}) async {
+    return await request(url, 'DELETE', data, type, handler: handler);
   }
 }

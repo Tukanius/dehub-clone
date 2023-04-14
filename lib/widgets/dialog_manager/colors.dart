@@ -16,7 +16,7 @@ const Color secondaryRed = Color(0xffFF314A);
 const Color grey = Color(0XFFC9C9C9);
 const Color grey2 = Color(0xff44566C);
 const Color grey3 = Color(0XFF636E72);
-const Color green = Color(0xff24E12F);
+const Color green = Color(0xff33A853);
 const Color black = Colors.black;
 const Color accentColor = Color(0xff5C78FF);
 const Color brownButtonColor = Color(0xff907532);
@@ -30,6 +30,9 @@ const Color moodyblue = Color(0xffA9A9E2);
 const Color textColor = Color(0xffABA5D1);
 const Color buttonColor = Color(0xff261EF0);
 Color fillColor = Color(0xff44566C).withOpacity(0.3);
+const Color lightYellow = Color(0xffF4BE5E);
+const Color lightRed = Color(0xffFF808B);
+
 const gradient2 = LinearGradient(colors: [
   Color(0xff5D7128),
   Color.fromARGB(255, 35, 82, 20),

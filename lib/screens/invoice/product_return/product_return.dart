@@ -1,20 +1,43 @@
+import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
-import 'package:dehub/screens/invoice/new_invoice/add_product/add_product.dart';
+import 'package:dehub/models/invoice.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/harah.dart';
 import 'package:dehub/screens/invoice/payment_page/payment_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+class ProductReturnPageArguments {
+  String id;
+  ProductReturnPageArguments({
+    required this.id,
+  });
+}
+
 class ProductReturnPage extends StatefulWidget {
+  final String id;
   static const routeName = '/productreturnpage';
-  const ProductReturnPage({super.key});
+  const ProductReturnPage({super.key, required this.id});
 
   @override
   State<ProductReturnPage> createState() => _ProductReturnPageState();
 }
 
-class _ProductReturnPageState extends State<ProductReturnPage> {
+class _ProductReturnPageState extends State<ProductReturnPage>
+    with AfterLayoutMixin {
+  Invoice invoice = Invoice();
+
+  @override
+  afterFirstLayout(BuildContext context) async {
+    invoice = await InvoiceApi().getInvoice(widget.id);
+    print("===================INVOICE=====================");
+    print(widget.id.toString());
+    print(invoice.toJson());
+
+    print("===================INVOICE=====================");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

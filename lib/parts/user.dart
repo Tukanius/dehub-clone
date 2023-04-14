@@ -2,6 +2,7 @@ part of '../models/user.dart';
 
 User _$UserFromJson(Map<String, dynamic> json) {
   String? id;
+  User? user;
   String? createdAt;
   String? updatedAt;
   String? deletedAt;
@@ -11,7 +12,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
   String? email;
   String? username;
   bool? isEmailVerified;
-  bool? emailVerifiedDate;
+  String? emailVerifiedDate;
   String? phone;
   bool? isPhoneVerified;
   String? phoneVerifiedDate;
@@ -85,10 +86,22 @@ User _$UserFromJson(Map<String, dynamic> json) {
   String? profileInfo;
   bool? isConfirmed;
   bool? isAnchorBusiness;
+  Partner? partner;
+  List<BusinessStaffs>? businessStaffs;
 
   if (json['code'] != null) code = json['code'];
   if (json['phone'] != null) phone = json['phone'];
-
+  if (json['partner'] != null) {
+    partner = Partner.fromJson(json['partner'] as Map<String, dynamic>);
+  }
+  if (json['businessStaffs'] != null) {
+    businessStaffs = (json['businessStaffs'] as List)
+        .map((e) => BusinessStaffs.fromJson(e))
+        .toList();
+  }
+  if (json['user'] != null) {
+    user = User.fromJson(json['user'] as Map<String, dynamic>);
+  }
   if (json['password'] != null) password = json['password'];
   if (json['regUserId'] != null) regUserId = json['regUserId'];
   if (json['businessId'] != null) businessId = json['businessId'];
@@ -145,6 +158,11 @@ User _$UserFromJson(Map<String, dynamic> json) {
   if (json['isConfirmed'] != null) isConfirmed = json['isConfirmed'];
   if (json['isAnchorBusiness'] != null)
     isAnchorBusiness = json['isAnchorBusiness'];
+  if (json['id'] != null) id = json['id'];
+  if (json['emailVerifiedDate'] != null)
+    emailVerifiedDate = json['emailVerifiedDate'];
+  if (json['isPhoneVerified'] != null)
+    isPhoneVerified = json['isPhoneVerified'];
 
   if (json['createdAt'] != null) createdAt = json['createdAt'];
   if (json['updatedAt'] != null) updatedAt = json['updatedAt'];
@@ -196,6 +214,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
   return User(
     id: id,
     createdAt: createdAt,
+    user: user,
     updatedAt: updatedAt,
     deletedAt: deletedAt,
     type: type,
@@ -203,6 +222,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
     isActive: isActive,
     email: email,
     username: username,
+    businessStaffs: businessStaffs,
     isEmailVerified: isEmailVerified,
     emailVerifiedDate: emailVerifiedDate,
     phone: phone,
@@ -222,6 +242,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
     registerStatus: registerStatus,
     userStatusDate: userStatusDate,
     partnerId: partnerId,
+    partner: partner,
     verifyExpiryDate: verifyExpiryDate,
     hasPin: hasPin,
     currentBusinessId: currentBusinessId,
@@ -283,6 +304,10 @@ User _$UserFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$UserToJson(User instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.roleDisableDate != null)
+    json["roleDisableDate"] = instance.roleDisableDate;
+  if (instance.emailVerifiedDate != null)
+    json["emailVerifiedDate"] = instance.emailVerifiedDate;
   if (instance.code != null) json['code'] = instance.code;
   if (instance.password != null) json['password'] = instance.password;
   if (instance.regUserId != null) json['regUserId'] = instance.regUserId;
@@ -328,6 +353,8 @@ Map<String, dynamic> _$UserToJson(User instance) {
   if (instance.businessStatus != null)
     json['businessStatus'] = instance.businessStatus;
   if (instance.isDefault != null) json['isDefault'] = instance.isDefault;
+  if (instance.businessStaffs != null)
+    json['businessStaffs'] = instance.businessStaffs;
   if (instance.isVatPayer != null) json['isVatPayer'] = instance.isVatPayer;
   if (instance.partnerEmail != null)
     json['partnerEmail'] = instance.partnerEmail;
@@ -395,6 +422,7 @@ Map<String, dynamic> _$UserToJson(User instance) {
     json['identityCardBack'] = instance.identityCardBack;
   if (instance.isSysUser != null) json['isSysUser'] = instance.isSysUser;
   if (instance.isAppUser != null) json['isAppUser'] = instance.isAppUser;
+  if (instance.partner != null) json['partner'] = instance.partner;
   if (instance.userId != null) json['userId'] = instance.userId;
   if (instance.tokenType != null) json['tokenType'] = instance.tokenType;
   if (instance.accessToken != null) json['accessToken'] = instance.accessToken;
@@ -402,6 +430,7 @@ Map<String, dynamic> _$UserToJson(User instance) {
     json['refreshToken'] = instance.refreshToken;
   if (instance.sessionState != null)
     json['sessionState'] = instance.sessionState;
+  if (instance.user != null) json['user'] = instance.user;
 
   return json;
 }

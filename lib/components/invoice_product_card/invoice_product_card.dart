@@ -1,6 +1,10 @@
+import 'package:dehub/api/invoice_api.dart';
+import 'package:dehub/models/invoice.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:dehub/models/invoice.dart';
 
 class InvoiceProductCard extends StatefulWidget {
   final Color? color;
@@ -150,24 +154,32 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                       height: 5,
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 7, vertical: 4),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Color(0xff636E72).withOpacity(0.3),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 7, vertical: 4),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xff636E72).withOpacity(0.3),
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                          color: Color(0xffEBFAFA),
                         ),
-                        borderRadius: BorderRadius.circular(5),
-                        color: Color(0xffEBFAFA),
-                      ),
-                      child: Text(
-                        'дүн',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: grey2,
+                        child: Text(
+                          'дүн',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: grey2,
+                          ),
+                        )
+                        // : Text(
+                        //     'хувиар',
+                        //     style: TextStyle(
+                        //       fontSize: 12,
+                        //       fontWeight: FontWeight.w500,
+                        //       color: grey2,
+                        //     ),
+                        //   ),
                         ),
-                      ),
-                    ),
                   ],
                 ),
                 SizedBox(
@@ -197,6 +209,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 10),
                   padding: const EdgeInsets.only(right: 5, top: 8, bottom: 11),
+                  width: 80,
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: Color(0xffD9DCDE),
@@ -205,6 +218,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                   child: Text(
                     '${_count}',
                     style: TextStyle(color: grey3, fontSize: 20),
+                    textAlign: TextAlign.end,
                   ),
                 ),
                 InkWell(

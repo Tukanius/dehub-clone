@@ -1,5 +1,8 @@
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Page3 extends StatefulWidget {
   const Page3({super.key});
@@ -9,8 +12,12 @@ class Page3 extends StatefulWidget {
 }
 
 class _Page3State extends State<Page3> {
+  User partnerUser = User();
+
   @override
   Widget build(BuildContext context) {
+    partnerUser = Provider.of<UserProvider>(context, listen: false).partnerUser;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -71,6 +78,7 @@ class _Page3State extends State<Page3> {
               style: TextStyle(
                 fontSize: 10,
                 color: Color(0xff636E72),
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
@@ -102,7 +110,7 @@ class _Page3State extends State<Page3> {
               border: Border.all(color: grey3),
             ),
             child: Text(
-              'Улаанбаатар',
+              '${partnerUser.partner!.province!.name}',
               style: TextStyle(
                 fontSize: 14,
                 color: grey3,
@@ -137,7 +145,7 @@ class _Page3State extends State<Page3> {
               border: Border.all(color: grey3),
             ),
             child: Text(
-              'Сонгино хайрхан',
+              '${partnerUser.partner!.district!.name}',
               style: TextStyle(
                 fontSize: 14,
                 color: grey3,
@@ -172,7 +180,7 @@ class _Page3State extends State<Page3> {
               border: Border.all(color: grey3),
             ),
             child: Text(
-              '17-р хороо',
+              '${partnerUser.partner!.khoroo!.name}',
               style: TextStyle(
                 fontSize: 14,
                 color: grey3,
@@ -207,7 +215,7 @@ class _Page3State extends State<Page3> {
               border: Border.all(color: grey3),
             ),
             child: Text(
-              'Цолмон хороолол',
+              '${partnerUser.partner!.khoroolol}',
               style: TextStyle(
                 fontSize: 14,
                 color: grey3,
@@ -242,7 +250,7 @@ class _Page3State extends State<Page3> {
               border: Border.all(color: grey3),
             ),
             child: Text(
-              'Баялаг плаза',
+              '${partnerUser.partner!.khotkhonBair}',
               style: TextStyle(
                 fontSize: 14,
                 color: grey3,
@@ -277,7 +285,7 @@ class _Page3State extends State<Page3> {
               border: Border.all(color: grey3),
             ),
             child: Text(
-              '3 давхар, 312 тоот',
+              '${partnerUser.partner!.khaalgaDugaar}',
               style: TextStyle(
                 fontSize: 14,
                 color: grey3,

@@ -33,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
         User save = User.fromJson(fbKey.currentState!.value);
 
         await Provider.of<UserProvider>(context, listen: false).login(save);
+        await Provider.of<UserProvider>(context, listen: false).me(true);
         Navigator.of(context).pushNamed(SplashPage.routeName);
       } catch (e) {
         print('============ERROR================');

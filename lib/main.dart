@@ -1,6 +1,6 @@
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/auth/login_page.dart';
-import 'package:dehub/screens/invoice/invoice.dart';
+import 'package:dehub/screens/invoice/invoice_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product_tabs/bagtsaar.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product_tabs/shirhegeer.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose.dart';
@@ -137,9 +137,14 @@ class MyApp extends StatelessWidget {
                       return SendPage();
                     });
                   case ProductReturnPage.routeName:
+                    ProductReturnPageArguments arguments =
+                        settings.arguments as ProductReturnPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return ProductReturnPage();
+                      return ProductReturnPage(
+                        id: arguments.id,
+                      );
                     });
+
                   case PaymentApprovalPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return PaymentApprovalPage();

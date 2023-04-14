@@ -29,12 +29,11 @@ class _Page2State extends State<Page2> {
   //   }
   // }
 
-  User user = User();
-  Partner partner = Partner();
+  User partnerUser = User();
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserProvider>(context, listen: false).user;
+    partnerUser = Provider.of<UserProvider>(context, listen: false).partnerUser;
 
     return SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),
@@ -44,18 +43,8 @@ class _Page2State extends State<Page2> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Container(
-                  margin: const EdgeInsets.only(left: 30, top: 40),
-                  alignment: Alignment.centerLeft,
-                  child: CircularPercentIndicator(
-                    radius: 20,
-                    percent: 0.3,
-                    progressColor: buttonColor,
-                    center: Text('30%'),
-                  ),
-                ),
                 Column(
                   children: [
                     Container(
@@ -143,11 +132,11 @@ class _Page2State extends State<Page2> {
               width: 56,
               height: 56,
               decoration: BoxDecoration(
-                color: Colors.grey,
                 borderRadius: BorderRadius.circular(5),
-                // image: DecorationImage(
-                //   image: NetworkImage("${user.logo}"),
-                // ),
+                image: DecorationImage(
+                  image: NetworkImage("${partnerUser.partner!.logo}"),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             SizedBox(
@@ -180,7 +169,7 @@ class _Page2State extends State<Page2> {
                 border: Border.all(color: grey3),
               ),
               child: Text(
-                'Баялаг хүнс дэлгүүр',
+                '${partnerUser.partner!.businessName}',
                 style: TextStyle(
                   fontSize: 14,
                   color: grey3,
@@ -217,7 +206,7 @@ class _Page2State extends State<Page2> {
                 border: Border.all(color: grey3),
               ),
               child: Text(
-                'www.baylag.mn',
+                '${partnerUser.partner!.web}',
                 style: TextStyle(
                   fontSize: 14,
                   color: grey3,
@@ -254,7 +243,7 @@ class _Page2State extends State<Page2> {
                 border: Border.all(color: grey3),
               ),
               child: Text(
-                'info@baylag.mn',
+                '${partnerUser.partner!.email}',
                 style: TextStyle(
                   fontSize: 14,
                   color: grey3,
@@ -291,7 +280,7 @@ class _Page2State extends State<Page2> {
                 border: Border.all(color: grey3),
               ),
               child: Text(
-                '9999-9999',
+                '${partnerUser.partner!.phone}',
                 style: TextStyle(
                   fontSize: 14,
                   color: grey3,
@@ -328,7 +317,7 @@ class _Page2State extends State<Page2> {
                 border: Border.all(color: grey3),
               ),
               child: Text(
-                '@baylag.mn',
+                '${partnerUser.partner!.fbLink}',
                 style: TextStyle(
                   fontSize: 14,
                   color: grey3,

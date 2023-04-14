@@ -29,14 +29,11 @@ class _Page1State extends State<Page1> {
     });
   }
 
-  User user = User();
+  User partnerUser = User();
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserProvider>(context, listen: true).user;
-    print("=====================USER=======================");
-    // print(user.partner);
-    print("=====================USER=======================");
+    partnerUser = Provider.of<UserProvider>(context, listen: false).partnerUser;
 
     return SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),
@@ -65,7 +62,7 @@ class _Page1State extends State<Page1> {
                     Container(
                       margin: const EdgeInsets.only(right: 6, top: 10),
                       child: Text(
-                        'Bolor Delguur',
+                        '${partnerUser.partner!.businessNameEng}',
                         style: TextStyle(
                           fontSize: 16,
                           color: grey3,
@@ -120,7 +117,7 @@ class _Page1State extends State<Page1> {
                 border: Border.all(color: grey3),
               ),
               child: Text(
-                'Авто олгосон код',
+                '${partnerUser.partner!.refCode}',
                 style: TextStyle(
                   fontSize: 14,
                   color: grey3,
@@ -156,7 +153,7 @@ class _Page1State extends State<Page1> {
                 border: Border.all(color: grey3),
               ),
               child: Text(
-                'Гангамөрөн',
+                '${partnerUser.partner!.businessName}',
                 style: TextStyle(
                   fontSize: 14,
                   color: grey3,
@@ -192,7 +189,7 @@ class _Page1State extends State<Page1> {
                 border: Border.all(color: grey3),
               ),
               child: Text(
-                'Gangamurun',
+                '${partnerUser.partner!.businessNameEng}',
                 style: TextStyle(
                   fontSize: 14,
                   color: grey3,
@@ -228,7 +225,7 @@ class _Page1State extends State<Page1> {
                 border: Border.all(color: grey3),
               ),
               child: Text(
-                'Хязгаарлагдмал хариуцлагатай компани',
+                '${partnerUser.partner!.legalEntityType}',
                 style: TextStyle(
                   fontSize: 14,
                   color: grey3,
@@ -264,7 +261,7 @@ class _Page1State extends State<Page1> {
                 border: Border.all(color: grey3),
               ),
               child: Text(
-                'Татвар төлөгчийн регистрийн дугаар',
+                '${partnerUser.partner!.regNumber}',
                 style: TextStyle(
                   fontSize: 14,
                   color: grey3,
@@ -282,29 +279,59 @@ class _Page1State extends State<Page1> {
                 color: Color(0xff263238),
               ),
             ),
-            ButtonBar(
-              alignment: MainAxisAlignment.start,
-              children: [
-                Radio(
-                  value: 1,
-                  activeColor: buttonColor,
-                  groupValue: selectedRadio,
-                  onChanged: (val) {
-                    setselectedRadio(val!);
-                  },
-                ),
-                Text('Тийм'),
-                Radio(
-                  value: 2,
-                  activeColor: buttonColor,
-                  groupValue: selectedRadio,
-                  onChanged: (val) {
-                    setselectedRadio(val!);
-                  },
-                ),
-                Text('Үгүй'),
-              ],
+            SizedBox(
+              height: 10,
             ),
+            partnerUser.partner!.isVatPayer == false
+                ? Row(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: grey3,
+                          borderRadius: BorderRadius.circular(3),
+                          border: Border.all(
+                            width: 1.5,
+                            color: grey3,
+                          ),
+                        ),
+                        child: Icon(
+                          Icons.close_outlined,
+                          color: white,
+                          size: 16,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Үгүй',
+                        style: TextStyle(
+                          color: grey3,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )
+                    ],
+                  )
+                : Row(
+                    children: [
+                      Icon(
+                        Icons.check_box,
+                        color: grey3,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Тийм',
+                        style: TextStyle(
+                          color: grey2,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )
+                    ],
+                  ),
             SizedBox(
               height: 30,
             ),

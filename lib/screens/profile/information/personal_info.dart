@@ -16,7 +16,7 @@ class PersonalInfo extends StatefulWidget {
 }
 
 class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
-  @override
+  User partnerUser = User();
   User user = User();
 
   afterFirstLayout(BuildContext context) async {}
@@ -30,7 +30,11 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    partnerUser = Provider.of<UserProvider>(context, listen: true).partnerUser;
     user = Provider.of<UserProvider>(context, listen: true).user;
+    print('=================PARTNERUSER===============');
+    print(partnerUser.toJson());
+    print('=================PARTNERUSER===============');
 
     return SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),
@@ -79,7 +83,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                         border: Border.all(color: grey3),
                       ),
                       child: Text(
-                        user.username.toString(),
+                        partnerUser.user!.username.toString(),
                         style: TextStyle(
                           fontSize: 14,
                           color: grey3,
@@ -112,7 +116,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                         border: Border.all(color: grey3),
                       ),
                       child: Text(
-                        user.phone.toString(),
+                        partnerUser.user!.businessId.toString(),
                         style: TextStyle(
                           fontSize: 14,
                           color: grey3,
@@ -145,7 +149,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                         border: Border.all(color: grey3),
                       ),
                       child: Text(
-                        '${user.lastName}',
+                        '${partnerUser.user!.lastName}',
                         style: TextStyle(
                           fontSize: 14,
                           color: grey3,
@@ -178,7 +182,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                         border: Border.all(color: grey3),
                       ),
                       child: Text(
-                        '${user.firstName}',
+                        '${partnerUser.user!.firstName}',
                         style: TextStyle(
                           fontSize: 14,
                           color: grey3,
@@ -213,38 +217,38 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                             border: Border.all(color: grey3),
                           ),
                           child: Text(
-                            '${user.phone}',
+                            '${partnerUser.user!.phone}',
                             style: TextStyle(
                               fontSize: 14,
                               color: grey3,
                             ),
                           ),
                         ),
-                        // user.isPhoneVerified == null
-                        //     ? Container(
-                        //         margin:
-                        //             const EdgeInsets.only(top: 5, right: 10),
-                        //         alignment: Alignment.centerRight,
-                        //         child: Text(
-                        //           'Баталгаажаагүй',
-                        //           style: TextStyle(
-                        //             fontSize: 12,
-                        //             color: Colors.red,
-                        //           ),
-                        //         ),
-                        //       )
-                        //     : Container(
-                        //         margin:
-                        //             const EdgeInsets.only(top: 5, right: 10),
-                        //         alignment: Alignment.centerRight,
-                        //         child: Text(
-                        //           'Баталгаажсан',
-                        //           style: TextStyle(
-                        //             fontSize: 12,
-                        //             color: Colors.green,
-                        //           ),
-                        //         ),
-                        //       ),
+                        partnerUser.user!.isPhoneVerified == false
+                            ? Container(
+                                margin:
+                                    const EdgeInsets.only(top: 5, right: 10),
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  'Баталгаажаагүй',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                margin:
+                                    const EdgeInsets.only(top: 5, right: 10),
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  'Баталгаажсан',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: green,
+                                  ),
+                                ),
+                              ),
                       ],
                     ),
                     SizedBox(
@@ -275,38 +279,38 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                             border: Border.all(color: grey3),
                           ),
                           child: Text(
-                            '${user.email}',
+                            '${partnerUser.user!.email}',
                             style: TextStyle(
                               fontSize: 14,
                               color: grey3,
                             ),
                           ),
                         ),
-                        // user.isEmailVerified == true
-                        //     ? Container(
-                        //         alignment: Alignment.centerRight,
-                        //         margin:
-                        //             const EdgeInsets.only(top: 5, right: 10),
-                        //         child: Text(
-                        //           'Баталгаажсан',
-                        //           style: TextStyle(
-                        //             fontSize: 12,
-                        //             color: Colors.green,
-                        //           ),
-                        //         ),
-                        //       )
-                        //     : Container(
-                        //         alignment: Alignment.centerRight,
-                        //         margin:
-                        //             const EdgeInsets.only(top: 5, right: 10),
-                        //         child: Text(
-                        //           'Баталгаажаагүй',
-                        //           style: TextStyle(
-                        //             fontSize: 12,
-                        //             color: Colors.red,
-                        //           ),
-                        //         ),
-                        //       )
+                        partnerUser.user!.isEmailVerified == true
+                            ? Container(
+                                alignment: Alignment.centerRight,
+                                margin:
+                                    const EdgeInsets.only(top: 5, right: 10),
+                                child: Text(
+                                  'Баталгаажсан',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: green,
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                alignment: Alignment.centerRight,
+                                margin:
+                                    const EdgeInsets.only(top: 5, right: 10),
+                                child: Text(
+                                  'Баталгаажаагүй',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              )
                       ],
                     ),
                     SizedBox(
@@ -367,13 +371,13 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(color: grey3),
                       ),
-                      // child: Text(
-                      //   '${user.registerStatus}',
-                      //   style: TextStyle(
-                      //     fontSize: 14,
-                      //     color: grey3,
-                      //   ),
-                      // ),
+                      child: Text(
+                        '${partnerUser.user!.registerNo}',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: grey3,
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 10,
@@ -381,31 +385,41 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 1),
-                          height: 20,
-                          width: 120,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                color: Color(0xffADC6FF),
-                              )),
-                          child: Text(
-                            'Баталгаажуулъя',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: buttonColor,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          'Дан систем баталгаажаагүй',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: red,
-                          ),
-                        )
+                        partnerUser.user!.isDanVerified == false
+                            ? Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 1),
+                                height: 20,
+                                width: 120,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(
+                                      color: Color(0xffADC6FF),
+                                    )),
+                                child: Text(
+                                  'Баталгаажуулъя',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: buttonColor,
+                                  ),
+                                ),
+                              )
+                            : SizedBox(),
+                        partnerUser.user!.isDanVerified != false
+                            ? Text(
+                                'Дан систем баталгаажсан',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: green,
+                                ),
+                              )
+                            : Text(
+                                'Дан систем баталгаажаагүй',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: red,
+                                ),
+                              )
                       ],
                     ),
                     SizedBox(

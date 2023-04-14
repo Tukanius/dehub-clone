@@ -1,4 +1,6 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/profile/information/partner_info.dart';
 import 'package:dehub/screens/profile/information/personal_info.dart';
 import 'package:dehub/screens/profile/information/settings_page.dart';
@@ -7,6 +9,7 @@ import 'package:dehub/screens/profile/information/screens/page2.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   static const routeName = '/profilepage';
@@ -43,8 +46,12 @@ class _ProfilePageState extends State<ProfilePage>
     });
   }
 
+  User partnerUser = User();
+
   @override
   Widget build(BuildContext context) {
+    partnerUser = Provider.of<UserProvider>(context, listen: false).partnerUser;
+
     return Scaffold(
       backgroundColor: Color(0xffF5F5F5),
       appBar: AppBar(
@@ -91,11 +98,10 @@ class _ProfilePageState extends State<ProfilePage>
                             children: [
                               Container(
                                 margin: const EdgeInsets.only(top: 35),
-                                height: 80,
-                                width: 80,
-                                child: Image(
-                                  image: AssetImage(
-                                    'images/icon.png',
+                                child: CircleAvatar(
+                                  radius: 40,
+                                  backgroundImage: NetworkImage(
+                                    '${partnerUser.user!.avatar}',
                                   ),
                                 ),
                               ),

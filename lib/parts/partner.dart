@@ -38,8 +38,8 @@ Partner _$PartnerFromJson(Map<String, dynamic> json) {
   String? khashaaDavkhar;
   String? khaalgaDugaar;
   String? businessAddress;
-  String? locationLat;
-  String? locationLng;
+  double? locationLat;
+  double? locationLng;
   bool? isAnchor;
   bool? isBuyer;
   bool? isSupplier;

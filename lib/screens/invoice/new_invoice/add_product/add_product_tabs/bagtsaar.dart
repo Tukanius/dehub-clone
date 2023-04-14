@@ -1,7 +1,7 @@
 import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
+import 'package:dehub/models/invoice.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class Bagtsaar extends StatefulWidget {
   static const routeName = '/bagtsaar';
@@ -17,6 +17,8 @@ class _BagtsaarState extends State<Bagtsaar> {
   int percent = 5;
   int _count = 00;
   String? discount;
+
+  Invoice invoice = Invoice();
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,6 @@
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/auth/login_page.dart';
-import 'package:dehub/screens/home/home_page.dart';
 import 'package:dehub/screens/main/main_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -18,13 +17,15 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage>
     with AfterLayoutMixin<SplashPage> {
+  User user = User();
+
   @override
   afterFirstLayout(BuildContext context) async {
-    await Provider.of<UserProvider>(context, listen: false).me(true);
-    var accessToken = await UserProvider.getAccessToken();
-    if (accessToken != null) {
+    try {
+      await Provider.of<UserProvider>(context, listen: false).me(false);
+      await Provider.of<UserProvider>(context, listen: false).partnerMe(false);
       await Navigator.of(context).pushNamed(MainPage.routeName);
-    } else {
+    } catch (e) {
       await Navigator.of(context).pushNamed(LoginPage.routeName);
     }
   }
@@ -33,10 +34,10 @@ class _SplashPageState extends State<SplashPage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          // child: CircularProgressIndicator(
-          //   color: buttonColor,
-          // ),
-          ),
+        child: CircularProgressIndicator(
+          color: buttonColor,
+        ),
+      ),
     );
   }
 }

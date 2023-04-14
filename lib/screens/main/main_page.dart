@@ -1,6 +1,6 @@
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/screens/home/home_page.dart';
-import 'package:dehub/screens/invoice/invoice.dart';
+import 'package:dehub/screens/invoice/invoice_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
 import 'package:dehub/screens/menu/menu_page.dart';
 import 'package:dehub/screens/profile/profile_page.dart';
