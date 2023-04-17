@@ -64,33 +64,31 @@ class _ProductCardState extends State<ProductCard> {
           SizedBox(
             height: 7,
           ),
-          widget.ratingBar == true
-              ? RatingBar(
-                  itemSize: 12,
-                  initialRating: 3,
-                  direction: Axis.horizontal,
-                  allowHalfRating: true,
-                  itemCount: 5,
-                  ratingWidget: RatingWidget(
-                    full: Icon(
-                      Icons.star,
-                      color: orange,
-                    ),
-                    half: Icon(
-                      Icons.star_half,
-                      color: orange,
-                    ),
-                    empty: Icon(
-                      Icons.star_border,
-                      color: orange,
-                    ),
-                  ),
-                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                  onRatingUpdate: (rating) {
-                    print(rating);
-                  },
-                )
-              : SizedBox(),
+          RatingBar(
+            itemSize: 12,
+            initialRating: 3,
+            direction: Axis.horizontal,
+            allowHalfRating: true,
+            itemCount: 5,
+            ratingWidget: RatingWidget(
+              full: Icon(
+                Icons.star,
+                color: orange,
+              ),
+              half: Icon(
+                Icons.star_half,
+                color: orange,
+              ),
+              empty: Icon(
+                Icons.star_border,
+                color: orange,
+              ),
+            ),
+            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+            onRatingUpdate: (rating) {
+              print(rating);
+            },
+          ),
           SizedBox(
             height: 7,
           ),
@@ -127,9 +125,6 @@ class _ProductCardState extends State<ProductCard> {
                 ),
               ),
             ],
-          ),
-          SizedBox(
-            height: 15,
           ),
         ],
       ),

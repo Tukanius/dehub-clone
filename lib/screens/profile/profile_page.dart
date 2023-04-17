@@ -62,7 +62,9 @@ class _ProfilePageState extends State<ProfilePage>
         actions: [
           tabController.index == 2
               ? Container(
-                  child: AddButton(),
+                  child: AddButton(
+                    onClick: () {},
+                  ),
                 )
               : SizedBox(),
         ],

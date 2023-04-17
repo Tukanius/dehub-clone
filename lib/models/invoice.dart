@@ -1,3 +1,4 @@
+import 'package:dehub/models/general.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_moment/simple_moment.dart';
 part '../parts/invoice.dart';
@@ -71,7 +72,7 @@ class Invoice {
 
   Invoice? senderBusiness;
   Invoice? senderFinUser;
-  Invoice? senderBrach;
+  Invoice? senderBranch;
   String? name;
   String? nameEng;
   String? branchStatus;
@@ -94,7 +95,7 @@ class Invoice {
   String? modifiedUserId;
   String? termRule;
   String? orderConfirmTerm;
-  String? expireDayCount;
+  int? expireDayCount;
   String? month;
   String? paymentDay;
   bool? isMain;
@@ -103,7 +104,7 @@ class Invoice {
   Invoice? receiverFinUser;
   Invoice? receiverBranch;
   Invoice? receiverAcc;
-  Invoice? invoiceLines;
+  List<Invoice>? invoiceLines;
   String? invoiceId;
   String? unitVariantId;
   double? price;
@@ -126,6 +127,7 @@ class Invoice {
   String? convertType;
   double? convertValue;
   List<Invoice>? attachments;
+  General? general = General();
 
   String getPostDate() {
     return Moment.parse(DateFormat("yyyy-MM-dd")
@@ -219,7 +221,7 @@ class Invoice {
     this.remainingDays,
     this.senderBusiness,
     this.senderFinUser,
-    this.senderBrach,
+    this.senderBranch,
     this.name,
     this.nameEng,
     this.branchStatus,
@@ -274,10 +276,13 @@ class Invoice {
     this.convertType,
     this.convertValue,
     this.attachments,
+    this.general,
   });
 
   static $fromJson(Map<String, dynamic> json) => _$InvoiceFromJson(json);
+
   factory Invoice.fromJson(Map<String, dynamic> json) =>
       _$InvoiceFromJson(json);
+
   Map<String, dynamic> toJson() => _$InvoiceToJson(this);
 }

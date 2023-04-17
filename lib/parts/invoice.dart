@@ -69,7 +69,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
 
   Invoice? senderBusiness;
   Invoice? senderFinUser;
-  Invoice? senderBrach;
+  Invoice? senderBranch;
   String? name;
   String? nameEng;
   String? branchStatus;
@@ -92,7 +92,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
   String? modifiedUserId;
   String? termRule;
   String? orderConfirmTerm;
-  String? expireDayCount;
+  int? expireDayCount;
   String? month;
   String? paymentDay;
   bool? isMain;
@@ -101,7 +101,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
   Invoice? receiverFinUser;
   Invoice? receiverBranch;
   Invoice? receiverAcc;
-  Invoice? invoiceLines;
+  List<Invoice>? invoiceLines;
   String? invoiceId;
   String? unitVariantId;
   double? price;
@@ -124,7 +124,10 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
   String? convertType;
   double? convertValue;
   List<Invoice>? attachments;
+  General? general = General();
 
+  if (json['general'] != null)
+    general = General.fromJson(json['general'] as Map<String, dynamic>);
   if (json['count'] != null) count = json['count'];
   if (json['rows'] != null)
     rows = (json['rows'] as List).map((e) => Invoice.fromJson(e)).toList();
@@ -229,14 +232,12 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
   if (json['remainingDays'] != null)
     remainingDays = int.parse('${json['remainingDays']}');
 
-  if (json['senderBusiness'] != null)
-    senderBusiness =
-        Invoice.fromJson(json['senderbusiness'] as Map<String, dynamic>);
   if (json['senderFinUser'] != null)
     senderFinUser =
         Invoice.fromJson(json['senderFinUser'] as Map<String, dynamic>);
-  if (json['senderBrach'] != null)
-    senderBrach = Invoice.fromJson(json['senderBrach'] as Map<String, dynamic>);
+  if (json['senderBranch'] != null)
+    senderBranch =
+        Invoice.fromJson(json['senderBranch'] as Map<String, dynamic>);
   if (json['name'] != null) name = json['name'];
   if (json['nameEng'] != null) nameEng = json['nameEng'];
   if (json['branchStatus'] != null) branchStatus = json['branchStatus'];
@@ -254,6 +255,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     locationLng = double.parse('${json['locationLng']}');
   if (json['senderAcc'] != null)
     senderAcc = Invoice.fromJson(json['senderAcc'] as Map<String, dynamic>);
+  if (json['senderBusiness'] != null)
+    senderBusiness =
+        Invoice.fromJson(json['senderBusiness'] as Map<String, dynamic>);
   if (json['bankName'] != null) bankName = json['bankName'];
   if (json['number'] != null) number = json['number'];
   if (json['currency'] != null) currency = json['currency'];
@@ -280,7 +284,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     receiverAcc = Invoice.fromJson(json['receiverAcc'] as Map<String, dynamic>);
   if (json['invoiceLines'] != null)
     invoiceLines =
-        Invoice.fromJson(json['invoiceLines'] as Map<String, dynamic>);
+        (json['invoiceLines'] as List).map((e) => Invoice.fromJson(e)).toList();
   if (json['invoiceId'] != null) invoiceId = json['invoiceId'];
   if (json['unitVariantId'] != null) unitVariantId = json['unitVariantId'];
   if (json['price'] != null) price = double.parse('${json['price']}');
@@ -313,135 +317,137 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
         (json['attachments'] as List).map((e) => Invoice.fromJson(e)).toList();
 
   return Invoice(
-    count: count,
-    rows: rows,
-    id: id,
-    createdAt: createdAt,
-    updatedAt: updatedAt,
-    deletedAt: deletedAt,
-    refCode: refCode,
-    senderUserId: senderUserId,
-    senderBusinessId: senderBusinessId,
-    senderFinUserId: senderFinUserId,
-    senderBranchId: senderBranchId,
-    senderAccId: senderAccId,
-    salesOrderId: salesOrderId,
-    purchaseOrderId: purchaseOrderId,
-    paymentTermId: paymentTermId,
-    paymentDate: paymentDate,
-    receiverBusinessId: receiverBusinessId,
-    receiverAccId: receiverAccId,
-    receiverAddress: receiverAddress,
-    receiverBranchId: receiverBranchId,
-    receiverFinUserId: receiverFinUserId,
-    shippingAmount: shippingAmount,
-    vatAmount: vatAmount,
-    taxAmount: taxAmount,
-    discountType: discountType,
-    discountValue: discountValue,
-    discountAmount: discountAmount,
-    itemsTotal: itemsTotal,
-    totalAmount: totalAmount,
-    confirmedAmount: confirmedAmount,
-    paidAmount: paidAmount,
-    amountToPay: amountToPay,
-    paymentStatus: paymentStatus,
-    invoiceStatus: invoiceStatus,
-    overDueStatus: overDueStatus,
-    sentDate: sentDate,
-    description: description,
-    confirmedUserId: confirmedUserId,
-    confirmedDate: confirmedDate,
-    respondText: respondText,
-    type: type,
-    receiverBusiness: receiverBusiness,
-    partnerId: partnerId,
-    regNumber: regNumber,
-    stateRegNum: stateRegNum,
-    partnerName: partnerName,
-    partnerNameEng: partnerNameEng,
-    isVatPayer: isVatPayer,
-    partnerEmail: partnerEmail,
-    partnerPhone: partnerPhone,
-    profileName: profileName,
-    profileNameEng: profileNameEng,
-    logo: logo,
-    profileInfo: profileInfo,
-    partner: partner,
-    businessName: businessName,
-    businessNameEng: businessNameEng,
-    senderUser: senderUser,
-    lastName: lastName,
-    firstName: firstName,
-    avatar: avatar,
-    confirmedUser: confirmedUser,
-    salesOrder: salesOrder,
-    purchaseOrder: purchaseOrder,
-    remainingDays: remainingDays,
-    senderBusiness: senderBusiness,
-    senderFinUser: senderFinUser,
-    senderBrach: senderBrach,
-    name: name,
-    nameEng: nameEng,
-    branchStatus: branchStatus,
-    provinceId: provinceId,
-    districtId: districtId,
-    khorooId: khorooId,
-    khoroolol: khoroolol,
-    khotkhonBair: khotkhonBair,
-    khashaaDavkhar: khashaaDavkhar,
-    khaalgaDugaar: khaalgaDugaar,
-    branchAddress: branchAddress,
-    locationLat: locationLat,
-    locationLng: locationLng,
-    senderAcc: senderAcc,
-    bankName: bankName,
-    number: number,
-    currency: currency,
-    icon: icon,
-    paymentTerm: paymentTerm,
-    modifiedUserId: modifiedUserId,
-    termRule: termRule,
-    orderConfirmTerm: orderConfirmTerm,
-    expireDayCount: expireDayCount,
-    month: month,
-    paymentDay: paymentDay,
-    isMain: isMain,
-    isActive: isActive,
-    isOpen: isOpen,
-    receiverFinUser: receiverFinUser,
-    receiverBranch: receiverBranch,
-    receiverAcc: receiverAcc,
-    invoiceLines: invoiceLines,
-    invoiceId: invoiceId,
-    unitVariantId: unitVariantId,
-    price: price,
-    quantity: quantity,
-    hasVat: hasVat,
-    vatPercent: vatPercent,
-    hasTax: hasTax,
-    taxPercent: taxPercent,
-    lineTotalAmount: lineTotalAmount,
-    skuCode: skuCode,
-    barCode: barCode,
-    erpCode: erpCode,
-    nameMon: nameMon,
-    nameBill: nameBill,
-    nameWeb: nameWeb,
-    nameApp: nameApp,
-    image: image,
-    priceStartDate: priceStartDate,
-    unit: unit,
-    convertType: convertType,
-    convertValue: convertValue,
-    attachments: attachments,
-  );
+      count: count,
+      rows: rows,
+      id: id,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      deletedAt: deletedAt,
+      refCode: refCode,
+      senderUserId: senderUserId,
+      senderBusinessId: senderBusinessId,
+      senderFinUserId: senderFinUserId,
+      senderBranchId: senderBranchId,
+      senderAccId: senderAccId,
+      salesOrderId: salesOrderId,
+      purchaseOrderId: purchaseOrderId,
+      paymentTermId: paymentTermId,
+      paymentDate: paymentDate,
+      receiverBusinessId: receiverBusinessId,
+      receiverAccId: receiverAccId,
+      receiverAddress: receiverAddress,
+      receiverBranchId: receiverBranchId,
+      receiverFinUserId: receiverFinUserId,
+      shippingAmount: shippingAmount,
+      vatAmount: vatAmount,
+      taxAmount: taxAmount,
+      discountType: discountType,
+      discountValue: discountValue,
+      discountAmount: discountAmount,
+      itemsTotal: itemsTotal,
+      totalAmount: totalAmount,
+      confirmedAmount: confirmedAmount,
+      paidAmount: paidAmount,
+      amountToPay: amountToPay,
+      paymentStatus: paymentStatus,
+      invoiceStatus: invoiceStatus,
+      overDueStatus: overDueStatus,
+      sentDate: sentDate,
+      description: description,
+      confirmedUserId: confirmedUserId,
+      confirmedDate: confirmedDate,
+      respondText: respondText,
+      type: type,
+      receiverBusiness: receiverBusiness,
+      partnerId: partnerId,
+      regNumber: regNumber,
+      stateRegNum: stateRegNum,
+      partnerName: partnerName,
+      partnerNameEng: partnerNameEng,
+      isVatPayer: isVatPayer,
+      partnerEmail: partnerEmail,
+      partnerPhone: partnerPhone,
+      profileName: profileName,
+      profileNameEng: profileNameEng,
+      logo: logo,
+      profileInfo: profileInfo,
+      partner: partner,
+      businessName: businessName,
+      businessNameEng: businessNameEng,
+      senderUser: senderUser,
+      lastName: lastName,
+      firstName: firstName,
+      avatar: avatar,
+      confirmedUser: confirmedUser,
+      salesOrder: salesOrder,
+      purchaseOrder: purchaseOrder,
+      remainingDays: remainingDays,
+      senderBusiness: senderBusiness,
+      senderFinUser: senderFinUser,
+      senderBranch: senderBranch,
+      name: name,
+      nameEng: nameEng,
+      branchStatus: branchStatus,
+      provinceId: provinceId,
+      districtId: districtId,
+      khorooId: khorooId,
+      khoroolol: khoroolol,
+      khotkhonBair: khotkhonBair,
+      khashaaDavkhar: khashaaDavkhar,
+      khaalgaDugaar: khaalgaDugaar,
+      branchAddress: branchAddress,
+      locationLat: locationLat,
+      locationLng: locationLng,
+      senderAcc: senderAcc,
+      bankName: bankName,
+      number: number,
+      currency: currency,
+      icon: icon,
+      paymentTerm: paymentTerm,
+      modifiedUserId: modifiedUserId,
+      termRule: termRule,
+      orderConfirmTerm: orderConfirmTerm,
+      expireDayCount: expireDayCount,
+      month: month,
+      paymentDay: paymentDay,
+      isMain: isMain,
+      isActive: isActive,
+      isOpen: isOpen,
+      receiverFinUser: receiverFinUser,
+      receiverBranch: receiverBranch,
+      receiverAcc: receiverAcc,
+      invoiceLines: invoiceLines,
+      invoiceId: invoiceId,
+      unitVariantId: unitVariantId,
+      price: price,
+      quantity: quantity,
+      hasVat: hasVat,
+      vatPercent: vatPercent,
+      hasTax: hasTax,
+      taxPercent: taxPercent,
+      lineTotalAmount: lineTotalAmount,
+      skuCode: skuCode,
+      barCode: barCode,
+      erpCode: erpCode,
+      nameMon: nameMon,
+      nameBill: nameBill,
+      nameWeb: nameWeb,
+      nameApp: nameApp,
+      image: image,
+      priceStartDate: priceStartDate,
+      unit: unit,
+      convertType: convertType,
+      convertValue: convertValue,
+      attachments: attachments,
+      general: general);
 }
 
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   Map<String, dynamic> json = {};
 
   if (instance.count != null) json['count'] = instance.count;
+  if (instance.general != null) json['general'] = instance.general;
+
   if (instance.rows != null) json['rows'] = instance.rows;
   if (instance.id != null) json['id'] = instance.id;
   if (instance.createdAt != null) json['createdAt'] = instance.createdAt;
@@ -542,7 +548,8 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
     json['senderBusiness'] = instance.senderBusiness;
   if (instance.senderFinUser != null)
     json['senderFinUser'] = instance.senderFinUser;
-  if (instance.senderBrach != null) json['senderBrach'] = instance.senderBrach;
+  if (instance.senderBranch != null)
+    json['senderBranch'] = instance.senderBranch;
   if (instance.name != null) json['name'] = instance.name;
   if (instance.nameEng != null) json['nameEng'] = instance.nameEng;
   if (instance.branchStatus != null)

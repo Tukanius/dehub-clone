@@ -1,4 +1,6 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/home/home_page.dart';
 import 'package:dehub/screens/invoice/invoice_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
@@ -7,6 +9,7 @@ import 'package:dehub/screens/profile/profile_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
   static const routeName = '/MainPage';
@@ -38,8 +41,12 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+  User user = User();
+
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: false).partnerUser;
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -83,17 +90,10 @@ class _MainPageState extends State<MainPage> {
                     onTap: () {
                       Navigator.of(context).pushNamed(ProfilePage.routeName);
                     },
-                    child: Ink(
-                      height: 30,
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 13),
                       width: 30,
-                      decoration: ShapeDecoration(
-                        shape: CircleBorder(),
-                      ),
-                      child: Image(
-                        image: AssetImage(
-                          'images/icon.png',
-                        ),
-                      ),
+                      color: red,
                     ),
                   ),
                 ),

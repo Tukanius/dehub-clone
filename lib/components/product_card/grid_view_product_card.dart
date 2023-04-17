@@ -104,28 +104,23 @@ class _GridViewProductCardState extends State<GridViewProductCard> {
           SizedBox(
             height: 7,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '₮ 6800.00',
-                style: TextStyle(
-                  color: buttonColor,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                ),
-              ),
-              Text(
-                '₮ 6800.00',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: grey3,
-                  fontWeight: FontWeight.w500,
-                  decoration: TextDecoration.lineThrough,
-                  decorationColor: grey3,
-                ),
-              ),
-            ],
+          Text(
+            '₮ 6800.00',
+            style: TextStyle(
+              fontSize: 12,
+              color: grey3,
+              fontWeight: FontWeight.w500,
+              decoration: TextDecoration.lineThrough,
+              decorationColor: grey3,
+            ),
+          ),
+          Text(
+            '₮ 6800.00',
+            style: TextStyle(
+              color: buttonColor,
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
+            ),
           ),
           SizedBox(
             height: 15,

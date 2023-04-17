@@ -34,7 +34,6 @@ class _ProductReturnPageState extends State<ProductReturnPage>
     print("===================INVOICE=====================");
     print(widget.id.toString());
     print(invoice.toJson());
-
     print("===================INVOICE=====================");
   }
 

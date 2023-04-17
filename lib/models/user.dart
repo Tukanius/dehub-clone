@@ -1,5 +1,6 @@
 import 'package:dehub/models/business.dart';
 import 'package:dehub/models/partner.dart';
+import 'package:dehub/utils/http_request.dart';
 part '../parts/user.dart';
 
 class User {
@@ -90,6 +91,10 @@ class User {
   bool? isAnchorBusiness;
   Partner? partner;
   List<BusinessStaffs>? businessStaffs;
+
+  getAvatar() {
+    return HttpRequest.s3host + avatar.toString();
+  }
 
   User({
     this.userId,

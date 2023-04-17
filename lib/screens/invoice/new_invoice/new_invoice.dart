@@ -920,13 +920,14 @@ class _NewInvoiceState extends State<NewInvoice> {
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 10),
                   padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 37),
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 30),
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     color: black,
                   ),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
                         onTap: () {
@@ -949,9 +950,6 @@ class _NewInvoiceState extends State<NewInvoice> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        width: 50,
-                      ),
                       InkWell(
                         onTap: () {},
                         child: Column(
@@ -969,9 +967,6 @@ class _NewInvoiceState extends State<NewInvoice> {
                             )
                           ],
                         ),
-                      ),
-                      SizedBox(
-                        width: 50,
                       ),
                       InkWell(
                         onTap: () {},
@@ -991,9 +986,6 @@ class _NewInvoiceState extends State<NewInvoice> {
                             )
                           ],
                         ),
-                      ),
-                      SizedBox(
-                        width: 50,
                       ),
                       InkWell(
                         onTap: () {},
