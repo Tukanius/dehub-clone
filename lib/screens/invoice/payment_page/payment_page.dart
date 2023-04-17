@@ -1,3 +1,4 @@
+import 'package:dehub/models/invoice.dart';
 import 'package:dehub/screens/invoice/payment_page/payment_approval_page.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -7,7 +8,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class PaymentPage extends StatefulWidget {
   static const routeName = '/paymentpage';
-  const PaymentPage({super.key});
+  Invoice data;
+  PaymentPage({
+    super.key,
+    required this.data,
+  });
 
   @override
   State<PaymentPage> createState() => _PaymentPageState();
@@ -15,6 +20,7 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   bool value = false;
+  Invoice invoice = Invoice();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +41,7 @@ class _PaymentPageState extends State<PaymentPage> {
           ),
         ),
         title: Text(
-          'INV - 23987 - төлөлт',
+          '${widget.data.refCode} - Төлөх',
           style: TextStyle(
             color: white,
             fontSize: 16,
@@ -84,7 +90,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         Row(
                           children: [
                             Text(
-                              '417,450.00 ₮',
+                              '${widget.data.amountToPay}',
                               style: TextStyle(color: brownButtonColor),
                             ),
                             IconButton(
@@ -109,7 +115,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         Row(
                           children: [
                             Text(
-                              '417,450.00 ₮',
+                              '${widget.data.amountToPay}',
                               style: TextStyle(color: brownButtonColor),
                             ),
                             IconButton(
@@ -165,7 +171,7 @@ class _PaymentPageState extends State<PaymentPage> {
                               width: 10,
                             ),
                             Text(
-                              'Supplier Business Name',
+                              '${widget.data.receiverBusiness!.profileName}',
                               style: TextStyle(color: brownButtonColor),
                             ),
                           ],
@@ -190,7 +196,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         Row(
                           children: [
                             Text(
-                              '2923423098',
+                              '${widget.data.receiverAcc!.number}',
                               style: TextStyle(color: brownButtonColor),
                             ),
                             IconButton(
@@ -341,8 +347,9 @@ class _PaymentPageState extends State<PaymentPage> {
               ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 15),
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
+                child: FormTextField(
+                  name: "amount",
+                  inputType: TextInputType.number,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     fillColor: Colors.white,

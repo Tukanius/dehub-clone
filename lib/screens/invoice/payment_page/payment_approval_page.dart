@@ -1,8 +1,13 @@
+import 'package:dehub/api/auth_api.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 
 class PaymentApprovalPage extends StatefulWidget {
   static const routeName = '/paymentapprovalpage';
@@ -10,16 +15,10 @@ class PaymentApprovalPage extends StatefulWidget {
 
   @override
   State<PaymentApprovalPage> createState() => _PaymentApprovalPageState();
-
-  @override
-  Widget build(BuildContext context) {
-    return Pinput(
-      length: 6,
-    );
-  }
 }
 
-class _PaymentApprovalPageState extends State<PaymentApprovalPage> {
+class _PaymentApprovalPageState extends State<PaymentApprovalPage>
+    with AfterLayoutMixin {
   show(ctx) {
     showDialog(
       useSafeArea: true,
@@ -110,6 +109,18 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage> {
     ),
   );
 
+  User user = User();
+
+  afterFirstLayout(BuildContext context) async {}
+
+  checkPin(value) async {
+    user.pin = value;
+    var res = await AuthApi().checkPin(user);
+    if (res == true) {
+      await show(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -187,12 +198,9 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage> {
                   child: Pinput(
                     keyboardType: TextInputType.number,
                     obscureText: true,
+                    onCompleted: (value) => checkPin(value),
                     length: 6,
-                    validator: (value) {
-                      return value == '222222'
-                          ? show(context)
-                          : "Пин коп буруу байна";
-                    },
+                    validator: (value) {},
                     hapticFeedbackType: HapticFeedbackType.lightImpact,
                     defaultPinTheme: defaultPinTheme,
                     submittedPinTheme: defaultPinTheme.copyWith(

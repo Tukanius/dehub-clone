@@ -88,6 +88,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
   bool? isAnchorBusiness;
   Partner? partner;
   List<BusinessStaffs>? businessStaffs;
+  String? pin;
 
   if (json['code'] != null) code = json['code'];
   if (json['phone'] != null) phone = json['phone'];
@@ -209,9 +210,11 @@ User _$UserFromJson(Map<String, dynamic> json) {
   if (json['tokenType'] != null) tokenType = json['tokenType'];
   if (json['accessToken'] != null) accessToken = json['accessToken'];
   if (json['refreshToken'] != null) refreshToken = json['refreshToken'];
+  if (json['pin'] != null) pin = json['pin'];
   if (json['sessionState'] != null) sessionState = json['sessionState'];
 
   return User(
+    pin: pin,
     id: id,
     createdAt: createdAt,
     user: user,
@@ -372,8 +375,8 @@ Map<String, dynamic> _$UserToJson(User instance) {
   if (instance.isConfirmed != null) json['isConfirmed'] = instance.isConfirmed;
   if (instance.isAnchorBusiness != null)
     json['isAnchorBusiness'] = instance.isAnchorBusiness;
-
   if (instance.id != null) json['id'] = instance.id;
+  if (instance.pin != null) json['pin'] = instance.pin;
   if (instance.createdAt != null) json['createdAt'] = instance.createdAt;
   if (instance.updatedAt != null) json['updatedAt'] = instance.updatedAt;
   if (instance.deletedAt != null) json['deletedAt'] = instance.deletedAt;

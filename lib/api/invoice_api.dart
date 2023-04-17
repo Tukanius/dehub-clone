@@ -27,4 +27,9 @@ class InvoiceApi extends HttpRequest {
     }
     return Invoice.fromJson(res as Map<String, dynamic>);
   }
+
+  Future<Invoice> pay(String id) async {
+    var res = await put('invoice/$id/pay', "INVOICE", handler: true);
+    return Invoice.fromJson(res as Map<String, dynamic>);
+  }
 }

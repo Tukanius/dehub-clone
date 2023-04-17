@@ -3,14 +3,15 @@ import 'package:dehub/models/invoice.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
-import 'package:dehub/models/invoice.dart';
+import 'package:after_layout/after_layout.dart';
 
 class InvoiceProductCard extends StatefulWidget {
   final Color? color;
+  final Invoice? data;
   const InvoiceProductCard({
     this.color,
     Key? key,
+    this.data,
   }) : super(key: key);
 
   @override
@@ -43,9 +44,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                 height: 56,
                 width: 56,
                 child: Image(
-                  image: AssetImage(
-                    'images/map.jpg',
-                  ),
+                  image: NetworkImage('${widget.data!.image}'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -56,7 +55,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Гүзээлзгэнэтэй иогурт',
+                    '${widget.data!.nameMon}',
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
@@ -68,7 +67,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                   Container(
                     width: MediaQuery.of(context).size.width * 0.67,
                     child: Text(
-                      'SKU 32165456, Brand Name, 250 гр, савлагааны нэр боөрсорыбх',
+                      '${widget.data!.skuCode}',
                       overflow: TextOverflow.ellipsis,
                       maxLines: 3,
                       softWrap: false,
@@ -106,7 +105,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                       height: 5,
                     ),
                     Text(
-                      '${price} ₮',
+                      '${widget.data!.price} ₮',
                       style: TextStyle(
                         color: widget.color,
                         fontWeight: FontWeight.bold,
@@ -117,10 +116,10 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                       height: 5,
                     ),
                     Text(
-                      '1 кг',
+                      '${widget.data!.unit!.name}',
                       style: TextStyle(
                         color: grey2,
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -143,7 +142,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                       height: 5,
                     ),
                     Text(
-                      '${amount} ₮',
+                      '${widget.data!.discountValue}',
                       style: TextStyle(
                         color: widget.color,
                         fontWeight: FontWeight.bold,
@@ -154,32 +153,33 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                       height: 5,
                     ),
                     Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 7, vertical: 4),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xff636E72).withOpacity(0.3),
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                          color: Color(0xffEBFAFA),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 7, vertical: 4),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Color(0xff636E72).withOpacity(0.3),
                         ),
-                        child: Text(
-                          'дүн',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: grey2,
-                          ),
-                        )
-                        // : Text(
-                        //     'хувиар',
-                        //     style: TextStyle(
-                        //       fontSize: 12,
-                        //       fontWeight: FontWeight.w500,
-                        //       color: grey2,
-                        //     ),
-                        //   ),
-                        ),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Color(0xffEBFAFA),
+                      ),
+                      child: widget.data!.discountType != "PERCENTAGE"
+                          ? Text(
+                              'хувиар',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: grey2,
+                              ),
+                            )
+                          : Text(
+                              'дүн',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: grey2,
+                              ),
+                            ),
+                    ),
                   ],
                 ),
                 SizedBox(
@@ -209,14 +209,14 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 10),
                   padding: const EdgeInsets.only(right: 5, top: 8, bottom: 11),
-                  width: 70,
+                  width: 50,
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: Color(0xffD9DCDE),
                     ),
                   ),
                   child: Text(
-                    '${_count}',
+                    '${widget.data!.quantity}',
                     style: TextStyle(color: grey3, fontSize: 20),
                     textAlign: TextAlign.end,
                   ),
@@ -259,7 +259,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                 ),
               ),
               Text(
-                '${(price - amount) * _count} ₮',
+                '${widget.data!.lineTotalAmount} ₮',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,

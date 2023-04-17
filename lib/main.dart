@@ -1,3 +1,4 @@
+import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/auth/login_page.dart';
 import 'package:dehub/screens/invoice/invoice_page.dart';
@@ -135,6 +136,14 @@ class MyApp extends StatelessWidget {
                   case SendPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return SendPage();
+                    });
+                  case ProductReturnPage.routeName:
+                    ProductReturnPageArguments arguments =
+                        settings.arguments as ProductReturnPageArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return ProductReturnPage(
+                        id: arguments.id,
+                      );
                     });
                   case ProductReturnPage.routeName:
                     ProductReturnPageArguments arguments =

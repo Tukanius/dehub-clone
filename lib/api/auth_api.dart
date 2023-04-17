@@ -15,8 +15,15 @@ class AuthApi extends HttpRequest {
     return User.fromJson(res as Map<String, dynamic>);
   }
 
-  Future<User> partnerMe(bool handler) async {
+  partnerMe(bool handler) async {
     var res = await get('/auth/me', "PARTNER", handler: handler);
     return User.fromJson(res as Map<String, dynamic>);
+  }
+
+  checkPin(User data) async {
+    Map<String, dynamic> json = {};
+    json['pin'] = data.pin;
+    var res = await put("/auth/pin/check", "AUTH", data: json);
+    return res['success'] == true;
   }
 }

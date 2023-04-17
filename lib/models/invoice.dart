@@ -129,6 +129,10 @@ class Invoice {
   List<Invoice>? attachments;
   General? general = General();
 
+  String? method;
+  String? creditAccountId;
+  double? amount;
+
   String getPostDate() {
     return Moment.parse(DateFormat("yyyy-MM-dd")
             .parseUTC(createdAt!)
@@ -154,6 +158,9 @@ class Invoice {
   }
 
   Invoice({
+    this.method,
+    this.creditAccountId,
+    this.amount,
     this.count,
     this.rows,
     this.id,

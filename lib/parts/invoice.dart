@@ -126,6 +126,14 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
   List<Invoice>? attachments;
   General? general = General();
 
+  String? method;
+  String? creditAccountId;
+  double? amount;
+
+  if (json['creditAccountId'] != null)
+    creditAccountId = json['creditAccountId'];
+  if (json['amount'] != null) amount = double.parse('${json['amount']}');
+  if (json['method'] != null) method = json['method'];
   if (json['general'] != null)
     general = General.fromJson(json['general'] as Map<String, dynamic>);
   if (json['count'] != null) count = json['count'];
@@ -317,6 +325,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
         (json['attachments'] as List).map((e) => Invoice.fromJson(e)).toList();
 
   return Invoice(
+      method: method,
+      creditAccountId: creditAccountId,
+      amount: amount,
       count: count,
       rows: rows,
       id: id,
@@ -445,6 +456,10 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.method != null) json['method'] = instance.method;
+  if (instance.creditAccountId != null)
+    json['creditAccountId'] = instance.creditAccountId;
+  if (instance.amount != null) json['amount'] = instance.amount;
   if (instance.count != null) json['count'] = instance.count;
   if (instance.general != null) json['general'] = instance.general;
 

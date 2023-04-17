@@ -5,12 +5,15 @@ import 'package:dehub/components/invoice_card/invoice_card.dart';
 import 'package:dehub/components/invoice_empty/invoice_empty.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
 import 'package:dehub/screens/invoice/product_return/product_return.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 
 class GivePage extends StatefulWidget {
   const GivePage({Key? key}) : super(key: key);
@@ -36,7 +39,7 @@ class _GivePageState extends State<GivePage>
     Filter filter = Filter();
     Offset offset = Offset(limit: limit, page: page);
     Result res = await InvoiceApi()
-        .list(ResultArguments(filter: filter, offset: offset));
+        .listReceived(ResultArguments(filter: filter, offset: offset));
     setState(() {
       invoice = res;
       isLoading = false;
@@ -49,8 +52,11 @@ class _GivePageState extends State<GivePage>
     });
   }
 
+  User me = User();
+
   @override
   Widget build(BuildContext context) {
+    me = Provider.of<UserProvider>(context, listen: true).partnerUser;
     return NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
         return <Widget>[

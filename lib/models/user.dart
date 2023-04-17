@@ -45,6 +45,7 @@ class User {
   String? tokenType;
   String? accessToken;
   String? refreshToken;
+  bool? success;
   String? sessionState;
 
   String? code;
@@ -91,12 +92,14 @@ class User {
   bool? isAnchorBusiness;
   Partner? partner;
   List<BusinessStaffs>? businessStaffs;
+  String? pin;
 
   getAvatar() {
     return HttpRequest.s3host + avatar.toString();
   }
 
   User({
+    this.pin,
     this.userId,
     this.user,
     this.businessStaffs,
@@ -116,6 +119,7 @@ class User {
     this.isEmailVerified,
     this.emailVerifiedDate,
     this.phone,
+    this.success,
     this.isPhoneVerified,
     this.phoneVerifiedDate,
     this.lastName,
