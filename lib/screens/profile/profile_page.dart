@@ -50,7 +50,7 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
-    partnerUser = Provider.of<UserProvider>(context, listen: false).partnerUser;
+    partnerUser = Provider.of<UserProvider>(context, listen: false).user;
 
     return Scaffold(
       backgroundColor: Color(0xffF5F5F5),
@@ -103,7 +103,7 @@ class _ProfilePageState extends State<ProfilePage>
                                 child: CircleAvatar(
                                   radius: 40,
                                   backgroundImage: NetworkImage(
-                                    '${partnerUser.user!.avatar}',
+                                    '${partnerUser.getAvatar()}',
                                   ),
                                 ),
                               ),

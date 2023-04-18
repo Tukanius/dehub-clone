@@ -16,7 +16,6 @@ class PersonalInfo extends StatefulWidget {
 }
 
 class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
-  User partnerUser = User();
   User user = User();
 
   afterFirstLayout(BuildContext context) async {}
@@ -30,11 +29,10 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    partnerUser = Provider.of<UserProvider>(context, listen: true).partnerUser;
     user = Provider.of<UserProvider>(context, listen: true).user;
-    print('=================PARTNERUSER===============');
-    print(partnerUser.toJson());
-    print('=================PARTNERUSER===============');
+    print('=================user===============');
+    print(user.toJson());
+    print('=================user===============');
 
     return SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),
@@ -83,7 +81,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                         border: Border.all(color: grey3),
                       ),
                       child: Text(
-                        partnerUser.user!.username.toString(),
+                        user.username.toString(),
                         style: TextStyle(
                           fontSize: 14,
                           color: grey3,
@@ -116,7 +114,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                         border: Border.all(color: grey3),
                       ),
                       child: Text(
-                        partnerUser.user!.businessId.toString(),
+                        user.businessId.toString(),
                         style: TextStyle(
                           fontSize: 14,
                           color: grey3,
@@ -149,7 +147,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                         border: Border.all(color: grey3),
                       ),
                       child: Text(
-                        '${partnerUser.user!.lastName}',
+                        '${user.lastName}',
                         style: TextStyle(
                           fontSize: 14,
                           color: grey3,
@@ -182,7 +180,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                         border: Border.all(color: grey3),
                       ),
                       child: Text(
-                        '${partnerUser.user!.firstName}',
+                        '${user.firstName}',
                         style: TextStyle(
                           fontSize: 14,
                           color: grey3,
@@ -217,14 +215,14 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                             border: Border.all(color: grey3),
                           ),
                           child: Text(
-                            '${partnerUser.user!.phone}',
+                            '${user.phone}',
                             style: TextStyle(
                               fontSize: 14,
                               color: grey3,
                             ),
                           ),
                         ),
-                        partnerUser.user!.isPhoneVerified == false
+                        user.isPhoneVerified == false
                             ? Container(
                                 margin:
                                     const EdgeInsets.only(top: 5, right: 10),
@@ -279,14 +277,14 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                             border: Border.all(color: grey3),
                           ),
                           child: Text(
-                            '${partnerUser.user!.email}',
+                            '${user.email}',
                             style: TextStyle(
                               fontSize: 14,
                               color: grey3,
                             ),
                           ),
                         ),
-                        partnerUser.user!.isEmailVerified == true
+                        user.isEmailVerified == true
                             ? Container(
                                 alignment: Alignment.centerRight,
                                 margin:
@@ -372,7 +370,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                         border: Border.all(color: grey3),
                       ),
                       child: Text(
-                        '${partnerUser.user!.registerNo}',
+                        '${user.registerNo}',
                         style: TextStyle(
                           fontSize: 14,
                           color: grey3,
@@ -385,7 +383,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        partnerUser.user!.isDanVerified == false
+                        user.isDanVerified == false
                             ? Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 8, vertical: 1),
@@ -405,7 +403,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                                 ),
                               )
                             : SizedBox(),
-                        partnerUser.user!.isDanVerified != false
+                        user.isDanVerified != false
                             ? Text(
                                 'Дан систем баталгаажсан',
                                 style: TextStyle(

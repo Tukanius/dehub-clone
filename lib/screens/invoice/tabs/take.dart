@@ -1,6 +1,3 @@
-import 'dart:async';
-
-import 'package:dehub/api/auth_api.dart';
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/invoice_card/invoice_card.dart';
 import 'package:dehub/components/invoice_empty/invoice_empty.dart';
@@ -8,13 +5,10 @@ import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
 import 'package:dehub/screens/invoice/product_return/product_return.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class TakePage extends StatefulWidget {
@@ -54,11 +48,8 @@ class _TakePageState extends State<TakePage>
     });
   }
 
-  User me = User();
-
   @override
   Widget build(BuildContext context) {
-    me = Provider.of<UserProvider>(context, listen: true).partnerUser;
     return NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
         return <Widget>[

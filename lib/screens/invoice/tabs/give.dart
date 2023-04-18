@@ -52,11 +52,8 @@ class _GivePageState extends State<GivePage>
     });
   }
 
-  User me = User();
-
   @override
   Widget build(BuildContext context) {
-    me = Provider.of<UserProvider>(context, listen: true).partnerUser;
     return NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
         return <Widget>[
