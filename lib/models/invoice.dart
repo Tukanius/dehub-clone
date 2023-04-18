@@ -1,4 +1,5 @@
 import 'package:dehub/models/general.dart';
+import 'package:dehub/models/user.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_moment/simple_moment.dart';
 part '../parts/invoice.dart';
@@ -65,7 +66,7 @@ class Invoice {
   String? lastName;
   String? firstName;
   String? avatar;
-  Invoice? confirmedUser;
+  User? confirmedUser;
   Invoice? salesOrder;
   Invoice? purchaseOrder;
   int? remainingDays;

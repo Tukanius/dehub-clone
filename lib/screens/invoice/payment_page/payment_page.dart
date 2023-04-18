@@ -4,14 +4,17 @@ import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class PaymentPage extends StatefulWidget {
   static const routeName = '/paymentpage';
   Invoice data;
+  String id;
   PaymentPage({
     super.key,
     required this.data,
+    required this.id,
   });
 
   @override
@@ -21,6 +24,25 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage> {
   bool value = false;
   Invoice invoice = Invoice();
+  TextEditingController textController = TextEditingController();
+  GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
+
+  fillAmount() {
+    setState(() {
+      textController.text = "${widget.data.amountToPay}";
+    });
+  }
+
+  onSubmit() {
+    Navigator.of(context).pushNamed(
+      PaymentApprovalPage.routeName,
+      arguments: PaymentApprovalPageArguments(
+        id: widget.id,
+        creditAccountId: widget.data.id.toString(),
+        amount: double.parse(textController.text),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -345,16 +367,20 @@ class _PaymentPageState extends State<PaymentPage> {
               SizedBox(
                 height: 10,
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 15),
-                child: FormTextField(
-                  name: "amount",
-                  inputType: TextInputType.number,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: brownButtonColor),
+              Form(
+                key: fbKey,
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 15),
+                  child: FormTextField(
+                    name: "amount",
+                    inputType: TextInputType.number,
+                    controller: textController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: brownButtonColor),
+                      ),
                     ),
                   ),
                 ),
@@ -372,6 +398,10 @@ class _PaymentPageState extends State<PaymentPage> {
                     ),
                     value: value,
                     onChanged: (value1) {
+                      fillAmount();
+                      if (value == true) {
+                        textController.text = "";
+                      }
                       setState(() {
                         value = value1!;
                       });
@@ -393,8 +423,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 labelColor: brownButtonColor,
                 labelText: 'Төлбөр зөвшөөрөх',
                 onClick: () {
-                  Navigator.of(context)
-                      .pushNamed(PaymentApprovalPage.routeName);
+                  onSubmit();
                 },
               ),
             ],

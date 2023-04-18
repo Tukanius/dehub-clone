@@ -17,19 +17,16 @@ class InvoiceApi extends HttpRequest {
   }
 
   Future<Invoice> getInvoice(String id) async {
-    var res;
-    try {
-      res = await get('/invoice/$id', "INVOICE", handler: true);
-    } catch (e) {
-      print("===============res==================");
-      print(e.toString());
-      print("===============res==================");
-    }
+    var res = await get('/invoice/$id', "INVOICE", handler: true);
     return Invoice.fromJson(res as Map<String, dynamic>);
   }
 
-  Future<Invoice> pay(String id) async {
-    var res = await put('invoice/$id/pay', "INVOICE", handler: true);
+  pay(String id, Invoice data) async {
+    print("=============================DATA========================");
+    var res = await put(
+        '/invoice/$id/pay', data: data.toJson(), "INVOICE", handler: true);
+    print(res);
+    print("=============================DATA========================");
     return Invoice.fromJson(res as Map<String, dynamic>);
   }
 }

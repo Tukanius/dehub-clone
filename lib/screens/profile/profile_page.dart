@@ -102,9 +102,13 @@ class _ProfilePageState extends State<ProfilePage>
                                 margin: const EdgeInsets.only(top: 35),
                                 child: CircleAvatar(
                                   radius: 40,
-                                  backgroundImage: NetworkImage(
-                                    '${partnerUser.getAvatar()}',
-                                  ),
+                                  backgroundImage: partnerUser.avatar != null
+                                      ? NetworkImage(
+                                          '${partnerUser.avatar}',
+                                        )
+                                      : NetworkImage(
+                                          'https://i0.wp.com/a.slack-edge.com/df10d/img/avatars/ava_0024-192.png?ssl=1',
+                                        ),
                                 ),
                               ),
                               SizedBox(

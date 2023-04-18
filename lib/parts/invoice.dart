@@ -62,7 +62,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
   String? lastName;
   String? firstName;
   String? avatar;
-  Invoice? confirmedUser;
+  User? confirmedUser;
   Invoice? salesOrder;
   Invoice? purchaseOrder;
   int? remainingDays;
@@ -226,9 +226,11 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
   if (json['lastName'] != null) lastName = json['lastName'];
   if (json['firstName'] != null) firstName = json['firstName'];
   if (json['avatar'] != null) avatar = json['avatar'];
-  if (json['confirmedUser'] != null)
+
+  if (json['confirmedUser'] != null) {
     confirmedUser =
-        Invoice.fromJson(json['confirmedUser'] as Map<String, dynamic>);
+        User.fromJson(json['confirmedUser'] as Map<String, dynamic>);
+  }
 
   if (json['salesOrder'] != null) {
     salesOrder = Invoice.fromJson(json['salesOrder'] as Map<String, dynamic>);

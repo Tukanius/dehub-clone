@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/models/invoice.dart';
 
-class InvoiceCard extends StatefulWidget {
-  static const routeName = '/invoicecard';
+class InvoiceCardSent extends StatefulWidget {
+  static const routeName = '/InvoiceCardSent';
   final Function()? onClick;
   final Invoice? data;
-  const InvoiceCard({
+  const InvoiceCardSent({
     Key? key,
     this.onClick,
     this.data,
   }) : super(key: key);
 
   @override
-  State<InvoiceCard> createState() => _InvoiceCardState();
+  State<InvoiceCardSent> createState() => _InvoiceCardSentState();
 }
 
-class _InvoiceCardState extends State<InvoiceCard> {
+class _InvoiceCardSentState extends State<InvoiceCardSent> {
   invoiceStatus() {
     switch (widget.data!.invoiceStatus) {
       case "CONFIRMED":
@@ -159,7 +159,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                   height: 13,
                                 ),
                                 Text(
-                                  '${widget.data!.senderBusiness!.partner!.businessNameEng}',
+                                  '${widget.data!.receiverBusiness!.partner!.businessNameEng}',
                                   style: TextStyle(
                                     color: black,
                                     fontWeight: FontWeight.w500,

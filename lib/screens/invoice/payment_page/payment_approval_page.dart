@@ -1,17 +1,36 @@
 import 'package:dehub/api/auth_api.dart';
+import 'package:dehub/api/invoice_api.dart';
+import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/user.dart';
-import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:provider/provider.dart';
+
+class PaymentApprovalPageArguments {
+  String creditAccountId;
+  String id;
+  double amount;
+  PaymentApprovalPageArguments({
+    required this.creditAccountId,
+    required this.id,
+    required this.amount,
+  });
+}
 
 class PaymentApprovalPage extends StatefulWidget {
   static const routeName = '/paymentapprovalpage';
-  const PaymentApprovalPage({Key? key}) : super(key: key);
+  String id;
+  String creditAccountId;
+  double amount;
+  PaymentApprovalPage({
+    Key? key,
+    required this.amount,
+    required this.creditAccountId,
+    required this.id,
+  }) : super(key: key);
 
   @override
   State<PaymentApprovalPage> createState() => _PaymentApprovalPageState();
@@ -110,14 +129,27 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
   );
 
   User user = User();
+  Invoice invoice = Invoice();
 
   afterFirstLayout(BuildContext context) async {}
 
   checkPin(value) async {
     user.pin = value;
     var res = await AuthApi().checkPin(user);
+
     if (res == true) {
-      await show(context);
+      try {
+        invoice.creditAccountId = widget.id;
+        invoice.amount = widget.amount;
+        invoice.method = "B2B";
+        print(invoice.toJson());
+        await InvoiceApi().pay(widget.id, invoice);
+        await show(context);
+      } catch (e) {
+        print("=================ERROR======================");
+        print(e.toString());
+        print("=================ERROR======================");
+      }
     }
   }
 
@@ -160,6 +192,8 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
           SizedBox(
             height: 20,
           ),
+          Text(widget.id),
+          Text(widget.amount.toString()),
           Text(
             'Нэхэмжлэх төлөх',
             style: TextStyle(

@@ -40,6 +40,70 @@ class _ProductReturnPageState extends State<ProductReturnPage>
     });
   }
 
+  invoicePaymentStatus() {
+    switch (invoice.paymentStatus) {
+      case "PENDING":
+        return "Хүлээгдэж буй";
+      case "DIVIDED":
+        return "Хуваасан";
+      case "OVER_DUE":
+        return "Хугацаа хэтэрсэн";
+      case "CLOSED":
+        return "Хаасан";
+      default:
+    }
+  }
+
+  textColor() {
+    switch (invoice.paymentStatus) {
+      case "PENDING":
+        return yellow;
+      case "DIVIDED":
+        return buttonColor;
+      case "OVER_DUE":
+        return red;
+      case "CLOSED":
+        return green;
+      default:
+    }
+  }
+
+  invoiceStatus() {
+    switch (invoice.invoiceStatus) {
+      case "DRAFT":
+        return "Түр төлөв";
+      case "SENT":
+        return "Илгээсэн";
+      case "CONFIRMED":
+        return "Баталсан";
+      case "REJECTED":
+        return "Татгалзсан";
+      case "RETURNED":
+        return "Буцаасан";
+      case "CLOSED":
+        return "Хаасан";
+      default:
+    }
+  }
+
+  invoiceStatusColor() {
+    switch (invoice.invoiceStatus) {
+      case "DRAFT":
+        return grey;
+      case "SENT":
+        return Colors.indigo;
+      case "CONFIRMED":
+        return Colors.lightBlue;
+      case "REJECTED":
+        return red;
+      case "RETURNED":
+        return Colors.pink;
+      case "CLOSED":
+        return green;
+      default:
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -333,8 +397,10 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                 Row(
                                   children: [
                                     Text(
-                                      '${invoice.invoiceStatus}',
-                                      style: TextStyle(color: brownButtonColor),
+                                      invoiceStatus(),
+                                      style: TextStyle(
+                                        color: invoiceStatusColor(),
+                                      ),
                                     ),
                                     IconButton(
                                       onPressed: () {},
@@ -357,7 +423,11 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                 ),
                                 Row(
                                   children: [
-                                    Text('${invoice.confirmedUser!.firstName}'),
+                                    invoice.invoiceStatus == "CONFIRMED"
+                                        ? Text(
+                                            '${invoice.confirmedUser!.firstName}',
+                                          )
+                                        : Text('-'),
                                     IconButton(
                                       onPressed: () {},
                                       icon: Icon(
@@ -801,7 +871,12 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                 ),
                                 Row(
                                   children: [
-                                    Text('${invoice.paymentStatus}'),
+                                    Text(
+                                      invoicePaymentStatus(),
+                                      style: TextStyle(
+                                        color: textColor(),
+                                      ),
+                                    ),
                                     IconButton(
                                       onPressed: () {},
                                       icon: Icon(
@@ -955,6 +1030,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
         maxChildSize: 1,
         initialChildSize: 1,
         builder: (context, innerBoxIsScrolled) => PaymentPage(
+          id: widget.id,
           data: invoice,
         ),
       );

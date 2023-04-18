@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -18,12 +20,20 @@ class InvoiceProductCard extends StatefulWidget {
   State<InvoiceProductCard> createState() => _InvoiceProductCardState();
 }
 
-class _InvoiceProductCardState extends State<InvoiceProductCard> {
+class _InvoiceProductCardState extends State<InvoiceProductCard>
+    with AfterLayoutMixin {
   int price = 9500;
   int amount = 1000;
   int percent = 5;
   int _count = 00;
   String? discount;
+
+  @override
+  afterFirstLayout(BuildContext context) {
+    print("===================DATA==================");
+    print(widget.data!.toJson());
+    print("===================DATA==================");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +172,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                         borderRadius: BorderRadius.circular(5),
                         color: Color(0xffEBFAFA),
                       ),
-                      child: widget.data!.discountType != "PERCENTAGE"
+                      child: widget.data!.discountType == "PERCENTAGE"
                           ? Text(
                               'хувиар',
                               style: TextStyle(
@@ -217,7 +227,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                   ),
                   child: Text(
                     '${widget.data!.quantity}',
-                    style: TextStyle(color: grey3, fontSize: 20),
+                    style: TextStyle(color: grey3, fontSize: 14),
                     textAlign: TextAlign.end,
                   ),
                 ),

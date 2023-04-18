@@ -1,6 +1,7 @@
 import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/auth/login_page.dart';
+import 'package:dehub/screens/home_page/home_page.dart';
 import 'package:dehub/screens/invoice/invoice_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product_tabs/bagtsaar.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product_tabs/shirhegeer.dart';
@@ -72,6 +73,10 @@ class MyApp extends StatelessWidget {
                   case SplashPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return const SplashPage();
+                    });
+                  case HomePage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return const HomePage();
                     });
                   case LoginPage.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -153,11 +158,17 @@ class MyApp extends StatelessWidget {
                         id: arguments.id,
                       );
                     });
-
                   case PaymentApprovalPage.routeName:
+                    PaymentApprovalPageArguments arguments =
+                        settings.arguments as PaymentApprovalPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return PaymentApprovalPage();
+                      return PaymentApprovalPage(
+                        amount: arguments.amount,
+                        id: arguments.id,
+                        creditAccountId: arguments.creditAccountId,
+                      );
                     });
+
                   case MenuPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return MenuPage();

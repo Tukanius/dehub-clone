@@ -1,15 +1,12 @@
 import 'package:dehub/api/invoice_api.dart';
-import 'package:dehub/components/invoice_card/invoice_card.dart';
+import 'package:dehub/components/invoice_card/invoice_card_sent.dart';
 import 'package:dehub/components/invoice_empty/invoice_empty.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/models/user.dart';
-import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/invoice/product_return/product_return.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:provider/provider.dart';
 
 class TakePage extends StatefulWidget {
   const TakePage({Key? key}) : super(key: key);
@@ -226,7 +223,7 @@ class _TakePageState extends State<TakePage>
                 ? Column(
                     children: invoice.rows!
                         .map(
-                          (item) => InvoiceCard(
+                          (item) => InvoiceCardSent(
                             data: item,
                             onClick: () {
                               Navigator.of(context).pushNamed(

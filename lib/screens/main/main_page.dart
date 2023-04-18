@@ -1,7 +1,7 @@
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/home/home_page.dart';
+import 'package:dehub/screens/home_page/home_page.dart';
 import 'package:dehub/screens/invoice/invoice_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
 import 'package:dehub/screens/menu/menu_page.dart';
@@ -45,7 +45,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserProvider>(context, listen: false).partnerUser;
+    user = Provider.of<UserProvider>(context, listen: false).user;
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -91,9 +91,21 @@ class _MainPageState extends State<MainPage> {
                       Navigator.of(context).pushNamed(ProfilePage.routeName);
                     },
                     child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 13),
-                      width: 30,
-                      color: red,
+                      decoration: BoxDecoration(),
+                      child: user.avatar == null
+                          ? CircleAvatar(
+                              radius: 15,
+                              child: ClipOval(
+                                child: Image(
+                                    image: NetworkImage(
+                                  'https://i0.wp.com/a.slack-edge.com/df10d/img/avatars/ava_0024-192.png?ssl=1',
+                                )),
+                              ),
+                            )
+                          : CircleAvatar(
+                              radius: 15,
+                              backgroundImage: NetworkImage('${user.avatar}'),
+                            ),
                     ),
                   ),
                 ),
