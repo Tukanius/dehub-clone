@@ -1,108 +1,89 @@
+import 'package:dehub/models/price_change_types.dart';
+import 'package:dehub/models/price_end_types.dart';
+import 'package:dehub/models/per_types.dart';
+import 'package:dehub/models/payment_term_rules.dart';
+import 'package:dehub/models/payment_method.dart';
+import 'package:dehub/models/over_due_status.dart';
+import 'package:dehub/models/order_confirm_terms.dart';
+import 'package:dehub/models/number_units.dart';
+import 'package:dehub/models/item_status.dart';
+import 'package:dehub/models/invoice_payment_status.dart';
+import 'package:dehub/models/invoice_history_types.dart';
+import 'package:dehub/models/invoice_status.dart';
+import 'package:dehub/models/types.dart';
+import 'package:dehub/models/invoice_types.dart';
+import 'package:dehub/models/bank_accounts.dart';
+import 'package:dehub/models/discount_types.dart';
+import 'package:dehub/models/unit_space_labels.dart';
+import 'package:dehub/models/unit_weight_labels.dart';
+import 'package:dehub/models/networks.dart';
+import 'package:dehub/models/transaction_types.dart';
+import 'package:dehub/models/currencies.dart';
+import 'package:dehub/models/staffs.dart';
+import 'package:dehub/models/return_types.dart';
+import 'package:dehub/models/unit_convert_types.dart';
+import 'package:dehub/models/districts.dart';
+import 'package:dehub/models/khoroos.dart';
+import 'package:dehub/models/provinces.dart';
 part '../parts/general.dart';
 
 class General {
-  List<General>? provinces;
-  String? id;
-  String? createdAt;
-  String? updatedAt;
-  String? name;
-  List<General>? districts;
-  String? provinceId;
-  List<General>? khoroos;
-  String? districtId;
-  List<General>? bankAccounts;
-  String? businessId;
-  String? bankName;
-  String? number;
-  String? currency;
-  bool? isDefault;
-  bool? isVerified;
-  bool? isActive;
-  String? icon;
-  String? balance;
-  List<General>? staffs;
-  String? lastName;
-  String? firstName;
-  List<General>? networks;
-  String? profileName;
-  List<General>? businessType;
-  List<General>? discountTypes;
-  String? code;
-  String? symbol;
-  List<General>? invoiceHistoryTypes;
-  List<General>? invoiceTypes;
-  List<General>? invoicePaymentStatus;
-  String? color;
-  List<General>? invoiceStatus;
-  List<General>? itemStatus;
-  List<General>? types;
-  List<General>? numberUnits;
-  String? value;
-  List<General>? orderConfirmTerms;
-  List<General>? overDueStatus;
-  List<General>? paymentMethod;
-  List<General>? paymentTermRules;
-  List<General>? perTypes;
-  String? text;
-  List<General>? priceChangeTypes;
-  List<General>? priceEndTypes;
-  List<General>? returnTypes;
-  List<General>? transactionTypes;
-  List<General>? unitConvertTypes;
-  List<General>? unitSpaceLabels;
-  List<General>? unitWeightLabels;
+  List<Provinces>? provinces;
+  List<Districts>? districts;
+  List<Khoroos>? khoroos;
+  List<BankAccounts>? bankAccounts;
+  List<Staffs>? staffs;
+  List<Networks>? networks;
+  List<Currencies>? currencies;
+  List<DiscountTypes>? discountTypes;
+  List<InvoiceHistoryTypes>? invoiceHistoryTypes;
+  List<InvoiceTypes>? invoiceTypes;
+  List<InvoicePaymentStatus>? invoicePaymentStatus;
+  List<InvoiceStatus>? invoiceStatus;
+  List<ItemStatus>? itemStatus;
+  List<Types>? types;
+  List<NumberUnits>? numberUnits;
+  List<OrderConfirmTerms>? orderConfirmTerms;
+  List<OverDueStatus>? overDueStatus;
+  List<PaymentMethod>? paymentMethod;
+  List<PaymentTermRules>? paymentTermRules;
+  List<PerTypes>? perTypes;
+  List<PriceChangeTypes>? priceChangeTypes;
+  List<PriceEndTypes>? priceEndTypes;
+  List<ReturnTypes>? returnTypes;
+  List<TransactionTypes>? transactionTypes;
+  List<UnitConvertTypes>? unitConvertTypes;
+  List<UnitSpaceLabels>? unitSpaceLabels;
+  List<UnitWeightLabels>? unitWeightLabels;
 
   General({
     this.provinces,
-    this.id,
-    this.createdAt,
-    this.updatedAt,
-    this.name,
     this.districts,
-    this.provinceId,
     this.khoroos,
-    this.districtId,
     this.bankAccounts,
-    this.businessId,
-    this.bankName,
-    this.number,
-    this.currency,
-    this.isDefault,
-    this.isVerified,
-    this.isActive,
-    this.icon,
-    this.balance,
     this.staffs,
-    this.lastName,
-    this.firstName,
     this.networks,
-    this.profileName,
-    this.businessType,
+    this.currencies,
     this.discountTypes,
-    this.code,
-    this.symbol,
     this.invoiceHistoryTypes,
     this.invoiceTypes,
     this.invoicePaymentStatus,
-    this.color,
     this.invoiceStatus,
     this.itemStatus,
     this.types,
     this.numberUnits,
-    this.value,
     this.orderConfirmTerms,
     this.overDueStatus,
     this.paymentMethod,
     this.paymentTermRules,
     this.perTypes,
-    this.text,
     this.priceChangeTypes,
     this.priceEndTypes,
     this.returnTypes,
     this.transactionTypes,
-    this.unitConvertTypes,
     this.unitSpaceLabels,
     this.unitWeightLabels,
+    this.unitConvertTypes,
   });
 
   static $fromJson(Map<String, dynamic> json) => _$GeneralFromJson(json);

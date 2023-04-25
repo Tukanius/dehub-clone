@@ -1,19 +1,25 @@
 import 'package:dehub/api/auth_api.dart';
+import 'package:dehub/api/general_api.dart';
 import 'package:dehub/api/invoice_api.dart';
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 
 class PaymentApprovalPageArguments {
   String creditAccountId;
   String id;
   double amount;
+  String? refCode;
   PaymentApprovalPageArguments({
+    this.refCode,
     required this.creditAccountId,
     required this.id,
     required this.amount,
@@ -25,10 +31,12 @@ class PaymentApprovalPage extends StatefulWidget {
   String id;
   String creditAccountId;
   double amount;
+  String? refCode;
   PaymentApprovalPage({
     Key? key,
     required this.amount,
     required this.creditAccountId,
+    required this.refCode,
     required this.id,
   }) : super(key: key);
 
@@ -85,7 +93,7 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 25),
                 child: Text(
-                  'Таны INV-23987 дугаартай нэхэмжлэхийн 200,000.00 ₮-ийн төлөлт амжилттай хийгдлээ.',
+                  'Таны ${widget.refCode} дугаартай нэхэмжлэхийн ${widget.amount.toString()} ₮-ийн төлөлт амжилттай хийгдлээ.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xff2C3D7A),
@@ -131,7 +139,10 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
   User user = User();
   Invoice invoice = Invoice();
 
-  afterFirstLayout(BuildContext context) async {}
+  afterFirstLayout(BuildContext context) async {
+    var res =
+        await Provider.of<GeneralProvider>(context, listen: false).general;
+  }
 
   checkPin(value) async {
     user.pin = value;
@@ -139,9 +150,12 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
 
     if (res == true) {
       try {
-        invoice.creditAccountId = widget.id;
+        invoice.creditAccountId = widget.creditAccountId;
         invoice.amount = widget.amount;
         invoice.method = "B2B";
+        print('================METHOD===============');
+        print(invoice.method.toString());
+        print('================METHOD===============');
         print(invoice.toJson());
         await InvoiceApi().pay(widget.id, invoice);
         await show(context);
@@ -153,8 +167,12 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
     }
   }
 
+  General general = General();
+
   @override
   Widget build(BuildContext context) {
+    general = Provider.of<GeneralProvider>(context, listen: true).general;
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -230,11 +248,11 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
                 Directionality(
                   textDirection: TextDirection.ltr,
                   child: Pinput(
+                    autofocus: true,
                     keyboardType: TextInputType.number,
                     obscureText: true,
                     onCompleted: (value) => checkPin(value),
                     length: 6,
-                    validator: (value) {},
                     hapticFeedbackType: HapticFeedbackType.lightImpact,
                     defaultPinTheme: defaultPinTheme,
                     submittedPinTheme: defaultPinTheme.copyWith(

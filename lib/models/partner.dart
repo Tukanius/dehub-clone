@@ -1,6 +1,7 @@
 part '../parts/partner.dart';
 
 class Partner {
+  Partner? partner;
   String? id;
   String? createdAt;
   String? updatedAt;
@@ -48,8 +49,11 @@ class Partner {
   String? name;
   Partner? district;
   Partner? khoroo;
+  Partner? employeeUnit;
 
   Partner({
+    this.employeeUnit,
+    this.partner,
     this.id,
     this.createdAt,
     this.updatedAt,

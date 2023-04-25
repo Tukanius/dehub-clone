@@ -5,8 +5,10 @@ import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/screens/invoice/product_return/product_return.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class TakePage extends StatefulWidget {
   const TakePage({Key? key}) : super(key: key);
@@ -22,10 +24,41 @@ class _TakePageState extends State<TakePage>
   late TabController tabController = TabController(length: 5, vsync: this);
   int currentIndex = 0;
   Result invoice = Result(rows: [], count: 0);
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+  int limit = 10;
+  int page = 1;
 
   @override
   afterFirstLayout(BuildContext context) async {
     await list(1, 10);
+  }
+
+  void dispose() {
+    super.dispose();
+  }
+
+  void _onRefresh() async {
+    await Future.delayed(const Duration(milliseconds: 1000));
+    setState(() {
+      isLoading = true;
+    });
+    await list(page, limit);
+    _refreshController.refreshCompleted();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  void _onLoading() async {
+    setState(() {
+      limit += 10;
+    });
+    await list(page, limit);
+    _refreshController.refreshCompleted();
+    setState(() {
+      isLoading = false;
+    });
   }
 
   list(int page, int limit) async {
@@ -212,15 +245,42 @@ class _TakePageState extends State<TakePage>
           ),
         ];
       },
-      body: SingleChildScrollView(
-        child: isLoading == true
-            ? Center(
-                child: CircularProgressIndicator(
-                  color: brownButtonColor,
-                ),
-              )
-            : invoice.rows!.length != 0
-                ? Column(
+      body: isLoading == true
+          ? Center(
+              child: CircularProgressIndicator(
+                color: brownButtonColor,
+              ),
+            )
+          : invoice.rows!.length == 0
+              ? InvoiceEmpty()
+              : SmartRefresher(
+                  enablePullDown: true,
+                  enablePullUp: true,
+                  controller: _refreshController,
+                  header: WaterDropHeader(
+                    waterDropColor: brownButtonColor,
+                  ),
+                  onRefresh: _onRefresh,
+                  onLoading: _onLoading,
+                  footer: CustomFooter(
+                    builder: (context, mode) {
+                      Widget body;
+                      if (mode == LoadStatus.idle) {
+                        body = const Text("");
+                      } else if (mode == LoadStatus.loading) {
+                        body = const CupertinoActivityIndicator();
+                      } else if (mode == LoadStatus.failed) {
+                        body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
+                      } else {
+                        body = const Text("Мэдээлэл алга байна");
+                      }
+                      return SizedBox(
+                        height: 55.0,
+                        child: Center(child: body),
+                      );
+                    },
+                  ),
+                  child: Column(
                     children: invoice.rows!
                         .map(
                           (item) => InvoiceCardSent(
@@ -235,9 +295,8 @@ class _TakePageState extends State<TakePage>
                           ),
                         )
                         .toList(),
-                  )
-                : InvoiceEmpty(),
-      ),
+                  ),
+                ),
     );
   }
 }

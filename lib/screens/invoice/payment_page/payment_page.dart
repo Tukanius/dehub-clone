@@ -1,4 +1,6 @@
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/screens/invoice/payment_page/payment_approval_page.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -6,6 +8,8 @@ import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:after_layout/after_layout.dart';
 
 class PaymentPage extends StatefulWidget {
   static const routeName = '/paymentpage';
@@ -21,11 +25,18 @@ class PaymentPage extends StatefulWidget {
   State<PaymentPage> createState() => _PaymentPageState();
 }
 
-class _PaymentPageState extends State<PaymentPage> {
+class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
   bool value = false;
   Invoice invoice = Invoice();
   TextEditingController textController = TextEditingController();
+  TextEditingController menuText = TextEditingController();
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
+
+  String? selectedValue;
+
+  afterFirstLayout(BuildContext context) {
+    print(general.paymentMethod!.first.name);
+  }
 
   fillAmount() {
     setState(() {
@@ -33,19 +44,32 @@ class _PaymentPageState extends State<PaymentPage> {
     });
   }
 
+  onChanged() {
+    if (selectedValue is String) {
+      setState(() {
+        menuText.text = selectedValue!;
+      });
+    }
+  }
+
   onSubmit() {
     Navigator.of(context).pushNamed(
       PaymentApprovalPage.routeName,
       arguments: PaymentApprovalPageArguments(
         id: widget.id,
-        creditAccountId: widget.data.id.toString(),
+        refCode: widget.data.refCode,
+        creditAccountId: general.bankAccounts!.first.id.toString(),
         amount: double.parse(textController.text),
       ),
     );
   }
 
+  General general = General();
+
   @override
   Widget build(BuildContext context) {
+    general = Provider.of<GeneralProvider>(context, listen: true).general;
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -264,26 +288,52 @@ class _PaymentPageState extends State<PaymentPage> {
                       children: [
                         Row(
                           children: [
-                            Container(
-                              child: SvgPicture.asset(
-                                'images/bank.svg',
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
+                            SvgPicture.asset('images/bank.svg'),
                             Text(
                               'Холбосон дансаар',
                               style: TextStyle(color: brownButtonColor),
                             ),
                           ],
                         ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.arrow_forward_ios,
-                            size: 12,
-                          ),
+                        // DropdownButton(
+                        //   items: general.bankAccounts!
+                        //       .map(
+                        //         (item) => DropdownMenuItem(
+                        //           child: Text('${item.bankName}'),
+                        //         ),
+                        //       )
+                        //       .toList(),
+                        //   onChanged: onChanged(),
+                        // )
+                        // PopupMenuButton(
+                        //   itemBuilder: (context) {
+                        //     return general.paymentMethod!
+                        //         .map(
+                        //           (item) => PopupMenuItem(
+                        //             child: Text('${item.name}'),
+                        //           ),
+                        //         )
+                        //         .toList();
+                        //   },
+                        // ),
+
+                        Column(
+                          children: general.bankAccounts!
+                              .map(
+                                (item) => DropdownMenuItem(
+                                  value: item.bankName,
+                                  child: SizedBox(
+                                    height: 30,
+                                    child: Text(
+                                      '${item.id}',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(fontSize: 12),
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList(),
                         ),
                       ],
                     ),

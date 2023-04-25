@@ -21,7 +21,7 @@ class _ProductState extends State<Product> {
           ? MediaQuery.of(context).size.width /
               (MediaQuery.of(context).size.height / 1.5)
           : MediaQuery.of(context).size.width /
-              (MediaQuery.of(context).size.height / 2),
+              (MediaQuery.of(context).size.height / 2.3),
       crossAxisCount: widget.gridview != true ? 1 : 2,
       children: <Widget>[
         for (var i = 0; i < 4; i++)

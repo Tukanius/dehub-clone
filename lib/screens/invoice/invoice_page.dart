@@ -5,7 +5,11 @@ import 'package:flutter/material.dart';
 
 class InvoicePage extends StatefulWidget {
   static const routeName = '/invoicepage';
-  const InvoicePage({Key? key}) : super(key: key);
+  final int? index;
+  const InvoicePage({
+    Key? key,
+    this.index,
+  }) : super(key: key);
 
   @override
   State<InvoicePage> createState() => _InvoicePageState();

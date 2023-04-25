@@ -21,17 +21,13 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(
-    color: black,
-    fontSize: 10,
-  );
-  static const List<Widget> _widgetOptions = <Widget>[
+
+  static const List<Widget> currentPages = <Widget>[
     HomePage(),
     InvoicePage(),
     VerticalDivider(),
     Text(
       'Index 3: Захиалга',
-      style: optionStyle,
     ),
   ];
 
@@ -112,7 +108,7 @@ class _MainPageState extends State<MainPage> {
         ],
       ),
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: currentPages.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
@@ -122,7 +118,7 @@ class _MainPageState extends State<MainPage> {
             label: 'Нүүр',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.playlist_add_check_rounded),
+            icon: SvgPicture.asset('images/binvoice.svg'),
             backgroundColor: brownButtonColor,
             label: 'Нэхэмжлэх',
           ),

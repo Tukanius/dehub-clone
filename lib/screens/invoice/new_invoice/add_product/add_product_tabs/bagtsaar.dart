@@ -1,17 +1,24 @@
+import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 
 class Bagtsaar extends StatefulWidget {
   static const routeName = '/bagtsaar';
-  const Bagtsaar({super.key});
+  // Invoice data;
+  Bagtsaar({
+    Key? key,
+    // required this.data,
+  }) : super(key: key);
 
   @override
   State<Bagtsaar> createState() => _BagtsaarState();
 }
 
-class _BagtsaarState extends State<Bagtsaar> {
+class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
+  bool isLoading = true;
   int price = 9500;
   int amount = 1000;
   int percent = 5;
@@ -19,6 +26,11 @@ class _BagtsaarState extends State<Bagtsaar> {
   String? discount;
 
   Invoice invoice = Invoice();
+
+  @override
+  afterFirstLayout(BuildContext context) async {
+    // invoice = await InvoiceApi().getInvoice(widget.data);
+  }
 
   @override
   Widget build(BuildContext context) {

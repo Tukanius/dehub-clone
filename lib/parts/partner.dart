@@ -48,6 +48,8 @@ Partner _$PartnerFromJson(Map<String, dynamic> json) {
   String? name;
   Partner? district;
   Partner? khoroo;
+  Partner? partner;
+  Partner? employeeUnit;
 
   if (json['id'] != null) id = json['id'];
   if (json['createdAt'] != null) createdAt = json['createdAt'];
@@ -90,8 +92,10 @@ Partner _$PartnerFromJson(Map<String, dynamic> json) {
   if (json['khaalgaDugaar'] != null) khaalgaDugaar = json['khaalgaDugaar'];
   if (json['businessAddress'] != null)
     businessAddress = json['businessAddress'];
-  if (json['locationLat'] != null) locationLat = json['locationLat'];
-  if (json['locationLng'] != null) locationLng = json['locationLng'];
+  if (json['locationLat'] != null)
+    locationLat = double.parse('${json['locationLat']}');
+  if (json['locationLng'] != null)
+    locationLng = double.parse('${json['locationLng']}');
   if (json['isAnchor'] != null) isAnchor = json['isAnchor'];
   if (json['isBuyer'] != null) isBuyer = json['isBuyer'];
   if (json['isSupplier'] != null) isSupplier = json['isSupplier'];
@@ -99,10 +103,17 @@ Partner _$PartnerFromJson(Map<String, dynamic> json) {
   if (json['province'] != null) {
     province = Partner.fromJson(json['province'] as Map<String, dynamic>);
   }
-  ;
+  if (json['employeeUnit'] != null) {
+    employeeUnit =
+        Partner.fromJson(json['employeeUnit'] as Map<String, dynamic>);
+  }
+
   if (json['name'] != null) name = json['name'];
   if (json['district'] != null) {
     district = Partner.fromJson(json['district'] as Map<String, dynamic>);
+  }
+  if (json['partner'] != null) {
+    partner = Partner.fromJson(json['partner'] as Map<String, dynamic>);
   }
   ;
   if (json['khoroo'] != null) {
@@ -111,6 +122,8 @@ Partner _$PartnerFromJson(Map<String, dynamic> json) {
   ;
 
   return Partner(
+    employeeUnit: employeeUnit,
+    partner: partner,
     id: id,
     createdAt: createdAt,
     updatedAt: updatedAt,
@@ -163,6 +176,9 @@ Partner _$PartnerFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$PartnerToJson(Partner instance) {
   Map<String, dynamic> json = {};
+  if (instance.employeeUnit != null)
+    json['employeeUnit'] = instance.employeeUnit;
+  if (instance.partner != null) json['partner'] = instance.partner;
   if (instance.id != null) json['id'] = instance.id;
   if (instance.createdAt != null) json['createdAt'] = instance.createdAt;
   if (instance.updatedAt != null) json['updatedAt'] = instance.updatedAt;

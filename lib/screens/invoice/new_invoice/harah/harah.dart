@@ -48,6 +48,13 @@ class _HarahState extends State<Harah> with SingleTickerProviderStateMixin {
         backgroundColor: brownButtonColor,
         elevation: 0,
         centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: Icon(Icons.arrow_back_ios),
+        ),
+        automaticallyImplyLeading: false,
         title: Text(
           'INV-290812',
           style: TextStyle(

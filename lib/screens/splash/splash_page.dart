@@ -1,4 +1,5 @@
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/auth/login_page.dart';
 import 'package:dehub/screens/main/main_page.dart';
@@ -24,6 +25,7 @@ class _SplashPageState extends State<SplashPage>
     try {
       await Provider.of<UserProvider>(context, listen: false).me(false);
       await Provider.of<UserProvider>(context, listen: false).partnerMe(false);
+      await Provider.of<GeneralProvider>(context, listen: false).init(false);
       await Navigator.of(context).pushNamed(MainPage.routeName);
     } catch (e) {
       await Navigator.of(context).pushNamed(LoginPage.routeName);

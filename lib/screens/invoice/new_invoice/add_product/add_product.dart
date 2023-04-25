@@ -90,7 +90,9 @@ class _AddProductState extends State<AddProduct> {
             },
             body: TabBarView(
               children: [
-                Bagtsaar(),
+                Bagtsaar(
+                    // data: ,
+                    ),
                 Shirhegeer(),
               ],
             ),

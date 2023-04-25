@@ -128,7 +128,6 @@ class Invoice {
   String? convertType;
   double? convertValue;
   List<Invoice>? attachments;
-  General? general = General();
 
   String? method;
   String? creditAccountId;
@@ -284,7 +283,6 @@ class Invoice {
     this.convertType,
     this.convertValue,
     this.attachments,
-    this.general,
   });
 
   static $fromJson(Map<String, dynamic> json) => _$InvoiceFromJson(json);

@@ -10,13 +10,20 @@ import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
 import 'package:dehub/screens/invoice/product_return/product_return.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
+import 'package:dehub/widgets/page_change_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:flutter/cupertino.dart';
 
 class GivePage extends StatefulWidget {
-  const GivePage({Key? key}) : super(key: key);
+  final PageChangeController? pageChangeController;
+  const GivePage({
+    Key? key,
+    this.pageChangeController,
+  }) : super(key: key);
 
   @override
   State<GivePage> createState() => _GivePageState();
@@ -28,11 +35,38 @@ class _GivePageState extends State<GivePage>
   bool isLoading = true;
   late TabController tabController = TabController(length: 5, vsync: this);
   int currentIndex = 0;
+  int page = 1;
   Result invoice = Result(rows: [], count: 0);
+  int limit = 10;
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  void _onLoading() async {
+    setState(() {
+      limit += 10;
+    });
+    await list(page, limit);
+    _refreshController.refreshCompleted();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  void _onRefresh() async {
+    await Future.delayed(const Duration(milliseconds: 1000));
+    setState(() {
+      isLoading = true;
+    });
+    await list(page, limit);
+    _refreshController.refreshCompleted();
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   afterFirstLayout(BuildContext context) async {
-    await list(1, 10);
+    await list(page, limit);
   }
 
   list(int page, int limit) async {
@@ -44,6 +78,25 @@ class _GivePageState extends State<GivePage>
       invoice = res;
       isLoading = false;
     });
+  }
+
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    if (widget.pageChangeController != null) {
+      widget.pageChangeController?.addListener(() async {
+        await list(page, limit);
+      });
+    }
+
+    setState(() {
+      isLoading = true;
+    });
+
+    super.initState();
   }
 
   void onItemTapped() {
@@ -263,15 +316,42 @@ class _GivePageState extends State<GivePage>
           ),
         ];
       },
-      body: SingleChildScrollView(
-        child: isLoading == true
-            ? Center(
-                child: CircularProgressIndicator(
-                  color: brownButtonColor,
-                ),
-              )
-            : invoice.rows!.length != 0
-                ? Column(
+      body: isLoading == true
+          ? Center(
+              child: CircularProgressIndicator(
+                color: brownButtonColor,
+              ),
+            )
+          : invoice.rows!.length == 0
+              ? InvoiceEmpty()
+              : SmartRefresher(
+                  enablePullDown: true,
+                  enablePullUp: true,
+                  controller: _refreshController,
+                  header: WaterDropHeader(
+                    waterDropColor: brownButtonColor,
+                  ),
+                  onRefresh: _onRefresh,
+                  onLoading: _onLoading,
+                  footer: CustomFooter(
+                    builder: (context, mode) {
+                      Widget body;
+                      if (mode == LoadStatus.idle) {
+                        body = const Text("");
+                      } else if (mode == LoadStatus.loading) {
+                        body = const CupertinoActivityIndicator();
+                      } else if (mode == LoadStatus.failed) {
+                        body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
+                      } else {
+                        body = const Text("Мэдээлэл алга байна");
+                      }
+                      return SizedBox(
+                        height: 55.0,
+                        child: Center(child: body),
+                      );
+                    },
+                  ),
+                  child: Column(
                     children: invoice.rows!
                         .map(
                           (item) => InvoiceCard(
@@ -286,9 +366,8 @@ class _GivePageState extends State<GivePage>
                           ),
                         )
                         .toList(),
-                  )
-                : InvoiceEmpty(),
-      ),
+                  ),
+                ),
     );
   }
 }

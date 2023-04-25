@@ -34,6 +34,9 @@ class _Page1State extends State<Page1> {
   @override
   Widget build(BuildContext context) {
     partnerUser = Provider.of<UserProvider>(context, listen: false).partnerUser;
+    print('=================PARTNERUSER===============');
+    print(partnerUser.toJson());
+    print('=================PARTNERUSER===============');
 
     return SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),
@@ -62,7 +65,7 @@ class _Page1State extends State<Page1> {
                     Container(
                       margin: const EdgeInsets.only(right: 6, top: 10),
                       child: Text(
-                        '${partnerUser.partner!.businessNameEng}',
+                        '${partnerUser.user!.currentBusiness!.profileNameEng}',
                         style: TextStyle(
                           fontSize: 16,
                           color: grey3,

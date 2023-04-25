@@ -1,4 +1,5 @@
 import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/auth/login_page.dart';
 import 'package:dehub/screens/home_page/home_page.dart';
@@ -54,11 +55,12 @@ class MyApp extends StatelessWidget {
       home: MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => UserProvider()),
+          ChangeNotifierProvider(create: (_) => GeneralProvider()),
         ],
         child: Stack(
           children: [
             MaterialApp(
-              title: 'E-Darkhan',
+              title: 'DeHub',
               builder: (context, widget) => Navigator(
                 onGenerateRoute: (settings) => MaterialPageRoute(
                   builder: (context) =>
@@ -118,10 +120,7 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return GereetBish();
                     });
-                  case Bagtsaar.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return Bagtsaar();
-                    });
+
                   case Shirhegeer.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return Shirhegeer();
@@ -163,6 +162,7 @@ class MyApp extends StatelessWidget {
                         settings.arguments as PaymentApprovalPageArguments;
                     return MaterialPageRoute(builder: (context) {
                       return PaymentApprovalPage(
+                        refCode: arguments.refCode,
                         amount: arguments.amount,
                         id: arguments.id,
                         creditAccountId: arguments.creditAccountId,

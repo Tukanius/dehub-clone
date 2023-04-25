@@ -64,7 +64,6 @@ class User {
   String? email2;
   bool? isDanVerified;
   bool? hasPassword;
-  String? employeeUnit;
   User? currentBusiness;
   double? regNumber;
   double? stateRegNum;
@@ -160,7 +159,6 @@ class User {
     this.email2,
     this.isDanVerified,
     this.hasPassword,
-    this.employeeUnit,
     this.currentBusiness,
     this.regNumber,
     this.stateRegNum,

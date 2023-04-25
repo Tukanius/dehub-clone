@@ -60,7 +60,6 @@ User _$UserFromJson(Map<String, dynamic> json) {
   String? email2;
   bool? isDanVerified;
   bool? hasPassword;
-  String? employeeUnit;
   User? currentBusiness;
   double? regNumber;
   double? stateRegNum;
@@ -121,7 +120,6 @@ User _$UserFromJson(Map<String, dynamic> json) {
   if (json['email2'] != null) email2 = json['email2'];
   if (json['isDanVerified'] != null) isDanVerified = json['isDanVerified'];
   if (json['hasPassword'] != null) hasPassword = json['hasPassword'];
-  if (json['employeeUnit'] != null) employeeUnit = json['employeeUnit'];
   if (json['currentBusiness'] != null) {
     currentBusiness =
         User.fromJson(json['currentBusiness'] as Map<String, dynamic>);
@@ -275,7 +273,6 @@ User _$UserFromJson(Map<String, dynamic> json) {
     email2: email2,
     isDanVerified: isDanVerified,
     hasPassword: hasPassword,
-    employeeUnit: employeeUnit,
     currentBusiness: currentBusiness,
     regNumber: regNumber,
     stateRegNum: stateRegNum,
@@ -331,8 +328,6 @@ Map<String, dynamic> _$UserToJson(User instance) {
   if (instance.isDanVerified != null)
     json['isDanVerified'] = instance.isDanVerified;
   if (instance.hasPassword != null) json['hasPassword'] = instance.hasPassword;
-  if (instance.employeeUnit != null)
-    json['employeeUnit'] = instance.employeeUnit;
   if (instance.currentBusiness != null)
     json['currentBusiness'] = instance.currentBusiness;
   if (instance.regNumber != null) json['regNumber'] = instance.regNumber;
