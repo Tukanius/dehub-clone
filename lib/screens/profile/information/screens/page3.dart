@@ -227,7 +227,7 @@ class _Page3State extends State<Page3> {
           ),
           Container(
             child: Text(
-              'Байр байшин',
+              'Байр, байшин',
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 14,

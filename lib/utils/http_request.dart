@@ -10,13 +10,18 @@ import 'http_handler.dart';
 import '../main.dart';
 
 class HttpRequest {
-  // static const host = 'https://dev-de-dehub.zto.mn';
-  static const host = 'http://192.168.1.220:30550';
-  static const partnerHost = 'http://192.168.1.220:30556';
-  static const invoiceHost = 'http://192.168.1.220:30553';
+  // static const host = 'http://192.168.1.220:30550/2fa';
+  static const host = 'http://dev-de-dehub.zto.mn/2fa';
 
-  // static const s3host = 'https://dev-de-dehub.zto.mn/s3';
-  static const s3host = 'http://192.168.1.220:30550/s3';
+  // static const partnerHost = 'http://192.168.1.220:30556/prt';
+  static const partnerHost = 'http://dev-de-partner.zto.mn/prt';
+
+  // static const invoiceHost = 'http://192.168.1.220:30553/inv';
+  static const invoiceHost = 'http://dev-de-invoice.zto.mn/inv';
+
+  // static const s3host = 'http://192.168.1.220:30550/s3';
+  static const s3host = 'https://dev-de-dehub.zto.mn/s3';
+
   static const version = '/app';
 
   static const uri = host;

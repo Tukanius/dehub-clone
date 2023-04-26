@@ -155,14 +155,23 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
                         SizedBox(
                           height: 5,
                         ),
-                        Text(
-                          '${widget.data!.discountAmount}',
-                          style: TextStyle(
-                            color: widget.color,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
+                        widget.data!.discountAmount != null
+                            ? Text(
+                                '${widget.data!.discountAmount}',
+                                style: TextStyle(
+                                  color: widget.color,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              )
+                            : Text(
+                                '0',
+                                style: TextStyle(
+                                  color: widget.color,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
                         SizedBox(
                           height: 5,
                         ),

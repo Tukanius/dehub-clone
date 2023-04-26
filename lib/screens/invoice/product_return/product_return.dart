@@ -1,13 +1,16 @@
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/harah.dart';
 import 'package:dehub/screens/invoice/payment_page/payment_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class ProductReturnPageArguments {
   String id;
@@ -104,8 +107,11 @@ class _ProductReturnPageState extends State<ProductReturnPage>
     }
   }
 
+  General general = General();
+
   @override
   Widget build(BuildContext context) {
+    general = Provider.of<GeneralProvider>(context, listen: false).general;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -427,7 +433,9 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                         ? Text(
                                             '${invoice.confirmedUser!.firstName}',
                                           )
-                                        : Text('-'),
+                                        : Text(
+                                            '-',
+                                          ),
                                     IconButton(
                                       onPressed: () {},
                                       icon: Icon(
@@ -525,7 +533,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                 Row(
                                   children: [
                                     Text(
-                                      '-',
+                                      '${invoice.senderFinUser!.firstName}',
                                       style: TextStyle(color: brownButtonColor),
                                     ),
                                     IconButton(
@@ -729,7 +737,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                               children: [
                                 Container(
                                   child: Text(
-                                    'Нийт Төлбөр',
+                                    'НИЙТ ТӨЛБӨР',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -740,9 +748,10 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                     Container(
                                       margin: EdgeInsets.only(right: 20),
                                       child: Text(
-                                        '${invoice.totalAmount}',
+                                        '${invoice.totalAmount} ',
                                         style: TextStyle(
                                           color: brownButtonColor,
+                                          fontSize: 24,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -752,7 +761,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                               ],
                             ),
                             SizedBox(
-                              height: 25,
+                              height: 10,
                             ),
                           ],
                         ),
