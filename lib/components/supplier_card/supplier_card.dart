@@ -117,7 +117,7 @@ class _SupplierCardState extends State<SupplierCard> {
                                         ),
                                       ),
                                       itemPadding:
-                                          EdgeInsets.symmetric(horizontal: 4.0),
+                                          EdgeInsets.symmetric(horizontal: 0),
                                       onRatingUpdate: (rating) {
                                         print(rating);
                                       },
