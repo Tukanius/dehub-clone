@@ -58,6 +58,10 @@ dev_dependencies:
   simple_moment: ^1.1.1
   lottie: ^2.3.2
   pull_to_refresh: ^2.0.0
+  fl_chart: ^0.62.0
+  syncfusion_flutter_charts: ^21.1.41
+  carousel_slider: ^4.2.1
+  gradient_borders: ^1.0.0
  
 
   # The "flutter_lints" package below contains a set of recommended lints to

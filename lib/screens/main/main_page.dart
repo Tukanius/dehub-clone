@@ -12,8 +12,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
+  int? selectedIndex;
   static const routeName = '/MainPage';
-  const MainPage({Key? key}) : super(key: key);
+  MainPage({
+    Key? key,
+    this.selectedIndex,
+  }) : super(key: key);
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -76,6 +80,7 @@ class _MainPageState extends State<MainPage> {
           ),
           _selectedIndex == 1
               ? AddButton(
+                  color: Colors.orange,
                   onClick: () {
                     Navigator.of(context).pushNamed(NewInvoice.routeName);
                   },

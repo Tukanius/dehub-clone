@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 class AddButton extends StatefulWidget {
   final Function()? onClick;
-  const AddButton({
+  Color? color;
+  AddButton({
+    this.color,
     Key? key,
     this.onClick,
   }) : super(key: key);
@@ -21,7 +23,7 @@ class _AddButtonState extends State<AddButton> {
         height: 30,
         width: 30,
         decoration: ShapeDecoration(
-          color: Colors.orange,
+          color: widget.color,
           shape: CircleBorder(),
         ),
         child: IconButton(

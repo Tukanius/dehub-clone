@@ -63,7 +63,8 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.all(20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 23),
                 margin: const EdgeInsets.only(top: 50),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),

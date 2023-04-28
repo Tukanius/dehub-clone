@@ -57,12 +57,19 @@ class _ProfilePageState extends State<ProfilePage>
       appBar: AppBar(
         backgroundColor: buttonColor,
         iconTheme: IconThemeData(color: white),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: Icon(Icons.arrow_back_ios_new),
+        ),
         elevation: 0,
         centerTitle: true,
         actions: [
           tabController.index == 2
               ? Container(
                   child: AddButton(
+                    color: Colors.orange,
                     onClick: () {},
                   ),
                 )

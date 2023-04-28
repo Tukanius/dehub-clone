@@ -32,6 +32,7 @@ class _SalbarSongohState extends State<SalbarSongoh> {
         ),
         actions: [
           AddButton(
+            color: Colors.orange,
             onClick: () {},
           ),
         ],

@@ -50,6 +50,7 @@ class _AddProductState extends State<AddProduct> {
             centerTitle: true,
             actions: [
               AddButton(
+                color: Colors.orange,
                 onClick: () {},
               ),
             ],

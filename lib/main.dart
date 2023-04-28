@@ -1,7 +1,10 @@
 import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/screens/account_info_page/account_info_page.dart';
+import 'package:dehub/screens/add_bank_account_page/add_bank_account_page.dart';
 import 'package:dehub/screens/auth/login_page.dart';
+import 'package:dehub/screens/first_page/first_page.dart';
 import 'package:dehub/screens/home_page/home_page.dart';
 import 'package:dehub/screens/invoice/invoice_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product_tabs/bagtsaar.dart';
@@ -18,6 +21,7 @@ import 'package:dehub/screens/invoice/new_invoice/harah/send_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
 import 'package:dehub/screens/invoice/payment_page/payment_approval_page.dart';
 import 'package:dehub/screens/invoice/product_return/product_return.dart';
+import 'package:dehub/screens/link_account_page/link_account_page.dart';
 import 'package:dehub/screens/main/main_page.dart';
 import 'package:dehub/screens/menu/menu_page.dart';
 import 'package:dehub/screens/shopping/shopping_page.dart';
@@ -96,6 +100,10 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return NewInvoice();
                     });
+                  case AccountInfoPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return AccountInfoPage();
+                    });
                   case InvoicePage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return InvoicePage();
@@ -128,6 +136,10 @@ class MyApp extends StatelessWidget {
                   case Harah.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return Harah();
+                    });
+                  case FirstPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return FirstPage();
                     });
                   case PdfPage.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -173,6 +185,10 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return MenuPage();
                     });
+                  case AddBankAccountPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return AddBankAccountPage();
+                    });
                   case SalesPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return SalesPage();
@@ -180,6 +196,10 @@ class MyApp extends StatelessWidget {
                   case PurchasePage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return PurchasePage();
+                    });
+                  case LinkAccountPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return LinkAccountPage();
                     });
                   case SuppliersPage.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -191,7 +211,7 @@ class MyApp extends StatelessWidget {
                     });
                   default:
                     return MaterialPageRoute(
-                      builder: (_) => const MainPage(),
+                      builder: (_) => MainPage(),
                     );
                 }
               },
