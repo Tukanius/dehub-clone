@@ -84,7 +84,6 @@ class _ProductCardState extends State<ProductCard> {
                 color: orange,
               ),
             ),
-            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
             onRatingUpdate: (rating) {
               print(rating);
             },

@@ -183,6 +183,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
             ];
           },
           body: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
             children: [
               Product(
                 gridview: gridview,

@@ -29,7 +29,6 @@ class _GolomtState extends State<Golomt> {
           Column(
             children: [
               Container(
-                padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: white,
@@ -39,10 +38,13 @@ class _GolomtState extends State<Golomt> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Холбосон дансаар',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500),
+                        Container(
+                          margin: const EdgeInsets.all(15),
+                          child: Text(
+                            'Холбосон дансаар',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w500),
+                          ),
                         ),
                         InkWell(
                           onTap: () {
@@ -50,6 +52,7 @@ class _GolomtState extends State<Golomt> {
                                 .pushNamed(LinkAccountPage.routeName);
                           },
                           child: Container(
+                            margin: const EdgeInsets.all(15),
                             height: 30,
                             width: 30,
                             decoration: BoxDecoration(
@@ -75,6 +78,9 @@ class _GolomtState extends State<Golomt> {
                         aspectRatio: 2.5,
                       ),
                     ),
+                    SizedBox(
+                      height: 15,
+                    )
                   ],
                 ),
               ),

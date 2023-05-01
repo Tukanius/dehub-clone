@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:dehub/screens/add_bank_account_page/add_bank_account_page.dart';
 import 'package:dehub/screens/invoice/invoice_page.dart';
 import 'package:dehub/screens/main/main_page.dart';
+import 'package:dehub/screens/network_page/network_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -156,7 +157,9 @@ class _AjilUuregState extends State<AjilUureg> {
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed(NetworkPage.routeName);
+                    },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

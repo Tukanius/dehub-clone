@@ -32,6 +32,7 @@ const Color buttonColor = Color(0xff261EF0);
 Color fillColor = Color(0xff44566C).withOpacity(0.3);
 const Color lightYellow = Color(0xffF4BE5E);
 const Color lightRed = Color(0xffFF808B);
+const Color networkPink = Color(0xffB452D9);
 
 const gradient2 = LinearGradient(colors: [
   Color(0xff5D7128),

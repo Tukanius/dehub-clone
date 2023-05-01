@@ -19,9 +19,9 @@ class _ProductState extends State<Product> {
     return GridView.count(
       childAspectRatio: widget.gridview == true
           ? MediaQuery.of(context).size.width /
-              (MediaQuery.of(context).size.height / 1.5)
+              (MediaQuery.of(context).size.height / 1.4)
           : MediaQuery.of(context).size.width /
-              (MediaQuery.of(context).size.height / 2.3),
+              (MediaQuery.of(context).size.height / 2.2),
       crossAxisCount: widget.gridview != true ? 1 : 2,
       children: <Widget>[
         for (var i = 0; i < 4; i++)

@@ -1,6 +1,9 @@
 import 'package:dehub/screens/account_info_page/tabs/index0.dart';
+import 'package:dehub/screens/account_info_page/tabs/index1.dart';
+
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AccountInfoPage extends StatefulWidget {
@@ -52,11 +55,37 @@ class _AccountInfoPageState extends State<AccountInfoPage>
             color: black,
           ),
         ),
-        title: Text(
-          'Дансны мэдээлэл',
-          style: TextStyle(color: black, fontSize: 18),
-        ),
+        title: tabController.index == 1
+            ? Text(
+                'Дансны түүх',
+                style: TextStyle(color: black, fontSize: 18),
+              )
+            : Text(
+                'Дансны мэдээлэл',
+                style: TextStyle(color: black, fontSize: 18),
+              ),
         centerTitle: true,
+        actions: [
+          tabController.index == 1
+              ? InkWell(
+                  onTap: () {},
+                  child: Container(
+                    padding: const EdgeInsets.all(7),
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 13, horizontal: 20),
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: neonGreen,
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: SvgPicture.asset(
+                      'images/yuluur1.svg',
+                    ),
+                  ),
+                )
+              : SizedBox(),
+        ],
         bottom: PreferredSize(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -100,15 +129,13 @@ class _AccountInfoPageState extends State<AccountInfoPage>
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 20),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           GestureDetector(
                             onTap: () {
                               changePage(0);
                             },
                             child: Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 15),
                               padding: const EdgeInsets.all(8),
                               height: 40,
                               width: 40,
@@ -135,8 +162,6 @@ class _AccountInfoPageState extends State<AccountInfoPage>
                               changePage(1);
                             },
                             child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 15),
                                 padding: const EdgeInsets.all(8),
                                 height: 40,
                                 width: 40,
@@ -163,8 +188,6 @@ class _AccountInfoPageState extends State<AccountInfoPage>
                               changePage(2);
                             },
                             child: Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 15),
                               padding: const EdgeInsets.all(8),
                               height: 40,
                               width: 40,
@@ -191,8 +214,6 @@ class _AccountInfoPageState extends State<AccountInfoPage>
                               changePage(3);
                             },
                             child: Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 15),
                               padding: const EdgeInsets.all(8),
                               height: 40,
                               width: 40,
@@ -219,8 +240,6 @@ class _AccountInfoPageState extends State<AccountInfoPage>
                               changePage(4);
                             },
                             child: Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 15),
                               padding: const EdgeInsets.all(8),
                               height: 40,
                               width: 40,
@@ -259,7 +278,7 @@ class _AccountInfoPageState extends State<AccountInfoPage>
             physics: NeverScrollableScrollPhysics(),
             children: [
               Index0(),
-              Text('2'),
+              Index1(),
               Text('3'),
               Text('4'),
               Text('5'),
