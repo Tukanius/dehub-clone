@@ -16,17 +16,28 @@ class Product extends StatefulWidget {
 class _ProductState extends State<Product> {
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      childAspectRatio: widget.gridview == true
-          ? MediaQuery.of(context).size.width /
-              (MediaQuery.of(context).size.height / 1.4)
-          : MediaQuery.of(context).size.width /
-              (MediaQuery.of(context).size.height / 2.2),
-      crossAxisCount: widget.gridview != true ? 1 : 2,
-      children: <Widget>[
-        for (var i = 0; i < 4; i++)
-          widget.gridview == true ? GridViewProductCard() : ProductCard()
-      ],
-    );
+    return widget.gridview == true
+        ? GridView.count(
+            childAspectRatio: 2 / 3,
+            scrollDirection: Axis.vertical,
+            crossAxisCount: 2,
+            children: <Widget>[
+              for (var i = 0; i < 4; i++) GridViewProductCard(),
+            ],
+          )
+        // ? Column(
+        // children: [
+        // Row(
+        // children: [
+        // Expanded(child: GridViewProductCard()),
+        // Expanded(child: GridViewProductCard()),
+        // ],
+        // ),
+        // ],
+        // )
+        : ListView.builder(
+            itemCount: 3,
+            itemBuilder: (context, index) => ProductCard(),
+          );
   }
 }

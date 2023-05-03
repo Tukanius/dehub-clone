@@ -280,21 +280,23 @@ class _TakePageState extends State<TakePage>
                       );
                     },
                   ),
-                  child: Column(
-                    children: invoice.rows!
-                        .map(
-                          (item) => InvoiceCardSent(
-                            data: item,
-                            onClick: () {
-                              Navigator.of(context).pushNamed(
-                                ProductReturnPage.routeName,
-                                arguments:
-                                    ProductReturnPageArguments(id: item.id),
-                              );
-                            },
-                          ),
-                        )
-                        .toList(),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: invoice.rows!
+                          .map(
+                            (item) => InvoiceCardSent(
+                              data: item,
+                              onClick: () {
+                                Navigator.of(context).pushNamed(
+                                  ProductReturnPage.routeName,
+                                  arguments:
+                                      ProductReturnPageArguments(id: item.id),
+                                );
+                              },
+                            ),
+                          )
+                          .toList(),
+                    ),
                   ),
                 ),
     );

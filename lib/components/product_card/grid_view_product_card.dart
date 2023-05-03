@@ -18,14 +18,16 @@ class _GridViewProductCardState extends State<GridViewProductCard> {
   Widget build(BuildContext context) {
     return Container(
       color: white,
-      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      margin: const EdgeInsets.all(5),
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
             children: [
               Container(
+                color: white,
                 height: 100,
                 child: Image(
                   image: AssetImage(
@@ -52,79 +54,49 @@ class _GridViewProductCardState extends State<GridViewProductCard> {
               ),
             ],
           ),
-          SizedBox(
-            height: 15,
+          Column(
+            children: [
+              Text(
+                'Гүзээлзгэнэтэй иогурт',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Text(
+                'SKU 32165456, Brand Name, 250 гр',
+                style: TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+            ],
           ),
-          Text(
-            'Гүзээлзгэнэтэй иогурт',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          SizedBox(
-            height: 7,
-          ),
-          widget.ratingBar == true
-              ? RatingBar(
-                  itemSize: 12,
-                  initialRating: 3,
-                  direction: Axis.horizontal,
-                  allowHalfRating: true,
-                  itemCount: 5,
-                  ratingWidget: RatingWidget(
-                    full: Icon(
-                      Icons.star,
-                      color: orange,
-                    ),
-                    half: Icon(
-                      Icons.star_half,
-                      color: orange,
-                    ),
-                    empty: Icon(
-                      Icons.star_border,
-                      color: orange,
-                    ),
-                  ),
-                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                  onRatingUpdate: (rating) {
-                    print(rating);
-                  },
-                )
-              : SizedBox(),
-          SizedBox(
-            height: 7,
-          ),
-          Text(
-            'SKU 32165456, Brand Name, 250 гр',
-            style: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-          SizedBox(
-            height: 7,
-          ),
-          Text(
-            '₮ 6800.00',
-            style: TextStyle(
-              fontSize: 12,
-              color: grey3,
-              fontWeight: FontWeight.w500,
-              decoration: TextDecoration.lineThrough,
-              decorationColor: grey3,
-            ),
-          ),
-          Text(
-            '₮ 6800.00',
-            style: TextStyle(
-              color: buttonColor,
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
-            ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '₮ 6800.00',
+                style: TextStyle(
+                  color: buttonColor,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                ),
+              ),
+              Text(
+                '₮ 6800.00',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: grey3,
+                  fontWeight: FontWeight.w500,
+                  decoration: TextDecoration.lineThrough,
+                  decorationColor: grey3,
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );

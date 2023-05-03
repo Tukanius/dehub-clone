@@ -17,6 +17,9 @@ class UserProvider extends ChangeNotifier {
   partnerMe(bool handler) async {
     try {
       partnerUser = await AuthApi().partnerMe(handler);
+      print('=====================PARTNER=================');
+      print(partnerUser.toJson());
+      print('=====================PARTNER=================');
     } catch (e) {
       print('==================ERRO+++++++++++++++++++++');
       print(e.toString());

@@ -221,108 +221,113 @@ class _Index1State extends State<Index1> {
               height: 5,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(15),
-                  color: white,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Supplier_Business_Name',
-                        style: TextStyle(
-                          color: black,
-                          fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    color: white,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Supplier_Business_Name',
+                          style: TextStyle(
+                            color: black,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'ТТД: 123123',
-                        style: TextStyle(
-                          color: black,
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Партнерын нэр',
-                        style: TextStyle(
-                          color: brownButtonColor,
+                        Text(
+                          'ТТД: 123123',
+                          style: TextStyle(
+                            color: black,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'mail@tradegroup.mn',
-                        style: TextStyle(
-                          color: black,
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        '+976 - 9999 9999',
-                        style: TextStyle(color: black),
-                      )
-                    ],
+                        Text(
+                          'Партнерын нэр',
+                          style: TextStyle(
+                            color: brownButtonColor,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'mail@tradegroup.mn',
+                          style: TextStyle(
+                            color: black,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          '+976 - 9999 9999',
+                          style: TextStyle(color: black),
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(
                   width: 10,
                 ),
-                Container(
-                  padding: const EdgeInsets.all(15),
-                  color: white,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Buyer_Business_Name',
-                        style: TextStyle(
-                          color: black,
-                          fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    color: white,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Buyer_Business_Name',
+                          style: TextStyle(
+                            color: black,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'ТТД: 123123',
-                        style: TextStyle(
-                          color: black,
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Партнерын нэр',
-                        style: TextStyle(
-                          color: brownButtonColor,
+                        Text(
+                          'ТТД: 123123',
+                          style: TextStyle(
+                            color: black,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'mail@tradegroup.mn',
-                        style: TextStyle(
-                          color: black,
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        '+976 - 9999 9999',
-                        style: TextStyle(color: black),
-                      )
-                    ],
+                        Text(
+                          'Партнерын нэр',
+                          style: TextStyle(
+                            color: brownButtonColor,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'mail@tradegroup.mn',
+                          style: TextStyle(
+                            color: black,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          '+976 - 9999 9999',
+                          style: TextStyle(color: black),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -462,7 +467,6 @@ class _Index1State extends State<Index1> {
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.symmetric(horizontal: 20),
                                 child: Text(
                                   '₮ 13240.00',
                                   style: TextStyle(

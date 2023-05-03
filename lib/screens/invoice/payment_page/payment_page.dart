@@ -469,12 +469,15 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
               SizedBox(
                 height: 40,
               ),
-              CustomButton(
-                labelColor: brownButtonColor,
-                labelText: 'Төлбөр зөвшөөрөх',
-                onClick: () {
-                  onSubmit();
-                },
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                child: CustomButton(
+                  labelColor: brownButtonColor,
+                  labelText: 'Төлбөр зөвшөөрөх',
+                  onClick: () {
+                    onSubmit();
+                  },
+                ),
               ),
             ],
           ),

@@ -60,8 +60,7 @@ class _DashboardPageState extends State<DashboardPage> {
               items: cardList,
               options: CarouselOptions(
                 autoPlay: true,
-                aspectRatio: 2.75,
-                enlargeCenterPage: true,
+                aspectRatio: 2.65,
               ),
             ),
             Container(

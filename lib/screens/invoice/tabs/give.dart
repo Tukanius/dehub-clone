@@ -351,21 +351,23 @@ class _GivePageState extends State<GivePage>
                       );
                     },
                   ),
-                  child: Column(
-                    children: invoice.rows!
-                        .map(
-                          (item) => InvoiceCard(
-                            data: item,
-                            onClick: () {
-                              Navigator.of(context).pushNamed(
-                                ProductReturnPage.routeName,
-                                arguments:
-                                    ProductReturnPageArguments(id: item.id),
-                              );
-                            },
-                          ),
-                        )
-                        .toList(),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: invoice.rows!
+                          .map(
+                            (item) => InvoiceCard(
+                              data: item,
+                              onClick: () {
+                                Navigator.of(context).pushNamed(
+                                  ProductReturnPage.routeName,
+                                  arguments:
+                                      ProductReturnPageArguments(id: item.id),
+                                );
+                              },
+                            ),
+                          )
+                          .toList(),
+                    ),
                   ),
                 ),
     );

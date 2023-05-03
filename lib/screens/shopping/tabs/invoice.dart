@@ -1,5 +1,5 @@
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter/material.dart';
+import 'package:dehub/components/sales_page_cards/invoice_card.dart';
 
 class Invoice extends StatefulWidget {
   const Invoice({super.key});
@@ -11,6 +11,12 @@ class Invoice extends StatefulWidget {
 class _InvoiceState extends State<Invoice> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      child: Column(
+        children: [
+          InvoiceCard(),
+        ],
+      ),
+    );
   }
 }

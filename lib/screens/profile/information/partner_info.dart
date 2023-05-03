@@ -80,7 +80,7 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                               ),
                             ),
                             SizedBox(
-                              width: 20,
+                              width: 10,
                             ),
                             SizedBox(
                               height: 50,
@@ -108,35 +108,37 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                         ),
                       )
                     : currentIndex == 3
-                        ? Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            child: SizedBox(
-                              height: 50,
-                              width: 360,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    currentIndex = 2;
-                                  });
-                                },
-                                child: Text(
-                                  'Өмнөх',
-                                  style: TextStyle(
-                                    color: buttonColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
+                        ? Row(
+                            children: [
+                              Container(
+                                child: SizedBox(
+                                  height: 50,
+                                  width: 360,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        currentIndex = 2;
+                                      });
+                                    },
+                                    child: Text(
+                                      'Өмнөх',
+                                      style: TextStyle(
+                                        color: buttonColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: white,
+                                      side: BorderSide(
+                                        color: buttonColor,
+                                      ),
+                                      shadowColor: transparent,
+                                    ),
                                   ),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: white,
-                                  side: BorderSide(
-                                    color: buttonColor,
-                                  ),
-                                  shadowColor: transparent,
                                 ),
                               ),
-                            ),
+                            ],
                           )
                         : Container(
                             width: MediaQuery.of(context).size.width,

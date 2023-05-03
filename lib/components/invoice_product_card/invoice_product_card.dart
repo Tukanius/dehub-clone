@@ -48,43 +48,46 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                height: 56,
-                width: 56,
-                child: Image(
-                  image: NetworkImage('${widget.data!.image}'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
                 children: [
-                  Text(
-                    '${widget.data!.nameMon}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
+                  Container(
+                    height: 56,
+                    width: 56,
+                    child: Image(
+                      image: NetworkImage('${widget.data!.image}'),
+                      fit: BoxFit.cover,
                     ),
                   ),
                   SizedBox(
-                    height: 5,
+                    width: 10,
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.67,
-                    child: Text(
-                      '${widget.data!.skuCode}',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 3,
-                      softWrap: false,
-                      style: TextStyle(
-                        fontSize: 16,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${widget.data!.nameMon}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        child: Text(
+                          '${widget.data!.skuCode}',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 3,
+                          softWrap: false,
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -235,7 +238,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
                       margin: const EdgeInsets.symmetric(horizontal: 10),
                       padding:
                           const EdgeInsets.only(right: 5, top: 8, bottom: 11),
-                      width: 80,
+                      width: 70,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(2),
                         color: Color(0xffF2F3F7),

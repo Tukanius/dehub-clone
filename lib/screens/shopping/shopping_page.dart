@@ -73,7 +73,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
         ],
       ),
       body: DefaultTabController(
-        length: 4,
+        length: 6,
         child: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
@@ -115,6 +115,12 @@ class _ShoppingPageState extends State<ShoppingPage> {
                       Text(
                         'Төлбөр',
                       ),
+                      Text(
+                        'Зээл тооцоо',
+                      ),
+                      Text(
+                        'Нөхцөл',
+                      ),
                     ],
                   ),
                 ),
@@ -132,7 +138,6 @@ class _ShoppingPageState extends State<ShoppingPage> {
                         child: Row(
                           children: [
                             Container(
-                              width: MediaQuery.of(context).size.width * 0.8,
                               margin: const EdgeInsets.only(right: 10),
                               decoration: BoxDecoration(
                                 border: Border.all(
@@ -141,16 +146,35 @@ class _ShoppingPageState extends State<ShoppingPage> {
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: Container(
-                                margin: const EdgeInsets.only(left: 10),
-                                alignment: Alignment.centerLeft,
-                                child: Icon(
-                                  Icons.search,
-                                  size: 20,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 5),
+                                child: SvgPicture.asset(
+                                  'images/yuluur.svg',
+                                  color: grey2,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                margin: const EdgeInsets.only(right: 10),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: grey3.withOpacity(0.3),
+                                  ),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Container(
+                                  margin: const EdgeInsets.only(left: 10),
+                                  alignment: Alignment.centerLeft,
+                                  child: Icon(
+                                    Icons.search,
+                                    size: 20,
+                                  ),
                                 ),
                               ),
                             ),
                             Container(
-                              width: 30,
+                              margin: const EdgeInsets.only(right: 10),
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   color: grey3.withOpacity(0.3),
@@ -191,6 +215,8 @@ class _ShoppingPageState extends State<ShoppingPage> {
               Invoice(),
               Order(),
               Payment(),
+              Text('Зээл тооцоо'),
+              Text('Нөхцөл'),
             ],
           ),
         ),

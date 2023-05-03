@@ -29,6 +29,7 @@ class _InvoiceStatusCardState extends State<InvoiceStatusCard> {
           height: 10,
         ),
         Container(
+          margin: const EdgeInsets.symmetric(horizontal: 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

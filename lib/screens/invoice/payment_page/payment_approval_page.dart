@@ -52,60 +52,61 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
       context: context,
       builder: (context) {
         return Container(
-          height: 400,
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 200),
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 170),
           alignment: Alignment.center,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             color: white,
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 23),
-                margin: const EdgeInsets.only(top: 50),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  border: Border.all(
-                    color: brownButtonColor,
-                    width: 3,
+              Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 23),
+                    margin: const EdgeInsets.only(top: 30),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      border: Border.all(
+                        color: brownButtonColor,
+                        width: 3,
+                      ),
+                    ),
+                    child: SvgPicture.asset(
+                      'images/check.svg',
+                    ),
                   ),
-                ),
-                child: SvgPicture.asset(
-                  'images/check.svg',
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                'Амжилттай',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: black,
-                ),
-              ),
-              SizedBox(
-                height: 35,
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 25),
-                child: Text(
-                  'Таны ${widget.refCode} дугаартай нэхэмжлэхийн ${widget.amount.toString()} ₮-ийн төлөлт амжилттай хийгдлээ.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xff2C3D7A),
+                  SizedBox(
+                    height: 15,
                   ),
-                ),
-              ),
-              SizedBox(
-                height: 60,
+                  Text(
+                    'Амжилттай',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: black,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 25),
+                    child: Text(
+                      'Таны ${widget.refCode} дугаартай нэхэмжлэхийн ${widget.amount.toString()} ₮-ийн төлөлт амжилттай хийгдлээ.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color(0xff2C3D7A),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 30),
+                margin: const EdgeInsets.only(left: 30, right: 30, bottom: 30),
                 child: CustomButton(
                   onClick: () {
                     Navigator.of(context).pop();
@@ -189,87 +190,89 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(top: 50),
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  color: brownButtonColor,
-                  borderRadius: BorderRadius.circular(3),
-                ),
-                child: SvgPicture.asset(
-                  'images/send.svg',
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Text(widget.id),
-          Text(widget.amount.toString()),
-          Text(
-            'Нэхэмжлэх төлөх',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
-              color: Color(0xff2C3D7A),
-            ),
-          ),
-          Text(
-            'Лавлах код: 32165421',
-            style: TextStyle(
-              color: Color(0xff00000000).withOpacity(0.6),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(
-            height: 150,
-          ),
-          Text(
-            'Төлөлт батлах ПИН кодоо оруулна уу.',
-            style: TextStyle(
-              color: Color(0xff657786),
-              fontWeight: FontWeight.w300,
-              fontSize: 14,
-            ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Form(
-            key: formKey,
-            child: Column(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: Pinput(
-                    autofocus: true,
-                    keyboardType: TextInputType.number,
-                    obscureText: true,
-                    onCompleted: (value) => checkPin(value),
-                    length: 6,
-                    hapticFeedbackType: HapticFeedbackType.lightImpact,
-                    defaultPinTheme: defaultPinTheme,
-                    submittedPinTheme: defaultPinTheme.copyWith(
-                      decoration: defaultPinTheme.decoration!.copyWith(
-                        color: white,
-                      ),
-                    ),
-                    errorPinTheme: defaultPinTheme.copyBorderWith(
-                      border: Border.all(color: Colors.redAccent),
-                    ),
+                Container(
+                  margin: const EdgeInsets.only(top: 50),
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    color: brownButtonColor,
+                    borderRadius: BorderRadius.circular(3),
+                  ),
+                  child: SvgPicture.asset(
+                    'images/send.svg',
                   ),
                 ),
               ],
             ),
-          ),
-        ],
+            SizedBox(
+              height: 20,
+            ),
+            Text(widget.id),
+            Text(widget.amount.toString()),
+            Text(
+              'Нэхэмжлэх төлөх',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+                color: Color(0xff2C3D7A),
+              ),
+            ),
+            Text(
+              'Лавлах код: 32165421',
+              style: TextStyle(
+                color: Color(0xff00000000).withOpacity(0.6),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: 150,
+            ),
+            Text(
+              'Төлөлт батлах ПИН кодоо оруулна уу.',
+              style: TextStyle(
+                color: Color(0xff657786),
+                fontWeight: FontWeight.w300,
+                fontSize: 14,
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: Pinput(
+                      autofocus: true,
+                      keyboardType: TextInputType.number,
+                      obscureText: true,
+                      onCompleted: (value) => checkPin(value),
+                      length: 6,
+                      hapticFeedbackType: HapticFeedbackType.lightImpact,
+                      defaultPinTheme: defaultPinTheme,
+                      submittedPinTheme: defaultPinTheme.copyWith(
+                        decoration: defaultPinTheme.decoration!.copyWith(
+                          color: white,
+                        ),
+                      ),
+                      errorPinTheme: defaultPinTheme.copyBorderWith(
+                        border: Border.all(color: Colors.redAccent),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

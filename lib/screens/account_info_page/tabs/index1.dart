@@ -27,7 +27,8 @@ class _Index1State extends State<Index1> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    tabController = TabController(length: 3, vsync: this);
+    tabController =
+        TabController(length: 3, vsync: this, animationDuration: Duration.zero);
     tabController.index = currentIndex;
     super.initState();
   }
