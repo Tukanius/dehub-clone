@@ -1,6 +1,3 @@
-import 'package:dehub/components/invoice_card/invoice_card.dart';
-import 'package:dehub/components/product_card/product_card.dart';
-import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/components/supplier_card/supplier_card.dart';
 import 'package:dehub/screens/shopping/tabs/invoice.dart';
 import 'package:dehub/screens/shopping/tabs/order.dart';
@@ -85,6 +82,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
               ),
               SliverToBoxAdapter(
                 child: SupplierCard(
+                  boxShadow: true,
                   shoppingCard: true,
                 ),
               ),

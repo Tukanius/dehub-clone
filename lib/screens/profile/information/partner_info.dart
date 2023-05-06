@@ -5,6 +5,7 @@ import 'package:dehub/screens/profile/information/screens/page3.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class PartnerInfo1 extends StatefulWidget {
   static const routeName = '/PartnerInfo1';
@@ -50,57 +51,71 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                 child: currentIndex == 2
                     ? Container(
                         width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.only(bottom: 50),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SizedBox(
-                              height: 50,
-                              width: 170,
-                              child: ElevatedButton(
-                                onPressed: () {
+                            Container(
+                              child: GestureDetector(
+                                onTap: () {
                                   setState(() {
                                     currentIndex = 1;
                                   });
                                 },
-                                child: Text(
-                                  'Өмнөх',
-                                  style: TextStyle(
-                                    color: buttonColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: white,
-                                  side: BorderSide(
-                                    color: buttonColor,
-                                  ),
-                                  shadowColor: transparent,
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 16,
+                                    ),
+                                    SvgPicture.asset(
+                                      'images/arrow_back.svg',
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      'Өмнөх',
+                                      style: TextStyle(
+                                        color: mainColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 16,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            SizedBox(
-                              height: 50,
-                              width: 170,
-                              child: ElevatedButton(
-                                onPressed: () {
+                            Container(
+                              child: GestureDetector(
+                                onTap: () {
                                   setState(() {
                                     currentIndex = 3;
                                   });
                                 },
-                                child: Text(
-                                  'Дараах',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  shadowColor: transparent,
-                                  backgroundColor: buttonColor,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Дараах',
+                                      style: TextStyle(
+                                        color: mainColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    SvgPicture.asset(
+                                      'images/arrow_forward.svg',
+                                    ),
+                                    SizedBox(
+                                      width: 16,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -108,48 +123,69 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                         ),
                       )
                     : currentIndex == 3
-                        ? Row(
-                            children: [
-                              Container(
-                                child: SizedBox(
-                                  height: 50,
-                                  width: 360,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        currentIndex = 2;
-                                      });
-                                    },
-                                    child: Text(
-                                      'Өмнөх',
-                                      style: TextStyle(
-                                        color: buttonColor,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: white,
-                                      side: BorderSide(
-                                        color: buttonColor,
-                                      ),
-                                      shadowColor: transparent,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        : Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: CustomButton(
-                              labelText: "Үргэлжлүүлэх",
-                              onClick: () {
+                        ? Container(
+                            margin: const EdgeInsets.only(bottom: 50, left: 16),
+                            child: GestureDetector(
+                              onTap: () {
                                 setState(() {
                                   currentIndex = 2;
                                 });
                               },
-                              labelColor: buttonColor,
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    'images/arrow_back.svg',
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Өмнөх',
+                                    style: TextStyle(
+                                      color: mainColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 16,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        : Container(
+                            margin: const EdgeInsets.only(bottom: 50),
+                            width: MediaQuery.of(context).size.width,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  currentIndex = 2;
+                                });
+                              },
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    'Дараах',
+                                    style: TextStyle(
+                                      color: mainColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  SvgPicture.asset(
+                                    'images/arrow_forward.svg',
+                                  ),
+                                  SizedBox(
+                                    width: 16,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
               ),

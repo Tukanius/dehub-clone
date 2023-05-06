@@ -312,7 +312,7 @@ class _Page3State extends State<Page3> {
             ),
           ),
           SizedBox(
-            height: 40,
+            height: 90,
           )
         ],
       ),

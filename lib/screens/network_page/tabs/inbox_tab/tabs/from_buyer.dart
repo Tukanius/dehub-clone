@@ -1,5 +1,5 @@
 import 'package:dehub/components/partner_cards/inbox_card.dart';
-import 'package:dehub/screens/inbox_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
+import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
 import 'package:flutter/material.dart';
 
 class FromBuyer extends StatefulWidget {

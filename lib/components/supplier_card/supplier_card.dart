@@ -5,8 +5,10 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class SupplierCard extends StatefulWidget {
   final bool? shoppingCard;
+  final bool? boxShadow;
   final Function()? onClick;
   const SupplierCard({
+    this.boxShadow,
     this.shoppingCard,
     Key? key,
     this.onClick,
@@ -20,6 +22,23 @@ class _SupplierCardState extends State<SupplierCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          widget.boxShadow == true
+              ? BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1,
+                  blurRadius: 3,
+                  offset: Offset(0, 1),
+                )
+              : BoxShadow(
+                  color: Colors.grey.withOpacity(0),
+                  spreadRadius: 0,
+                  blurRadius: 0,
+                  offset: Offset(0, 0),
+                ),
+        ],
+      ),
       child: Column(
         children: [
           InkWell(

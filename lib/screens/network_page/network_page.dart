@@ -1,13 +1,12 @@
 import 'package:dehub/components/add_button/add_button.dart';
-import 'package:dehub/screens/dashboard_tab/dashboard_tab.dart';
-import 'package:dehub/screens/inbox_tab/inbox_tab.dart';
-import 'package:dehub/screens/partner_tab/partner_tab.dart';
-import 'package:dehub/screens/sent_tab/sent_tab.dart';
+import 'package:dehub/screens/network_page/tabs/inbox_tab/inbox_tab.dart';
+import 'package:dehub/screens/network_page/tabs/partner_tab/partner_tab.dart';
+import 'package:dehub/screens/network_page/tabs/sent_tab/sent_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab.dart';
 
 class NetworkPage extends StatefulWidget {
   static const routeName = 'networkpage';
@@ -39,7 +38,7 @@ class _NetworkPageState extends State<NetworkPage> {
       appBar: AppBar(
         leadingWidth: 100,
         elevation: 0,
-        backgroundColor: selectedIndex != 3 ? backgroundColor : networkPink,
+        backgroundColor: selectedIndex != 3 ? backgroundColor : networkColor,
         leading: InkWell(
           onTap: () {
             Navigator.of(context).pop();
@@ -50,7 +49,7 @@ class _NetworkPageState extends State<NetworkPage> {
               children: [
                 Icon(
                   Icons.arrow_back_ios_new,
-                  color: selectedIndex != 3 ? networkPink : white,
+                  color: selectedIndex != 3 ? networkColor : white,
                 ),
                 SizedBox(
                   width: 5,
@@ -58,7 +57,7 @@ class _NetworkPageState extends State<NetworkPage> {
                 Text(
                   'Буцах',
                   style: TextStyle(
-                      color: selectedIndex != 3 ? networkPink : white,
+                      color: selectedIndex != 3 ? networkColor : white,
                       fontSize: 17),
                 ),
               ],
@@ -87,13 +86,13 @@ class _NetworkPageState extends State<NetworkPage> {
                   ),
                   child: SvgPicture.asset(
                     'images/grid.svg',
-                    color: selectedIndex != 3 ? networkPink : white,
+                    color: selectedIndex != 3 ? networkColor : white,
                   ),
                 )
               : selectedIndex == 3
                   ? AddButton(
                       color: white,
-                      addColor: networkPink,
+                      addColor: networkColor,
                     )
                   : SizedBox(),
         ],
@@ -102,24 +101,37 @@ class _NetworkPageState extends State<NetworkPage> {
         child: currentPages.elementAt(selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        fixedColor: networkPink,
+        // selectedIconTheme: IconThemeData(color: networkColor),
+        fixedColor: networkColor,
         onTap: ontappedItem,
         currentIndex: selectedIndex,
         items: [
           BottomNavigationBarItem(
-            icon: SvgPicture.asset('images/dashboard.svg'),
+            icon: SvgPicture.asset(
+              'images/dashboard.svg',
+              color: networkColor,
+            ),
             label: 'Дашбоард',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset('images/partners.svg'),
+            icon: SvgPicture.asset(
+              'images/partners.svg',
+              color: networkColor,
+            ),
             label: 'Харилцагч',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset('images/inbox.svg'),
+            icon: SvgPicture.asset(
+              'images/inbox.svg',
+              color: networkColor,
+            ),
             label: 'Ирсэн',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset('images/sent.svg'),
+            icon: SvgPicture.asset(
+              'images/sent.svg',
+              color: networkColor,
+            ),
             label: 'Илгээсэн',
           ),
         ],

@@ -5,9 +5,9 @@ InvoiceStatus _$InvoiceStatusFromJson(Map<String, dynamic> json) {
   String? color;
   String? name;
 
-  if (json[color] != null) color = json['color'];
-  if (json[code] != null) code = json['code'];
-  if (json[name] != null) name = json['name'];
+  if (json['color'] != null) color = json['color'];
+  if (json['code'] != null) code = json['code'];
+  if (json['name'] != null) name = json['name'];
 
   return InvoiceStatus(
     code: code,

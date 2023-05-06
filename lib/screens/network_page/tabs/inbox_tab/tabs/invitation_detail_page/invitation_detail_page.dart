@@ -16,7 +16,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: networkPink,
+        backgroundColor: networkColor,
         leading: InkWell(
           onTap: () {
             Navigator.of(context).pop();
@@ -80,7 +80,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                       Text(
                         'DeHUB Network',
                         style: TextStyle(
-                          color: networkPink,
+                          color: networkColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -131,7 +131,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   ),
                   Text(
                     'PartnerName',
-                    style: TextStyle(color: networkPink),
+                    style: TextStyle(color: networkColor),
                   ),
                 ],
               ),
@@ -148,7 +148,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   ),
                   Text(
                     'PartnerRef#',
-                    style: TextStyle(color: networkPink),
+                    style: TextStyle(color: networkColor),
                   ),
                 ],
               ),
@@ -165,7 +165,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   ),
                   Text(
                     'BusinessName',
-                    style: TextStyle(color: networkPink),
+                    style: TextStyle(color: networkColor),
                   ),
                 ],
               ),
@@ -182,7 +182,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   ),
                   Text(
                     'BusRef#',
-                    style: TextStyle(color: networkPink),
+                    style: TextStyle(color: networkColor),
                   ),
                 ],
               ),
@@ -199,7 +199,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   ),
                   Text(
                     'Тийм',
-                    style: TextStyle(color: networkPink),
+                    style: TextStyle(color: networkColor),
                   ),
                 ],
               ),
@@ -216,7 +216,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   ),
                   Text(
                     'Үгүй',
-                    style: TextStyle(color: networkPink),
+                    style: TextStyle(color: networkColor),
                   ),
                 ],
               ),
@@ -233,7 +233,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   ),
                   Text(
                     'Username',
-                    style: TextStyle(color: networkPink),
+                    style: TextStyle(color: networkColor),
                   ),
                 ],
               ),
@@ -250,7 +250,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   ),
                   Text(
                     'email',
-                    style: TextStyle(color: networkPink),
+                    style: TextStyle(color: networkColor),
                   ),
                 ],
               ),
@@ -267,7 +267,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   ),
                   Text(
                     'Mobile',
-                    style: TextStyle(color: networkPink),
+                    style: TextStyle(color: networkColor),
                   ),
                 ],
               ),
@@ -284,7 +284,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   ),
                   Text(
                     'Username',
-                    style: TextStyle(color: networkPink),
+                    style: TextStyle(color: networkColor),
                   ),
                 ],
               ),
@@ -350,7 +350,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   ),
                   Text(
                     'Username',
-                    style: TextStyle(color: networkPink),
+                    style: TextStyle(color: networkColor),
                   ),
                 ],
               ),
@@ -367,7 +367,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   ),
                   Text(
                     'Username',
-                    style: TextStyle(color: networkPink),
+                    style: TextStyle(color: networkColor),
                   ),
                 ],
               ),
@@ -384,7 +384,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   ),
                   Text(
                     'Username',
-                    style: TextStyle(color: networkPink),
+                    style: TextStyle(color: networkColor),
                   ),
                 ],
               ),
@@ -401,7 +401,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   ),
                   Text(
                     'Username',
-                    style: TextStyle(color: networkPink),
+                    style: TextStyle(color: networkColor),
                   ),
                 ],
               ),
@@ -418,7 +418,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   ),
                   Text(
                     'Username',
-                    style: TextStyle(color: networkPink),
+                    style: TextStyle(color: networkColor),
                   ),
                 ],
               ),
@@ -435,7 +435,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   ),
                   Text(
                     'Username',
-                    style: TextStyle(color: networkPink),
+                    style: TextStyle(color: networkColor),
                   ),
                 ],
               ),
@@ -452,7 +452,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   ),
                   Text(
                     'Username',
-                    style: TextStyle(color: networkPink),
+                    style: TextStyle(color: networkColor),
                   ),
                 ],
               ),
@@ -470,7 +470,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(
-                          color: networkPink,
+                          color: networkColor,
                         ),
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 12),
@@ -478,7 +478,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                         child: Text(
                           'Татгалзах',
                           style: TextStyle(
-                            color: networkPink,
+                            color: networkColor,
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
@@ -494,7 +494,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                       margin: const EdgeInsets.only(right: 15),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: networkPink,
+                        color: networkColor,
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       child: Center(

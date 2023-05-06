@@ -55,7 +55,7 @@ class _ProfilePageState extends State<ProfilePage>
     return Scaffold(
       backgroundColor: Color(0xffF5F5F5),
       appBar: AppBar(
-        backgroundColor: buttonColor,
+        backgroundColor: mainColor,
         iconTheme: IconThemeData(color: white),
         leading: IconButton(
           onPressed: () {
@@ -102,49 +102,6 @@ class _ProfilePageState extends State<ProfilePage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    tabController.index == 0
-                        ? Column(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(top: 35),
-                                child: CircleAvatar(
-                                  radius: 40,
-                                  backgroundImage: partnerUser.avatar != null
-                                      ? NetworkImage(
-                                          '${partnerUser.avatar}',
-                                        )
-                                      : NetworkImage(
-                                          'https://i0.wp.com/a.slack-edge.com/df10d/img/avatars/ava_0024-192.png?ssl=1',
-                                        ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Text(
-                                'Дэлгэрэх хүнс ХХК',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: grey3),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                'Bolormaa.Ch, 9999-9999',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: grey3,
-                                ),
-                              ),
-                              Divider(
-                                indent: 20,
-                                endIndent: 20,
-                              ),
-                            ],
-                          )
-                        : SizedBox(),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       margin: const EdgeInsets.symmetric(vertical: 20),
@@ -165,7 +122,7 @@ class _ProfilePageState extends State<ProfilePage>
                                 borderRadius: BorderRadius.circular(100),
                                 border: Border.all(color: grey3, width: 0.5),
                                 color: tabController.index == 0
-                                    ? buttonColor
+                                    ? mainColor
                                     : white,
                               ),
                               child: SvgPicture.asset(
@@ -188,7 +145,7 @@ class _ProfilePageState extends State<ProfilePage>
                                 borderRadius: BorderRadius.circular(100),
                                 border: Border.all(color: grey3, width: 0.5),
                                 color: tabController.index == 1
-                                    ? buttonColor
+                                    ? mainColor
                                     : white,
                               ),
                               child: SvgPicture.asset(
@@ -211,7 +168,7 @@ class _ProfilePageState extends State<ProfilePage>
                                 borderRadius: BorderRadius.circular(100),
                                 border: Border.all(color: grey3, width: 0.5),
                                 color: tabController.index == 2
-                                    ? buttonColor
+                                    ? mainColor
                                     : white,
                               ),
                               child: SvgPicture.asset(
@@ -234,7 +191,7 @@ class _ProfilePageState extends State<ProfilePage>
                                   borderRadius: BorderRadius.circular(100),
                                   border: Border.all(color: grey3, width: 0.5),
                                   color: tabController.index == 3
-                                      ? buttonColor
+                                      ? mainColor
                                       : white),
                               child: SvgPicture.asset(
                                 'images/settings.svg',
@@ -258,7 +215,9 @@ class _ProfilePageState extends State<ProfilePage>
             controller: tabController,
             physics: const NeverScrollableScrollPhysics(),
             children: [
-              PersonalInfo(),
+              PersonalInfo(
+                data: partnerUser,
+              ),
               PartnerInfo1(),
               SystemUsersPage(),
               SettingsPage(),

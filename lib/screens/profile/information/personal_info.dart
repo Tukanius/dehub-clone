@@ -9,7 +9,12 @@ import 'package:after_layout/after_layout.dart';
 
 class PersonalInfo extends StatefulWidget {
   static const routeName = '/personalinfo';
-  const PersonalInfo({Key? key}) : super(key: key);
+  User? data;
+
+  PersonalInfo({
+    Key? key,
+    this.data,
+  }) : super(key: key);
 
   @override
   State<PersonalInfo> createState() => _PersonalInfoState();
@@ -40,6 +45,45 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 20),
+                  child: CircleAvatar(
+                    radius: 40,
+                    backgroundImage: widget.data!.avatar != null
+                        ? NetworkImage(
+                            '${widget.data!.avatar}',
+                          )
+                        : NetworkImage(
+                            'https://i0.wp.com/a.slack-edge.com/df10d/img/avatars/ava_0024-192.png?ssl=1',
+                          ),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  'Дэлгэрэх хүнс ХХК',
+                  style: TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w600, color: grey3),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  'Bolormaa.Ch, 9999-9999',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: grey3,
+                  ),
+                ),
+                Divider(
+                  indent: 20,
+                  endIndent: 20,
+                ),
+              ],
+            ),
             Text(
               'Хувийн мэдээлэл',
               style: TextStyle(
@@ -428,7 +472,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                         logout();
                       },
                       labelText: 'Системээс гарах',
-                      labelColor: buttonColor,
+                      labelColor: mainColor,
                     ),
                     SizedBox(
                       height: 20,

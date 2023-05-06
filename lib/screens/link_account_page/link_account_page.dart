@@ -20,60 +20,66 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
       context: context,
       builder: (context) {
         return Container(
-          height: 400,
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 200),
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 170),
           alignment: Alignment.center,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             color: white,
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 23),
-                margin: const EdgeInsets.only(top: 50),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  border: Border.all(
-                    color: neonGreen,
-                    width: 3,
+              Column(
+                children: [
+                  SizedBox(
+                    height: 20,
                   ),
-                ),
-                child: Container(
-                  child: SvgPicture.asset(
-                    'images/check.svg',
-                    color: neonGreen,
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 23),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      border: Border.all(
+                        color: neonGreen,
+                        width: 3,
+                      ),
+                    ),
+                    child: Container(
+                      child: SvgPicture.asset(
+                        'images/check.svg',
+                        color: neonGreen,
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    'Амжилттай',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: black,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 25),
+                    child: Text(
+                      'Та бизнес тооцооны  дансаа амжилттай холболоо.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color(0xff2C3D7A),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
                 height: 15,
-              ),
-              Text(
-                'Амжилттай',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: black,
-                ),
-              ),
-              SizedBox(
-                height: 35,
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 25),
-                child: Text(
-                  'Та бизнес тооцооны  дансаа амжилттай холболоо.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xff2C3D7A),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 60,
               ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 30),
@@ -86,6 +92,9 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
                   labelText: 'Ойлголоо',
                 ),
               ),
+              SizedBox(
+                height: 20,
+              )
             ],
           ),
         );

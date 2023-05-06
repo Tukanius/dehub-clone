@@ -4,8 +4,8 @@ Networks _$NetworksFromJson(Map<String, dynamic> json) {
   String? id;
   String? profileName;
 
-  if (json[id] != null) id = json['id'];
-  if (json[profileName] != null) profileName = json['profileName'];
+  if (json['id'] != null) id = json['id'];
+  if (json['profileName'] != null) profileName = json['profileName'];
 
   return Networks(
     id: id,

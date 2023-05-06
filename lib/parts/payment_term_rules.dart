@@ -4,8 +4,8 @@ PaymentTermRules _$PaymentTermRulesFromJson(Map<String, dynamic> json) {
   String? code;
   String? text;
 
-  if (json[code] != null) code = json['code'];
-  if (json[text] != null) text = json['text'];
+  if (json['code'] != null) code = json['code'];
+  if (json['text'] != null) text = json['text'];
 
   return PaymentTermRules(
     code: code,

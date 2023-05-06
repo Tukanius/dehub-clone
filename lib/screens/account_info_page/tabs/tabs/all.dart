@@ -13,16 +13,18 @@ class All extends StatefulWidget {
 class _AllState extends State<All> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          TransactionInformationCard(
-            color: red,
-          ),
-          TransactionInformationCard(
-            color: green,
-          ),
-        ],
+    return SingleChildScrollView(
+      child: Container(
+        child: Column(
+          children: [
+            TransactionInformationCard(
+              color: red,
+            ),
+            TransactionInformationCard(
+              color: green,
+            ),
+          ],
+        ),
       ),
     );
   }

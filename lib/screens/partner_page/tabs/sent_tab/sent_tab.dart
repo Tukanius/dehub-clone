@@ -1,5 +1,5 @@
-import 'package:dehub/screens/sent_tab/tabs/dehub_network.dart';
-import 'package:dehub/screens/sent_tab/tabs/onboar_invitation.dart';
+import 'package:dehub/screens/network_page/tabs/sent_tab/tabs/dehub_network.dart';
+import 'package:dehub/screens/network_page/tabs/sent_tab/tabs/onboar_invitation.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -23,9 +23,9 @@ class _SentTabState extends State<SentTab> {
                 color: white,
                 elevation: 2,
                 child: TabBar(
-                  labelColor: networkPink,
-                  unselectedLabelColor: dark,
-                  indicatorColor: networkPink,
+                  labelColor: partnerColor,
+                  unselectedLabelColor: partnerColor,
+                  indicatorColor: partnerColor,
                   tabs: [
                     Container(
                       height: 40,

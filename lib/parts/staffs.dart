@@ -6,10 +6,10 @@ Staffs _$StaffsFromJson(Map<String, dynamic> json) {
   String? firstName;
   String? avatar;
 
-  if (json[id] != null) id = json['id'];
-  if (json[lastName] != null) lastName = json['lastName'];
-  if (json[firstName] != null) firstName = json['firstName'];
-  if (json[avatar] != null) avatar = json['avatar'];
+  if (json['id'] != null) id = json['id'];
+  if (json['lastName'] != null) lastName = json['lastName'];
+  if (json['firstName'] != null) firstName = json['firstName'];
+  if (json['avatar'] != null) avatar = json['avatar'];
 
   return Staffs(
     id: id,

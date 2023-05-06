@@ -105,7 +105,8 @@ class _Index1State extends State<Index1> with SingleTickerProviderStateMixin {
                           onTap: () {
                             changePage(0);
                           },
-                          child: Container(
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 200),
                             width: 70,
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             decoration: BoxDecoration(
@@ -139,7 +140,8 @@ class _Index1State extends State<Index1> with SingleTickerProviderStateMixin {
                           onTap: () {
                             changePage(1);
                           },
-                          child: Container(
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 200),
                             width: 70,
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             decoration: BoxDecoration(
@@ -173,7 +175,8 @@ class _Index1State extends State<Index1> with SingleTickerProviderStateMixin {
                           onTap: () {
                             changePage(2);
                           },
-                          child: Container(
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 200),
                             width: 70,
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             decoration: BoxDecoration(

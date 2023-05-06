@@ -4,9 +4,12 @@ import 'package:dehub/screens/account_info_page/account_info_page.dart';
 import 'package:dehub/screens/account_info_page/tabs/tabs/transaction_detail_page.dart';
 import 'package:dehub/screens/add_bank_account_page/add_bank_account_page.dart';
 import 'package:dehub/screens/auth/login_page.dart';
+import 'package:dehub/screens/debt_page/debt_page.dart';
+import 'package:dehub/screens/financing_page/financing_page.dart';
 import 'package:dehub/screens/first_page/first_page.dart';
 import 'package:dehub/screens/home_page/home_page.dart';
-import 'package:dehub/screens/inbox_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
+import 'package:dehub/screens/invoice/payment_page/qpay_page.dart';
+import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
 import 'package:dehub/screens/invoice/invoice_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product_tabs/shirhegeer.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose.dart';
@@ -25,6 +28,10 @@ import 'package:dehub/screens/link_account_page/link_account_page.dart';
 import 'package:dehub/screens/main/main_page.dart';
 import 'package:dehub/screens/menu/menu_page.dart';
 import 'package:dehub/screens/network_page/network_page.dart';
+import 'package:dehub/screens/order_page/order_page.dart';
+import 'package:dehub/screens/partner_page/partner_page.dart';
+import 'package:dehub/screens/payment_page/payment_page.dart';
+import 'package:dehub/screens/product_page/product_page.dart';
 import 'package:dehub/screens/shopping/shopping_page.dart';
 import 'package:dehub/screens/menu/suppliers/suppliers_page.dart';
 import 'package:dehub/screens/menu/tabs/purchase_page.dart';
@@ -32,12 +39,14 @@ import 'package:dehub/screens/menu/tabs/sales_page.dart';
 import 'package:dehub/screens/profile/information/partner_info.dart';
 import 'package:dehub/screens/profile/profile_page.dart';
 import 'package:dehub/screens/splash/splash_page.dart';
+import 'package:dehub/screens/user_management_page/user_management_page.dart';
 import 'package:dehub/services/dialog.dart';
 import 'package:dehub/services/navigation.dart';
 import 'package:dehub/widgets/dialog_manager/dialog_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
+import 'package:dehub/screens/main_invoice_page/invoice_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -187,6 +196,7 @@ class MyApp extends StatelessWidget {
                         settings.arguments as PaymentApprovalPageArguments;
                     return MaterialPageRoute(builder: (context) {
                       return PaymentApprovalPage(
+                        method: arguments.method,
                         refCode: arguments.refCode,
                         amount: arguments.amount,
                         id: arguments.id,
@@ -197,6 +207,38 @@ class MyApp extends StatelessWidget {
                   case MenuPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return MenuPage();
+                    });
+                  case DebtPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return DebtPage();
+                    });
+                  case FinancingPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return FinancingPage();
+                    });
+                  case MainInvoicePage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return MainInvoicePage();
+                    });
+                  case OrderPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return OrderPage();
+                    });
+                  case PaymentPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return PaymentPage();
+                    });
+                  case ProductPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return ProductPage();
+                    });
+                  case UserMangementPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return UserMangementPage();
+                    });
+                  case PartnerPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return PartnerPage();
                     });
                   case AddBankAccountPage.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -221,6 +263,10 @@ class MyApp extends StatelessWidget {
                   case ShoppingPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return ShoppingPage();
+                    });
+                  case QpayPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return QpayPage();
                     });
                   default:
                     return MaterialPageRoute(

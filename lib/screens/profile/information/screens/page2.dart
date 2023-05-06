@@ -133,10 +133,16 @@ class _Page2State extends State<Page2> {
               height: 56,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                image: DecorationImage(
-                  image: NetworkImage("${partnerUser.partner!.logo}"),
-                  fit: BoxFit.cover,
-                ),
+                image: partnerUser.user!.logo != null
+                    ? DecorationImage(
+                        image: NetworkImage("${partnerUser.partner!.logo}"),
+                        fit: BoxFit.cover,
+                      )
+                    : DecorationImage(
+                        image: AssetImage(
+                          'images/invoice_empty.png',
+                        ),
+                        fit: BoxFit.cover),
               ),
             ),
             SizedBox(
@@ -325,7 +331,7 @@ class _Page2State extends State<Page2> {
               ),
             ),
             SizedBox(
-              height: 42,
+              height: 92,
             ),
           ],
         ),

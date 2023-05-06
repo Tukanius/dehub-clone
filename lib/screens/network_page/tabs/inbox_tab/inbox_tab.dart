@@ -1,6 +1,6 @@
 import 'package:dehub/components/partner_cards/inbox_card.dart';
-import 'package:dehub/screens/inbox_tab/tabs/from_bank.dart';
-import 'package:dehub/screens/inbox_tab/tabs/from_buyer.dart';
+import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/from_bank.dart';
+import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/from_buyer.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -75,7 +75,7 @@ class _InboxTabState extends State<InboxTab>
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: tabController.index == 0
-                                ? networkPink
+                                ? networkColor
                                 : backgroundColor,
                           ),
                           child: Text(
@@ -103,7 +103,7 @@ class _InboxTabState extends State<InboxTab>
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: tabController.index == 1
-                                ? networkPink
+                                ? networkColor
                                 : backgroundColor,
                           ),
                           child: Text(

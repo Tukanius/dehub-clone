@@ -55,7 +55,7 @@ class _FirstPageState extends State<FirstPage> {
               ),
             ),
           ],
-          backgroundColor: Color(0xff051139),
+          backgroundColor: mainColor,
           leading: InkWell(
             onTap: () {
               Navigator.of(context).pushNamed(MenuPage.routeName);

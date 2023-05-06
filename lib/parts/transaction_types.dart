@@ -4,8 +4,8 @@ TransactionTypes _$TransactionTypesFromJson(Map<String, dynamic> json) {
   String? code;
   String? name;
 
-  if (json[code] != null) code = json['code'];
-  if (json[name] != null) name = json['name'];
+  if (json['code'] != null) code = json['code'];
+  if (json['name'] != null) name = json['name'];
 
   return TransactionTypes(
     code: code,

@@ -1,9 +1,13 @@
-import 'dart:ffi';
-
-import 'package:dehub/screens/add_bank_account_page/add_bank_account_page.dart';
-import 'package:dehub/screens/invoice/invoice_page.dart';
+import 'package:dehub/screens/debt_page/debt_page.dart';
+import 'package:dehub/screens/financing_page/financing_page.dart';
+import 'package:dehub/screens/main_invoice_page/invoice_page.dart';
+import 'package:dehub/screens/order_page/order_page.dart';
+import 'package:dehub/screens/payment_page/payment_page.dart';
 import 'package:dehub/screens/main/main_page.dart';
 import 'package:dehub/screens/network_page/network_page.dart';
+import 'package:dehub/screens/partner_page/partner_page.dart';
+import 'package:dehub/screens/product_page/product_page.dart';
+import 'package:dehub/screens/user_management_page/user_management_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -38,13 +42,9 @@ class _AjilUuregState extends State<AjilUureg> {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => MainPage(
-                              selectedIndex: 1,
-                            ),
-                          ),
-                        );
+                        // Navigator.of(context)
+                        //     .pushNamed(MainInvoicePage.routeName);
+                        Navigator.of(context).pushNamed(MainPage.routeName);
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -61,7 +61,9 @@ class _AjilUuregState extends State<AjilUureg> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).pushNamed(OrderPage.routeName);
+                      },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -84,8 +86,7 @@ class _AjilUuregState extends State<AjilUureg> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.of(context)
-                            .pushNamed(AddBankAccountPage.routeName);
+                        Navigator.of(context).pushNamed(PaymentPage.routeName);
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -104,7 +105,10 @@ class _AjilUuregState extends State<AjilUureg> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushNamed(FinancingPage.routeName);
+                      },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -122,11 +126,13 @@ class _AjilUuregState extends State<AjilUureg> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).pushNamed(DebtPage.routeName);
+                      },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset('images/avlaga_uglog.svg'),
+                          SvgPicture.asset('images/avlaga_uglug.svg'),
                           SizedBox(
                             height: 10,
                           ),
@@ -140,16 +146,18 @@ class _AjilUuregState extends State<AjilUureg> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).pushNamed(ProductPage.routeName);
+                      },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SvgPicture.asset('images/baraa.svg'),
                           SizedBox(
-                            height: 10,
+                            height: 3,
                           ),
                           Text(
-                            'Бараа',
+                            'Бараа, материал',
                             style: TextStyle(
                               fontSize: 12,
                             ),
@@ -178,7 +186,9 @@ class _AjilUuregState extends State<AjilUureg> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).pushNamed(PartnerPage.routeName);
+                      },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -196,7 +206,10 @@ class _AjilUuregState extends State<AjilUureg> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushNamed(UserMangementPage.routeName);
+                      },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -205,7 +218,7 @@ class _AjilUuregState extends State<AjilUureg> {
                             height: 10,
                           ),
                           Text(
-                            'Партнер',
+                            'Хэрэглэгч',
                             style: TextStyle(
                               fontSize: 12,
                             ),

@@ -98,6 +98,7 @@ class _AccountInfoPageState extends State<AccountInfoPage>
       body: DefaultTabController(
         length: 5,
         child: NestedScrollView(
+          controller: scrollController,
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverToBoxAdapter(

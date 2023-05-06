@@ -18,7 +18,9 @@ class PaymentApprovalPageArguments {
   String id;
   double amount;
   String? refCode;
+  String? method;
   PaymentApprovalPageArguments({
+    this.method,
     this.refCode,
     required this.creditAccountId,
     required this.id,
@@ -29,11 +31,13 @@ class PaymentApprovalPageArguments {
 class PaymentApprovalPage extends StatefulWidget {
   static const routeName = '/paymentapprovalpage';
   String id;
+  String? method;
   String creditAccountId;
   double amount;
   String? refCode;
   PaymentApprovalPage({
     Key? key,
+    required this.method,
     required this.amount,
     required this.creditAccountId,
     required this.refCode,
@@ -154,7 +158,7 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
       try {
         invoice.creditAccountId = widget.creditAccountId;
         invoice.amount = widget.amount;
-        invoice.method = "B2B";
+        invoice.method = widget.method.toString();
         print('================METHOD===============');
         print(invoice.method.toString());
         print('================METHOD===============');

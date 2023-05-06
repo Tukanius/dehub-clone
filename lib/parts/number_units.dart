@@ -4,8 +4,8 @@ NumberUnits _$NumberUnitsFromJson(Map<String, dynamic> json) {
   String? code;
   String? value;
 
-  if (json[code] != null) code = json['code'];
-  if (json[value] != null) value = json['value'];
+  if (json['code'] != null) code = json['code'];
+  if (json['value'] != null) value = json['value'];
 
   return NumberUnits(
     code: code,

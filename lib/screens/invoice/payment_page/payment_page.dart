@@ -1,7 +1,9 @@
+import 'package:dehub/models/bank_accounts.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/screens/invoice/payment_page/payment_approval_page.dart';
+import 'package:dehub/screens/invoice/payment_page/qpay_page.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -30,12 +32,12 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
   Invoice invoice = Invoice();
   TextEditingController textController = TextEditingController();
   TextEditingController menuText = TextEditingController();
-  GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
 
   String? selectedValue;
+  String? selectedMethod;
 
   afterFirstLayout(BuildContext context) {
-    print(general.paymentMethod!.first.name);
+    print(general.paymentMethod);
   }
 
   fillAmount() {
@@ -44,24 +46,17 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
     });
   }
 
-  onChanged() {
-    if (selectedValue is String) {
-      setState(() {
-        menuText.text = selectedValue!;
-      });
-    }
-  }
-
   onSubmit() {
-    Navigator.of(context).pushNamed(
-      PaymentApprovalPage.routeName,
-      arguments: PaymentApprovalPageArguments(
-        id: widget.id,
-        refCode: widget.data.refCode,
-        creditAccountId: general.bankAccounts!.first.id.toString(),
-        amount: double.parse(textController.text),
-      ),
-    );
+    selectedMethod == "B2B"
+        ? Navigator.of(context).pushNamed(PaymentApprovalPage.routeName,
+            arguments: PaymentApprovalPageArguments(
+              method: selectedMethod.toString(),
+              id: widget.id,
+              refCode: widget.data.refCode,
+              creditAccountId: selectedValue.toString(),
+              amount: double.parse(textController.text),
+            ))
+        : Navigator.of(context).pushNamed(QpayPage.routeName);
   }
 
   General general = General();
@@ -277,91 +272,241 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                 height: 10,
               ),
               Container(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                ),
                 color: white,
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            SvgPicture.asset('images/bank.svg'),
-                            Text(
-                              'Холбосон дансаар',
-                              style: TextStyle(color: brownButtonColor),
-                            ),
-                          ],
-                        ),
-                        // DropdownButton(
-                        //   items: general.bankAccounts!
-                        //       .map(
-                        //         (item) => DropdownMenuItem(
-                        //           child: Text('${item.bankName}'),
-                        //         ),
-                        //       )
-                        //       .toList(),
-                        //   onChanged: onChanged(),
-                        // )
-                        // PopupMenuButton(
-                        //   itemBuilder: (context) {
-                        //     return general.paymentMethod!
-                        //         .map(
-                        //           (item) => PopupMenuItem(
-                        //             child: Text('${item.name}'),
-                        //           ),
-                        //         )
-                        //         .toList();
-                        //   },
-                        // ),
-
-                        Column(
-                          children: general.bankAccounts!
-                              .map(
-                                (item) => DropdownMenuItem(
-                                  value: item.bankName,
-                                  child: SizedBox(
-                                    height: 30,
-                                    child: Text(
-                                      '${item.id}',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(fontSize: 12),
-                                    ),
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Бизнес тооцооны данс',
+                    SizedBox(
+                      height: 50,
+                      child: FormBuilderDropdown(
+                        hint: Container(
+                          margin: const EdgeInsets.only(left: 10),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset('images/bank.svg'),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              const Text(
+                                "Холбосон дансаар",
+                                style: TextStyle(
+                                    fontSize: 14, color: brownButtonColor),
+                              ),
+                            ],
                           ),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              '5432423098',
-                              style: TextStyle(color: brownButtonColor),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.arrow_forward_ios,
-                                size: 12,
-                              ),
-                            ),
-                          ],
+                        icon: Container(
+                          decoration: BoxDecoration(
+                            color: white,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: const Icon(
+                            Icons.arrow_drop_down,
+                            color: black,
+                          ),
                         ),
-                      ],
+                        name: 'paymentMethod',
+                        onChanged: (value) async {
+                          setState(() {
+                            selectedMethod = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: white,
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 10),
+                          border: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: white, width: 0),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: white, width: 0),
+                          ),
+                        ),
+                        items: general.paymentMethod!
+                            .map(
+                              (item) => DropdownMenuItem(
+                                value: item.code,
+                                child: Container(
+                                  margin: const EdgeInsets.only(left: 10),
+                                  child: Row(
+                                    children: [
+                                      item.code == "B2B"
+                                          ? SizedBox()
+                                          : item.code == "QPAY"
+                                              ? Container(
+                                                  margin: const EdgeInsets.only(
+                                                    right: 10,
+                                                  ),
+                                                  height: 20,
+                                                  width: 20,
+                                                  child: Image(
+                                                    image: AssetImage(
+                                                      'images/qpay_logo.png',
+                                                    ),
+                                                  ),
+                                                )
+                                              : item.code == "SOCIAL_PAY"
+                                                  ? Container(
+                                                      margin:
+                                                          const EdgeInsets.only(
+                                                        right: 10,
+                                                      ),
+                                                      height: 20,
+                                                      width: 20,
+                                                      child: Image(
+                                                        image: AssetImage(
+                                                          'images/social_pay_logo.png',
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : item.code == "BANK_CARD"
+                                                      ? Container(
+                                                          margin:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  right: 10),
+                                                          child:
+                                                              SvgPicture.asset(
+                                                            'images/bank_card.svg',
+                                                            color:
+                                                                brownButtonColor,
+                                                          ),
+                                                        )
+                                                      : SizedBox(),
+                                      Text(
+                                        '${item.name}',
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
                     ),
+                    selectedMethod == "B2B"
+                        ? SizedBox(
+                            height: 50,
+                            child: FormBuilderDropdown(
+                              hint: Container(
+                                margin: const EdgeInsets.only(left: 10),
+                                child: const Text(
+                                  "Данс сонгоно уу",
+                                  style: TextStyle(
+                                      fontSize: 14, color: brownButtonColor),
+                                ),
+                              ),
+                              icon: Container(
+                                decoration: BoxDecoration(
+                                  color: white,
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: const Icon(
+                                  Icons.arrow_drop_down,
+                                  color: black,
+                                ),
+                              ),
+                              name: 'number',
+                              onChanged: (value) async {
+                                selectedValue = value;
+                              },
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: white,
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 10),
+                                border: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: white, width: 0),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: white, width: 0),
+                                ),
+                              ),
+                              items: general.bankAccounts!
+                                  .map(
+                                    (item) => DropdownMenuItem(
+                                      value: item.id,
+                                      child: Container(
+                                        margin: const EdgeInsets.only(left: 10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Image(
+                                                  image: NetworkImage(
+                                                    '${item.icon}',
+                                                  ),
+                                                  height: 20,
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                  '${item.bankName}',
+                                                  style: TextStyle(
+                                                    color: black,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Text(
+                                              '${item.number}',
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                color: brownButtonColor,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          )
+                        : Container(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Төлөлт хийх заавар',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Заавар татах',
+                                      style: TextStyle(
+                                        color: brownButtonColor,
+                                        fontSize: 14,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(
+                                        Icons.arrow_forward_ios,
+                                        size: 12,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
                   ],
                 ),
               ),
@@ -417,20 +562,17 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
               SizedBox(
                 height: 10,
               ),
-              Form(
-                key: fbKey,
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 15),
-                  child: FormTextField(
-                    name: "amount",
-                    inputType: TextInputType.number,
-                    controller: textController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      fillColor: Colors.white,
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: brownButtonColor),
-                      ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 15),
+                child: FormTextField(
+                  name: "amount",
+                  inputType: TextInputType.number,
+                  controller: textController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    fillColor: Colors.white,
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: brownButtonColor),
                     ),
                   ),
                 ),
