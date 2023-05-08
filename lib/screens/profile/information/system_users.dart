@@ -59,7 +59,7 @@ class _SystemUsersPageState extends State<SystemUsersPage> {
                                         style: TextStyle(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 16,
-                                          color: Color(0xff263238),
+                                          color: dark,
                                         ),
                                       ),
                                     ),
@@ -82,9 +82,7 @@ class _SystemUsersPageState extends State<SystemUsersPage> {
                                         const EdgeInsets.symmetric(vertical: 5),
                                     child: Text(
                                       'System admin',
-                                      style: TextStyle(
-                                        color: Color(0xff263238),
-                                      ),
+                                      style: TextStyle(color: dark),
                                     ),
                                   ),
                                   SizedBox(

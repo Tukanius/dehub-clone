@@ -31,7 +31,6 @@ class GivePage extends StatefulWidget {
 
 class _GivePageState extends State<GivePage>
     with AfterLayoutMixin, SingleTickerProviderStateMixin {
-  int? selectedIndex;
   bool isLoading = true;
   late TabController tabController = TabController(length: 5, vsync: this);
   int currentIndex = 0;

@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(height: 80, width: 80, color: buttonColor),
+                    Container(height: 80, width: 80, color: mainColor),
                     SizedBox(
                       height: 21,
                     ),
@@ -237,7 +237,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: Text(
                               'Нууц үгээ мартсан уу?',
                               style: TextStyle(
-                                  color: buttonColor,
+                                  color: mainColor,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500),
                             ),
@@ -252,7 +252,7 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         Checkbox(
                           fillColor: MaterialStateProperty.resolveWith(
-                              (states) => buttonColor),
+                              (states) => mainColor),
                           value: saveUserName,
                           onChanged: (bool? value) {
                             setState(() {
@@ -278,7 +278,7 @@ class _LoginPageState extends State<LoginPage> {
                         onSubmit();
                       },
                       labelText: "Нэвтрэх",
-                      labelColor: buttonColor,
+                      labelColor: mainColor,
                     ),
                   ],
                 ),

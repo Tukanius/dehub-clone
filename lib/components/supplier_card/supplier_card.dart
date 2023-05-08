@@ -83,7 +83,7 @@ class _SupplierCardState extends State<SupplierCard> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 16,
-                                      color: Color(0xff263238),
+                                      color: dark,
                                     ),
                                   ),
                                 ),
@@ -104,7 +104,7 @@ class _SupplierCardState extends State<SupplierCard> {
                             child: Text(
                               'Партнерийн нэр',
                               style: TextStyle(
-                                color: Color(0xff263238),
+                                color: dark,
                               ),
                             ),
                           ),

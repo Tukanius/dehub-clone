@@ -96,7 +96,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
                         TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     indicatorColor: buttonColor,
                     labelColor: buttonColor,
-                    unselectedLabelColor: Color(0xff263238),
+                    unselectedLabelColor: dark,
                     tabs: [
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 16),

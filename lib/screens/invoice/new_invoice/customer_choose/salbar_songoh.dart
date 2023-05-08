@@ -97,7 +97,7 @@ class _SalbarSongohState extends State<SalbarSongoh> {
                                             style: TextStyle(
                                               fontWeight: FontWeight.w600,
                                               fontSize: 16,
-                                              color: Color(0xff263238),
+                                              color: dark,
                                             ),
                                           ),
                                         ),
@@ -112,7 +112,7 @@ class _SalbarSongohState extends State<SalbarSongoh> {
                                         child: Text(
                                           'Дэлгэр сайхан ХХК  ТТД: 315466',
                                           style: TextStyle(
-                                            color: Color(0xff263238),
+                                            color: dark,
                                           ),
                                         ),
                                       ),
@@ -125,7 +125,7 @@ class _SalbarSongohState extends State<SalbarSongoh> {
                                     child: Text(
                                       '+976 - 9999 9999',
                                       style: TextStyle(
-                                        color: Color(0xff263238),
+                                        color: dark,
                                       ),
                                     ),
                                   )

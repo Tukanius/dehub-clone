@@ -153,7 +153,7 @@ class _Page2State extends State<Page2> {
               child: Text(
                 'Бизнесийн нэр:',
                 style: TextStyle(
-                  color: Color(0xff263238),
+                  color: dark,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),

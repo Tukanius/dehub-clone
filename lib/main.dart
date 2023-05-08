@@ -4,6 +4,9 @@ import 'package:dehub/screens/account_info_page/account_info_page.dart';
 import 'package:dehub/screens/account_info_page/tabs/tabs/transaction_detail_page.dart';
 import 'package:dehub/screens/add_bank_account_page/add_bank_account_page.dart';
 import 'package:dehub/screens/auth/login_page.dart';
+import 'package:dehub/screens/avaible_funding_page/avaible_funding_detail_page.dart';
+import 'package:dehub/screens/avaible_funding_page/avaible_funding_page.dart';
+import 'package:dehub/screens/avaible_funding_page/request_approval_page.dart';
 import 'package:dehub/screens/debt_page/debt_page.dart';
 import 'package:dehub/screens/financing_page/financing_page.dart';
 import 'package:dehub/screens/first_page/first_page.dart';
@@ -145,6 +148,18 @@ class MyApp extends StatelessWidget {
                   case Gereet.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return Gereet();
+                    });
+                  case AvaibleFundingPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return AvaibleFundingPage();
+                    });
+                  case RequestApprovalPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return RequestApprovalPage();
+                    });
+                  case AvaibleFundingDetailPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return AvaibleFundingDetailPage();
                     });
                   case GereetBish.routeName:
                     return MaterialPageRoute(builder: (context) {

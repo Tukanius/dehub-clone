@@ -277,10 +277,7 @@ class _Page1State extends State<Page1> {
             Text(
               'НӨАТ төлөгч эсэх :',
               style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 14,
-                color: Color(0xff263238),
-              ),
+                  fontWeight: FontWeight.w500, fontSize: 14, color: dark),
             ),
             SizedBox(
               height: 10,

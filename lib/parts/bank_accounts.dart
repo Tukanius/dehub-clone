@@ -16,6 +16,10 @@ BankAccounts _$BankAccountsFromJson(Map<String, dynamic> json) {
   bool? isActive;
   String? icon;
 
+  String? partnerId;
+  String? regUserId;
+  String? balance;
+
   if (json['id'] != null) id = json['id'];
   if (json['createdAt'] != null) createdAt = json['createdAt'];
   if (json['updatedAt'] != null) updatedAt = json['updatedAt'];
@@ -30,6 +34,9 @@ BankAccounts _$BankAccountsFromJson(Map<String, dynamic> json) {
   if (json['isVerified'] != null) isVerified = json['isVerified'];
   if (json['isActive'] != null) isActive = json['isActive'];
   if (json['icon'] != null) icon = json['icon'];
+  if (json['partnerId'] != null) partnerId = json['partnerId'];
+  if (json['regUserId'] != null) regUserId = json['regUserId'];
+  if (json['balance'] != null) balance = json['balance'];
 
   return BankAccounts(
     id: id,
@@ -46,6 +53,9 @@ BankAccounts _$BankAccountsFromJson(Map<String, dynamic> json) {
     isVerified: isVerified,
     isActive: isActive,
     icon: icon,
+    partnerId: partnerId,
+    regUserId: regUserId,
+    balance: balance,
   );
 }
 
@@ -66,6 +76,9 @@ Map<String, dynamic> _$BankAccountsToJson(BankAccounts instance) {
   if (instance.isVerified != null) json['isVerified'] = instance.isVerified;
   if (instance.isActive != null) json['isActive'] = instance.isActive;
   if (instance.icon != null) json['icon'] = instance.icon;
+  if (instance.partnerId != null) json['partnerId'] = instance.partnerId;
+  if (instance.regUserId != null) json['regUserId'] = instance.regUserId;
+  if (instance.balance != null) json['balance'] = instance.balance;
 
   return json;
 }

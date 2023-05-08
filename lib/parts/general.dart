@@ -29,6 +29,120 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
   List<UnitSpaceLabels>? unitSpaceLabels;
   List<UnitWeightLabels>? unitWeightLabels;
 
+  List<BranchStatus>? branchStatus;
+  List<BranchTypes>? branchTypes;
+  List<BusinessSectors>? businessSectors;
+  List<BusinessStaffRoles>? businessStaffRoles;
+  List<BusinessStatus>? businessStatus;
+  List<ContractDocTypes>? contractDocTypes;
+  List<EquityTypes>? equityTypes;
+  List<InvitationStatus>? invitationStatus;
+  List<InvitationTypes>? invitationTypes;
+  List<LegalEntityTypes>? legalEntityTypes;
+  List<PartnerClassifications>? partnerClassifications;
+  List<PartnerRegisterStatus>? partnerRegisterStatus;
+  List<PartnerTypes>? partnerTypes;
+  List<Permissions>? permissions;
+  List<ProductCategoryTypes>? productCategoryTypes;
+  List<PurchaseTypes>? purchaseTypes;
+  ReferenceListTypes? referenceListTypes;
+  List<ReferenceTypes>? referenceTypes;
+  List<ServiceCategoryTypes>? serviceCategoryTypes;
+
+  if (json['branchStatus'] != null) {
+    branchStatus = (json['branchStatus'] as List)
+        .map((e) => BranchStatus.fromJson(e))
+        .toList();
+  }
+  if (json['referenceListTypes'] != null) {
+    referenceListTypes = ReferenceListTypes.fromJson(
+        json['referenceListTypes'] as Map<String, dynamic>);
+  }
+  if (json['branchTypes'] != null) {
+    branchTypes = (json['branchTypes'] as List)
+        .map((e) => BranchTypes.fromJson(e))
+        .toList();
+  }
+  if (json['businessSectors'] != null) {
+    businessSectors = (json['businessSectors'] as List)
+        .map((e) => BusinessSectors.fromJson(e))
+        .toList();
+  }
+  if (json['businessStaffRoles'] != null) {
+    businessStaffRoles = (json['businessStaffRoles'] as List)
+        .map((e) => BusinessStaffRoles.fromJson(e))
+        .toList();
+  }
+  if (json['businessStatus'] != null) {
+    businessStatus = (json['businessStatus'] as List)
+        .map((e) => BusinessStatus.fromJson(e))
+        .toList();
+  }
+  if (json['contractDocTypes'] != null) {
+    contractDocTypes = (json['contractDocTypes'] as List)
+        .map((e) => ContractDocTypes.fromJson(e))
+        .toList();
+  }
+  if (json['equityTypes'] != null) {
+    equityTypes = (json['equityTypes'] as List)
+        .map((e) => EquityTypes.fromJson(e))
+        .toList();
+  }
+  if (json['invitationStatus'] != null) {
+    invitationStatus = (json['invitationStatus'] as List)
+        .map((e) => InvitationStatus.fromJson(e))
+        .toList();
+  }
+  if (json['invitationTypes'] != null) {
+    invitationTypes = (json['invitationTypes'] as List)
+        .map((e) => InvitationTypes.fromJson(e))
+        .toList();
+  }
+  if (json['legalEntityTypes'] != null) {
+    legalEntityTypes = (json['legalEntityTypes'] as List)
+        .map((e) => LegalEntityTypes.fromJson(e))
+        .toList();
+  }
+  if (json['partnerClassifications'] != null) {
+    partnerClassifications = (json['partnerClassifications'] as List)
+        .map((e) => PartnerClassifications.fromJson(e))
+        .toList();
+  }
+  if (json['partnerRegisterStatus'] != null) {
+    partnerRegisterStatus = (json['partnerRegisterStatus'] as List)
+        .map((e) => PartnerRegisterStatus.fromJson(e))
+        .toList();
+  }
+  if (json['partnerTypes'] != null) {
+    partnerTypes = (json['partnerTypes'] as List)
+        .map((e) => PartnerTypes.fromJson(e))
+        .toList();
+  }
+  if (json['permissions'] != null) {
+    permissions = (json['permissions'] as List)
+        .map((e) => Permissions.fromJson(e))
+        .toList();
+  }
+  if (json['productCategoryTypes'] != null) {
+    productCategoryTypes = (json['productCategoryTypes'] as List)
+        .map((e) => ProductCategoryTypes.fromJson(e))
+        .toList();
+  }
+  if (json['purchaseTypes'] != null) {
+    purchaseTypes = (json['purchaseTypes'] as List)
+        .map((e) => PurchaseTypes.fromJson(e))
+        .toList();
+  }
+  if (json['referenceTypes'] != null) {
+    referenceTypes = (json['referenceTypes'] as List)
+        .map((e) => ReferenceTypes.fromJson(e))
+        .toList();
+  }
+  if (json['serviceCategoryTypes'] != null) {
+    serviceCategoryTypes = (json['serviceCategoryTypes'] as List)
+        .map((e) => ServiceCategoryTypes.fromJson(e))
+        .toList();
+  }
   if (json['provinces'] != null) {
     provinces =
         (json['provinces'] as List).map((e) => Provinces.fromJson(e)).toList();
@@ -184,11 +298,66 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
     unitSpaceLabels: unitSpaceLabels,
     unitWeightLabels: unitWeightLabels,
     priceEndTypes: priceEndTypes,
+    branchStatus: branchStatus,
+    branchTypes: branchTypes,
+    businessSectors: businessSectors,
+    businessStaffRoles: businessStaffRoles,
+    businessStatus: businessStatus,
+    contractDocTypes: contractDocTypes,
+    equityTypes: equityTypes,
+    invitationStatus: invitationStatus,
+    invitationTypes: invitationTypes,
+    legalEntityTypes: legalEntityTypes,
+    partnerClassifications: partnerClassifications,
+    partnerRegisterStatus: partnerRegisterStatus,
+    partnerTypes: partnerTypes,
+    permissions: permissions,
+    productCategoryTypes: productCategoryTypes,
+    purchaseTypes: purchaseTypes,
+    referenceListTypes: referenceListTypes,
+    referenceTypes: referenceTypes,
+    serviceCategoryTypes: serviceCategoryTypes,
   );
 }
 
 Map<String, dynamic> _$GeneralToJson(General instance) {
   Map<String, dynamic> json = {};
+
+  if (instance.branchStatus != null)
+    json['branchStatus'] = instance.branchStatus;
+  if (instance.branchTypes != null) json['branchTypes'] = instance.branchTypes;
+  if (instance.businessSectors != null)
+    json['businessSectors'] = instance.businessSectors;
+  if (instance.businessStaffRoles != null)
+    json['businessStaffRoles'] = instance.businessStaffRoles;
+  if (instance.businessStatus != null)
+    json['businessStatus'] = instance.businessStatus;
+  if (instance.contractDocTypes != null)
+    json['contractDocTypes'] = instance.contractDocTypes;
+  if (instance.equityTypes != null) json['equityTypes'] = instance.equityTypes;
+  if (instance.invitationStatus != null)
+    json['invitationStatus'] = instance.invitationStatus;
+  if (instance.invitationTypes != null)
+    json['invitationTypes'] = instance.invitationTypes;
+  if (instance.legalEntityTypes != null)
+    json['legalEntityTypes'] = instance.legalEntityTypes;
+  if (instance.partnerClassifications != null)
+    json['partnerClassifications'] = instance.partnerClassifications;
+  if (instance.partnerRegisterStatus != null)
+    json['partnerRegisterStatus'] = instance.partnerRegisterStatus;
+  if (instance.partnerTypes != null)
+    json['partnerTypes'] = instance.partnerTypes;
+  if (instance.permissions != null) json['permissions'] = instance.permissions;
+  if (instance.productCategoryTypes != null)
+    json['productCategoryTypes'] = instance.productCategoryTypes;
+  if (instance.purchaseTypes != null)
+    json['purchaseTypes'] = instance.purchaseTypes;
+  if (instance.referenceListTypes != null)
+    json['referenceListTypes'] = instance.referenceListTypes;
+  if (instance.referenceTypes != null)
+    json['referenceTypes'] = instance.referenceTypes;
+  if (instance.serviceCategoryTypes != null)
+    json['serviceCategoryTypes'] = instance.serviceCategoryTypes;
 
   if (instance.priceEndTypes != null)
     json['priceEndTypes'] = instance.priceEndTypes;

@@ -49,7 +49,10 @@ class _AjilUuregState extends State<AjilUureg> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset('images/nehemjleh.svg'),
+                          SvgPicture.asset(
+                            'images/nehemjleh.svg',
+                            color: invoiceColor,
+                          ),
                           SizedBox(
                             height: 10,
                           ),
@@ -69,6 +72,7 @@ class _AjilUuregState extends State<AjilUureg> {
                         children: [
                           SvgPicture.asset(
                             'images/zahialga.svg',
+                            color: orderColor,
                             height: 24,
                             width: 24,
                           ),
@@ -91,7 +95,10 @@ class _AjilUuregState extends State<AjilUureg> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset('images/tolbor_tootsoo.svg'),
+                          SvgPicture.asset(
+                            'images/tolbor_tootsoo.svg',
+                            color: paymentColor,
+                          ),
                           SizedBox(
                             height: 10,
                           ),
@@ -112,7 +119,10 @@ class _AjilUuregState extends State<AjilUureg> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset('images/sanhuujilt.svg'),
+                          SvgPicture.asset(
+                            'images/sanhuujilt.svg',
+                            color: financingColor,
+                          ),
                           SizedBox(
                             height: 10,
                           ),
@@ -132,7 +142,10 @@ class _AjilUuregState extends State<AjilUureg> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset('images/avlaga_uglug.svg'),
+                          SvgPicture.asset(
+                            'images/avlaga_uglug.svg',
+                            color: debtColor,
+                          ),
                           SizedBox(
                             height: 10,
                           ),
@@ -152,7 +165,10 @@ class _AjilUuregState extends State<AjilUureg> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset('images/baraa.svg'),
+                          SvgPicture.asset(
+                            'images/baraa.svg',
+                            color: productColor,
+                          ),
                           SizedBox(
                             height: 3,
                           ),
@@ -172,7 +188,10 @@ class _AjilUuregState extends State<AjilUureg> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset('images/network.svg'),
+                          SvgPicture.asset(
+                            'images/network.svg',
+                            color: networkColor,
+                          ),
                           SizedBox(
                             height: 10,
                           ),
@@ -192,7 +211,10 @@ class _AjilUuregState extends State<AjilUureg> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset('images/partner.svg'),
+                          SvgPicture.asset(
+                            'images/partner.svg',
+                            color: partnerColor,
+                          ),
                           SizedBox(
                             height: 10,
                           ),
@@ -213,7 +235,10 @@ class _AjilUuregState extends State<AjilUureg> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset('images/hereglegch.svg'),
+                          SvgPicture.asset(
+                            'images/hereglegch.svg',
+                            color: userColor,
+                          ),
                           SizedBox(
                             height: 10,
                           ),

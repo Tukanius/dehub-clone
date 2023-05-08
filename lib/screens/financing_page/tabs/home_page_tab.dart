@@ -1,3 +1,4 @@
+import 'package:dehub/screens/avaible_funding_page/avaible_funding_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -150,7 +151,7 @@ class _HomePageTabState extends State<HomePageTab> {
                           color: financingColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/map.svg',
+                          'images/sanhuujiltS.svg',
                           color: financingColor,
                         ),
                       ),
@@ -158,7 +159,7 @@ class _HomePageTabState extends State<HomePageTab> {
                         height: 2,
                       ),
                       Text(
-                        'Хөнгөлөлт, урамшуулал',
+                        'Санхүүжилт хүсэлт',
                         style: TextStyle(
                             fontSize: 11, fontWeight: FontWeight.w500),
                         softWrap: true,
@@ -166,39 +167,45 @@ class _HomePageTabState extends State<HomePageTab> {
                     ],
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: white,
-                  ),
-                  padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: financingColor.withOpacity(0.1),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushNamed(AvaibleFundingPage.routeName);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: white,
+                    ),
+                    padding: const EdgeInsets.all(10),
+                    width: 90,
+                    height: 90,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: financingColor.withOpacity(0.1),
+                          ),
+                          child: SvgPicture.asset(
+                            'images/map.svg',
+                            color: financingColor,
+                          ),
                         ),
-                        child: SvgPicture.asset(
-                          'images/map.svg',
-                          color: financingColor,
+                        SizedBox(
+                          height: 2,
                         ),
-                      ),
-                      SizedBox(
-                        height: 2,
-                      ),
-                      Text(
-                        'Лавлах мэдээлэл',
-                        style: TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.w500),
-                        softWrap: true,
-                      ),
-                    ],
+                        Text(
+                          'Боломжит нэхэмжлэл',
+                          style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w500),
+                          softWrap: true,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

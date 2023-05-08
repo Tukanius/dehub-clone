@@ -16,6 +16,10 @@ class BankAccounts {
   bool? isActive;
   String? icon;
 
+  String? partnerId;
+  String? regUserId;
+  String? balance;
+
   BankAccounts({
     this.id,
     this.createdAt,
@@ -31,6 +35,9 @@ class BankAccounts {
     this.isVerified,
     this.isDefault,
     this.icon,
+    this.partnerId,
+    this.regUserId,
+    this.balance,
   });
 
   static $fromJson(Map<String, dynamic> json) => _$BankAccountsFromJson(json);

@@ -474,59 +474,169 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                                   .toList(),
                             ),
                           )
-                        : Container(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Төлөлт хийх заавар',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                Row(
+                        : selectedMethod == "QPAY"
+                            ? Container(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Заавар татах',
+                                      'Төлөлт хийх заавар',
                                       style: TextStyle(
-                                        color: brownButtonColor,
                                         fontSize: 14,
-                                        decoration: TextDecoration.underline,
                                       ),
                                     ),
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 12,
-                                      ),
-                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Заавар татах',
+                                          style: TextStyle(
+                                            color: brownButtonColor,
+                                            fontSize: 14,
+                                            decoration:
+                                                TextDecoration.underline,
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(
+                                            Icons.arrow_forward_ios,
+                                            size: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    )
                                   ],
-                                )
-                              ],
-                            ),
-                          ),
+                                ),
+                              )
+                            : selectedMethod == "SOCIAL_PAY"
+                                ? Container(
+                                    padding: const EdgeInsets.only(left: 20),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Төлөлт хийх заавар',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Заавар татах',
+                                              style: TextStyle(
+                                                color: brownButtonColor,
+                                                fontSize: 14,
+                                                decoration:
+                                                    TextDecoration.underline,
+                                              ),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {},
+                                              icon: Icon(
+                                                Icons.arrow_forward_ios,
+                                                size: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                : selectedMethod == "BANK_CARD"
+                                    ? Container(
+                                        padding:
+                                            const EdgeInsets.only(left: 20),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Төлөлт хийх заавар',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  'Заавар татах',
+                                                  style: TextStyle(
+                                                    color: brownButtonColor,
+                                                    fontSize: 14,
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                  ),
+                                                ),
+                                                IconButton(
+                                                  onPressed: () {},
+                                                  icon: Icon(
+                                                    Icons.arrow_forward_ios,
+                                                    size: 12,
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    : Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            margin:
+                                                const EdgeInsets.only(left: 20),
+                                            child: const Text(
+                                              "Төлбөрийн хэрэгсэл сонгоно уу",
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: brownButtonColor,
+                                              ),
+                                            ),
+                                          ),
+                                          IconButton(
+                                            onPressed: () {},
+                                            icon: Icon(
+                                              Icons.arrow_forward_ios,
+                                              size: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                   ],
                 ),
               ),
               SizedBox(
                 height: 10,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(right: 25),
-                    child: Text(
-                      'Үлдэгдэл: 560,780.00 ₮',
+              Container(
+                margin: const EdgeInsets.only(right: 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Үлдэгдэл: ',
                       style: TextStyle(
                         fontSize: 12,
                         color: grey2,
                       ),
                     ),
-                  ),
-                ],
+                    Row(
+                      children: general.bankAccounts!
+                          .map(
+                            (item) => Text(
+                              '${item.balance}',
+                              style: TextStyle(fontSize: 12, color: grey2),
+                            ),
+                          )
+                          .toList(),
+                    )
+                  ],
+                ),
               ),
               SizedBox(
                 height: 15,

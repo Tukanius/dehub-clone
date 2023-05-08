@@ -8,6 +8,7 @@ class UserProvider extends ChangeNotifier {
   final DefaultCacheManager cacheManager = DefaultCacheManager();
   User user = User();
   User partnerUser = User();
+  User businessUser = User();
 
   me(bool handler) async {
     user = await AuthApi().me(handler);
@@ -25,6 +26,11 @@ class UserProvider extends ChangeNotifier {
       print(e.toString());
       print('==================ERRO+++++++++++++++++++++');
     }
+    notifyListeners();
+  }
+
+  businessMe(bool handler) async {
+    businessUser = await AuthApi().businessMe(handler);
     notifyListeners();
   }
 

@@ -29,4 +29,9 @@ class AuthApi extends HttpRequest {
     var res = await put("/auth/pin/check", "AUTH", data: json);
     return res['success'] == true;
   }
+
+  businessMe(bool handler) async {
+    var res = await get('auth/me', "BUSINESS", handler: handler);
+    return User.fromJson(res as Map<String, dynamic>);
+  }
 }
