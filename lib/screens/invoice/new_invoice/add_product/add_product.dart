@@ -26,13 +26,13 @@ class _AddProductState extends State<AddProduct> {
         child: Scaffold(
           backgroundColor: backgroundColor,
           appBar: AppBar(
-            backgroundColor: brownButtonColor,
+            backgroundColor: invoiceColor,
             leading: InkWell(
               onTap: () {
                 Navigator.of(context).pop();
               },
               child: Container(
-                color: brownButtonColor,
+                color: invoiceColor,
                 padding: const EdgeInsets.all(13),
                 child: SvgPicture.asset(
                   'images/close.svg',
@@ -50,7 +50,8 @@ class _AddProductState extends State<AddProduct> {
             centerTitle: true,
             actions: [
               AddButton(
-                color: Colors.orange,
+                addColor: invoiceColor,
+                color: white,
                 onClick: () {},
               ),
             ],
@@ -66,9 +67,9 @@ class _AddProductState extends State<AddProduct> {
                         margin: const EdgeInsets.only(top: 10, bottom: 10),
                         color: white,
                         child: TabBar(
-                          labelColor: brownButtonColor,
+                          labelColor: invoiceColor,
                           unselectedLabelColor: grey3,
-                          indicatorColor: brownButtonColor,
+                          indicatorColor: invoiceColor,
                           tabs: [
                             Container(
                               alignment: Alignment.center,
@@ -82,7 +83,7 @@ class _AddProductState extends State<AddProduct> {
                         ),
                       ),
                       SearchButton(
-                        color: brownButtonColor,
+                        color: invoiceColor,
                       ),
                     ],
                   ),
@@ -91,9 +92,7 @@ class _AddProductState extends State<AddProduct> {
             },
             body: TabBarView(
               children: [
-                Bagtsaar(
-                    // data: ,
-                    ),
+                Bagtsaar(),
                 Shirhegeer(),
               ],
             ),

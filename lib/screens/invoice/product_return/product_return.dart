@@ -116,7 +116,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
       backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: brownButtonColor,
+        backgroundColor: invoiceColor,
         title: Text(
           'Буцах',
           style: TextStyle(
@@ -134,7 +134,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                     margin: const EdgeInsets.only(top: 20),
                     child: Center(
                       child: CircularProgressIndicator(
-                        color: brownButtonColor,
+                        color: invoiceColor,
                       ),
                     ),
                   )
@@ -210,7 +210,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                     Container(
                                       child: Icon(
                                         Icons.perm_contact_cal_outlined,
-                                        color: brownButtonColor,
+                                        color: invoiceColor,
                                       ),
                                     ),
                                     SizedBox(
@@ -218,7 +218,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                     ),
                                     Text(
                                       '${invoice.senderBusiness!.partner!.businessNameEng}',
-                                      style: TextStyle(color: brownButtonColor),
+                                      style: TextStyle(color: invoiceColor),
                                     ),
                                   ],
                                 ),
@@ -243,7 +243,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                   children: [
                                     Text(
                                       '${invoice.senderBusiness!.partner!.businessNameEng}',
-                                      style: TextStyle(color: brownButtonColor),
+                                      style: TextStyle(color: invoiceColor),
                                     ),
                                     IconButton(
                                       onPressed: () {},
@@ -268,7 +268,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                   children: [
                                     Text(
                                       '${invoice.senderBranch!.nameEng}',
-                                      style: TextStyle(color: brownButtonColor),
+                                      style: TextStyle(color: invoiceColor),
                                     ),
                                     IconButton(
                                       onPressed: () {},
@@ -314,7 +314,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                     Container(
                                       child: Icon(
                                         Icons.perm_contact_cal_outlined,
-                                        color: brownButtonColor,
+                                        color: invoiceColor,
                                       ),
                                     ),
                                     SizedBox(
@@ -322,7 +322,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                     ),
                                     Text(
                                       'Харилцагч сонгох',
-                                      style: TextStyle(color: brownButtonColor),
+                                      style: TextStyle(color: invoiceColor),
                                     ),
                                   ],
                                 ),
@@ -484,7 +484,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                   children: [
                                     Text(
                                       '${invoice.purchaseOrder!.refCode}',
-                                      style: TextStyle(color: brownButtonColor),
+                                      style: TextStyle(color: invoiceColor),
                                     ),
                                     IconButton(
                                       onPressed: () {},
@@ -509,7 +509,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                   children: [
                                     Text(
                                       '${invoice.salesOrder!.refCode}',
-                                      style: TextStyle(color: brownButtonColor),
+                                      style: TextStyle(color: invoiceColor),
                                     ),
                                     IconButton(
                                       onPressed: () {},
@@ -534,7 +534,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                   children: [
                                     Text(
                                       '${invoice.senderFinUser!.firstName}',
-                                      style: TextStyle(color: brownButtonColor),
+                                      style: TextStyle(color: invoiceColor),
                                     ),
                                     IconButton(
                                       onPressed: () {},
@@ -572,7 +572,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                             .map(
                               (item) => InvoiceProductCard(
                                 data: item,
-                                color: brownButtonColor,
+                                color: invoiceColor,
                               ),
                             )
                             .toList(),
@@ -613,7 +613,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                   children: [
                                     Text(
                                       '${invoice.discountAmount}',
-                                      style: TextStyle(color: brownButtonColor),
+                                      style: TextStyle(color: invoiceColor),
                                     ),
                                     IconButton(
                                       onPressed: () {},
@@ -643,8 +643,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                       margin: EdgeInsets.only(right: 20),
                                       child: Text(
                                         '${invoice.itemsTotal}',
-                                        style:
-                                            TextStyle(color: brownButtonColor),
+                                        style: TextStyle(color: invoiceColor),
                                       ),
                                     ),
                                   ],
@@ -668,8 +667,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                       margin: EdgeInsets.only(right: 20),
                                       child: Text(
                                         '${invoice.vatAmount}₮',
-                                        style:
-                                            TextStyle(color: brownButtonColor),
+                                        style: TextStyle(color: invoiceColor),
                                       ),
                                     ),
                                   ],
@@ -693,8 +691,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                       margin: EdgeInsets.only(right: 20),
                                       child: Text(
                                         '${invoice.taxAmount}',
-                                        style:
-                                            TextStyle(color: brownButtonColor),
+                                        style: TextStyle(color: invoiceColor),
                                       ),
                                     ),
                                   ],
@@ -716,7 +713,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                   children: [
                                     Text(
                                       '${invoice.shippingAmount}',
-                                      style: TextStyle(color: brownButtonColor),
+                                      style: TextStyle(color: invoiceColor),
                                     ),
                                     IconButton(
                                       onPressed: () {},
@@ -750,7 +747,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                       child: Text(
                                         '${invoice.totalAmount} ',
                                         style: TextStyle(
-                                          color: brownButtonColor,
+                                          color: invoiceColor,
                                           fontSize: 24,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -833,7 +830,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                   children: [
                                     Text(
                                       '${invoice.amountToPay}',
-                                      style: TextStyle(color: brownButtonColor),
+                                      style: TextStyle(color: invoiceColor),
                                     ),
                                     IconButton(
                                       onPressed: () {},
@@ -909,7 +906,7 @@ class _ProductReturnPageState extends State<ProductReturnPage>
                                   children: [
                                     Text(
                                       '${invoice.confirmedAmount}',
-                                      style: TextStyle(color: brownButtonColor),
+                                      style: TextStyle(color: invoiceColor),
                                     ),
                                     IconButton(
                                       onPressed: () {},

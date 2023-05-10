@@ -69,7 +69,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: brownButtonColor,
+        backgroundColor: invoiceColor,
         leading: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           child: InkWell(
@@ -132,7 +132,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                           children: [
                             Text(
                               '${widget.data.amountToPay}',
-                              style: TextStyle(color: brownButtonColor),
+                              style: TextStyle(color: invoiceColor),
                             ),
                             IconButton(
                               onPressed: () {},
@@ -157,7 +157,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                           children: [
                             Text(
                               '${widget.data.amountToPay}',
-                              style: TextStyle(color: brownButtonColor),
+                              style: TextStyle(color: invoiceColor),
                             ),
                             IconButton(
                               onPressed: () {},
@@ -205,7 +205,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                             Container(
                               child: Icon(
                                 Icons.perm_contact_cal_outlined,
-                                color: brownButtonColor,
+                                color: invoiceColor,
                               ),
                             ),
                             SizedBox(
@@ -213,7 +213,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                             ),
                             Text(
                               '${widget.data.receiverBusiness!.profileName}',
-                              style: TextStyle(color: brownButtonColor),
+                              style: TextStyle(color: invoiceColor),
                             ),
                           ],
                         ),
@@ -238,7 +238,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                           children: [
                             Text(
                               '${widget.data.receiverAcc!.number}',
-                              style: TextStyle(color: brownButtonColor),
+                              style: TextStyle(color: invoiceColor),
                             ),
                             IconButton(
                               onPressed: () {},
@@ -282,14 +282,17 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                           margin: const EdgeInsets.only(left: 10),
                           child: Row(
                             children: [
-                              SvgPicture.asset('images/bank.svg'),
+                              SvgPicture.asset(
+                                'images/bank.svg',
+                                color: invoiceColor,
+                              ),
                               SizedBox(
                                 width: 5,
                               ),
                               const Text(
                                 "Холбосон дансаар",
                                 style: TextStyle(
-                                    fontSize: 14, color: brownButtonColor),
+                                    fontSize: 14, color: invoiceColor),
                               ),
                             ],
                           ),
@@ -371,8 +374,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                                                           child:
                                                               SvgPicture.asset(
                                                             'images/bank_card.svg',
-                                                            color:
-                                                                brownButtonColor,
+                                                            color: invoiceColor,
                                                           ),
                                                         )
                                                       : SizedBox(),
@@ -397,7 +399,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                                 child: const Text(
                                   "Данс сонгоно уу",
                                   style: TextStyle(
-                                      fontSize: 14, color: brownButtonColor),
+                                      fontSize: 14, color: invoiceColor),
                                 ),
                               ),
                               icon: Container(
@@ -463,7 +465,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                                               '${item.number}',
                                               style: const TextStyle(
                                                 fontSize: 14,
-                                                color: brownButtonColor,
+                                                color: invoiceColor,
                                               ),
                                             ),
                                           ],
@@ -492,7 +494,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                                         Text(
                                           'Заавар татах',
                                           style: TextStyle(
-                                            color: brownButtonColor,
+                                            color: invoiceColor,
                                             fontSize: 14,
                                             decoration:
                                                 TextDecoration.underline,
@@ -528,7 +530,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                                             Text(
                                               'Заавар татах',
                                               style: TextStyle(
-                                                color: brownButtonColor,
+                                                color: invoiceColor,
                                                 fontSize: 14,
                                                 decoration:
                                                     TextDecoration.underline,
@@ -565,7 +567,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                                                 Text(
                                                   'Заавар татах',
                                                   style: TextStyle(
-                                                    color: brownButtonColor,
+                                                    color: invoiceColor,
                                                     fontSize: 14,
                                                     decoration: TextDecoration
                                                         .underline,
@@ -594,7 +596,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                                               "Төлбөрийн хэрэгсэл сонгоно уу",
                                               style: TextStyle(
                                                 fontSize: 14,
-                                                color: brownButtonColor,
+                                                color: invoiceColor,
                                               ),
                                             ),
                                           ),
@@ -682,7 +684,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                     border: OutlineInputBorder(),
                     fillColor: Colors.white,
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: brownButtonColor),
+                      borderSide: BorderSide(color: invoiceColor),
                     ),
                   ),
                 ),
@@ -691,9 +693,9 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                 children: [
                   Checkbox(
                     checkColor: white,
-                    activeColor: brownButtonColor,
+                    activeColor: invoiceColor,
                     fillColor: MaterialStateProperty.resolveWith(
-                      (states) => brownButtonColor,
+                      (states) => invoiceColor,
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
@@ -724,7 +726,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 10),
                 child: CustomButton(
-                  labelColor: brownButtonColor,
+                  labelColor: invoiceColor,
                   labelText: 'Төлбөр зөвшөөрөх',
                   onClick: () {
                     onSubmit();

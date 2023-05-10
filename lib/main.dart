@@ -10,6 +10,7 @@ import 'package:dehub/screens/avaible_funding_page/request_approval_page.dart';
 import 'package:dehub/screens/debt_page/debt_page.dart';
 import 'package:dehub/screens/financing_page/financing_page.dart';
 import 'package:dehub/screens/first_page/first_page.dart';
+import 'package:dehub/screens/funding_request_page/funding_request_detail_page.dart';
 import 'package:dehub/screens/home_page/home_page.dart';
 import 'package:dehub/screens/invoice/payment_page/qpay_page.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
@@ -35,6 +36,9 @@ import 'package:dehub/screens/order_page/order_page.dart';
 import 'package:dehub/screens/partner_page/partner_page.dart';
 import 'package:dehub/screens/payment_page/payment_page.dart';
 import 'package:dehub/screens/product_page/product_page.dart';
+import 'package:dehub/screens/received_funding_page/give_funding_detail_page.dart';
+import 'package:dehub/screens/received_funding_page/received_funding_detail_page.dart';
+import 'package:dehub/screens/received_funding_page/received_funding_page.dart';
 import 'package:dehub/screens/shopping/shopping_page.dart';
 import 'package:dehub/screens/menu/suppliers/suppliers_page.dart';
 import 'package:dehub/screens/menu/tabs/purchase_page.dart';
@@ -50,6 +54,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:dehub/screens/main_invoice_page/invoice_page.dart';
+import 'package:dehub/screens/funding_request_page/funding_request_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -108,6 +113,14 @@ class MyApp extends StatelessWidget {
                   case ProfilePage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return ProfilePage();
+                    });
+                  case FundingRequestDetailPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return FundingRequestDetailPage();
+                    });
+                  case FundingRequestPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return FundingRequestPage();
                     });
                   case PartnerInfo1.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -247,6 +260,10 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return ProductPage();
                     });
+                  case ReceivedFundingDetailPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return ReceivedFundingDetailPage();
+                    });
                   case UserMangementPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return UserMangementPage();
@@ -254,6 +271,10 @@ class MyApp extends StatelessWidget {
                   case PartnerPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return PartnerPage();
+                    });
+                  case ReceivedFundingPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return ReceivedFundingPage();
                     });
                   case AddBankAccountPage.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -283,9 +304,17 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return QpayPage();
                     });
+                  case GiveFundingDetailPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return GiveFundingDetailPage();
+                    });
+                  case MainPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return MainPage();
+                    });
                   default:
                     return MaterialPageRoute(
-                      builder: (_) => MainPage(),
+                      builder: (_) => FirstPage(),
                     );
                 }
               },

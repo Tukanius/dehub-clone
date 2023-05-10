@@ -42,9 +42,9 @@ class _AjilUuregState extends State<AjilUureg> {
                   children: [
                     InkWell(
                       onTap: () {
-                        // Navigator.of(context)
-                        //     .pushNamed(MainInvoicePage.routeName);
-                        Navigator.of(context).pushNamed(MainPage.routeName);
+                        Navigator.of(context)
+                            .pushNamed(MainInvoicePage.routeName);
+                        // Navigator.of(context).pushNamed(MainPage.routeName);
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,

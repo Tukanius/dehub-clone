@@ -51,7 +51,7 @@ class _QpayPageState extends State<QpayPage> {
                 width: 40,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  color: brownButtonColor,
+                  color: invoiceColor,
                 ),
               ),
               SizedBox(
@@ -114,7 +114,7 @@ class _QpayPageState extends State<QpayPage> {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },
-                labelColor: brownButtonColor,
+                labelColor: invoiceColor,
                 labelText: 'Төлбөр шалгах',
               ),
             ],

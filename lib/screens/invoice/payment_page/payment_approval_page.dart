@@ -75,12 +75,13 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                       border: Border.all(
-                        color: brownButtonColor,
+                        color: invoiceColor,
                         width: 3,
                       ),
                     ),
                     child: SvgPicture.asset(
                       'images/check.svg',
+                      color: invoiceColor,
                     ),
                   ),
                   SizedBox(
@@ -118,7 +119,7 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
                     Navigator.of(ctx).pop();
                     Navigator.of(ctx).pop();
                   },
-                  labelColor: brownButtonColor,
+                  labelColor: invoiceColor,
                   labelText: 'Ойлголоо',
                 ),
               ),
@@ -182,7 +183,7 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: brownButtonColor,
+        backgroundColor: invoiceColor,
         elevation: 0,
         leading: IconButton(
           onPressed: () {
@@ -205,7 +206,7 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
                   height: 40,
                   width: 40,
                   decoration: BoxDecoration(
-                    color: brownButtonColor,
+                    color: invoiceColor,
                     borderRadius: BorderRadius.circular(3),
                   ),
                   child: SvgPicture.asset(
@@ -217,8 +218,6 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
             SizedBox(
               height: 20,
             ),
-            Text(widget.id),
-            Text(widget.amount.toString()),
             Text(
               'Нэхэмжлэх төлөх',
               style: TextStyle(

@@ -1,4 +1,5 @@
 import 'package:dehub/api/invoice_api.dart';
+import 'package:dehub/components/invoice_product_card/add_product_card.dart';
 import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -7,10 +8,8 @@ import 'package:flutter/material.dart';
 
 class Bagtsaar extends StatefulWidget {
   static const routeName = '/bagtsaar';
-  // Invoice data;
   Bagtsaar({
     Key? key,
-    // required this.data,
   }) : super(key: key);
 
   @override
@@ -28,9 +27,7 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
   Invoice invoice = Invoice();
 
   @override
-  afterFirstLayout(BuildContext context) async {
-    // invoice = await InvoiceApi().getInvoice(widget.data);
-  }
+  afterFirstLayout(BuildContext context) async {}
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +37,8 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
         child: Column(
           children: [
             for (var i = 0; i < 10; i++)
-              InvoiceProductCard(
-                color: brownButtonColor,
+              AddProductCard(
+                color: invoiceColor,
               ),
             SizedBox(
               height: 50,

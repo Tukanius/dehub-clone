@@ -27,9 +27,9 @@ class _SupplierCardState extends State<SupplierCard> {
           widget.boxShadow == true
               ? BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1,
-                  blurRadius: 3,
-                  offset: Offset(0, 1),
+                  spreadRadius: 0.5,
+                  blurRadius: 1,
+                  offset: Offset(0, 0.5),
                 )
               : BoxShadow(
                   color: Colors.grey.withOpacity(0),

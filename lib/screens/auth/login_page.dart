@@ -280,6 +280,9 @@ class _LoginPageState extends State<LoginPage> {
                       labelText: "Нэвтрэх",
                       labelColor: mainColor,
                     ),
+                    SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),

@@ -19,7 +19,7 @@ class _SalbarSongohState extends State<SalbarSongoh> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: brownButtonColor,
+        backgroundColor: invoiceColor,
         elevation: 0.0,
         centerTitle: true,
         title: Text(

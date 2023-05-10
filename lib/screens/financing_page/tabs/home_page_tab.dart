@@ -1,4 +1,6 @@
 import 'package:dehub/screens/avaible_funding_page/avaible_funding_page.dart';
+import 'package:dehub/screens/funding_request_page/funding_request_page.dart';
+import 'package:dehub/screens/received_funding_page/received_funding_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -30,39 +32,45 @@ class _HomePageTabState extends State<HomePageTab> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                Container(
-                  margin: const EdgeInsets.only(left: 15, right: 5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: white,
-                  ),
-                  padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: financingColor.withOpacity(0.1),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushNamed(ReceivedFundingPage.routeName);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 15, right: 5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: white,
+                    ),
+                    padding: const EdgeInsets.all(10),
+                    width: 90,
+                    height: 90,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: financingColor.withOpacity(0.1),
+                          ),
+                          child: SvgPicture.asset(
+                            'images/camera.svg',
+                            color: financingColor,
+                          ),
                         ),
-                        child: SvgPicture.asset(
-                          'images/grid1.svg',
-                          color: financingColor,
+                        SizedBox(
+                          height: 2,
                         ),
-                      ),
-                      SizedBox(
-                        height: 2,
-                      ),
-                      Text(
-                        'Барааны жагсаалт',
-                        style: TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.w500),
-                        softWrap: true,
-                      ),
-                    ],
+                        Text(
+                          'Авсан санхүүжилт',
+                          style: TextStyle(
+                              fontSize: 11.5, fontWeight: FontWeight.w500),
+                          softWrap: true,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -132,39 +140,45 @@ class _HomePageTabState extends State<HomePageTab> {
                     ],
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: white,
-                  ),
-                  padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: financingColor.withOpacity(0.1),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushNamed(FundingRequestPage.routeName);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: white,
+                    ),
+                    padding: const EdgeInsets.all(10),
+                    width: 90,
+                    height: 90,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: financingColor.withOpacity(0.1),
+                          ),
+                          child: SvgPicture.asset(
+                            'images/sanhuujiltS.svg',
+                            color: financingColor,
+                          ),
                         ),
-                        child: SvgPicture.asset(
-                          'images/sanhuujiltS.svg',
-                          color: financingColor,
+                        SizedBox(
+                          height: 2,
                         ),
-                      ),
-                      SizedBox(
-                        height: 2,
-                      ),
-                      Text(
-                        'Санхүүжилт хүсэлт',
-                        style: TextStyle(
-                            fontSize: 11, fontWeight: FontWeight.w500),
-                        softWrap: true,
-                      ),
-                    ],
+                        Text(
+                          'Санхүүжилт хүсэлт',
+                          style: TextStyle(
+                              fontSize: 11, fontWeight: FontWeight.w500),
+                          softWrap: true,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 InkWell(

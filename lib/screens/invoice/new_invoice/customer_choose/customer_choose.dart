@@ -27,13 +27,13 @@ class _CustomerChooseState extends State<CustomerChoose> {
         child: Scaffold(
           backgroundColor: backgroundColor,
           appBar: AppBar(
-            backgroundColor: brownButtonColor,
+            backgroundColor: invoiceColor,
             leading: InkWell(
               onTap: () {
                 Navigator.of(context).pop();
               },
               child: Container(
-                color: brownButtonColor,
+                color: invoiceColor,
                 padding: const EdgeInsets.all(13),
                 child: SvgPicture.asset(
                   'images/close.svg',
@@ -67,9 +67,9 @@ class _CustomerChooseState extends State<CustomerChoose> {
                         margin: const EdgeInsets.only(top: 10, bottom: 10),
                         color: white,
                         child: TabBar(
-                          labelColor: brownButtonColor,
+                          labelColor: invoiceColor,
                           unselectedLabelColor: grey3,
-                          indicatorColor: brownButtonColor,
+                          indicatorColor: invoiceColor,
                           tabs: [
                             Container(
                               alignment: Alignment.center,
@@ -85,7 +85,9 @@ class _CustomerChooseState extends State<CustomerChoose> {
                           ],
                         ),
                       ),
-                      SearchButton(),
+                      SearchButton(
+                        color: invoiceColor,
+                      ),
                     ],
                   ),
                 ),

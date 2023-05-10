@@ -1,4 +1,3 @@
-import 'package:dehub/components/partner_cards/inbox_card.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/from_bank.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/from_buyer.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -33,11 +32,6 @@ class _InboxTabState extends State<InboxTab>
       tabController.index = index;
     });
   }
-
-  var data = [
-    {},
-    {},
-  ];
 
   @override
   Widget build(BuildContext context) {

@@ -51,7 +51,7 @@ class _MainPageState extends State<MainPage> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: _selectedIndex == 1
-            ? brownButtonColor
+            ? invoiceColor
             : _selectedIndex == 2
                 ? purpleButtonColor
                 : buttonColor,
@@ -124,7 +124,7 @@ class _MainPageState extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset('images/binvoice.svg'),
-            backgroundColor: brownButtonColor,
+            backgroundColor: invoiceColor,
             label: 'Нэхэмжлэх',
           ),
           BottomNavigationBarItem(

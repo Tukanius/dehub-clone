@@ -31,7 +31,7 @@ class _Index1State extends State<Index1> {
                   Text(
                     'Ch.Gerelmaa',
                     style: TextStyle(
-                      color: brownButtonColor,
+                      color: invoiceColor,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -252,7 +252,7 @@ class _Index1State extends State<Index1> {
                         Text(
                           'Партнерын нэр',
                           style: TextStyle(
-                            color: brownButtonColor,
+                            color: invoiceColor,
                           ),
                         ),
                         SizedBox(
@@ -307,7 +307,7 @@ class _Index1State extends State<Index1> {
                         Text(
                           'Партнерын нэр',
                           style: TextStyle(
-                            color: brownButtonColor,
+                            color: invoiceColor,
                           ),
                         ),
                         SizedBox(
@@ -552,7 +552,7 @@ class _Index1State extends State<Index1> {
                               Text(
                                 '25,500 ₮',
                                 style: TextStyle(
-                                  color: brownButtonColor,
+                                  color: invoiceColor,
                                 ),
                               ),
                               SizedBox(
@@ -589,7 +589,7 @@ class _Index1State extends State<Index1> {
                               Text(
                                 '379,500.00 ₮',
                                 style: TextStyle(
-                                  color: brownButtonColor,
+                                  color: invoiceColor,
                                 ),
                               ),
                               SizedBox(
@@ -621,7 +621,7 @@ class _Index1State extends State<Index1> {
                               Text(
                                 '37,95.00 ₮',
                                 style: TextStyle(
-                                  color: brownButtonColor,
+                                  color: invoiceColor,
                                 ),
                               ),
                               SizedBox(
@@ -653,7 +653,7 @@ class _Index1State extends State<Index1> {
                               Text(
                                 '00.00 ₮',
                                 style: TextStyle(
-                                  color: brownButtonColor,
+                                  color: invoiceColor,
                                 ),
                               ),
                               SizedBox(
@@ -685,7 +685,7 @@ class _Index1State extends State<Index1> {
                               Text(
                                 '00.00 ₮',
                                 style: TextStyle(
-                                  color: brownButtonColor,
+                                  color: invoiceColor,
                                 ),
                               ),
                               SizedBox(
@@ -727,7 +727,7 @@ class _Index1State extends State<Index1> {
                               Text(
                                 '417,450.00 ₮',
                                 style: TextStyle(
-                                  color: brownButtonColor,
+                                  color: invoiceColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 24,
                                 ),

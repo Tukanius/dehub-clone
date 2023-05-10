@@ -18,13 +18,13 @@ class _SendPageState extends State<SendPage> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: brownButtonColor,
+        backgroundColor: invoiceColor,
         leading: InkWell(
           onTap: () {
             Navigator.of(context).pop();
           },
           child: Container(
-            color: brownButtonColor,
+            color: invoiceColor,
             padding: const EdgeInsets.all(13),
             child: SvgPicture.asset(
               'images/close.svg',
@@ -75,7 +75,7 @@ class _SendPageState extends State<SendPage> {
                               Text(
                                 'Bolor Store',
                                 style: TextStyle(
-                                  color: brownButtonColor,
+                                  color: invoiceColor,
                                 ),
                               ),
                               SizedBox(
@@ -112,7 +112,7 @@ class _SendPageState extends State<SendPage> {
                               Text(
                                 'bolor@gmail.com',
                                 style: TextStyle(
-                                  color: brownButtonColor,
+                                  color: invoiceColor,
                                 ),
                               ),
                               SizedBox(
@@ -149,7 +149,7 @@ class _SendPageState extends State<SendPage> {
                               Text(
                                 '417,450.00 ₮',
                                 style: TextStyle(
-                                  color: brownButtonColor,
+                                  color: invoiceColor,
                                 ),
                               ),
                               SizedBox(
@@ -186,7 +186,7 @@ class _SendPageState extends State<SendPage> {
                               Text(
                                 'Invoice-23987.PDF',
                                 style: TextStyle(
-                                  color: brownButtonColor,
+                                  color: invoiceColor,
                                 ),
                               ),
                               SizedBox(
@@ -242,7 +242,7 @@ class _SendPageState extends State<SendPage> {
                           Container(
                             child: Icon(
                               Icons.perm_contact_cal_outlined,
-                              color: brownButtonColor,
+                              color: invoiceColor,
                             ),
                           ),
                           SizedBox(
@@ -250,7 +250,7 @@ class _SendPageState extends State<SendPage> {
                           ),
                           Text(
                             'Supplier Business Name',
-                            style: TextStyle(color: brownButtonColor),
+                            style: TextStyle(color: invoiceColor),
                           ),
                         ],
                       ),
@@ -276,7 +276,7 @@ class _SendPageState extends State<SendPage> {
                         children: [
                           Text(
                             'Партнер нэр',
-                            style: TextStyle(color: brownButtonColor),
+                            style: TextStyle(color: invoiceColor),
                           ),
                           IconButton(
                             onPressed: () {},
@@ -302,7 +302,7 @@ class _SendPageState extends State<SendPage> {
                         children: [
                           Text(
                             'Салбарын нэр',
-                            style: TextStyle(color: brownButtonColor),
+                            style: TextStyle(color: invoiceColor),
                           ),
                           IconButton(
                             onPressed: () {},
@@ -353,7 +353,7 @@ class _SendPageState extends State<SendPage> {
               child: CustomButton(
                 labelText: 'Нэхэмжлэл илгээх',
                 onClick: () {},
-                labelColor: brownButtonColor,
+                labelColor: invoiceColor,
               ),
             ),
           ],

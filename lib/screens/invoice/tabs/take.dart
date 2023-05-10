@@ -102,7 +102,7 @@ class _TakePageState extends State<TakePage>
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                       color: currentIndex == 0
-                          ? brownButtonColor
+                          ? invoiceColor
                           : Colors.grey.shade100,
                     ),
                     child: InkWell(
@@ -130,7 +130,7 @@ class _TakePageState extends State<TakePage>
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                       color: currentIndex == 1
-                          ? brownButtonColor
+                          ? invoiceColor
                           : Colors.grey.shade100,
                     ),
                     child: InkWell(
@@ -158,7 +158,7 @@ class _TakePageState extends State<TakePage>
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                       color: currentIndex == 2
-                          ? brownButtonColor
+                          ? invoiceColor
                           : Colors.grey.shade100,
                     ),
                     child: InkWell(
@@ -186,7 +186,7 @@ class _TakePageState extends State<TakePage>
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                       color: currentIndex == 3
-                          ? brownButtonColor
+                          ? invoiceColor
                           : Colors.grey.shade100,
                     ),
                     child: InkWell(
@@ -214,7 +214,7 @@ class _TakePageState extends State<TakePage>
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                       color: currentIndex == 4
-                          ? brownButtonColor
+                          ? invoiceColor
                           : Colors.grey.shade100,
                     ),
                     child: InkWell(
@@ -240,7 +240,7 @@ class _TakePageState extends State<TakePage>
           ),
           SliverToBoxAdapter(
             child: SearchButton(
-              color: brownButtonColor,
+              color: invoiceColor,
             ),
           ),
         ];
@@ -248,7 +248,7 @@ class _TakePageState extends State<TakePage>
       body: isLoading == true
           ? Center(
               child: CircularProgressIndicator(
-                color: brownButtonColor,
+                color: invoiceColor,
               ),
             )
           : invoice.rows!.length == 0
@@ -258,7 +258,7 @@ class _TakePageState extends State<TakePage>
                   enablePullUp: true,
                   controller: _refreshController,
                   header: WaterDropHeader(
-                    waterDropColor: brownButtonColor,
+                    waterDropColor: invoiceColor,
                   ),
                   onRefresh: _onRefresh,
                   onLoading: _onLoading,

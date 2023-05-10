@@ -21,7 +21,7 @@ class _NewInvoiceState extends State<NewInvoice> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: brownButtonColor,
+        backgroundColor: invoiceColor,
         elevation: 0,
         leading: IconButton(
           onPressed: () {
@@ -100,46 +100,49 @@ class _NewInvoiceState extends State<NewInvoice> {
                   color: white,
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                child: Icon(
-                                  Icons.perm_contact_cal_outlined,
-                                  color: brownButtonColor,
-                                ),
+                      InkWell(
+                        onTap: () {
+                          showModalBottomSheet(
+                            useSafeArea: true,
+                            isScrollControlled: true,
+                            context: context,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(20),
                               ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Харилцагч сонгох',
-                                style: TextStyle(color: brownButtonColor),
-                              ),
-                            ],
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              showModalBottomSheet(
-                                useSafeArea: true,
-                                isScrollControlled: true,
-                                context: context,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(20),
+                            ),
+                            builder: (context) => buildSheet(),
+                          );
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  child: Icon(
+                                    Icons.perm_contact_cal_outlined,
+                                    color: invoiceColor,
                                   ),
                                 ),
-                                builder: (context) => buildSheet(),
-                              );
-                            },
-                            icon: Icon(
-                              Icons.arrow_forward_ios,
-                              size: 12,
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'Харилцагч сонгох',
+                                  style: TextStyle(color: invoiceColor),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.arrow_forward_ios,
+                                size: 12,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -197,7 +200,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                             children: [
                               Text(
                                 'Үүссэн',
-                                style: TextStyle(color: brownButtonColor),
+                                style: TextStyle(color: invoiceColor),
                               ),
                               IconButton(
                                 onPressed: () {},
@@ -267,7 +270,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                               Container(
                                 child: Icon(
                                   Icons.perm_contact_cal_outlined,
-                                  color: brownButtonColor,
+                                  color: invoiceColor,
                                 ),
                               ),
                               SizedBox(
@@ -275,7 +278,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                               ),
                               Text(
                                 'Supplier Business Name',
-                                style: TextStyle(color: brownButtonColor),
+                                style: TextStyle(color: invoiceColor),
                               ),
                             ],
                           ),
@@ -300,7 +303,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                             children: [
                               Text(
                                 'Партнер нэр',
-                                style: TextStyle(color: brownButtonColor),
+                                style: TextStyle(color: invoiceColor),
                               ),
                               IconButton(
                                 onPressed: () {},
@@ -325,7 +328,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                             children: [
                               Text(
                                 'Салбарын нэр',
-                                style: TextStyle(color: brownButtonColor),
+                                style: TextStyle(color: invoiceColor),
                               ),
                               IconButton(
                                 onPressed: () {},
@@ -375,7 +378,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                             children: [
                               Text(
                                 '-',
-                                style: TextStyle(color: brownButtonColor),
+                                style: TextStyle(color: invoiceColor),
                               ),
                               IconButton(
                                 onPressed: () {},
@@ -400,7 +403,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                             children: [
                               Text(
                                 '-',
-                                style: TextStyle(color: brownButtonColor),
+                                style: TextStyle(color: invoiceColor),
                               ),
                               IconButton(
                                 onPressed: () {},
@@ -481,7 +484,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                               Container(
                                 child: Icon(
                                   Icons.download_for_offline_outlined,
-                                  color: brownButtonColor,
+                                  color: invoiceColor,
                                 ),
                               ),
                               SizedBox(
@@ -489,7 +492,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                               ),
                               Text(
                                 'Мөр нэмэх',
-                                style: TextStyle(color: brownButtonColor),
+                                style: TextStyle(color: invoiceColor),
                               ),
                             ],
                           ),
@@ -541,7 +544,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                             children: [
                               Text(
                                 'Нэмэх',
-                                style: TextStyle(color: brownButtonColor),
+                                style: TextStyle(color: invoiceColor),
                               ),
                               IconButton(
                                 onPressed: () {},
@@ -571,7 +574,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                                 margin: EdgeInsets.only(right: 20),
                                 child: Text(
                                   '00.00₮',
-                                  style: TextStyle(color: brownButtonColor),
+                                  style: TextStyle(color: invoiceColor),
                                 ),
                               ),
                             ],
@@ -595,7 +598,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                                 margin: EdgeInsets.only(right: 20),
                                 child: Text(
                                   '00.00₮',
-                                  style: TextStyle(color: brownButtonColor),
+                                  style: TextStyle(color: invoiceColor),
                                 ),
                               ),
                             ],
@@ -619,7 +622,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                                 margin: EdgeInsets.only(right: 20),
                                 child: Text(
                                   '00.00₮',
-                                  style: TextStyle(color: brownButtonColor),
+                                  style: TextStyle(color: invoiceColor),
                                 ),
                               ),
                             ],
@@ -641,7 +644,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                             children: [
                               Text(
                                 'Нэмэх',
-                                style: TextStyle(color: brownButtonColor),
+                                style: TextStyle(color: invoiceColor),
                               ),
                               IconButton(
                                 onPressed: () {},
@@ -675,7 +678,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                                 child: Text(
                                   '00.00₮',
                                   style: TextStyle(
-                                    color: brownButtonColor,
+                                    color: invoiceColor,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -754,7 +757,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                             children: [
                               Text(
                                 '00.00 ₮',
-                                style: TextStyle(color: brownButtonColor),
+                                style: TextStyle(color: invoiceColor),
                               ),
                               IconButton(
                                 onPressed: () {},
@@ -779,7 +782,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                             children: [
                               Text(
                                 '00.00 ₮',
-                                style: TextStyle(color: brownButtonColor),
+                                style: TextStyle(color: invoiceColor),
                               ),
                               IconButton(
                                 onPressed: () {},
@@ -850,7 +853,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                             children: [
                               Text(
                                 '00.00 ₮',
-                                style: TextStyle(color: brownButtonColor),
+                                style: TextStyle(color: invoiceColor),
                               ),
                               IconButton(
                                 onPressed: () {},

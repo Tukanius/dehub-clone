@@ -55,7 +55,7 @@ class _InvoiceCardSentState extends State<InvoiceCardSent> {
   fillColor() {
     switch (widget.data!.paymentStatus) {
       case "PENDING":
-        return brownButtonColor.withOpacity(0.3);
+        return invoiceColor.withOpacity(0.3);
       case "DIVIDED":
         return lightYellow.withOpacity(0.5);
       case "OVER_DUE":
@@ -87,7 +87,7 @@ class _InvoiceCardSentState extends State<InvoiceCardSent> {
   textColor() {
     switch (widget.data!.paymentStatus) {
       case "PENDING":
-        return brownButtonColor;
+        return invoiceColor;
       case "DIVIDED":
         return grey3;
       case "OVER_DUE":
@@ -136,14 +136,14 @@ class _InvoiceCardSentState extends State<InvoiceCardSent> {
                             Checkbox(
                               side: MaterialStateBorderSide.resolveWith(
                                 (states) => BorderSide(
-                                  color: brownButtonColor,
+                                  color: invoiceColor,
                                   width: 2,
                                 ),
                               ),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),
-                              activeColor: brownButtonColor,
+                              activeColor: invoiceColor,
                               value: value,
                               onChanged: (value1) {
                                 setState(() {
@@ -182,7 +182,7 @@ class _InvoiceCardSentState extends State<InvoiceCardSent> {
                                   invoiceStatus(),
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: brownButtonColor,
+                                    color: invoiceColor,
                                   ),
                                 ),
                                 SizedBox(
@@ -213,7 +213,7 @@ class _InvoiceCardSentState extends State<InvoiceCardSent> {
                                   children: [
                                     SvgPicture.asset(
                                       'images/inv.svg',
-                                      color: brownButtonColor,
+                                      color: invoiceColor,
                                     ),
                                     SizedBox(
                                       width: 5,
