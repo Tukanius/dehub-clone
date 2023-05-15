@@ -1,3 +1,4 @@
+import 'package:dehub/screens/add_bank_account_page/add_bank_account_page.dart';
 import 'package:dehub/screens/debt_page/debt_page.dart';
 import 'package:dehub/screens/financing_page/financing_page.dart';
 import 'package:dehub/screens/main_invoice_page/invoice_page.dart';
@@ -90,7 +91,9 @@ class _AjilUuregState extends State<AjilUureg> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).pushNamed(PaymentPage.routeName);
+                        // Navigator.of(context).pushNamed(PaymentPage.routeName);
+                        Navigator.of(context)
+                            .pushNamed(AddBankAccountPage.routeName);
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,

@@ -1,12 +1,13 @@
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/inbox_tab.dart';
-import 'package:dehub/screens/network_page/tabs/partner_tab/partner_tab.dart';
+import 'package:dehub/screens/network_page/tabs/inbox_tab/new_invitation_page/new_invitation_page.dart';
 import 'package:dehub/screens/network_page/tabs/sent_tab/sent_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dehub/screens/network_page/tabs/dashboard_tab.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/dashboard_tab.dart';
+import 'package:dehub/screens/network_page/tabs/home_tab/home_tab.dart';
 
 class NetworkPage extends StatefulWidget {
   static const routeName = 'networkpage';
@@ -19,8 +20,8 @@ class NetworkPage extends StatefulWidget {
 class _NetworkPageState extends State<NetworkPage> {
   int selectedIndex = 0;
   static const List<Widget> currentPages = [
+    HomeTab(),
     DashboardTab(),
-    PartnerTab(),
     InboxTab(),
     SentTab(),
   ];
@@ -89,10 +90,16 @@ class _NetworkPageState extends State<NetworkPage> {
                     color: selectedIndex != 3 ? networkColor : white,
                   ),
                 )
-              : selectedIndex == 3
+              : selectedIndex == 3 || selectedIndex == 2
                   ? AddButton(
-                      color: white,
-                      addColor: networkColor,
+                      color: selectedIndex != 2 ? white : networkColor,
+                      addColor: selectedIndex != 2 ? networkColor : white,
+                      onClick: () {
+                        selectedIndex == 3
+                            ? Navigator.of(context)
+                                .pushNamed(NewInvitationPage.routeName)
+                            : SizedBox();
+                      },
                     )
                   : SizedBox(),
         ],
@@ -107,18 +114,18 @@ class _NetworkPageState extends State<NetworkPage> {
         currentIndex: selectedIndex,
         items: [
           BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+              color: networkColor,
+            ),
+            label: 'Нүүр',
+          ),
+          BottomNavigationBarItem(
             icon: SvgPicture.asset(
               'images/dashboard.svg',
               color: networkColor,
             ),
             label: 'Дашбоард',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'images/partners.svg',
-              color: networkColor,
-            ),
-            label: 'Харилцагч',
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(

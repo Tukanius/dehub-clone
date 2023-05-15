@@ -1,4 +1,3 @@
-import 'package:dehub/components/partner_cards/inbox_card.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/from_bank.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/from_buyer.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -17,12 +16,6 @@ class _InboxTabState extends State<InboxTab>
   late TabController tabController;
   ScrollController scrollController = ScrollController();
 
-  void initState() {
-    tabController = TabController(length: 2, vsync: this);
-    tabController.index = currentIndex;
-    super.initState();
-  }
-
   void dispose() {
     tabController.dispose();
     super.dispose();
@@ -34,10 +27,11 @@ class _InboxTabState extends State<InboxTab>
     });
   }
 
-  var data = [
-    {},
-    {},
-  ];
+  void initState() {
+    tabController = TabController(length: 2, vsync: this);
+    tabController.index = currentIndex;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

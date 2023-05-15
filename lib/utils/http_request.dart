@@ -19,7 +19,7 @@ class HttpRequest {
   // static const invoiceHost = 'http://192.168.1.220:30553/inv';
   static const invoiceHost = 'http://dev-de-invoice.zto.mn/inv';
 
-  static const businessHost = 'http://dev-de-business-zto.mn/biz';
+  static const businessHost = 'http://dev-de-network-zto.mn/biz';
 
   // static const s3host = 'http://192.168.1.220:30550/s3';
   static const s3host = 'https://dev-de-dehub.zto.mn/s3';

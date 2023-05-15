@@ -1,6 +1,8 @@
+import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/partner_cards/inbox_card.dart';
-import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
+import 'package:dehub/models/result.dart';
 import 'package:flutter/material.dart';
+import 'package:after_layout/after_layout.dart';
 
 class FromBuyer extends StatefulWidget {
   const FromBuyer({Key? key}) : super(key: key);
@@ -9,14 +11,41 @@ class FromBuyer extends StatefulWidget {
   _FromBuyerState createState() => _FromBuyerState();
 }
 
-class _FromBuyerState extends State<FromBuyer> {
+class _FromBuyerState extends State<FromBuyer> with AfterLayoutMixin {
+  int page = 1;
+  int limit = 10;
+  Result invitation = Result(rows: [], count: 0);
+  bool isLoading = true;
+
+  @override
+  afterFirstLayout(BuildContext context) async {
+    await list(page, limit);
+  }
+
+  list(int page, int limit) async {
+    Filter filter = Filter();
+    Offset offset = Offset(page: page, limit: limit);
+    print('================INVITATION=================');
+    Result res = await BusinessApi()
+        .list(ResultArguments(filter: filter, offset: offset));
+    print('================INVITATION=================');
+    setState(() {
+      invitation = res;
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        children: [
-          for (var i = 0; i < 10; i++) InboxCard(),
-        ],
+        children: invitation.rows!
+            .map(
+              (item) => InboxCard(
+                data: item,
+              ),
+            )
+            .toList(),
       ),
     );
   }

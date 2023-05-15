@@ -1,3 +1,4 @@
+import 'package:dehub/components/goods_info_card/goods_info_card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -352,162 +353,85 @@ class _Index1State extends State<Index1> {
                   ),
                   Divider(),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          '#',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: black,
+                      Row(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(left: 10),
+                            child: Text(
+                              '#',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: black,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Container(
-                        child: Text(
-                          'Бараа',
-                          style: TextStyle(
-                            color: black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
+                          SizedBox(
+                            width: 20,
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 120,
-                      ),
-                      Container(
-                        child: Text(
-                          'Хэм.н',
-                          style: TextStyle(
-                            color: black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
+                          Container(
+                            child: Text(
+                              'Бараа',
+                              style: TextStyle(
+                                color: black,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
+                        ],
                       ),
                       Container(
-                        child: Text(
-                          'Тоо',
-                          style: TextStyle(
-                            color: black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 30,
-                      ),
-                      Container(
-                        child: Text(
-                          'Нэгж үнэ',
-                          style: TextStyle(
-                            color: black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                          ),
+                        margin: const EdgeInsets.only(right: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              child: Text(
+                                'Хэм.н',
+                                style: TextStyle(
+                                  color: black,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Container(
+                              child: Text(
+                                'Тоо',
+                                style: TextStyle(
+                                  color: black,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 30,
+                            ),
+                            Container(
+                              child: Text(
+                                'Нэгж үнэ',
+                                style: TextStyle(
+                                  color: black,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                   Divider(),
-                  for (var i = 1; i < 6; i++)
-                    Container(
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  '${i}',
-                                  style: TextStyle(
-                                    color: black,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: 160,
-                                child: Text(
-                                  'Талын Монгол банш, 900гр'
-                                  'Хонины махтай, ууттай,'
-                                  'SKU 321312313',
-                                  style: TextStyle(
-                                    color: black,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 15),
-                                child: Text(
-                                  'ш',
-                                  style: TextStyle(
-                                    color: black,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 20),
-                                child: Text(
-                                  '5',
-                                  style: TextStyle(
-                                    color: black,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                child: Text(
-                                  '₮ 13240.00',
-                                  style: TextStyle(
-                                    color: black,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                child: Text(
-                                  'Нийт',
-                                  style: TextStyle(
-                                    color: black,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 25),
-                                child: Text(
-                                  '₮ 66200.00',
-                                  style: TextStyle(
-                                    color: black,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                  for (var i = 1; i < 5; i++)
+                    GoodsInfoCard(
+                      index: i,
                     ),
                   SizedBox(
                     height: 10,

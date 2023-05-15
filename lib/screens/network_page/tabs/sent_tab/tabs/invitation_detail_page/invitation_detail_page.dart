@@ -1,16 +1,15 @@
-import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
-class InvitationDetailPage extends StatefulWidget {
-  static const routeName = 'invitationdetailpage';
-  const InvitationDetailPage({Key? key}) : super(key: key);
+class SentInvitationDetail extends StatefulWidget {
+  static const routeName = 'SentInvitationDetail';
+  const SentInvitationDetail({Key? key}) : super(key: key);
 
   @override
-  _InvitationDetailPageState createState() => _InvitationDetailPageState();
+  _SentInvitationDetailState createState() => _SentInvitationDetailState();
 }
 
-class _InvitationDetailPageState extends State<InvitationDetailPage> {
+class _SentInvitationDetailState extends State<SentInvitationDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +27,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
           ),
         ),
         title: Text(
-          'Ирсэн урилга',
+          'Илгээсэн урилга',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
@@ -99,7 +98,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Статус',
+                    'Урилга төлөв',
                     style: TextStyle(color: dark),
                   ),
                   Container(
@@ -107,12 +106,12 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Color(0xff71717A).withOpacity(0.1),
+                      color: Color(0xff38C0FE).withOpacity(0.1),
                     ),
                     child: Text(
                       'Илгээсэн',
                       style: TextStyle(
-                        color: dark,
+                        color: Color(0xff38C0FE),
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
                       ),

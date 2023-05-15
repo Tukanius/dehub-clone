@@ -13,6 +13,11 @@ import 'package:dehub/screens/first_page/first_page.dart';
 import 'package:dehub/screens/funding_request_page/funding_request_detail_page.dart';
 import 'package:dehub/screens/home_page/home_page.dart';
 import 'package:dehub/screens/invoice/payment_page/qpay_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_detail_page/partner_detail_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_detail_page/payment_condition_page/payment_condition_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_page.dart';
+import 'package:dehub/screens/network_page/tabs/inbox_tab/new_invitation_page/invitation_sent_page/invitation_sent_page.dart';
+import 'package:dehub/screens/network_page/tabs/inbox_tab/new_invitation_page/new_invitation_page.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
 import 'package:dehub/screens/invoice/invoice_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product_tabs/shirhegeer.dart';
@@ -32,6 +37,7 @@ import 'package:dehub/screens/link_account_page/link_account_page.dart';
 import 'package:dehub/screens/main/main_page.dart';
 import 'package:dehub/screens/menu/menu_page.dart';
 import 'package:dehub/screens/network_page/network_page.dart';
+import 'package:dehub/screens/network_page/tabs/sent_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
 import 'package:dehub/screens/order_page/order_page.dart';
 import 'package:dehub/screens/partner_page/partner_page.dart';
 import 'package:dehub/screens/payment_page/payment_page.dart';
@@ -183,6 +189,10 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return Shirhegeer();
                     });
+                  case NetworkPartnerPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return NetworkPartnerPage();
+                    });
                   case Harah.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return Harah();
@@ -190,6 +200,18 @@ class MyApp extends StatelessWidget {
                   case FirstPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return FirstPage();
+                    });
+                  case NewInvitationPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return NewInvitationPage();
+                    });
+                  case PartnerDetailPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return PartnerDetailPage();
+                    });
+                  case SentInvitationDetail.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return SentInvitationDetail();
                     });
                   case PdfPage.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -311,6 +333,10 @@ class MyApp extends StatelessWidget {
                   case MainPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return MainPage();
+                    });
+                  case PaymentConditionPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return PaymentConditionPage();
                     });
                   default:
                     return MaterialPageRoute(

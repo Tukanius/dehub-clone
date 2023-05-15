@@ -1,4 +1,5 @@
 import 'package:dehub/components/partner_cards/sent_card.dart';
+import 'package:dehub/screens/network_page/tabs/sent_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
 import 'package:flutter/material.dart';
 
 class DehubNetwork extends StatefulWidget {
@@ -20,7 +21,13 @@ class _DehubNetworkState extends State<DehubNetwork> {
             SizedBox(
               height: 15,
             ),
-            for (var i = 0; i < 10; i++) SentCard(),
+            for (var i = 0; i < 10; i++)
+              SentCard(
+                onClick: () {
+                  Navigator.of(context)
+                      .pushNamed(SentInvitationDetail.routeName);
+                },
+              ),
           ],
         ),
       ),

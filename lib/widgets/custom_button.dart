@@ -5,7 +5,9 @@ class CustomButton extends StatefulWidget {
   final String labelText;
   final Function()? onClick;
   final Color? labelColor;
+  final Color? textColor;
   CustomButton({
+    this.textColor,
     this.labelColor,
     this.onClick,
     this.labelText = '',
@@ -27,7 +29,11 @@ class _CustomButtonState extends State<CustomButton> {
           onPressed: widget.onClick,
           child: Text(
             widget.labelText.toString(),
-            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              color: widget.textColor == null ? white : widget.textColor,
+            ),
           ),
           style: ElevatedButton.styleFrom(
             shadowColor: Colors.transparent,

@@ -52,6 +52,7 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
     with AfterLayoutMixin {
   show(ctx) {
     showDialog(
+      barrierDismissible: false,
       useSafeArea: true,
       context: context,
       builder: (context) {
@@ -99,7 +100,7 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
                     height: 20,
                   ),
                   Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 25),
+                    margin: const EdgeInsets.symmetric(horizontal: 15),
                     child: Text(
                       'Таны ${widget.refCode} дугаартай нэхэмжлэхийн ${widget.amount.toString()} ₮-ийн төлөлт амжилттай хийгдлээ.',
                       textAlign: TextAlign.center,
@@ -108,10 +109,13 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                 ],
               ),
               Container(
-                margin: const EdgeInsets.only(left: 30, right: 30, bottom: 30),
+                margin: const EdgeInsets.only(left: 30, right: 30, bottom: 20),
                 child: CustomButton(
                   onClick: () {
                     Navigator.of(context).pop();

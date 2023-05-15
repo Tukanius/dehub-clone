@@ -69,7 +69,7 @@ class FormTextField extends StatefulWidget {
       this.focus,
       this.nextFocus,
       this.prefixIcon,
-      this.color = backgroundColor,
+      this.color,
       this.suffixIcon,
       this.labelText});
 

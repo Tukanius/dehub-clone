@@ -1,10 +1,13 @@
+import 'package:dehub/models/invitation_received.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class InboxCard extends StatefulWidget {
   final Function()? onClick;
+  final InvitationReceived? data;
   InboxCard({
+    this.data,
     this.onClick,
     Key? key,
   }) : super(key: key);
