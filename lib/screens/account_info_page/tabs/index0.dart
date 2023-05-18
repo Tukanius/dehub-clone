@@ -51,7 +51,7 @@ class _Index0State extends State<Index0> {
                     children: [
                       Text(
                         'Delgereh',
-                        style: TextStyle(color: neonGreen),
+                        style: TextStyle(color: paymentColor),
                       ),
                       SizedBox(
                         width: 10,
@@ -77,7 +77,7 @@ class _Index0State extends State<Index0> {
                   ),
                   Text(
                     'Голомт банк',
-                    style: TextStyle(color: neonGreen),
+                    style: TextStyle(color: paymentColor),
                   ),
                 ],
               ),
@@ -97,7 +97,7 @@ class _Index0State extends State<Index0> {
                   ),
                   Text(
                     'Дэлгэрэх хүнс',
-                    style: TextStyle(color: neonGreen),
+                    style: TextStyle(color: paymentColor),
                   ),
                 ],
               ),
@@ -117,7 +117,7 @@ class _Index0State extends State<Index0> {
                   ),
                   Text(
                     '521****513',
-                    style: TextStyle(color: neonGreen),
+                    style: TextStyle(color: paymentColor),
                   ),
                 ],
               ),
@@ -137,7 +137,7 @@ class _Index0State extends State<Index0> {
                   ),
                   Text(
                     'Төгрөг',
-                    style: TextStyle(color: neonGreen),
+                    style: TextStyle(color: paymentColor),
                   ),
                 ],
               ),
@@ -157,7 +157,7 @@ class _Index0State extends State<Index0> {
                   ),
                   Text(
                     '30,000.00 ₮',
-                    style: TextStyle(color: neonGreen),
+                    style: TextStyle(color: paymentColor),
                   ),
                 ],
               ),
@@ -181,7 +181,7 @@ class _Index0State extends State<Index0> {
                   ),
                   Text(
                     'B.Bolormaa',
-                    style: TextStyle(color: neonGreen),
+                    style: TextStyle(color: paymentColor),
                   ),
                 ],
               ),
@@ -201,7 +201,7 @@ class _Index0State extends State<Index0> {
                   ),
                   Text(
                     '2021-11-13 17:13 PM',
-                    style: TextStyle(color: neonGreen),
+                    style: TextStyle(color: paymentColor),
                   ),
                 ],
               ),
@@ -214,6 +214,7 @@ class _Index0State extends State<Index0> {
                 Transform.scale(
                   scale: 0.7,
                   child: CupertinoSwitch(
+                      activeColor: paymentColor,
                       value: isSwitch,
                       onChanged: (value) {
                         setState(() {

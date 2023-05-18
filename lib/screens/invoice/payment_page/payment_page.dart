@@ -477,39 +477,45 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                             ),
                           )
                         : selectedMethod == "QPAY"
-                            ? Container(
-                                padding: const EdgeInsets.only(left: 20),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Төлөлт хийх заавар',
-                                      style: TextStyle(
-                                        fontSize: 14,
+                            ? InkWell(
+                                onTap: () {
+                                  Navigator.of(context)
+                                      .pushNamed(QpayPage.routeName);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.only(left: 20),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Төлөлт хийх заавар',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                        ),
                                       ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'Заавар татах',
-                                          style: TextStyle(
-                                            color: invoiceColor,
-                                            fontSize: 14,
-                                            decoration:
-                                                TextDecoration.underline,
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Заавар татах',
+                                            style: TextStyle(
+                                              color: invoiceColor,
+                                              fontSize: 14,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                            ),
                                           ),
-                                        ),
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(
-                                            Icons.arrow_forward_ios,
-                                            size: 12,
+                                          IconButton(
+                                            onPressed: () {},
+                                            icon: Icon(
+                                              Icons.arrow_forward_ios,
+                                              size: 12,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
                               )
                             : selectedMethod == "SOCIAL_PAY"

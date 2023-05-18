@@ -29,57 +29,6 @@ class _AddBankAccountPageState extends State<AddBankAccountPage> {
       length: 4,
       child: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: AppBar(
-          shadowColor: transparent,
-          elevation: 0,
-          backgroundColor: backgroundColor,
-          leading: InkWell(
-            onTap: () {
-              Navigator.of(context).pushNamed(MenuPage.routeName);
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: SvgPicture.asset(
-                'images/menu.svg',
-                color: neonGreen,
-              ),
-            ),
-          ),
-          actions: [
-            Container(
-              margin: const EdgeInsets.only(right: 20),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pushNamed(ProfilePage.routeName);
-                },
-                child: Container(
-                  decoration: BoxDecoration(),
-                  child: user.avatar == null
-                      ? CircleAvatar(
-                          radius: 13,
-                          child: ClipOval(
-                            child: Image(
-                                image: NetworkImage(
-                              'https://i0.wp.com/a.slack-edge.com/df10d/img/avatars/ava_0024-192.png?ssl=1',
-                            )),
-                          ),
-                        )
-                      : CircleAvatar(
-                          radius: 13,
-                          backgroundImage: NetworkImage('${user.avatar}'),
-                        ),
-                ),
-              ),
-            ),
-          ],
-          bottom: PreferredSize(
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5),
-                color: neonGreen,
-                height: 2.0,
-              ),
-              preferredSize: Size.fromHeight(3.0)),
-        ),
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
@@ -87,13 +36,23 @@ class _AddBankAccountPageState extends State<AddBankAccountPage> {
                 child: Column(
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(top: 10, bottom: 10),
-                      color: backgroundColor,
+                      margin: const EdgeInsets.only(bottom: 10),
+                      decoration: BoxDecoration(
+                        color: white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: grey3.withOpacity(0.1),
+                            spreadRadius: 3,
+                            blurRadius: 1,
+                            offset: Offset(0, 1),
+                          )
+                        ],
+                      ),
                       child: TabBar(
                         isScrollable: true,
-                        labelColor: neonGreen,
+                        labelColor: paymentColor,
                         unselectedLabelColor: grey3,
-                        indicatorColor: neonGreen,
+                        indicatorColor: paymentColor,
                         tabs: [
                           Container(
                             height: 40,

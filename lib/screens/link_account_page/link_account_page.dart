@@ -41,14 +41,14 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                       border: Border.all(
-                        color: neonGreen,
+                        color: paymentColor,
                         width: 3,
                       ),
                     ),
                     child: Container(
                       child: SvgPicture.asset(
                         'images/check.svg',
-                        color: neonGreen,
+                        color: paymentColor,
                       ),
                     ),
                   ),
@@ -88,7 +88,7 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
                     Navigator.of(context).pop();
                     Navigator.of(ctx).pop();
                   },
-                  labelColor: neonGreen,
+                  labelColor: paymentColor,
                   labelText: 'Ойлголоо',
                 ),
               ),
@@ -117,170 +117,144 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
           },
           icon: Icon(
             Icons.arrow_back_ios_new,
-            color: black,
+            color: paymentColor,
           ),
         ),
         title: Text(
           'Данс холбох',
-          style: TextStyle(color: black, fontSize: 18),
+          style: TextStyle(
+            color: paymentColor,
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
-        bottom: PreferredSize(
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 5),
-            color: neonGreen,
-            height: 2.0,
-          ),
-          preferredSize: Size.fromHeight(3.0),
-        ),
       ),
       body: Container(
         margin: const EdgeInsets.symmetric(vertical: 10),
-        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Хэрэглэгчийн нэр',
-              style: TextStyle(
-                fontSize: 16,
-                color: black,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
             Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 12,
-              ),
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(color: grey3),
-              ),
+              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: Text(
-                'Голомт банк',
+                'Дансны мэдээлэл',
                 style: TextStyle(
-                  fontSize: 16,
-                  color: grey3,
+                  color: dark,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              'Дансны дугаар',
-              style: TextStyle(
-                fontSize: 16,
-                color: black,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
             Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 12,
-              ),
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(color: grey3),
-              ),
-              child: Text(
-                '3216546513',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: grey3,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              'Дансны нэр',
-              style: TextStyle(
-                fontSize: 16,
-                color: black,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 12,
-              ),
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(color: grey3),
-              ),
-              child: Text(
-                'DELGEREH KHUNS',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: grey3,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              'Дансны валют',
-              style: TextStyle(
-                fontSize: 16,
-                color: black,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 8,
-                horizontal: 12,
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(color: grey3),
-              ),
-              child: Text(
-                'MNT',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: grey3,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                Transform.scale(
-                  scale: 0.7,
-                  child: CupertinoSwitch(
-                    value: isSwitched,
-                    onChanged: (bool value) {
-                      setState(() {
-                        isSwitched = value;
-                      });
-                    },
+              color: white,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Банкны нэр',
+                    style: TextStyle(
+                      color: grey2,
+                    ),
                   ),
-                ),
-                Text(
-                  'Үндсэн данс болгох',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ],
+                  Text(
+                    'Голомт банк',
+                    style: TextStyle(
+                      color: paymentColor,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              color: white,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Дансны дугаар',
+                    style: TextStyle(
+                      color: grey2,
+                    ),
+                  ),
+                  Text(
+                    'Account Number',
+                    style: TextStyle(
+                      color: paymentColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              color: white,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Дансны нэр',
+                    style: TextStyle(
+                      color: grey2,
+                    ),
+                  ),
+                  Text(
+                    'Дансны нэр авто гаргах',
+                    style: TextStyle(
+                      color: grey2,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              color: white,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Дансны валют',
+                    style: TextStyle(
+                      color: grey2,
+                    ),
+                  ),
+                  Text(
+                    'Төгрөг',
+                    style: TextStyle(
+                      color: paymentColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              color: white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Үндсэн данс болгох',
+                    style: TextStyle(fontSize: 14, color: grey2),
+                  ),
+                  Transform.scale(
+                    scale: 0.7,
+                    child: CupertinoSwitch(
+                      activeColor: paymentColor,
+                      value: isSwitched,
+                      onChanged: (bool value) {
+                        setState(() {
+                          isSwitched = value;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: 20,
@@ -288,16 +262,20 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
             Text(
               'Та буруу дансанд орлого авахаас сэргийлэн оруулсан мэдээллээ сайтар шалгана уу.',
               style: TextStyle(fontSize: 14, color: grey3),
+              textAlign: TextAlign.center,
             ),
             SizedBox(
               height: 50,
             ),
-            CustomButton(
-              labelColor: neonGreen,
-              labelText: 'Мэдээлэл зөв. Холбоё',
-              onClick: () {
-                show(context);
-              },
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 40),
+              child: CustomButton(
+                labelColor: paymentColor,
+                labelText: 'Мэдээлэл зөв. Холбоё',
+                onClick: () {
+                  show(context);
+                },
+              ),
             ),
           ],
         ),

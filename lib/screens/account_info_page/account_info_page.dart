@@ -45,7 +45,7 @@ class _AccountInfoPageState extends State<AccountInfoPage>
       backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: backgroundColor,
+        backgroundColor: white,
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
@@ -58,11 +58,11 @@ class _AccountInfoPageState extends State<AccountInfoPage>
         title: tabController.index == 1
             ? Text(
                 'Дансны түүх',
-                style: TextStyle(color: black, fontSize: 18),
+                style: TextStyle(color: paymentColor, fontSize: 18),
               )
             : Text(
                 'Дансны мэдээлэл',
-                style: TextStyle(color: black, fontSize: 18),
+                style: TextStyle(color: paymentColor, fontSize: 18),
               ),
         centerTitle: true,
         actions: [
@@ -76,7 +76,7 @@ class _AccountInfoPageState extends State<AccountInfoPage>
                     height: 30,
                     width: 30,
                     decoration: BoxDecoration(
-                      color: neonGreen,
+                      color: paymentColor,
                       borderRadius: BorderRadius.circular(100),
                     ),
                     child: SvgPicture.asset(
@@ -86,14 +86,6 @@ class _AccountInfoPageState extends State<AccountInfoPage>
                 )
               : SizedBox(),
         ],
-        bottom: PreferredSize(
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 5),
-            color: neonGreen,
-            height: 2.0,
-          ),
-          preferredSize: Size.fromHeight(3.0),
-        ),
       ),
       body: DefaultTabController(
         length: 5,
@@ -113,7 +105,7 @@ class _AccountInfoPageState extends State<AccountInfoPage>
                         style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
-                            color: neonGreen),
+                            color: paymentColor),
                       ),
                     ),
                     SizedBox(
@@ -149,7 +141,7 @@ class _AccountInfoPageState extends State<AccountInfoPage>
                                   width: 0.5,
                                 ),
                                 color: tabController.index == 0
-                                    ? neonGreen
+                                    ? paymentColor
                                     : white,
                               ),
                               child: SvgPicture.asset(
@@ -175,7 +167,7 @@ class _AccountInfoPageState extends State<AccountInfoPage>
                                     width: 0.5,
                                   ),
                                   color: tabController.index == 1
-                                      ? neonGreen
+                                      ? paymentColor
                                       : white,
                                 ),
                                 child: Icon(
@@ -201,7 +193,7 @@ class _AccountInfoPageState extends State<AccountInfoPage>
                                   width: 0.5,
                                 ),
                                 color: tabController.index == 2
-                                    ? neonGreen
+                                    ? paymentColor
                                     : white,
                               ),
                               child: SvgPicture.asset(
@@ -227,7 +219,7 @@ class _AccountInfoPageState extends State<AccountInfoPage>
                                   width: 0.5,
                                 ),
                                 color: tabController.index == 3
-                                    ? neonGreen
+                                    ? paymentColor
                                     : white,
                               ),
                               child: SvgPicture.asset(
@@ -253,7 +245,7 @@ class _AccountInfoPageState extends State<AccountInfoPage>
                                   width: 0.5,
                                 ),
                                 color: tabController.index == 4
-                                    ? neonGreen
+                                    ? paymentColor
                                     : white,
                               ),
                               child: SvgPicture.asset(

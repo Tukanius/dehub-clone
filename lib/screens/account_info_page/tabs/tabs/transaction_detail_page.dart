@@ -28,7 +28,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
         bottom: PreferredSize(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 5),
-            color: neonGreen,
+            color: paymentColor,
             height: 2.0,
           ),
           preferredSize: Size.fromHeight(3.0),
@@ -44,7 +44,9 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
             child: Text(
               '521****513',
               style: TextStyle(
-                  color: neonGreen, fontSize: 24, fontWeight: FontWeight.bold),
+                  color: paymentColor,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold),
             ),
           ),
           SizedBox(
@@ -203,7 +205,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
                 ),
                 Text(
                   'Амжилттай',
-                  style: TextStyle(color: neonGreen),
+                  style: TextStyle(color: paymentColor),
                 ),
               ],
             ),
@@ -223,7 +225,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
                 ),
                 Text(
                   'B.Bolormaa',
-                  style: TextStyle(color: neonGreen),
+                  style: TextStyle(color: paymentColor),
                 ),
               ],
             ),
@@ -247,7 +249,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
                 ),
                 Text(
                   '32332094823',
-                  style: TextStyle(color: neonGreen),
+                  style: TextStyle(color: paymentColor),
                 ),
               ],
             ),
@@ -267,7 +269,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
                 ),
                 Text(
                   'Гүрүн трэйд ХХК',
-                  style: TextStyle(color: neonGreen),
+                  style: TextStyle(color: paymentColor),
                 ),
               ],
             ),
@@ -287,7 +289,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
                 ),
                 Text(
                   'Голомт банк',
-                  style: TextStyle(color: neonGreen),
+                  style: TextStyle(color: paymentColor),
                 ),
               ],
             ),

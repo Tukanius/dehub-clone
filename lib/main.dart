@@ -13,9 +13,22 @@ import 'package:dehub/screens/first_page/first_page.dart';
 import 'package:dehub/screens/funding_request_page/funding_request_detail_page.dart';
 import 'package:dehub/screens/home_page/home_page.dart';
 import 'package:dehub/screens/invoice/payment_page/qpay_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/add_direction.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/direction_detail_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/direction_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/invoice_condition_page/invoice_condition_detail_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/invoice_condition_page/invoice_condition_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/invoice_condition_page/new_condition_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/category_page/category_detail_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/category_page/category_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/rank_page/rank_detail_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/rank_page/rank_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/reference_information_page/reference_information_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_detail_page/partner_detail_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_detail_page/payment_condition_page/payment_condition_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/zoning_page/zoning_detail_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/zoning_page/zoning_page.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/new_invitation_page/invitation_sent_page/invitation_sent_page.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/new_invitation_page/new_invitation_page.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
@@ -334,9 +347,57 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return MainPage();
                     });
+                  case ReferenceInformationPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return ReferenceInformationPage();
+                    });
+                  case InvoiceConditionPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return InvoiceConditionPage();
+                    });
                   case PaymentConditionPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return PaymentConditionPage();
+                    });
+                  case NewConditionPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return NewConditionPage();
+                    });
+                  case InvoiceConditionDetailPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return InvoiceConditionDetailPage();
+                    });
+                  case CategoryPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return CategoryPage();
+                    });
+                  case CategoryDetailPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return CategoryDetailPage();
+                    });
+                  case ZoningPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return ZoningPage();
+                    });
+                  case ZoningDetailPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return ZoningDetailPage();
+                    });
+                  case DirectionDetailPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return DirectionDetailPage();
+                    });
+                  case DirectionPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return DirectionPage();
+                    });
+                  case RankDetailPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return RankDetailPage();
+                    });
+                  case RankPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return RankPage();
                     });
                   default:
                     return MaterialPageRoute(

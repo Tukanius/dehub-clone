@@ -19,7 +19,7 @@ class _SectorCardState extends State<SectorCard> {
       onTap: widget.onClick,
       child: Container(
         padding: const EdgeInsets.all(15),
-        margin: const EdgeInsets.only(bottom: 10),
+        margin: const EdgeInsets.only(bottom: 2),
         width: MediaQuery.of(context).size.width,
         color: Colors.white,
         child: Column(

@@ -1,3 +1,4 @@
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/reference_information_page/reference_information_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_page.dart';
 import 'package:dehub/screens/partner_page/partner_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -42,7 +43,8 @@ class _DashboardTabState extends State<DashboardTab> {
                       borderRadius: BorderRadius.circular(10),
                       color: white,
                     ),
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.only(
+                        left: 10, right: 10, top: 10, bottom: 5),
                     width: 90,
                     height: 90,
                     child: Column(
@@ -60,7 +62,7 @@ class _DashboardTabState extends State<DashboardTab> {
                           ),
                         ),
                         SizedBox(
-                          height: 2,
+                          height: 5,
                         ),
                         Text(
                           'Манай харилцагч',
@@ -78,7 +80,8 @@ class _DashboardTabState extends State<DashboardTab> {
                     borderRadius: BorderRadius.circular(10),
                     color: white,
                   ),
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.only(
+                      left: 10, right: 10, top: 10, bottom: 5),
                   width: 90,
                   height: 90,
                   child: Column(
@@ -96,7 +99,7 @@ class _DashboardTabState extends State<DashboardTab> {
                         ),
                       ),
                       SizedBox(
-                        height: 2,
+                        height: 5,
                       ),
                       Text(
                         'Манай нийлүүлэгч',
@@ -113,7 +116,8 @@ class _DashboardTabState extends State<DashboardTab> {
                     borderRadius: BorderRadius.circular(10),
                     color: white,
                   ),
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.only(
+                      left: 10, right: 10, top: 10, bottom: 5),
                   width: 90,
                   height: 90,
                   child: Column(
@@ -130,6 +134,9 @@ class _DashboardTabState extends State<DashboardTab> {
                           color: networkColor,
                         ),
                       ),
+                      SizedBox(
+                        height: 5,
+                      ),
                       Text(
                         'Хариуцсан, ажилтнууд',
                         style: TextStyle(
@@ -145,7 +152,8 @@ class _DashboardTabState extends State<DashboardTab> {
                     borderRadius: BorderRadius.circular(10),
                     color: white,
                   ),
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.only(
+                      left: 10, right: 10, top: 10, bottom: 5),
                   width: 90,
                   height: 90,
                   child: Column(
@@ -163,7 +171,7 @@ class _DashboardTabState extends State<DashboardTab> {
                         ),
                       ),
                       SizedBox(
-                        height: 2,
+                        height: 7,
                       ),
                       Text(
                         'Чиглэл, бүсчлэл',
@@ -172,6 +180,48 @@ class _DashboardTabState extends State<DashboardTab> {
                         softWrap: true,
                       ),
                     ],
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushNamed(ReferenceInformationPage.routeName);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: white,
+                    ),
+                    padding: const EdgeInsets.only(
+                        left: 10, right: 10, top: 10, bottom: 5),
+                    width: 90,
+                    height: 90,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: networkColor.withOpacity(0.1),
+                          ),
+                          child: SvgPicture.asset(
+                            'images/bag.svg',
+                            color: networkColor,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          'Лавлах мэдээлэл',
+                          style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w500),
+                          softWrap: true,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

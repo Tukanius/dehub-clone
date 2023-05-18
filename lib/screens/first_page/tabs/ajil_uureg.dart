@@ -91,9 +91,9 @@ class _AjilUuregState extends State<AjilUureg> {
                     ),
                     InkWell(
                       onTap: () {
-                        // Navigator.of(context).pushNamed(PaymentPage.routeName);
-                        Navigator.of(context)
-                            .pushNamed(AddBankAccountPage.routeName);
+                        Navigator.of(context).pushNamed(PaymentPage.routeName);
+                        // Navigator.of(context)
+                        //     .pushNamed(AddBankAccountPage.routeName);
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,

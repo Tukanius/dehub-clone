@@ -1,4 +1,6 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/screens/add_bank_account_page/add_bank_account_page.dart';
+import 'package:dehub/screens/link_account_page/link_account_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,7 @@ int selectedIndex = 0;
 class _PaymentPageState extends State<PaymentPage> {
   static const List<Widget> currentPages = [
     HomePageTab(),
-    Text('1'),
+    AddBankAccountPage(),
     Text('1'),
     Text('1'),
   ];
@@ -36,7 +38,7 @@ class _PaymentPageState extends State<PaymentPage> {
       appBar: AppBar(
         leadingWidth: 100,
         elevation: 0,
-        backgroundColor: selectedIndex != 3 ? backgroundColor : paymentColor,
+        backgroundColor: selectedIndex != 3 ? white : paymentColor,
         leading: InkWell(
           onTap: () {
             Navigator.of(context).pop();
@@ -87,10 +89,14 @@ class _PaymentPageState extends State<PaymentPage> {
                     color: selectedIndex != 3 ? paymentColor : white,
                   ),
                 )
-              : selectedIndex == 3
+              : selectedIndex == 3 || selectedIndex == 1
                   ? AddButton(
-                      color: white,
-                      addColor: paymentColor,
+                      color: paymentColor,
+                      addColor: white,
+                      onClick: () {
+                        Navigator.of(context)
+                            .pushNamed(LinkAccountPage.routeName);
+                      },
                     )
                   : SizedBox(),
         ],

@@ -84,7 +84,7 @@ class _Index1State extends State<Index1> with SingleTickerProviderStateMixin {
                             Icon(
                               Icons.arrow_forward,
                               size: 15,
-                              color: neonGreen,
+                              color: paymentColor,
                             ),
                             Text(
                               '${end.year} - ${end.month} - ${end.day}',
@@ -105,13 +105,13 @@ class _Index1State extends State<Index1> with SingleTickerProviderStateMixin {
                           onTap: () {
                             changePage(0);
                           },
-                          child: AnimatedContainer(
-                            duration: Duration(milliseconds: 200),
+                          child: Container(
                             width: 70,
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             decoration: BoxDecoration(
-                              color:
-                                  tabController.index == 0 ? neonGreen : white,
+                              color: tabController.index == 0
+                                  ? paymentColor
+                                  : white,
                               borderRadius: BorderRadius.circular(7),
                               boxShadow: [
                                 tabController.index != 0
@@ -140,13 +140,13 @@ class _Index1State extends State<Index1> with SingleTickerProviderStateMixin {
                           onTap: () {
                             changePage(1);
                           },
-                          child: AnimatedContainer(
-                            duration: Duration(milliseconds: 200),
+                          child: Container(
                             width: 70,
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             decoration: BoxDecoration(
-                              color:
-                                  tabController.index == 1 ? neonGreen : white,
+                              color: tabController.index == 1
+                                  ? paymentColor
+                                  : white,
                               boxShadow: [
                                 tabController.index != 1
                                     ? BoxShadow(
@@ -175,13 +175,13 @@ class _Index1State extends State<Index1> with SingleTickerProviderStateMixin {
                           onTap: () {
                             changePage(2);
                           },
-                          child: AnimatedContainer(
-                            duration: Duration(milliseconds: 200),
+                          child: Container(
                             width: 70,
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             decoration: BoxDecoration(
-                              color:
-                                  tabController.index == 2 ? neonGreen : white,
+                              color: tabController.index == 2
+                                  ? paymentColor
+                                  : white,
                               borderRadius: BorderRadius.circular(7),
                               boxShadow: [
                                 tabController.index != 2
@@ -232,9 +232,9 @@ class _Index1State extends State<Index1> with SingleTickerProviderStateMixin {
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.light(
-              primary: neonGreen,
+              primary: paymentColor,
               onPrimary: Colors.white,
-              onSurface: Colors.green,
+              onSurface: paymentColor,
             ),
           ),
           child: child!,

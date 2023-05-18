@@ -1,3 +1,4 @@
+import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/bank_account_card/bank_account_card.dart';
 import 'package:dehub/screens/account_info_page/account_info_page.dart';
 import 'package:dehub/screens/link_account_page/link_account_page.dart';
@@ -56,12 +57,13 @@ class _GolomtState extends State<Golomt> {
                             height: 30,
                             width: 30,
                             decoration: BoxDecoration(
-                              color: neonGreen,
+                              color: paymentColor,
                               borderRadius: BorderRadius.circular(100),
                             ),
                             child: Icon(
                               Icons.add,
                               color: white,
+                              size: 15,
                             ),
                           ),
                         ),
@@ -91,14 +93,14 @@ class _GolomtState extends State<Golomt> {
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: neonGreen.withOpacity(0.1),
+                  color: paymentColor.withOpacity(0.1),
                 ),
                 child: Row(
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(100),
                       child: Container(
-                        color: neonGreen,
+                        color: paymentColor,
                         padding: const EdgeInsets.symmetric(
                             vertical: 7, horizontal: 10),
                         child: SvgPicture.asset(
@@ -118,7 +120,7 @@ class _GolomtState extends State<Golomt> {
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
-                              color: neonGreen),
+                              color: paymentColor),
                         ),
                         Text(
                           '₮10.203.000.00',
