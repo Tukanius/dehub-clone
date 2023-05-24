@@ -101,38 +101,112 @@ class _PartnerPageState extends State<PartnerPage> {
         child: currentPages.elementAt(selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        // selectedIconTheme: IconThemeData(color: partnerColor),
+        unselectedItemColor: partnerColor,
+        unselectedFontSize: 12,
+        selectedFontSize: 12,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        backgroundColor: white,
+        type: BottomNavigationBarType.fixed,
         fixedColor: partnerColor,
         onTap: ontappedItem,
         currentIndex: selectedIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              color: partnerColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 0 ? partnerColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/home.svg',
+                    color: selectedIndex == 0 ? white : partnerColor,
+                  ),
+                ),
+                selectedIndex != 0
+                    ? Text(
+                        'Нүүр',
+                        style: TextStyle(color: partnerColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Нүүр',
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'images/partner.svg',
-              color: partnerColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 1 ? partnerColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/dashboard.svg',
+                    color: selectedIndex == 1 ? white : partnerColor,
+                  ),
+                ),
+                selectedIndex != 1
+                    ? Text(
+                        'Дашбоард',
+                        style: TextStyle(color: partnerColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Харилцагч',
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'images/inbox.svg',
-              color: partnerColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 2 ? partnerColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/inbox.svg',
+                    color: selectedIndex == 2 ? white : partnerColor,
+                  ),
+                ),
+                selectedIndex != 2
+                    ? Text(
+                        'Ирсэн',
+                        style: TextStyle(color: partnerColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Ирсэн',
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'images/sent.svg',
-              color: partnerColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 3 ? partnerColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/sent.svg',
+                    color: selectedIndex == 3 ? white : partnerColor,
+                  ),
+                ),
+                selectedIndex != 3
+                    ? Text(
+                        'Илгээсэн',
+                        style: TextStyle(color: partnerColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Илгээсэн',
+            label: '',
           ),
         ],
       ),

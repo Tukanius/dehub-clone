@@ -99,37 +99,112 @@ class _OrderPageState extends State<OrderPage> {
         child: currentPages.elementAt(selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: orderColor,
+        unselectedFontSize: 12,
+        selectedFontSize: 12,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        backgroundColor: white,
+        type: BottomNavigationBarType.fixed,
         fixedColor: orderColor,
         onTap: ontappedItem,
         currentIndex: selectedIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              color: orderColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 0 ? orderColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/home.svg',
+                    color: selectedIndex == 0 ? white : orderColor,
+                  ),
+                ),
+                selectedIndex != 0
+                    ? Text(
+                        'Нүүр',
+                        style: TextStyle(color: orderColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Нүүр',
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'images/dashboard.svg',
-              color: orderColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 1 ? orderColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/dashboard.svg',
+                    color: selectedIndex == 1 ? white : orderColor,
+                  ),
+                ),
+                selectedIndex != 1
+                    ? Text(
+                        'Дашбоард',
+                        style: TextStyle(color: orderColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Дашбоард',
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'images/inbox.svg',
-              color: orderColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 2 ? orderColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/inbox.svg',
+                    color: selectedIndex == 2 ? white : orderColor,
+                  ),
+                ),
+                selectedIndex != 2
+                    ? Text(
+                        'Ирсэн',
+                        style: TextStyle(color: orderColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Зарлага',
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'images/sent.svg',
-              color: orderColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 3 ? orderColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/sent.svg',
+                    color: selectedIndex == 3 ? white : orderColor,
+                  ),
+                ),
+                selectedIndex != 3
+                    ? Text(
+                        'Илгээсэн',
+                        style: TextStyle(color: orderColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Орлого',
+            label: '',
           ),
         ],
       ),

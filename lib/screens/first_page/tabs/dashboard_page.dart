@@ -59,7 +59,7 @@ class _DashboardPageState extends State<DashboardPage> {
             CarouselSlider(
               items: cardList,
               options: CarouselOptions(
-                autoPlay: true,
+                autoPlay: false,
                 aspectRatio: 2.65,
               ),
             ),
@@ -79,7 +79,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 tooltipBehavior: TooltipBehavior(enable: true),
                 series: <ChartSeries<InvoiceData, String>>[
                   LineSeries<InvoiceData, String>(
-                    color: red,
+                    color: Color(0xffEBCA6F),
                     name: 'Зарлага',
                     dataSource: data2,
                     xValueMapper: (InvoiceData invoice, _) => invoice.month,
@@ -89,7 +89,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
                   ),
                   LineSeries<InvoiceData, String>(
-                    color: lightBlue,
+                    color: Color(0xff75cccd),
                     name: 'Орлого',
                     dataSource: data,
                     xValueMapper: (InvoiceData invoice, _) => invoice.month,

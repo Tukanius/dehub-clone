@@ -63,6 +63,7 @@ dev_dependencies:
   carousel_slider: ^4.2.1
   gradient_borders: ^1.0.0
   syncfusion_flutter_datepicker: ^21.1.41
+  convex_bottom_bar: ^3.2.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

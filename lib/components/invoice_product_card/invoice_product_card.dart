@@ -178,34 +178,40 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
                         SizedBox(
                           height: 5,
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 7, vertical: 4),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xff636E72).withOpacity(0.3),
-                            ),
-                            borderRadius: BorderRadius.circular(5),
-                            color: Color(0xffEBFAFA),
-                          ),
-                          child: widget.data!.discountType == "PERCENTAGE"
-                              ? Text(
-                                  'хувиар',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: grey2,
+                        widget.data!.discountAmount != null
+                            ? Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 7, vertical: 4),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Color(0xff636E72).withOpacity(0.3),
                                   ),
-                                )
-                              : Text(
-                                  'дүн',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: grey2,
-                                  ),
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Color(0xffEBFAFA),
                                 ),
-                        ),
+                                child: widget.data!.discountType == "PERCENTAGE"
+                                    ? Text(
+                                        'хувиар',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: grey2,
+                                        ),
+                                      )
+                                    : widget.data!.discountType == "AMOUNT"
+                                        ? Text(
+                                            'дүн',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: grey2,
+                                            ),
+                                          )
+                                        : SizedBox(),
+                              )
+                            : SizedBox(
+                                height: 20,
+                              ),
                       ],
                     ),
                   ],

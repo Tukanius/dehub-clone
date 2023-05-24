@@ -75,38 +75,112 @@ class _DebtPageState extends State<DebtPage> {
         child: currentPages.elementAt(selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        // selectedIconTheme: IconThemeData(color: debtColor),
+        unselectedItemColor: debtColor,
+        unselectedFontSize: 12,
+        selectedFontSize: 12,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        backgroundColor: white,
+        type: BottomNavigationBarType.fixed,
         fixedColor: debtColor,
         onTap: ontappedItem,
         currentIndex: selectedIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              color: debtColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 0 ? debtColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/home.svg',
+                    color: selectedIndex == 0 ? white : debtColor,
+                  ),
+                ),
+                selectedIndex != 0
+                    ? Text(
+                        'Нүүр',
+                        style: TextStyle(color: debtColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Нүүр',
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'images/dashboard.svg',
-              color: debtColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 1 ? debtColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/dashboard.svg',
+                    color: selectedIndex == 1 ? white : debtColor,
+                  ),
+                ),
+                selectedIndex != 1
+                    ? Text(
+                        'Дашбоард',
+                        style: TextStyle(color: debtColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Дашбоард',
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'images/partners.svg',
-              color: debtColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 2 ? debtColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/inbox.svg',
+                    color: selectedIndex == 2 ? white : debtColor,
+                  ),
+                ),
+                selectedIndex != 2
+                    ? Text(
+                        'Ирсэн',
+                        style: TextStyle(color: debtColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Хэрэглэгч',
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'images/bag.svg',
-              color: debtColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 3 ? debtColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/sent.svg',
+                    color: selectedIndex == 3 ? white : debtColor,
+                  ),
+                ),
+                selectedIndex != 3
+                    ? Text(
+                        'Илгээсэн',
+                        style: TextStyle(color: debtColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Эрх, роль',
+            label: '',
           ),
         ],
       ),

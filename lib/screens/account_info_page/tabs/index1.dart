@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dehub/screens/account_info_page/tabs/tabs/all.dart';
 import 'package:dehub/screens/account_info_page/tabs/tabs/expenditure.dart';
 import 'package:dehub/screens/account_info_page/tabs/tabs/income.dart';
@@ -228,6 +230,7 @@ class _Index1State extends State<Index1> with SingleTickerProviderStateMixin {
 
   Future pickDateRange() async {
     DateTimeRange? newDateRange = await showDateRangePicker(
+      saveText: 'Хадгалах',
       builder: (BuildContext context, child) {
         return Theme(
           data: ThemeData.light().copyWith(

@@ -12,7 +12,10 @@ import 'package:dehub/screens/financing_page/financing_page.dart';
 import 'package:dehub/screens/first_page/first_page.dart';
 import 'package:dehub/screens/funding_request_page/funding_request_detail_page.dart';
 import 'package:dehub/screens/home_page/home_page.dart';
+import 'package:dehub/screens/invoice/closed_invoice_page.dart';
 import 'package:dehub/screens/invoice/payment_page/qpay_page.dart';
+import 'package:dehub/screens/invoice/tabs/give.dart';
+import 'package:dehub/screens/invoice/tabs/take.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/add_direction.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/direction_detail_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/direction_page.dart';
@@ -45,7 +48,7 @@ import 'package:dehub/screens/invoice/new_invoice/harah/pdf_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/send_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
 import 'package:dehub/screens/invoice/payment_page/payment_approval_page.dart';
-import 'package:dehub/screens/invoice/product_return/product_return.dart';
+import 'package:dehub/screens/invoice_detail_page/invoice_detail_page.dart';
 import 'package:dehub/screens/link_account_page/link_account_page.dart';
 import 'package:dehub/screens/main/main_page.dart';
 import 'package:dehub/screens/menu/menu_page.dart';
@@ -55,6 +58,8 @@ import 'package:dehub/screens/order_page/order_page.dart';
 import 'package:dehub/screens/partner_page/partner_page.dart';
 import 'package:dehub/screens/payment_page/payment_page.dart';
 import 'package:dehub/screens/product_page/product_page.dart';
+import 'package:dehub/screens/product_page/tabs/home_page_tab/product_detail_page/product_detail_page.dart';
+import 'package:dehub/screens/product_page/tabs/home_page_tab/product_list_page/product_list_page.dart';
 import 'package:dehub/screens/received_funding_page/give_funding_detail_page.dart';
 import 'package:dehub/screens/received_funding_page/received_funding_detail_page.dart';
 import 'package:dehub/screens/received_funding_page/received_funding_page.dart';
@@ -238,19 +243,19 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return SendPage();
                     });
-                  case ProductReturnPage.routeName:
-                    ProductReturnPageArguments arguments =
-                        settings.arguments as ProductReturnPageArguments;
+                  case InvoiceDetailPage.routeName:
+                    InvoiceDetailPageArguments arguments =
+                        settings.arguments as InvoiceDetailPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return ProductReturnPage(
+                      return InvoiceDetailPage(
                         id: arguments.id,
                       );
                     });
-                  case ProductReturnPage.routeName:
-                    ProductReturnPageArguments arguments =
-                        settings.arguments as ProductReturnPageArguments;
+                  case InvoiceDetailPage.routeName:
+                    InvoiceDetailPageArguments arguments =
+                        settings.arguments as InvoiceDetailPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return ProductReturnPage(
+                      return InvoiceDetailPage(
                         id: arguments.id,
                       );
                     });
@@ -302,6 +307,10 @@ class MyApp extends StatelessWidget {
                   case UserMangementPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return UserMangementPage();
+                    });
+                  case ClosedInvoicePage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return ClosedInvoicePage();
                     });
                   case PartnerPage.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -398,6 +407,22 @@ class MyApp extends StatelessWidget {
                   case RankPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return RankPage();
+                    });
+                  case ProductListPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return ProductListPage();
+                    });
+                  case ProductDetailPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return ProductDetailPage();
+                    });
+                  case GivePage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return GivePage();
+                    });
+                  case TakePage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return TakePage();
                     });
                   default:
                     return MaterialPageRoute(

@@ -99,37 +99,112 @@ class _FinancingPageState extends State<FinancingPage> {
         child: currentPages.elementAt(selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: financingColor,
+        unselectedFontSize: 12,
+        selectedFontSize: 12,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        backgroundColor: white,
+        type: BottomNavigationBarType.fixed,
         fixedColor: financingColor,
         onTap: ontappedItem,
         currentIndex: selectedIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              color: financingColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 0 ? financingColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/home.svg',
+                    color: selectedIndex == 0 ? white : financingColor,
+                  ),
+                ),
+                selectedIndex != 0
+                    ? Text(
+                        'Нүүр',
+                        style: TextStyle(color: financingColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Нүүр',
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'images/dashboard.svg',
-              color: financingColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 1 ? financingColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/dashboard.svg',
+                    color: selectedIndex == 1 ? white : financingColor,
+                  ),
+                ),
+                selectedIndex != 1
+                    ? Text(
+                        'Дашбоард',
+                        style: TextStyle(color: financingColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Дашбоард',
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'images/inbox.svg',
-              color: financingColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 2 ? financingColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/inbox.svg',
+                    color: selectedIndex == 2 ? white : financingColor,
+                  ),
+                ),
+                selectedIndex != 2
+                    ? Text(
+                        'Ирсэн',
+                        style: TextStyle(color: financingColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Зарлага',
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'images/sent.svg',
-              color: financingColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 3 ? financingColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/sent.svg',
+                    color: selectedIndex == 3 ? white : financingColor,
+                  ),
+                ),
+                selectedIndex != 3
+                    ? Text(
+                        'Илгээсэн',
+                        style: TextStyle(color: financingColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Орлого',
+            label: '',
           ),
         ],
       ),

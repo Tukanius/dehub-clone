@@ -1,6 +1,6 @@
 import 'package:dehub/components/add_button/add_button.dart';
-import 'package:dehub/components/direction_card/direction_card.dart';
 import 'package:dehub/components/rank_card/rank_card.dart';
+import 'package:dehub/components/direction_card/direction_card.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/add_direction.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/rank_page/add_rank.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';

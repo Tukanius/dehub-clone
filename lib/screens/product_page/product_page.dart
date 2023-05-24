@@ -3,7 +3,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dehub/screens/product_page/tabs/home_page_tab.dart';
+import 'package:dehub/screens/product_page/tabs/home_page_tab/home_page_tab.dart';
 
 class ProductPage extends StatefulWidget {
   static const routeName = 'productpage';
@@ -99,37 +99,112 @@ class _ProductPageState extends State<ProductPage> {
         child: currentPages.elementAt(selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: productColor,
+        unselectedFontSize: 12,
+        selectedFontSize: 12,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        backgroundColor: white,
+        type: BottomNavigationBarType.fixed,
         fixedColor: productColor,
         onTap: ontappedItem,
         currentIndex: selectedIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              color: productColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 0 ? productColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/home.svg',
+                    color: selectedIndex == 0 ? white : productColor,
+                  ),
+                ),
+                selectedIndex != 0
+                    ? Text(
+                        'Нүүр',
+                        style: TextStyle(color: productColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Нүүр',
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'images/dashboard.svg',
-              color: productColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 1 ? productColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/dashboard.svg',
+                    color: selectedIndex == 1 ? white : productColor,
+                  ),
+                ),
+                selectedIndex != 1
+                    ? Text(
+                        'Дашбоард',
+                        style: TextStyle(color: productColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Дашбоард',
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'images/inbox.svg',
-              color: productColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 2 ? productColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/inbox.svg',
+                    color: selectedIndex == 2 ? white : productColor,
+                  ),
+                ),
+                selectedIndex != 2
+                    ? Text(
+                        'Ирсэн',
+                        style: TextStyle(color: productColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Зарлага',
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'images/sent.svg',
-              color: productColor,
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 3 ? productColor : white,
+                  ),
+                  padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'images/sent.svg',
+                    color: selectedIndex == 3 ? white : productColor,
+                  ),
+                ),
+                selectedIndex != 3
+                    ? Text(
+                        'Илгээсэн',
+                        style: TextStyle(color: productColor, fontSize: 12),
+                      )
+                    : SizedBox(),
+              ],
             ),
-            label: 'Орлого',
+            label: '',
           ),
         ],
       ),

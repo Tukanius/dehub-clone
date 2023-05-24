@@ -11,6 +11,29 @@ class PdfPage extends StatefulWidget {
 }
 
 class _PdfPageState extends State<PdfPage> {
+  show(context) {
+    showDialog(
+      useSafeArea: true,
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dismissible(
+          onDismissed: (direction) {
+            Navigator.of(context).pop();
+          },
+          direction: DismissDirection.vertical,
+          key: GlobalKey(),
+          child: Container(
+            child: Image(
+              image: AssetImage('images/invoice_pdf.png'),
+              fit: BoxFit.fitWidth,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -36,9 +59,14 @@ class _PdfPageState extends State<PdfPage> {
             SizedBox(
               height: 10,
             ),
-            Image(
-              image: AssetImage(
-                'images/invoice_pdf.png',
+            InkWell(
+              onTap: () {
+                show(context);
+              },
+              child: Image(
+                image: AssetImage(
+                  'images/invoice_pdf.png',
+                ),
               ),
             ),
             SizedBox(
@@ -74,6 +102,9 @@ class _PdfPageState extends State<PdfPage> {
                   ),
                 ),
               ],
+            ),
+            SizedBox(
+              height: 200,
             ),
           ],
         ),

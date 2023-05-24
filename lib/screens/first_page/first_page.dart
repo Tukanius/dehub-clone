@@ -23,86 +23,121 @@ class _FirstPageState extends State<FirstPage> {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).user;
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        backgroundColor: backgroundColor,
-        appBar: AppBar(
-          actions: [
-            Container(
-              margin: const EdgeInsets.only(right: 20),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pushNamed(ProfilePage.routeName);
-                },
-                child: Container(
-                  decoration: BoxDecoration(),
-                  child: user.avatar == null
-                      ? CircleAvatar(
-                          radius: 13,
-                          child: ClipOval(
-                            child: Image(
-                                image: NetworkImage(
-                              'https://i0.wp.com/a.slack-edge.com/df10d/img/avatars/ava_0024-192.png?ssl=1',
-                            )),
+    return WillPopScope(
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          backgroundColor: backgroundColor,
+          appBar: AppBar(
+            actions: [
+              Container(
+                margin: const EdgeInsets.only(right: 20),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(ProfilePage.routeName);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(),
+                    child: user.avatar == null
+                        ? CircleAvatar(
+                            radius: 13,
+                            child: ClipOval(
+                              child: Image(
+                                  image: NetworkImage(
+                                'https://i0.wp.com/a.slack-edge.com/df10d/img/avatars/ava_0024-192.png?ssl=1',
+                              )),
+                            ),
+                          )
+                        : CircleAvatar(
+                            radius: 13,
+                            backgroundImage: NetworkImage('${user.avatar}'),
                           ),
-                        )
-                      : CircleAvatar(
-                          radius: 13,
-                          backgroundImage: NetworkImage('${user.avatar}'),
-                        ),
-                ),
-              ),
-            ),
-          ],
-          backgroundColor: mainColor,
-          leading: InkWell(
-            onTap: () {
-              Navigator.of(context).pushNamed(MenuPage.routeName);
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: SvgPicture.asset('images/menu.svg'),
-            ),
-          ),
-          automaticallyImplyLeading: false,
-          bottom: TabBar(
-            unselectedLabelColor: white,
-            indicatorColor: white,
-            tabs: [
-              Container(
-                alignment: Alignment.center,
-                height: 40,
-                child: Text(
-                  'Дашбоард',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                height: 40,
-                child: Text(
-                  'Ажил үүрэг',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300,
                   ),
                 ),
               ),
             ],
+            backgroundColor: mainColor,
+            leading: InkWell(
+              onTap: () {
+                Navigator.of(context).pushNamed(MenuPage.routeName);
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: SvgPicture.asset('images/menu.svg'),
+              ),
+            ),
+            automaticallyImplyLeading: false,
+            bottom: TabBar(
+              unselectedLabelColor: white,
+              indicatorColor: white,
+              tabs: [
+                Container(
+                  alignment: Alignment.center,
+                  height: 40,
+                  child: Text(
+                    'Дашбоард',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  height: 40,
+                  child: Text(
+                    'Ажил үүрэг',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          body: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
+            children: [
+              DashboardPage(),
+              AjilUureg(),
+            ],
           ),
         ),
-        body: TabBarView(
-          physics: NeverScrollableScrollPhysics(),
-          children: [
-            DashboardPage(),
-            AjilUureg(),
-          ],
-        ),
       ),
+      onWillPop: () async {
+        final shoudPop = await showMyDialog();
+        return shoudPop!;
+      },
     );
   }
+
+  Future<bool?> showMyDialog() => showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Та Апп-аас гарах гэж байна'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+              child: Text('Болих'),
+            ),
+            TextButton(
+              style: ButtonStyle(
+                overlayColor: MaterialStatePropertyAll(
+                  red.withOpacity(0.1),
+                ),
+              ),
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+              child: Text(
+                'Гарах',
+                style: TextStyle(color: red),
+              ),
+            ),
+          ],
+        ),
+      );
 }

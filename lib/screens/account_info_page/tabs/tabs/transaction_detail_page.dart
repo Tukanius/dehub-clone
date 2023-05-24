@@ -34,270 +34,285 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
           preferredSize: Size.fromHeight(3.0),
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 15,
-          ),
-          Center(
-            child: Text(
-              '521****513',
-              style: TextStyle(
-                  color: paymentColor,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 15,
             ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Center(
-            child: Text(
-              'Голомт банк, Дэлгэрэх хүнс',
-              style: TextStyle(
-                color: grey2,
-                fontSize: 15,
+            Center(
+              child: Text(
+                '521****513',
+                style: TextStyle(
+                    color: paymentColor,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold),
               ),
             ),
-          ),
-          Divider(
-            endIndent: 20,
-            indent: 20,
-          ),
-          SizedBox(
-            height: 50,
-          ),
-          Container(
-            color: white,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Гүйлгээний лавлах',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Transref#',
-                  style: TextStyle(
-                      color: grey2, fontSize: 16, fontWeight: FontWeight.w500),
-                ),
-              ],
+            SizedBox(
+              height: 10,
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            color: white,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Огноо, цаг',
-                  style: TextStyle(color: dark),
+            Center(
+              child: Text(
+                'Голомт банк, Дэлгэрэх хүнс',
+                style: TextStyle(
+                  color: grey2,
+                  fontSize: 15,
                 ),
-                Text(
-                  '2023-01-23 12:23 PM',
-                  style: TextStyle(
-                      color: grey2, fontSize: 16, fontWeight: FontWeight.w500),
-                ),
-              ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            color: white,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Гүйлгээний төрөл',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'B2B нэхэмжлэх',
-                  style: TextStyle(
-                      color: grey2, fontSize: 16, fontWeight: FontWeight.w500),
-                ),
-              ],
+            Divider(
+              endIndent: 20,
+              indent: 20,
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            color: white,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Төлбөрийн хэрэгсэл',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'DeHUB B2B',
-                  style: TextStyle(
-                      color: grey2, fontSize: 16, fontWeight: FontWeight.w500),
-                ),
-              ],
+            SizedBox(
+              height: 50,
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            color: white,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Гүйлгээний дүн',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  '30,000.00 ₮',
-                  style: TextStyle(color: red),
-                ),
-              ],
+            Container(
+              color: white,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Гүйлгээний лавлах',
+                    style: TextStyle(color: dark),
+                  ),
+                  Text(
+                    'Transref#',
+                    style: TextStyle(
+                        color: grey2,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            color: white,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Валют',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Төгрөг',
-                  style: TextStyle(
-                      color: grey2, fontSize: 16, fontWeight: FontWeight.w500),
-                ),
-              ],
+            SizedBox(
+              height: 5,
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            color: white,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Гүйлгээний утга',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Амжилттай',
-                  style: TextStyle(color: paymentColor),
-                ),
-              ],
+            Container(
+              color: white,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Огноо, цаг',
+                    style: TextStyle(color: dark),
+                  ),
+                  Text(
+                    '2023-01-23 12:23 PM',
+                    style: TextStyle(
+                        color: grey2,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            color: white,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Гүйлгээ хийсэн',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'B.Bolormaa',
-                  style: TextStyle(color: paymentColor),
-                ),
-              ],
+            SizedBox(
+              height: 5,
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-            child: Text(
-              'ХАРЬЦСАН ДАНС',
-              style: TextStyle(color: grey3, fontWeight: FontWeight.w600),
+            Container(
+              color: white,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Гүйлгээний төрөл',
+                    style: TextStyle(color: dark),
+                  ),
+                  Text(
+                    'B2B нэхэмжлэх',
+                    style: TextStyle(
+                        color: grey2,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Container(
-            color: white,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Дансны дугаар',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  '32332094823',
-                  style: TextStyle(color: paymentColor),
-                ),
-              ],
+            SizedBox(
+              height: 5,
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            color: white,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Дансны нэр',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Гүрүн трэйд ХХК',
-                  style: TextStyle(color: paymentColor),
-                ),
-              ],
+            Container(
+              color: white,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Төлбөрийн хэрэгсэл',
+                    style: TextStyle(color: dark),
+                  ),
+                  Text(
+                    'DeHUB B2B',
+                    style: TextStyle(
+                        color: grey2,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            color: white,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Банкны нэр',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Голомт банк',
-                  style: TextStyle(color: paymentColor),
-                ),
-              ],
+            SizedBox(
+              height: 5,
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-        ],
+            Container(
+              color: white,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Гүйлгээний дүн',
+                    style: TextStyle(color: dark),
+                  ),
+                  Text(
+                    '30,000.00 ₮',
+                    style: TextStyle(color: red),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              color: white,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Валют',
+                    style: TextStyle(color: dark),
+                  ),
+                  Text(
+                    'Төгрөг',
+                    style: TextStyle(
+                        color: grey2,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              color: white,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Гүйлгээний утга',
+                    style: TextStyle(color: dark),
+                  ),
+                  Text(
+                    'Амжилттай',
+                    style: TextStyle(color: paymentColor),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              color: white,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Гүйлгээ хийсэн',
+                    style: TextStyle(color: dark),
+                  ),
+                  Text(
+                    'B.Bolormaa',
+                    style: TextStyle(color: paymentColor),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              child: Text(
+                'ХАРЬЦСАН ДАНС',
+                style: TextStyle(color: grey3, fontWeight: FontWeight.w600),
+              ),
+            ),
+            Container(
+              color: white,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Дансны дугаар',
+                    style: TextStyle(color: dark),
+                  ),
+                  Text(
+                    '32332094823',
+                    style: TextStyle(color: paymentColor),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              color: white,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Дансны нэр',
+                    style: TextStyle(color: dark),
+                  ),
+                  Text(
+                    'Гүрүн трэйд ХХК',
+                    style: TextStyle(color: paymentColor),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              color: white,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Банкны нэр',
+                    style: TextStyle(color: dark),
+                  ),
+                  Text(
+                    'Голомт банк',
+                    style: TextStyle(color: paymentColor),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            SizedBox(
+              height: 50,
+            ),
+          ],
+        ),
       ),
     );
   }

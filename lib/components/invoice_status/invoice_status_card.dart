@@ -20,7 +20,7 @@ class _InvoiceStatusCardState extends State<InvoiceStatusCard> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Таны авах',
+          '${widget.title}',
           style: TextStyle(
             color: black.withOpacity(0.7),
           ),
@@ -56,8 +56,8 @@ class _InvoiceStatusCardState extends State<InvoiceStatusCard> {
                     LinearPercentIndicator(
                       lineHeight: 10,
                       percent: 0.3,
-                      backgroundColor: red,
-                      progressColor: green,
+                      backgroundColor: Color(0xffEBCA6F),
+                      progressColor: Color(0xff75cccd),
                     ),
                     Divider(
                       thickness: 0.1,
@@ -74,7 +74,7 @@ class _InvoiceStatusCardState extends State<InvoiceStatusCard> {
                                 'Хугацаа хэвийн',
                                 style: TextStyle(
                                   fontSize: 10,
-                                  color: Colors.blue.shade300,
+                                  color: Color(0xff75cccd),
                                 ),
                               ),
                             ),
@@ -99,7 +99,7 @@ class _InvoiceStatusCardState extends State<InvoiceStatusCard> {
                                 'Хугацаа хэтэрсэн',
                                 style: TextStyle(
                                   fontSize: 10,
-                                  color: lightRed,
+                                  color: Color(0xffEBCA6F),
                                 ),
                               ),
                             ),

@@ -199,7 +199,7 @@ class _AjilUuregState extends State<AjilUureg> {
                             height: 10,
                           ),
                           Text(
-                            'Network',
+                            'Бизнес нетворк',
                             style: TextStyle(
                               fontSize: 12,
                             ),

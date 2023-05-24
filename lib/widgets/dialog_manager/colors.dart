@@ -38,7 +38,7 @@ const Color financingColor = Color(0xff68199D);
 const Color invoiceColor = Color(0xff00B3D3);
 const Color orderColor = Color(0xffE97027);
 const Color paymentColor = Color(0xffD60B9D);
-const Color productColor = Color(0xffFE2413);
+const Color productColor = Color(0xff6883BC);
 const Color userColor = Color(0xff000000);
 const Color debtColor = Color(0xffD60B9D);
 

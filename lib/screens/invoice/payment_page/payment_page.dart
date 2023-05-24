@@ -13,21 +13,21 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
 
-class PaymentPage extends StatefulWidget {
-  static const routeName = '/paymentpage';
+class InvoicePaymentPage extends StatefulWidget {
   Invoice data;
   String id;
-  PaymentPage({
+  InvoicePaymentPage({
     super.key,
     required this.data,
     required this.id,
   });
 
   @override
-  State<PaymentPage> createState() => _PaymentPageState();
+  State<InvoicePaymentPage> createState() => _InvoicePaymentPageState();
 }
 
-class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
+class _InvoicePaymentPageState extends State<InvoicePaymentPage>
+    with AfterLayoutMixin {
   bool value = false;
   Invoice invoice = Invoice();
   TextEditingController textController = TextEditingController();

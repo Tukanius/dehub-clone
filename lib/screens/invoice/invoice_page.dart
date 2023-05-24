@@ -25,30 +25,24 @@ class _InvoicePageState extends State<InvoicePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          'Борлуулалтын нэхэмжлэл',
+          style: TextStyle(
+            fontSize: 17,
+            color: invoiceColor,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        centerTitle: true,
         elevation: 0,
         backgroundColor: white,
-        leadingWidth: 100,
-        leading: InkWell(
-          onTap: () {
+        leading: IconButton(
+          onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Row(
-            children: [
-              SizedBox(
-                width: 15,
-              ),
-              Icon(
-                Icons.arrow_back_ios_new,
-                color: invoiceColor,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                'Буцах',
-                style: TextStyle(fontSize: 17, color: invoiceColor),
-              )
-            ],
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: invoiceColor,
           ),
         ),
         actions: [

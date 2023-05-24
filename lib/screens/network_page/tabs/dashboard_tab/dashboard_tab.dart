@@ -182,7 +182,7 @@ class _DashboardTabState extends State<DashboardTab> {
                     ],
                   ),
                 ),
-                InkWell(
+                GestureDetector(
                   onTap: () {
                     Navigator.of(context)
                         .pushNamed(ReferenceInformationPage.routeName);
