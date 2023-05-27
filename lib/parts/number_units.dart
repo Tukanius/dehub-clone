@@ -1,15 +1,9 @@
 part of "../models/number_units.dart";
 
 NumberUnits _$NumberUnitsFromJson(Map<String, dynamic> json) {
-  String? code;
-  String? value;
-
-  if (json['code'] != null) code = json['code'];
-  if (json['value'] != null) value = json['value'];
-
   return NumberUnits(
-    code: code,
-    value: value,
+    code: json['code'] != null ? json['code'] as String : null,
+    value: json['value'] != null ? json['value'] as String : null,
   );
 }
 

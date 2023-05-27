@@ -1,21 +1,12 @@
 part of "../models/invitation_status.dart";
 
 InvitationStatus _$InvitationStatusFromJson(Map<String, dynamic> json) {
-  String? code;
-  String? name;
-  String? receivedName;
-  String? color;
-
-  if (json['code'] != null) code = json['code'];
-  if (json['name'] != null) name = json['name'];
-  if (json['receivedName'] != null) receivedName = json['receivedName'];
-  if (json['color'] != null) color = json['color'];
-
   return InvitationStatus(
-    code: code,
-    name: name,
-    receivedName: receivedName,
-    color: color,
+    code: json['code'] != null ? json['code'] as String : null,
+    name: json['name'] != null ? json['name'] as String : null,
+    receivedName:
+        json['receivedName'] != null ? json['receivedName'] as String : null,
+    color: json['color'] != null ? json['color'] as String : null,
   );
 }
 

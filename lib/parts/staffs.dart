@@ -1,21 +1,11 @@
 part of '../models/staffs.dart';
 
 Staffs _$StaffsFromJson(Map<String, dynamic> json) {
-  String? id;
-  String? lastName;
-  String? firstName;
-  String? avatar;
-
-  if (json['id'] != null) id = json['id'];
-  if (json['lastName'] != null) lastName = json['lastName'];
-  if (json['firstName'] != null) firstName = json['firstName'];
-  if (json['avatar'] != null) avatar = json['avatar'];
-
   return Staffs(
-    id: id,
-    lastName: lastName,
-    firstName: firstName,
-    avatar: avatar,
+    id: json['id'] != null ? json['id'] as String : null,
+    lastName: json['lastName'] != null ? json['lastName'] as String : null,
+    firstName: json['firstName'] != null ? json['firstName'] as String : null,
+    avatar: json['avatar'] != null ? json['avatar'] as String : null,
   );
 }
 

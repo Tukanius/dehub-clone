@@ -18,11 +18,11 @@ class _FromBuyerState extends State<FromBuyer> with AfterLayoutMixin {
   bool isLoading = true;
 
   @override
-  afterFirstLayout(BuildContext context) async {
+  Future<void> afterFirstLayout(BuildContext context) async {
     await list(page, limit);
   }
 
-  list(int page, int limit) async {
+  list(page, limit) async {
     Filter filter = Filter();
     Offset offset = Offset(page: page, limit: limit);
     print('================INVITATION=================');

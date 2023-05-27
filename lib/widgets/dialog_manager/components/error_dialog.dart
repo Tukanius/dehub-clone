@@ -1,4 +1,5 @@
 import 'package:dehub/services/dialog.dart';
+import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../dialog_wrapper.dart';

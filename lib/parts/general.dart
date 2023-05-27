@@ -1,322 +1,222 @@
 part of "../models/general.dart";
 
 General _$GeneralFromJson(Map<String, dynamic> json) {
-  List<Provinces>? provinces;
-  List<Districts>? districts;
-  List<Khoroos>? khoroos;
-  List<BankAccounts>? bankAccounts;
-  List<Staffs>? staffs;
-  List<Networks>? networks;
-  List<Currencies>? currencies;
-  List<DiscountTypes>? discountTypes;
-  List<InvoiceHistoryTypes>? invoiceHistoryTypes;
-  List<InvoiceTypes>? invoiceTypes;
-  List<InvoicePaymentStatus>? invoicePaymentStatus;
-  List<InvoiceStatus>? invoiceStatus;
-  List<ItemStatus>? itemStatus;
-  List<Types>? types;
-  List<NumberUnits>? numberUnits;
-  List<OrderConfirmTerms>? orderConfirmTerms;
-  List<OverDueStatus>? overDueStatus;
-  List<PaymentMethod>? paymentMethod;
-  List<PaymentTermRules>? paymentTermRules;
-  List<PerTypes>? perTypes;
-  List<PriceChangeTypes>? priceChangeTypes;
-  List<PriceEndTypes>? priceEndTypes;
-  List<ReturnTypes>? returnTypes;
-  List<TransactionTypes>? transactionTypes;
-  List<UnitConvertTypes>? unitConvertTypes;
-  List<UnitSpaceLabels>? unitSpaceLabels;
-  List<UnitWeightLabels>? unitWeightLabels;
-
-  List<BranchStatus>? branchStatus;
-  List<BranchTypes>? branchTypes;
-  List<BusinessSectors>? businessSectors;
-  List<BusinessStaffRoles>? businessStaffRoles;
-  List<BusinessStatus>? businessStatus;
-  List<ContractDocTypes>? contractDocTypes;
-  List<EquityTypes>? equityTypes;
-  List<InvitationStatus>? invitationStatus;
-  List<InvitationTypes>? invitationTypes;
-  List<LegalEntityTypes>? legalEntityTypes;
-  List<PartnerClassifications>? partnerClassifications;
-  List<PartnerRegisterStatus>? partnerRegisterStatus;
-  List<PartnerTypes>? partnerTypes;
-  List<Permissions>? permissions;
-  List<ProductCategoryTypes>? productCategoryTypes;
-  List<PurchaseTypes>? purchaseTypes;
-  ReferenceListTypes? referenceListTypes;
-  List<ReferenceTypes>? referenceTypes;
-  List<ServiceCategoryTypes>? serviceCategoryTypes;
-
-  if (json['branchStatus'] != null) {
-    branchStatus = (json['branchStatus'] as List)
-        .map((e) => BranchStatus.fromJson(e))
-        .toList();
-  }
-  if (json['referenceListTypes'] != null) {
-    referenceListTypes = ReferenceListTypes.fromJson(
-        json['referenceListTypes'] as Map<String, dynamic>);
-  }
-  if (json['branchTypes'] != null) {
-    branchTypes = (json['branchTypes'] as List)
-        .map((e) => BranchTypes.fromJson(e))
-        .toList();
-  }
-  if (json['businessSectors'] != null) {
-    businessSectors = (json['businessSectors'] as List)
-        .map((e) => BusinessSectors.fromJson(e))
-        .toList();
-  }
-  if (json['businessStaffRoles'] != null) {
-    businessStaffRoles = (json['businessStaffRoles'] as List)
-        .map((e) => BusinessStaffRoles.fromJson(e))
-        .toList();
-  }
-  if (json['businessStatus'] != null) {
-    businessStatus = (json['businessStatus'] as List)
-        .map((e) => BusinessStatus.fromJson(e))
-        .toList();
-  }
-  if (json['contractDocTypes'] != null) {
-    contractDocTypes = (json['contractDocTypes'] as List)
-        .map((e) => ContractDocTypes.fromJson(e))
-        .toList();
-  }
-  if (json['equityTypes'] != null) {
-    equityTypes = (json['equityTypes'] as List)
-        .map((e) => EquityTypes.fromJson(e))
-        .toList();
-  }
-  if (json['invitationStatus'] != null) {
-    invitationStatus = (json['invitationStatus'] as List)
-        .map((e) => InvitationStatus.fromJson(e))
-        .toList();
-  }
-  if (json['invitationTypes'] != null) {
-    invitationTypes = (json['invitationTypes'] as List)
-        .map((e) => InvitationTypes.fromJson(e))
-        .toList();
-  }
-  if (json['legalEntityTypes'] != null) {
-    legalEntityTypes = (json['legalEntityTypes'] as List)
-        .map((e) => LegalEntityTypes.fromJson(e))
-        .toList();
-  }
-  if (json['partnerClassifications'] != null) {
-    partnerClassifications = (json['partnerClassifications'] as List)
-        .map((e) => PartnerClassifications.fromJson(e))
-        .toList();
-  }
-  if (json['partnerRegisterStatus'] != null) {
-    partnerRegisterStatus = (json['partnerRegisterStatus'] as List)
-        .map((e) => PartnerRegisterStatus.fromJson(e))
-        .toList();
-  }
-  if (json['partnerTypes'] != null) {
-    partnerTypes = (json['partnerTypes'] as List)
-        .map((e) => PartnerTypes.fromJson(e))
-        .toList();
-  }
-  if (json['permissions'] != null) {
-    permissions = (json['permissions'] as List)
-        .map((e) => Permissions.fromJson(e))
-        .toList();
-  }
-  if (json['productCategoryTypes'] != null) {
-    productCategoryTypes = (json['productCategoryTypes'] as List)
-        .map((e) => ProductCategoryTypes.fromJson(e))
-        .toList();
-  }
-  if (json['purchaseTypes'] != null) {
-    purchaseTypes = (json['purchaseTypes'] as List)
-        .map((e) => PurchaseTypes.fromJson(e))
-        .toList();
-  }
-  if (json['referenceTypes'] != null) {
-    referenceTypes = (json['referenceTypes'] as List)
-        .map((e) => ReferenceTypes.fromJson(e))
-        .toList();
-  }
-  if (json['serviceCategoryTypes'] != null) {
-    serviceCategoryTypes = (json['serviceCategoryTypes'] as List)
-        .map((e) => ServiceCategoryTypes.fromJson(e))
-        .toList();
-  }
-  if (json['provinces'] != null) {
-    provinces =
-        (json['provinces'] as List).map((e) => Provinces.fromJson(e)).toList();
-  }
-  if (json['districts'] != null) {
-    districts =
-        (json['districts'] as List).map((e) => Districts.fromJson(e)).toList();
-  }
-  if (json['khoroos'] != null) {
-    khoroos =
-        (json['khoroos'] as List).map((e) => Khoroos.fromJson(e)).toList();
-  }
-  if (json['bankAccounts'] != null) {
-    bankAccounts = (json['bankAccounts'] as List)
-        .map((e) => BankAccounts.fromJson(e))
-        .toList();
-  }
-  if (json['staffs'] != null) {
-    staffs = (json['staffs'] as List).map((e) => Staffs.fromJson(e)).toList();
-  }
-  if (json['networks'] != null) {
-    networks =
-        (json['networks'] as List).map((e) => Networks.fromJson(e)).toList();
-  }
-  if (json['currencies'] != null) {
-    currencies = (json['currencies'] as List)
-        .map((e) => Currencies.fromJson(e))
-        .toList();
-  }
-  if (json['discountTypes'] != null) {
-    discountTypes = (json['discountTypes'] as List)
-        .map((e) => DiscountTypes.fromJson(e))
-        .toList();
-  }
-  if (json['invoiceHistoryTypes'] != null) {
-    invoiceHistoryTypes = (json['invoiceHistoryTypes'] as List)
-        .map((e) => InvoiceHistoryTypes.fromJson(e))
-        .toList();
-  }
-  if (json['invoiceTypes'] != null) {
-    invoiceTypes = (json['invoiceTypes'] as List)
-        .map((e) => InvoiceTypes.fromJson(e))
-        .toList();
-  }
-  if (json['invoicePaymentStatus'] != null) {
-    invoicePaymentStatus = (json['invoicePaymentStatus'] as List)
-        .map((e) => InvoicePaymentStatus.fromJson(e))
-        .toList();
-  }
-  if (json['invoiceStatus'] != null) {
-    invoiceStatus = (json['invoiceStatus'] as List)
-        .map((e) => InvoiceStatus.fromJson(e))
-        .toList();
-  }
-  if (json['itemStatus'] != null) {
-    itemStatus = (json['itemStatus'] as List)
-        .map((e) => ItemStatus.fromJson(e))
-        .toList();
-  }
-  if (json['types'] != null) {
-    types = (json['types'] as List).map((e) => Types.fromJson(e)).toList();
-  }
-  if (json['numberUnits'] != null) {
-    numberUnits = (json['numberUnits'] as List)
-        .map((e) => NumberUnits.fromJson(e))
-        .toList();
-  }
-  if (json['orderConfirmTerms'] != null) {
-    orderConfirmTerms = (json['orderConfirmTerms'] as List)
-        .map((e) => OrderConfirmTerms.fromJson(e))
-        .toList();
-  }
-  if (json['overDueStatus'] != null) {
-    overDueStatus = (json['overDueStatus'] as List)
-        .map((e) => OverDueStatus.fromJson(e))
-        .toList();
-  }
-  if (json['paymentMethod'] != null) {
-    paymentMethod = (json['paymentMethod'] as List)
-        .map((e) => PaymentMethod.fromJson(e))
-        .toList();
-  }
-  if (json['paymentTermRules'] != null) {
-    paymentTermRules = (json['paymentTermRules'] as List)
-        .map((e) => PaymentTermRules.fromJson(e))
-        .toList();
-  }
-  if (json['perTypes'] != null) {
-    perTypes =
-        (json['perTypes'] as List).map((e) => PerTypes.fromJson(e)).toList();
-  }
-  if (json['priceChangeTypes'] != null) {
-    priceChangeTypes = (json['priceChangeTypes'] as List)
-        .map((e) => PriceChangeTypes.fromJson(e))
-        .toList();
-  }
-  if (json['priceEndTypes'] != null) {
-    priceEndTypes = (json['priceEndTypes'] as List)
-        .map((e) => PriceEndTypes.fromJson(e))
-        .toList();
-  }
-  if (json['returnTypes'] != null) {
-    returnTypes = (json['returnTypes'] as List)
-        .map((e) => ReturnTypes.fromJson(e))
-        .toList();
-  }
-  if (json['transactionTypes'] != null) {
-    transactionTypes = (json['transactionTypes'] as List)
-        .map((e) => TransactionTypes.fromJson(e))
-        .toList();
-  }
-  if (json['unitConvertTypes'] != null) {
-    unitConvertTypes = (json['unitConvertTypes'] as List)
-        .map((e) => UnitConvertTypes.fromJson(e))
-        .toList();
-  }
-  if (json['unitSpaceLabels'] != null) {
-    unitSpaceLabels = (json['unitSpaceLabels'] as List)
-        .map((e) => UnitSpaceLabels.fromJson(e))
-        .toList();
-  }
-  if (json['unitWeightLabels'] != null) {
-    unitWeightLabels = (json['unitWeightLabels'] as List)
-        .map((e) => UnitWeightLabels.fromJson(e))
-        .toList();
-  }
-
   return General(
-    provinces: provinces,
-    districts: districts,
-    khoroos: khoroos,
-    bankAccounts: bankAccounts,
-    staffs: staffs,
-    networks: networks,
-    currencies: currencies,
-    discountTypes: discountTypes,
-    invoiceHistoryTypes: invoiceHistoryTypes,
-    invoiceTypes: invoiceTypes,
-    invoicePaymentStatus: invoicePaymentStatus,
-    invoiceStatus: invoiceStatus,
-    itemStatus: itemStatus,
-    types: types,
-    numberUnits: numberUnits,
-    orderConfirmTerms: orderConfirmTerms,
-    overDueStatus: overDueStatus,
-    paymentMethod: paymentMethod,
-    paymentTermRules: paymentTermRules,
-    perTypes: perTypes,
-    priceChangeTypes: priceChangeTypes,
-    returnTypes: returnTypes,
-    transactionTypes: transactionTypes,
-    unitConvertTypes: unitConvertTypes,
-    unitSpaceLabels: unitSpaceLabels,
-    unitWeightLabels: unitWeightLabels,
-    priceEndTypes: priceEndTypes,
-    branchStatus: branchStatus,
-    branchTypes: branchTypes,
-    businessSectors: businessSectors,
-    businessStaffRoles: businessStaffRoles,
-    businessStatus: businessStatus,
-    contractDocTypes: contractDocTypes,
-    equityTypes: equityTypes,
-    invitationStatus: invitationStatus,
-    invitationTypes: invitationTypes,
-    legalEntityTypes: legalEntityTypes,
-    partnerClassifications: partnerClassifications,
-    partnerRegisterStatus: partnerRegisterStatus,
-    partnerTypes: partnerTypes,
-    permissions: permissions,
-    productCategoryTypes: productCategoryTypes,
-    purchaseTypes: purchaseTypes,
-    referenceListTypes: referenceListTypes,
-    referenceTypes: referenceTypes,
-    serviceCategoryTypes: serviceCategoryTypes,
+    provinces: json['provinces'] != null
+        ? (json['provinces'] as List).map((e) => Provinces.fromJson(e)).toList()
+        : null,
+    districts: json['districts'] != null
+        ? (json['districts'] as List).map((e) => Districts.fromJson(e)).toList()
+        : null,
+    khoroos: json['khoroos'] != null
+        ? (json['khoroos'] as List).map((e) => Khoroos.fromJson(e)).toList()
+        : null,
+    bankAccounts: json['bankAccounts'] != null
+        ? (json['bankAccounts'] as List)
+            .map((e) => BankAccounts.fromJson(e))
+            .toList()
+        : null,
+    staffs: json['staffs'] != null
+        ? (json['staffs'] as List).map((e) => Staffs.fromJson(e)).toList()
+        : null,
+    networks: json['networks'] != null
+        ? (json['networks'] as List).map((e) => Networks.fromJson(e)).toList()
+        : null,
+    currencies: json['currencies'] != null
+        ? (json['currencies'] as List)
+            .map((e) => Currencies.fromJson(e))
+            .toList()
+        : null,
+    discountTypes: json['discountTypes'] != null
+        ? (json['discountTypes'] as List)
+            .map((e) => DiscountTypes.fromJson(e))
+            .toList()
+        : null,
+    invoiceHistoryTypes: json['invoiceHistoryTypes'] != null
+        ? (json['invoiceHistoryTypes'] as List)
+            .map((e) => InvoiceHistoryTypes.fromJson(e))
+            .toList()
+        : null,
+    invoiceTypes: json['invoiceTypes'] != null
+        ? (json['invoiceTypes'] as List)
+            .map((e) => InvoiceTypes.fromJson(e))
+            .toList()
+        : null,
+    invoicePaymentStatus: json['invoicePaymentStatus'] != null
+        ? (json['invoicePaymentStatus'] as List)
+            .map((e) => InvoicePaymentStatus.fromJson(e))
+            .toList()
+        : null,
+    invoiceStatus: json['invoiceStatus'] != null
+        ? (json['invoiceStatus'] as List)
+            .map((e) => InvoiceStatus.fromJson(e))
+            .toList()
+        : null,
+    itemStatus: json['itemStatus'] != null
+        ? (json['itemStatus'] as List)
+            .map((e) => ItemStatus.fromJson(e))
+            .toList()
+        : null,
+    types: json['types'] != null
+        ? (json['types'] as List).map((e) => Types.fromJson(e)).toList()
+        : null,
+    numberUnits: json['numberUnits'] != null
+        ? (json['numberUnits'] as List)
+            .map((e) => NumberUnits.fromJson(e))
+            .toList()
+        : null,
+    orderConfirmTerms: json['orderConfirmTerms'] != null
+        ? (json['orderConfirmTerms'] as List)
+            .map((e) => OrderConfirmTerms.fromJson(e))
+            .toList()
+        : null,
+    overDueStatus: json['overDueStatus'] != null
+        ? (json['overDueStatus'] as List)
+            .map((e) => OverDueStatus.fromJson(e))
+            .toList()
+        : null,
+    paymentMethod: json['paymentMethod'] != null
+        ? (json['paymentMethod'] as List)
+            .map((e) => PaymentMethod.fromJson(e))
+            .toList()
+        : null,
+    paymentTermRules: json['paymentTermRules'] != null
+        ? (json['paymentTermRules'] as List)
+            .map((e) => PaymentTermRules.fromJson(e))
+            .toList()
+        : null,
+    perTypes: json['perTypes'] != null
+        ? (json['perTypes'] as List).map((e) => PerTypes.fromJson(e)).toList()
+        : null,
+    priceChangeTypes: json['priceChangeTypes'] != null
+        ? (json['priceChangeTypes'] as List)
+            .map((e) => PriceChangeTypes.fromJson(e))
+            .toList()
+        : null,
+    returnTypes: json['returnTypes'] != null
+        ? (json['returnTypes'] as List)
+            .map((e) => ReturnTypes.fromJson(e))
+            .toList()
+        : null,
+    transactionTypes: json['transactionTypes'] != null
+        ? (json['transactionTypes'] as List)
+            .map((e) => TransactionTypes.fromJson(e))
+            .toList()
+        : null,
+    unitConvertTypes: json['unitConvertTypes'] != null
+        ? (json['unitConvertTypes'] as List)
+            .map((e) => UnitConvertTypes.fromJson(e))
+            .toList()
+        : null,
+    unitSpaceLabels: json['unitSpaceLabels'] != null
+        ? (json['unitSpaceLabels'] as List)
+            .map((e) => UnitSpaceLabels.fromJson(e))
+            .toList()
+        : null,
+    unitWeightLabels: json['unitWeightLabels'] != null
+        ? (json['unitWeightLabels'] as List)
+            .map((e) => UnitWeightLabels.fromJson(e))
+            .toList()
+        : null,
+    priceEndTypes: json['priceEndTypes'] != null
+        ? (json['priceEndTypes'] as List)
+            .map((e) => PriceEndTypes.fromJson(e))
+            .toList()
+        : null,
+    branchStatus: json['branchStatus'] != null
+        ? (json['branchStatus'] as List)
+            .map((e) => BranchStatus.fromJson(e))
+            .toList()
+        : null,
+    branchTypes: json['branchTypes'] != null
+        ? (json['branchTypes'] as List)
+            .map((e) => BranchTypes.fromJson(e))
+            .toList()
+        : null,
+    businessSectors: json['businessSectors'] != null
+        ? (json['businessSectors'] as List)
+            .map((e) => BusinessSectors.fromJson(e))
+            .toList()
+        : null,
+    businessStaffRoles: json['businessStaffRoles'] != null
+        ? (json['businessStaffRoles'] as List)
+            .map((e) => BusinessStaffRoles.fromJson(e))
+            .toList()
+        : null,
+    businessStatus: json['businessStatus'] != null
+        ? (json['businessStatus'] as List)
+            .map((e) => BusinessStatus.fromJson(e))
+            .toList()
+        : null,
+    contractDocTypes: json['contractDocTypes'] != null
+        ? (json['contractDocTypes'] as List)
+            .map((e) => ContractDocTypes.fromJson(e))
+            .toList()
+        : null,
+    equityTypes: json['equityTypes'] != null
+        ? (json['equityTypes'] as List)
+            .map((e) => EquityTypes.fromJson(e))
+            .toList()
+        : null,
+    invitationStatus: json['invitationStatus'] != null
+        ? (json['invitationStatus'] as List)
+            .map((e) => InvitationStatus.fromJson(e))
+            .toList()
+        : null,
+    invitationTypes: json['invitationTypes'] != null
+        ? (json['invitationTypes'] as List)
+            .map((e) => InvitationTypes.fromJson(e))
+            .toList()
+        : null,
+    legalEntityTypes: json['legalEntityTypes'] != null
+        ? (json['legalEntityTypes'] as List)
+            .map((e) => LegalEntityTypes.fromJson(e))
+            .toList()
+        : null,
+    partnerClassifications: json['partnerClassifications'] != null
+        ? (json['partnerClassifications'] as List)
+            .map((e) => PartnerClassifications.fromJson(e))
+            .toList()
+        : null,
+    partnerRegisterStatus: json['partnerRegisterStatus'] != null
+        ? (json['partnerRegisterStatus'] as List)
+            .map((e) => PartnerRegisterStatus.fromJson(e))
+            .toList()
+        : null,
+    partnerTypes: json['partnerTypes'] != null
+        ? (json['partnerTypes'] as List)
+            .map((e) => PartnerTypes.fromJson(e))
+            .toList()
+        : null,
+    permissions: json['permissions'] != null
+        ? (json['permissions'] as List)
+            .map((e) => Permissions.fromJson(e))
+            .toList()
+        : null,
+    productCategoryTypes: json['productCategoryTypes'] != null
+        ? (json['productCategoryTypes'] as List)
+            .map((e) => ProductCategoryTypes.fromJson(e))
+            .toList()
+        : null,
+    purchaseTypes: json['purchaseTypes'] != null
+        ? (json['purchaseTypes'] as List)
+            .map((e) => PurchaseTypes.fromJson(e))
+            .toList()
+        : null,
+    referenceListTypes: json['referenceListTypes'] != null
+        ? ReferenceListTypes.fromJson(
+            json['referenceListTypes'] as Map<String, dynamic>)
+        : null,
+    referenceTypes: json['referenceTypes'] != null
+        ? (json['referenceTypes'] as List)
+            .map((e) => ReferenceTypes.fromJson(e))
+            .toList()
+        : null,
+    serviceCategoryTypes: json['serviceCategoryTypes'] != null
+        ? (json['serviceCategoryTypes'] as List)
+            .map((e) => ServiceCategoryTypes.fromJson(e))
+            .toList()
+        : null,
   );
 }
 

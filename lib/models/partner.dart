@@ -1,3 +1,6 @@
+import 'package:dehub/models/business.dart';
+import 'package:dehub/screens/partner_page/tabs/partner_tab/partner_tab.dart';
+
 part '../parts/partner.dart';
 
 class Partner {
@@ -50,8 +53,57 @@ class Partner {
   Partner? district;
   Partner? khoroo;
   Partner? employeeUnit;
+  bool? isAdmin;
+  String? registrationType;
+
+  String? username;
+  String? sessionId;
+  String? partnerId;
+  String? businessId;
+  String? currentBusinessId;
+  String? registerNo;
+  String? familyName;
+  String? firstName;
+  String? lastName;
+  String? avatar;
+  String? departmentUnitId;
+  String? departmentSubUnitId;
+  String? employeeUnitId;
+  String? userStatus;
+  Partner? currentBusiness;
+  String? partnerName;
+  String? partnerNameEng;
+  String? businessSectorId;
+  String? businessSubSectorId;
+  String? purchaseType;
+  String? productCategoryType;
+  String? serviceCategoryType;
+  String? businessStatus;
+  bool? isDefault;
+  String? partnerEmail;
+  String? partnerEmail2;
+  String? partnerPhone;
+  String? partnerPhone2;
+  String? profileName;
+  String? profileNameEng;
+  String? profileInfo;
+  bool? isAnchorBusiness;
+  List<BusinessStaffs>? businessStaffs;
+  Partner? user;
+
+  bool? isSysUser;
+  bool? isAppUser;
+  bool? isEmailVerified;
+  bool? isPhoneVerified;
+  bool? isDanVerified;
+  String? loginType;
+  String? identityCardFront;
+  String? identityCardBack;
+  bool? hasPassword;
+  bool? hasPin;
 
   Partner({
+    this.user,
     this.employeeUnit,
     this.partner,
     this.id,
@@ -101,6 +153,41 @@ class Partner {
     this.name,
     this.district,
     this.khoroo,
+    this.isAdmin,
+    this.registrationType,
+    this.username,
+    this.sessionId,
+    this.partnerId,
+    this.businessId,
+    this.currentBusinessId,
+    this.registerNo,
+    this.familyName,
+    this.firstName,
+    this.lastName,
+    this.avatar,
+    this.departmentUnitId,
+    this.departmentSubUnitId,
+    this.employeeUnitId,
+    this.userStatus,
+    this.currentBusiness,
+    this.partnerName,
+    this.partnerNameEng,
+    this.businessSectorId,
+    this.businessSubSectorId,
+    this.purchaseType,
+    this.productCategoryType,
+    this.serviceCategoryType,
+    this.businessStatus,
+    this.isDefault,
+    this.partnerEmail,
+    this.partnerEmail2,
+    this.partnerPhone,
+    this.partnerPhone2,
+    this.profileName,
+    this.profileNameEng,
+    this.profileInfo,
+    this.isAnchorBusiness,
+    this.businessStaffs,
   });
 
   static $fromJson(Map<String, dynamic> json) => _$PartnerFromJson(json);

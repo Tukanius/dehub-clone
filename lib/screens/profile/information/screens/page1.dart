@@ -1,9 +1,10 @@
-import 'package:dehub/models/user.dart';
+import 'dart:async';
+import 'package:dehub/models/partner.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:after_layout/after_layout.dart';
 
 class Page1 extends StatefulWidget {
   const Page1({
@@ -14,22 +15,11 @@ class Page1 extends StatefulWidget {
   State<Page1> createState() => _Page1State();
 }
 
-class _Page1State extends State<Page1> {
-  int? selectedRadio;
+class _Page1State extends State<Page1> with AfterLayoutMixin {
+  Partner partnerUser = Partner();
 
   @override
-  void initState() {
-    super.initState();
-    selectedRadio = 0;
-  }
-
-  setselectedRadio(int val) {
-    setState(() {
-      selectedRadio = val;
-    });
-  }
-
-  User partnerUser = User();
+  afterFirstLayout(BuildContext context) async {}
 
   @override
   Widget build(BuildContext context) {

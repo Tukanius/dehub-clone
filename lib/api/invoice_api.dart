@@ -21,12 +21,16 @@ class InvoiceApi extends HttpRequest {
     return Invoice.fromJson(res as Map<String, dynamic>);
   }
 
+  Future<Result> listClosed(ResultArguments resultArguments) async {
+    var res =
+        await get("/invoice/closed", "INVOICE", data: resultArguments.toJson());
+    return Result.fromJson(res, Invoice.fromJson);
+  }
+
   pay(String id, Invoice data) async {
-    print("=============================DATA========================");
     var res = await put(
         '/invoice/$id/pay', data: data.toJson(), "INVOICE", handler: true);
     print(res);
-    print("=============================DATA========================");
     return Invoice.fromJson(res as Map<String, dynamic>);
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dehub/api/invoice_api.dart';
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,9 @@ import 'package:after_layout/after_layout.dart';
 class InvoiceProductCard extends StatefulWidget {
   final Color? color;
   final Invoice? data;
+  final General? general;
   const InvoiceProductCard({
+    this.general,
     this.color,
     Key? key,
     this.data,
@@ -33,6 +36,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
     print("===================DATA==================");
     print(widget.data!.toJson());
     print("===================DATA==================");
+    print(widget.data!.discountType.toString());
   }
 
   @override

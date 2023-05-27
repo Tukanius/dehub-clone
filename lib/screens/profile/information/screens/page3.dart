@@ -1,3 +1,4 @@
+import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -12,7 +13,7 @@ class Page3 extends StatefulWidget {
 }
 
 class _Page3State extends State<Page3> {
-  User partnerUser = User();
+  Partner partnerUser = Partner();
 
   @override
   Widget build(BuildContext context) {

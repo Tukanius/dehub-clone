@@ -1,8 +1,14 @@
+import 'dart:async';
+
+import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/goods_card/goods_card.dart';
-import 'package:dehub/screens/product_page/tabs/home_page_tab/product_detail_page/product_detail_page.dart';
+import 'package:dehub/components/invoice_empty/invoice_empty.dart';
+import 'package:dehub/models/result.dart';
+import 'package:dehub/screens/product_page/tabs/dashboard_tab/product_detail_page/product_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:after_layout/after_layout.dart';
 
 class GoodsTab extends StatefulWidget {
   const GoodsTab({super.key});
@@ -11,7 +17,28 @@ class GoodsTab extends StatefulWidget {
   State<GoodsTab> createState() => _GoodsTabState();
 }
 
-class _GoodsTabState extends State<GoodsTab> {
+class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
+  bool isLoading = true;
+  int page = 1;
+  int limit = 10;
+  Result inventory = Result(rows: [], count: 0);
+
+  @override
+  afterFirstLayout(BuildContext context) async {
+    await list(page, limit);
+  }
+
+  list(page, limit) async {
+    Filter filter = Filter();
+    Offset offset = Offset(page: page, limit: limit);
+    Result res = await InventoryApi()
+        .listGoods(ResultArguments(filter: filter, offset: offset));
+    setState(() {
+      inventory = res;
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -89,11 +116,27 @@ class _GoodsTabState extends State<GoodsTab> {
               ],
             ),
           ),
-          GoodsCard(
-            onClick: () {
-              Navigator.of(context).pushNamed(ProductDetailPage.routeName);
-            },
-          ),
+          isLoading == true
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: productColor,
+                  ),
+                )
+              : inventory.rows!.length != 0
+                  ? Column(
+                      children: inventory.rows!
+                          .map(
+                            (item) => GoodsCard(
+                              data: item,
+                              onClick: () {
+                                Navigator.of(context)
+                                    .pushNamed(ProductDetailPage.routeName);
+                              },
+                            ),
+                          )
+                          .toList(),
+                    )
+                  : InvoiceEmpty(),
         ],
       ),
     );

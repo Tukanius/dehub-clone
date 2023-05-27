@@ -1,4 +1,5 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/screens/product_page/tabs/dashboard_tab/dashboard_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ int selectedIndex = 0;
 class _ProductPageState extends State<ProductPage> {
   static const List<Widget> currentPages = [
     HomePageTab(),
-    Text('1'),
+    DashboardTab(),
     Text('1'),
     Text('1'),
   ];
@@ -62,7 +63,7 @@ class _ProductPageState extends State<ProductPage> {
             ),
           ),
         ),
-        title: selectedIndex == 0
+        title: selectedIndex == 1
             ? Container(
                 child: FormTextField(
                   inputType: TextInputType.text,
@@ -74,7 +75,7 @@ class _ProductPageState extends State<ProductPage> {
               )
             : SizedBox(),
         actions: [
-          selectedIndex == 0
+          selectedIndex == 1
               ? Container(
                   padding: const EdgeInsets.all(10),
                   margin: const EdgeInsets.only(right: 15, top: 9, bottom: 9),

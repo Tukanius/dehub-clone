@@ -1,455 +1,268 @@
 part of '../models/invoice.dart';
 
 Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
-  int? count;
-  List<Invoice>? rows;
-  String? id;
-  String? createdAt;
-  String? updatedAt;
-  String? deletedAt;
-  String? refCode;
-  String? senderUserId;
-  String? senderBusinessId;
-  String? senderFinUserId;
-  String? senderBranchId;
-  String? senderAccId;
-  String? salesOrderId;
-  String? purchaseOrderId;
-  String? paymentTermId;
-  String? paymentDate;
-  String? receiverBusinessId;
-  String? receiverAccId;
-  String? receiverAddress;
-  String? receiverBranchId;
-  String? receiverFinUserId;
-  double? shippingAmount;
-  double? vatAmount;
-  double? taxAmount;
-  String? discountType;
-  double? discountValue;
-  double? discountAmount;
-  double? itemsTotal;
-  double? totalAmount;
-  double? confirmedAmount;
-  double? paidAmount;
-  double? amountToPay;
-  String? paymentStatus;
-  String? invoiceStatus;
-  String? overDueStatus;
-  String? sentDate;
-  String? description;
-  String? confirmedUserId;
-  String? confirmedDate;
-  String? respondText;
-  String? type;
-  Invoice? receiverBusiness;
-  String? partnerId;
-  String? regNumber;
-  String? stateRegNum;
-  String? partnerName;
-  String? partnerNameEng;
-  bool? isVatPayer;
-  String? partnerEmail;
-  String? partnerPhone;
-  String? profileName;
-  String? profileNameEng;
-  String? logo;
-  String? profileInfo;
-  Invoice? partner;
-  String? businessName;
-  String? businessNameEng;
-  Invoice? senderUser;
-  String? lastName;
-  String? firstName;
-  String? avatar;
-  User? confirmedUser;
-  Invoice? salesOrder;
-  Invoice? purchaseOrder;
-  int? remainingDays;
-
-  Invoice? senderBusiness;
-  Invoice? senderFinUser;
-  Invoice? senderBranch;
-  String? name;
-  String? nameEng;
-  String? branchStatus;
-  String? provinceId;
-  String? districtId;
-  String? khorooId;
-  String? khoroolol;
-  String? khotkhonBair;
-  String? khashaaDavkhar;
-  String? khaalgaDugaar;
-  String? branchAddress;
-  double? locationLat;
-  double? locationLng;
-  Invoice? senderAcc;
-  String? bankName;
-  String? number;
-  String? currency;
-  String? icon;
-  Invoice? paymentTerm;
-  String? modifiedUserId;
-  String? termRule;
-  String? orderConfirmTerm;
-  int? expireDayCount;
-  String? month;
-  String? paymentDay;
-  bool? isMain;
-  bool? isActive;
-  bool? isOpen;
-  Invoice? receiverFinUser;
-  Invoice? receiverBranch;
-  Invoice? receiverAcc;
-  List<Invoice>? invoiceLines;
-  String? invoiceId;
-  String? unitVariantId;
-  double? price;
-  double? quantity;
-  bool? hasVat;
-  double? vatPercent;
-  bool? hasTax;
-  double? taxPercent;
-  double? lineTotalAmount;
-  String? skuCode;
-  String? barCode;
-  String? erpCode;
-  String? nameMon;
-  String? nameBill;
-  String? nameWeb;
-  String? nameApp;
-  String? image;
-  String? priceStartDate;
-  Invoice? unit;
-  String? convertType;
-  double? convertValue;
-  List<Invoice>? attachments;
-
-  String? method;
-  String? creditAccountId;
-  double? amount;
-
-  if (json['creditAccountId'] != null)
-    creditAccountId = json['creditAccountId'];
-  if (json['amount'] != null) amount = double.parse('${json['amount']}');
-  if (json['method'] != null) method = json['method'];
-
-  if (json['count'] != null) count = json['count'];
-  if (json['rows'] != null)
-    rows = (json['rows'] as List).map((e) => Invoice.fromJson(e)).toList();
-  if (json['id'] != null) id = json['id'];
-  if (json['createdAt'] != null) createdAt = json['createdAt'];
-  if (json['updatedAt'] != null) updatedAt = json['updatedAt'];
-  if (json['deletedAt'] != null) deletedAt = json['deletedAt'];
-  if (json['refCode'] != null) refCode = json['refCode'];
-  if (json['senderUserId'] != null) senderUserId = json['senderUserId'];
-  if (json['senderBusinessId'] != null)
-    senderBusinessId = json['senderBusinessId'];
-  if (json['senderFinUserId'] != null)
-    senderFinUserId = json['senderFinUserId'];
-  if (json['senderBranchId'] != null) senderBranchId = json['senderBranchId'];
-  if (json['senderAccId'] != null) senderAccId = json['senderAccId'];
-  if (json['salesOrderId'] != null) salesOrderId = json['salesOrderId'];
-  if (json['purchaseOrderId'] != null)
-    purchaseOrderId = json['purchaseOrderId'];
-  if (json['paymentTermId'] != null) paymentTermId = json['paymentTermId'];
-  if (json['paymentDate'] != null) paymentDate = json['paymentDate'];
-  if (json['receiverBusinessId'] != null)
-    receiverBusinessId = json['receiverBusinessId'];
-  if (json['receiverAccId'] != null) receiverAccId = json['receiverAccId'];
-  if (json['receiverAddress'] != null)
-    receiverAddress = json['receiverAddress'];
-  if (json['receiverBranchId'] != null)
-    receiverBranchId = json['receiverBranchId'];
-  if (json['receiverFinUserId'] != null)
-    receiverFinUserId = json['receiverFinUserId'];
-  if (json['shippingAmount'] != null)
-    shippingAmount = double.parse('${json['shippingAmount']}');
-  if (json['vatAmount'] != null)
-    vatAmount = double.parse('${json['vatAmount']}');
-  if (json['taxAmount'] != null)
-    taxAmount = double.parse('${json['taxAmount']}');
-  if (json['discountType'] != null) discountType = json['discountType'];
-  if (json['discountValue'] != null)
-    discountValue = double.parse('${json['taxAmount']}');
-  if (json['discountAmount'] != null)
-    discountAmount = double.parse('${json['discountAmount']}');
-  if (json['itemsTotal'] != null)
-    itemsTotal = double.parse('${json['itemsTotal']}');
-  if (json['totalAmount'] != null)
-    totalAmount = double.parse('${json['totalAmount']}');
-  if (json['confirmedAmount'] != null)
-    confirmedAmount = double.parse('${json['confirmedAmount']}');
-  if (json['paidAmount'] != null)
-    paidAmount = double.parse('${json['paidAmount']}');
-  if (json['amountToPay'] != null)
-    amountToPay = double.parse('${json['amountToPay']}');
-  if (json['paymentStatus'] != null) paymentStatus = json['paymentStatus'];
-  if (json['invoiceStatus'] != null) invoiceStatus = json['invoiceStatus'];
-  if (json['overDueStatus'] != null) overDueStatus = json['overDueStatus'];
-  if (json['sentDate'] != null) sentDate = json['sentDate'];
-  if (json['description'] != null) description = json['description'];
-  if (json['confirmedUserId'] != null)
-    confirmedUserId = json['confirmedUserId'];
-  if (json['confirmedDate'] != null) confirmedDate = json['confirmedDate'];
-  if (json['respondText'] != null) respondText = json['respondText'];
-  if (json['type'] != null) type = json['type'];
-  if (json['receiverBusiness'] != null) {
-    receiverBusiness =
-        Invoice.fromJson(json['receiverBusiness'] as Map<String, dynamic>);
-  }
-
-  if (json['partnerId'] != null) partnerId = json['partnerId'];
-  if (json['regNumber'] != null) regNumber = json['regNumber'];
-  if (json['stateRegNum'] != null) stateRegNum = json['stateRegNum'];
-  if (json['partnerName'] != null) partnerName = json['partnerName'];
-  if (json['partnerNameEng'] != null) partnerNameEng = json['partnerNameEng'];
-  if (json['isVatPayer'] != null) isVatPayer = json['isVatPayer'];
-  if (json['partnerEmail'] != null) partnerEmail = json['partnerEmail'];
-  if (json['partnerPhone'] != null) partnerPhone = json['partnerPhone'];
-  if (json['profileName'] != null) profileName = json['profileName'];
-  if (json['profileNameEng'] != null) profileNameEng = json['profileNameEng'];
-  if (json['logo'] != null) logo = json['logo'];
-  if (json['profileInfo'] != null) profileInfo = json['profileInfo'];
-  if (json['partner'] != null) {
-    partner = Invoice.fromJson(json['partner'] as Map<String, dynamic>);
-  }
-
-  if (json['businessName'] != null) businessName = json['businessName'];
-  if (json['businessNameEng'] != null)
-    businessNameEng = json['businessNameEng'];
-  if (json['senderUser'] != null) {
-    senderUser = Invoice.fromJson(json['senderUser'] as Map<String, dynamic>);
-  }
-  if (json['lastName'] != null) lastName = json['lastName'];
-  if (json['firstName'] != null) firstName = json['firstName'];
-  if (json['avatar'] != null) avatar = json['avatar'];
-
-  if (json['confirmedUser'] != null) {
-    confirmedUser =
-        User.fromJson(json['confirmedUser'] as Map<String, dynamic>);
-  }
-
-  if (json['salesOrder'] != null) {
-    salesOrder = Invoice.fromJson(json['salesOrder'] as Map<String, dynamic>);
-  }
-  if (json['purchaseOrder'] != null) {
-    purchaseOrder =
-        Invoice.fromJson(json['purchaseOrder'] as Map<String, dynamic>);
-  }
-  if (json['remainingDays'] != null)
-    remainingDays = int.parse('${json['remainingDays']}');
-
-  if (json['senderFinUser'] != null)
-    senderFinUser =
-        Invoice.fromJson(json['senderFinUser'] as Map<String, dynamic>);
-  if (json['senderBranch'] != null)
-    senderBranch =
-        Invoice.fromJson(json['senderBranch'] as Map<String, dynamic>);
-  if (json['name'] != null) name = json['name'];
-  if (json['nameEng'] != null) nameEng = json['nameEng'];
-  if (json['branchStatus'] != null) branchStatus = json['branchStatus'];
-  if (json['provinceId'] != null) provinceId = json['provinceId'];
-  if (json['districtId'] != null) districtId = json['districtId'];
-  if (json['khorooId'] != null) khorooId = json['khorooId'];
-  if (json['khoroolol'] != null) khoroolol = json['khoroolol'];
-  if (json['khotkhonBair'] != null) khotkhonBair = json['khotkhonBair'];
-  if (json['khashaaDavkhar'] != null) khashaaDavkhar = json['khashaaDavkhar'];
-  if (json['khaalgaDugaar'] != null) khaalgaDugaar = json['khaalgaDugaar'];
-  if (json['branchAddress'] != null) branchAddress = json['branchAddress'];
-  if (json['locationLat'] != null)
-    locationLat = double.parse('${json['locationLat']}');
-  if (json['locationLng'] != null)
-    locationLng = double.parse('${json['locationLng']}');
-  if (json['senderAcc'] != null)
-    senderAcc = Invoice.fromJson(json['senderAcc'] as Map<String, dynamic>);
-  if (json['senderBusiness'] != null)
-    senderBusiness =
-        Invoice.fromJson(json['senderBusiness'] as Map<String, dynamic>);
-  if (json['bankName'] != null) bankName = json['bankName'];
-  if (json['number'] != null) number = json['number'];
-  if (json['currency'] != null) currency = json['currency'];
-  if (json['icon'] != null) icon = json['icon'];
-  if (json['paymentTerm'] != null)
-    paymentTerm = Invoice.fromJson(json['paymentTerm'] as Map<String, dynamic>);
-  if (json['modifiedUserId'] != null) modifiedUserId = json['modifiedUserId'];
-  if (json['termRule'] != null) termRule = json['termRule'];
-  if (json['orderConfirmTerm'] != null)
-    orderConfirmTerm = json['orderConfirmTerm'];
-  if (json['expireDayCount'] != null) expireDayCount = json['expireDayCount'];
-  if (json['month'] != null) month = json['month'];
-  if (json['paymentDay'] != null) paymentDay = json['paymentDay'];
-  if (json['isMain'] != null) isMain = json['isMain'];
-  if (json['isActive'] != null) isActive = json['isActive'];
-  if (json['isOpen'] != null) isOpen = json['isOpen'];
-  if (json['receiverFinUser'] != null)
-    receiverFinUser =
-        Invoice.fromJson(json['receiverFinUser'] as Map<String, dynamic>);
-  if (json['receiverBranch'] != null)
-    receiverBranch =
-        Invoice.fromJson(json['receiverBranch'] as Map<String, dynamic>);
-  if (json['receiverAcc'] != null)
-    receiverAcc = Invoice.fromJson(json['receiverAcc'] as Map<String, dynamic>);
-  if (json['invoiceLines'] != null)
-    invoiceLines =
-        (json['invoiceLines'] as List).map((e) => Invoice.fromJson(e)).toList();
-  if (json['invoiceId'] != null) invoiceId = json['invoiceId'];
-  if (json['unitVariantId'] != null) unitVariantId = json['unitVariantId'];
-  if (json['price'] != null) price = double.parse('${json['price']}');
-  if (json['quantity'] != null) quantity = double.parse('${json['quantity']}');
-  if (json['hasVat'] != null) hasVat = json['hasVat'];
-  if (json['vatPercent'] != null)
-    vatPercent = double.parse('${json['vatPercent']}');
-  if (json['hasTax'] != null) hasTax = json['hasTax'];
-  if (json['taxPercent'] != null)
-    taxPercent = double.parse('${json['taxPercent']}');
-  if (json['lineTotalAmount'] != null)
-    lineTotalAmount = double.parse('${json['lineTotalAmount']}');
-
-  if (json['skuCode'] != null) skuCode = json['skuCode'];
-  if (json['barCode'] != null) barCode = json['barCode'];
-  if (json['erpCode'] != null) erpCode = json['erpCode'];
-  if (json['nameMon'] != null) nameMon = json['nameMon'];
-  if (json['nameBill'] != null) nameBill = json['nameBill'];
-  if (json['nameWeb'] != null) nameWeb = json['nameWeb'];
-  if (json['nameApp'] != null) nameApp = json['nameApp'];
-  if (json['image'] != null) image = json['image'];
-  if (json['priceStartDate'] != null) priceStartDate = json['priceStartDate'];
-  if (json['unit'] != null)
-    unit = Invoice.fromJson(json['unit'] as Map<String, dynamic>);
-  if (json['convertType'] != null) convertType = json['convertType'];
-  if (json['convertValue'] != null)
-    convertValue = double.parse('${json['convertValue']}');
-  if (json['attachments'] != null)
-    attachments =
-        (json['attachments'] as List).map((e) => Invoice.fromJson(e)).toList();
-
   return Invoice(
-    method: method,
-    creditAccountId: creditAccountId,
-    amount: amount,
-    count: count,
-    rows: rows,
-    id: id,
-    createdAt: createdAt,
-    updatedAt: updatedAt,
-    deletedAt: deletedAt,
-    refCode: refCode,
-    senderUserId: senderUserId,
-    senderBusinessId: senderBusinessId,
-    senderFinUserId: senderFinUserId,
-    senderBranchId: senderBranchId,
-    senderAccId: senderAccId,
-    salesOrderId: salesOrderId,
-    purchaseOrderId: purchaseOrderId,
-    paymentTermId: paymentTermId,
-    paymentDate: paymentDate,
-    receiverBusinessId: receiverBusinessId,
-    receiverAccId: receiverAccId,
-    receiverAddress: receiverAddress,
-    receiverBranchId: receiverBranchId,
-    receiverFinUserId: receiverFinUserId,
-    shippingAmount: shippingAmount,
-    vatAmount: vatAmount,
-    taxAmount: taxAmount,
-    discountType: discountType,
-    discountValue: discountValue,
-    discountAmount: discountAmount,
-    itemsTotal: itemsTotal,
-    totalAmount: totalAmount,
-    confirmedAmount: confirmedAmount,
-    paidAmount: paidAmount,
-    amountToPay: amountToPay,
-    paymentStatus: paymentStatus,
-    invoiceStatus: invoiceStatus,
-    overDueStatus: overDueStatus,
-    sentDate: sentDate,
-    description: description,
-    confirmedUserId: confirmedUserId,
-    confirmedDate: confirmedDate,
-    respondText: respondText,
-    type: type,
-    receiverBusiness: receiverBusiness,
-    partnerId: partnerId,
-    regNumber: regNumber,
-    stateRegNum: stateRegNum,
-    partnerName: partnerName,
-    partnerNameEng: partnerNameEng,
-    isVatPayer: isVatPayer,
-    partnerEmail: partnerEmail,
-    partnerPhone: partnerPhone,
-    profileName: profileName,
-    profileNameEng: profileNameEng,
-    logo: logo,
-    profileInfo: profileInfo,
-    partner: partner,
-    businessName: businessName,
-    businessNameEng: businessNameEng,
-    senderUser: senderUser,
-    lastName: lastName,
-    firstName: firstName,
-    avatar: avatar,
-    confirmedUser: confirmedUser,
-    salesOrder: salesOrder,
-    purchaseOrder: purchaseOrder,
-    remainingDays: remainingDays,
-    senderBusiness: senderBusiness,
-    senderFinUser: senderFinUser,
-    senderBranch: senderBranch,
-    name: name,
-    nameEng: nameEng,
-    branchStatus: branchStatus,
-    provinceId: provinceId,
-    districtId: districtId,
-    khorooId: khorooId,
-    khoroolol: khoroolol,
-    khotkhonBair: khotkhonBair,
-    khashaaDavkhar: khashaaDavkhar,
-    khaalgaDugaar: khaalgaDugaar,
-    branchAddress: branchAddress,
-    locationLat: locationLat,
-    locationLng: locationLng,
-    senderAcc: senderAcc,
-    bankName: bankName,
-    number: number,
-    currency: currency,
-    icon: icon,
-    paymentTerm: paymentTerm,
-    modifiedUserId: modifiedUserId,
-    termRule: termRule,
-    orderConfirmTerm: orderConfirmTerm,
-    expireDayCount: expireDayCount,
-    month: month,
-    paymentDay: paymentDay,
-    isMain: isMain,
-    isActive: isActive,
-    isOpen: isOpen,
-    receiverFinUser: receiverFinUser,
-    receiverBranch: receiverBranch,
-    receiverAcc: receiverAcc,
-    invoiceLines: invoiceLines,
-    invoiceId: invoiceId,
-    unitVariantId: unitVariantId,
-    price: price,
-    quantity: quantity,
-    hasVat: hasVat,
-    vatPercent: vatPercent,
-    hasTax: hasTax,
-    taxPercent: taxPercent,
-    lineTotalAmount: lineTotalAmount,
-    skuCode: skuCode,
-    barCode: barCode,
-    erpCode: erpCode,
-    nameMon: nameMon,
-    nameBill: nameBill,
-    nameWeb: nameWeb,
-    nameApp: nameApp,
-    image: image,
-    priceStartDate: priceStartDate,
-    unit: unit,
-    convertType: convertType,
-    convertValue: convertValue,
-    attachments: attachments,
+    method: json['method'] != null ? json['method'] as String : null,
+    creditAccountId: json['creditAccountId'] != null
+        ? json['creditAccountId'] as String
+        : null,
+    amount: json['amount'] != null ? double.parse('${json['amount']}') : null,
+    count: json['count'] != null ? int.parse("${json['count']}") : null,
+    rows: json['rows'] != null
+        ? (json['rows'] as List).map((e) => Invoice.fromJson(e)).toList()
+        : null,
+    id: json['id'] != null ? json['id'] as String : null,
+    createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
+    updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
+    deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
+    refCode: json['refCode'] != null ? json['refCode'] as String : null,
+    senderUserId:
+        json['senderUserId'] != null ? json['senderUserId'] as String : null,
+    senderBusinessId: json['senderBusinessId'] != null
+        ? json['senderBusinessId'] as String
+        : null,
+    senderFinUserId: json['senderFinUserId'] != null
+        ? json['senderFinUserId'] as String
+        : null,
+    senderBranchId: json['senderBranchId'] != null
+        ? json['senderBranchId'] as String
+        : null,
+    senderAccId:
+        json['senderAccId'] != null ? json['senderAccId'] as String : null,
+    salesOrderId:
+        json['salesOrderId'] != null ? json['salesOrderId'] as String : null,
+    purchaseOrderId: json['purchaseOrderId'] != null
+        ? json['purchaseOrderId'] as String
+        : null,
+    paymentTermId:
+        json['paymentTermId'] != null ? json['paymentTermId'] as String : null,
+    paymentDate:
+        json['paymentDate'] != null ? json['paymentDate'] as String : null,
+    receiverBusinessId: json['receiverBusinessId'] != null
+        ? json['receiverBusinessId'] as String
+        : null,
+    receiverAccId:
+        json['receiverAccId'] != null ? json['receiverAccId'] as String : null,
+    receiverAddress: json['receiverAddress'] != null
+        ? json['receiverAddress'] as String
+        : null,
+    receiverBranchId: json['receiverBranchId'] != null
+        ? json['receiverBranchId'] as String
+        : null,
+    receiverFinUserId: json['receiverFinUserId'] != null
+        ? json['receiverFinUserId'] as String
+        : null,
+    shippingAmount: json['shippingAmount'] != null
+        ? double.parse("${json['shippingAmount']}")
+        : null,
+    vatAmount:
+        json['vatAmount'] != null ? double.parse("${json['vatAmount']}") : null,
+    taxAmount:
+        json['taxAmount'] != null ? double.parse("${json['taxAmount']}") : null,
+    discountType:
+        json['discountType'] != null ? json['discountType'] as String : null,
+    discountValue: json['discountValue'] != null
+        ? double.parse("${json['discountValue']}")
+        : null,
+    discountAmount: json['discountAmount'] != null
+        ? double.parse("${json['discountAmount']}")
+        : null,
+    itemsTotal: json['itemsTotal'] != null
+        ? double.parse("${json['itemsTotal']}")
+        : null,
+    totalAmount: json['totalAmount'] != null
+        ? double.parse("${json['totalAmount']}")
+        : null,
+    confirmedAmount: json['confirmedAmount'] != null
+        ? double.parse("${json['confirmedAmount']}")
+        : null,
+    paidAmount: json['paidAmount'] != null
+        ? double.parse("${json['paidAmount']}")
+        : null,
+    amountToPay: json['amountToPay'] != null
+        ? double.parse("${json['amountToPay']}")
+        : null,
+    paymentStatus:
+        json['paymentStatus'] != null ? json['paymentStatus'] as String : null,
+    invoiceStatus:
+        json['invoiceStatus'] != null ? json['invoiceStatus'] as String : null,
+    overDueStatus:
+        json['overDueStatus'] != null ? json['overDueStatus'] as String : null,
+    sentDate: json['sentDate'] != null ? json['sentDate'] as String : null,
+    description:
+        json['description'] != null ? json['description'] as String : null,
+    confirmedUserId: json['confirmedUserId'] != null
+        ? json['confirmedUserId'] as String
+        : null,
+    confirmedDate:
+        json['confirmedDate'] != null ? json['confirmedDate'] as String : null,
+    respondText:
+        json['respondText'] != null ? json['respondText'] as String : null,
+    type: json['type'] != null ? json['type'] as String : null,
+    receiverBusiness: json['receiverBusiness'] != null
+        ? Invoice.fromJson(json['receiverBusiness'] as Map<String, dynamic>)
+        : null,
+    partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
+    regNumber: json['regNumber'] != null ? json['regNumber'] as String : null,
+    stateRegNum:
+        json['stateRegNum'] != null ? json['stateRegNum'] as String : null,
+    partnerName:
+        json['partnerName'] != null ? json['partnerName'] as String : null,
+    partnerNameEng: json['partnerNameEng'] != null
+        ? json['partnerNameEng'] as String
+        : null,
+    isVatPayer: json['isVatPayer'] != null ? json['isVatPayer'] as bool : null,
+    partnerEmail:
+        json['partnerEmail'] != null ? json['partnerEmail'] as String : null,
+    partnerPhone:
+        json['partnerPhone'] != null ? json['partnerPhone'] as String : null,
+    profileName:
+        json['profileName'] != null ? json['profileName'] as String : null,
+    profileNameEng: json['profileNameEng'] != null
+        ? json['profileNameEng'] as String
+        : null,
+    logo: json['logo'] != null ? json['logo'] as String : null,
+    profileInfo:
+        json['profileInfo'] != null ? json['profileInfo'] as String : null,
+    partner: json['partner'] != null
+        ? Invoice.fromJson(json['partner'] as Map<String, dynamic>)
+        : null,
+    businessName:
+        json['businessName'] != null ? json['businessName'] as String : null,
+    businessNameEng: json['businessNameEng'] != null
+        ? json['businessNameEng'] as String
+        : null,
+    senderUser: json['senderUser'] != null
+        ? Invoice.fromJson(json['senderUser'] as Map<String, dynamic>)
+        : null,
+    lastName: json['lastName'] != null ? json['lastName'] as String : null,
+    firstName: json['firstName'] != null ? json['firstName'] as String : null,
+    avatar: json['avatar'] != null ? json['avatar'] as String : null,
+    confirmedUser: json['confirmedUser'] != null
+        ? Invoice.fromJson(json['confirmedUser'] as Map<String, dynamic>)
+        : null,
+    salesOrder: json['salesOrder'] != null
+        ? Invoice.fromJson(json['salesOrder'] as Map<String, dynamic>)
+        : null,
+    purchaseOrder: json['purchaseOrder'] != null
+        ? Invoice.fromJson(json['purchaseOrder'] as Map<String, dynamic>)
+        : null,
+    remainingDays: json['remainingDays'] != null
+        ? int.parse('${json['remainingDays']}')
+        : null,
+    senderBusiness: json['senderBusiness'] != null
+        ? Invoice.fromJson(json['senderBusiness'] as Map<String, dynamic>)
+        : null,
+    senderFinUser: json['senderFinUser'] != null
+        ? Invoice.fromJson(json['senderFinUser'] as Map<String, dynamic>)
+        : null,
+    senderBranch: json['senderBranch'] != null
+        ? Invoice.fromJson(json['senderBranch'] as Map<String, dynamic>)
+        : null,
+    name: json['name'] != null ? json['name'] as String : null,
+    nameEng: json['nameEng'] != null ? json['nameEng'] as String : null,
+    branchStatus:
+        json['branchStatus'] != null ? json['branchStatus'] as String : null,
+    provinceId:
+        json['provinceId'] != null ? json['provinceId'] as String : null,
+    districtId:
+        json['districtId'] != null ? json['districtId'] as String : null,
+    khorooId: json['khorooId'] != null ? json['khorooId'] as String : null,
+    khoroolol: json['khoroolol'] != null ? json['khoroolol'] as String : null,
+    khotkhonBair:
+        json['khotkhonBair'] != null ? json['khotkhonBair'] as String : null,
+    khashaaDavkhar: json['khashaaDavkhar'] != null
+        ? json['khashaaDavkhar'] as String
+        : null,
+    khaalgaDugaar:
+        json['khaalgaDugaar'] != null ? json['khaalgaDugaar'] as String : null,
+    branchAddress:
+        json['branchAddress'] != null ? json['branchAddress'] as String : null,
+    locationLat: json['locationLat'] != null
+        ? double.parse("${json['locationLat']}")
+        : null,
+    locationLng: json['locationLng'] != null
+        ? double.parse("${json['locationLng']}")
+        : null,
+    senderAcc: json['senderAcc'] != null
+        ? Invoice.fromJson(json['senderAcc'] as Map<String, dynamic>)
+        : null,
+    bankName: json['bankName'] != null ? json['bankName'] as String : null,
+    number: json['number'] != null ? json['number'] as String : null,
+    currency: json['currency'] != null ? json['currency'] as String : null,
+    icon: json['icon'] != null ? json['icon'] as String : null,
+    paymentTerm: json['paymentTerm'] != null
+        ? Invoice.fromJson(json['paymentTerm'] as Map<String, dynamic>)
+        : null,
+    modifiedUserId: json['modifiedUserId'] != null
+        ? json['modifiedUserId'] as String
+        : null,
+    termRule: json['termRule'] != null ? json['termRule'] as String : null,
+    orderConfirmTerm: json['orderConfirmTerm'] != null
+        ? json['orderConfirmTerm'] as String
+        : null,
+    expireDayCount: json['expireDayCount'] != null
+        ? int.parse("${json['expireDayCount']}")
+        : null,
+    month: json['month'] != null ? json['month'] as String : null,
+    paymentDay:
+        json['paymentDay'] != null ? json['paymentDay'] as String : null,
+    isMain: json['isMain'] != null ? json['isMain'] as bool : null,
+    isActive: json['isActive'] != null ? json['isActive'] as bool : null,
+    isOpen: json['isOpen'] != null ? json['isOpen'] as bool : null,
+    receiverFinUser: json['receiverFinUser'] != null
+        ? Invoice.fromJson(json['receiverFinUser'] as Map<String, dynamic>)
+        : null,
+    receiverBranch: json['receiverBranch'] != null
+        ? Invoice.fromJson(json['receiverBranch'] as Map<String, dynamic>)
+        : null,
+    receiverAcc: json['receiverAcc'] != null
+        ? Invoice.fromJson(json['receiverAcc'] as Map<String, dynamic>)
+        : null,
+    invoiceLines: json['invoiceLines'] != null
+        ? (json['invoiceLines'] as List)
+            .map((e) => Invoice.fromJson(e))
+            .toList()
+        : null,
+    invoiceId: json['invoiceId'] != null ? json['invoiceId'] as String : null,
+    unitVariantId:
+        json['unitVariantId'] != null ? json['unitVariantId'] as String : null,
+    price: json['price'] != null ? double.parse("${json['price']}") : null,
+    quantity:
+        json['quantity'] != null ? double.parse("${json['quantity']}") : null,
+    hasVat: json['hasVat'] != null ? json['hasVat'] as bool : null,
+    vatPercent: json['vatPercent'] != null
+        ? double.parse("${json['vatPercent']}")
+        : null,
+    hasTax: json['hasTax'] != null ? json['hasTax'] as bool : null,
+    taxPercent: json['taxPercent'] != null
+        ? double.parse("${json['taxPercent']}")
+        : null,
+    lineTotalAmount: json['lineTotalAmount'] != null
+        ? double.parse("${json['lineTotalAmount']}")
+        : null,
+    skuCode: json['skuCode'] != null ? json['skuCode'] as String : null,
+    barCode: json['barCode'] != null ? json['barCode'] as String : null,
+    erpCode: json['erpCode'] != null ? json['erpCode'] as String : null,
+    nameMon: json['nameMon'] != null ? json['nameMon'] as String : null,
+    nameBill: json['nameBill'] != null ? json['nameBill'] as String : null,
+    nameWeb: json['nameWeb'] != null ? json['nameWeb'] as String : null,
+    nameApp: json['nameApp'] != null ? json['nameApp'] as String : null,
+    image: json['image'] != null ? json['image'] as String : null,
+    priceStartDate: json['priceStartDate'] != null
+        ? json['priceStartDate'] as String
+        : null,
+    unit: json['unit'] != null
+        ? Invoice.fromJson(json['unit'] as Map<String, dynamic>)
+        : null,
+    convertType:
+        json['convertType'] != null ? json['convertType'] as String : null,
+    convertValue: json['convertValue'] != null
+        ? int.parse(json['convertValue'].toString())
+        : null,
+    attachments: json['attachments'] != null
+        ? (json['attachments'] as List).map((e) => Invoice.fromJson(e)).toList()
+        : null,
   );
 }
 

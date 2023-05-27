@@ -3,7 +3,6 @@ import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/auth/login_page.dart';
 import 'package:dehub/screens/first_page/first_page.dart';
-import 'package:dehub/screens/main/main_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -24,14 +23,20 @@ class _SplashPageState extends State<SplashPage>
   @override
   afterFirstLayout(BuildContext context) async {
     try {
+      print('===================1========================');
       await Provider.of<UserProvider>(context, listen: false).me(false);
       print('===================1========================');
+      print('===================2========================');
       await Provider.of<UserProvider>(context, listen: false).partnerMe(false);
       print('===================2========================');
+      print('===================3========================');
       await Provider.of<GeneralProvider>(context, listen: false).init(false);
       print('===================3========================');
       await Navigator.of(context).pushNamed(FirstPage.routeName);
     } catch (e) {
+      print('===================ERROR=================');
+      print(e.toString());
+      print('===================ERROR=================');
       await Navigator.of(context).pushNamed(LoginPage.routeName);
     }
   }

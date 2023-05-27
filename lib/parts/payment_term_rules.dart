@@ -1,15 +1,9 @@
 part of "../models/payment_term_rules.dart";
 
 PaymentTermRules _$PaymentTermRulesFromJson(Map<String, dynamic> json) {
-  String? code;
-  String? text;
-
-  if (json['code'] != null) code = json['code'];
-  if (json['text'] != null) text = json['text'];
-
   return PaymentTermRules(
-    code: code,
-    text: text,
+    code: json['code'] != null ? json['code'] as String : null,
+    text: json['text'] != null ? json['text'] as String : null,
   );
 }
 

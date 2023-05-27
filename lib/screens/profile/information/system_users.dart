@@ -1,3 +1,4 @@
+import 'package:dehub/models/user.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,8 @@ class SystemUsersPage extends StatefulWidget {
 }
 
 class _SystemUsersPageState extends State<SystemUsersPage> {
+  User user = User();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

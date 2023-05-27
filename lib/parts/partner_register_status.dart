@@ -2,18 +2,10 @@ part of "../models/partner_register_status.dart";
 
 PartnerRegisterStatus _$PartnerRegisterStatusFromJson(
     Map<String, dynamic> json) {
-  String? code;
-  String? name;
-  Color? color;
-
-  if (json['code'] != null) code = json['code'];
-  if (json['name'] != null) name = json['name'];
-  if (json['color'] != null) color = json['color'];
-
   return PartnerRegisterStatus(
-    code: code,
-    name: name,
-    color: color,
+    code: json['code'] != null ? json['code'] as String : null,
+    name: json['name'] != null ? json['name'] as String : null,
+    color: json['color'] != null ? json['color'] as Color : null,
   );
 }
 

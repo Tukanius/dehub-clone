@@ -1,4 +1,5 @@
 import 'package:dehub/api/auth_api.dart';
+import 'package:dehub/models/partner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import '../models/user.dart';
@@ -7,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserProvider extends ChangeNotifier {
   final DefaultCacheManager cacheManager = DefaultCacheManager();
   User user = User();
-  User partnerUser = User();
+  Partner partnerUser = Partner();
   User businessUser = User();
 
   me(bool handler) async {
@@ -16,16 +17,9 @@ class UserProvider extends ChangeNotifier {
   }
 
   partnerMe(bool handler) async {
-    try {
-      partnerUser = await AuthApi().partnerMe(handler);
-      print('=====================PARTNER=================');
-      print(partnerUser.toJson());
-      print('=====================PARTNER=================');
-    } catch (e) {
-      print('==================ERRO+++++++++++++++++++++');
-      print(e.toString());
-      print('==================ERRO+++++++++++++++++++++');
-    }
+    print('===================PARTNERME==================');
+    partnerUser = await AuthApi().partnerMe(handler);
+    print('===================PARTNERME==================');
     notifyListeners();
   }
 

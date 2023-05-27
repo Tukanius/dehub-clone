@@ -1,303 +1,183 @@
 part of '../models/user.dart';
 
 User _$UserFromJson(Map<String, dynamic> json) {
-  String? id;
-  User? user;
-  String? createdAt;
-  String? updatedAt;
-  String? deletedAt;
-  String? type;
-  String? sessionId;
-  bool? isActive;
-  String? email;
-  String? username;
-  bool? isEmailVerified;
-  String? emailVerifiedDate;
-  String? phone;
-  bool? isPhoneVerified;
-  String? phoneVerifiedDate;
-  String? lastName;
-  String? firstName;
-  String? avatar;
-  String? sessionScope;
-  double? expiryHours;
-  bool? userSuspended;
-  bool? passwordExpired;
-  bool? passwordNeedChange;
-  bool? userTerminated;
-  String? expiryDate;
-  String? userStatus;
-  String? registerStatus;
-  String? userStatusDate;
-  String? partnerId;
-  String? verifyExpiryDate;
-  bool? hasPin;
-  String? currentBusinessId;
-  String? loginType;
-  String? identityCardFront;
-  String? identityCardBack;
-  bool? isSysUser;
-  bool? isAppUser;
-  String? userId;
-  String? tokenType;
-  String? accessToken;
-  String? refreshToken;
-  String? sessionState;
-
-  String? code;
-  String? password;
-  String? regUserId;
-  String? businessId;
-  String? registerNo;
-  String? familyName;
-  String? roleId;
-  String? departmentUnitId;
-  String? departmentSubUnitId;
-  String? employeeUnitId;
-  String? roleEnableDate;
-  String? roleDisableDate;
-  String? phone2;
-  String? email2;
-  bool? isDanVerified;
-  bool? hasPassword;
-  User? currentBusiness;
-  double? regNumber;
-  double? stateRegNum;
-  String? legalEntityType;
-  String? partnerName;
-  String? partnerNameEng;
-  String? refCode;
-  String? businessSectorId;
-  String? businessSubSectorId;
-  String? purchaseType;
-  String? productCategoryType;
-  String? serviceCategoryType;
-  String? businessStatus;
-  bool? isDefault;
-  bool? isVatPayer;
-  String? partnerEmail;
-  String? partnerEmail2;
-  String? partnerPhone;
-  String? partnerPhone2;
-  String? profileName;
-  String? profileNameEng;
-  String? logo;
-  String? profileInfo;
-  bool? isConfirmed;
-  bool? isAnchorBusiness;
-  Partner? partner;
-  List<BusinessStaffs>? businessStaffs;
-  String? pin;
-
-  if (json['code'] != null) code = json['code'];
-  if (json['phone'] != null) phone = json['phone'];
-  if (json['partner'] != null) {
-    partner = Partner.fromJson(json['partner'] as Map<String, dynamic>);
-  }
-  if (json['businessStaffs'] != null) {
-    businessStaffs = (json['businessStaffs'] as List)
-        .map((e) => BusinessStaffs.fromJson(e))
-        .toList();
-  }
-  if (json['user'] != null) {
-    user = User.fromJson(json['user'] as Map<String, dynamic>);
-  }
-  if (json['password'] != null) password = json['password'];
-  if (json['regUserId'] != null) regUserId = json['regUserId'];
-  if (json['businessId'] != null) businessId = json['businessId'];
-  if (json['registerNo'] != null) registerNo = json['registerNo'];
-  if (json['familyName'] != null) familyName = json['familyName'];
-  if (json['roleId'] != null) roleId = json['roleId'];
-  if (json['departmentUnitId'] != null)
-    departmentUnitId = json['departmentUnitId'];
-  if (json['departmentSubUnitId'] != null)
-    departmentSubUnitId = json['departmentSubUnitId'];
-  if (json['employeeUnitId'] != null) employeeUnitId = json['employeeUnitId'];
-  if (json['roleEnableDate'] != null) roleEnableDate = json['roleEnableDate'];
-  if (json['roleDisableDate'] != null)
-    roleDisableDate = json['roleDisableDate'];
-  if (json['phone2'] != null) phone2 = json['phone2'];
-  if (json['email2'] != null) email2 = json['email2'];
-  if (json['isDanVerified'] != null) isDanVerified = json['isDanVerified'];
-  if (json['hasPassword'] != null) hasPassword = json['hasPassword'];
-  if (json['currentBusiness'] != null) {
-    currentBusiness =
-        User.fromJson(json['currentBusiness'] as Map<String, dynamic>);
-  }
-
-  if (json['regNumber'] != null)
-    regNumber = double.parse(json['regNumber'].toString());
-  if (json['stateRegNum'] != null)
-    stateRegNum = double.parse(json['stateRegNum'].toString());
-  if (json['legalEntityType'] != null)
-    legalEntityType = json['legalEntityType'];
-  if (json['partnerName'] != null) partnerName = json['partnerName'];
-  if (json['partnerNameEng'] != null) partnerNameEng = json['partnerNameEng'];
-  if (json['refCode'] != null) refCode = json['refCode'];
-  if (json['businessSectorId'] != null)
-    businessSectorId = json['businessSectorId'];
-  if (json['businessSubSectorId'] != null)
-    businessSubSectorId = json['businessSubSectorId'];
-  if (json['purchaseType'] != null) purchaseType = json['purchaseType'];
-  if (json['productCategoryType'] != null)
-    productCategoryType = json['productCategoryType'];
-  if (json['serviceCategoryType'] != null)
-    serviceCategoryType = json['serviceCategoryType'];
-  if (json['businessStatus'] != null) businessStatus = json['businessStatus'];
-  if (json['isDefault'] != null) isDefault = json['isDefault'];
-  if (json['isVatPayer'] != null) isVatPayer = json['isVatPayer'];
-  if (json['partnerEmail'] != null) partnerEmail = json['partnerEmail'];
-  if (json['partnerEmail2'] != null) partnerEmail2 = json['partnerEmail2'];
-  if (json['partnerPhone'] != null) partnerPhone = json['partnerPhone'];
-  if (json['partnerPhone2'] != null) partnerPhone2 = json['partnerPhone2'];
-  if (json['profileName'] != null) profileName = json['profileName'];
-  if (json['profileNameEng'] != null) profileNameEng = json['profileNameEng'];
-  if (json['logo'] != null) logo = json['logo'];
-  if (json['profileInfo'] != null) profileInfo = json['profileInfo'];
-  if (json['isConfirmed'] != null) isConfirmed = json['isConfirmed'];
-  if (json['isAnchorBusiness'] != null)
-    isAnchorBusiness = json['isAnchorBusiness'];
-  if (json['id'] != null) id = json['id'];
-  if (json['emailVerifiedDate'] != null)
-    emailVerifiedDate = json['emailVerifiedDate'];
-  if (json['isPhoneVerified'] != null)
-    isPhoneVerified = json['isPhoneVerified'];
-
-  if (json['createdAt'] != null) createdAt = json['createdAt'];
-  if (json['updatedAt'] != null) updatedAt = json['updatedAt'];
-  if (json['deletedAt'] != null) deletedAt = json['deletedAt'];
-  if (json['type'] != null) type = json['type'];
-  if (json['sessionId'] != null) sessionId = json['sessionId'];
-  if (json['isActive'] != null) isActive = json['isActive'];
-  if (json['email'] != null) email = json['email'];
-  if (json['username'] != null) username = json['username'];
-  if (json['isEmailVerified'] != null)
-    isEmailVerified = json['isEmailVerified'];
-  if (json['phoneVerifiedDate'] != null)
-    phoneVerifiedDate = json['phoneVerifiedDate'];
-  if (json['lastName'] != null) lastName = json['lastName'];
-  if (json['firstName'] != null) firstName = json['firstName'];
-  if (json['avatar'] != null) avatar = json['avatar'];
-  if (json['sessionScope'] != null) sessionScope = json['sessionScope'];
-  if (json['expiryHours'] != null)
-    expiryHours = double.parse(json['expiryHours'].toString());
-  if (json['userSuspended'] != null) userSuspended = json['userSuspended'];
-  if (json['passwordExpired'] != null)
-    passwordExpired = json['passwordExpired'];
-  if (json['passwordNeedChange'] != null)
-    passwordNeedChange = json['passwordNeedChange'];
-  if (json['userTerminated'] != null) userTerminated = json['userTerminated'];
-  if (json['expiryDate'] != null) expiryDate = json['expiryDate'];
-  if (json['userStatus'] != null) userStatus = json['userStatus'];
-  if (json['registerStatus'] != null) registerStatus = json['registerStatus'];
-  if (json['userStatusDate'] != null) userStatusDate = json['userStatusDate'];
-  if (json['partnerId'] != null) partnerId = json['partnerId'];
-  if (json['verifyExpiryDate'] != null)
-    verifyExpiryDate = json['verifyExpiryDate'];
-  if (json['hasPin'] != null) hasPin = json['hasPin'];
-  if (json['currentBusinessId'] != null)
-    currentBusinessId = json['currentBusinessId'];
-  if (json['loginType'] != null) loginType = json['loginType'];
-  if (json['identityCardFront'] != null)
-    identityCardFront = json['identityCardFront'];
-  if (json['identityCardBack'] != null)
-    identityCardBack = json['identityCardBack'];
-  if (json['isSysUser'] != null) isSysUser = json['isSysUser'];
-  if (json['isAppUser'] != null) isAppUser = json['isAppUser'];
-  if (json['userId'] != null) userId = json['userId'];
-  if (json['tokenType'] != null) tokenType = json['tokenType'];
-  if (json['accessToken'] != null) accessToken = json['accessToken'];
-  if (json['refreshToken'] != null) refreshToken = json['refreshToken'];
-  if (json['pin'] != null) pin = json['pin'];
-  if (json['sessionState'] != null) sessionState = json['sessionState'];
-
   return User(
-    pin: pin,
-    id: id,
-    createdAt: createdAt,
-    user: user,
-    updatedAt: updatedAt,
-    deletedAt: deletedAt,
-    type: type,
-    sessionId: sessionId,
-    isActive: isActive,
-    email: email,
-    username: username,
-    businessStaffs: businessStaffs,
-    isEmailVerified: isEmailVerified,
-    emailVerifiedDate: emailVerifiedDate,
-    phone: phone,
-    isPhoneVerified: isPhoneVerified,
-    phoneVerifiedDate: phoneVerifiedDate,
-    lastName: lastName,
-    firstName: firstName,
-    avatar: avatar,
-    sessionScope: sessionScope,
-    expiryHours: expiryHours,
-    userSuspended: userSuspended,
-    passwordExpired: passwordExpired,
-    passwordNeedChange: passwordNeedChange,
-    userTerminated: userTerminated,
-    expiryDate: expiryDate,
-    userStatus: userStatus,
-    registerStatus: registerStatus,
-    userStatusDate: userStatusDate,
-    partnerId: partnerId,
-    partner: partner,
-    verifyExpiryDate: verifyExpiryDate,
-    hasPin: hasPin,
-    currentBusinessId: currentBusinessId,
-    loginType: loginType,
-    identityCardFront: identityCardFront,
-    identityCardBack: identityCardBack,
-    isSysUser: isSysUser,
-    isAppUser: isAppUser,
-    userId: userId,
-    tokenType: tokenType,
-    accessToken: accessToken,
-    refreshToken: refreshToken,
-    sessionState: sessionState,
-    code: code,
-    password: password,
-    regUserId: regUserId,
-    businessId: businessId,
-    registerNo: registerNo,
-    familyName: familyName,
-    roleId: roleId,
-    departmentUnitId: departmentUnitId,
-    departmentSubUnitId: departmentSubUnitId,
-    employeeUnitId: employeeUnitId,
-    roleEnableDate: roleEnableDate,
-    roleDisableDate: roleDisableDate,
-    phone2: phone2,
-    email2: email2,
-    isDanVerified: isDanVerified,
-    hasPassword: hasPassword,
-    currentBusiness: currentBusiness,
-    regNumber: regNumber,
-    stateRegNum: stateRegNum,
-    legalEntityType: legalEntityType,
-    partnerName: partnerName,
-    partnerNameEng: partnerNameEng,
-    refCode: refCode,
-    businessSectorId: businessSectorId,
-    businessSubSectorId: businessSubSectorId,
-    purchaseType: purchaseType,
-    productCategoryType: productCategoryType,
-    serviceCategoryType: serviceCategoryType,
-    businessStatus: businessStatus,
-    isDefault: isDefault,
-    isVatPayer: isVatPayer,
-    partnerEmail: partnerEmail,
-    partnerEmail2: partnerEmail2,
-    partnerPhone: partnerPhone,
-    partnerPhone2: partnerPhone2,
-    profileName: profileName,
-    profileNameEng: profileNameEng,
-    logo: logo,
-    profileInfo: profileInfo,
-    isConfirmed: isConfirmed,
-    isAnchorBusiness: isAnchorBusiness,
+    pin: json['pin'] != null ? json['pin'] as String : null,
+    id: json['id'] != null ? json['id'] as String : null,
+    createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
+    user: json['user'] != null
+        ? User.fromJson(json['user'] as Map<String, dynamic>)
+        : null,
+    updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
+    deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
+    type: json['type'] != null ? json['type'] as String : null,
+    sessionId: json['sessionId'] != null ? json['sessionId'] as String : null,
+    isActive: json['isActive'] != null ? json['isActive'] as bool : null,
+    email: json['email'] != null ? json['email'] as String : null,
+    username: json['username'] != null ? json['username'] as String : null,
+    businessStaffs: json['businessStaffs'] != null
+        ? (json['businessStaffs'] as List)
+            .map((e) => BusinessStaffs.fromJson(e))
+            .toList()
+        : null,
+    isEmailVerified: json['isEmailVerified'] != null
+        ? json['isEmailVerified'] as bool
+        : null,
+    emailVerifiedDate: json['emailVerifiedDate'] != null
+        ? json['emailVerifiedDate'] as String
+        : null,
+    phone: json['phone'] != null ? json['phone'] as String : null,
+    isPhoneVerified: json['isPhoneVerified'] != null
+        ? json['isPhoneVerified'] as bool
+        : null,
+    phoneVerifiedDate: json['phoneVerifiedDate'] != null
+        ? json['phoneVerifiedDate'] as String
+        : null,
+    lastName: json['lastName'] != null ? json['lastName'] as String : null,
+    firstName: json['firstName'] != null ? json['firstName'] as String : null,
+    avatar: json['avatar'] != null ? json['avatar'] as String : null,
+    sessionScope:
+        json['sessionScope'] != null ? json['sessionScope'] as String : null,
+    expiryHours: json['expiryHours'] != null
+        ? double.parse(json['expiryHours'].toString())
+        : null,
+    userSuspended:
+        json['userSuspended'] != null ? json['userSuspended'] as bool : null,
+    passwordExpired: json['passwordExpired'] != null
+        ? json['passwordExpired'] as bool
+        : null,
+    passwordNeedChange: json['passwordNeedChange'] != null
+        ? json['passwordNeedChange'] as bool
+        : null,
+    userTerminated:
+        json['userTerminated'] != null ? json['userTerminated'] as bool : null,
+    expiryDate:
+        json['expiryDate'] != null ? json['expiryDate'] as String : null,
+    userStatus:
+        json['userStatus'] != null ? json['userStatus'] as String : null,
+    registerStatus: json['registerStatus'] != null
+        ? json['registerStatus'] as String
+        : null,
+    userStatusDate: json['userStatusDate'] != null
+        ? json['userStatusDate'] as String
+        : null,
+    partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
+    // partner: json['partner'] != null
+    //     ? Partner.fromJson(json['partner'] as Map<String, dynamic>)
+    //     : null,
+    verifyExpiryDate: json['verifyExpiryDate'] != null
+        ? json['verifyExpiryDate'] as String
+        : null,
+    hasPin: json['hasPin'] != null ? json['hasPin'] as bool : null,
+    currentBusinessId: json['currentBusinessId'] != null
+        ? json['currentBusinessId'] as String
+        : null,
+    loginType: json['loginType'] != null ? json['loginType'] as String : null,
+    identityCardFront: json['identityCardFront'] != null
+        ? json['identityCardFront'] as String
+        : null,
+    identityCardBack: json['identityCardBack'] != null
+        ? json['identityCardBack'] as String
+        : null,
+    isSysUser: json['isSysUser'] != null ? json['isSysUser'] as bool : null,
+    isAppUser: json['isAppUser'] != null ? json['isAppUser'] as bool : null,
+    userId: json['userId'] != null ? json['userId'] as String : null,
+    tokenType: json['tokenType'] != null ? json['tokenType'] as String : null,
+    accessToken:
+        json['accessToken'] != null ? json['accessToken'] as String : null,
+    refreshToken:
+        json['refreshToken'] != null ? json['refreshToken'] as String : null,
+    sessionState:
+        json['sessionState'] != null ? json['sessionState'] as String : null,
+    code: json['code'] != null ? json['code'] as String : null,
+    password: json['password'] != null ? json['password'] as String : null,
+    regUserId: json['regUserId'] != null ? json['regUserId'] as String : null,
+    businessId:
+        json['businessId'] != null ? json['businessId'] as String : null,
+    registerNo:
+        json['registerNo'] != null ? json['registerNo'] as String : null,
+    familyName:
+        json['familyName'] != null ? json['familyName'] as String : null,
+    roleId: json['roleId'] != null ? json['roleId'] as String : null,
+    departmentUnitId: json['departmentUnitId'] != null
+        ? json['departmentUnitId'] as String
+        : null,
+    departmentSubUnitId: json['departmentSubUnitId'] != null
+        ? json['departmentSubUnitId'] as String
+        : null,
+    employeeUnitId: json['employeeUnitId'] != null
+        ? json['employeeUnitId'] as String
+        : null,
+    roleEnableDate: json['roleEnableDate'] != null
+        ? json['roleEnableDate'] as String
+        : null,
+    roleDisableDate: json['roleDisableDate'] != null
+        ? json['roleDisableDate'] as String
+        : null,
+    phone2: json['phone2'] != null ? json['phone2'] as String : null,
+    email2: json['email2'] != null ? json['email2'] as String : null,
+    isDanVerified:
+        json['isDanVerified'] != null ? json['isDanVerified'] as bool : null,
+    hasPassword:
+        json['hasPassword'] != null ? json['hasPassword'] as bool : null,
+    currentBusiness: json['currentBusiness'] != null
+        ? User.fromJson(json['currentBusiness'] as Map<String, dynamic>)
+        : null,
+    regNumber: json['regNumber'] != null
+        ? double.parse(json['regNumber'].toString())
+        : null,
+    stateRegNum: json['stateRegNum'] != null
+        ? double.parse(json['stateRegNum'].toString())
+        : null,
+    legalEntityType: json['legalEntityType'] != null
+        ? json['legalEntityType'] as String
+        : null,
+    partnerName:
+        json['partnerName'] != null ? json['partnerName'] as String : null,
+    partnerNameEng: json['partnerNameEng'] != null
+        ? json['partnerNameEng'] as String
+        : null,
+    refCode: json['refCode'] != null ? json['refCode'] as String : null,
+    businessSectorId: json['businessSectorId'] != null
+        ? json['businessSectorId'] as String
+        : null,
+    businessSubSectorId: json['businessSubSectorId'] != null
+        ? json['businessSubSectorId'] as String
+        : null,
+    purchaseType:
+        json['purchaseType'] != null ? json['purchaseType'] as String : null,
+    productCategoryType: json['productCategoryType'] != null
+        ? json['productCategoryType'] as String
+        : null,
+    serviceCategoryType: json['serviceCategoryType'] != null
+        ? json['serviceCategoryType'] as String
+        : null,
+    businessStatus: json['businessStatus'] != null
+        ? json['businessStatus'] as String
+        : null,
+    isDefault: json['isDefault'] != null ? json['isDefault'] as bool : null,
+    isVatPayer: json['isVatPayer'] != null ? json['isVatPayer'] as bool : null,
+    partnerEmail:
+        json['partnerEmail'] != null ? json['partnerEmail'] as String : null,
+    partnerEmail2:
+        json['partnerEmail2'] != null ? json['partnerEmail2'] as String : null,
+    partnerPhone:
+        json['partnerPhone'] != null ? json['partnerPhone'] as String : null,
+    partnerPhone2:
+        json['partnerPhone2'] != null ? json['partnerPhone2'] as String : null,
+    profileName:
+        json['profileName'] != null ? json['profileName'] as String : null,
+    profileNameEng: json['profileNameEng'] != null
+        ? json['profileNameEng'] as String
+        : null,
+    logo: json['logo'] != null ? json['logo'] as String : null,
+    profileInfo:
+        json['profileInfo'] != null ? json['profileInfo'] as String : null,
+    isConfirmed:
+        json['isConfirmed'] != null ? json['isConfirmed'] as bool : null,
+    isAnchorBusiness: json['isAnchorBusiness'] != null
+        ? json['isAnchorBusiness'] as bool
+        : null,
   );
 }
 
@@ -420,7 +300,7 @@ Map<String, dynamic> _$UserToJson(User instance) {
     json['identityCardBack'] = instance.identityCardBack;
   if (instance.isSysUser != null) json['isSysUser'] = instance.isSysUser;
   if (instance.isAppUser != null) json['isAppUser'] = instance.isAppUser;
-  if (instance.partner != null) json['partner'] = instance.partner;
+  // if (instance.partner != null) json['partner'] = instance.partner;
   if (instance.userId != null) json['userId'] = instance.userId;
   if (instance.tokenType != null) json['tokenType'] = instance.tokenType;
   if (instance.accessToken != null) json['accessToken'] = instance.accessToken;

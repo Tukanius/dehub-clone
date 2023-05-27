@@ -1,176 +1,179 @@
 part of '../models/partner.dart';
 
 Partner _$PartnerFromJson(Map<String, dynamic> json) {
-  String? id;
-  String? createdAt;
-  String? updatedAt;
-  String? deletedAt;
-  String? legalEntityType;
-  String? equityType;
-  String? partnerCategory;
-  String? ownerUserId;
-  String? country;
-  String? refCode;
-  String? regUserId;
-  String? registerStatus;
-  String? contractStatus;
-  String? partnerStatus;
-  String? type;
-  String? classification;
-  String? businessName;
-  String? businessNameEng;
-  String? stateRegNum;
-  String? stateRegDate;
-  String? regNumber;
-  bool? isVatPayer;
-  String? web;
-  String? email;
-  String? email2;
-  String? phone;
-  String? phone2;
-  String? fbLink;
-  String? logo;
-  String? provinceId;
-  String? districtId;
-  String? khorooId;
-  String? khotkhonBair;
-  String? khoroolol;
-  String? khashaaDavkhar;
-  String? khaalgaDugaar;
-  String? businessAddress;
-  double? locationLat;
-  double? locationLng;
-  bool? isAnchor;
-  bool? isBuyer;
-  bool? isSupplier;
-  bool? isConfirmed;
-  Partner? province;
-  String? name;
-  Partner? district;
-  Partner? khoroo;
-  Partner? partner;
-  Partner? employeeUnit;
-
-  if (json['id'] != null) id = json['id'];
-  if (json['createdAt'] != null) createdAt = json['createdAt'];
-  if (json['updatedAt'] != null) updatedAt = json['updatedAt'];
-  if (json['deletedAt'] != null) deletedAt = json['deletedAt'];
-  if (json['legalEntityType'] != null)
-    legalEntityType = json['legalEntityType'];
-  if (json['equityType'] != null) equityType = json['equityType'];
-  if (json['partnerCategory'] != null)
-    partnerCategory = json['partnerCategory'];
-  if (json['ownerUserId'] != null) ownerUserId = json['ownerUserId'];
-  if (json['country'] != null) country = json['country'];
-  if (json['refCode'] != null) refCode = json['refCode'];
-  if (json['regUserId'] != null) regUserId = json['regUserId'];
-  if (json['registerStatus'] != null) registerStatus = json['registerStatus'];
-  if (json['contractStatus'] != null) contractStatus = json['contractStatus'];
-  if (json['partnerStatus'] != null) partnerStatus = json['partnerStatus'];
-  if (json['type'] != null) type = json['type'];
-  if (json['classification'] != null) classification = json['classification'];
-  if (json['businessName'] != null) businessName = json['businessName'];
-  if (json['businessNameEng'] != null)
-    businessNameEng = json['businessNameEng'];
-  if (json['stateRegNum'] != null) stateRegNum = json['stateRegNum'];
-  if (json['stateRegDate'] != null) stateRegDate = json['stateRegDate'];
-  if (json['regNumber'] != null) regNumber = json['regNumber'];
-  if (json['isVatPayer'] != null) isVatPayer = json['isVatPayer'];
-  if (json['web'] != null) web = json['web'];
-  if (json['email'] != null) email = json['email'];
-  if (json['email2'] != null) email2 = json['email2'];
-  if (json['phone'] != null) phone = json['phone'];
-  if (json['phone2'] != null) phone2 = json['phone2'];
-  if (json['fbLink'] != null) fbLink = json['fbLink'];
-  if (json['logo'] != null) logo = json['logo'];
-  if (json['provinceId'] != null) provinceId = json['provinceId'];
-  if (json['districtId'] != null) districtId = json['districtId'];
-  if (json['khorooId'] != null) khorooId = json['khorooId'];
-  if (json['khotkhonBair'] != null) khotkhonBair = json['khotkhonBair'];
-  if (json['khoroolol'] != null) khoroolol = json['khoroolol'];
-  if (json['khashaaDavkhar'] != null) khashaaDavkhar = json['khashaaDavkhar'];
-  if (json['khaalgaDugaar'] != null) khaalgaDugaar = json['khaalgaDugaar'];
-  if (json['businessAddress'] != null)
-    businessAddress = json['businessAddress'];
-  if (json['locationLat'] != null)
-    locationLat = double.parse('${json['locationLat']}');
-  if (json['locationLng'] != null)
-    locationLng = double.parse('${json['locationLng']}');
-  if (json['isAnchor'] != null) isAnchor = json['isAnchor'];
-  if (json['isBuyer'] != null) isBuyer = json['isBuyer'];
-  if (json['isSupplier'] != null) isSupplier = json['isSupplier'];
-  if (json['isConfirmed'] != null) isConfirmed = json['isConfirmed'];
-  if (json['province'] != null) {
-    province = Partner.fromJson(json['province'] as Map<String, dynamic>);
-  }
-  if (json['employeeUnit'] != null) {
-    employeeUnit =
-        Partner.fromJson(json['employeeUnit'] as Map<String, dynamic>);
-  }
-
-  if (json['name'] != null) name = json['name'];
-  if (json['district'] != null) {
-    district = Partner.fromJson(json['district'] as Map<String, dynamic>);
-  }
-  if (json['partner'] != null) {
-    partner = Partner.fromJson(json['partner'] as Map<String, dynamic>);
-  }
-  ;
-  if (json['khoroo'] != null) {
-    khoroo = Partner.fromJson(json['khoroo'] as Map<String, dynamic>);
-  }
-  ;
-
   return Partner(
-    employeeUnit: employeeUnit,
-    partner: partner,
-    id: id,
-    createdAt: createdAt,
-    updatedAt: updatedAt,
-    deletedAt: deletedAt,
-    legalEntityType: legalEntityType,
-    equityType: equityType,
-    partnerCategory: partnerCategory,
-    ownerUserId: ownerUserId,
-    country: country,
-    refCode: refCode,
-    regUserId: regUserId,
-    registerStatus: registerStatus,
-    contractStatus: contractStatus,
-    partnerStatus: partnerStatus,
-    type: type,
-    classification: classification,
-    businessName: businessName,
-    businessNameEng: businessNameEng,
-    stateRegNum: stateRegNum,
-    stateRegDate: stateRegDate,
-    regNumber: regNumber,
-    isVatPayer: isVatPayer,
-    web: web,
-    email: email,
-    email2: email2,
-    phone: phone,
-    phone2: phone2,
-    fbLink: fbLink,
-    logo: logo,
-    provinceId: provinceId,
-    districtId: districtId,
-    khorooId: khorooId,
-    khotkhonBair: khotkhonBair,
-    khoroolol: khoroolol,
-    khashaaDavkhar: khashaaDavkhar,
-    khaalgaDugaar: khaalgaDugaar,
-    businessAddress: businessAddress,
-    locationLat: locationLat,
-    locationLng: locationLng,
-    isAnchor: isAnchor,
-    isBuyer: isBuyer,
-    isSupplier: isSupplier,
-    isConfirmed: isConfirmed,
-    province: province,
-    name: name,
-    district: district,
-    khoroo: khoroo,
+    user: json['user'] != null
+        ? Partner.fromJson(json['user'] as Map<String, dynamic>)
+        : null,
+    employeeUnit: json['employeeUnit'] != null
+        ? Partner.fromJson(json['employeeUnit'] as Map<String, dynamic>)
+        : null,
+    partner: json['partner'] != null
+        ? Partner.fromJson(json['partner'] as Map<String, dynamic>)
+        : null,
+    id: json['id'] != null ? json['id'] as String : null,
+    createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
+    updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
+    deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
+    legalEntityType: json['legalEntityType'] != null
+        ? json['legalEntityType'] as String
+        : null,
+    equityType:
+        json['equityType'] != null ? json['equityType'] as String : null,
+    partnerCategory: json['partnerCategory'] != null
+        ? json['partnerCategory'] as String
+        : null,
+    ownerUserId:
+        json['ownerUserId'] != null ? json['ownerUserId'] as String : null,
+    country: json['country'] != null ? json['country'] as String : null,
+    refCode: json['refCode'] != null ? json['refCode'] as String : null,
+    regUserId: json['regUserId'] != null ? json['regUserId'] as String : null,
+    registerStatus: json['registerStatus'] != null
+        ? json['registerStatus'] as String
+        : null,
+    contractStatus: json['contractStatus'] != null
+        ? json['contractStatus'] as String
+        : null,
+    partnerStatus:
+        json['partnerStatus'] != null ? json['partnerStatus'] as String : null,
+    type: json['type'] != null ? json['type'] as String : null,
+    classification: json['classification'] != null
+        ? json['classification'] as String
+        : null,
+    businessName:
+        json['businessName'] != null ? json['businessName'] as String : null,
+    businessNameEng: json['businessNameEng'] != null
+        ? json['businessNameEng'] as String
+        : null,
+    stateRegNum:
+        json['stateRegNum'] != null ? json['stateRegNum'] as String : null,
+    stateRegDate:
+        json['stateRegDate'] != null ? json['stateRegDate'] as String : null,
+    regNumber: json['regNumber'] != null ? json['regNumber'] as String : null,
+    isVatPayer: json['isVatPayer'] != null ? json['isVatPayer'] as bool : null,
+    web: json['web'] != null ? json['web'] as String : null,
+    email: json['email'] != null ? json['email'] as String : null,
+    email2: json['email2'] != null ? json['email2'] as String : null,
+    phone: json['phone'] != null ? json['phone'] as String : null,
+    phone2: json['phone2'] != null ? json['phone2'] as String : null,
+    fbLink: json['fbLink'] != null ? json['fbLink'] as String : null,
+    logo: json['logo'] != null ? json['logo'] as String : null,
+    provinceId:
+        json['provinceId'] != null ? json['provinceId'] as String : null,
+    districtId:
+        json['districtId'] != null ? json['districtId'] as String : null,
+    khorooId: json['khorooId'] != null ? json['khorooId'] as String : null,
+    khotkhonBair:
+        json['khotkhonBair'] != null ? json['khotkhonBair'] as String : null,
+    khoroolol: json['khoroolol'] != null ? json['khoroolol'] as String : null,
+    khashaaDavkhar: json['khashaaDavkhar'] != null
+        ? json['khashaaDavkhar'] as String
+        : null,
+    khaalgaDugaar:
+        json['khaalgaDugaar'] != null ? json['khaalgaDugaar'] as String : null,
+    businessAddress: json['businessAddress'] != null
+        ? json['businessAddress'] as String
+        : null,
+    locationLat: json['locationLat'] != null
+        ? double.parse('${json['locationLat']}')
+        : null,
+    locationLng: json['locationLng'] != null
+        ? double.parse('${json['locationLng']}')
+        : null,
+    isAnchor: json['isAnchor'] != null ? json['isAnchor'] as bool : null,
+    isBuyer: json['isBuyer'] != null ? json['isBuyer'] as bool : null,
+    isSupplier: json['isSupplier'] != null ? json['isSupplier'] as bool : null,
+    isConfirmed:
+        json['isConfirmed'] != null ? json['isConfirmed'] as bool : null,
+    province: json['province'] != null
+        ? Partner.fromJson(json['province'] as Map<String, dynamic>)
+        : null,
+    name: json['name'] != null ? json['name'] as String : null,
+    district: json['district'] != null
+        ? Partner.fromJson(json['district'] as Map<String, dynamic>)
+        : null,
+    khoroo: json['khoroo'] != null
+        ? Partner.fromJson(json['khoroo'] as Map<String, dynamic>)
+        : null,
+    isAdmin: json['isAdmin'] != null ? json['isAdmin'] as bool : null,
+    registrationType: json['registrationType'] != null
+        ? json['registrationType'] as String
+        : null,
+    username: json['username'] != null ? json['username'] as String : null,
+    sessionId: json['sessionId'] != null ? json['sessionId'] as String : null,
+    partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
+    businessId:
+        json['businessId'] != null ? json['businessId'] as String : null,
+    currentBusinessId: json['currentBusinessId'] != null
+        ? json['currentBusinessId'] as String
+        : null,
+    registerNo:
+        json['registerNo'] != null ? json['registerNo'] as String : null,
+    familyName:
+        json['familyName'] != null ? json['familyName'] as String : null,
+    firstName: json['firstName'] != null ? json['firstName'] as String : null,
+    lastName: json['lastName'] != null ? json['lastName'] as String : null,
+    avatar: json['avatar'] != null ? json['avatar'] as String : null,
+    departmentUnitId: json['departmentUnitId'] != null
+        ? json['departmentUnitId'] as String
+        : null,
+    departmentSubUnitId: json['departmentSubUnitId'] != null
+        ? json['departmentSubUnitId'] as String
+        : null,
+    employeeUnitId: json['employeeUnitId'] != null
+        ? json['employeeUnitId'] as String
+        : null,
+    userStatus:
+        json['userStatus'] != null ? json['userStatus'] as String : null,
+    currentBusiness: json['currentBusiness'] != null
+        ? Partner.fromJson(json['currentBusiness'] as Map<String, dynamic>)
+        : null,
+    partnerName:
+        json['partnerName'] != null ? json['partnerName'] as String : null,
+    partnerNameEng: json['partnerNameEng'] != null
+        ? json['partnerNameEng'] as String
+        : null,
+    businessSectorId: json['businessSectorId'] != null
+        ? json['businessSectorId'] as String
+        : null,
+    businessSubSectorId: json['businessSubSectorId'] != null
+        ? json['businessSubSectorId'] as String
+        : null,
+    purchaseType:
+        json['purchaseType'] != null ? json['purchaseType'] as String : null,
+    productCategoryType: json['productCategoryType'] != null
+        ? json['productCategoryType'] as String
+        : null,
+    serviceCategoryType: json['serviceCategoryType'] != null
+        ? json['serviceCategoryType'] as String
+        : null,
+    businessStatus: json['businessStatus'] != null
+        ? json['businessStatus'] as String
+        : null,
+    isDefault: json['isDefault'] != null ? json['isDefault'] as bool : null,
+    partnerEmail:
+        json['partnerEmail'] != null ? json['partnerEmail'] as String : null,
+    partnerEmail2:
+        json['partnerEmail2'] != null ? json['partnerEmail2'] as String : null,
+    partnerPhone:
+        json['partnerPhone'] != null ? json['partnerPhone'] as String : null,
+    partnerPhone2:
+        json['partnerPhone2'] != null ? json['partnerPhone2'] as String : null,
+    profileName:
+        json['profileName'] != null ? json['profileName'] as String : null,
+    profileNameEng: json['profileNameEng'] != null
+        ? json['profileNameEng'] as String
+        : null,
+    profileInfo:
+        json['profileInfo'] != null ? json['profileInfo'] as String : null,
+    isAnchorBusiness: json['isAnchorBusiness'] != null
+        ? json['isAnchorBusiness'] as bool
+        : null,
+    businessStaffs: json['businessStaffs'] != null
+        ? (json['businessStaffs'] as List)
+            .map((e) => BusinessStaffs.fromJson(e))
+            .toList()
+        : null,
   );
 }
 
@@ -178,6 +181,62 @@ Map<String, dynamic> _$PartnerToJson(Partner instance) {
   Map<String, dynamic> json = {};
   if (instance.employeeUnit != null)
     json['employeeUnit'] = instance.employeeUnit;
+  if (instance.currentBusinessId != null)
+    json['currentBusinessId'] = instance.currentBusinessId;
+  if (instance.departmentUnitId != null)
+    json['departmentUnitId'] = instance.departmentUnitId;
+  if (instance.departmentSubUnitId != null)
+    json['departmentSubUnitId'] = instance.departmentSubUnitId;
+  if (instance.employeeUnitId != null)
+    json['employeeUnitId'] = instance.employeeUnitId;
+  if (instance.userStatus != null) json['userStatus'] = instance.userStatus;
+  if (instance.partnerName != null) json['partnerName'] = instance.partnerName;
+  if (instance.partnerNameEng != null)
+    json['partnerNameEng'] = instance.partnerNameEng;
+  if (instance.businessSectorId != null)
+    json['businessSectorId'] = instance.businessSectorId;
+  if (instance.businessSubSectorId != null)
+    json['businessSubSectorId'] = instance.businessSubSectorId;
+  if (instance.purchaseType != null)
+    json['purchaseType'] = instance.purchaseType;
+  if (instance.productCategoryType != null)
+    json['productCategoryType'] = instance.productCategoryType;
+  if (instance.serviceCategoryType != null)
+    json['serviceCategoryType'] = instance.serviceCategoryType;
+  if (instance.businessStatus != null)
+    json['businessStatus'] = instance.businessStatus;
+  if (instance.businessStaffs != null)
+    json['businessStaffs'] = instance.businessStaffs;
+  if (instance.isAnchorBusiness != null)
+    json['isAnchorBusiness'] = instance.isAnchorBusiness;
+  if (instance.isDefault != null) json['isDefault'] = instance.isDefault;
+  if (instance.partnerEmail != null)
+    json['partnerEmail'] = instance.partnerEmail;
+  if (instance.partnerEmail2 != null)
+    json['partnerEmail2'] = instance.partnerEmail2;
+  if (instance.partnerPhone != null)
+    json['partnerPhone'] = instance.partnerPhone;
+  if (instance.partnerPhone2 != null)
+    json['partnerPhone2'] = instance.partnerPhone2;
+  if (instance.profileName != null) json['profileName'] = instance.profileName;
+  if (instance.profileInfo != null) json['profileInfo'] = instance.profileInfo;
+  if (instance.avatar != null) json['avatar'] = instance.avatar;
+  if (instance.firstName != null) json['firstName'] = instance.firstName;
+  if (instance.lastName != null) json['lastName'] = instance.lastName;
+  if (instance.familyName != null) json['familyName'] = instance.familyName;
+  if (instance.registerNo != null) json['registerNo'] = instance.registerNo;
+  if (instance.businessId != null) json['businessId'] = instance.businessId;
+  if (instance.partnerId != null) json['partnerId'] = instance.partnerId;
+  if (instance.isAdmin != null) json['isAdmin'] = instance.isAdmin;
+  if (instance.username != null) json['username'] = instance.username;
+  if (instance.sessionId != null) json['sessionId'] = instance.sessionId;
+  if (instance.profileNameEng != null)
+    json['profileNameEng'] = instance.profileNameEng;
+  if (instance.currentBusiness != null)
+    json['currentBusiness'] = instance.currentBusiness;
+  if (instance.user != null) json['user'] = instance.user;
+  if (instance.registrationType != null)
+    json['registrationType'] = instance.registrationType;
   if (instance.partner != null) json['partner'] = instance.partner;
   if (instance.id != null) json['id'] = instance.id;
   if (instance.createdAt != null) json['createdAt'] = instance.createdAt;

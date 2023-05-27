@@ -1,5 +1,4 @@
-import 'dart:async';
-
+import 'package:dehub/models/partner.dart';
 import 'package:dehub/utils/http_request.dart';
 import '../models/user.dart';
 
@@ -16,11 +15,11 @@ class AuthApi extends HttpRequest {
   }
 
   partnerMe(bool handler) async {
-    var res = await get('/auth/me', "PARTNER", handler: handler);
     print('==================ASDF==================');
+    var res = await get('/auth/me', "PARTNER", handler: handler);
     print(res);
     print('==================RES==================');
-    return User.fromJson(res as Map<String, dynamic>);
+    return Partner.fromJson(res as Map<String, dynamic>);
   }
 
   checkPin(User data) async {

@@ -1,30 +1,15 @@
 part of '../models/business.dart';
 
 BusinessStaffs _$BusinessStaffsFromJson(Map<String, dynamic> json) {
-  String? id;
-  String? avatar;
-  String? lastName;
-  String? firstName;
-  String? phone;
-  String? email;
-  String? userStatus;
-
-  if (json['id'] != null) id = json['id'];
-  if (json['avatar'] != null) avatar = json['avatar'];
-  if (json['lastName'] != null) lastName = json['lastName'];
-  if (json['firstName'] != null) firstName = json['firstName'];
-  if (json['phone'] != null) phone = json['phone'];
-  if (json['email'] != null) email = json['email'];
-  if (json['userStatus'] != null) userStatus = json['userStatus'];
-
   return BusinessStaffs(
-    id: id,
-    avatar: avatar,
-    lastName: lastName,
-    firstName: firstName,
-    phone: phone,
-    email: email,
-    userStatus: userStatus,
+    id: json['id'] != null ? json['id'] as String : null,
+    avatar: json['avatar'] != null ? json['avatar'] as String : null,
+    lastName: json['lastName'] != null ? json['lastName'] as String : null,
+    firstName: json['firstName'] != null ? json['firstName'] as String : null,
+    phone: json['phone'] != null ? json['phone'] as String : null,
+    email: json['email'] != null ? json['email'] as String : null,
+    userStatus:
+        json['userStatus'] != null ? json['userStatus'] as String : null,
   );
 }
 

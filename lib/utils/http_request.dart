@@ -21,6 +21,8 @@ class HttpRequest {
 
   static const businessHost = 'http://dev-de-network-zto.mn/biz';
 
+  static const inventoryHost = 'http://dev-de-inventory.zto.mn/erp';
+
   // static const s3host = 'http://192.168.1.220:30550/s3';
   static const s3host = 'https://dev-de-dehub.zto.mn/s3';
 
@@ -41,6 +43,8 @@ class HttpRequest {
       uri = '$invoiceHost$version$api';
     } else if (type == "BUSINESS") {
       uri = '$businessHost$version$api';
+    } else if (type == "INVENTORY") {
+      uri = '$inventoryHost$version$api';
     } else {
       uri = '$host$version$api';
     }

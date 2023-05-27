@@ -1,5 +1,6 @@
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/components/invoice_card/invoice_card.dart';
 import 'package:dehub/components/invoice_card/invoice_card_sent.dart';
 import 'package:dehub/components/invoice_empty/invoice_empty.dart';
 import 'package:dehub/components/search_button/search_button.dart';
@@ -34,7 +35,7 @@ class _TakePageState extends State<TakePage>
 
   @override
   afterFirstLayout(BuildContext context) async {
-    await list(1, 10);
+    await list(page, limit);
   }
 
   void dispose() {

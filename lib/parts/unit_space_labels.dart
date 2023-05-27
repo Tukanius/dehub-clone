@@ -1,15 +1,9 @@
 part of "../models/unit_space_labels.dart";
 
 UnitSpaceLabels _$UnitSpaceLabelsFromJson(Map<String, dynamic> json) {
-  String? code;
-  String? name;
-
-  if (json['code'] != null) code = json['code'];
-  if (json['name'] != null) name = json['name'];
-
   return UnitSpaceLabels(
-    code: code,
-    name: name,
+    code: json['code'] != null ? json['code'] as String : null,
+    name: json['name'] != null ? json['name'] as String : null,
   );
 }
 

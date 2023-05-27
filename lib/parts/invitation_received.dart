@@ -1,195 +1,111 @@
 part of '../models/invitation_received.dart';
 
 InvitationReceived _$InvitationReceivedFromJson(Map<String, dynamic> json) {
-  int? count;
-  List<InvitationReceived>? rows;
-  String? id;
-  String? createdAt;
-  String? updatedAt;
-  String? deletedAt;
-  String? refCode;
-  String? senderId;
-  String? receiverId;
-  String? type;
-  String? invitationStatus;
-  String? toMessage;
-  String? invitedDate;
-  String? responseMessage;
-  String? respondedDate;
-  String? senderUserId;
-  String? bankName;
-  String? senderUserName;
-  String? senderUserAvatar;
-  bool? toAnchor;
-  String? partnerId;
-  bool? isOnboarding;
-  bool? isBuyer;
-  bool? isSupplier;
-  InvitationReceived? sender;
-  String? regNumber;
-  String? stateRegNum;
-  String? legalEntityType;
-  String? partnerName;
-  String? partnerNameEng;
-  String? businessSectorId;
-  String? businessSubSectorId;
-  String? purchaseType;
-  String? productCategoryType;
-  String? serviceCategoryType;
-  String? businessStatus;
-  bool? isDefault;
-  bool? isVatPayer;
-  String? partnerEmail;
-  String? partnerEmail2;
-  String? partnerPhone;
-  String? partnerPhone2;
-  String? profileName;
-  String? profileNameEng;
-  String? logo;
-  String? profileInfo;
-  bool? isAnchorBusiness;
-  InvitationReceived? staff;
-  String? firstName;
-  String? lastName;
-  String? email;
-  String? phone;
-  String? avatar;
-  InvitationReceived? receiver;
-
-  if (json['count'] != null) count = int.parse(json['count'].toString());
-  // if (json['rows'] != null) {
-  //   rows = (json['rows'] as List).map((e) => InvitationReceived()).toList();
-  // }
-  if (json['rows'] != null) {
-    rows = (json['rows'] as List)
-        .map((e) => InvitationReceived.fromJson(e))
-        .toList();
-  }
-  if (json['id'] != null) id = json['id'];
-  if (json['createdAt'] != null) createdAt = json['createdAt'];
-  if (json['updatedAt'] != null) updatedAt = json['updatedAt'];
-  if (json['deletedAt'] != null) deletedAt = json['deletedAt'];
-  if (json['refCode'] != null) refCode = json['refCode'];
-  if (json['senderId'] != null) senderId = json['senderId'];
-  if (json['receiverId'] != null) receiverId = json['receiverId'];
-  if (json['type'] != null) type = json['type'];
-  if (json['invitationStatus'] != null)
-    invitationStatus = json['invitationStatus'];
-  if (json['toMessage'] != null) toMessage = json['toMessage'];
-  if (json['invitedDate'] != null) invitedDate = json['invitedDate'];
-  if (json['responseMessage'] != null)
-    responseMessage = json['responseMessage'];
-  if (json['respondedDate'] != null) respondedDate = json['respondedDate'];
-  if (json['senderUserId'] != null) senderUserId = json['senderUserId'];
-  if (json['bankName'] != null) bankName = json['bankName'];
-  if (json['senderUserName'] != null) senderUserName = json['senderUserName'];
-  if (json['senderUserAvatar'] != null)
-    senderUserAvatar = json['senderUserAvatar'];
-  if (json['toAnchor'] != null) toAnchor = json['toAnchor'];
-  if (json['partnerId'] != null) partnerId = json['partnerId'];
-  if (json['isOnboarding'] != null) isOnboarding = json['isOnboarding'];
-  if (json['isBuyer'] != null) isBuyer = json['isBuyer'];
-  if (json['isSupplier'] != null) isSupplier = json['isSupplier'];
-  if (json['sender'] != null) {
-    sender =
-        InvitationReceived.fromJson(json['sender'] as Map<String, dynamic>);
-  }
-  if (json['regNumber'] != null) regNumber = json['regNumber'];
-  if (json['stateRegNum'] != null) stateRegNum = json['stateRegNum'];
-  if (json['legalEntityType'] != null)
-    legalEntityType = json['legalEntityType'];
-  if (json['partnerName'] != null) partnerName = json['partnerName'];
-  if (json['partnerNameEng'] != null) partnerNameEng = json['partnerNameEng'];
-  if (json['businessSectorId'] != null)
-    businessSectorId = json['businessSectorId'];
-  if (json['businessSubSectorId'] != null)
-    businessSubSectorId = json['businessSubSectorId'];
-  if (json['purchaseType'] != null) purchaseType = json['purchaseType'];
-  if (json['productCategoryType'] != null)
-    productCategoryType = json['productCategoryType'];
-  if (json['serviceCategoryType'] != null)
-    serviceCategoryType = json['serviceCategoryType'];
-  if (json['businessStatus'] != null) businessStatus = json['businessStatus'];
-  if (json['isDefault'] != null) isDefault = json['isDefault'];
-  if (json['isVatPayer'] != null) isVatPayer = json['isVatPayer'];
-  if (json['partnerEmail'] != null) partnerEmail = json['partnerEmail'];
-  if (json['partnerEmail2'] != null) partnerEmail2 = json['partnerEmail2'];
-  if (json['partnerPhone'] != null) partnerPhone = json['partnerPhone'];
-  if (json['partnerPhone2'] != null) partnerPhone2 = json['partnerPhone2'];
-  if (json['profileName'] != null) profileName = json['profileName'];
-  if (json['profileNameEng'] != null) profileNameEng = json['profileNameEng'];
-  if (json['logo'] != null) logo = json['logo'];
-  if (json['profileInfo'] != null) profileInfo = json['profileInfo'];
-  if (json['isAnchorBusiness'] != null)
-    isAnchorBusiness = json['isAnchorBusiness'];
-  if (json['staff'] != null) {
-    staff = InvitationReceived.fromJson(json['staff'] as Map<String, dynamic>);
-  }
-  if (json['firstName'] != null) firstName = json['firstName'];
-  if (json['lastName'] != null) lastName = json['lastName'];
-  if (json['email'] != null) email = json['email'];
-  if (json['phone'] != null) phone = json['phone'];
-  if (json['avatar'] != null) avatar = json['avatar'];
-  if (json['receiver'] != null) {
-    receiver =
-        InvitationReceived.fromJson(json['receiver'] as Map<String, dynamic>);
-  }
-
   return InvitationReceived(
-    count: count,
-    rows: rows,
-    id: id,
-    createdAt: createdAt,
-    updatedAt: updatedAt,
-    deletedAt: deletedAt,
-    refCode: refCode,
-    senderId: senderId,
-    receiverId: receiverId,
-    type: type,
-    invitationStatus: invitationStatus,
-    toMessage: toMessage,
-    invitedDate: invitedDate,
-    responseMessage: responseMessage,
-    respondedDate: respondedDate,
-    senderUserId: senderUserId,
-    bankName: bankName,
-    senderUserName: senderUserName,
-    senderUserAvatar: senderUserAvatar,
-    toAnchor: toAnchor,
-    partnerId: partnerId,
-    isOnboarding: isOnboarding,
-    isBuyer: isBuyer,
-    isSupplier: isSupplier,
-    sender: sender,
-    regNumber: regNumber,
-    stateRegNum: stateRegNum,
-    legalEntityType: legalEntityType,
-    partnerName: partnerName,
-    partnerNameEng: partnerNameEng,
-    businessSectorId: businessSectorId,
-    businessSubSectorId: businessSubSectorId,
-    purchaseType: purchaseType,
-    productCategoryType: productCategoryType,
-    serviceCategoryType: serviceCategoryType,
-    businessStatus: businessStatus,
-    isDefault: isDefault,
-    isVatPayer: isVatPayer,
-    partnerEmail: partnerEmail,
-    partnerEmail2: partnerEmail2,
-    partnerPhone: partnerPhone,
-    partnerPhone2: partnerPhone2,
-    profileName: profileName,
-    profileNameEng: profileNameEng,
-    logo: logo,
-    profileInfo: profileInfo,
-    isAnchorBusiness: isAnchorBusiness,
-    staff: staff,
-    firstName: firstName,
-    lastName: lastName,
-    email: email,
-    phone: phone,
-    avatar: avatar,
-    receiver: receiver,
+    count: json['count'] != null ? int.parse(json['count'].toString()) : null,
+    rows: json['rows'] != null
+        ? (json['rows'] as List)
+            .map((e) => InvitationReceived.fromJson(e))
+            .toList()
+        : null,
+    id: json['id'] != null ? json['id'] as String : null,
+    createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
+    updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
+    deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
+    refCode: json['refCode'] != null ? json['refCode'] as String : null,
+    senderId: json['senderId'] != null ? json['senderId'] as String : null,
+    receiverId:
+        json['receiverId'] != null ? json['receiverId'] as String : null,
+    type: json['type'] != null ? json['type'] as String : null,
+    invitationStatus: json['invitationStatus'] != null
+        ? json['invitationStatus'] as String
+        : null,
+    toMessage: json['toMessage'] != null ? json['toMessage'] as String : null,
+    invitedDate:
+        json['invitedDate'] != null ? json['invitedDate'] as String : null,
+    responseMessage: json['responseMessage'] != null
+        ? json['responseMessage'] as String
+        : null,
+    respondedDate:
+        json['respondedDate'] != null ? json['respondedDate'] as String : null,
+    senderUserId:
+        json['senderUserId'] != null ? json['senderUserId'] as String : null,
+    bankName: json['bankName'] != null ? json['bankName'] as String : null,
+    senderUserName: json['senderUserName'] != null
+        ? json['senderUserName'] as String
+        : null,
+    senderUserAvatar: json['senderUserAvatar'] != null
+        ? json['senderUserAvatar'] as String
+        : null,
+    toAnchor: json['toAnchor'] != null ? json['toAnchor'] as bool : null,
+    partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
+    isOnboarding:
+        json['isOnboarding'] != null ? json['isOnboarding'] as bool : null,
+    isBuyer: json['isBuyer'] != null ? json['isBuyer'] as bool : null,
+    isSupplier: json['isSupplier'] != null ? json['isSupplier'] as bool : null,
+    sender: json['sender'] != null
+        ? InvitationReceived.fromJson(json['sender'] as Map<String, dynamic>)
+        : null,
+    regNumber: json['regNumber'] != null ? json['regNumber'] as String : null,
+    stateRegNum:
+        json['stateRegNum'] != null ? json['stateRegNum'] as String : null,
+    legalEntityType: json['legalEntityType'] != null
+        ? json['legalEntityType'] as String
+        : null,
+    partnerName:
+        json['partnerName'] != null ? json['partnerName'] as String : null,
+    partnerNameEng: json['partnerNameEng'] != null
+        ? json['partnerNameEng'] as String
+        : null,
+    businessSectorId: json['businessSectorId'] != null
+        ? json['businessSectorId'] as String
+        : null,
+    businessSubSectorId: json['businessSubSectorId'] != null
+        ? json['businessSubSectorId'] as String
+        : null,
+    purchaseType:
+        json['purchaseType'] != null ? json['purchaseType'] as String : null,
+    productCategoryType: json['productCategoryType'] != null
+        ? json['productCategoryType'] as String
+        : null,
+    serviceCategoryType: json['serviceCategoryType'] != null
+        ? json['serviceCategoryType'] as String
+        : null,
+    businessStatus: json['businessStatus'] != null
+        ? json['businessStatus'] as String
+        : null,
+    isDefault: json['isDefault'] != null ? json['isDefault'] as bool : null,
+    isVatPayer: json['isVatPayer'] != null ? json['isVatPayer'] as bool : null,
+    partnerEmail:
+        json['partnerEmail'] != null ? json['partnerEmail'] as String : null,
+    partnerEmail2:
+        json['partnerEmail2'] != null ? json['partnerEmail2'] as String : null,
+    partnerPhone:
+        json['partnerPhone'] != null ? json['partnerPhone'] as String : null,
+    partnerPhone2:
+        json['partnerPhone2'] != null ? json['partnerPhone2'] as String : null,
+    profileName:
+        json['profileName'] != null ? json['profileName'] as String : null,
+    profileNameEng: json['profileNameEng'] != null
+        ? json['profileNameEng'] as String
+        : null,
+    logo: json['logo'] != null ? json['logo'] as String : null,
+    profileInfo:
+        json['profileInfo'] != null ? json['profileInfo'] as String : null,
+    isAnchorBusiness: json['isAnchorBusiness'] != null
+        ? json['isAnchorBusiness'] as bool
+        : null,
+    staff: json['staff'] != null
+        ? InvitationReceived.fromJson(json['staff'] as Map<String, dynamic>)
+        : null,
+    firstName: json['firstName'] != null ? json['firstName'] as String : null,
+    lastName: json['lastName'] != null ? json['lastName'] as String : null,
+    email: json['email'] != null ? json['email'] as String : null,
+    phone: json['phone'] != null ? json['phone'] as String : null,
+    avatar: json['avatar'] != null ? json['avatar'] as String : null,
+    receiver: json['id'] != null
+        ? InvitationReceived.fromJson(json['receiver'] as Map<String, dynamic>)
+        : null,
   );
 }
 

@@ -89,9 +89,12 @@ class User {
   String? profileInfo;
   bool? isConfirmed;
   bool? isAnchorBusiness;
-  Partner? partner;
+  // Partner? partner;
   List<BusinessStaffs>? businessStaffs;
   String? pin;
+
+  bool? isAdmin;
+  String? employeeUnit;
 
   getAvatar() {
     return HttpRequest.s3host + avatar.toString();
@@ -184,7 +187,7 @@ class User {
     this.profileInfo,
     this.isConfirmed,
     this.isAnchorBusiness,
-    this.partner,
+    // this.partner,
   });
 
   static $fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

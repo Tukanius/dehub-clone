@@ -1,10 +1,13 @@
+import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class GoodsCard extends StatefulWidget {
   final Function()? onClick;
+  final InventoryGoods? data;
   const GoodsCard({
     Key? key,
+    this.data,
     this.onClick,
   }) : super(key: key);
 

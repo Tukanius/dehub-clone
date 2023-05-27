@@ -1,15 +1,10 @@
 part of "../models/networks.dart";
 
 Networks _$NetworksFromJson(Map<String, dynamic> json) {
-  String? id;
-  String? profileName;
-
-  if (json['id'] != null) id = json['id'];
-  if (json['profileName'] != null) profileName = json['profileName'];
-
   return Networks(
-    id: id,
-    profileName: profileName,
+    id: json['id'] != null ? json['id'] as String : null,
+    profileName:
+        json['profileName'] != null ? json['profileName'] as String : null,
   );
 }
 

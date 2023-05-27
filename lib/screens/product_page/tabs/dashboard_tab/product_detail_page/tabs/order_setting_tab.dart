@@ -15,6 +15,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
   bool value2 = false;
   bool value3 = false;
   bool isVisible = false;
+  bool? visibleValue = false;
 
   Widget visiblityWidget = Column(
     children: [
@@ -91,6 +92,49 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
               'Тоо',
               style: TextStyle(color: productColor),
             )
+          ],
+        ),
+      ),
+      Container(
+        color: white,
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Худалдан авалт',
+              style: TextStyle(
+                color: grey2,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20), color: networkColor),
+              child: Row(
+                children: [
+                  Text(
+                    'Тийм',
+                    style: TextStyle(
+                      color: white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: white,
+                    ),
+                    height: 18,
+                    width: 18,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

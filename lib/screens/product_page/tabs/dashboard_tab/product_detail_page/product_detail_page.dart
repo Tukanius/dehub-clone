@@ -1,12 +1,12 @@
-import 'package:dehub/screens/product_page/tabs/home_page_tab/product_detail_page/tabs/additional_information_tab.dart';
-import 'package:dehub/screens/product_page/tabs/home_page_tab/product_detail_page/tabs/basic_information_tab.dart';
-import 'package:dehub/screens/product_page/tabs/home_page_tab/product_detail_page/tabs/order_setting_tab.dart';
+import 'package:dehub/screens/product_page/tabs/dashboard_tab/product_detail_page/tabs/additional_information_tab.dart';
+import 'package:dehub/screens/product_page/tabs/dashboard_tab/product_detail_page/tabs/basic_information_tab.dart';
+import 'package:dehub/screens/product_page/tabs/dashboard_tab/product_detail_page/tabs/order_setting_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailPage extends StatefulWidget {
   static const routeName = 'ProductDetailPage';
-  const ProductDetailPage({super.key});
+  ProductDetailPage({Key? key}) : super(key: key);
 
   @override
   State<ProductDetailPage> createState() => _ProductDetailPageState();

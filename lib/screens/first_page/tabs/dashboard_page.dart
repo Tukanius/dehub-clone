@@ -59,7 +59,7 @@ class _DashboardPageState extends State<DashboardPage> {
             CarouselSlider(
               items: cardList,
               options: CarouselOptions(
-                autoPlay: false,
+                autoPlay: true,
                 aspectRatio: 2.65,
               ),
             ),

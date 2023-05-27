@@ -1,7 +1,9 @@
+import 'package:simple_moment/simple_moment.dart';
+import 'package:intl/intl.dart';
 part '../parts/bank_accounts.dart';
 
 class BankAccounts {
-  String? id;
+  String id;
   String? createdAt;
   String? updatedAt;
   String? deletedAt;
@@ -21,7 +23,7 @@ class BankAccounts {
   String? balance;
 
   BankAccounts({
-    this.id,
+    required this.id,
     this.createdAt,
     this.updatedAt,
     this.deletedAt,
@@ -41,7 +43,9 @@ class BankAccounts {
   });
 
   static $fromJson(Map<String, dynamic> json) => _$BankAccountsFromJson(json);
+
   factory BankAccounts.fromJson(Map<String, dynamic> json) =>
       _$BankAccountsFromJson(json);
+
   Map<String, dynamic> toJson() => _$BankAccountsToJson(this);
 }

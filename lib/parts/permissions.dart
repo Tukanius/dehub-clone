@@ -1,37 +1,17 @@
 part of '../models/permissions.dart';
 
 Permissions _$PermissionsFromJson(Map<String, dynamic> json) {
-  String? code;
-  String? name;
-
-  String? module;
-  String? description;
-  bool? isView;
-  bool? isCreate;
-  bool? isEdit;
-  bool? isReview;
-  bool? isDelete;
-
-  if (json['code'] != null) code = json['code'];
-  if (json['name'] != null) name = json['name'];
-  if (json['module'] != null) module = json['module'];
-  if (json['description'] != null) description = json['description'];
-  if (json['isView'] != null) isView = json['isView'];
-  if (json['isCreate'] != null) isCreate = json['isCreate'];
-  if (json['isEdit'] != null) isEdit = json['isEdit'];
-  if (json['isReview'] != null) isReview = json['isReview'];
-  if (json['isDelete'] != null) isDelete = json['isDelete'];
-
   return Permissions(
-    code: code,
-    name: name,
-    module: module,
-    description: description,
-    isView: isView,
-    isCreate: isCreate,
-    isEdit: isEdit,
-    isReview: isReview,
-    isDelete: isDelete,
+    code: json['code'] != null ? json['code'] as String : null,
+    name: json['name'] != null ? json['name'] as String : null,
+    module: json['module'] != null ? json['module'] as String : null,
+    description:
+        json['description'] != null ? json['description'] as String : null,
+    isView: json['isView'] != null ? json['isView'] as bool : null,
+    isCreate: json['isCreate'] != null ? json['isCreate'] as bool : null,
+    isEdit: json['isEdit'] != null ? json['isEdit'] as bool : null,
+    isReview: json['isReview'] != null ? json['isReview'] as bool : null,
+    isDelete: json['isDelete'] != null ? json['isDelete'] as bool : null,
   );
 }
 

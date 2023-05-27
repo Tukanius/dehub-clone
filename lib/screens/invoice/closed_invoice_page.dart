@@ -1,6 +1,6 @@
-import 'dart:async';
 import 'package:dehub/components/invoice_card/invoice_card.dart';
 import 'package:dehub/api/invoice_api.dart';
+import 'package:dehub/components/invoice_empty/invoice_empty.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -16,15 +16,17 @@ class ClosedInvoicePage extends StatefulWidget {
 }
 
 class _ClosedInvoicePageState extends State<ClosedInvoicePage>
-    with AfterLayoutMixin, SingleTickerProviderStateMixin {
+    with AfterLayoutMixin {
   int page = 1;
   int limit = 10;
   Result invoice = Result(rows: [], count: 0);
 
   list(page, limit) async {
-    Filter filter = Filter();
+    Filter filter = Filter(
+        // isReceived: true
+        );
     Offset offset = Offset(page: page, limit: limit);
-    Result res = await InvoiceApi().listReceived(
+    Result res = await InvoiceApi().listClosed(
       ResultArguments(filter: filter, offset: offset),
     );
     setState(() {
@@ -33,7 +35,7 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
   }
 
   @override
-  FutureOr<void> afterFirstLayout(BuildContext context) {
+  afterFirstLayout(BuildContext context) {
     list(page, limit);
   }
 
@@ -62,15 +64,17 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
                 color: invoiceColor,
               ),
             ),
-            Column(
-              children: invoice.rows!
-                  .map(
-                    (e) => InvoiceCard(
-                      data: e,
-                    ),
+            invoice.rows!.length != 0
+                ? Column(
+                    children: invoice.rows!
+                        .map(
+                          (e) => InvoiceCard(
+                            data: e,
+                          ),
+                        )
+                        .toList(),
                   )
-                  .toList(),
-            )
+                : InvoiceEmpty(),
           ],
         ),
       ),

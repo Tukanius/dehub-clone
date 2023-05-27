@@ -1,4 +1,4 @@
-import 'package:dehub/screens/product_page/tabs/home_page_tab/product_list_page/tabs/goods_tab/goods_tab.dart';
+import 'package:dehub/screens/product_page/tabs/dashboard_tab/product_list_page/tabs/goods_tab/goods_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 

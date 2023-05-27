@@ -1,68 +1,32 @@
 part of '../models/bank_accounts.dart';
 
 BankAccounts _$BankAccountsFromJson(Map<String, dynamic> json) {
-  String? id;
-  String? createdAt;
-  String? updatedAt;
-  String? deletedAt;
-  String? businessId;
-  String? bankName;
-  String? number;
-  String? name;
-  String? shortName;
-  String? currency;
-  bool? isDefault;
-  bool? isVerified;
-  bool? isActive;
-  String? icon;
-
-  String? partnerId;
-  String? regUserId;
-  String? balance;
-
-  if (json['id'] != null) id = json['id'];
-  if (json['createdAt'] != null) createdAt = json['createdAt'];
-  if (json['updatedAt'] != null) updatedAt = json['updatedAt'];
-  if (json['deletedAt'] != null) deletedAt = json['deletedAt'];
-  if (json['businessId'] != null) businessId = json['businessId'];
-  if (json['bankName'] != null) bankName = json['bankName'];
-  if (json['number'] != null) number = json['number'];
-  if (json['name'] != null) name = json['name'];
-  if (json['shortName'] != null) shortName = json['shortName'];
-  if (json['currency'] != null) currency = json['currency'];
-  if (json['isDefault'] != null) isDefault = json['isDefault'];
-  if (json['isVerified'] != null) isVerified = json['isVerified'];
-  if (json['isActive'] != null) isActive = json['isActive'];
-  if (json['icon'] != null) icon = json['icon'];
-  if (json['partnerId'] != null) partnerId = json['partnerId'];
-  if (json['regUserId'] != null) regUserId = json['regUserId'];
-  if (json['balance'] != null) balance = json['balance'];
-
   return BankAccounts(
-    id: id,
-    createdAt: createdAt,
-    updatedAt: updatedAt,
-    deletedAt: deletedAt,
-    businessId: businessId,
-    bankName: bankName,
-    number: number,
-    name: name,
-    shortName: shortName,
-    currency: currency,
-    isDefault: isDefault,
-    isVerified: isVerified,
-    isActive: isActive,
-    icon: icon,
-    partnerId: partnerId,
-    regUserId: regUserId,
-    balance: balance,
+    id: json['id'] as String,
+    createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
+    updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
+    deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
+    businessId:
+        json['businessId'] != null ? json['businessId'] as String : null,
+    bankName: json['bankName'] != null ? json['bankName'] as String : null,
+    number: json['number'] != null ? json['number'] as String : null,
+    name: json['name'] != null ? json['name'] as String : null,
+    shortName: json['shortName'] != null ? json['shortName'] as String : null,
+    currency: json['currency'] != null ? json['currency'] as String : null,
+    isDefault: json['isDefault'] != null ? json['isDefault'] as bool : null,
+    isVerified: json['isVerified'] != null ? json['isVerified'] as bool : null,
+    isActive: json['isActive'] != null ? json['isActive'] as bool : null,
+    icon: json['icon'] != null ? json['icon'] as String : null,
+    partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
+    regUserId: json['regUserId'] != null ? json['regUserId'] as String : null,
+    balance: json['balance'] != null ? json['balance'] as String : null,
   );
 }
 
 Map<String, dynamic> _$BankAccountsToJson(BankAccounts instance) {
   Map<String, dynamic> json = {};
 
-  if (instance.id != null) json['id'] = instance.id;
+  json['id'] = instance.id;
   if (instance.createdAt != null) json['createdAt'] = instance.createdAt;
   if (instance.updatedAt != null) json['updatedAt'] = instance.updatedAt;
   if (instance.deletedAt != null) json['deletedAt'] = instance.deletedAt;

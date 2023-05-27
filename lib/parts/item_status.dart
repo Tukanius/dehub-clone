@@ -1,15 +1,9 @@
 part of "../models/item_status.dart";
 
 ItemStatus _$ItemStatusFromJson(Map<String, dynamic> json) {
-  String? code;
-  String? name;
-
-  if (json['code'] != null) code = json['code'];
-  if (json['name'] != null) name = json['name'];
-
   return ItemStatus(
-    code: code,
-    name: name,
+    code: json['code'] != null ? json['code'] as String : null,
+    name: json['name'] != null ? json['name'] as String : null,
   );
 }
 

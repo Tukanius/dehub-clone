@@ -1,17 +1,9 @@
 part of "../models/invoice_status.dart";
 
 InvoiceStatus _$InvoiceStatusFromJson(Map<String, dynamic> json) {
-  String? code;
-  String? color;
-  String? name;
-
-  if (json['color'] != null) color = json['color'];
-  if (json['code'] != null) code = json['code'];
-  if (json['name'] != null) name = json['name'];
-
   return InvoiceStatus(
-    code: code,
-    name: name,
+    code: json['code'] != null ? json['code'] as String : null,
+    name: json['name'] != null ? json['name'] as String : null,
   );
 }
 

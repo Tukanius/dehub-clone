@@ -696,6 +696,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                           (item) => InvoiceProductCard(
                             data: item,
                             color: invoiceColor,
+                            general: general,
                           ),
                         )
                         .toList(),

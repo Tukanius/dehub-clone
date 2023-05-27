@@ -1,27 +1,14 @@
 part of "../models/districts.dart";
 
 Districts _$DistrictsFromJson(Map<String, dynamic> json) {
-  String? id;
-  String? createdAt;
-  String? updatedAt;
-  String? deletedAt;
-  String? name;
-  String? provinceId;
-
-  if (json['id'] != null) id = json['id'];
-  if (json['createdAt'] != null) createdAt = json['createdAt'];
-  if (json['updatedAt'] != null) updatedAt = json['updatedAt'];
-  if (json['deletedAt'] != null) deletedAt = json['deletedAt'];
-  if (json['name'] != null) name = json['name'];
-  if (json['provinceId'] != null) provinceId = json['provinceId'];
-
   return Districts(
-    id: id,
-    createdAt: createdAt,
-    updatedAt: updatedAt,
-    deletedAt: deletedAt,
-    name: name,
-    provinceId: provinceId,
+    id: json['id'] != null ? json['id'] as String : null,
+    createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
+    updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
+    deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
+    name: json['name'] != null ? json['name'] as String : null,
+    provinceId:
+        json['provinceId'] != null ? json['provinceId'] as String : null,
   );
 }
 

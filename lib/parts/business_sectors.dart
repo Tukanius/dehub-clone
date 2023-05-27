@@ -1,36 +1,16 @@
 part of "../models/business_sectors.dart";
 
 BusinessSectors _$BusinessSectorsFromJson(Map<String, dynamic> json) {
-  String? id;
-  String? createdAt;
-  String? updatedAt;
-  String? deletedAt;
-  String? refCode;
-  String? partnerId;
-  String? parentId;
-  String? name;
-  bool? isPublic;
-
-  if (json['id'] != null) id = json['id'];
-  if (json['createdAt'] != null) createdAt = json['createdAt'];
-  if (json['updatedAt'] != null) updatedAt = json['updatedAt'];
-  if (json['deletedAt'] != null) deletedAt = json['deletedAt'];
-  if (json['refCode'] != null) refCode = json['refCode'];
-  if (json['partnerId'] != null) partnerId = json['partnerId'];
-  if (json['parentId'] != null) parentId = json['parentId'];
-  if (json['name'] != null) name = json['name'];
-  if (json['isPublic'] != null) isPublic = json['isPublic'];
-
   return BusinessSectors(
-    id: id,
-    createdAt: createdAt,
-    updatedAt: updatedAt,
-    deletedAt: deletedAt,
-    refCode: refCode,
-    partnerId: partnerId,
-    parentId: parentId,
-    name: name,
-    isPublic: isPublic,
+    id: json['id'] != null ? json['id'] as String : null,
+    createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
+    updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
+    deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
+    refCode: json['refCode'] != null ? json['refCode'] as String : null,
+    partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
+    parentId: json['parentId'] != null ? json['parentId'] as String : null,
+    name: json['name'] != null ? json['name'] as String : null,
+    isPublic: json['isPublic'] != null ? json['isPublic'] as bool : null,
   );
 }
 

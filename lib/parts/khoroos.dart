@@ -1,27 +1,14 @@
 part of "../models/khoroos.dart";
 
 Khoroos _$KhoroosFromJson(Map<String, dynamic> json) {
-  String? id;
-  String? createdAt;
-  String? updatedAt;
-  String? deletedAt;
-  String? districtId;
-  String? name;
-
-  if (json['id'] != null) id = json['id'];
-  if (json['createdAt'] != null) createdAt = json['createdAt'];
-  if (json['updatedAt'] != null) updatedAt = json['updatedAt'];
-  if (json['deletedAt'] != null) deletedAt = json['deletedAt'];
-  if (json['districtId'] != null) districtId = json['districtId'];
-  if (json['name'] != null) name = json['name'];
-
   return Khoroos(
-    id: id,
-    createdAt: createdAt,
-    updatedAt: updatedAt,
-    deletedAt: deletedAt,
-    districtId: districtId,
-    name: name,
+    id: json['id'] != null ? json['id'] as String : null,
+    createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
+    updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
+    deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
+    districtId:
+        json['districtId'] != null ? json['districtId'] as String : null,
+    name: json['name'] != null ? json['name'] as String : null,
   );
 }
 

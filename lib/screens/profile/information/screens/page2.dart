@@ -29,7 +29,7 @@ class _Page2State extends State<Page2> {
   //   }
   // }
 
-  User partnerUser = User();
+  Partner partnerUser = Partner();
 
   @override
   Widget build(BuildContext context) {

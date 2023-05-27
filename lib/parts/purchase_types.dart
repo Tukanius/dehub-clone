@@ -1,15 +1,9 @@
 part of '../models/purchase_types.dart';
 
 PurchaseTypes _$PurchaseTypesFromJson(Map<String, dynamic> json) {
-  String? code;
-  String? name;
-
-  if (json['code'] != null) code = json['code'];
-  if (json['name'] != null) name = json['name'];
-
   return PurchaseTypes(
-    code: code,
-    name: name,
+    code: json['code'] != null ? json['code'] as String : null,
+    name: json['name'] != null ? json['name'] as String : null,
   );
 }
 

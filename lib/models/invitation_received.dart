@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:dehub/models/staffs.dart';
+
 part '../parts/invitation_received.dart';
 
 class InvitationReceived {
