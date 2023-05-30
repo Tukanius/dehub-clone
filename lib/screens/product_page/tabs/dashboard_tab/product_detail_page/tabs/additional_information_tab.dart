@@ -1,8 +1,19 @@
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
+class AdditionalInformationTabArguments {
+  String id;
+  AdditionalInformationTabArguments({
+    required this.id,
+  });
+}
+
 class AdditionalInformationTab extends StatefulWidget {
-  const AdditionalInformationTab({super.key});
+  final String id;
+  const AdditionalInformationTab({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
   @override
   State<AdditionalInformationTab> createState() =>

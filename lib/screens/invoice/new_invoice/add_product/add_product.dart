@@ -91,6 +91,7 @@ class _AddProductState extends State<AddProduct> {
               ];
             },
             body: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
               children: [
                 Bagtsaar(),
                 Shirhegeer(),

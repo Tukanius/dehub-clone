@@ -21,7 +21,6 @@ class _SearchButtonState extends State<SearchButton> {
       child: Column(
         children: [
           Container(
-            margin: const EdgeInsets.only(bottom: 10),
             color: white,
             height: 50,
             padding: const EdgeInsets.only(left: 16, top: 10, bottom: 10),

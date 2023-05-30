@@ -108,11 +108,134 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     quantity: json['quantity'] != null
         ? double.parse(json['quantity'].toString())
         : null,
+    brand: json['brand'] != null
+        ? InventoryGoods.fromJson(json['brand'] as Map<String, dynamic>)
+        : null,
+    supplier: json['supplier'] != null
+        ? InventoryGoods.fromJson(json['supplier'] as Map<String, dynamic>)
+        : null,
+    manufacturer: json['manufacturer'] != null
+        ? InventoryGoods.fromJson(json['manufacturer'] as Map<String, dynamic>)
+        : null,
+    originCountry: json['originCountry'] != null
+        ? InventoryGoods.fromJson(json['originCountry'] as Map<String, dynamic>)
+        : null,
+    importerCountry: json['importerCountry'] != null
+        ? InventoryGoods.fromJson(
+            json['importerCountry'] as Map<String, dynamic>)
+        : null,
+    distributor: json['distributor'] != null
+        ? InventoryGoods.fromJson(json['distributor'] as Map<String, dynamic>)
+        : null,
+    itemType: json['itemType'] != null
+        ? InventoryGoods.fromJson(json['itemType'] as Map<String, dynamic>)
+        : null,
+    classification: json['classification'] != null
+        ? InventoryGoods.fromJson(
+            json['classification'] as Map<String, dynamic>)
+        : null,
+    subClassification: json['subClassification'] != null
+        ? InventoryGoods.fromJson(
+            json['subClassification'] as Map<String, dynamic>)
+        : null,
+    category: json['category'] != null
+        ? InventoryGoods.fromJson(json['category'] as Map<String, dynamic>)
+        : null,
+    subCategory: json['subCategory'] != null
+        ? InventoryGoods.fromJson(json['subCategory'] as Map<String, dynamic>)
+        : null,
+    tag: json['tag'] != null
+        ? InventoryGoods.fromJson(json['tag'] as Map<String, dynamic>)
+        : null,
+    deliveryType: json['deliveryType'] != null
+        ? InventoryGoods.fromJson(json['deliveryType'] as Map<String, dynamic>)
+        : null,
+    packageType: json['packageType'] != null
+        ? InventoryGoods.fromJson(json['packageType'] as Map<String, dynamic>)
+        : null,
+    coverImages: json['coverImages'] != null
+        ? (json['coverImages'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
+    detailImages: (json['detailImages'] != null)
+        ? (json['detailImages'] as List).map((e) => e as String).toList()
+        : null,
+    // detailImages: json['detailImages'] != null
+    //     ? (json['detailImages'] as List)
+    //         .map((e) => InventoryGoods.fromJson(e))
+    //         .toList()
+    //     : null,
+    sections: json['sections'] != null
+        ? (json['sections'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
+    sectionIds: json['sectionIds'] != null
+        ? (json['sectionIds'] as List).map((e) => e as String).toList()
+        : null,
+    fields: json['fields'] != null
+        ? (json['fields'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
+    itemFieldValues: json['itemFieldValues'] != null
+        ? (json['itemFieldValues'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
+    quantityPrices: json['quantityPrices'] != null
+        ? (json['quantityPrices'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
+    units: json['units'] != null
+        ? (json['units'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
+    text: json['text'] != null ? json['text'] as String : null,
+    url: json['url'] != null ? json['url'] as String : null,
   );
 }
 
 Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   Map<String, dynamic> json = {};
+
+  if (instance.url != null) json['url'] = instance.url;
+  if (instance.text != null) json['text'] = instance.text;
+  if (instance.brand != null) json['brand'] = instance.brand;
+  if (instance.supplier != null) json['supplier'] = instance.supplier;
+  if (instance.manufacturer != null)
+    json['manufacturer'] = instance.manufacturer;
+  if (instance.originCountry != null)
+    json['originCountry'] = instance.originCountry;
+  if (instance.importerCountry != null)
+    json['importerCountry'] = instance.importerCountry;
+  if (instance.distributor != null) json['distributor'] = instance.distributor;
+  if (instance.itemType != null) json['itemType'] = instance.itemType;
+  if (instance.classification != null)
+    json['classification'] = instance.classification;
+  if (instance.subClassification != null)
+    json['subClassification'] = instance.subClassification;
+  if (instance.category != null) json['category'] = instance.category;
+  if (instance.subCategory != null) json['subCategory'] = instance.subCategory;
+  if (instance.tag != null) json['tag'] = instance.tag;
+  if (instance.deliveryType != null)
+    json['deliveryType'] = instance.deliveryType;
+  if (instance.packageType != null) json['packageType'] = instance.packageType;
+  if (instance.coverImages != null) json['coverImages'] = instance.coverImages;
+  if (instance.detailImages != null)
+    json['detailImages'] = instance.detailImages;
+  if (instance.sections != null) json['sections'] = instance.sections;
+  if (instance.sectionIds != null) json['sectionIds'] = instance.sectionIds;
+  if (instance.fields != null) json['fields'] = instance.fields;
+  if (instance.itemFieldValues != null)
+    json['itemFieldValues'] = instance.itemFieldValues;
+  if (instance.quantityPrices != null)
+    json['quantityPrices'] = instance.quantityPrices;
+  if (instance.units != null) json['units'] = instance.units;
+
   if (instance.count != null) json['count'] = instance.count;
   if (instance.rows != null) json['rows'] = instance.rows;
   if (instance.id != null) json['id'] = instance.id;

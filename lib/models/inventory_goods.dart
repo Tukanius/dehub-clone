@@ -62,8 +62,35 @@ class InventoryGoods {
   bool? isDehub;
   InventoryGoods? unit;
   double? quantity;
+  String? text;
+  String? url;
+
+  InventoryGoods? brand;
+  InventoryGoods? supplier;
+  InventoryGoods? manufacturer;
+  InventoryGoods? originCountry;
+  InventoryGoods? importerCountry;
+  InventoryGoods? distributor;
+  InventoryGoods? itemType;
+  InventoryGoods? classification;
+  InventoryGoods? subClassification;
+  InventoryGoods? category;
+  InventoryGoods? subCategory;
+  InventoryGoods? tag;
+  InventoryGoods? deliveryType;
+  InventoryGoods? packageType;
+  List<InventoryGoods>? coverImages;
+  List<String>? detailImages;
+  List<InventoryGoods>? sections;
+  List<String>? sectionIds;
+  List<InventoryGoods>? fields;
+  List<InventoryGoods>? itemFieldValues;
+  List<InventoryGoods>? quantityPrices;
+  List<InventoryGoods>? units;
 
   InventoryGoods({
+    this.url,
+    this.text,
     this.count,
     this.rows,
     this.id,
@@ -125,6 +152,28 @@ class InventoryGoods {
     this.isDehub,
     this.unit,
     this.quantity,
+    this.brand,
+    this.supplier,
+    this.manufacturer,
+    this.originCountry,
+    this.importerCountry,
+    this.distributor,
+    this.itemType,
+    this.classification,
+    this.subClassification,
+    this.category,
+    this.subCategory,
+    this.tag,
+    this.deliveryType,
+    this.packageType,
+    this.coverImages,
+    this.detailImages,
+    this.sections,
+    this.sectionIds,
+    this.fields,
+    this.itemFieldValues,
+    this.quantityPrices,
+    this.units,
   });
 
   static $fromJson(Map<String, dynamic> json) => _$InventoryGoodsFromJson(json);

@@ -4,9 +4,20 @@ import 'package:dehub/screens/product_page/tabs/dashboard_tab/product_detail_pag
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
+class ProductDetailPageArguments {
+  String? id;
+  ProductDetailPageArguments({
+    this.id,
+  });
+}
+
 class ProductDetailPage extends StatefulWidget {
   static const routeName = 'ProductDetailPage';
-  ProductDetailPage({Key? key}) : super(key: key);
+  final String id;
+  ProductDetailPage({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
   @override
   State<ProductDetailPage> createState() => _ProductDetailPageState();
@@ -61,9 +72,15 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         body: TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
-            BasicInformationTab(),
-            AdditionalInformationTab(),
-            OrderSettingTab(),
+            BasicInformationTab(
+              id: widget.id,
+            ),
+            AdditionalInformationTab(
+              id: widget.id,
+            ),
+            OrderSettingTab(
+              id: widget.id,
+            ),
           ],
         ),
       ),

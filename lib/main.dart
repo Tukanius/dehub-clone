@@ -259,6 +259,7 @@ class MyApp extends StatelessWidget {
                         id: arguments.id,
                       );
                     });
+
                   case PaymentApprovalPage.routeName:
                     PaymentApprovalPageArguments arguments =
                         settings.arguments as PaymentApprovalPageArguments;
@@ -413,8 +414,12 @@ class MyApp extends StatelessWidget {
                       return ProductListPage();
                     });
                   case ProductDetailPage.routeName:
+                    ProductDetailPageArguments arguments =
+                        settings.arguments as ProductDetailPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return ProductDetailPage();
+                      return ProductDetailPage(
+                        id: arguments.id!,
+                      );
                     });
                   case GivePage.routeName:
                     return MaterialPageRoute(builder: (context) {

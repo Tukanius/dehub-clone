@@ -129,8 +129,12 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
                             (item) => GoodsCard(
                               data: item,
                               onClick: () {
-                                Navigator.of(context)
-                                    .pushNamed(ProductDetailPage.routeName);
+                                Navigator.of(context).pushNamed(
+                                  ProductDetailPage.routeName,
+                                  arguments: ProductDetailPageArguments(
+                                    id: item.id,
+                                  ),
+                                );
                               },
                             ),
                           )

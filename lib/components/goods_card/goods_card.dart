@@ -45,7 +45,7 @@ class _GoodsCardState extends State<GoodsCard> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image(
-                  image: AssetImage('images/map.jpg'),
+                  image: NetworkImage('${widget.data!.image}'),
                 ),
               ),
             ),
@@ -61,7 +61,7 @@ class _GoodsCardState extends State<GoodsCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Барааны нэр',
+                        '${widget.data!.nameMon}',
                         style: TextStyle(
                           color: grey2,
                           fontWeight: FontWeight.w600,
@@ -78,7 +78,7 @@ class _GoodsCardState extends State<GoodsCard> {
                     height: 6,
                   ),
                   Text(
-                    'SKU: 8987323972389',
+                    'SKU: ${widget.data!.skuCode}',
                     style: TextStyle(
                       color: grey2,
                       fontSize: 12,
@@ -122,7 +122,7 @@ class _GoodsCardState extends State<GoodsCard> {
                     height: 6,
                   ),
                   Text(
-                    'Ангилал',
+                    '${widget.data!.category!.name}',
                     style: TextStyle(color: grey2, fontSize: 12),
                   )
                 ],
