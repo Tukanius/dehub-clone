@@ -56,7 +56,7 @@ class _InboxTabState extends State<InboxTab>
                   ),
                   Row(
                     children: [
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           changePage(0);
                         },
@@ -85,7 +85,7 @@ class _InboxTabState extends State<InboxTab>
                       SizedBox(
                         width: 30,
                       ),
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           changePage(1);
                         },

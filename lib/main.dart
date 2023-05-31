@@ -123,8 +123,20 @@ class MyApp extends StatelessWidget {
                       return const SplashPage();
                     });
                   case InvitationDetailPage.routeName:
+                    InvitationDetailPageArguments arguments =
+                        settings.arguments as InvitationDetailPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return const InvitationDetailPage();
+                      return InvitationDetailPage(
+                        id: arguments.id,
+                      );
+                    });
+                  case PartnerDetailPage.routeName:
+                    PartnerDetailPageArguments arguments =
+                        settings.arguments as PartnerDetailPageArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return PartnerDetailPage(
+                        id: arguments.id,
+                      );
                     });
                   case HomePage.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -223,13 +235,14 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return NewInvitationPage();
                     });
-                  case PartnerDetailPage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return PartnerDetailPage();
-                    });
+
                   case SentInvitationDetail.routeName:
+                    SentInvitationDetailArguments arguments =
+                        settings.arguments as SentInvitationDetailArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return SentInvitationDetail();
+                      return SentInvitationDetail(
+                        id: arguments.id,
+                      );
                     });
                   case PdfPage.routeName:
                     return MaterialPageRoute(builder: (context) {

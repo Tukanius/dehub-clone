@@ -1,7 +1,5 @@
-import 'dart:developer';
-
-import 'package:dehub/models/staffs.dart';
-
+import 'package:simple_moment/simple_moment.dart';
+import 'package:intl/intl.dart';
 part '../parts/invitation_received.dart';
 
 class InvitationReceived {
@@ -60,7 +58,29 @@ class InvitationReceived {
   String? avatar;
   InvitationReceived? receiver;
 
+  InvitationReceived? partner;
+  String? businessName;
+  String? businessNameEng;
+  InvitationReceived? senderUser;
+  InvitationReceived? senderFinStaff;
+
+  bool? accept;
+
+  String getInvitedDate() {
+    return Moment.parse(DateFormat("yyyy-MM-ddTHH:mm:ssZ")
+            .parseUTC(invitedDate!)
+            .toLocal()
+            .toIso8601String())
+        .format("yyyy-MM-dd HH:mm");
+  }
+
   InvitationReceived({
+    this.accept,
+    this.partner,
+    this.businessName,
+    this.businessNameEng,
+    this.senderUser,
+    this.senderFinStaff,
     this.count,
     this.rows,
     this.id,

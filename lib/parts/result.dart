@@ -36,7 +36,12 @@ Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
     params['filter'] = {};
 
     params['filter']['query'] = instance.filter!.query;
-    // params['filter']['isReceived'] = instance.filter!.isReceived;
+    if (instance.filter!.isReceived != null)
+      params['filter']['isReceived'] = instance.filter!.isReceived;
+
+    if (instance.filter!.type != null) {
+      params['filter']['type'] = instance.filter!.type;
+    }
 
     if (instance.offset!.page! > 0) {
       params['offset']['page'] = instance.offset!.page;
@@ -44,6 +49,8 @@ Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
     if (instance.offset!.limit! > 0) {
       params['offset']['limit'] = instance.offset!.limit;
     }
+
+    print("JSON=>" + params['filter'].toString());
   }
 
   return params;

@@ -2,11 +2,13 @@ part '../parts/result.dart';
 
 class Filter {
   String? query;
-  // bool? isReceived;
+  bool? isReceived;
+  String? type;
 
   Filter({
+    this.type,
     this.query,
-    // this.isReceived,
+    this.isReceived,
   });
 }
 

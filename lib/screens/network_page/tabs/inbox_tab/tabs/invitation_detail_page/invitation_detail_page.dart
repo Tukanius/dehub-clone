@@ -1,16 +1,57 @@
+import 'package:dehub/api/business_api.dart';
+import 'package:dehub/models/invitation_received.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:after_layout/after_layout.dart';
+
+class InvitationDetailPageArguments {
+  String id;
+  InvitationDetailPageArguments({
+    required this.id,
+  });
+}
 
 class InvitationDetailPage extends StatefulWidget {
+  final String id;
   static const routeName = 'invitationdetailpage';
-  const InvitationDetailPage({Key? key}) : super(key: key);
+  const InvitationDetailPage({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
   @override
   _InvitationDetailPageState createState() => _InvitationDetailPageState();
 }
 
-class _InvitationDetailPageState extends State<InvitationDetailPage> {
+class _InvitationDetailPageState extends State<InvitationDetailPage>
+    with AfterLayoutMixin {
+  InvitationReceived invitation = InvitationReceived();
+  @override
+  afterFirstLayout(BuildContext context) async {
+    invitation = await BusinessApi().getInfo(widget.id);
+  }
+
+  approve() {
+    try {
+      var res = BusinessApi().respond(invitation, widget.id);
+    } catch (e) {
+      print('===============ERROR===============');
+      print(e.toString());
+      print('===============ERROR===============');
+    }
+  }
+
+  refuse() {
+    try {
+      var res = BusinessApi().refuse(invitation, widget.id);
+    } catch (e) {
+      print('===============ERROR===============');
+      print(e.toString());
+      print('===============ERROR===============');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -445,23 +486,18 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                 children: [
                   Expanded(
                     child: Container(
-                      margin: const EdgeInsets.only(left: 15),
+                      margin: const EdgeInsets.only(left: 10),
                       decoration: BoxDecoration(
+                        border: Border.all(color: networkColor),
                         borderRadius: BorderRadius.circular(5),
-                        border: Border.all(
-                          color: networkColor,
-                        ),
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      child: Center(
-                        child: Text(
-                          'Татгалзах',
-                          style: TextStyle(
-                            color: networkColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                      child: CustomButton(
+                        labelColor: backgroundColor,
+                        labelText: "Татгалзах",
+                        onClick: () {
+                          refuse();
+                        },
+                        textColor: networkColor,
                       ),
                     ),
                   ),
@@ -470,21 +506,14 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   ),
                   Expanded(
                     child: Container(
-                      margin: const EdgeInsets.only(right: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: networkColor,
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      child: Center(
-                        child: Text(
-                          'Батлах',
-                          style: TextStyle(
-                            color: white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                      margin: const EdgeInsets.only(right: 10),
+                      child: CustomButton(
+                        textColor: white,
+                        labelColor: networkColor,
+                        onClick: () {
+                          approve();
+                        },
+                        labelText: "Батлах",
                       ),
                     ),
                   ),

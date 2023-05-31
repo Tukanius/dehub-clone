@@ -103,9 +103,26 @@ InvitationReceived _$InvitationReceivedFromJson(Map<String, dynamic> json) {
     email: json['email'] != null ? json['email'] as String : null,
     phone: json['phone'] != null ? json['phone'] as String : null,
     avatar: json['avatar'] != null ? json['avatar'] as String : null,
-    receiver: json['id'] != null
+    receiver: json['receiver'] != null
         ? InvitationReceived.fromJson(json['receiver'] as Map<String, dynamic>)
         : null,
+    partner: json['partner'] != null
+        ? InvitationReceived.fromJson(json['partner'] as Map<String, dynamic>)
+        : null,
+    businessName:
+        json['businessName'] != null ? json['businessName'] as String : null,
+    businessNameEng: json['businessNameEng'] != null
+        ? json['businessNameEng'] as String
+        : null,
+    senderUser: json['senderUser'] != null
+        ? InvitationReceived.fromJson(
+            json['senderUser'] as Map<String, dynamic>)
+        : null,
+    senderFinStaff: json['senderFinStaff'] != null
+        ? InvitationReceived.fromJson(
+            json['senderFinStaff'] as Map<String, dynamic>)
+        : null,
+    accept: json['accept'] != null ? json['accept'] as bool : null,
   );
 }
 
@@ -114,6 +131,15 @@ Map<String, dynamic> _$InvitationReceivedToJson(InvitationReceived instance) {
 
   if (instance.businessSubSectorId != null)
     json['businessSubSectorId'] = instance.businessSubSectorId;
+  if (instance.partner != null) json['partner'] = instance.partner;
+  if (instance.businessName != null)
+    json['businessName'] = instance.businessName;
+  if (instance.businessNameEng != null)
+    json['businessNameEng'] = instance.businessNameEng;
+  if (instance.senderUser != null) json['senderUser'] = instance.senderUser;
+  if (instance.senderFinStaff != null)
+    json['senderFinStaff'] = instance.senderFinStaff;
+  if (instance.accept != null) json['accept'] = instance.accept;
   if (instance.count != null) json['count'] = instance.count;
   if (instance.rows != null) json['rows'] = instance.rows;
   if (instance.id != null) json['id'] = instance.id;

@@ -1,10 +1,13 @@
+import 'package:dehub/models/invitation_received.dart';
 import 'package:dehub/screens/network_page/tabs/sent_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class SentCard extends StatefulWidget {
   final Function()? onClick;
+  final InvitationReceived? data;
   const SentCard({
+    this.data,
     Key? key,
     this.onClick,
   }) : super(key: key);
@@ -17,10 +20,7 @@ class _SentCardState extends State<SentCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // widget.onClick;
-        Navigator.of(context).pushNamed(SentInvitationDetail.routeName);
-      },
+      onTap: widget.onClick,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 2),
         decoration: BoxDecoration(
@@ -42,7 +42,7 @@ class _SentCardState extends State<SentCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Бизнэсийн нэр',
+                          '${widget.data!.sender!.partner!.businessName}',
                           style: TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
                         ),
@@ -50,7 +50,7 @@ class _SentCardState extends State<SentCard> {
                           height: 5,
                         ),
                         Text(
-                          'Партнерийн нэр',
+                          '${widget.data!.sender!.partnerName}',
                           style: TextStyle(fontSize: 12, color: grey3),
                         ),
                         SizedBox(

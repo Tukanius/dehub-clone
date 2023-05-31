@@ -16,7 +16,7 @@ class HttpRequest {
 
   static const invoiceHost = 'http://dev-de-invoice.zto.mn/inv';
 
-  static const businessHost = 'http://dev-de-network-zto.mn/biz';
+  static const businessHost = 'http://dev-de-network.zto.mn/biz';
 
   static const inventoryHost = 'http://dev-de-inventory.zto.mn/erp';
 

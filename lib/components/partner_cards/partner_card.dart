@@ -1,10 +1,13 @@
+import 'package:dehub/models/business_network.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class PartnerCard extends StatefulWidget {
   final Function()? onClick;
-  bool? type;
+  final BusinessNetwork? data;
+  final bool? type;
   PartnerCard({
+    this.data,
     this.type,
     Key? key,
     this.onClick,
@@ -55,7 +58,7 @@ class _PartnerCardState extends State<PartnerCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Бизнэсийн нэр',
+                          '${widget.data!.partnerName}',
                           style: TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
                         ),
@@ -84,7 +87,7 @@ class _PartnerCardState extends State<PartnerCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'BusRef#',
+                          '${widget.data!.refCode}',
                           style: TextStyle(
                             fontSize: 12,
                             color: grey3,

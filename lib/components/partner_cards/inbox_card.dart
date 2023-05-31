@@ -1,5 +1,4 @@
 import 'package:dehub/models/invitation_received.dart';
-import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -20,9 +19,7 @@ class _InboxCardState extends State<InboxCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.of(context).pushNamed(InvitationDetailPage.routeName);
-      },
+      onTap: widget.onClick,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
         decoration: BoxDecoration(

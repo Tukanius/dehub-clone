@@ -1,5 +1,3 @@
-import 'package:simple_moment/simple_moment.dart';
-import 'package:intl/intl.dart';
 part '../parts/bank_accounts.dart';
 
 class BankAccounts {

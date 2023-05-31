@@ -1,19 +1,42 @@
+import 'dart:async';
+
+import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/partner_cards/partner_card.dart';
+import 'package:dehub/models/business_network.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_detail_page/tabs/information_tab.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_detail_page/tabs/sector_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:after_layout/after_layout.dart';
+
+class PartnerDetailPageArguments {
+  String id;
+  PartnerDetailPageArguments({
+    required this.id,
+  });
+}
 
 class PartnerDetailPage extends StatefulWidget {
+  final String id;
   static const routeName = 'PartnerDetailPage';
-  const PartnerDetailPage({super.key});
+  const PartnerDetailPage({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
   @override
   State<PartnerDetailPage> createState() => _PartnerDetailPageState();
 }
 
 class _PartnerDetailPageState extends State<PartnerDetailPage>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, AfterLayoutMixin {
+  BusinessNetwork businessNetwork = BusinessNetwork();
+
+  @override
+  afterFirstLayout(BuildContext context) async {
+    businessNetwork = await BusinessApi().partnerDetail(widget.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,9 +78,9 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
                         fit: BoxFit.cover,
                       ),
                     ),
-                    PartnerCard(
-                      type: false,
-                    ),
+                    // PartnerCard(
+                    //   type: false,
+                    // ),
                     Container(
                       color: white,
                       child: TabBar(

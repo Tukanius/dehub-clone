@@ -19,7 +19,7 @@ class _InformationTabState extends State<InformationTab> {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: Text(
-              'Ерөнхйи мэдээлэл',
+              'Ерөнхий мэдээлэл',
               style: TextStyle(
                 color: grey3,
                 fontWeight: FontWeight.w600,
@@ -27,7 +27,7 @@ class _InformationTabState extends State<InformationTab> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             color: white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -44,7 +44,7 @@ class _InformationTabState extends State<InformationTab> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             color: white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,7 +61,7 @@ class _InformationTabState extends State<InformationTab> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             color: white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -78,7 +78,7 @@ class _InformationTabState extends State<InformationTab> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             color: white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,7 +95,7 @@ class _InformationTabState extends State<InformationTab> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             color: white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,7 +112,7 @@ class _InformationTabState extends State<InformationTab> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             color: white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -129,7 +129,7 @@ class _InformationTabState extends State<InformationTab> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             color: white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -146,7 +146,7 @@ class _InformationTabState extends State<InformationTab> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             color: white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -187,7 +187,7 @@ class _InformationTabState extends State<InformationTab> {
               Navigator.of(context).pushNamed(PaymentConditionPage.routeName);
             },
             child: Container(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               color: white,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -217,7 +217,7 @@ class _InformationTabState extends State<InformationTab> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             color: white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -246,7 +246,7 @@ class _InformationTabState extends State<InformationTab> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             color: white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -285,7 +285,7 @@ class _InformationTabState extends State<InformationTab> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             color: white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -314,7 +314,7 @@ class _InformationTabState extends State<InformationTab> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             color: white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

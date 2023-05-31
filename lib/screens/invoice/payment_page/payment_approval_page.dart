@@ -164,10 +164,6 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
         invoice.creditAccountId = widget.creditAccountId;
         invoice.amount = widget.amount;
         invoice.method = widget.method.toString();
-        print('================METHOD===============');
-        print(invoice.method.toString());
-        print('================METHOD===============');
-        print(invoice.toJson());
         await InvoiceApi().pay(widget.id, invoice);
         await show(context);
       } catch (e) {
