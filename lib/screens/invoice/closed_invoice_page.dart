@@ -27,9 +27,7 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
       RefreshController(initialRefresh: false);
 
   list(page, limit) async {
-    Filter filter = Filter(
-        // isReceived: true
-        );
+    Filter filter = Filter(query: '');
     Offset offset = Offset(page: page, limit: limit);
     Result res = await InvoiceApi().listClosed(
       ResultArguments(filter: filter, offset: offset),

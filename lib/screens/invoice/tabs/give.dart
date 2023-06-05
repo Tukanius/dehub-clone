@@ -71,7 +71,7 @@ class _GivePageState extends State<GivePage>
   }
 
   list(int page, int limit) async {
-    Filter filter = Filter();
+    Filter filter = Filter(query: '');
     Offset offset = Offset(limit: limit, page: page);
     Result res = await InvoiceApi()
         .listReceived(ResultArguments(filter: filter, offset: offset));

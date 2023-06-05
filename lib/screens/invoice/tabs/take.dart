@@ -66,7 +66,7 @@ class _TakePageState extends State<TakePage>
   }
 
   list(int page, int limit) async {
-    Filter filter = Filter();
+    Filter filter = Filter(query: '');
     Offset offset = Offset(limit: limit, page: page);
     Result res = await InvoiceApi()
         .list(ResultArguments(filter: filter, offset: offset));
