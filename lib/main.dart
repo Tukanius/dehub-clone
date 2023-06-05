@@ -16,7 +16,6 @@ import 'package:dehub/screens/invoice/closed_invoice_page.dart';
 import 'package:dehub/screens/invoice/payment_page/qpay_page.dart';
 import 'package:dehub/screens/invoice/tabs/give.dart';
 import 'package:dehub/screens/invoice/tabs/take.dart';
-import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/add_direction.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/direction_detail_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/direction_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/invoice_condition_page/invoice_condition_detail_page.dart';
@@ -32,7 +31,6 @@ import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partn
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/zoning_page/zoning_detail_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/zoning_page/zoning_page.dart';
-import 'package:dehub/screens/network_page/tabs/inbox_tab/new_invitation_page/invitation_sent_page/invitation_sent_page.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/new_invitation_page/new_invitation_page.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
 import 'package:dehub/screens/invoice/invoice_page.dart';
@@ -235,7 +233,18 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return NewInvitationPage();
                     });
-
+                  case ZoningDetailPage.routeName:
+                    ZoningDetailPageArguments arguments =
+                        settings.arguments as ZoningDetailPageArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return ZoningDetailPage(
+                        id: arguments.id,
+                      );
+                    });
+                  case ZoningPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return ZoningPage();
+                    });
                   case SentInvitationDetail.routeName:
                     SentInvitationDetailArguments arguments =
                         settings.arguments as SentInvitationDetailArguments;
@@ -374,9 +383,14 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return ReferenceInformationPage();
                     });
+
                   case InvoiceConditionPage.routeName:
+                    InvoiceConditionPageArguments arguments =
+                        settings.arguments as InvoiceConditionPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return InvoiceConditionPage();
+                      return InvoiceConditionPage(
+                        data: arguments.data,
+                      );
                     });
                   case PaymentConditionPage.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -387,28 +401,32 @@ class MyApp extends StatelessWidget {
                       return NewConditionPage();
                     });
                   case InvoiceConditionDetailPage.routeName:
+                    InvoiceConditionDetailPageArguments arguments = settings
+                        .arguments as InvoiceConditionDetailPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return InvoiceConditionDetailPage();
+                      return InvoiceConditionDetailPage(
+                        id: arguments.id,
+                      );
                     });
                   case CategoryPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return CategoryPage();
                     });
                   case CategoryDetailPage.routeName:
+                    CategoryDetailPageArguments arguments =
+                        settings.arguments as CategoryDetailPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return CategoryDetailPage();
-                    });
-                  case ZoningPage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return ZoningPage();
-                    });
-                  case ZoningDetailPage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return ZoningDetailPage();
+                      return CategoryDetailPage(
+                        id: arguments.id,
+                      );
                     });
                   case DirectionDetailPage.routeName:
+                    DirectionDetailPageArguments arguments =
+                        settings.arguments as DirectionDetailPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return DirectionDetailPage();
+                      return DirectionDetailPage(
+                        id: arguments.id,
+                      );
                     });
                   case DirectionPage.routeName:
                     return MaterialPageRoute(builder: (context) {

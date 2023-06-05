@@ -1,18 +1,18 @@
-import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/direction_page.dart';
+import 'dart:async';
+
+import 'package:dehub/models/reference_information.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/invoice_condition_page/invoice_condition_page.dart';
-import 'package:dehub/screens/network_page/tabs/dashboard_tab/category_page/category_page.dart';
-import 'package:dehub/screens/network_page/tabs/dashboard_tab/rank_page/rank_page.dart';
-import 'package:dehub/screens/network_page/tabs/dashboard_tab/zoning_page/zoning_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:after_layout/after_layout.dart';
 
 class ReferenceInformationCard extends StatefulWidget {
-  String? labelText;
-  int? index;
+  final ReferenceInformation? data;
+  final int? index;
   ReferenceInformationCard({
     Key? key,
     this.index,
-    this.labelText,
+    this.data,
   }) : super(key: key);
 
   @override
@@ -20,22 +20,34 @@ class ReferenceInformationCard extends StatefulWidget {
       _ReferenceInformationCardState();
 }
 
-class _ReferenceInformationCardState extends State<ReferenceInformationCard> {
+class _ReferenceInformationCardState extends State<ReferenceInformationCard>
+    with AfterLayoutMixin {
+  @override
+  afterFirstLayout(BuildContext context) {
+    print(widget.data!.listType);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
-        if (widget.labelText == 'Нэхэмжлэх нөхцөл') {
-          Navigator.of(context).pushNamed(InvoiceConditionPage.routeName);
-        } else if (widget.labelText == 'Ангилал') {
-          Navigator.of(context).pushNamed(CategoryPage.routeName);
-        } else if (widget.labelText == 'Бүсчлэл') {
-          Navigator.of(context).pushNamed(ZoningPage.routeName);
-        } else if (widget.labelText == 'Чиглэл') {
-          Navigator.of(context).pushNamed(DirectionPage.routeName);
-        } else if (widget.labelText == 'Зэрэглэл') {
-          Navigator.of(context).pushNamed(RankPage.routeName);
-        }
+        Navigator.of(context).pushNamed(
+          InvoiceConditionPage.routeName,
+          arguments: InvoiceConditionPageArguments(
+            data: widget.data!,
+          ),
+        );
+        //  else if (widget.data!.name == 'Харилцагчийн ангилал' ||
+        //     widget.data!.name == 'Нийлүүлэгчийн ангилал') {
+        //   Navigator.of(context).pushNamed(CategoryPage.routeName);
+        // } else if (widget.data!.name == 'Борлуулалтын бүс') {
+        //   Navigator.of(context).pushNamed(ZoningPage.routeName);
+        // } else if (widget.data!.name == 'Борлуулалтын чиглэл') {
+        //   Navigator.of(context).pushNamed(DirectionPage.routeName);
+        // } else if (widget.data!.name == 'Харилцагчийн зэрэглэл' ||
+        //     widget.data!.name == 'Нийлүүлэгчийн зэрэглэл') {
+        //   Navigator.of(context).pushNamed(RankPage.routeName);
+        // }
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
@@ -68,7 +80,7 @@ class _ReferenceInformationCardState extends State<ReferenceInformationCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${widget.labelText}',
+                      '${widget.data!.name}',
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -91,7 +103,7 @@ class _ReferenceInformationCardState extends State<ReferenceInformationCard> {
                     Container(
                       width: 170,
                       child: Text(
-                        'Тайлбар тайлбар тайлбар тайлбар ...',
+                        '${widget.data!.description}',
                         style: TextStyle(
                           color: grey3,
                           fontSize: 12,
@@ -108,7 +120,7 @@ class _ReferenceInformationCardState extends State<ReferenceInformationCard> {
                 Column(
                   children: [
                     Text(
-                      'Ref-000${widget.index! + 1}',
+                      '${widget.data!.refCode}',
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,

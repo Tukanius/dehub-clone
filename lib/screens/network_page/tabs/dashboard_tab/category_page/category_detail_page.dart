@@ -1,15 +1,38 @@
+import 'dart:async';
+
+import 'package:dehub/api/business_api.dart';
+import 'package:dehub/models/reference_information_get.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:after_layout/after_layout.dart';
+
+class CategoryDetailPageArguments {
+  String id;
+  CategoryDetailPageArguments({
+    required this.id,
+  });
+}
 
 class CategoryDetailPage extends StatefulWidget {
+  final String id;
   static const routeName = 'CategoryDetailpage';
-  const CategoryDetailPage({super.key});
+  const CategoryDetailPage({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
   @override
   State<CategoryDetailPage> createState() => _CategoryDetailPageState();
 }
 
-class _CategoryDetailPageState extends State<CategoryDetailPage> {
+class _CategoryDetailPageState extends State<CategoryDetailPage>
+    with AfterLayoutMixin {
+  ReferenceInformationGet referenceGet = ReferenceInformationGet();
+  @override
+  afterFirstLayout(BuildContext context) async {
+    referenceGet = await BusinessApi().clientClassificationGet(widget.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +75,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
                     style: TextStyle(color: dark),
                   ),
                   Text(
-                    'Ангилал код',
+                    '${referenceGet.refCode}',
                     style: TextStyle(
                       color: networkColor,
                     ),
@@ -71,7 +94,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
                     style: TextStyle(color: dark),
                   ),
                   Text(
-                    'Ангилалийн нэр',
+                    '${referenceGet.name}',
                     style: TextStyle(
                       color: networkColor,
                     ),
@@ -92,7 +115,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
                   Container(
                     width: 200,
                     child: Text(
-                      'ТОП харилцагчид бла бла бла бла бла бла бла',
+                      '${referenceGet.description}',
                       style: TextStyle(
                         color: networkColor,
                       ),

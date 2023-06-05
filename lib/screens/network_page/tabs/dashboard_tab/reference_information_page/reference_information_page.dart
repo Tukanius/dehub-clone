@@ -1,7 +1,10 @@
+import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/reference_information_card/reference_information_card.dart';
+import 'package:dehub/models/result.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:after_layout/after_layout.dart';
 
 class ReferenceInformationPage extends StatefulWidget {
   static const routeName = 'ReferenceInformationPage';
@@ -12,18 +15,30 @@ class ReferenceInformationPage extends StatefulWidget {
       _ReferenceInformationPageState();
 }
 
-class _ReferenceInformationPageState extends State<ReferenceInformationPage> {
-  List<String> labelText = [
-    'Бэлэнгийн нөхцөл',
-    "Нэхэмжлэх нөхцөл",
-    "Авлагын нөхцөл",
-    "Бүсчлэл",
-    "Чиглэл",
-    "Ангилал",
-    "Зэрэглэл",
-  ];
+class _ReferenceInformationPageState extends State<ReferenceInformationPage>
+    with AfterLayoutMixin {
+  int index = 1;
+  int page = 1;
+  int limit = 10;
+  Result reference = Result(rows: [], count: 0);
+  bool isLoading = true;
 
-  List<Object> data = [];
+  list(page, limit) async {
+    Filter filter = Filter(query: '');
+    Offset offset = Offset(page: page, limit: limit);
+    Result res = await BusinessApi().referenceList(
+      ResultArguments(filter: filter, offset: offset),
+    );
+    setState(() {
+      reference = res;
+      isLoading = false;
+    });
+  }
+
+  @override
+  afterFirstLayout(BuildContext context) async {
+    list(page, limit);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,11 +127,19 @@ class _ReferenceInformationPageState extends State<ReferenceInformationPage> {
             SizedBox(
               height: 10,
             ),
-            for (var i = 0; i < labelText.length; i++)
-              ReferenceInformationCard(
-                labelText: labelText[i],
-                index: i,
-              ),
+            Column(
+              children: reference.rows!
+                  .map(
+                    (e) => ReferenceInformationCard(
+                      index: reference.rows!.indexOf(e),
+                      data: e,
+                    ),
+                  )
+                  .toList(),
+            ),
+            SizedBox(
+              height: 50,
+            ),
           ],
         ),
       ),

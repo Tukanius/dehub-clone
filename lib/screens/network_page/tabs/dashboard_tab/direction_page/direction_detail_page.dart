@@ -1,15 +1,38 @@
+import 'dart:async';
+
+import 'package:dehub/api/business_api.dart';
+import 'package:dehub/models/reference_information_get.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:after_layout/after_layout.dart';
+
+class DirectionDetailPageArguments {
+  String id;
+  DirectionDetailPageArguments({
+    required this.id,
+  });
+}
 
 class DirectionDetailPage extends StatefulWidget {
+  final String id;
   static const routeName = 'DirectionDetailPage';
-  const DirectionDetailPage({super.key});
+  const DirectionDetailPage({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
   @override
   State<DirectionDetailPage> createState() => _DirectionDetailPageState();
 }
 
-class _DirectionDetailPageState extends State<DirectionDetailPage> {
+class _DirectionDetailPageState extends State<DirectionDetailPage>
+    with AfterLayoutMixin {
+  ReferenceInformationGet referenceGet = ReferenceInformationGet();
+  @override
+  afterFirstLayout(BuildContext context) async {
+    referenceGet = await BusinessApi().distrbutionAreaGet(widget.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

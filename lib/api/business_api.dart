@@ -1,5 +1,7 @@
 import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/invitation_received.dart';
+import 'package:dehub/models/reference_information.dart';
+import 'package:dehub/models/reference_information_get.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/utils/http_request.dart';
 
@@ -52,5 +54,53 @@ class BusinessApi extends HttpRequest {
   Future<BusinessNetwork> partnerDetail(String id) async {
     var res = get("/network/$id", "BUSINESS");
     return BusinessNetwork.fromJson(res as Map<String, dynamic>);
+  }
+
+  // Future<Result> referenceList(ResultArguments resultArguments) async {
+  //   var res =
+  //       await get('/reference', "BUSINESS", data: resultArguments.toJson());
+  //   return Result.fromJson(res, ReferenceInformation.$fromJson);
+  // }
+  Future<Result> referenceList(ResultArguments resultArguments) async {
+    var res =
+        await get("/reference", "BUSINESS", data: resultArguments.toJson());
+    print('================REFERENCE===============');
+    print(res);
+    print('================REFERENCE===============');
+    return Result.fromJson(res, ReferenceInformation.$fromJson);
+  }
+
+  Future<Result> paymentTermList(ResultArguments resultArguments) async {
+    var res =
+        await get("/payment_term", "BUSINESS", data: resultArguments.toJson());
+    return Result.fromJson(res, ReferenceInformation.fromJson);
+  }
+
+  Future<Result> distributionAreaList(ResultArguments resultArguments) async {
+    var res = await get("/distribution_area", "BUSINESS",
+        data: resultArguments.toJson());
+    return Result.fromJson(res, ReferenceInformation.fromJson);
+  }
+
+  Future<Result> clientClassificationList(
+      ResultArguments resultArguments) async {
+    var res = await get("/client_classification", "BUSINESS",
+        data: resultArguments.toJson());
+    return Result.fromJson(res, ReferenceInformation.fromJson);
+  }
+
+  Future<ReferenceInformationGet> paymentTermGet(String id) async {
+    var res = await get("/payment_term/$id", "BUSINESS");
+    return ReferenceInformationGet.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<ReferenceInformationGet> clientClassificationGet(String id) async {
+    var res = await get("/client_classification/$id", "BUSINESS");
+    return ReferenceInformationGet.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<ReferenceInformationGet> distrbutionAreaGet(String id) async {
+    var res = await get("/distribution_area/$id", "BUSINESS");
+    return ReferenceInformationGet.fromJson(res as Map<String, dynamic>);
   }
 }

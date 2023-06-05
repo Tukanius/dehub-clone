@@ -1,16 +1,20 @@
+import 'dart:async';
+
+import 'package:dehub/models/reference_information.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:after_layout/after_layout.dart';
 
 class InvoiceConditionCard extends StatefulWidget {
-  String? labelText;
-  String? description;
-  int? index;
   final Function()? onClick;
+  final int? index;
+  final ReferenceInformation? listType;
+  final ReferenceInformation? data;
   InvoiceConditionCard({
+    this.listType,
+    this.data,
     Key? key,
     this.onClick,
-    this.description,
-    this.labelText,
     this.index,
   }) : super(key: key);
 
@@ -18,10 +22,17 @@ class InvoiceConditionCard extends StatefulWidget {
   State<InvoiceConditionCard> createState() => _InvoiceConditionCardState();
 }
 
-class _InvoiceConditionCardState extends State<InvoiceConditionCard> {
+class _InvoiceConditionCardState extends State<InvoiceConditionCard>
+    with AfterLayoutMixin {
+  @override
+  afterFirstLayout(BuildContext context) {
+    print(widget.data!.toJson());
+    print('======');
+  }
+
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: widget.onClick,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
@@ -53,14 +64,23 @@ class _InvoiceConditionCardState extends State<InvoiceConditionCard> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '${widget.labelText}',
-                      style: TextStyle(
-                        color: networkColor,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    widget.data!.termRule == null
+                        ? Text(
+                            '${widget.data!.name}',
+                            style: TextStyle(
+                              color: networkColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        : Text(
+                            '${widget.data!.termRule}',
+                            style: TextStyle(
+                              color: networkColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                     SizedBox(
                       height: 5,
                     ),
@@ -74,11 +94,14 @@ class _InvoiceConditionCardState extends State<InvoiceConditionCard> {
                     SizedBox(
                       height: 5,
                     ),
-                    Text(
-                      '${widget.description}',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: grey3,
+                    Container(
+                      width: 250,
+                      child: Text(
+                        '${widget.data!.description}',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: grey3,
+                        ),
                       ),
                     ),
                   ],

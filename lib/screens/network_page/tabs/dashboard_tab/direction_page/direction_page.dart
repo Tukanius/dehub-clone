@@ -1,8 +1,6 @@
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/direction_card/direction_card.dart';
-import 'package:dehub/components/zoning_card/zoning_card.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/add_direction.dart';
-import 'package:dehub/screens/network_page/tabs/dashboard_tab/zoning_page/add_zoning.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 

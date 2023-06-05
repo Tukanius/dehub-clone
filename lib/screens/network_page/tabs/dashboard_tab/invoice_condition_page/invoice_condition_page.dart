@@ -1,35 +1,88 @@
+import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/invoice_condition_card/invoice_condition_card.dart';
+import 'package:dehub/models/reference_information.dart';
+import 'package:dehub/models/result.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/category_page/category_detail_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/add_direction.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/direction_detail_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/invoice_condition_page/invoice_condition_detail_page.dart';
-import 'package:dehub/screens/network_page/tabs/dashboard_tab/invoice_condition_page/new_condition_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/rank_page/rank_detail_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/zoning_page/zoning_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:after_layout/after_layout.dart';
+
+class InvoiceConditionPageArguments {
+  ReferenceInformation data;
+  InvoiceConditionPageArguments({
+    required this.data,
+  });
+}
 
 class InvoiceConditionPage extends StatefulWidget {
+  final ReferenceInformation data;
   static const routeName = 'InvoiceConditionPage';
-  const InvoiceConditionPage({super.key});
+  const InvoiceConditionPage({
+    required this.data,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<InvoiceConditionPage> createState() => _InvoiceConditionPageState();
 }
 
-class _InvoiceConditionPageState extends State<InvoiceConditionPage> {
-  List<String> labelText = [
-    'INV_NET_10',
-    'INV_COD',
-    'INV_EOM',
-    'INV_MF_X',
-    'INV_SOM',
-  ];
-  List<String> description = [
-    'Баталснаас хойш 10 хоногт төлөх',
-    "Баталсан дариу төлөх",
-    "Баталсан сарын сүүлийн өдөр төлөх",
-    "Баталсны дараа Х-ны өдөр төлөх",
-    "Тайлбар мэдээлэл",
-  ];
+class _InvoiceConditionPageState extends State<InvoiceConditionPage>
+    with AfterLayoutMixin {
+  int page = 1;
+  int limit = 10;
+  Result reference = Result(rows: [], count: 0);
+  bool isLoading = true;
 
-  // List<Object> data = [];
+  @override
+  afterFirstLayout(BuildContext context) async {
+    switch (widget.data.type) {
+      case "PAYMENT_TERM":
+        return list(page, limit);
+      case "DISTRIBUTION_AREA":
+        return distributionAreaList(page, limit);
+      case "CLIENT_CLASSIFICATION":
+        return clientClassificationList(page, limit);
+    }
+    print(widget.data.listType.toString());
+  }
+
+  list(page, limit) async {
+    Offset offset = Offset(limit: limit, page: page);
+    Filter filter = Filter(orderConfirmTerm: widget.data.listType);
+    reference = await BusinessApi()
+        .paymentTermList(ResultArguments(offset: offset, filter: filter));
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  distributionAreaList(page, limit) async {
+    Offset offset = Offset(limit: limit, page: page);
+    Filter filter =
+        Filter(isParent: widget.data.listType == "REGION" ? true : false);
+    reference = await BusinessApi()
+        .distributionAreaList(ResultArguments(offset: offset, filter: filter));
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  clientClassificationList(page, limit) async {
+    Offset offset = Offset(limit: limit, page: page);
+    Filter filter = Filter(
+        isParent: widget.data.listType == "CLIENT_CATEGORY" ? true : false);
+    reference = await BusinessApi().clientClassificationList(
+        ResultArguments(offset: offset, filter: filter));
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,59 +123,119 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage> {
             addColor: white,
             color: networkColor,
             onClick: () {
-              Navigator.of(context).pushNamed(NewConditionPage.routeName);
+              // if (widget.data.listType == "INV_NET2") {
+              //   Navigator.of(context).pushNamed(NewConditionPage.routeName);
+              // } else if (widget.data.listType == "REGION") {
+              //   Navigator.of(context).pushNamed(ZoningDetailPage.routeName);
+              // } else if (widget.data.listType == 'CLIENT_CATEGORY') {
+              //   Navigator.of(context).pushNamed(CategoryDetailPage.routeName);
+              // } else if (widget.data.listType == "CLIENT_PRIORITY") {
+              //   Navigator.of(context).pushNamed(RankDetailPage.routeName);
+              // } else if (widget.data.listType == "DIRECTION") {
+              //   Navigator.of(context).pushNamed(AddDirection.routeName);
+              // }
+              if (widget.data.listType == "DIRECTION") {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  useSafeArea: true,
+                  context: context,
+                  builder: (context) => buildSheet(),
+                );
+              }
             },
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
-              'Нэхэмжлэх нөхцөл',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 15),
-            child: Text(
-              'Төлбөрийн нөхцөл',
-              style: TextStyle(
+      body: isLoading == true
+          ? Center(
+              child: CircularProgressIndicator(
                 color: networkColor,
-                fontWeight: FontWeight.bold,
+              ),
+            )
+          : SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    child: Text(
+                      "${widget.data.name}",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Text(
+                      '${widget.data.description}',
+                      style: TextStyle(
+                        color: networkColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Column(
+                    children: reference.rows!
+                        .map(
+                          (e) => InvoiceConditionCard(
+                            onClick: () {
+                              if (widget.data.listType == "INV_NET2") {
+                                Navigator.of(context).pushNamed(
+                                  InvoiceConditionDetailPage.routeName,
+                                  arguments:
+                                      InvoiceConditionDetailPageArguments(
+                                          id: e.id),
+                                );
+                              } else if (widget.data.listType == "REGION") {
+                                Navigator.of(context).pushNamed(
+                                  ZoningDetailPage.routeName,
+                                  arguments:
+                                      ZoningDetailPageArguments(id: e.id),
+                                );
+                              } else if (widget.data.listType ==
+                                  'CLIENT_CATEGORY') {
+                                Navigator.of(context).pushNamed(
+                                  CategoryDetailPage.routeName,
+                                  arguments:
+                                      CategoryDetailPageArguments(id: e.id),
+                                );
+                              } else if (widget.data.listType ==
+                                  "CLIENT_PRIORITY") {
+                                Navigator.of(context)
+                                    .pushNamed(RankDetailPage.routeName);
+                              } else if (widget.data.listType == "DIRECTION") {
+                                Navigator.of(context).pushNamed(
+                                  DirectionDetailPage.routeName,
+                                  arguments:
+                                      DirectionDetailPageArguments(id: e.id),
+                                );
+                              }
+                            },
+                            data: e,
+                            index: reference.rows!.indexOf(e),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                ],
               ),
             ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          for (var i = 0; i < labelText.length; i++)
-            InvoiceConditionCard(
-              onClick: () {
-                Navigator.of(context)
-                    .pushNamed(InvoiceConditionDetailPage.routeName);
-              },
-              index: i,
-              labelText: labelText[i],
-              description: description[i],
-            ),
-          // ListView.builder(
-          //   itemBuilder: (context, index) {
-          //     var data = labelText[index];
-          //     var des = description[index];
-          //     return InvoiceConditionCard(
-          //       labelText: data,
-          //       description: des,
-          //     );
-          //   },
-          // ),
-        ],
-      ),
     );
   }
 }
+
+Widget buildSheet() => DraggableScrollableSheet(
+      initialChildSize: 1,
+      minChildSize: 0.5,
+      maxChildSize: 1,
+      builder: (context, scrollController) => AddDirection(),
+    );

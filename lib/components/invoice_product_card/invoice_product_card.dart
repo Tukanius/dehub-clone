@@ -32,12 +32,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
   String? discount;
 
   @override
-  afterFirstLayout(BuildContext context) {
-    print("===================DATA==================");
-    print(widget.data!.toJson());
-    print("===================DATA==================");
-    print(widget.data!.discountType.toString());
-  }
+  afterFirstLayout(BuildContext context) {}
 
   @override
   Widget build(BuildContext context) {

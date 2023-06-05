@@ -4,11 +4,15 @@ class Filter {
   String? query;
   bool? isReceived;
   String? type;
+  String? orderConfirmTerm;
+  bool? isParent;
 
   Filter({
+    this.isParent,
     this.type,
     this.query,
     this.isReceived,
+    this.orderConfirmTerm,
   });
 }
 

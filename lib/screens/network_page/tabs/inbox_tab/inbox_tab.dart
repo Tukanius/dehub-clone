@@ -121,6 +121,7 @@ class _InboxTabState extends State<InboxTab>
           ];
         },
         body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
           controller: tabController,
           children: [
             FromBuyer(),

@@ -30,11 +30,11 @@ class PaymentApprovalPageArguments {
 
 class PaymentApprovalPage extends StatefulWidget {
   static const routeName = '/paymentapprovalpage';
-  String id;
-  String? method;
-  String creditAccountId;
-  double amount;
-  String? refCode;
+  final String id;
+  final String? method;
+  final String creditAccountId;
+  final double amount;
+  final String? refCode;
   PaymentApprovalPage({
     Key? key,
     required this.method,
