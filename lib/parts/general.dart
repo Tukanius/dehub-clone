@@ -217,12 +217,19 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => ServiceCategoryTypes.fromJson(e))
             .toList()
         : null,
+    distributionAreas: json['distributionAreas'] != null
+        ? (json['distributionAreas'] as List)
+            .map((e) => DistributionAreas.fromJson(e))
+            .toList()
+        : null,
   );
 }
 
 Map<String, dynamic> _$GeneralToJson(General instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.distributionAreas != null)
+    json['distributionAreas'] = instance.distributionAreas;
   if (instance.branchStatus != null)
     json['branchStatus'] = instance.branchStatus;
   if (instance.branchTypes != null) json['branchTypes'] = instance.branchTypes;

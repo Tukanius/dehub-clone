@@ -3,7 +3,6 @@ import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/components/sector_card/sector_card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SalbarSongoh extends StatefulWidget {
   static const routeName = '/salbarsongoh';

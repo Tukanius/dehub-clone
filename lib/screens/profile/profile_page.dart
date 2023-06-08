@@ -5,7 +5,6 @@ import 'package:dehub/screens/profile/information/partner_info.dart';
 import 'package:dehub/screens/profile/information/personal_info.dart';
 import 'package:dehub/screens/profile/information/settings_page.dart';
 import 'package:dehub/screens/profile/information/system_users.dart';
-import 'package:dehub/screens/profile/information/screens/page2.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

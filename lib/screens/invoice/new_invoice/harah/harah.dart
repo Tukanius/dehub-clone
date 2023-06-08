@@ -3,7 +3,6 @@ import 'package:dehub/screens/invoice/new_invoice/harah/pdf_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/send_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class Harah extends StatefulWidget {
   static const routeName = '/harah';

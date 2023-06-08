@@ -4,7 +4,6 @@ import 'package:dehub/screens/account_info_page/tabs/index1.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class AccountInfoPage extends StatefulWidget {
   static const routeName = 'accountinfopage';

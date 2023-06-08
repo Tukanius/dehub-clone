@@ -10,11 +10,29 @@ BusinessStaffs _$BusinessStaffsFromJson(Map<String, dynamic> json) {
     email: json['email'] != null ? json['email'] as String : null,
     userStatus:
         json['userStatus'] != null ? json['userStatus'] as String : null,
+    termRule: json['termRule'] != null ? json['termRule'] as String : null,
+    orderConfirmTerm: json['orderConfirmTerm'] != null
+        ? json['orderConfirmTerm'] as String
+        : null,
+    expireDayCount: json['expireDayCount'] != null
+        ? int.parse(json['expireDayCount'].toString())
+        : null,
+    month: json['month'] != null ? int.parse(json['month'].toString()) : null,
+    paymentDay: json['paymentDay'] != null
+        ? int.parse(json['paymentDay'].toString())
+        : null,
   );
 }
 
 Map<String, dynamic> _$BusinessStaffsToJson(BusinessStaffs instance) {
   Map<String, dynamic> json = {};
+  if (instance.termRule != null) json['termRule'] = instance.termRule;
+  if (instance.orderConfirmTerm != null)
+    json['orderConfirmTerm'] = instance.orderConfirmTerm;
+  if (instance.expireDayCount != null)
+    json['expireDayCount'] = instance.expireDayCount;
+  if (instance.month != null) json['month'] = instance.month;
+  if (instance.paymentDay != null) json['paymentDay'] = instance.paymentDay;
   if (instance.id != null) json['id'] = instance.id;
   if (instance.avatar != null) json['avatar'] = instance.avatar;
   if (instance.lastName != null) json['lastName'] = instance.lastName;

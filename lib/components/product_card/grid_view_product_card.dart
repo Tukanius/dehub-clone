@@ -1,6 +1,5 @@
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class GridViewProductCard extends StatefulWidget {
   final bool? ratingBar;

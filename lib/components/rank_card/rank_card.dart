@@ -3,7 +3,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class RankCard extends StatefulWidget {
-  int? index;
+  final int? index;
   RankCard({
     Key? key,
     this.index,

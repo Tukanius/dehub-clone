@@ -2,7 +2,6 @@ import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cupertino_icons/cupertino_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LinkAccountPage extends StatefulWidget {

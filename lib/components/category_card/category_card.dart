@@ -3,8 +3,8 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class CategoryCard extends StatefulWidget {
-  String? text;
-  int? index;
+  final String? text;
+  final int? index;
   CategoryCard({
     Key? key,
     this.index,

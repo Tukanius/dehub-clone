@@ -1,3 +1,4 @@
+import 'package:dehub/models/business.dart';
 import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/invitation_received.dart';
 import 'package:dehub/models/reference_information.dart';
@@ -102,5 +103,17 @@ class BusinessApi extends HttpRequest {
   Future<ReferenceInformationGet> distrbutionAreaGet(String id) async {
     var res = await get("/distribution_area/$id", "BUSINESS");
     return ReferenceInformationGet.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<BusinessStaffs> createPaymentTerm(BusinessStaffs data) async {
+    var res = await post("/payment_term", "BUSINESS",
+        data: data.toJson(), handler: true);
+    return BusinessStaffs.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<BusinessStaffs> createdDistributionArea(BusinessStaffs data) async {
+    var res = await post("/distribution_area", "BUSINESS",
+        data: data.toJson(), handler: true);
+    return BusinessStaffs.fromJson(res as Map<String, dynamic>);
   }
 }

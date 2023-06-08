@@ -1,4 +1,3 @@
-import 'package:dehub/screens/funding_request_page/funding_request_detail_page.dart';
 import 'package:dehub/screens/received_funding_page/received_funding_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';

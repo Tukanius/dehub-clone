@@ -1,4 +1,3 @@
-import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/screens/account_info_page/account_info_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';

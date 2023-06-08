@@ -1,7 +1,5 @@
 import 'package:dehub/components/sales_page_cards/payment_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class Payment extends StatefulWidget {
   const Payment({super.key});

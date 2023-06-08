@@ -1,5 +1,4 @@
 import 'package:dehub/models/business.dart';
-import 'package:dehub/models/partner.dart';
 import 'package:dehub/utils/http_request.dart';
 part '../parts/user.dart';
 

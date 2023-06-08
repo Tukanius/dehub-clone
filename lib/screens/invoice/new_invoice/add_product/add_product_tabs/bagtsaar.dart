@@ -1,6 +1,4 @@
-import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/invoice_product_card/add_product_card.dart';
-import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:after_layout/after_layout.dart';
@@ -21,7 +19,6 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
   int price = 9500;
   int amount = 1000;
   int percent = 5;
-  int _count = 00;
   String? discount;
 
   Invoice invoice = Invoice();

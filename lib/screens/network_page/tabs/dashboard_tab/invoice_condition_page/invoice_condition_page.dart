@@ -3,11 +3,15 @@ import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/invoice_condition_card/invoice_condition_card.dart';
 import 'package:dehub/models/reference_information.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/category_page/add_category.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/category_page/category_detail_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/add_direction.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/direction_detail_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/invoice_condition_page/invoice_condition_detail_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/invoice_condition_page/new_condition_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/rank_page/add_rank.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/rank_page/rank_detail_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/zoning_page/add_zoning.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/zoning_page/zoning_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -141,6 +145,34 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
                   context: context,
                   builder: (context) => buildSheet(),
                 );
+              } else if (widget.data.listType == "INV_NET2") {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  useSafeArea: true,
+                  context: context,
+                  builder: (context) => addInvoiceTerm(),
+                );
+              } else if (widget.data.listType == "REGION") {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  useSafeArea: true,
+                  context: context,
+                  builder: (context) => addZoning(),
+                );
+              } else if (widget.data.listType == "CLIENT_CATEGORY") {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  useSafeArea: true,
+                  context: context,
+                  builder: (context) => addCategory(),
+                );
+              } else if (widget.data.listType == "CLIENT_PRIORITY") {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  useSafeArea: true,
+                  context: context,
+                  builder: (context) => addRank(),
+                );
               }
             },
           ),
@@ -238,4 +270,28 @@ Widget buildSheet() => DraggableScrollableSheet(
       minChildSize: 0.5,
       maxChildSize: 1,
       builder: (context, scrollController) => AddDirection(),
+    );
+Widget addInvoiceTerm() => DraggableScrollableSheet(
+      initialChildSize: 1,
+      minChildSize: 0.5,
+      maxChildSize: 1,
+      builder: (context, scrollController) => NewConditionPage(),
+    );
+Widget addZoning() => DraggableScrollableSheet(
+      initialChildSize: 1,
+      minChildSize: 0.5,
+      maxChildSize: 1,
+      builder: (context, scrollController) => AddZoning(),
+    );
+Widget addCategory() => DraggableScrollableSheet(
+      initialChildSize: 1,
+      minChildSize: 0.5,
+      maxChildSize: 1,
+      builder: (context, scrollController) => AddCategory(),
+    );
+Widget addRank() => DraggableScrollableSheet(
+      initialChildSize: 1,
+      minChildSize: 0.5,
+      maxChildSize: 1,
+      builder: (context, scrollController) => AddRank(),
     );

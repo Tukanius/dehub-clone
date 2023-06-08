@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
 
 class BasicInformationTab extends StatefulWidget {
-  String id;
+  final String id;
   BasicInformationTab({
     Key? key,
     required this.id,

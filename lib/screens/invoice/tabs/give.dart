@@ -6,8 +6,6 @@ import 'package:dehub/components/invoice_card/invoice_card.dart';
 import 'package:dehub/components/invoice_empty/invoice_empty.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/models/user.dart';
-import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
 import 'package:dehub/screens/invoice_detail_page/invoice_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -15,7 +13,6 @@ import 'package:dehub/widgets/page_change_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/cupertino.dart';
 

@@ -39,9 +39,9 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
     });
   }
 
-  approve() {
+  approve() async {
     try {
-      var res = BusinessApi().respond(invitation, widget.id);
+      await BusinessApi().respond(invitation, widget.id);
     } catch (e) {
       print('===============ERROR===============');
       print(e.toString());
@@ -49,9 +49,9 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
     }
   }
 
-  refuse() {
+  refuse() async {
     try {
-      var res = BusinessApi().refuse(invitation, widget.id);
+      await BusinessApi().refuse(invitation, widget.id);
     } catch (e) {
       print('===============ERROR===============');
       print(e.toString());

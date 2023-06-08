@@ -12,7 +12,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
-  int? selectedIndex;
+  final int? selectedIndex;
   static const routeName = '/MainPage';
   MainPage({
     Key? key,

@@ -1,13 +1,8 @@
-import 'dart:io';
-
 import 'package:dehub/screens/account_info_page/tabs/tabs/all.dart';
 import 'package:dehub/screens/account_info_page/tabs/tabs/expenditure.dart';
 import 'package:dehub/screens/account_info_page/tabs/tabs/income.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-import 'package:simple_moment/simple_moment.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Index1 extends StatefulWidget {

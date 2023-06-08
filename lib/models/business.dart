@@ -12,7 +12,21 @@ class BusinessStaffs {
   String? email;
   String? userStatus;
 
+  String? termRule;
+  String? orderConfirmTerm;
+  int? expireDayCount;
+  int? month;
+  int? paymentDay;
+  String? name;
+  String? parentId;
+  String? description;
+
   BusinessStaffs({
+    this.termRule,
+    this.orderConfirmTerm,
+    this.expireDayCount,
+    this.month,
+    this.paymentDay,
     this.id,
     this.avatar,
     this.lastName,

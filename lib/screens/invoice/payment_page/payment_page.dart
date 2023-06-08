@@ -1,4 +1,3 @@
-import 'package:dehub/models/bank_accounts.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/providers/general_provider.dart';
@@ -14,8 +13,8 @@ import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
 
 class InvoicePaymentPage extends StatefulWidget {
-  Invoice data;
-  String id;
+  final Invoice data;
+  final String id;
   InvoicePaymentPage({
     super.key,
     required this.data,
@@ -278,25 +277,6 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                     SizedBox(
                       height: 50,
                       child: FormBuilderDropdown(
-                        hint: Container(
-                          margin: const EdgeInsets.only(left: 10),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                'images/bank.svg',
-                                color: invoiceColor,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              const Text(
-                                "Холбосон дансаар",
-                                style: TextStyle(
-                                    fontSize: 14, color: invoiceColor),
-                              ),
-                            ],
-                          ),
-                        ),
                         icon: Container(
                           decoration: BoxDecoration(
                             color: white,
@@ -314,6 +294,26 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                           });
                         },
                         decoration: InputDecoration(
+                          hintText:
+                              //   Container(
+                              //   margin: const EdgeInsets.only(left: 10),
+                              //   child: Row(
+                              //     children: [
+                              //       SvgPicture.asset(
+                              //         'images/bank.svg',
+                              //         color: invoiceColor,
+                              //       ),
+                              //       SizedBox(
+                              //         width: 5,
+                              //       ),
+
+                              //     ],
+                              //   ),
+                              // ),
+
+                              "Холбосон дансаар",
+                          hintStyle:
+                              TextStyle(fontSize: 14, color: invoiceColor),
                           filled: true,
                           fillColor: white,
                           contentPadding: const EdgeInsets.symmetric(
@@ -394,14 +394,6 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                         ? SizedBox(
                             height: 50,
                             child: FormBuilderDropdown(
-                              hint: Container(
-                                margin: const EdgeInsets.only(left: 10),
-                                child: const Text(
-                                  "Данс сонгоно уу",
-                                  style: TextStyle(
-                                      fontSize: 14, color: invoiceColor),
-                                ),
-                              ),
                               icon: Container(
                                 decoration: BoxDecoration(
                                   color: white,
@@ -417,6 +409,9 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                                 selectedValue = value;
                               },
                               decoration: InputDecoration(
+                                hintText: 'Данс сонгоно уу',
+                                hintStyle: TextStyle(
+                                    fontSize: 14, color: invoiceColor),
                                 filled: true,
                                 fillColor: white,
                                 contentPadding: const EdgeInsets.symmetric(

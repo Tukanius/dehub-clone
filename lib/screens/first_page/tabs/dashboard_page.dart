@@ -1,12 +1,7 @@
-import 'dart:math';
 import 'package:dehub/components/invoice_status/invoice_status_card.dart';
-import 'package:dehub/models/invoice_status.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class DashboardPage extends StatefulWidget {

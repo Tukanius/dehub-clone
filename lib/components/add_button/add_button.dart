@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class AddButton extends StatefulWidget {
   final Function()? onClick;
-  Color? addColor;
-  Color? color;
+  final Color? addColor;
+  final Color? color;
   AddButton({
     this.color,
     Key? key,

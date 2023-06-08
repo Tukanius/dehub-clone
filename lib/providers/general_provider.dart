@@ -8,14 +8,20 @@ class GeneralProvider extends ChangeNotifier {
 
   init(bool handler) async {
     general = await GeneralApi().init(handler);
-    print("general.paymentMethod!.length==================");
-    print(general.paymentMethod!.map((e) => e.name));
-    print("general.paymentMethod!.length==================");
     notifyListeners();
   }
 
   businessInit(bool handler) async {
-    businessGeneral = await GeneralApi().businessInit(handler);
+    print('BUSINESS-GENERAL');
+    try {
+      businessGeneral = await GeneralApi().businessInit(handler);
+    } catch (e) {
+      print('===============ERROR=============');
+      print(e.toString());
+      print('===============ERROR=============');
+    }
+    print(businessGeneral.toJson());
+    print('BUSINESS-GENERAL');
     notifyListeners();
   }
 }

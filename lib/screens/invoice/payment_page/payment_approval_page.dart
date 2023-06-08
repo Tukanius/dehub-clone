@@ -1,5 +1,4 @@
 import 'package:dehub/api/auth_api.dart';
-import 'package:dehub/api/general_api.dart';
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
@@ -151,8 +150,7 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
   Invoice invoice = Invoice();
 
   afterFirstLayout(BuildContext context) async {
-    var res =
-        await Provider.of<GeneralProvider>(context, listen: false).general;
+    await Provider.of<GeneralProvider>(context, listen: false).general;
   }
 
   checkPin(value) async {

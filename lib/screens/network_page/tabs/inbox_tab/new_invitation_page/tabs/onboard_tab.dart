@@ -1,9 +1,7 @@
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class OnboardTab extends StatefulWidget {
   const OnboardTab({super.key});

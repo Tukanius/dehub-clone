@@ -1,11 +1,8 @@
-import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/bank_account_card/bank_account_card.dart';
-import 'package:dehub/screens/account_info_page/account_info_page.dart';
 import 'package:dehub/screens/link_account_page/link_account_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class Golomt extends StatefulWidget {

@@ -1,10 +1,8 @@
-import 'package:dehub/screens/add_bank_account_page/add_bank_account_page.dart';
 import 'package:dehub/screens/debt_page/debt_page.dart';
 import 'package:dehub/screens/financing_page/financing_page.dart';
 import 'package:dehub/screens/main_invoice_page/invoice_page.dart';
 import 'package:dehub/screens/order_page/order_page.dart';
 import 'package:dehub/screens/payment_page/payment_page.dart';
-import 'package:dehub/screens/main/main_page.dart';
 import 'package:dehub/screens/network_page/network_page.dart';
 import 'package:dehub/screens/partner_page/partner_page.dart';
 import 'package:dehub/screens/product_page/product_page.dart';

@@ -1,6 +1,5 @@
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/reference_information_page/reference_information_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_page.dart';
-import 'package:dehub/screens/partner_page/partner_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

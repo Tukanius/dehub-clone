@@ -1,11 +1,7 @@
 import 'package:dehub/models/partner.dart';
-import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/profile/information/partner_info.dart';
-
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 class Page2 extends StatefulWidget {

@@ -1,8 +1,11 @@
+import 'package:dehub/models/general.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class AddDirection extends StatefulWidget {
   const AddDirection({super.key});
@@ -17,8 +20,17 @@ class _AddDirectionState extends State<AddDirection> {
   bool isSwitch = false;
   String? selectedValue;
 
+  onSubmit() async {}
+
+  General general = General();
+
   @override
   Widget build(BuildContext context) {
+    general =
+        Provider.of<GeneralProvider>(context, listen: false).businessGeneral;
+    print('==========GENERAL======');
+    print(general.distributionAreas);
+    print('==========GENERAL======');
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -58,7 +70,7 @@ class _AddDirectionState extends State<AddDirection> {
             ),
             Container(
               color: white,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -84,7 +96,8 @@ class _AddDirectionState extends State<AddDirection> {
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
+                        horizontal: 15,
+                      ),
                       color: white,
                       child: Text(
                         'Чиглэлийн Нэр',
@@ -94,15 +107,14 @@ class _AddDirectionState extends State<AddDirection> {
                   ),
                   Expanded(
                     child: Container(
-                      height: 40,
-                      child: TextFormField(
-                        maxLength: 20,
+                      margin: const EdgeInsets.only(top: 10),
+                      child: FormTextField(
                         textAlign: TextAlign.end,
-                        style: TextStyle(
-                          color: networkColor,
-                        ),
+                        inputType: TextInputType.text,
+                        showCounter: false,
+                        name: 'distributionArea',
+                        maxLenght: 30,
                         decoration: InputDecoration(
-                          counterText: '',
                           hintText: 'Гараас оруулах',
                           hintStyle: TextStyle(
                             color: networkColor,
@@ -119,40 +131,52 @@ class _AddDirectionState extends State<AddDirection> {
                 ],
               ),
             ),
+            // Container(
+            //   color: white,
+            //   padding: const EdgeInsets.symmetric(horizontal: 15),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Text(
+            //         'Бүсийн нэр',
+            //         style: TextStyle(color: dark),
+            //       ),
+            //       DropdownButtonHideUnderline(
+            //         child: DropdownButton(
+            //           icon: Container(
+            //             margin: const EdgeInsets.only(left: 10),
+            //             child: Icon(
+            //               Icons.arrow_forward_ios,
+            //               size: 14,
+            //             ),
+            //           ),
+            //           isExpanded: false,
+            //           dropdownColor: white,
+            //           value: selectedValue,
+            //           items: general.distributionAreas!
+            //               .map((item) => DropdownMenuItem(
+            //                     value: item,
+            //                     child: Text(
+            //                       item.toString(),
+            //                       style: TextStyle(
+            //                         color: networkColor,
+            //                         fontSize: 14,
+            //                       ),
+            //                       textAlign: TextAlign.center,
+            //                     ),
+            //                   ))
+            //               .toList(),
+            //           onChanged: (value) => setState(
+            //             () => this.selectedValue = value.toString(),
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Container(
               color: white,
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Бүсийн нэр',
-                    style: TextStyle(color: dark),
-                  ),
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                      icon: Container(
-                        margin: const EdgeInsets.only(left: 10),
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 14,
-                        ),
-                      ),
-                      isExpanded: false,
-                      dropdownColor: white,
-                      value: selectedValue,
-                      items: items.map(buildMenuItem).toList(),
-                      onChanged: (value) => setState(
-                        () => this.selectedValue = value,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              color: white,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -193,7 +217,7 @@ class _AddDirectionState extends State<AddDirection> {
             ),
             Container(
               color: white,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -212,7 +236,7 @@ class _AddDirectionState extends State<AddDirection> {
             ),
             Container(
               color: white,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -231,7 +255,7 @@ class _AddDirectionState extends State<AddDirection> {
             ),
             Container(
               color: white,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -307,7 +331,7 @@ class _AddDirectionState extends State<AddDirection> {
             color: networkColor,
             fontSize: 14,
           ),
-          textAlign: TextAlign.end,
+          textAlign: TextAlign.center,
         ),
       );
 }

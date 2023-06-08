@@ -1,5 +1,4 @@
 import 'package:dehub/models/business.dart';
-import 'package:dehub/screens/partner_page/tabs/partner_tab/partner_tab.dart';
 
 part '../parts/partner.dart';
 

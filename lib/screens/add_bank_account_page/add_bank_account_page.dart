@@ -4,11 +4,8 @@ import 'package:dehub/screens/add_bank_account_page/banks/golomt.dart';
 import 'package:dehub/screens/add_bank_account_page/banks/hudaldaa_hogjil.dart';
 import 'package:dehub/screens/add_bank_account_page/banks/khan.dart';
 import 'package:dehub/screens/add_bank_account_page/banks/khas.dart';
-import 'package:dehub/screens/menu/menu_page.dart';
-import 'package:dehub/screens/profile/profile_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class AddBankAccountPage extends StatefulWidget {

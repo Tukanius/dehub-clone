@@ -1,5 +1,5 @@
-import 'package:simple_moment/simple_moment.dart';
 import 'package:intl/intl.dart';
+import 'package:moment_dart/moment_dart.dart';
 part '../parts/invitation_received.dart';
 
 class InvitationReceived {

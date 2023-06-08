@@ -2,7 +2,6 @@ import 'package:dehub/components/supplier_card/supplier_card.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/salbar_songoh.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class Bugd extends StatefulWidget {
   static const routeName = '/bugd';

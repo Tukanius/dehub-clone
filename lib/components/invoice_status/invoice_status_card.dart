@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class InvoiceStatusCard extends StatefulWidget {
-  String title;
+  final String title;
   InvoiceStatusCard({
     required this.title,
     Key? key,

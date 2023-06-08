@@ -2,7 +2,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class GoodsInfoCard extends StatefulWidget {
-  int? index;
+  final int? index;
   GoodsInfoCard({
     Key? key,
     this.index,

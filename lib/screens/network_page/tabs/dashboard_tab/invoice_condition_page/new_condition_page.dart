@@ -1,8 +1,13 @@
+import 'package:dehub/api/business_api.dart';
+import 'package:dehub/models/business.dart';
+import 'package:dehub/models/general.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class NewConditionPage extends StatefulWidget {
   static const routeName = 'NewConditionPage';
@@ -24,9 +29,25 @@ class _NewConditionPageState extends State<NewConditionPage> {
   String currentOption = options[0];
 
   int? index;
+  int? indexMonth;
+  int? indexDay;
+
+  General general = General();
+  BusinessStaffs business = BusinessStaffs();
+
+  onSubmit() async {
+    business.termRule = currentOption;
+    business.orderConfirmTerm = "INV_NET2";
+    business.expireDayCount = 10;
+    business.paymentDay = index;
+    print(index);
+    await BusinessApi().createPaymentTerm(business);
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
+    general = Provider.of<GeneralProvider>(context, listen: false).general;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -56,245 +77,317 @@ class _NewConditionPageState extends State<NewConditionPage> {
                 ),
               ),
             ),
-            // Column(
-            //   children: options
-            //       .map((e) => ListTile(
-            //             tileColor: white,
-            //             title: Text('${e}'),
-            //             leading: Radio(
-            //               value: options,
-            //               groupValue: currentOption,
-            //               onChanged: (value) {
-            //                 setState(() {
-            //                   currentOption = value.toString();
-            //                 });
-            //               },
-            //             ),
-            //           ))
-            //       .toList(),
-            // )
-            for (var i = 0; i < options.length; i++)
-              ListTile(
-                tileColor: white,
-                title: Text(
-                  '${options[i]}',
-                  style: TextStyle(
-                    color: dark,
-                    fontSize: 14,
-                  ),
-                ),
-                leading: Radio(
-                  fillColor:
-                      MaterialStateColor.resolveWith((states) => networkColor),
-                  value: options[i],
-                  groupValue: currentOption,
-                  onChanged: (value) {
-                    setState(() {
-                      currentOption = value.toString();
-                      index = i;
-                    });
-                  },
-                ),
-              ),
-            // index == 0
-            //     ?
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Text(
-                    'Нэмэлт тохиргоо',
-                    style: TextStyle(
-                      color: grey3,
-                      fontWeight: FontWeight.w600,
+              children: general.paymentTermRules!
+                  .map(
+                    (e) => ListTile(
+                      tileColor: white,
+                      title: Text(
+                        '${e.text}',
+                        style: TextStyle(
+                          color: dark,
+                          fontSize: 14,
+                        ),
+                      ),
+                      leading: Radio(
+                        fillColor: MaterialStateColor.resolveWith(
+                            (states) => networkColor),
+                        value: 1,
+                        groupValue: currentOption,
+                        onChanged: (value) {
+                          setState(() {
+                            currentOption = e.code.toString();
+                            print(currentOption.toString());
+                          });
+                        },
+                      ),
                     ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    showCupertinoModalPopup(
-                      context: context,
-                      builder: (context) {
-                        return Container(
-                          color: white,
-                          height: MediaQuery.of(context).size.height * 0.4,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text(
-                                  'Болсон',
-                                  style: TextStyle(color: networkColor),
-                                ),
-                              ),
-                              Expanded(
-                                child: CupertinoPicker(
-                                  itemExtent: 30,
-                                  onSelectedItemChanged: (index) {
-                                    setState(() {
-                                      this.index = index;
-                                      print(index);
-                                    });
-                                  },
+                  )
+                  .toList(),
+            ),
+            currentOption == "INV_NET_X"
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        child: Text(
+                          'Нэмэлт тохиргоо',
+                          style: TextStyle(
+                            color: grey3,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          showCupertinoModalPopup(
+                            context: context,
+                            builder: (context) {
+                              return Container(
+                                color: white,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.4,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    for (var i = 1; i < 31; i++)
-                                      Center(
-                                        child: Text('${i}'),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(
+                                        'Болсон',
+                                        style: TextStyle(color: networkColor),
                                       ),
+                                    ),
+                                    Expanded(
+                                      child: CupertinoPicker(
+                                        itemExtent: 30,
+                                        onSelectedItemChanged: (index) {
+                                          setState(() {
+                                            this.index = index;
+                                          });
+                                        },
+                                        children: [
+                                          for (var i = 1; i < 31; i++)
+                                            Center(
+                                              child: Text('${i}'),
+                                            ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
+                              );
+                            },
+                          );
+                        },
+                        child: Container(
+                          color: white,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Хоногийн тоо',
+                                style: TextStyle(color: dark),
+                              ),
+                              Row(
+                                children: [
+                                  this.index == null
+                                      ? Text(
+                                          '0',
+                                          style: TextStyle(color: networkColor),
+                                        )
+                                      : Text(
+                                          '${this.index! + 1}',
+                                          style: TextStyle(color: networkColor),
+                                        ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  SvgPicture.asset(
+                                    'images/edit.svg',
+                                    color: networkColor,
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        );
-                      },
-                    );
-                  },
-                  child: Container(
-                    color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Хоногийн тоо',
-                          style: TextStyle(color: dark),
                         ),
-                        Row(
-                          children: [
-                            this.index == null
-                                ? Text(
-                                    '0',
-                                    style: TextStyle(color: networkColor),
-                                  )
-                                : Text(
-                                    '${this.index! + 1}',
-                                    style: TextStyle(color: networkColor),
+                      ),
+                    ],
+                  )
+                : currentOption == "INV_SOM"
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: Text(
+                              'Нэмэлт тохиргоо',
+                              style: TextStyle(
+                                color: grey3,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              showCupertinoModalPopup(
+                                context: context,
+                                builder: (context) {
+                                  return Container(
+                                    color: white,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.4,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text(
+                                            'Болсон',
+                                            style:
+                                                TextStyle(color: networkColor),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: CupertinoPicker(
+                                            itemExtent: 30,
+                                            onSelectedItemChanged: (index) {
+                                              setState(() {
+                                                this.indexMonth = index;
+                                                print(indexMonth);
+                                              });
+                                            },
+                                            children: [
+                                              for (var i = 1; i < 13; i++)
+                                                Center(
+                                                  child: Text('${i}'),
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: Container(
+                              color: white,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Сар',
+                                    style: TextStyle(color: dark),
                                   ),
-                            SizedBox(
-                              width: 5,
+                                  Row(
+                                    children: [
+                                      this.indexMonth == null
+                                          ? Text(
+                                              '0',
+                                              style: TextStyle(
+                                                  color: networkColor),
+                                            )
+                                          : Text(
+                                              '${this.indexMonth! + 1}',
+                                              style: TextStyle(
+                                                  color: networkColor),
+                                            ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      SvgPicture.asset(
+                                        'images/edit.svg',
+                                        color: networkColor,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                            SvgPicture.asset(
-                              'images/edit.svg',
-                              color: networkColor,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              showCupertinoModalPopup(
+                                context: context,
+                                builder: (context) {
+                                  return Container(
+                                    color: white,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.4,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text(
+                                            'Болсон',
+                                            style:
+                                                TextStyle(color: networkColor),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: CupertinoPicker(
+                                            itemExtent: 30,
+                                            onSelectedItemChanged: (index) {
+                                              setState(() {
+                                                this.indexDay = index;
+                                                print(indexDay);
+                                              });
+                                            },
+                                            children: [
+                                              for (var i = 1; i < 31; i++)
+                                                Center(
+                                                  child: Text('${i}'),
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: Container(
+                              color: white,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Хоногийн тоо',
+                                    style: TextStyle(color: dark),
+                                  ),
+                                  Row(
+                                    children: [
+                                      this.indexDay == null
+                                          ? Text(
+                                              '0',
+                                              style: TextStyle(
+                                                  color: networkColor),
+                                            )
+                                          : Text(
+                                              '${this.indexDay! + 1}',
+                                              style: TextStyle(
+                                                  color: networkColor),
+                                            ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      SvgPicture.asset(
+                                        'images/edit.svg',
+                                        color: networkColor,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            // : index == 4
-            //     ? Column(
-            //         crossAxisAlignment: CrossAxisAlignment.start,
-            //         children: [
-            //           Container(
-            //             margin: const EdgeInsets.symmetric(
-            //                 horizontal: 15, vertical: 10),
-            //             child: Text(
-            //               'Нэмэлт тохиргоо',
-            //               style: TextStyle(
-            //                 color: grey3,
-            //                 fontWeight: FontWeight.w600,
-            //               ),
-            //             ),
-            //           ),
-            //           InkWell(
-            //             onTap: () {
-            //               showCupertinoModalPopup(
-            //                 context: context,
-            //                 builder: (context) {
-            //                   return Container(
-            //                     color: white,
-            //                     height: MediaQuery.of(context).size.height *
-            //                         0.4,
-            //                     child: Column(
-            //                       crossAxisAlignment:
-            //                           CrossAxisAlignment.end,
-            //                       children: [
-            //                         TextButton(
-            //                           onPressed: () {
-            //                             Navigator.of(context).pop();
-            //                           },
-            //                           child: Text(
-            //                             'Болсон',
-            //                             style:
-            //                                 TextStyle(color: networkColor),
-            //                           ),
-            //                         ),
-            //                         Expanded(
-            //                           child: CupertinoPicker(
-            //                             itemExtent: 30,
-            //                             onSelectedItemChanged: (index) {
-            //                               setState(() {
-            //                                 this.index = index;
-            //                               });
-            //                             },
-            //                             children: [
-            //                               for (var i = 1; i < 31; i++)
-            //                                 Center(
-            //                                   child: Text('${i}'),
-            //                                 ),
-            //                             ],
-            //                           ),
-            //                         ),
-            //                       ],
-            //                     ),
-            //                   );
-            //                 },
-            //               );
-            //             },
-            //             child: Container(
-            //               color: white,
-            //               padding: const EdgeInsets.symmetric(
-            //                   horizontal: 15, vertical: 10),
-            //               child: Row(
-            //                 mainAxisAlignment:
-            //                     MainAxisAlignment.spaceBetween,
-            //                 children: [
-            //                   Text(
-            //                     'Хоногийн тоо',
-            //                     style: TextStyle(color: dark),
-            //                   ),
-            //                   Row(
-            //                     children: [
-            //                       this.index == null
-            //                           ? Text(
-            //                               '0',
-            //                               style: TextStyle(
-            //                                   color: networkColor),
-            //                             )
-            //                           : Text(
-            //                               '${this.index! + 1}',
-            //                               style: TextStyle(
-            //                                   color: networkColor),
-            //                             ),
-            //                       SizedBox(
-            //                         width: 5,
-            //                       ),
-            //                       SvgPicture.asset(
-            //                         'images/edit.svg',
-            //                         color: networkColor,
-            //                       ),
-            //                     ],
-            //                   ),
-            //                 ],
-            //               ),
-            //             ),
-            //           ),
-            //         ],
-            //       )
-            //     : SizedBox(),
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
             SizedBox(
-              height: 100,
+              height: 50,
             ),
             Row(
               children: [
@@ -319,7 +412,9 @@ class _NewConditionPageState extends State<NewConditionPage> {
                     child: CustomButton(
                       labelColor: networkColor,
                       labelText: 'Хадгалах',
-                      onClick: () {},
+                      onClick: () {
+                        onSubmit();
+                      },
                     ),
                   ),
                 ),

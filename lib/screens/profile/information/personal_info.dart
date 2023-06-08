@@ -9,7 +9,7 @@ import 'package:after_layout/after_layout.dart';
 
 class PersonalInfo extends StatefulWidget {
   static const routeName = '/personalinfo';
-  User? data;
+  final User? data;
 
   PersonalInfo({
     Key? key,

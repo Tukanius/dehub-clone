@@ -1,5 +1,4 @@
 import 'package:dehub/models/partner.dart';
-import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';

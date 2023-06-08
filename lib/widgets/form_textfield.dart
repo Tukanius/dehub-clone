@@ -1,4 +1,3 @@
-import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -36,11 +35,15 @@ class FormTextField extends StatefulWidget {
   final bool showCounter;
   final Function(dynamic)? onChanged;
   final Color? color;
+  final Color? textColor;
+  final TextAlign? textAlign;
 
   // ignore: use_key_in_widget_constructors
   const FormTextField(
       {Key? key,
+      this.textAlign,
       this.name,
+      this.textColor,
       this.controller,
       this.decoration,
       this.maxLines = 1,
@@ -124,8 +127,9 @@ class _FormTextFieldState extends State<FormTextField> {
           widget.onComplete!();
         }
       },
+      textAlign: widget.textAlign != null ? widget.textAlign! : TextAlign.start,
       style: TextStyle(
-          color: Colors.black,
+          color: widget.textColor,
           fontSize: widget.fontSize,
           fontWeight: widget.fontWeight),
 

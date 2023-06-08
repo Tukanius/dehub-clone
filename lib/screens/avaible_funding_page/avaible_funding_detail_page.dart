@@ -4,7 +4,6 @@ import 'package:dehub/screens/avaible_funding_page/tabs/limit_tab.dart';
 import 'package:dehub/screens/avaible_funding_page/tabs/request_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class AvaibleFundingDetailPage extends StatefulWidget {
   static const routeName = 'avaiblefundingdetailpage';

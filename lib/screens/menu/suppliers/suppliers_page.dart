@@ -1,14 +1,9 @@
-import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/search_button/search_button.dart';
-import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/bugd.dart';
-import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet.dart';
-import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet_bish.dart';
 import 'package:dehub/screens/menu/suppliers/tabs/all.dart';
 import 'package:dehub/screens/menu/suppliers/tabs/contractual.dart';
 import 'package:dehub/screens/menu/suppliers/tabs/not_contractual.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SuppliersPage extends StatefulWidget {
   static const routeName = '/SuppliersPage';

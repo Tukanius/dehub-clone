@@ -1,6 +1,5 @@
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/screens/funding_request_page/tabs/invoice.dart';
 import 'package:dehub/screens/funding_request_page/tabs/request_tab.dart';
 import 'package:dehub/screens/funding_request_page/tabs/limit_tab.dart';
