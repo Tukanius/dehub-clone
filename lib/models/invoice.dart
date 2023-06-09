@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:moment_dart/moment_dart.dart';
 part '../parts/invoice.dart';
 
@@ -132,27 +131,15 @@ class Invoice {
   double? amount;
 
   String getPostDate() {
-    return Moment.parse(DateFormat("yyyy-MM-dd")
-            .parseUTC(createdAt!)
-            .toLocal()
-            .toIso8601String())
-        .format("yyyy-MM-dd");
+    return Moment.parse(createdAt!).format("YYYY-MM-DD");
   }
 
   String getsentDate() {
-    return Moment.parse(DateFormat("yyyy-MM-ddTHH:mm:ssZ")
-            .parseUTC(createdAt!)
-            .toLocal()
-            .toIso8601String())
-        .format("yyyy-MM-dd HH:mm");
+    return Moment.parse(createdAt!).format("YYYY-MM-DD");
   }
 
   String getPaymentDate() {
-    return Moment.parse(DateFormat("yyyy-MM-ddTHH:mm:ssZ")
-            .parseUTC(paymentDate!)
-            .toLocal()
-            .toIso8601String())
-        .format('yyyy-MM-dd HH:mm');
+    return Moment.parse(paymentDate!).format('YYYY-MM-DD ');
   }
 
   Invoice({

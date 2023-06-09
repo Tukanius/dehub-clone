@@ -43,6 +43,21 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
   Result reference = Result(rows: [], count: 0);
   bool isLoading = true;
 
+  bottomSheet() {
+    switch (widget.data.listType) {
+      case "DIRECTION":
+        return buildSheet();
+      case "INV_NET2":
+        return addInvoiceTerm();
+      case "REGION":
+        return addZoning();
+      case "CLIENT_CATEGORY":
+        return addCategory();
+      case "CLIENT_PRIORITY":
+        return addRank();
+    }
+  }
+
   @override
   afterFirstLayout(BuildContext context) async {
     switch (widget.data.type) {
@@ -127,53 +142,11 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
             addColor: white,
             color: networkColor,
             onClick: () {
-              // if (widget.data.listType == "INV_NET2") {
-              //   Navigator.of(context).pushNamed(NewConditionPage.routeName);
-              // } else if (widget.data.listType == "REGION") {
-              //   Navigator.of(context).pushNamed(ZoningDetailPage.routeName);
-              // } else if (widget.data.listType == 'CLIENT_CATEGORY') {
-              //   Navigator.of(context).pushNamed(CategoryDetailPage.routeName);
-              // } else if (widget.data.listType == "CLIENT_PRIORITY") {
-              //   Navigator.of(context).pushNamed(RankDetailPage.routeName);
-              // } else if (widget.data.listType == "DIRECTION") {
-              //   Navigator.of(context).pushNamed(AddDirection.routeName);
-              // }
-              if (widget.data.listType == "DIRECTION") {
-                showModalBottomSheet(
+              showModalBottomSheet(
                   isScrollControlled: true,
                   useSafeArea: true,
                   context: context,
-                  builder: (context) => buildSheet(),
-                );
-              } else if (widget.data.listType == "INV_NET2") {
-                showModalBottomSheet(
-                  isScrollControlled: true,
-                  useSafeArea: true,
-                  context: context,
-                  builder: (context) => addInvoiceTerm(),
-                );
-              } else if (widget.data.listType == "REGION") {
-                showModalBottomSheet(
-                  isScrollControlled: true,
-                  useSafeArea: true,
-                  context: context,
-                  builder: (context) => addZoning(),
-                );
-              } else if (widget.data.listType == "CLIENT_CATEGORY") {
-                showModalBottomSheet(
-                  isScrollControlled: true,
-                  useSafeArea: true,
-                  context: context,
-                  builder: (context) => addCategory(),
-                );
-              } else if (widget.data.listType == "CLIENT_PRIORITY") {
-                showModalBottomSheet(
-                  isScrollControlled: true,
-                  useSafeArea: true,
-                  context: context,
-                  builder: (context) => addRank(),
-                );
-              }
+                  builder: (context) => bottomSheet());
             },
           ),
         ],

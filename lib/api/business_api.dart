@@ -57,11 +57,6 @@ class BusinessApi extends HttpRequest {
     return BusinessNetwork.fromJson(res as Map<String, dynamic>);
   }
 
-  // Future<Result> referenceList(ResultArguments resultArguments) async {
-  //   var res =
-  //       await get('/reference', "BUSINESS", data: resultArguments.toJson());
-  //   return Result.fromJson(res, ReferenceInformation.$fromJson);
-  // }
   Future<Result> referenceList(ResultArguments resultArguments) async {
     var res =
         await get("/reference", "BUSINESS", data: resultArguments.toJson());

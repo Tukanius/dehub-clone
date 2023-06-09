@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:moment_dart/moment_dart.dart';
 part '../parts/invitation_received.dart';
 
@@ -67,11 +66,7 @@ class InvitationReceived {
   bool? accept;
 
   String getInvitedDate() {
-    return Moment.parse(DateFormat("yyyy-MM-ddTHH:mm:ssZ")
-            .parseUTC(invitedDate!)
-            .toLocal()
-            .toIso8601String())
-        .format("yyyy-MM-dd HH:mm");
+    return Moment.parse(invitedDate!).format('YYYY-MM-DD');
   }
 
   InvitationReceived({
