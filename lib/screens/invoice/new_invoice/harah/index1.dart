@@ -347,7 +347,7 @@ class _Index1State extends State<Index1> {
                       'Барааны мэдээлэл',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        color: Color(0xff636E72),
+                        color: grey3,
                       ),
                     ),
                   ),
@@ -449,7 +449,7 @@ class _Index1State extends State<Index1> {
                   child: Text(
                     'НИЙТ ТӨЛБӨР',
                     style: TextStyle(
-                      color: Color(0xff636E72),
+                      color: grey3,
                       fontWeight: FontWeight.w600,
                     ),
                   ),

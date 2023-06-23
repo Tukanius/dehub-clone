@@ -60,9 +60,7 @@ class _Page3State extends State<Page3> {
             child: Text(
               'ЕРӨНХИЙ МЭДЭЭЛЭЛ',
               style: TextStyle(
-                color: Color(
-                  0xff636E72,
-                ),
+                color: grey3,
                 fontWeight: FontWeight.w500,
                 fontSize: 16,
               ),
@@ -77,7 +75,7 @@ class _Page3State extends State<Page3> {
               'Нийтэд нээлттэй гарах хаягийн мэдээлэл',
               style: TextStyle(
                 fontSize: 10,
-                color: Color(0xff636E72),
+                color: grey3,
                 fontWeight: FontWeight.w500,
               ),
             ),

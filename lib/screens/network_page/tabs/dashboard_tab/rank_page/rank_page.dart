@@ -1,6 +1,5 @@
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/rank_card/rank_card.dart';
-import 'package:dehub/screens/network_page/tabs/dashboard_tab/rank_page/add_rank.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -52,12 +51,12 @@ class _RankPageState extends State<RankPage> {
             addColor: white,
             color: networkColor,
             onClick: () {
-              showModalBottomSheet(
-                useSafeArea: true,
-                isScrollControlled: true,
-                context: context,
-                builder: (context) => buildSheet(),
-              );
+              // showModalBottomSheet(
+              //   useSafeArea: true,
+              //   isScrollControlled: true,
+              //   context: context,
+              //   builder: (context) => buildSheet(),
+              // );
             },
           ),
         ],
@@ -99,10 +98,10 @@ class _RankPageState extends State<RankPage> {
     );
   }
 
-  Widget buildSheet() => DraggableScrollableSheet(
-        minChildSize: 0.5,
-        maxChildSize: 1,
-        initialChildSize: 1,
-        builder: (context, scrollController) => AddRank(),
-      );
+  // Widget buildSheet() => DraggableScrollableSheet(
+  //       minChildSize: 0.5,
+  //       maxChildSize: 1,
+  //       initialChildSize: 1,
+  //       builder: (context, scrollController) => AddRank(),
+  //     );
 }

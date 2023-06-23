@@ -1,9 +1,12 @@
+import 'package:dehub/models/invoice.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class SectorCard extends StatefulWidget {
   final Function()? onClick;
+  final Invoice? data;
   const SectorCard({
+    this.data,
     Key? key,
     this.onClick,
   }) : super(key: key);
@@ -28,17 +31,15 @@ class _SectorCardState extends State<SectorCard> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  height: 40,
-                  width: 40,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: Image(
-                      image: AssetImage('images/map.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+                widget.data?.logo != null
+                    ? CircleAvatar(
+                        radius: 20,
+                        backgroundImage: NetworkImage('${widget.data?.logo}'),
+                      )
+                    : CircleAvatar(
+                        radius: 20,
+                        backgroundImage: AssetImage('images/map.jpg'),
+                      ),
                 SizedBox(
                   width: 16,
                 ),

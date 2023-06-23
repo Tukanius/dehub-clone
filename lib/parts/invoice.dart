@@ -11,6 +11,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => Invoice.fromJson(e)).toList()
         : null,
+    items: json['items'] != null
+        ? (json['items'] as List).map((e) => Invoice.fromJson(e)).toList()
+        : null,
     id: json['id'] != null ? json['id'] as String : null,
     createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
     updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
@@ -24,6 +27,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     senderFinUserId: json['senderFinUserId'] != null
         ? json['senderFinUserId'] as String
         : null,
+    send: json['send'] != null ? json['send'] as bool : null,
     senderBranchId: json['senderBranchId'] != null
         ? json['senderBranchId'] as String
         : null,
@@ -269,6 +273,8 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.send != null) json['send'] = instance.send;
+  if (instance.items != null) json['items'] = instance.items;
   if (instance.method != null) json['method'] = instance.method;
   if (instance.creditAccountId != null)
     json['creditAccountId'] = instance.creditAccountId;

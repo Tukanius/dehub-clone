@@ -33,9 +33,6 @@ class _BasicInformationTabState extends State<BasicInformationTab>
       isLoading = true;
     });
     inventory = await InventoryApi().goodsGet(widget.id);
-    print("================INVENTORT=======================");
-    print(inventory.toJson());
-    print("================INVENTORT=======================");
     setState(() {
       isLoading = false;
     });

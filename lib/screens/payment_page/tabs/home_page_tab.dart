@@ -25,7 +25,7 @@ class _HomePageTabState extends State<HomePageTab> {
             ),
           ),
           Container(
-            height: 90,
+            height: 100,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
@@ -36,8 +36,8 @@ class _HomePageTabState extends State<HomePageTab> {
                     color: white,
                   ),
                   padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -71,8 +71,8 @@ class _HomePageTabState extends State<HomePageTab> {
                     color: white,
                   ),
                   padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -106,8 +106,8 @@ class _HomePageTabState extends State<HomePageTab> {
                     color: white,
                   ),
                   padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -138,8 +138,8 @@ class _HomePageTabState extends State<HomePageTab> {
                     color: white,
                   ),
                   padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -173,8 +173,8 @@ class _HomePageTabState extends State<HomePageTab> {
                     color: white,
                   ),
                   padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

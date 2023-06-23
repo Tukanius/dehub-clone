@@ -222,6 +222,11 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => DistributionAreas.fromJson(e))
             .toList()
         : null,
+    clientClassifications: json['clientClassifications'] != null
+        ? (json['clientClassifications'] as List)
+            .map((e) => ClientClassifications.fromJson(e))
+            .toList()
+        : null,
   );
 }
 

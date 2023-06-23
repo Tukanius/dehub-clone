@@ -50,7 +50,6 @@ class _ProfilePageState extends State<ProfilePage>
   @override
   Widget build(BuildContext context) {
     partnerUser = Provider.of<UserProvider>(context, listen: false).user;
-
     return Scaffold(
       backgroundColor: Color(0xffF5F5F5),
       appBar: AppBar(
@@ -148,7 +147,7 @@ class _ProfilePageState extends State<ProfilePage>
                                     : white,
                               ),
                               child: SvgPicture.asset(
-                                'images/Vector.svg',
+                                'images/hospital.svg',
                                 color: tabController.index != 1 ? grey3 : white,
                               ),
                             ),

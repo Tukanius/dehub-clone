@@ -3,6 +3,7 @@ import 'package:dehub/models/invoice.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/screens/invoice/payment_page/payment_approval_page.dart';
 import 'package:dehub/screens/invoice/payment_page/qpay_page.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 
 class InvoicePaymentPage extends StatefulWidget {
   final Invoice data;
@@ -130,7 +132,7 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                         Row(
                           children: [
                             Text(
-                              '${widget.data.amountToPay}',
+                              '${Utils().formatCurrency(widget.data.amountToPay.toString())}',
                               style: TextStyle(color: invoiceColor),
                             ),
                             IconButton(
@@ -155,7 +157,7 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                         Row(
                           children: [
                             Text(
-                              '${widget.data.amountToPay}',
+                              '${Utils().formatCurrency(widget.data.amountToPay.toString())}',
                               style: TextStyle(color: invoiceColor),
                             ),
                             IconButton(
@@ -274,202 +276,172 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                 color: white,
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: 50,
-                      child: FormBuilderDropdown(
-                        icon: Container(
-                          decoration: BoxDecoration(
-                            color: white,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: const Icon(
-                            Icons.arrow_drop_down,
-                            color: black,
-                          ),
+                    FormBuilderDropdown(
+                      icon: Container(
+                        decoration: BoxDecoration(
+                          color: white,
+                          borderRadius: BorderRadius.circular(15),
                         ),
-                        name: 'paymentMethod',
-                        onChanged: (value) async {
-                          setState(() {
-                            selectedMethod = value;
-                          });
-                        },
-                        decoration: InputDecoration(
-                          hintText:
-                              //   Container(
-                              //   margin: const EdgeInsets.only(left: 10),
-                              //   child: Row(
-                              //     children: [
-                              //       SvgPicture.asset(
-                              //         'images/bank.svg',
-                              //         color: invoiceColor,
-                              //       ),
-                              //       SizedBox(
-                              //         width: 5,
-                              //       ),
-
-                              //     ],
-                              //   ),
-                              // ),
-
-                              "Холбосон дансаар",
-                          hintStyle:
-                              TextStyle(fontSize: 14, color: invoiceColor),
-                          filled: true,
-                          fillColor: white,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 12, horizontal: 10),
-                          border: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: white, width: 0),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: white, width: 0),
-                          ),
+                        child: const Icon(
+                          Icons.arrow_drop_down,
+                          color: black,
                         ),
-                        items: general.paymentMethod!
-                            .map(
-                              (item) => DropdownMenuItem(
-                                value: item.code,
-                                child: Container(
-                                  margin: const EdgeInsets.only(left: 10),
-                                  child: Row(
-                                    children: [
-                                      item.code == "B2B"
-                                          ? SizedBox()
-                                          : item.code == "QPAY"
-                                              ? Container(
-                                                  margin: const EdgeInsets.only(
-                                                    right: 10,
+                      ),
+                      name: 'paymentMethod',
+                      onChanged: (value) async {
+                        setState(() {
+                          selectedMethod = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Төлбөрийн хэрэгсэл сонгох',
+                        hintStyle: TextStyle(fontSize: 14, color: invoiceColor),
+                        filled: true,
+                        fillColor: white,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 15),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      items: general.paymentMethod!
+                          .map(
+                            (item) => DropdownMenuItem(
+                              value: item.code,
+                              child: Container(
+                                margin: const EdgeInsets.only(left: 10),
+                                child: Row(
+                                  children: [
+                                    item.code == "B2B"
+                                        ? SizedBox()
+                                        : item.code == "QPAY"
+                                            ? Container(
+                                                margin: const EdgeInsets.only(
+                                                  right: 10,
+                                                ),
+                                                height: 20,
+                                                width: 20,
+                                                child: Image(
+                                                  image: AssetImage(
+                                                    'images/qpay_logo.png',
                                                   ),
-                                                  height: 20,
-                                                  width: 20,
-                                                  child: Image(
-                                                    image: AssetImage(
-                                                      'images/qpay_logo.png',
+                                                ),
+                                              )
+                                            : item.code == "SOCIAL_PAY"
+                                                ? Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                      right: 10,
                                                     ),
-                                                  ),
-                                                )
-                                              : item.code == "SOCIAL_PAY"
-                                                  ? Container(
-                                                      margin:
-                                                          const EdgeInsets.only(
-                                                        right: 10,
+                                                    height: 20,
+                                                    width: 20,
+                                                    child: Image(
+                                                      image: AssetImage(
+                                                        'images/social_pay_logo.png',
                                                       ),
-                                                      height: 20,
-                                                      width: 20,
-                                                      child: Image(
-                                                        image: AssetImage(
-                                                          'images/social_pay_logo.png',
+                                                    ),
+                                                  )
+                                                : item.code == "BANK_CARD"
+                                                    ? Container(
+                                                        margin: const EdgeInsets
+                                                            .only(right: 10),
+                                                        child: SvgPicture.asset(
+                                                          'images/bank_card.svg',
+                                                          color: invoiceColor,
                                                         ),
-                                                      ),
-                                                    )
-                                                  : item.code == "BANK_CARD"
-                                                      ? Container(
-                                                          margin:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  right: 10),
-                                                          child:
-                                                              SvgPicture.asset(
-                                                            'images/bank_card.svg',
-                                                            color: invoiceColor,
-                                                          ),
-                                                        )
-                                                      : SizedBox(),
-                                      Text(
-                                        '${item.name}',
-                                        style: TextStyle(fontSize: 14),
-                                      ),
-                                    ],
-                                  ),
+                                                      )
+                                                    : SizedBox(),
+                                    Text(
+                                      '${item.name}',
+                                      style: TextStyle(fontSize: 14),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            )
-                            .toList(),
-                      ),
+                            ),
+                          )
+                          .toList(),
                     ),
                     selectedMethod == "B2B"
-                        ? SizedBox(
-                            height: 50,
-                            child: FormBuilderDropdown(
-                              icon: Container(
-                                decoration: BoxDecoration(
-                                  color: white,
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: const Icon(
-                                  Icons.arrow_drop_down,
-                                  color: black,
-                                ),
+                        ? FormBuilderDropdown(
+                            icon: Container(
+                              decoration: BoxDecoration(
+                                color: white,
                               ),
-                              name: 'number',
-                              onChanged: (value) async {
-                                selectedValue = value;
-                              },
-                              decoration: InputDecoration(
-                                hintText: 'Данс сонгоно уу',
-                                hintStyle: TextStyle(
-                                    fontSize: 14, color: invoiceColor),
-                                filled: true,
-                                fillColor: white,
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 12, horizontal: 10),
-                                border: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: white, width: 0),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: white, width: 0),
-                                ),
+                              child: const Icon(
+                                Icons.arrow_drop_down,
+                                color: black,
                               ),
-                              items: general.bankAccounts!
-                                  .map(
-                                    (item) => DropdownMenuItem(
-                                      value: item.id,
-                                      child: Container(
-                                        margin: const EdgeInsets.only(left: 10),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Image(
-                                                  image: NetworkImage(
-                                                    '${item.icon}',
-                                                  ),
-                                                  height: 20,
+                            ),
+                            name: 'number',
+                            onChanged: (value) async {
+                              selectedValue = value;
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'Дансны дугаар сонгоно уу',
+                              hintStyle:
+                                  TextStyle(fontSize: 14, color: invoiceColor),
+                              filled: true,
+                              fillColor: white,
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 12, horizontal: 15),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            items: general.bankAccounts!
+                                .map(
+                                  (item) => DropdownMenuItem(
+                                    value: item.id,
+                                    child: Container(
+                                      margin: const EdgeInsets.only(left: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Image(
+                                                image: NetworkImage(
+                                                  '${item.icon}',
                                                 ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Text(
-                                                  '${item.bankName}',
-                                                  style: TextStyle(
-                                                    color: black,
-                                                    fontSize: 14,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Text(
-                                              '${item.number}',
-                                              style: const TextStyle(
-                                                fontSize: 14,
-                                                color: invoiceColor,
+                                                height: 20,
                                               ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text(
+                                                '${item.bankName}',
+                                                style: TextStyle(
+                                                  color: black,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Text(
+                                            '${item.number}',
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              color: invoiceColor,
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  )
-                                  .toList(),
-                            ),
+                                  ),
+                                )
+                                .toList(),
                           )
                         : selectedMethod == "QPAY"
                             ? InkWell(
@@ -682,12 +654,18 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                   inputType: TextInputType.number,
                   controller: textController,
                   decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 15),
                     border: OutlineInputBorder(),
                     fillColor: Colors.white,
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: invoiceColor),
                     ),
                   ),
+                  validators: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(
+                        errorText: 'Төлбөрийн дүн оруулна уу')
+                  ]),
                 ),
               ),
               Row(
@@ -733,6 +711,9 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                     onSubmit();
                   },
                 ),
+              ),
+              SizedBox(
+                height: 50,
               ),
             ],
           ),

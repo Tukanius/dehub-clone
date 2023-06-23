@@ -1,6 +1,5 @@
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/category_card/category_card.dart';
-import 'package:dehub/screens/network_page/tabs/dashboard_tab/category_page/add_category.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -57,12 +56,12 @@ class _CategoryPageState extends State<CategoryPage> {
             color: networkColor,
             addColor: white,
             onClick: () {
-              showModalBottomSheet(
-                isScrollControlled: true,
-                useSafeArea: true,
-                context: context,
-                builder: (context) => buildSheet(),
-              );
+              // showModalBottomSheet(
+              //   isScrollControlled: true,
+              //   useSafeArea: true,
+              //   context: context,
+              //   builder: (context) => buildSheet(),
+              // );
             },
           ),
         ],
@@ -106,10 +105,10 @@ class _CategoryPageState extends State<CategoryPage> {
     );
   }
 
-  Widget buildSheet() => DraggableScrollableSheet(
-        minChildSize: 0.5,
-        maxChildSize: 1,
-        initialChildSize: 1,
-        builder: (context, scrollController) => AddCategory(),
-      );
+  // Widget buildSheet() => DraggableScrollableSheet(
+  //       minChildSize: 0.5,
+  //       maxChildSize: 1,
+  //       initialChildSize: 1,
+  //       builder: (context, scrollController) => AddCategory(),
+  //     );
 }

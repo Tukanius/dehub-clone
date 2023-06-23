@@ -4,6 +4,7 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/harah.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dehub/screens/invoice/payment_page/payment_page.dart';
@@ -204,7 +205,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                           ),
                         ),
                         Text(
-                          '${invoice.itemsTotal}',
+                          '${Utils().formatCurrency(invoice.itemsTotal.toString())}',
                           style: TextStyle(color: invoiceColor),
                         ),
                       ],
@@ -221,7 +222,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          invoice.paidAmount.toString(),
+                          "${Utils().formatCurrency(invoice.paidAmount.toString())}",
                           style: TextStyle(color: invoiceColor),
                         ),
                       ],
@@ -238,7 +239,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          invoice.amountToPay.toString(),
+                          '${Utils().formatCurrency(invoice.amountToPay.toString())}',
                           style: TextStyle(color: invoiceColor),
                         ),
                       ],
@@ -723,7 +724,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Color(0xff636E72).withOpacity(0.3),
+                          color: grey3.withOpacity(0.3),
                         ),
                       ),
                       child: Text('${invoice.description}'),
@@ -754,7 +755,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         Row(
                           children: [
                             Text(
-                              '${invoice.discountAmount}',
+                              '${Utils().formatCurrency(invoice.discountAmount.toString())}',
                               style: TextStyle(color: invoiceColor),
                             ),
                             SizedBox(
@@ -784,7 +785,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                           children: [
                             Container(
                               child: Text(
-                                '${invoice.vatAmount}₮',
+                                '${Utils().formatCurrency(invoice.vatAmount.toString())}₮',
                                 style: TextStyle(color: invoiceColor),
                               ),
                             ),
@@ -808,7 +809,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                           children: [
                             Container(
                               child: Text(
-                                '${invoice.taxAmount}',
+                                '${Utils().formatCurrency(invoice.taxAmount.toString())}',
                                 style: TextStyle(color: invoiceColor),
                               ),
                             ),
@@ -831,7 +832,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         Row(
                           children: [
                             Text(
-                              '${invoice.shippingAmount}',
+                              '${Utils().formatCurrency(invoice.shippingAmount.toString())}',
                               style: TextStyle(color: invoiceColor),
                             ),
                             SizedBox(
@@ -864,7 +865,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                           children: [
                             Container(
                               child: Text(
-                                '${invoice.totalAmount} ',
+                                '${Utils().formatCurrency(invoice.totalAmount.toString())} ',
                                 style: TextStyle(
                                   color: invoiceColor,
                                   fontSize: 24,

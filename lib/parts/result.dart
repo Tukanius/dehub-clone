@@ -59,8 +59,6 @@ Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
     if (instance.offset!.limit! > 0) {
       params['offset']['limit'] = instance.offset!.limit;
     }
-
-    print("JSON=>" + params['filter']['query'].toString());
   }
 
   return params;

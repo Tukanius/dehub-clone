@@ -49,7 +49,7 @@ class _SendPageState extends State<SendPage> {
                   child: Text(
                     'ХҮЛЭЭН АВАГЧ',
                     style: TextStyle(
-                      color: Color(0xff636E72),
+                      color: grey3,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),

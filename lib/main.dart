@@ -16,6 +16,8 @@ import 'package:dehub/screens/invoice/closed_invoice_page.dart';
 import 'package:dehub/screens/invoice/payment_page/qpay_page.dart';
 import 'package:dehub/screens/invoice/tabs/give.dart';
 import 'package:dehub/screens/invoice/tabs/take.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/category_page/add_category.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/add_direction.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/direction_detail_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/direction_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/invoice_condition_page/invoice_condition_detail_page.dart';
@@ -23,12 +25,14 @@ import 'package:dehub/screens/network_page/tabs/dashboard_tab/invoice_condition_
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/invoice_condition_page/new_condition_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/category_page/category_detail_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/category_page/category_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/rank_page/add_rank.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/rank_page/rank_detail_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/rank_page/rank_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/reference_information_page/reference_information_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_detail_page/partner_detail_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_detail_page/payment_condition_page/payment_condition_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_page.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/zoning_page/add_zoning.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/zoning_page/zoning_detail_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/zoning_page/zoning_page.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/new_invitation_page/new_invitation_page.dart';
@@ -53,6 +57,9 @@ import 'package:dehub/screens/menu/menu_page.dart';
 import 'package:dehub/screens/network_page/network_page.dart';
 import 'package:dehub/screens/network_page/tabs/sent_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
 import 'package:dehub/screens/order_page/order_page.dart';
+import 'package:dehub/screens/otp_page/create_password.dart';
+import 'package:dehub/screens/otp_page/otp-phone-verify.dart';
+import 'package:dehub/screens/otp_page/otp_page.dart';
 import 'package:dehub/screens/partner_page/partner_page.dart';
 import 'package:dehub/screens/payment_page/payment_page.dart';
 import 'package:dehub/screens/product_page/product_page.dart';
@@ -61,6 +68,7 @@ import 'package:dehub/screens/product_page/tabs/dashboard_tab/product_list_page/
 import 'package:dehub/screens/received_funding_page/give_funding_detail_page.dart';
 import 'package:dehub/screens/received_funding_page/received_funding_detail_page.dart';
 import 'package:dehub/screens/received_funding_page/received_funding_page.dart';
+import 'package:dehub/screens/register-page/register-page.dart';
 import 'package:dehub/screens/shopping/shopping_page.dart';
 import 'package:dehub/screens/menu/suppliers/suppliers_page.dart';
 import 'package:dehub/screens/menu/tabs/purchase_page.dart';
@@ -104,6 +112,7 @@ class MyApp extends StatelessWidget {
         child: Stack(
           children: [
             MaterialApp(
+              theme: ThemeData(fontFamily: "Montserrat"),
               title: 'DeHub',
               builder: (context, widget) => Navigator(
                 onGenerateRoute: (settings) => MaterialPageRoute(
@@ -180,14 +189,54 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return InvoicePage();
                     });
+
                   case CustomerChoose.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return CustomerChoose();
-                    });
+                    // CustomerChooseArguments arguments =
+                    //     settings.arguments as CustomerChooseArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          CustomerChoose(
+                              // listenController: arguments.listenController,
+                              ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
                   case SalbarSongoh.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return SalbarSongoh();
-                    });
+                    SalbarSongohArguments arguments =
+                        settings.arguments as SalbarSongohArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          SalbarSongoh(
+                        // listenController: arguments.listenController,
+                        id: arguments.id,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
                   case Bugd.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return Bugd();
@@ -212,7 +261,22 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return GereetBish();
                     });
-
+                  case OtpVerifyPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return OtpVerifyPage();
+                    });
+                  case CreatePasswordPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return CreatePasswordPage();
+                    });
+                  case OtpPhoneVerify.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return OtpPhoneVerify();
+                    });
+                  case RegisterPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return RegisterPage();
+                    });
                   case Shirhegeer.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return Shirhegeer();
@@ -397,9 +461,120 @@ class MyApp extends StatelessWidget {
                       return PaymentConditionPage();
                     });
                   case NewConditionPage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return NewConditionPage();
-                    });
+                    NewConditionPageArguments arguments =
+                        settings.arguments as NewConditionPageArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          NewConditionPage(
+                        listenController: arguments.listenController,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
+                  case AddDirection.routeName:
+                    AddDirectionArguments arguments =
+                        settings.arguments as AddDirectionArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          AddDirection(
+                        listenController: arguments.listenController,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
+                  case AddZoning.routeName:
+                    AddZoningArguments arguments =
+                        settings.arguments as AddZoningArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          AddZoning(
+                        listenController: arguments.listenController,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
+                  case AddCategory.routeName:
+                    AddCategoryArguments arguments =
+                        settings.arguments as AddCategoryArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          AddCategory(
+                        listenController: arguments.listenController,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
+                  case AddRank.routeName:
+                    AddRankArguments arguments =
+                        settings.arguments as AddRankArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          AddRank(
+                        listenController: arguments.listenController,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
                   case InvoiceConditionDetailPage.routeName:
                     InvoiceConditionDetailPageArguments arguments = settings
                         .arguments as InvoiceConditionDetailPageArguments;

@@ -23,15 +23,9 @@ class _SplashPageState extends State<SplashPage>
   @override
   afterFirstLayout(BuildContext context) async {
     try {
-      print('===================1========================');
       await Provider.of<UserProvider>(context, listen: false).me(false);
-      print('===================1========================');
-      print('===================2========================');
       await Provider.of<UserProvider>(context, listen: false).partnerMe(false);
-      print('===================2========================');
       await Provider.of<GeneralProvider>(context, listen: false).init(false);
-      print('===================3========================');
-      print('===================3========================');
       await Provider.of<GeneralProvider>(context, listen: false)
           .businessInit(false);
       await Navigator.of(context).pushNamed(FirstPage.routeName);

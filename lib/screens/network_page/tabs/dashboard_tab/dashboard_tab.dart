@@ -27,7 +27,7 @@ class _DashboardTabState extends State<DashboardTab> {
             ),
           ),
           Container(
-            height: 90,
+            height: 100,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
@@ -44,12 +44,14 @@ class _DashboardTabState extends State<DashboardTab> {
                     ),
                     padding: const EdgeInsets.only(
                         left: 10, right: 10, top: 10, bottom: 5),
-                    width: 90,
-                    height: 90,
+                    width: 100,
+                    height: 100,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
+                          height: 40,
+                          width: 40,
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
@@ -81,12 +83,14 @@ class _DashboardTabState extends State<DashboardTab> {
                   ),
                   padding: const EdgeInsets.only(
                       left: 10, right: 10, top: 10, bottom: 5),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
+                        height: 40,
+                        width: 40,
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -117,13 +121,15 @@ class _DashboardTabState extends State<DashboardTab> {
                   ),
                   padding: const EdgeInsets.only(
                       left: 10, right: 10, top: 10, bottom: 5),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(10),
+                        height: 40,
+                        width: 40,
+                        padding: const EdgeInsets.all(7),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: networkColor.withOpacity(0.1),
@@ -153,12 +159,14 @@ class _DashboardTabState extends State<DashboardTab> {
                   ),
                   padding: const EdgeInsets.only(
                       left: 10, right: 10, top: 10, bottom: 5),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
+                        height: 40,
+                        width: 40,
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -194,13 +202,15 @@ class _DashboardTabState extends State<DashboardTab> {
                     ),
                     padding: const EdgeInsets.only(
                         left: 10, right: 10, top: 10, bottom: 5),
-                    width: 90,
-                    height: 90,
+                    width: 100,
+                    height: 100,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(10),
+                          height: 40,
+                          width: 40,
+                          padding: const EdgeInsets.all(7),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: networkColor.withOpacity(0.1),

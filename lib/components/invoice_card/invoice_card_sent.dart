@@ -112,7 +112,7 @@ class _InvoiceCardSentState extends State<InvoiceCardSent> {
             child: Text(
               "${widget.data!.getPostDate()}",
               style: TextStyle(
-                color: Color(0xff636E72),
+                color: grey3,
                 fontWeight: FontWeight.w600,
               ),
             ),

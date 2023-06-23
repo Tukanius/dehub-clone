@@ -1,16 +1,52 @@
+import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/models/business.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
+import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:moment_dart/moment_dart.dart';
+
+class AddZoningArguments {
+  ListenController listenController;
+  AddZoningArguments({
+    required this.listenController,
+  });
+}
 
 class AddZoning extends StatefulWidget {
-  const AddZoning({super.key});
+  final ListenController listenController;
+  static const routeName = "AddZoning";
+  const AddZoning({
+    Key? key,
+    required this.listenController,
+  }) : super(key: key);
 
   @override
   State<AddZoning> createState() => _AddZoningState();
 }
 
 class _AddZoningState extends State<AddZoning> {
+  GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
+  BusinessStaffs businessStaffs = BusinessStaffs();
+
+  onSubmit() async {
+    if (fbKey.currentState!.saveAndValidate()) {
+      try {
+        businessStaffs = BusinessStaffs.fromJson(fbKey.currentState!.value);
+        businessStaffs.parentId = "";
+        await BusinessApi().createDistributionArea(businessStaffs);
+        widget.listenController.changeVariable("createZoning");
+        Navigator.of(context).pop();
+      } catch (e) {
+        print(e.toString());
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,65 +107,70 @@ class _AddZoningState extends State<AddZoning> {
                 ],
               ),
             ),
-            Container(
-              color: white,
-              child: Row(
+            FormBuilder(
+              key: fbKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      color: white,
-                      child: Text(
-                        'Нэр',
-                        style: TextStyle(color: dark),
+                  FormTextField(
+                    textColor: networkColor,
+                    textAlign: TextAlign.end,
+                    name: 'name',
+                    inputType: TextInputType.text,
+                    maxLenght: 255,
+                    showCounter: false,
+                    decoration: InputDecoration(
+                      prefixIcon: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 15),
+                        child: Text(
+                          'Нэр',
+                          style: TextStyle(color: dark),
+                        ),
+                      ),
+                      fillColor: white,
+                      filled: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 15),
+                      hintStyle: TextStyle(color: networkColor),
+                      hintText: 'Бүсийн нэр',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                    validators: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Бүсийн нэр оруулна уу'),
+                    ]),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    child: Text(
+                      'Тайлбар',
+                      style: TextStyle(
+                        color: grey3,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: TextFormField(
-                      maxLength: 20,
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        color: networkColor,
-                      ),
-                      decoration: InputDecoration(
-                        counterText: '',
-                        hintText: 'Гараас оруулах',
-                        hintStyle: TextStyle(
-                          color: networkColor,
-                        ),
-                        filled: true,
-                        fillColor: white,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
+                  FormTextField(
+                    textColor: networkColor,
+                    name: 'description',
+                    inputType: TextInputType.text,
+                    decoration: InputDecoration(
+                      fillColor: white,
+                      filled: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 15),
+                      hintStyle: TextStyle(color: dark),
+                      hintText: 'Тайлбар оруулна уу',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
                       ),
                     ),
                   ),
                 ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Тайлбар',
-                style: TextStyle(
-                  color: grey3,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Container(
-              color: white,
-              padding: EdgeInsets.all(15),
-              height: 125,
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: grey3.withOpacity(0.3),
-                  ),
-                ),
               ),
             ),
             Container(
@@ -143,7 +184,7 @@ class _AddZoningState extends State<AddZoning> {
                     style: TextStyle(color: dark),
                   ),
                   Text(
-                    '2023-04-08 16:24 PM',
+                    '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD HH:mm")}',
                     style: TextStyle(
                       color: dark,
                     ),
@@ -214,7 +255,9 @@ class _AddZoningState extends State<AddZoning> {
                     child: CustomButton(
                       labelColor: backgroundColor,
                       textColor: networkColor,
-                      onClick: () {},
+                      onClick: () {
+                        Navigator.of(context).pop();
+                      },
                       labelText: "Буцах",
                     ),
                   ),
@@ -225,7 +268,9 @@ class _AddZoningState extends State<AddZoning> {
                     child: CustomButton(
                       labelColor: networkColor,
                       labelText: 'Хадгалах',
-                      onClick: () {},
+                      onClick: () {
+                        onSubmit();
+                      },
                     ),
                   ),
                 ),

@@ -2,6 +2,7 @@ import 'package:dehub/models/branch_status.dart';
 import 'package:dehub/models/business_sectors.dart';
 import 'package:dehub/models/business_staff_roles.dart';
 import 'package:dehub/models/business_status.dart';
+import 'package:dehub/models/client_classification.dart';
 import 'package:dehub/models/distribution_areas.dart';
 import 'package:dehub/models/equity_types.dart';
 import 'package:dehub/models/permissions.dart';
@@ -95,10 +96,12 @@ class General {
   ReferenceListTypes? referenceListTypes;
   List<ReferenceTypes>? referenceTypes;
   List<ServiceCategoryTypes>? serviceCategoryTypes;
-
   List<DistributionAreas>? distributionAreas;
 
+  List<ClientClassifications>? clientClassifications;
+
   General({
+    this.clientClassifications,
     this.distributionAreas,
     this.provinces,
     this.districts,

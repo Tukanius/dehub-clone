@@ -1,16 +1,50 @@
+import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/models/business.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
+import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+
+class AddCategoryArguments {
+  ListenController listenController;
+  AddCategoryArguments({
+    required this.listenController,
+  });
+}
 
 class AddCategory extends StatefulWidget {
-  const AddCategory({super.key});
+  final ListenController listenController;
+  static const routeName = 'AddCategory';
+  const AddCategory({
+    Key? key,
+    required this.listenController,
+  }) : super(key: key);
 
   @override
   State<AddCategory> createState() => _AddCategoryState();
 }
 
 class _AddCategoryState extends State<AddCategory> {
+  GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
+  onSubmit() async {
+    if (fbKey.currentState!.saveAndValidate()) {
+      try {
+        BusinessStaffs businessStaffs =
+            BusinessStaffs.fromJson(fbKey.currentState!.value);
+        businessStaffs.parentId = '';
+        await BusinessApi().createClientClassification(businessStaffs);
+        widget.listenController.changeVariable('createCategory');
+        Navigator.of(context).pop();
+      } catch (e) {
+        print(e.toString());
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,65 +105,68 @@ class _AddCategoryState extends State<AddCategory> {
                 ],
               ),
             ),
-            Container(
-              color: white,
-              child: Row(
+            FormBuilder(
+              key: fbKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      color: white,
-                      child: Text(
-                        'Ангилал нэр',
-                        style: TextStyle(color: dark),
+                  FormTextField(
+                    textAlign: TextAlign.right,
+                    name: 'name',
+                    textColor: networkColor,
+                    decoration: InputDecoration(
+                      hintText: 'Ангилал нэр оруулах',
+                      fillColor: white,
+                      hintStyle: TextStyle(color: networkColor),
+                      filled: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 15),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(0),
+                      ),
+                      prefixIcon: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 15),
+                        child: Text(
+                          'Ангилал нэр',
+                          style: TextStyle(color: dark),
+                        ),
+                      ),
+                    ),
+                    validators: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Ангилал нэр оруулна уу'),
+                    ]),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    child: Text(
+                      'Тайлбар',
+                      style: TextStyle(
+                        color: grey3,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: TextFormField(
-                      maxLength: 20,
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        color: networkColor,
-                      ),
-                      decoration: InputDecoration(
-                        counterText: '',
-                        hintText: 'Гараас оруулах',
-                        hintStyle: TextStyle(
-                          color: networkColor,
-                        ),
-                        filled: true,
-                        fillColor: white,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
+                  FormTextField(
+                    textColor: networkColor,
+                    name: 'description',
+                    decoration: InputDecoration(
+                      hintText: 'Тайлбар оруулах',
+                      fillColor: white,
+                      hintStyle: TextStyle(color: networkColor),
+                      filled: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 15),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(0),
                       ),
                     ),
                   ),
                 ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Тайлбар',
-                style: TextStyle(
-                  color: grey3,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Container(
-              color: white,
-              padding: EdgeInsets.all(15),
-              height: 125,
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: grey3.withOpacity(0.3),
-                  ),
-                ),
               ),
             ),
             Container(
@@ -214,7 +251,9 @@ class _AddCategoryState extends State<AddCategory> {
                     child: CustomButton(
                       labelColor: backgroundColor,
                       textColor: networkColor,
-                      onClick: () {},
+                      onClick: () {
+                        Navigator.of(context).pop();
+                      },
                       labelText: "Буцах",
                     ),
                   ),
@@ -225,7 +264,9 @@ class _AddCategoryState extends State<AddCategory> {
                     child: CustomButton(
                       labelColor: networkColor,
                       labelText: 'Хадгалах',
-                      onClick: () {},
+                      onClick: () {
+                        onSubmit();
+                      },
                     ),
                   ),
                 ),

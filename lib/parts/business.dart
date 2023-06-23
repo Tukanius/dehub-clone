@@ -21,11 +21,18 @@ BusinessStaffs _$BusinessStaffsFromJson(Map<String, dynamic> json) {
     paymentDay: json['paymentDay'] != null
         ? int.parse(json['paymentDay'].toString())
         : null,
+    name: json['name'] != null ? json['name'] as String : null,
+    parentId: json['parentId'] != null ? json['parentId'] as String : null,
+    description:
+        json['description'] != null ? json['description'] as String : null,
   );
 }
 
 Map<String, dynamic> _$BusinessStaffsToJson(BusinessStaffs instance) {
   Map<String, dynamic> json = {};
+  if (instance.name != null) json['name'] = instance.name;
+  if (instance.parentId != null) json['parentId'] = instance.parentId;
+  if (instance.description != null) json['description'] = instance.description;
   if (instance.termRule != null) json['termRule'] = instance.termRule;
   if (instance.orderConfirmTerm != null)
     json['orderConfirmTerm'] = instance.orderConfirmTerm;

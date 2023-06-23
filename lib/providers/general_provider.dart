@@ -12,16 +12,7 @@ class GeneralProvider extends ChangeNotifier {
   }
 
   businessInit(bool handler) async {
-    print('BUSINESS-GENERAL');
-    try {
-      businessGeneral = await GeneralApi().businessInit(handler);
-    } catch (e) {
-      print('===============ERROR=============');
-      print(e.toString());
-      print('===============ERROR=============');
-    }
-    print(businessGeneral.toJson());
-    print('BUSINESS-GENERAL');
+    businessGeneral = await GeneralApi().businessInit(handler);
     notifyListeners();
   }
 }

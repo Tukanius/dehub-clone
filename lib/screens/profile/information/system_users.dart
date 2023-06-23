@@ -115,7 +115,7 @@ class _SystemUsersPageState extends State<SystemUsersPage> {
                                 child: Text(
                                   '9999-9999, bolormaa@gmail.com',
                                   style: TextStyle(
-                                    color: Color(0xff636E72),
+                                    color: grey3,
                                   ),
                                 ),
                               )

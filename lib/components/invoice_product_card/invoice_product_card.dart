@@ -1,5 +1,6 @@
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -180,7 +181,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
                                     horizontal: 7, vertical: 4),
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Color(0xff636E72).withOpacity(0.3),
+                                    color: grey3.withOpacity(0.3),
                                   ),
                                   borderRadius: BorderRadius.circular(5),
                                   color: Color(0xffEBFAFA),
@@ -295,7 +296,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
                 ),
               ),
               Text(
-                '${widget.data!.lineTotalAmount!.toStringAsFixed(2)} ₮',
+                '${Utils().formatCurrency(widget.data!.lineTotalAmount!.toStringAsFixed(2))} ₮',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,

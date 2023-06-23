@@ -23,10 +23,7 @@ class InvoiceConditionCard extends StatefulWidget {
 class _InvoiceConditionCardState extends State<InvoiceConditionCard>
     with AfterLayoutMixin {
   @override
-  afterFirstLayout(BuildContext context) {
-    print(widget.data!.toJson());
-    print('======');
-  }
+  afterFirstLayout(BuildContext context) {}
 
   @override
   Widget build(BuildContext context) {

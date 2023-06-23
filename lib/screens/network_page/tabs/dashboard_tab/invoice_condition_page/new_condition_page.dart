@@ -1,4 +1,5 @@
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/business.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
@@ -9,9 +10,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+class NewConditionPageArguments {
+  ListenController listenController;
+  NewConditionPageArguments({
+    required this.listenController,
+  });
+}
+
 class NewConditionPage extends StatefulWidget {
+  final ListenController listenController;
+
   static const routeName = 'NewConditionPage';
-  const NewConditionPage({super.key});
+  const NewConditionPage({required this.listenController, Key? key})
+      : super(key: key);
 
   @override
   State<NewConditionPage> createState() => _NewConditionPageState();
@@ -42,6 +53,7 @@ class _NewConditionPageState extends State<NewConditionPage> {
     business.paymentDay = index;
     print(index);
     await BusinessApi().createPaymentTerm(business);
+    widget.listenController.changeVariable('invoiceConditionCreate');
     Navigator.of(context).pop();
   }
 
@@ -402,7 +414,9 @@ class _NewConditionPageState extends State<NewConditionPage> {
                       labelText: 'Буцах',
                       labelColor: backgroundColor,
                       textColor: networkColor,
-                      onClick: () {},
+                      onClick: () {
+                        Navigator.of(context).pop();
+                      },
                     ),
                   ),
                 ),

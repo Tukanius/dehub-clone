@@ -1,6 +1,5 @@
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/zoning_card/zoning_card.dart';
-import 'package:dehub/screens/network_page/tabs/dashboard_tab/zoning_page/add_zoning.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -52,12 +51,12 @@ class _ZoningPageState extends State<ZoningPage> {
             addColor: white,
             color: networkColor,
             onClick: () {
-              showModalBottomSheet(
-                useSafeArea: true,
-                isScrollControlled: true,
-                context: context,
-                builder: (context) => buildSheet(),
-              );
+              // showModalBottomSheet(
+              //   useSafeArea: true,
+              //   isScrollControlled: true,
+              //   context: context,
+              //   builder: (context) => buildSheet(),
+              // );
             },
           ),
         ],
@@ -99,10 +98,10 @@ class _ZoningPageState extends State<ZoningPage> {
     );
   }
 
-  Widget buildSheet() => DraggableScrollableSheet(
-        minChildSize: 0.5,
-        maxChildSize: 1,
-        initialChildSize: 1,
-        builder: (context, scrollController) => AddZoning(),
-      );
+  // Widget buildSheet() => DraggableScrollableSheet(
+  //       minChildSize: 0.5,
+  //       maxChildSize: 1,
+  //       initialChildSize: 1,
+  //       builder: (context, scrollController) => AddZoning(),
+  //     );
 }

@@ -3,7 +3,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dehub/screens/order_page/tabs/home_page_tab.dart';
+import 'package:dehub/screens/order_page/tabs/dashboard_tab.dart';
 
 class OrderPage extends StatefulWidget {
   static const routeName = 'OrderPage';
@@ -17,8 +17,8 @@ int selectedIndex = 0;
 
 class _OrderPageState extends State<OrderPage> {
   static const List<Widget> currentPages = [
-    HomePageTab(),
     Text('1'),
+    DashboardTab(),
     Text('1'),
     Text('1'),
   ];
@@ -36,7 +36,7 @@ class _OrderPageState extends State<OrderPage> {
       appBar: AppBar(
         leadingWidth: 100,
         elevation: 0,
-        backgroundColor: selectedIndex != 3 ? backgroundColor : orderColor,
+        backgroundColor: selectedIndex != 3 ? white : orderColor,
         leading: InkWell(
           onTap: () {
             Navigator.of(context).pop();
@@ -99,7 +99,7 @@ class _OrderPageState extends State<OrderPage> {
         child: currentPages.elementAt(selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: orderColor,
+        unselectedItemColor: buttonColor,
         unselectedFontSize: 12,
         selectedFontSize: 12,
         showSelectedLabels: false,
@@ -121,13 +121,13 @@ class _OrderPageState extends State<OrderPage> {
                   padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
                   child: SvgPicture.asset(
                     'images/home.svg',
-                    color: selectedIndex == 0 ? white : orderColor,
+                    color: selectedIndex == 0 ? white : buttonColor,
                   ),
                 ),
                 selectedIndex != 0
                     ? Text(
                         'Нүүр',
-                        style: TextStyle(color: orderColor, fontSize: 12),
+                        style: TextStyle(color: buttonColor, fontSize: 12),
                       )
                     : SizedBox(),
               ],
@@ -145,13 +145,13 @@ class _OrderPageState extends State<OrderPage> {
                   padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
                   child: SvgPicture.asset(
                     'images/dashboard.svg',
-                    color: selectedIndex == 1 ? white : orderColor,
+                    color: selectedIndex == 1 ? white : buttonColor,
                   ),
                 ),
                 selectedIndex != 1
                     ? Text(
                         'Дашбоард',
-                        style: TextStyle(color: orderColor, fontSize: 12),
+                        style: TextStyle(color: buttonColor, fontSize: 12),
                       )
                     : SizedBox(),
               ],
@@ -169,13 +169,13 @@ class _OrderPageState extends State<OrderPage> {
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
                     'images/inbox.svg',
-                    color: selectedIndex == 2 ? white : orderColor,
+                    color: selectedIndex == 2 ? white : buttonColor,
                   ),
                 ),
                 selectedIndex != 2
                     ? Text(
                         'Ирсэн',
-                        style: TextStyle(color: orderColor, fontSize: 12),
+                        style: TextStyle(color: buttonColor, fontSize: 12),
                       )
                     : SizedBox(),
               ],
@@ -193,13 +193,13 @@ class _OrderPageState extends State<OrderPage> {
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
                     'images/sent.svg',
-                    color: selectedIndex == 3 ? white : orderColor,
+                    color: selectedIndex == 3 ? white : buttonColor,
                   ),
                 ),
                 selectedIndex != 3
                     ? Text(
                         'Илгээсэн',
-                        style: TextStyle(color: orderColor, fontSize: 12),
+                        style: TextStyle(color: buttonColor, fontSize: 12),
                       )
                     : SizedBox(),
               ],

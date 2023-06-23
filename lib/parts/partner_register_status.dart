@@ -5,7 +5,7 @@ PartnerRegisterStatus _$PartnerRegisterStatusFromJson(
   return PartnerRegisterStatus(
     code: json['code'] != null ? json['code'] as String : null,
     name: json['name'] != null ? json['name'] as String : null,
-    color: json['color'] != null ? json['color'] as Color : null,
+    color: json['color'] != null ? json['color'] as String : null,
   );
 }
 

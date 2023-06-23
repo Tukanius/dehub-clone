@@ -11,7 +11,6 @@ class BusinessStaffs {
   String? phone;
   String? email;
   String? userStatus;
-
   String? termRule;
   String? orderConfirmTerm;
   int? expireDayCount;
@@ -22,6 +21,9 @@ class BusinessStaffs {
   String? description;
 
   BusinessStaffs({
+    this.name,
+    this.parentId,
+    this.description,
     this.termRule,
     this.orderConfirmTerm,
     this.expireDayCount,

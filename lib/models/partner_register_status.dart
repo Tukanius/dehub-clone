@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
-
 part '../parts/partner_register_status.dart';
 
 class PartnerRegisterStatus {
   String? code;
   String? name;
-  Color? color;
+  String? color;
 
   PartnerRegisterStatus({
     this.code,

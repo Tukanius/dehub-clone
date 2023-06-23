@@ -168,7 +168,7 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
                               horizontal: 7, vertical: 4),
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Color(0xff636E72).withOpacity(0.3),
+                              color: grey3.withOpacity(0.3),
                             ),
                             borderRadius: BorderRadius.circular(5),
                             color: Color(0xffEBFAFA),

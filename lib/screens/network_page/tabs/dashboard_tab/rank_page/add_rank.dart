@@ -1,23 +1,63 @@
+import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/models/business.dart';
+import 'package:dehub/models/general.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
+import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:provider/provider.dart';
+
+class AddRankArguments {
+  ListenController listenController;
+  AddRankArguments({
+    required this.listenController,
+  });
+}
 
 class AddRank extends StatefulWidget {
-  const AddRank({super.key});
+  static const routeName = 'AddRank';
+  final ListenController listenController;
+  const AddRank({
+    Key? key,
+    required this.listenController,
+  }) : super(key: key);
 
   @override
   State<AddRank> createState() => _AddRankState();
 }
 
 class _AddRankState extends State<AddRank> {
-  List<String> items = ['Хуулийн этгээд', 'Иргэн'];
-
   bool isSwitch = false;
-  String? selectedValue;
+  General general = General();
+  String? parentId;
+  String? refcode;
+  GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
+
+  onSubmit() async {
+    if (fbKey.currentState!.saveAndValidate()) {
+      try {
+        BusinessStaffs businessStaffs =
+            BusinessStaffs.fromJson(fbKey.currentState!.value);
+        businessStaffs.parentId = parentId;
+        await BusinessApi().createClientClassification(businessStaffs);
+        widget.listenController.changeVariable('createRank');
+        Navigator.of(context).pop();
+      } catch (e) {
+        print(e.toString());
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    general =
+        Provider.of<GeneralProvider>(context, listen: true).businessGeneral;
+    print(general.toJson());
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -62,7 +102,7 @@ class _AddRankState extends State<AddRank> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Чиглэлийн код',
+                    'Зэрэглэл код',
                     style: TextStyle(color: dark),
                   ),
                   Text(
@@ -76,118 +116,158 @@ class _AddRankState extends State<AddRank> {
                 ],
               ),
             ),
-            Container(
-              color: white,
-              child: Row(
+            FormBuilder(
+              key: fbKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      color: white,
-                      child: Text(
-                        'Чиглэлийн Нэр',
-                        style: TextStyle(color: dark),
+                  FormTextField(
+                    textAlign: TextAlign.right,
+                    name: 'name',
+                    textColor: networkColor,
+                    decoration: InputDecoration(
+                      hintText: 'Зэрэглэл нэр оруулах',
+                      fillColor: white,
+                      hintStyle: TextStyle(color: networkColor),
+                      filled: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 15),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(0),
+                      ),
+                      prefixIcon: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 15),
+                        child: Text(
+                          'Зэрэглэл нэр',
+                          style: TextStyle(color: dark),
+                        ),
                       ),
                     ),
+                    validators: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Ангилал нэр оруулна уу'),
+                    ]),
                   ),
-                  Expanded(
-                    child: Container(
-                      height: 40,
-                      child: TextFormField(
-                        maxLength: 20,
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          color: networkColor,
-                        ),
-                        decoration: InputDecoration(
-                          counterText: '',
-                          hintText: 'Гараас оруулах',
-                          hintStyle: TextStyle(
-                            color: networkColor,
+                  general.clientClassifications == []
+                      ? Container(
+                          color: white,
+                          padding: const EdgeInsets.all(15),
+                          child: Text('Бүсчлэл сонгоно уу'),
+                        )
+                      : DropdownButtonFormField(
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                                errorText: 'Заавал оруулна уу.')
+                          ]),
+                          icon: Container(
+                            decoration: BoxDecoration(
+                              color: white,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Сонгох',
+                                  style: TextStyle(
+                                      color: networkColor, fontSize: 14),
+                                ),
+                                Icon(
+                                  Icons.arrow_drop_down,
+                                  color: dark,
+                                ),
+                              ],
+                            ),
                           ),
-                          filled: true,
-                          fillColor: white,
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
+                          onChanged: (value) {
+                            setState(() {});
+                          },
+                          dropdownColor: white,
+                          elevation: 2,
+                          decoration: InputDecoration(
+                            hintText: 'Бүсийн нэр',
+                            hintStyle: TextStyle(fontSize: 14, color: dark),
+                            filled: true,
+                            fillColor: white,
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 15),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            ),
                           ),
+                          items: general.clientClassifications!
+                              .map(
+                                (item) => DropdownMenuItem(
+                                  onTap: () {
+                                    parentId = item.id;
+                                    refcode = item.refCode;
+                                  },
+                                  value: item,
+                                  child: Text(
+                                    '${item.name}',
+                                    style: TextStyle(
+                                      color: dark,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList(),
                         ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              color: white,
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Бүсийн нэр',
-                    style: TextStyle(color: dark),
-                  ),
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                      icon: Container(
-                        margin: const EdgeInsets.only(left: 10),
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 14,
+                  Container(
+                    color: white,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Ангилал код',
+                          style: TextStyle(color: dark),
                         ),
+                        refcode == null
+                            ? Text(
+                                'Ангилал код',
+                                style: TextStyle(color: networkColor),
+                              )
+                            : Text(
+                                '${refcode}',
+                                style: TextStyle(
+                                  color: networkColor,
+                                ),
+                              )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    child: Text(
+                      'Тайлбар',
+                      style: TextStyle(
+                        color: grey3,
+                        fontWeight: FontWeight.w600,
                       ),
-                      isExpanded: false,
-                      dropdownColor: white,
-                      value: selectedValue,
-                      items: items.map(buildMenuItem).toList(),
-                      onChanged: (value) => setState(
-                        () => this.selectedValue = value,
+                    ),
+                  ),
+                  FormTextField(
+                    textColor: networkColor,
+                    name: 'description',
+                    decoration: InputDecoration(
+                      hintText: 'Тайлбар оруулах',
+                      fillColor: white,
+                      hintStyle: TextStyle(color: networkColor),
+                      filled: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 15),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(0),
                       ),
                     ),
                   ),
                 ],
-              ),
-            ),
-            Container(
-              color: white,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Бүсийн код',
-                    style: TextStyle(color: dark),
-                  ),
-                  Text(
-                    'Авто гарах',
-                    style: TextStyle(
-                      color: networkColor,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Тайлбар',
-                style: TextStyle(
-                  color: grey3,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Container(
-              color: white,
-              padding: EdgeInsets.all(15),
-              height: 125,
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: grey3.withOpacity(0.3),
-                  ),
-                ),
               ),
             ),
             Container(
@@ -211,7 +291,7 @@ class _AddRankState extends State<AddRank> {
             ),
             Container(
               color: white,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -230,7 +310,7 @@ class _AddRankState extends State<AddRank> {
             ),
             Container(
               color: white,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -240,7 +320,7 @@ class _AddRankState extends State<AddRank> {
                   ),
                   Container(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: grey2.withOpacity(0.1),
@@ -272,7 +352,9 @@ class _AddRankState extends State<AddRank> {
                     child: CustomButton(
                       labelColor: backgroundColor,
                       textColor: networkColor,
-                      onClick: () {},
+                      onClick: () {
+                        Navigator.of(context).pop();
+                      },
                       labelText: "Буцах",
                     ),
                   ),
@@ -283,7 +365,9 @@ class _AddRankState extends State<AddRank> {
                     child: CustomButton(
                       labelColor: networkColor,
                       labelText: 'Хадгалах',
-                      onClick: () {},
+                      onClick: () {
+                        onSubmit();
+                      },
                     ),
                   ),
                 ),

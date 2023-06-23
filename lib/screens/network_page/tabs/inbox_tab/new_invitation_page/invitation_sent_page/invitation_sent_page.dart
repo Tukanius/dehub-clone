@@ -308,7 +308,7 @@ class _InvitationSentPageState extends State<InvitationSentPage> {
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Color(0xff636E72).withOpacity(0.3),
+                    color: grey3.withOpacity(0.3),
                   ),
                 ),
               ),

@@ -24,12 +24,10 @@ class _FromBuyerState extends State<FromBuyer> with AfterLayoutMixin {
   }
 
   list(page, limit) async {
-    Filter filter = Filter();
+    Filter filter = Filter(query: '');
     Offset offset = Offset(page: page, limit: limit);
-    print('================INVITATION=================');
     Result res = await BusinessApi()
         .list(ResultArguments(filter: filter, offset: offset));
-    print('================INVITATION=================');
     setState(() {
       invitation = res;
       isLoading = false;

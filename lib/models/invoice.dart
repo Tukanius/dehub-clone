@@ -125,10 +125,12 @@ class Invoice {
   String? convertType;
   int? convertValue;
   List<Invoice>? attachments;
-
   String? method;
   String? creditAccountId;
   double? amount;
+
+  bool? send;
+  List<Invoice>? items;
 
   String getPostDate() {
     return Moment.parse(createdAt!).format("YYYY-MM-DD");
@@ -143,6 +145,8 @@ class Invoice {
   }
 
   Invoice({
+    this.send,
+    this.items,
     this.method,
     this.creditAccountId,
     this.amount,

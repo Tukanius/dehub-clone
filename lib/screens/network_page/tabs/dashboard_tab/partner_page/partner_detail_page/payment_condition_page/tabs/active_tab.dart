@@ -312,7 +312,9 @@ class _ActiveTabState extends State<ActiveTab> {
                     ),
                   ),
                   child: CustomButton(
-                    onClick: () {},
+                    onClick: () {
+                      Navigator.of(context).pop();
+                    },
                     labelText: 'буцах',
                     textColor: networkColor,
                     labelColor: backgroundColor,

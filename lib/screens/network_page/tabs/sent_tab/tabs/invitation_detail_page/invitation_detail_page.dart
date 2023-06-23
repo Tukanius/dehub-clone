@@ -378,7 +378,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Color(0xff636E72).withOpacity(0.3),
+                          color: grey3.withOpacity(0.3),
                         ),
                       ),
                       child: Text(''),

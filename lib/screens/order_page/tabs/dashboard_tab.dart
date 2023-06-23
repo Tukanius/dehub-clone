@@ -2,14 +2,14 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HomePageTab extends StatefulWidget {
-  const HomePageTab({super.key});
+class DashboardTab extends StatefulWidget {
+  const DashboardTab({super.key});
 
   @override
-  State<HomePageTab> createState() => _HomePageTabState();
+  State<DashboardTab> createState() => _DashboardTabState();
 }
 
-class _HomePageTabState extends State<HomePageTab> {
+class _DashboardTabState extends State<DashboardTab> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -19,13 +19,16 @@ class _HomePageTabState extends State<HomePageTab> {
           Container(
             margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
             child: Text(
-              'Захиалга удирдлага',
+              'Захиалгын дашбоард',
               style: TextStyle(
-                  color: black, fontSize: 24, fontWeight: FontWeight.bold),
+                color: buttonColor,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           Container(
-            height: 90,
+            height: 100,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
@@ -36,20 +39,23 @@ class _HomePageTabState extends State<HomePageTab> {
                     color: white,
                   ),
                   padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(10),
+                        height: 40,
+                        width: 40,
+                        padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: orderColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/grid1.svg',
-                          color: orderColor,
+                          'images/zahialga.svg',
+                          color: buttonColor,
                         ),
                       ),
                       SizedBox(
@@ -71,12 +77,15 @@ class _HomePageTabState extends State<HomePageTab> {
                     color: white,
                   ),
                   padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
+                        height: 40,
+                        width: 40,
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -84,14 +93,14 @@ class _HomePageTabState extends State<HomePageTab> {
                         ),
                         child: SvgPicture.asset(
                           'images/push.svg',
-                          color: orderColor,
+                          color: buttonColor,
                         ),
                       ),
                       SizedBox(
                         height: 2,
                       ),
                       Text(
-                        'Ажил, үйлчилгээ',
+                        'Ачилт авах',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w500),
                         softWrap: true,
@@ -106,24 +115,30 @@ class _HomePageTabState extends State<HomePageTab> {
                     color: white,
                   ),
                   padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
+                        height: 40,
+                        width: 40,
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: orderColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/bag.svg',
-                          color: orderColor,
+                          'images/push.svg',
+                          color: buttonColor,
                         ),
                       ),
+                      SizedBox(
+                        height: 2,
+                      ),
                       Text(
-                        'Үнийн бодлого',
+                        'Захиалга нэгтгэл',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w500),
                         softWrap: true,
@@ -138,29 +153,29 @@ class _HomePageTabState extends State<HomePageTab> {
                     color: white,
                   ),
                   padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
+                        height: 40,
+                        width: 40,
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: orderColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/map.svg',
-                          color: orderColor,
+                          'images/push.svg',
+                          color: buttonColor,
                         ),
                       ),
-                      SizedBox(
-                        height: 2,
-                      ),
                       Text(
-                        'Хөнгөлөлт, урамшуулал',
+                        'Буцаалтын тооцоо',
                         style: TextStyle(
-                            fontSize: 11, fontWeight: FontWeight.w500),
+                            fontSize: 12, fontWeight: FontWeight.w500),
                         softWrap: true,
                       ),
                     ],
@@ -173,12 +188,15 @@ class _HomePageTabState extends State<HomePageTab> {
                     color: white,
                   ),
                   padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
+                        height: 40,
+                        width: 40,
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -186,7 +204,7 @@ class _HomePageTabState extends State<HomePageTab> {
                         ),
                         child: SvgPicture.asset(
                           'images/map.svg',
-                          color: orderColor,
+                          color: buttonColor,
                         ),
                       ),
                       SizedBox(

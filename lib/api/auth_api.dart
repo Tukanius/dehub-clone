@@ -15,10 +15,7 @@ class AuthApi extends HttpRequest {
   }
 
   partnerMe(bool handler) async {
-    print('==================ASDF==================');
     var res = await get('/auth/me', "PARTNER", handler: handler);
-    print(res);
-    print('==================RES==================');
     return Partner.fromJson(res as Map<String, dynamic>);
   }
 

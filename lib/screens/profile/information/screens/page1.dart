@@ -23,9 +23,6 @@ class _Page1State extends State<Page1> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     partnerUser = Provider.of<UserProvider>(context, listen: false).partnerUser;
-    print('=================PARTNERUSER===============');
-    print(partnerUser.toJson());
-    print('=================PARTNERUSER===============');
 
     return SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),
@@ -72,9 +69,7 @@ class _Page1State extends State<Page1> with AfterLayoutMixin {
               child: Text(
                 'ЕРӨНХИЙ МЭДЭЭЛЭЛ',
                 style: TextStyle(
-                  color: Color(
-                    0xff636E72,
-                  ),
+                  color: grey3,
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
                 ),

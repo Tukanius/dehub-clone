@@ -27,7 +27,10 @@ class ResultArguments {
   Filter? filter = Filter();
   Offset? offset = Offset(page: 1, limit: 10);
 
-  ResultArguments({this.filter, this.offset});
+  ResultArguments({
+    this.filter,
+    this.offset,
+  });
 
   Map<String, dynamic> toJson() => _$ResultArgumentToJson(this);
 }

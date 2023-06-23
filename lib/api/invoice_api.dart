@@ -33,4 +33,17 @@ class InvoiceApi extends HttpRequest {
     print(res);
     return Invoice.fromJson(res as Map<String, dynamic>);
   }
+
+  Future<Result> network(String query) async {
+    var res = await get("/network?query=${query}", "INVOICE", handler: true);
+    return Result.fromJson(res, Invoice.fromJson);
+  }
+
+  Future<Result> brach(String businessId, String query) async {
+    var res = await get(
+      "/branch?businessId=$businessId&query=$query",
+      "INVOICE",
+    );
+    return Result.fromJson(res, Invoice.fromJson);
+  }
 }

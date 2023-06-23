@@ -1,5 +1,4 @@
 import 'package:dehub/components/add_button/add_button.dart';
-import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/bugd.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet_bish.dart';
@@ -7,15 +6,33 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+// class CustomerChooseArguments {
+//   ListenController listenController;
+//   CustomerChooseArguments({
+//     required this.listenController,
+//   });
+// }
+
 class CustomerChoose extends StatefulWidget {
+  // final ListenController listenController;
+
   static const routeName = '/customerchoose';
-  const CustomerChoose({super.key});
+  const CustomerChoose({
+    Key? key,
+    // required this.listenController,
+  }) : super(key: key);
 
   @override
   State<CustomerChoose> createState() => _CustomerChooseState();
 }
 
 class _CustomerChooseState extends State<CustomerChoose> {
+  // @override
+  // void initState() {
+  //   widget.listenController.addListener(() {});
+  //   super.initState();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -84,9 +101,6 @@ class _CustomerChooseState extends State<CustomerChoose> {
                             ),
                           ],
                         ),
-                      ),
-                      SearchButton(
-                        color: invoiceColor,
                       ),
                     ],
                   ),

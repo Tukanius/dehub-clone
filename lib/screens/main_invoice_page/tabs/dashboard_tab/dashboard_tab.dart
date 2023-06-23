@@ -65,7 +65,7 @@ class _DashBoardTabState extends State<DashBoardTab> {
                         Text(
                           'Манай авах- нэхэмжлэл',
                           style: TextStyle(
-                              fontSize: 11, fontWeight: FontWeight.w500),
+                              fontSize: 10, fontWeight: FontWeight.w500),
                           softWrap: true,
                         ),
                       ],
@@ -105,7 +105,7 @@ class _DashBoardTabState extends State<DashBoardTab> {
                         Text(
                           'Манай төлөх- нэхэмжлэл',
                           style: TextStyle(
-                              fontSize: 11, fontWeight: FontWeight.w500),
+                              fontSize: 10, fontWeight: FontWeight.w500),
                           softWrap: true,
                         ),
                       ],
@@ -146,7 +146,7 @@ class _DashBoardTabState extends State<DashBoardTab> {
                         Text(
                           'Хаагдсан нэхэмжлэх',
                           style: TextStyle(
-                              fontSize: 11, fontWeight: FontWeight.w500),
+                              fontSize: 10, fontWeight: FontWeight.w500),
                           softWrap: true,
                         ),
                       ],
@@ -182,7 +182,7 @@ class _DashBoardTabState extends State<DashBoardTab> {
                       Text(
                         'Лавлах мэдээлэл',
                         style: TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.w500),
+                            fontSize: 10, fontWeight: FontWeight.w500),
                         softWrap: true,
                       ),
                     ],

@@ -1,3 +1,4 @@
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/harah.dart';
@@ -16,6 +17,7 @@ class NewInvoice extends StatefulWidget {
 }
 
 class _NewInvoiceState extends State<NewInvoice> {
+  ListenController listenController = ListenController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,18 +102,10 @@ class _NewInvoiceState extends State<NewInvoice> {
                   color: white,
                   child: Column(
                     children: [
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
-                          showModalBottomSheet(
-                            useSafeArea: true,
-                            isScrollControlled: true,
-                            context: context,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(20),
-                              ),
-                            ),
-                            builder: (context) => buildSheet(),
+                          Navigator.of(context).pushNamed(
+                            CustomerChoose.routeName,
                           );
                         },
                         child: Row(
@@ -718,7 +712,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: Color(0xff636E72).withOpacity(0.3),
+                        color: grey3.withOpacity(0.3),
                       ),
                     ),
                   ),
@@ -1018,13 +1012,6 @@ class _NewInvoiceState extends State<NewInvoice> {
       ),
     );
   }
-
-  Widget buildSheet() => DraggableScrollableSheet(
-        initialChildSize: 1,
-        minChildSize: 0.5,
-        maxChildSize: 1,
-        builder: (context, scrollController) => CustomerChoose(),
-      );
 
   Widget buildProduct() => DraggableScrollableSheet(
         initialChildSize: 1,

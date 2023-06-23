@@ -1,5 +1,6 @@
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/screens/register-page/register-page.dart';
 import 'package:dehub/screens/splash/splash_page.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -50,40 +51,48 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: backgroundColor,
       body: SingleChildScrollView(
-        reverse: true,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SafeArea(
             top: false,
             bottom: false,
             child: Container(
-              margin: const EdgeInsets.only(top: 100),
+              margin: const EdgeInsets.only(top: 40),
               width: MediaQuery.of(context).size.width,
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: mainColor,
-                      ),
-                      height: 80,
-                      width: 80,
-                    ),
                     SizedBox(
                       height: 21,
                     ),
                     Text(
-                      'Системд нэвтрэх',
+                      'DeHUB',
                       style: TextStyle(
-                        color: grey2,
+                        color: buttonColor,
                         fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                        fontSize: 32,
                       ),
                     ),
                     SizedBox(
-                      height: 40,
+                      height: 5,
+                    ),
+                    Text(
+                      'Үнэ цэн нэмсэн түншлэл',
+                      style: TextStyle(
+                        color: buttonColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Image(
+                      image: AssetImage('images/login.png'),
+                    ),
+                    SizedBox(
+                      height: 20,
                     ),
                     FormBuilder(
                       key: fbKey,
@@ -91,10 +100,10 @@ class _LoginPageState extends State<LoginPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Бизнэсийн код',
+                            'Нэвтрэх код',
                             style: TextStyle(
-                              color: grey3,
-                              fontWeight: FontWeight.bold,
+                              color: buttonColor,
+                              fontWeight: FontWeight.w500,
                               fontSize: 14,
                             ),
                           ),
@@ -136,8 +145,8 @@ class _LoginPageState extends State<LoginPage> {
                           Text(
                             'Хэрэглэгчийн нэр',
                             style: TextStyle(
-                              color: grey3,
-                              fontWeight: FontWeight.bold,
+                              color: buttonColor,
+                              fontWeight: FontWeight.w500,
                               fontSize: 14,
                             ),
                           ),
@@ -180,8 +189,8 @@ class _LoginPageState extends State<LoginPage> {
                           Text(
                             'Нууц үг',
                             style: TextStyle(
-                              color: grey3,
-                              fontWeight: FontWeight.bold,
+                              color: buttonColor,
+                              fontWeight: FontWeight.w500,
                               fontSize: 14,
                             ),
                           ),
@@ -236,16 +245,17 @@ class _LoginPageState extends State<LoginPage> {
                             ]),
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 5,
                           ),
                           Container(
                             alignment: Alignment.centerRight,
                             child: Text(
                               'Нууц үгээ мартсан уу?',
                               style: TextStyle(
-                                  color: mainColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500),
+                                color: buttonColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           )
                         ],
@@ -258,7 +268,7 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         Checkbox(
                           fillColor: MaterialStateProperty.resolveWith(
-                              (states) => mainColor),
+                              (states) => buttonColor),
                           value: saveUserName,
                           onChanged: (bool? value) {
                             setState(() {
@@ -284,10 +294,38 @@ class _LoginPageState extends State<LoginPage> {
                         onSubmit();
                       },
                       labelText: "Нэвтрэх",
-                      labelColor: mainColor,
+                      labelColor: buttonColor,
                     ),
                     SizedBox(
                       height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Байгууллага бүртгэлгүй юу? ',
+                          style: TextStyle(
+                            color: buttonColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(RegisterPage.routeName);
+                          },
+                          child: Text(
+                            'БҮРТГҮҮЛЭХ',
+                            style: TextStyle(
+                              color: Color(0xff2E41FB),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
                     ),
                   ],
                 ),

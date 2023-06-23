@@ -60,9 +60,6 @@ class BusinessApi extends HttpRequest {
   Future<Result> referenceList(ResultArguments resultArguments) async {
     var res =
         await get("/reference", "BUSINESS", data: resultArguments.toJson());
-    print('================REFERENCE===============');
-    print(res);
-    print('================REFERENCE===============');
     return Result.fromJson(res, ReferenceInformation.$fromJson);
   }
 
@@ -106,9 +103,14 @@ class BusinessApi extends HttpRequest {
     return BusinessStaffs.fromJson(res as Map<String, dynamic>);
   }
 
-  Future<BusinessStaffs> createdDistributionArea(BusinessStaffs data) async {
-    var res = await post("/distribution_area", "BUSINESS",
-        data: data.toJson(), handler: true);
+  Future<BusinessStaffs> createDistributionArea(BusinessStaffs data) async {
+    var res = await post("/distribution_area", "BUSINESS", data: data.toJson());
+    return BusinessStaffs.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<BusinessStaffs> createClientClassification(BusinessStaffs data) async {
+    var res =
+        await post("/client_classification", "BUSINESS", data: data.toJson());
     return BusinessStaffs.fromJson(res as Map<String, dynamic>);
   }
 }

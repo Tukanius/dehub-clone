@@ -76,9 +76,7 @@ class _Page2State extends State<Page2> {
               child: Text(
                 'МАРКЕТИНГИЙН МЭДЭЭЛЭЛ',
                 style: TextStyle(
-                  color: Color(
-                    0xff636E72,
-                  ),
+                  color: grey3,
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
                 ),

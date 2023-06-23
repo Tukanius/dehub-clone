@@ -11,7 +11,7 @@ class ReferenceInformationGet {
   String? orderConfirmTerm;
   int? expireDayCount;
   int? month;
-  String? paymentDay;
+  int? paymentDay;
   String? description;
   bool? isMain;
   bool? isActive;
