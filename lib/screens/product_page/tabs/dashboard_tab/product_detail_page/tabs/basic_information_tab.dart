@@ -1,4 +1,5 @@
 import 'package:dehub/widgets/dialog_manager/colors.dart';
+import 'package:dehub/widgets/dialog_manager/image_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/models/inventory_goods.dart';
@@ -33,6 +34,9 @@ class _BasicInformationTabState extends State<BasicInformationTab>
       isLoading = true;
     });
     inventory = await InventoryApi().goodsGet(widget.id);
+    print('======inventory========');
+    print(inventory.brand?.toJson());
+    print('======inventory========');
     setState(() {
       isLoading = false;
     });
@@ -174,9 +178,13 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         'Нэр /Монгол хэл/',
                         style: TextStyle(color: grey2),
                       ),
-                      Text(
-                        'Нэр',
-                        style: TextStyle(color: grey2),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: Text(
+                          '${inventory.nameMon}',
+                          style: TextStyle(color: grey2),
+                          textAlign: TextAlign.end,
+                        ),
                       ),
                     ],
                   ),
@@ -192,9 +200,13 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         'Нэр /Англи хэл/',
                         style: TextStyle(color: grey2),
                       ),
-                      Text(
-                        '${inventory.nameEng}',
-                        style: TextStyle(color: grey2),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: Text(
+                          '${inventory.nameEng}',
+                          style: TextStyle(color: grey2),
+                          textAlign: TextAlign.end,
+                        ),
                       ),
                     ],
                   ),
@@ -210,9 +222,13 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         'Падаанд гарах нэр',
                         style: TextStyle(color: grey2),
                       ),
-                      Text(
-                        '${inventory.nameBill}',
-                        style: TextStyle(color: grey2),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: Text(
+                          '${inventory.nameBill}',
+                          style: TextStyle(color: grey2),
+                          textAlign: TextAlign.end,
+                        ),
                       ),
                     ],
                   ),
@@ -228,9 +244,13 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         'Вевд гарах нэр',
                         style: TextStyle(color: grey2),
                       ),
-                      Text(
-                        '${inventory.nameWeb}',
-                        style: TextStyle(color: grey2),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: Text(
+                          '${inventory.nameWeb}',
+                          style: TextStyle(color: grey2),
+                          textAlign: TextAlign.end,
+                        ),
                       ),
                     ],
                   ),
@@ -243,12 +263,16 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Апп-д гарах нэр',
+                        'Апп-д гарах нэр:',
                         style: TextStyle(color: grey2),
                       ),
-                      Text(
-                        '${inventory.nameApp}',
-                        style: TextStyle(color: grey2),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: Text(
+                          '${inventory.nameApp}',
+                          style: TextStyle(color: grey2),
+                          textAlign: TextAlign.end,
+                        ),
                       ),
                     ],
                   ),
@@ -276,7 +300,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         style: TextStyle(color: grey2),
                       ),
                       Text(
-                        '${inventory.brand!.name}',
+                        '${inventory.brand?.name}',
                         style: TextStyle(color: grey2),
                       ),
                     ],
@@ -294,7 +318,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         style: TextStyle(color: grey2),
                       ),
                       Text(
-                        '${inventory.supplier!.name}',
+                        '${inventory.supplier?.name}',
                         style: TextStyle(color: grey2),
                       ),
                     ],
@@ -312,7 +336,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         style: TextStyle(color: grey2),
                       ),
                       Text(
-                        '${inventory.manufacturer!.name}',
+                        '${inventory.manufacturer?.name}',
                         style: TextStyle(color: grey2),
                       ),
                     ],
@@ -330,7 +354,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         style: TextStyle(color: grey2),
                       ),
                       Text(
-                        '${inventory.originCountry!.name}',
+                        '${inventory.originCountry?.name}',
                         style: TextStyle(color: grey2),
                       ),
                     ],
@@ -348,7 +372,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         style: TextStyle(color: grey2),
                       ),
                       Text(
-                        '${inventory.importerCountry!.name}',
+                        '${inventory.importerCountry?.name}',
                         style: TextStyle(color: grey2),
                       ),
                     ],
@@ -366,7 +390,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         style: TextStyle(color: grey2),
                       ),
                       Text(
-                        '${inventory.distributor!.name}',
+                        '${inventory.distributor?.name}',
                         style: TextStyle(color: grey2),
                       ),
                     ],
@@ -384,7 +408,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         style: TextStyle(color: grey2),
                       ),
                       Text(
-                        '${inventory.itemType!.name}',
+                        '${inventory.itemType?.name}',
                         style: TextStyle(color: grey2),
                       ),
                     ],
@@ -402,7 +426,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         style: TextStyle(color: grey2),
                       ),
                       Text(
-                        '${inventory.classification!.name}',
+                        '${inventory.classification?.name}',
                         style: TextStyle(color: grey2),
                       ),
                     ],
@@ -420,7 +444,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         style: TextStyle(color: grey2),
                       ),
                       Text(
-                        '${inventory.subClassification!.name}',
+                        '${inventory.subClassification?.name}',
                         style: TextStyle(color: grey2),
                       ),
                     ],
@@ -438,7 +462,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         style: TextStyle(color: grey2),
                       ),
                       Text(
-                        '${inventory.category!.name}',
+                        '${inventory.category?.name}',
                         style: TextStyle(color: grey2),
                       ),
                     ],
@@ -456,7 +480,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         style: TextStyle(color: grey2),
                       ),
                       Text(
-                        '${inventory.tag!.text}',
+                        '${inventory.tag?.text}',
                         style: TextStyle(color: grey2),
                       ),
                     ],
@@ -475,7 +499,6 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  height: 125,
                   color: white,
                   padding: const EdgeInsets.all(15),
                   child: Container(
@@ -519,27 +542,50 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                     ),
                   ),
                 ),
-                Container(
-                  height: 200,
-                  child: ListView(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    children: inventory.detailImages!
-                        .map(
-                          (e) => Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 5),
-                            padding: const EdgeInsets.symmetric(horizontal: 30),
-                            height: 200,
-                            color: white,
-                            child: Image(
-                              image: NetworkImage('${e}'),
-                              fit: BoxFit.fitHeight,
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
+                inventory.detailImages != null
+                    ? Container(
+                        height: 200,
+                        child: ListView(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          children: inventory.detailImages!
+                              .map(
+                                (e) => Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 30),
+                                  height: 200,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: Offset(0, 3),
+                                        blurRadius: 3,
+                                        color: Colors.grey,
+                                      )
+                                    ],
+                                  ),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return ImageDialog(link: e);
+                                          });
+                                    },
+                                    child: Image(
+                                      image: NetworkImage('${e}'),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      )
+                    : SizedBox(),
                 SizedBox(
                   height: 100,
                 ),

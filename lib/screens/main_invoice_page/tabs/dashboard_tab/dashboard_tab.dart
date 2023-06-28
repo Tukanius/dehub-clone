@@ -75,7 +75,7 @@ class _DashBoardTabState extends State<DashBoardTab> {
                                 height: 2,
                               ),
                               Text(
-                                'Манай авах- нэхэмжлэл',
+                                'Манай төлөх- нэхэмжлэл',
                                 style: TextStyle(
                                     fontSize: 11, fontWeight: FontWeight.w500),
                                 softWrap: true,
@@ -116,7 +116,7 @@ class _DashBoardTabState extends State<DashBoardTab> {
                                 height: 2,
                               ),
                               Text(
-                                'Манай төлөх- нэхэмжлэл',
+                                'Манай авах- нэхэмжлэл',
                                 style: TextStyle(
                                     fontSize: 11, fontWeight: FontWeight.w500),
                                 softWrap: true,

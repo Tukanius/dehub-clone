@@ -32,6 +32,7 @@ class _SearchButtonState extends State<SearchButton> {
               margin: const EdgeInsets.only(left: 15, right: 5),
               height: 30,
               child: FormTextField(
+                textColor: invoiceColor,
                 controller: textController,
                 name: 'query',
                 onChanged: (value) {
@@ -40,13 +41,19 @@ class _SearchButtonState extends State<SearchButton> {
                   }
                 },
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 7),
+                    child: SvgPicture.asset('images/search.svg'),
+                  ),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: grey,
                     ),
                   ),
-                  contentPadding: const EdgeInsets.only(bottom: 10, left: 15),
+                  contentPadding: const EdgeInsets.only(
+                    bottom: 10,
+                    left: 15,
+                  ),
                 ),
               ),
             ),

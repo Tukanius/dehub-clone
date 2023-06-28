@@ -38,6 +38,23 @@ class _BasicInformationTabState extends State<BasicInformationTab>
     });
   }
 
+  overDueStatus() {
+    switch (invoice.overDueStatus) {
+      case "NORMAL":
+        return "Хэвийн";
+      case "ONE_TO_THREE":
+        return "1-3 хоног";
+      case "FOUR_TO_THIRTY":
+        return "4-30 хоног";
+      case "THIRTY_ONE_TO_SIXTY":
+        return "31-60 хоног";
+      case "SIXTY_ONE_TO_NINETY":
+        return "61-90 хоног";
+      case "MORE_THAN_NINETY":
+        return "91 < хоног";
+    }
+  }
+
   invoicePaymentStatus() {
     switch (invoice.paymentStatus) {
       case "PENDING":
@@ -274,7 +291,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                           ),
                         ),
                         Text(
-                          '${invoice.overDueStatus}',
+                          '${overDueStatus()}',
                           style: TextStyle(color: invoiceColor),
                         ),
                       ],
@@ -865,7 +882,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                           children: [
                             Container(
                               child: Text(
-                                '${Utils().formatCurrency(invoice.totalAmount.toString())} ',
+                                '${Utils().formatCurrency(invoice.totalAmount.toString())}₮',
                                 style: TextStyle(
                                   color: invoiceColor,
                                   fontSize: 24,
@@ -890,60 +907,25 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                       ),
                     ),
                   ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Файлын нэр',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: grey3,
-                          size: 14,
-                        ),
-                      ],
+                  for (var i = 0; i < 3; i++)
+                    Container(
+                      color: white,
+                      padding: const EdgeInsets.all(15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Файлын нэр',
+                            style: TextStyle(color: invoiceColor),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            color: grey3,
+                            size: 14,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Файлын нэр',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: grey3,
-                          size: 14,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Файлын нэр',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: grey3,
-                          size: 14,
-                        ),
-                      ],
-                    ),
-                  ),
                   SizedBox(
                     height: 70,
                   ),

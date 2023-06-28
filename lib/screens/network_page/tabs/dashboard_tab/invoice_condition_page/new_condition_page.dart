@@ -37,12 +37,11 @@ List<String> options = [
 ];
 
 class _NewConditionPageState extends State<NewConditionPage> {
-  String currentOption = options[0];
-
+  String currentOption = "";
+  int? selectedRadioValue;
   int? index;
   int? indexMonth;
   int? indexDay;
-
   General general = General();
   BusinessStaffs business = BusinessStaffs();
 
@@ -50,11 +49,24 @@ class _NewConditionPageState extends State<NewConditionPage> {
     business.termRule = currentOption;
     business.orderConfirmTerm = "INV_NET2";
     business.expireDayCount = 10;
-    business.paymentDay = index;
+    business.month = 2;
+    business.paymentDay = (index! + 1);
     print(index);
     await BusinessApi().createPaymentTerm(business);
     widget.listenController.changeVariable('invoiceConditionCreate');
     Navigator.of(context).pop();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    selectedRadioValue = 1;
+  }
+
+  setSelectedRadioValue(int value) {
+    setState(() {
+      selectedRadioValue = value;
+    });
   }
 
   @override
@@ -92,25 +104,21 @@ class _NewConditionPageState extends State<NewConditionPage> {
             Column(
               children: general.paymentTermRules!
                   .map(
-                    (e) => ListTile(
-                      tileColor: white,
-                      title: Text(
-                        '${e.text}',
-                        style: TextStyle(
-                          color: dark,
-                          fontSize: 14,
+                    (e) => Container(
+                      color: white,
+                      child: RadioListTile(
+                        title: Text(
+                          '${e.text}',
+                          style: TextStyle(color: dark, fontSize: 14),
                         ),
-                      ),
-                      leading: Radio(
                         fillColor: MaterialStateColor.resolveWith(
                             (states) => networkColor),
-                        value: 1,
-                        groupValue: currentOption,
+                        value: general.paymentTermRules?.indexOf(e),
+                        groupValue: selectedRadioValue,
                         onChanged: (value) {
-                          setState(() {
-                            currentOption = e.code.toString();
-                            print(currentOption.toString());
-                          });
+                          setSelectedRadioValue(value!);
+                          currentOption = e.code.toString();
+                          print(currentOption);
                         },
                       ),
                     ),

@@ -60,11 +60,13 @@ class _GoodsCardState extends State<GoodsCard> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        '${widget.data!.nameMon}',
-                        style: TextStyle(
-                          color: grey2,
-                          fontWeight: FontWeight.w600,
+                      Expanded(
+                        child: Text(
+                          '${widget.data!.nameMon}',
+                          style: TextStyle(
+                            color: grey2,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                       Icon(
@@ -100,7 +102,7 @@ class _GoodsCardState extends State<GoodsCard> {
                             ),
                           ),
                           Text(
-                            'Ширхэг',
+                            '${widget.data?.unit?.name}',
                             style: TextStyle(
                               color: green,
                               fontSize: 12,

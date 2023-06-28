@@ -26,7 +26,7 @@ class _DashboardTabState extends State<DashboardTab> {
             ),
           ),
           Container(
-            height: 90,
+            height: 100,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
@@ -41,9 +41,10 @@ class _DashboardTabState extends State<DashboardTab> {
                       color: white,
                     ),
                     padding: const EdgeInsets.all(10),
-                    width: 90,
-                    height: 90,
+                    width: 100,
+                    height: 100,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
@@ -77,9 +78,10 @@ class _DashboardTabState extends State<DashboardTab> {
                     color: white,
                   ),
                   padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
@@ -112,9 +114,10 @@ class _DashboardTabState extends State<DashboardTab> {
                     color: white,
                   ),
                   padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
@@ -144,9 +147,10 @@ class _DashboardTabState extends State<DashboardTab> {
                     color: white,
                   ),
                   padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
@@ -179,9 +183,10 @@ class _DashboardTabState extends State<DashboardTab> {
                     color: white,
                   ),
                   padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(

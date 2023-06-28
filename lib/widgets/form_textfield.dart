@@ -111,6 +111,7 @@ class _FormTextFieldState extends State<FormTextField> {
       // autovalidate: false,
       // validator: widget.validators ?? [],
       validator: widget.validators ?? widget.validator,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       textCapitalization: widget.textCapitalization,
       inputFormatters: widget.inputFormatters,
       maxLength: widget.maxLenght,

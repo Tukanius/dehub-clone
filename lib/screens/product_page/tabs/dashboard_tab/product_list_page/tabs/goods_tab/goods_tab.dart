@@ -27,10 +27,10 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
   }
 
   list(page, limit) async {
-    Filter filter = Filter();
+    Filter filter = Filter(query: '');
     Offset offset = Offset(page: page, limit: limit);
     Result res = await InventoryApi()
-        .listGoods(ResultArguments(filter: filter, offset: offset));
+        .listProduct(ResultArguments(filter: filter, offset: offset));
     setState(() {
       inventory = res;
       isLoading = false;

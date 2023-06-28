@@ -48,292 +48,354 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: SafeArea(
-            top: false,
-            bottom: false,
-            child: Container(
-              margin: const EdgeInsets.only(top: 40),
-              width: MediaQuery.of(context).size.width,
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 21,
-                    ),
-                    Text(
-                      'DeHUB',
-                      style: TextStyle(
-                        color: buttonColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 32,
+    return WillPopScope(
+      child: Scaffold(
+        backgroundColor: backgroundColor,
+        body: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SafeArea(
+              top: false,
+              bottom: false,
+              child: Container(
+                margin: const EdgeInsets.only(top: 40),
+                width: MediaQuery.of(context).size.width,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 70,
                       ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      'Үнэ цэн нэмсэн түншлэл',
-                      style: TextStyle(
-                        color: buttonColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                      Text(
+                        'DeHUB',
+                        style: TextStyle(
+                          color: buttonColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 32,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Image(
-                      image: AssetImage('images/login.png'),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    FormBuilder(
-                      key: fbKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Нэвтрэх код',
-                            style: TextStyle(
-                              color: buttonColor,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          FormTextField(
-                            name: "code",
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              fillColor: Colors.white,
-                              filled: true,
-                              hintText: "Системд нэвтрэх бизнесийн код",
-                              hintStyle: TextStyle(
-                                color: grey2,
-                                fontSize: 14,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0xff44566C30),
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.blue,
-                                ),
-                              ),
-                            ),
-                            validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(
-                                errorText: 'Бизнесийн код оруулна уу',
-                              ),
-                            ]),
-                          ),
-                          SizedBox(
-                            height: 25,
-                          ),
-                          Text(
-                            'Хэрэглэгчийн нэр',
-                            style: TextStyle(
-                              color: buttonColor,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          FormTextField(
-                            name: "email",
-                            inputType: TextInputType.text,
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              fillColor: Colors.white,
-                              filled: true,
-                              hintText: "Хэрэглэгчийн нэрээ оруулна уу",
-                              hintStyle: TextStyle(
-                                color: grey2,
-                                fontSize: 14,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0xff44566C30),
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.blue,
-                                ),
-                              ),
-                            ),
-                            validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(
-                                errorText: 'Хэрэглэгчийн нэр оруулна уу',
-                              ),
-                            ]),
-                          ),
-                          SizedBox(
-                            height: 25,
-                          ),
-                          Text(
-                            'Нууц үг',
-                            style: TextStyle(
-                              color: buttonColor,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          FormTextField(
-                            name: "password",
-                            inputType: TextInputType.text,
-                            obscureText: _isVisible,
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              suffixIcon: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _isVisible = !_isVisible;
-                                  });
-                                },
-                                child: _isVisible == true
-                                    ? Icon(
-                                        Icons.visibility_off_outlined,
-                                        color: grey2,
-                                      )
-                                    : Icon(
-                                        Icons.visibility_outlined,
-                                        color: grey2,
-                                      ),
-                              ),
-                              fillColor: Colors.white,
-                              filled: true,
-                              hintText: "Нууц үгээ оруулна уу",
-                              hintStyle: TextStyle(
-                                color: grey2,
-                                fontSize: 14,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0xff44566C30),
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.blue,
-                                ),
-                              ),
-                            ),
-                            validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(
-                                errorText: 'Нууц үгээ оруулна уу',
-                              ),
-                            ]),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              'Нууц үгээ мартсан уу?',
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        'Үнэ цэн нэмсэн түншлэл',
+                        style: TextStyle(
+                          color: buttonColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Image(
+                        image: AssetImage('images/login.png'),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      FormBuilder(
+                        key: fbKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Нэвтрэх код',
                               style: TextStyle(
                                 color: buttonColor,
-                                fontSize: 14,
                                 fontWeight: FontWeight.w500,
+                                fontSize: 14,
                               ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            FormTextField(
+                              textColor: buttonColor,
+                              name: "code",
+                              decoration: InputDecoration(
+                                contentPadding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                fillColor: Colors.white,
+                                filled: true,
+                                hintText: "Системд нэвтрэх бизнесийн код",
+                                hintStyle: TextStyle(
+                                  color: grey2,
+                                  fontSize: 14,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0xff44566C30),
+                                  ),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: red),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ),
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(
+                                  errorText: 'Бизнесийн код оруулна уу',
+                                ),
+                              ]),
+                            ),
+                            SizedBox(
+                              height: 25,
+                            ),
+                            Text(
+                              'Хэрэглэгчийн нэр',
+                              style: TextStyle(
+                                color: buttonColor,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            FormTextField(
+                              labelText: 'Хэрэглэгчийн нэр',
+                              // labelStyle: TextStyle(
+                              //   color: buttonColor,
+                              //   fontWeight: FontWeight.w500,
+                              //   fontSize: 14,
+                              // ),
+                              textColor: buttonColor,
+                              name: "email",
+                              inputType: TextInputType.text,
+                              decoration: InputDecoration(
+                                contentPadding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                fillColor: Colors.white,
+                                filled: true,
+                                hintText: "Хэрэглэгчийн нэрээ оруулна уу",
+                                hintStyle: TextStyle(
+                                  color: grey2,
+                                  fontSize: 14,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0xff44566C30),
+                                  ),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: red),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ),
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(
+                                  errorText: 'Хэрэглэгчийн нэр оруулна уу',
+                                ),
+                              ]),
+                            ),
+                            SizedBox(
+                              height: 25,
+                            ),
+                            Text(
+                              'Нууц үг',
+                              style: TextStyle(
+                                color: buttonColor,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            FormTextField(
+                              textColor: buttonColor,
+                              name: "password",
+                              inputType: TextInputType.text,
+                              obscureText: _isVisible,
+                              decoration: InputDecoration(
+                                contentPadding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _isVisible = !_isVisible;
+                                    });
+                                  },
+                                  child: _isVisible == true
+                                      ? Icon(
+                                          Icons.visibility_off_outlined,
+                                          color: grey2,
+                                        )
+                                      : Icon(
+                                          Icons.visibility_outlined,
+                                          color: grey2,
+                                        ),
+                                ),
+                                fillColor: Colors.white,
+                                filled: true,
+                                hintText: "Нууц үгээ оруулна уу",
+                                hintStyle: TextStyle(
+                                  color: grey2,
+                                  fontSize: 14,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: red),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0xff44566C30),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ),
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(
+                                  errorText: 'Нууц үгээ оруулна уу',
+                                ),
+                              ]),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Container(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                'Нууц үгээ мартсан уу?',
+                                style: TextStyle(
+                                  color: buttonColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Checkbox(
+                            fillColor: MaterialStateProperty.resolveWith(
+                                (states) => buttonColor),
+                            value: saveUserName,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                saveUserName = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Нэвтрэх мэдээлэл сануулах',
+                            style: TextStyle(
+                              color: grey2,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
                             ),
                           )
                         ],
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Checkbox(
-                          fillColor: MaterialStateProperty.resolveWith(
-                              (states) => buttonColor),
-                          value: saveUserName,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              saveUserName = value!;
-                            });
-                          },
-                        ),
-                        Text(
-                          'Нэвтрэх мэдээлэл сануулах',
-                          style: TextStyle(
-                            color: grey2,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 42,
-                    ),
-                    CustomButton(
-                      onClick: () {
-                        onSubmit();
-                      },
-                      labelText: "Нэвтрэх",
-                      labelColor: buttonColor,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Байгууллага бүртгэлгүй юу? ',
-                          style: TextStyle(
-                            color: buttonColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(RegisterPage.routeName);
-                          },
-                          child: Text(
-                            'БҮРТГҮҮЛЭХ',
+                      SizedBox(
+                        height: 42,
+                      ),
+                      CustomButton(
+                        onClick: () {
+                          onSubmit();
+                        },
+                        labelText: "Нэвтрэх",
+                        labelColor: buttonColor,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Байгууллага бүртгэлгүй юу? ',
                             style: TextStyle(
-                              color: Color(0xff2E41FB),
+                              color: buttonColor,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                  ],
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .pushNamed(RegisterPage.routeName);
+                            },
+                            child: Text(
+                              'БҮРТГҮҮЛЭХ',
+                              style: TextStyle(
+                                color: Color(0xff2E41FB),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
         ),
       ),
+      onWillPop: () async {
+        final shouldPop = await showMyDialog();
+        return shouldPop!;
+      },
     );
   }
+
+  Future<bool?> showMyDialog() => showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Та Апп-аас гарах гэж байна'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+              child: Text('Болих'),
+            ),
+            TextButton(
+              style: ButtonStyle(
+                overlayColor: MaterialStatePropertyAll(
+                  red.withOpacity(0.1),
+                ),
+              ),
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+              child: Text(
+                'Гарах',
+                style: TextStyle(color: red),
+              ),
+            ),
+          ],
+        ),
+      );
 }

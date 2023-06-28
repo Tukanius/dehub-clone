@@ -71,6 +71,7 @@ class _CustomerChooseState extends State<CustomerChoose> {
               ),
             ),
             centerTitle: true,
+            elevation: 0,
             actions: [
               AddButton(
                 color: Colors.orange,

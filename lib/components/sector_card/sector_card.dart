@@ -52,7 +52,7 @@ class _SectorCardState extends State<SectorCard> {
                         children: [
                           Container(
                             child: Text(
-                              'Салбар №1: Түмэн дэлгүүр',
+                              '${widget.data?.name}',
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,

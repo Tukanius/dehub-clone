@@ -3,7 +3,6 @@ import 'package:dehub/models/invoice.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
 
 class InvoiceProductCard extends StatefulWidget {
@@ -37,8 +36,8 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 16,
+        horizontal: 15,
+        vertical: 15,
       ),
       color: white,
       child: Column(
@@ -88,12 +87,6 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
                   ),
                 ],
               ),
-              SvgPicture.asset(
-                'images/close.svg',
-                color: grey3,
-                height: 20,
-                width: 20,
-              )
             ],
           ),
           Divider(

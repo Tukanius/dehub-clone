@@ -1,3 +1,4 @@
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,6 +33,24 @@ class _InvoiceCardSentState extends State<InvoiceCardSent> {
         return "Буцаасан";
       case "CLOSED":
         return "Хаасан";
+      default:
+    }
+  }
+
+  invoiceStatusColor() {
+    switch (widget.data!.invoiceStatus) {
+      case "CONFIRMED":
+        return Colors.lightBlue;
+      case "DRAFT":
+        return Colors.grey;
+      case "SENT":
+        return Colors.indigo;
+      case "REJECTED":
+        return Colors.red;
+      case "RETURNED":
+        return Colors.pink;
+      case "CLOSED":
+        return Colors.green;
       default:
     }
   }
@@ -159,7 +178,7 @@ class _InvoiceCardSentState extends State<InvoiceCardSent> {
                                   height: 13,
                                 ),
                                 Text(
-                                  '${widget.data!.receiverBusiness!.partner!.businessNameEng}',
+                                  '${widget.data!.receiverBusiness!.partner!.businessName}',
                                   style: TextStyle(
                                     color: black,
                                     fontWeight: FontWeight.w500,
@@ -182,7 +201,7 @@ class _InvoiceCardSentState extends State<InvoiceCardSent> {
                                   invoiceStatus(),
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: invoiceColor,
+                                    color: invoiceStatusColor(),
                                   ),
                                 ),
                                 SizedBox(
@@ -244,7 +263,7 @@ class _InvoiceCardSentState extends State<InvoiceCardSent> {
                               height: 10,
                             ),
                             Text(
-                              '${widget.data!.amountToPay}',
+                              '${Utils().formatCurrency(widget.data!.amountToPay.toString())}₮',
                               style: TextStyle(
                                 color: black,
                                 fontWeight: FontWeight.w500,
@@ -284,7 +303,7 @@ class _InvoiceCardSentState extends State<InvoiceCardSent> {
                                   ),
                                 ),
                                 Text(
-                                  '${widget.data!.confirmedAmount}',
+                                  '${Utils().formatCurrency(widget.data!.confirmedAmount.toString())}₮',
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Color(0xff555555),
@@ -337,7 +356,7 @@ class _InvoiceCardSentState extends State<InvoiceCardSent> {
                                   width: 5,
                                 ),
                                 Text(
-                                  '${widget.data!.paidAmount} ₮',
+                                  '${Utils().formatCurrency(widget.data!.paidAmount.toString())} ₮',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: grey2,

@@ -10,6 +10,11 @@ class InventoryApi extends HttpRequest {
     return Result.fromJson(res, Invoice.fromJson);
   }
 
+  Future<Result> listProduct(ResultArguments resultArguments) async {
+    var res = await get("/goods", "INVENTORY", data: resultArguments.toJson());
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
   goodsGet(String id) async {
     var res = await get('/goods/$id', "INVENTORY");
     return InventoryGoods.fromJson(res);
