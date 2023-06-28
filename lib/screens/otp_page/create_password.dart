@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:dehub/screens/first_page/first_page.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -10,7 +8,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class CreatePasswordPage extends StatefulWidget {
-  static const routeName = 'CreatePasswordPage';
+  static const routeName = '/CreatePasswordPage';
   const CreatePasswordPage({Key? key}) : super(key: key);
 
   @override
@@ -238,7 +236,7 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
             ),
             CustomButton(
               onClick: () {
-                Navigator.of(context).pushNamed(FirstPage.routeName);
+                // Navigator.of(context).pushNamed(FirstPage.routeName);
               },
               labelColor: buttonColor,
               labelText: 'Нууц үг үүсгэх',

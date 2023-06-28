@@ -12,7 +12,7 @@ class ProductDetailPageArguments {
 }
 
 class ProductDetailPage extends StatefulWidget {
-  static const routeName = 'ProductDetailPage';
+  static const routeName = '/ProductDetailPage';
   final String id;
   ProductDetailPage({
     Key? key,

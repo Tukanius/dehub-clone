@@ -1,4 +1,5 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/bugd.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet_bish.dart';
@@ -6,20 +7,24 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-// class CustomerChooseArguments {
-//   ListenController listenController;
-//   CustomerChooseArguments({
-//     required this.listenController,
-//   });
-// }
+class CustomerChooseArguments {
+  ListenController listenController;
+  ListenController partnerListenController;
+  CustomerChooseArguments({
+    required this.listenController,
+    required this.partnerListenController,
+  });
+}
 
 class CustomerChoose extends StatefulWidget {
-  // final ListenController listenController;
+  final ListenController listenController;
+  final ListenController partnerListenController;
 
   static const routeName = '/customerchoose';
   const CustomerChoose({
     Key? key,
-    // required this.listenController,
+    required this.partnerListenController,
+    required this.listenController,
   }) : super(key: key);
 
   @override
@@ -109,7 +114,10 @@ class _CustomerChooseState extends State<CustomerChoose> {
             },
             body: TabBarView(
               children: [
-                Bugd(),
+                Bugd(
+                  listenController: widget.listenController,
+                  partnerListenController: widget.partnerListenController,
+                ),
                 Gereet(),
                 GereetBish(),
               ],

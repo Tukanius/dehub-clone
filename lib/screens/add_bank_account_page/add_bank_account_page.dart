@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AddBankAccountPage extends StatefulWidget {
-  static const routeName = 'addbankaccountpage';
+  static const routeName = '/addbankaccountpage';
   const AddBankAccountPage({Key? key}) : super(key: key);
 
   @override

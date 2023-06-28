@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/screens/product_page/tabs/home_page_tab/home_page_tab.dart';
 
 class ProductPage extends StatefulWidget {
-  static const routeName = 'productpage';
+  static const routeName = '/productpage';
   const ProductPage({super.key});
 
   @override

@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/screens/main_invoice_page/tabs/dashboard_tab/dashboard_tab.dart';
 
 class MainInvoicePage extends StatefulWidget {
-  static const routeName = 'MainInvoicePage';
+  static const routeName = '/MainInvoicePage';
   const MainInvoicePage({super.key});
 
   @override

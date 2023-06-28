@@ -3,7 +3,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class ProductListPage extends StatefulWidget {
-  static const routeName = 'ProductListPage';
+  static const routeName = '/ProductListPage';
   const ProductListPage({super.key});
 
   @override

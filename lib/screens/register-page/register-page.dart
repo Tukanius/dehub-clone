@@ -7,7 +7,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class RegisterPage extends StatefulWidget {
-  static const routeName = 'RegisterPage';
+  static const routeName = '/RegisterPage';
   const RegisterPage({Key? key}) : super(key: key);
 
   @override

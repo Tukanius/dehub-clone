@@ -13,7 +13,7 @@ class ZoningDetailPageArguments {
 
 class ZoningDetailPage extends StatefulWidget {
   final String id;
-  static const routeName = 'ZoningDetailPage';
+  static const routeName = '/ZoningDetailPage';
   const ZoningDetailPage({
     Key? key,
     required this.id,

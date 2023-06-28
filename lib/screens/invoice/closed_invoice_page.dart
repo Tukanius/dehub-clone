@@ -10,7 +10,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ClosedInvoicePage extends StatefulWidget {
-  static const routeName = 'ClosedInvoicePage';
+  static const routeName = '/ClosedInvoicePage';
   const ClosedInvoicePage({super.key});
 
   @override

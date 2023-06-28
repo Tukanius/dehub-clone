@@ -13,8 +13,13 @@ import 'package:lottie/lottie.dart';
 
 class Bugd extends StatefulWidget {
   static const routeName = '/bugd';
+
+  final ListenController listenController;
+  final ListenController partnerListenController;
   const Bugd({
     Key? key,
+    required this.partnerListenController,
+    required this.listenController,
   }) : super(key: key);
 
   @override
@@ -66,7 +71,7 @@ class _BugdState extends State<Bugd> with AfterLayoutMixin {
     return Scaffold(
         backgroundColor: backgroundColor,
         body: isLoading == true
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(
                   color: invoiceColor,
                 ),
@@ -79,7 +84,7 @@ class _BugdState extends State<Bugd> with AfterLayoutMixin {
                         onChange: (_query) {
                           onChange(_query);
                         }),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     isSubmit == false
@@ -87,13 +92,17 @@ class _BugdState extends State<Bugd> with AfterLayoutMixin {
                             ? Column(
                                 children: invoice.rows!
                                     .map(
-                                      (e) => SupplierCard(
-                                        data: e,
+                                      (data) => SupplierCard(
+                                        data: data,
                                         onClick: () {
+                                          widget.listenController
+                                              .invoiceChange(data);
                                           Navigator.of(context).pushNamed(
                                             SalbarSongoh.routeName,
                                             arguments: SalbarSongohArguments(
-                                              id: e.id,
+                                              id: data.id,
+                                              partnerListenController: widget
+                                                  .partnerListenController,
                                             ),
                                           );
                                         },
@@ -104,10 +113,10 @@ class _BugdState extends State<Bugd> with AfterLayoutMixin {
                             : Column(
                                 children: [
                                   Lottie.asset('images/not-found.json'),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 20,
                                   ),
-                                  Text(
+                                  const Text(
                                     'Мэдээлэл олдсонгүй!',
                                     style: TextStyle(
                                       color: invoiceColor,
@@ -116,7 +125,7 @@ class _BugdState extends State<Bugd> with AfterLayoutMixin {
                                   )
                                 ],
                               )
-                        : Center(
+                        : const Center(
                             child: CircularProgressIndicator(
                               color: invoiceColor,
                             ),

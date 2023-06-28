@@ -21,7 +21,7 @@ class AddDirectionArguments {
 
 class AddDirection extends StatefulWidget {
   final ListenController listenController;
-  static const routeName = 'AddDirection';
+  static const routeName = '/AddDirection';
   const AddDirection({
     Key? key,
     required this.listenController,

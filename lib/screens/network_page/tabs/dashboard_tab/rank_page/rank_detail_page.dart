@@ -2,7 +2,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class RankDetailPage extends StatefulWidget {
-  static const routeName = 'RankDetailPage';
+  static const routeName = '/RankDetailPage';
   const RankDetailPage({super.key});
 
   @override

@@ -20,7 +20,7 @@ class AddRankArguments {
 }
 
 class AddRank extends StatefulWidget {
-  static const routeName = 'AddRank';
+  static const routeName = '/AddRank';
   final ListenController listenController;
   const AddRank({
     Key? key,

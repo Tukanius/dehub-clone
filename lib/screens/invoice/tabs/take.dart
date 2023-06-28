@@ -13,7 +13,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class TakePage extends StatefulWidget {
-  static const routeName = 'TakePage';
+  static const routeName = '/TakePage';
   const TakePage({Key? key}) : super(key: key);
 
   @override

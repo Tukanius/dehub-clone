@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/screens/order_page/tabs/dashboard_tab.dart';
 
 class OrderPage extends StatefulWidget {
-  static const routeName = 'OrderPage';
+  static const routeName = '/OrderPage';
   const OrderPage({super.key});
 
   @override

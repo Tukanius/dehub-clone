@@ -35,6 +35,9 @@ Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
     params['offset'] = {};
     params['filter'] = {};
 
+    if (instance.filter!.businessId != null) {
+      params['filter']['businessId'] = instance.filter!.businessId;
+    }
     if (instance.filter!.query != null) {
       params['filter']['query'] = instance.filter!.query;
     }

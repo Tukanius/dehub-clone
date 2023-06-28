@@ -26,6 +26,7 @@ class _SupplierCardState extends State<SupplierCard> {
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
+        margin: const EdgeInsets.only(bottom: 5),
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: white,

@@ -1,10 +1,15 @@
 import 'package:dehub/components/goods_info_card/goods_info_card.dart';
+import 'package:dehub/models/invoice.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class Index1 extends StatefulWidget {
+  final List<Invoice>? data;
   static const routeName = '/index1';
-  const Index1({Key? key}) : super(key: key);
+  const Index1({
+    Key? key,
+    this.data,
+  }) : super(key: key);
 
   @override
   State<Index1> createState() => _Index1State();
@@ -355,23 +360,23 @@ class _Index1State extends State<Index1> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(left: 10),
-                            child: Text(
+                      Expanded(
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
                               '#',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: black,
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Container(
-                            child: Text(
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text(
                               'Бараа',
                               style: TextStyle(
                                 color: black,
@@ -379,13 +384,12 @@ class _Index1State extends State<Index1> {
                                 fontSize: 12,
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(right: 5),
+                      Expanded(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Container(
                               child: Text(
@@ -429,10 +433,16 @@ class _Index1State extends State<Index1> {
                     ],
                   ),
                   Divider(),
-                  for (var i = 1; i < 5; i++)
-                    GoodsInfoCard(
-                      index: i,
-                    ),
+                  Column(
+                    children: widget.data!
+                        .map(
+                          (e) => GoodsInfoCard(
+                            index: widget.data!.indexOf(e),
+                            data: e,
+                          ),
+                        )
+                        .toList(),
+                  ),
                   SizedBox(
                     height: 10,
                   ),

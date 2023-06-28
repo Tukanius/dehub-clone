@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class UserMangementPage extends StatefulWidget {
-  static const routeName = 'UserMangementPage';
+  static const routeName = '/UserMangementPage';
   const UserMangementPage({Key? key}) : super(key: key);
 
   @override

@@ -4,7 +4,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class RankPage extends StatefulWidget {
-  static const routeName = 'RankPage';
+  static const routeName = '/RankPage';
   const RankPage({super.key});
 
   @override

@@ -9,7 +9,7 @@ import 'package:dehub/screens/partner_page/tabs/inbox_tab/inbox_tab.dart';
 import 'package:dehub/screens/partner_page/tabs/sent_tab/sent_tab.dart';
 
 class PartnerPage extends StatefulWidget {
-  static const routeName = 'PartnerPage';
+  static const routeName = '/PartnerPage';
   const PartnerPage({Key? key}) : super(key: key);
 
   @override

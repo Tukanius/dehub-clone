@@ -1,9 +1,12 @@
+import 'package:dehub/models/invoice.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class GoodsInfoCard extends StatefulWidget {
   final int? index;
+  final Invoice? data;
   GoodsInfoCard({
+    this.data,
     Key? key,
     this.index,
   }) : super(key: key);
@@ -22,41 +25,13 @@ class _GoodsInfoCardState extends State<GoodsInfoCard> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 5, right: 10),
-                    child: Text(
-                      '${widget.index}',
-                      style: TextStyle(
-                        color: black,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 160,
-                    child: Text(
-                      'Талын Монгол банш, 900гр'
-                      'Хонины махтай, ууттай,'
-                      'SKU 321312313',
-                      style: TextStyle(
-                        color: black,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                margin: const EdgeInsets.only(right: 5),
+              Expanded(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15),
+                      margin: EdgeInsets.only(left: 5, right: 10),
                       child: Text(
-                        'ш',
+                        '${widget.index! + 1} ',
                         style: TextStyle(
                           color: black,
                           fontSize: 12,
@@ -64,18 +39,9 @@ class _GoodsInfoCardState extends State<GoodsInfoCard> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      width: 160,
                       child: Text(
-                        '5',
-                        style: TextStyle(
-                          color: black,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: Text(
-                        '₮ 13240.00',
+                        '${widget.data?.nameMon} SKU ${widget.data?.skuCode}',
                         style: TextStyle(
                           color: black,
                           fontSize: 12,
@@ -83,6 +49,45 @@ class _GoodsInfoCardState extends State<GoodsInfoCard> {
                       ),
                     ),
                   ],
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.only(right: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 15),
+                        child: Text(
+                          'ш',
+                          style: TextStyle(
+                            color: black,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          '${widget.data?.quantity?.toInt()}',
+                          style: TextStyle(
+                            color: black,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        child: Text(
+                          '${widget.data?.price}₮',
+                          style: TextStyle(
+                            color: black,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -108,7 +113,7 @@ class _GoodsInfoCardState extends State<GoodsInfoCard> {
               ),
               Container(
                 child: Text(
-                  '₮ 66200.00',
+                  '${widget.data?.price}₮',
                   style: TextStyle(
                     color: black,
                     fontSize: 12,

@@ -1,12 +1,23 @@
+import 'package:dehub/models/invoice.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/index1.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/pdf_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/send_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:after_layout/after_layout.dart';
+
+class HarahArguments {
+  List<Invoice> data;
+  HarahArguments({
+    required this.data,
+  });
+}
 
 class Harah extends StatefulWidget {
+  final List<Invoice> data;
   static const routeName = '/harah';
   const Harah({
+    required this.data,
     Key? key,
   }) : super(key: key);
 
@@ -14,11 +25,18 @@ class Harah extends StatefulWidget {
   State<Harah> createState() => _HarahState();
 }
 
-class _HarahState extends State<Harah> with SingleTickerProviderStateMixin {
+class _HarahState extends State<Harah>
+    with SingleTickerProviderStateMixin, AfterLayoutMixin {
   late TabController tabController;
   ScrollController scrollController = ScrollController();
   int currentIndex = 1;
   bool isTap = false;
+
+  @override
+  afterFirstLayout(BuildContext context) {
+    print(widget.data.first.toJson());
+    print('=====data=====');
+  }
 
   @override
   void initState() {
@@ -203,7 +221,11 @@ class _HarahState extends State<Harah> with SingleTickerProviderStateMixin {
               indent: 25,
               endIndent: 25,
             ),
-            currentIndex == 1 ? Index1() : SizedBox(),
+            currentIndex == 1
+                ? Index1(
+                    data: widget.data,
+                  )
+                : SizedBox(),
           ],
         ),
       ),

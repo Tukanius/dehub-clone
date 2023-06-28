@@ -3,7 +3,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class PaymentConditionPage extends StatefulWidget {
-  static const routeName = 'PaymentConditionPage';
+  static const routeName = '/PaymentConditionPage';
   const PaymentConditionPage({super.key});
 
   @override

@@ -4,7 +4,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class AvaibleFundingPage extends StatefulWidget {
-  static const routeName = 'AvaibleFundingPage';
+  static const routeName = '/AvaibleFundingPage';
   const AvaibleFundingPage({super.key});
 
   @override

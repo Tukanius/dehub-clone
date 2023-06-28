@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 
 class RequestApprovalPage extends StatefulWidget {
-  static const routeName = 'RequestApprovalPage';
+  static const routeName = '/RequestApprovalPage';
   const RequestApprovalPage({super.key});
 
   @override

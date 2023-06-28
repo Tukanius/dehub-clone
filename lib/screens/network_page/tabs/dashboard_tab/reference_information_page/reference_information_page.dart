@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
 
 class ReferenceInformationPage extends StatefulWidget {
-  static const routeName = 'ReferenceInformationPage';
+  static const routeName = '/ReferenceInformationPage';
   const ReferenceInformationPage({super.key});
 
   @override

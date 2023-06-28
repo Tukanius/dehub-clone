@@ -2,7 +2,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class TransactionDetailPage extends StatefulWidget {
-  static const routeName = 'transactiondetailpage';
+  static const routeName = '/transactiondetailpage';
   const TransactionDetailPage({Key? key}) : super(key: key);
 
   @override

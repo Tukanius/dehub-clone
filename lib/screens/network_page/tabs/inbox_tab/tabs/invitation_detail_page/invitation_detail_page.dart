@@ -14,7 +14,7 @@ class InvitationDetailPageArguments {
 
 class InvitationDetailPage extends StatefulWidget {
   final String id;
-  static const routeName = 'invitationdetailpage';
+  static const routeName = '/invitationdetailpage';
   const InvitationDetailPage({
     Key? key,
     required this.id,

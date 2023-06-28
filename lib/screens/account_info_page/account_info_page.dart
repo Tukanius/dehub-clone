@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AccountInfoPage extends StatefulWidget {
-  static const routeName = 'accountinfopage';
+  static const routeName = '/accountinfopage';
   const AccountInfoPage({Key? key}) : super(key: key);
 
   @override

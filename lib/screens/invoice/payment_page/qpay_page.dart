@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class QpayPage extends StatefulWidget {
-  static const routeName = 'QpayPage';
+  static const routeName = '/QpayPage';
   const QpayPage({super.key});
 
   @override

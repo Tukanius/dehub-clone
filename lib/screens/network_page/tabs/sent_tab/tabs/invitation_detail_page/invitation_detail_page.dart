@@ -13,7 +13,7 @@ class SentInvitationDetailArguments {
 
 class SentInvitationDetail extends StatefulWidget {
   final String id;
-  static const routeName = 'SentInvitationDetail';
+  static const routeName = '/SentInvitationDetail';
   const SentInvitationDetail({
     Key? key,
     required this.id,

@@ -4,7 +4,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class ReceivedFundingDetailPage extends StatefulWidget {
-  static const routeName = 'ReceivedFundingDetailPage';
+  static const routeName = '/ReceivedFundingDetailPage';
   const ReceivedFundingDetailPage({super.key});
 
   @override

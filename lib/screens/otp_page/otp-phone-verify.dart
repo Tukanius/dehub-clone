@@ -8,7 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpPhoneVerify extends StatefulWidget {
-  static const routeName = 'OtpPhoneVerify';
+  static const routeName = '/OtpPhoneVerify';
   const OtpPhoneVerify({Key? key}) : super(key: key);
 
   @override

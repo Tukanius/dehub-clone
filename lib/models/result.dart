@@ -6,8 +6,10 @@ class Filter {
   String? type;
   String? orderConfirmTerm;
   bool? isParent;
+  String? businessId;
 
   Filter({
+    this.businessId,
     this.isParent,
     this.type,
     this.query,

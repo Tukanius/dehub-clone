@@ -46,4 +46,10 @@ class InvoiceApi extends HttpRequest {
     );
     return Result.fromJson(res, Invoice.fromJson);
   }
+
+  Future<Invoice> createInvoice(Invoice data) async {
+    var res =
+        await post('/invoice', "INVOICE", data: data.toJson(), handler: true);
+    return Invoice.fromJson(res as Map<String, dynamic>);
+  }
 }

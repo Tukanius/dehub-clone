@@ -4,7 +4,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class ZoningPage extends StatefulWidget {
-  static const routeName = 'ZoningPage';
+  static const routeName = '/ZoningPage';
   const ZoningPage({super.key});
 
   @override

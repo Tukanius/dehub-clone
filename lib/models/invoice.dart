@@ -128,7 +128,7 @@ class Invoice {
   String? method;
   String? creditAccountId;
   double? amount;
-
+  String? unitName;
   bool? send;
   List<Invoice>? items;
 
@@ -145,6 +145,7 @@ class Invoice {
   }
 
   Invoice({
+    this.unitName,
     this.send,
     this.items,
     this.method,

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/components/sector_card/sector_card.dart';
 import 'package:dehub/models/result.dart';
@@ -12,17 +13,21 @@ import 'package:after_layout/after_layout.dart';
 import 'package:lottie/lottie.dart';
 
 class SalbarSongohArguments {
+  ListenController partnerListenController;
   String id;
   SalbarSongohArguments({
+    required this.partnerListenController,
     required this.id,
   });
 }
 
 class SalbarSongoh extends StatefulWidget {
+  final ListenController partnerListenController;
   final String id;
   static const routeName = '/salbarsongoh';
   const SalbarSongoh({
     Key? key,
+    required this.partnerListenController,
     required this.id,
   }) : super(key: key);
 
@@ -97,61 +102,69 @@ class _SalbarSongohState extends State<SalbarSongoh> with AfterLayoutMixin {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 5,
-            ),
-            SearchButton(
-              color: invoiceColor,
-              onChange: (_query) {
-                setState(() {
-                  onChange(_query);
-                });
-              },
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            isSubmit == false
-                ? invoice.rows?.length != 0
-                    ? Column(
-                        children: invoice.rows!
-                            .map(
-                              (e) => SectorCard(
-                                data: e,
-                                onClick: () {
-                                  Navigator.of(context).pop();
-                                  Navigator.of(context).pop();
-                                },
-                              ),
+      body: isLoading == true
+          ? Center(
+              child: CircularProgressIndicator(
+                color: invoiceColor,
+              ),
+            )
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 5,
+                  ),
+                  SearchButton(
+                    color: invoiceColor,
+                    onChange: (_query) {
+                      setState(() {
+                        onChange(_query);
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  isSubmit == false
+                      ? invoice.rows?.length != 0
+                          ? Column(
+                              children: invoice.rows!
+                                  .map(
+                                    (e) => SectorCard(
+                                      data: e,
+                                      onClick: () {
+                                        widget.partnerListenController
+                                            .partnerInvoiceChange(e);
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  )
+                                  .toList(),
                             )
-                            .toList(),
-                      )
-                    : Column(
-                        children: [
-                          Lottie.asset('images/not-found.json'),
-                          SizedBox(
-                            height: 20,
+                          : Column(
+                              children: [
+                                Lottie.asset('images/not-found.json'),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  'Мэдээлэл олдсонгүй!',
+                                  style: TextStyle(
+                                    color: invoiceColor,
+                                    fontSize: 16,
+                                  ),
+                                )
+                              ],
+                            )
+                      : Center(
+                          child: CircularProgressIndicator(
+                            color: invoiceColor,
                           ),
-                          Text(
-                            'Мэдээлэл олдсонгүй!',
-                            style: TextStyle(
-                              color: invoiceColor,
-                              fontSize: 16,
-                            ),
-                          )
-                        ],
-                      )
-                : Center(
-                    child: CircularProgressIndicator(
-                      color: invoiceColor,
-                    ),
-                  )
-          ],
-        ),
-      ),
+                        )
+                ],
+              ),
+            ),
     );
   }
 }

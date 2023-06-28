@@ -56,7 +56,7 @@ class _SearchButtonState extends State<SearchButton> {
             width: 30,
             decoration: BoxDecoration(
               border: Border.all(
-                color: grey3.withOpacity(0.3),
+                color: Colors.grey,
               ),
               borderRadius: BorderRadius.circular(5),
             ),

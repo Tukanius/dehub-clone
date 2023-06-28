@@ -13,6 +13,7 @@ import 'package:dehub/screens/first_page/first_page.dart';
 import 'package:dehub/screens/funding_request_page/funding_request_detail_page.dart';
 import 'package:dehub/screens/home_page/home_page.dart';
 import 'package:dehub/screens/invoice/closed_invoice_page.dart';
+import 'package:dehub/screens/invoice/new_invoice/add_product/add_product.dart';
 import 'package:dehub/screens/invoice/payment_page/qpay_page.dart';
 import 'package:dehub/screens/invoice/tabs/give.dart';
 import 'package:dehub/screens/invoice/tabs/take.dart';
@@ -40,7 +41,7 @@ import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/invitation_detail
 import 'package:dehub/screens/invoice/invoice_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product_tabs/shirhegeer.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose.dart';
-import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/bugd.dart';
+// import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/bugd.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet_bish.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/salbar_songoh.dart';
@@ -191,13 +192,15 @@ class MyApp extends StatelessWidget {
                     });
 
                   case CustomerChoose.routeName:
-                    // CustomerChooseArguments arguments =
-                    //     settings.arguments as CustomerChooseArguments;
+                    CustomerChooseArguments arguments =
+                        settings.arguments as CustomerChooseArguments;
                     return PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
                           CustomerChoose(
-                              // listenController: arguments.listenController,
-                              ),
+                        listenController: arguments.listenController,
+                        partnerListenController:
+                            arguments.partnerListenController,
+                      ),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                         var begin = const Offset(0.0, 1.0);
@@ -221,6 +224,8 @@ class MyApp extends StatelessWidget {
                           SalbarSongoh(
                         // listenController: arguments.listenController,
                         id: arguments.id,
+                        partnerListenController:
+                            arguments.partnerListenController,
                       ),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
@@ -237,10 +242,10 @@ class MyApp extends StatelessWidget {
                         );
                       },
                     );
-                  case Bugd.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return Bugd();
-                    });
+                  // case Bugd.routeName:
+                  //   return MaterialPageRoute(builder: (context) {
+                  //     return Bugd();
+                  //   });
                   case Gereet.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return Gereet();
@@ -285,10 +290,6 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return NetworkPartnerPage();
                     });
-                  case Harah.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return Harah();
-                    });
                   case FirstPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return FirstPage();
@@ -296,6 +297,14 @@ class MyApp extends StatelessWidget {
                   case NewInvitationPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return NewInvitationPage();
+                    });
+                  case Harah.routeName:
+                    HarahArguments arguments =
+                        settings.arguments as HarahArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return Harah(
+                        data: arguments.data,
+                      );
                     });
                   case ZoningDetailPage.routeName:
                     ZoningDetailPageArguments arguments =
@@ -513,6 +522,30 @@ class MyApp extends StatelessWidget {
                       pageBuilder: (context, animation, secondaryAnimation) =>
                           AddZoning(
                         listenController: arguments.listenController,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
+                  case AddProduct.routeName:
+                    AddProductArguments arguments =
+                        settings.arguments as AddProductArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          AddProduct(
+                        goodsListenController: arguments.goodsListenController,
+                        businessId: arguments.businessId,
                       ),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {

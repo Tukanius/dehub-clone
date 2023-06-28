@@ -8,7 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/screens/payment_page/tabs/home_page_tab.dart';
 
 class PaymentPage extends StatefulWidget {
-  static const routeName = 'PaymentPage';
+  static const routeName = '/PaymentPage';
   const PaymentPage({super.key});
 
   @override

@@ -5,7 +5,7 @@ import 'package:dehub/screens/funding_request_page/tabs/request_tab.dart';
 import 'package:dehub/screens/funding_request_page/tabs/limit_tab.dart';
 
 class FundingRequestDetailPage extends StatefulWidget {
-  static const routeName = 'FundingRequestDetailPage';
+  static const routeName = '/FundingRequestDetailPage';
   const FundingRequestDetailPage({super.key});
 
   @override

@@ -15,7 +15,7 @@ class PartnerDetailPageArguments {
 
 class PartnerDetailPage extends StatefulWidget {
   final String id;
-  static const routeName = 'PartnerDetailPage';
+  static const routeName = '/PartnerDetailPage';
   const PartnerDetailPage({
     Key? key,
     required this.id,

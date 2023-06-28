@@ -20,7 +20,7 @@ class NewConditionPageArguments {
 class NewConditionPage extends StatefulWidget {
   final ListenController listenController;
 
-  static const routeName = 'NewConditionPage';
+  static const routeName = '/NewConditionPage';
   const NewConditionPage({required this.listenController, Key? key})
       : super(key: key);
 

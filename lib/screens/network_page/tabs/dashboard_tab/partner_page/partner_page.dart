@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 
 class NetworkPartnerPage extends StatefulWidget {
-  static const routeName = 'NetworkPartnerPage';
+  static const routeName = '/NetworkPartnerPage';
   const NetworkPartnerPage({super.key});
 
   @override

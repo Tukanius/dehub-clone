@@ -1,14 +1,29 @@
 import 'package:dehub/components/add_button/add_button.dart';
-import 'package:dehub/components/search_button/search_button.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product_tabs/bagtsaar.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product_tabs/shirhegeer.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+class AddProductArguments {
+  ListenController goodsListenController;
+  String businessId;
+  AddProductArguments({
+    required this.goodsListenController,
+    required this.businessId,
+  });
+}
+
 class AddProduct extends StatefulWidget {
+  final ListenController goodsListenController;
+  final String businessId;
   static const routeName = '/addproduct';
-  const AddProduct({super.key});
+  const AddProduct({
+    required this.businessId,
+    Key? key,
+    required this.goodsListenController,
+  }) : super(key: key);
 
   @override
   State<AddProduct> createState() => _AddProductState();
@@ -82,9 +97,6 @@ class _AddProductState extends State<AddProduct> {
                           ],
                         ),
                       ),
-                      SearchButton(
-                        color: invoiceColor,
-                      ),
                     ],
                   ),
                 ),
@@ -93,7 +105,10 @@ class _AddProductState extends State<AddProduct> {
             body: TabBarView(
               physics: NeverScrollableScrollPhysics(),
               children: [
-                Bagtsaar(),
+                Bagtsaar(
+                  goodsListenController: widget.goodsListenController,
+                  businessId: widget.businessId,
+                ),
                 Shirhegeer(),
               ],
             ),

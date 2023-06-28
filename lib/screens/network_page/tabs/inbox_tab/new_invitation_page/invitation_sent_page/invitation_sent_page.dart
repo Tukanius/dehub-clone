@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class InvitationSentPage extends StatefulWidget {
-  static const routeName = 'InvitationSentPage';
+  static const routeName = '/InvitationSentPage';
   const InvitationSentPage({super.key});
 
   @override

@@ -2,7 +2,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class InvitationDetailPage extends StatefulWidget {
-  static const routeName = 'invitationdetailpage';
+  static const routeName = '/invitationdetailpage';
   const InvitationDetailPage({Key? key}) : super(key: key);
 
   @override

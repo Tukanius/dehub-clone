@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ReceivedFundingPage extends StatefulWidget {
-  static const routeName = 'ReceivedFundingPage';
+  static const routeName = '/ReceivedFundingPage';
   const ReceivedFundingPage({super.key});
 
   @override

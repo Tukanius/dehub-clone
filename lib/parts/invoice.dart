@@ -267,12 +267,14 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     attachments: json['attachments'] != null
         ? (json['attachments'] as List).map((e) => Invoice.fromJson(e)).toList()
         : null,
+    unitName: json['unitName'] != null ? json['unitName'] as String : null,
   );
 }
 
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.unitName != null) json['unitName'] = instance.unitName;
   if (instance.send != null) json['send'] = instance.send;
   if (instance.items != null) json['items'] = instance.items;
   if (instance.method != null) json['method'] = instance.method;

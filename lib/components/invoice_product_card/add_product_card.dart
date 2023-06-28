@@ -7,7 +7,13 @@ import 'package:after_layout/after_layout.dart';
 class AddProductCard extends StatefulWidget {
   final Color? color;
   final Invoice? data;
+  final Function()? onClick;
+  final bool? isCheck;
+  final int? index;
   const AddProductCard({
+    this.index,
+    this.isCheck,
+    this.onClick,
     this.color,
     Key? key,
     this.data,
@@ -18,66 +24,264 @@ class AddProductCard extends StatefulWidget {
 }
 
 class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
-  int price = 9500;
-  int amount = 1000;
-  int percent = 5;
   int _count = 00;
   String? discount;
+  bool isCheck = false;
 
   @override
   afterFirstLayout(BuildContext context) {}
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 16,
-      ),
-      color: white,
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    height: 56,
-                    width: 56,
-                    child: Image(
-                      image: NetworkImage(
-                          'https://www.apudairy.mn/wp-content/uploads/2021/09/d-suu-1.png'),
-                      fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: widget.onClick,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
+        color: white,
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      height: 56,
+                      width: 56,
+                      child: Image(
+                        image: NetworkImage('${widget.data?.image}'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Гүзээлзгэнэтэй иогурт',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${widget.data?.nameMon}',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          width: 240,
+                          child: Text(
+                            '${widget.data?.skuCode}, ${widget.data?.barCode}, ${widget.data?.erpCode}',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 3,
+                            softWrap: false,
+                            style: TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                widget.isCheck == false
+                    ? SvgPicture.asset(
+                        'images/close.svg',
+                        color: grey3,
+                        height: 20,
+                        width: 20,
+                      )
+                    : SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: Checkbox(
+                          side: MaterialStateBorderSide.resolveWith(
+                            (states) => BorderSide(
+                              color: invoiceColor,
+                              width: 2,
+                            ),
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          activeColor: invoiceColor,
+                          value: isCheck,
+                          onChanged: (value) {
+                            setState(() {
+                              isCheck = value!;
+                            });
+                          },
                         ),
                       ),
+              ],
+            ),
+            Divider(
+              thickness: 0.5,
+            ),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Нэгж үнэ',
+                            style: TextStyle(
+                              color: Color(0xff8181A5),
+                              fontSize: 14,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            '${widget.data?.price} ₮',
+                            style: TextStyle(
+                              color: widget.color,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            '${widget.data?.unitName}',
+                            style: TextStyle(
+                              color: grey2,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
                       SizedBox(
-                        height: 5,
+                        width: 20,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Хөнгөлөлт',
+                            style: TextStyle(
+                              color: Color(0xff8181A5),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            '0%',
+                            style: TextStyle(
+                              color: widget.color,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 7, vertical: 4),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: grey3.withOpacity(0.3),
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                              color: Color(0xffEBFAFA),
+                            ),
+                            child: Text(
+                              'хувиар',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: grey2,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            if (_count > 0) {
+                              _count--;
+                              widget.data?.quantity = _count.toDouble();
+                            }
+                          });
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 7, vertical: 13),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: widget.color!),
+                            borderRadius: BorderRadius.circular(3),
+                          ),
+                          child: Icon(
+                            Icons.remove,
+                            color: widget.color,
+                            size: 20,
+                          ),
+                        ),
                       ),
                       Container(
-                        width: 250,
-                        child: Text(
-                          'SKU 32165456, Brand Name, 250 гр, савлагааны нэр боөрсорыбх',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 3,
-                          softWrap: false,
-                          style: TextStyle(
-                            fontSize: 14,
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        padding:
+                            const EdgeInsets.only(right: 5, top: 8, bottom: 11),
+                        width: 70,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2),
+                          color: Color(0xffF2F3F7),
+                          border: Border.all(
+                            color: Color(0xffD9DCDE),
+                          ),
+                        ),
+                        child: widget.data?.quantity == null
+                            ? Text(
+                                '0',
+                                style: TextStyle(color: grey3, fontSize: 20),
+                                textAlign: TextAlign.end,
+                              )
+                            : Text(
+                                '${widget.data?.quantity?.toInt()}',
+                                style: TextStyle(color: grey3, fontSize: 20),
+                                textAlign: TextAlign.end,
+                              ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            _count++;
+                            widget.data?.quantity = _count.toDouble();
+                          });
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 7, vertical: 13),
+                          decoration: BoxDecoration(
+                            color: widget.color,
+                            border: Border.all(color: widget.color!),
+                            borderRadius: BorderRadius.circular(3),
+                          ),
+                          child: Icon(
+                            Icons.add,
+                            color: white,
+                            size: 20,
                           ),
                         ),
                       ),
@@ -85,200 +289,33 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
                   ),
                 ],
               ),
-              SvgPicture.asset(
-                'images/close.svg',
-                color: grey3,
-                height: 20,
-                width: 20,
-              )
-            ],
-          ),
-          Divider(
-            thickness: 0.5,
-          ),
-          Container(
-            child: Row(
+            ),
+            Divider(
+              thickness: 0.5,
+            ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Нэгж үнэ',
-                          style: TextStyle(
-                            color: Color(0xff8181A5),
-                            fontSize: 14,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          '${price} ₮',
-                          style: TextStyle(
-                            color: widget.color,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          '5 кг',
-                          style: TextStyle(
-                            color: grey2,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Хөнгөлөлт',
-                          style: TextStyle(
-                            color: Color(0xff8181A5),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          '5%',
-                          style: TextStyle(
-                            color: widget.color,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 7, vertical: 4),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: grey3.withOpacity(0.3),
-                            ),
-                            borderRadius: BorderRadius.circular(5),
-                            color: Color(0xffEBFAFA),
-                          ),
-                          child: Text(
-                            'хувиар',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: grey2,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                Text(
+                  'Дүн:',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    color: grey2,
+                  ),
                 ),
-                Row(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          if (_count > 0) {
-                            _count--;
-                          }
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 7, vertical: 13),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: widget.color!),
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                        child: Icon(
-                          Icons.remove,
-                          color: widget.color,
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      padding:
-                          const EdgeInsets.only(right: 5, top: 8, bottom: 11),
-                      width: 70,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(2),
-                        color: Color(0xffF2F3F7),
-                        border: Border.all(
-                          color: Color(0xffD9DCDE),
-                        ),
-                      ),
-                      child: Text(
-                        '${_count}',
-                        style: TextStyle(color: grey3, fontSize: 20),
-                        textAlign: TextAlign.end,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          _count++;
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 7, vertical: 13),
-                        decoration: BoxDecoration(
-                          color: widget.color,
-                          border: Border.all(color: widget.color!),
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                        child: Icon(
-                          Icons.add,
-                          color: white,
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                Text(
+                  '${double.parse(_count.toString()) * widget.data!.price!} ₮',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    color: grey2,
+                  ),
+                )
               ],
-            ),
-          ),
-          Divider(
-            thickness: 0.5,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Дүн:',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                  color: grey2,
-                ),
-              ),
-              Text(
-                '${price * _count} ₮',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  color: grey2,
-                ),
-              )
-            ],
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

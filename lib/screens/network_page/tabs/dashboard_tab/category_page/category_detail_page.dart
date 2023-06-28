@@ -13,7 +13,7 @@ class CategoryDetailPageArguments {
 
 class CategoryDetailPage extends StatefulWidget {
   final String id;
-  static const routeName = 'CategoryDetailpage';
+  static const routeName = '/CategoryDetailpage';
   const CategoryDetailPage({
     Key? key,
     required this.id,

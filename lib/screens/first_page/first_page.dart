@@ -5,6 +5,7 @@ import 'package:dehub/components/modules_card/modules_card.dart';
 import 'package:dehub/components/schedule_card/schedule_card.dart';
 import 'package:dehub/components/take_give_card/take_give_card.dart';
 import 'package:dehub/components/tutorial_card/tutorial_card.dart';
+import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/menu/menu_page.dart';
@@ -26,6 +27,7 @@ class FirstPage extends StatefulWidget {
 }
 
 User user = User();
+Partner partnerUser = Partner();
 
 show(context) {
   showDialog(
@@ -191,14 +193,17 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) {
-    show(context);
+    // show(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserProvider>(context, listen: false).user;
+    user = Provider.of<UserProvider>(context, listen: true).user;
+    partnerUser = Provider.of<UserProvider>(context, listen: true).partnerUser;
     return WillPopScope(
       child: SafeArea(
+        top: false,
+        bottom: false,
         child: Scaffold(
           backgroundColor: backgroundColor,
           appBar: AppBar(
@@ -237,11 +242,12 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
             ],
             backgroundColor: buttonColor,
             elevation: 0,
-            leading: InkWell(
+            leading: GestureDetector(
               onTap: () {
                 Navigator.of(context).pushNamed(MenuPage.routeName);
               },
               child: Container(
+                color: buttonColor,
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: SvgPicture.asset('images/menu.svg'),
               ),
@@ -269,7 +275,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'Дэлгэрэх трэйд ХХК',
+                            '${partnerUser.user?.currentBusiness?.partnerName}',
                             style: TextStyle(
                               color: white,
                               fontWeight: FontWeight.w500,
@@ -283,14 +289,14 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Buyer: ",
+                                "${partnerUser.user?.currentBusiness?.type}: ",
                                 style: TextStyle(
                                   color: Color(0xffFEBC11),
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
                               Text(
-                                "Бизнесийн нэр",
+                                "${partnerUser.user?.currentBusiness?.partnerName}",
                                 style: TextStyle(
                                   color: white,
                                   fontWeight: FontWeight.w500,
@@ -304,7 +310,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                     ModulesCard(),
                   ],
                 ),
-                isNew != false
+                isNew == false
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -316,17 +322,27 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 15),
-                                  child: Text(
-                                    "Өнөөдөр хүлээн авах",
-                                    style: TextStyle(
-                                      color: buttonColor,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: partnerUser
+                                                .user?.currentBusiness?.type ==
+                                            "SUPPLIER"
+                                        ? Text(
+                                            "Өнөөдөр хүлээлгэн өгөх",
+                                            style: TextStyle(
+                                              color: buttonColor,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          )
+                                        : Text(
+                                            "Өнөөдөр хүлээн авах",
+                                            style: TextStyle(
+                                              color: buttonColor,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          )),
                                 SizedBox(
                                   height: 15,
                                 ),

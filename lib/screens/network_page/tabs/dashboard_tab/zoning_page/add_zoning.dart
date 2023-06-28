@@ -19,7 +19,7 @@ class AddZoningArguments {
 
 class AddZoning extends StatefulWidget {
   final ListenController listenController;
-  static const routeName = "AddZoning";
+  static const routeName = "/AddZoning";
   const AddZoning({
     Key? key,
     required this.listenController,
