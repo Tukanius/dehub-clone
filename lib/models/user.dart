@@ -64,7 +64,7 @@ class User {
   bool? isDanVerified;
   bool? hasPassword;
   User? currentBusiness;
-  double? regNumber;
+  String? regNumber;
   double? stateRegNum;
   String? legalEntityType;
   String? partnerName;
@@ -91,15 +91,31 @@ class User {
   // Partner? partner;
   List<BusinessStaffs>? businessStaffs;
   String? pin;
-
   bool? isAdmin;
   String? employeeUnit;
+
+  String? verifyId;
+  String? otpCode;
+  String? message;
+  int? expiryIn;
+  String? otpCharset;
+  String? otpMethod;
+  String? oldPassword;
+  String? businessName;
 
   getAvatar() {
     return HttpRequest.s3host + avatar.toString();
   }
 
   User({
+    this.businessName,
+    this.verifyId,
+    this.otpCode,
+    this.message,
+    this.expiryIn,
+    this.otpCharset,
+    this.otpMethod,
+    this.oldPassword,
     this.pin,
     this.userId,
     this.user,

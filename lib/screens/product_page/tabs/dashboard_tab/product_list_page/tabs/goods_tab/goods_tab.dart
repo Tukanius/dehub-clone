@@ -1,12 +1,14 @@
+import 'dart:async';
+
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/goods_card/goods_card.dart';
-import 'package:dehub/components/invoice_empty/invoice_empty.dart';
+import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/screens/product_page/tabs/dashboard_tab/product_detail_page/product_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:lottie/lottie.dart';
 
 class GoodsTab extends StatefulWidget {
   const GoodsTab({super.key});
@@ -20,14 +22,16 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
   int page = 1;
   int limit = 10;
   Result inventory = Result(rows: [], count: 0);
+  Timer? timer;
+  bool isSubmit = false;
 
   @override
   afterFirstLayout(BuildContext context) async {
-    await list(page, limit);
+    await list(page, limit, '');
   }
 
-  list(page, limit) async {
-    Filter filter = Filter(query: '');
+  list(page, limit, String value) async {
+    Filter filter = Filter(query: '${value}');
     Offset offset = Offset(page: page, limit: limit);
     Result res = await InventoryApi()
         .listProduct(ResultArguments(filter: filter, offset: offset));
@@ -37,82 +41,31 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
     });
   }
 
+  onChange(String value) {
+    if (timer != null) timer!.cancel();
+    timer = Timer(const Duration(milliseconds: 500), () async {
+      setState(() {
+        isSubmit = true;
+      });
+      list(page, limit, value);
+      setState(() {
+        isSubmit = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 2),
-            child: Column(
-              children: [
-                Container(
-                  color: white,
-                  height: 50,
-                  padding: const EdgeInsets.only(left: 16, top: 10, bottom: 10),
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: grey3.withOpacity(0.3),
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 5),
-                          child: SvgPicture.asset(
-                            'images/yuluur.svg',
-                            color: grey2,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          margin: const EdgeInsets.only(right: 10),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: grey3.withOpacity(0.3),
-                            ),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Container(
-                            margin: const EdgeInsets.only(left: 10),
-                            alignment: Alignment.centerLeft,
-                            child: Icon(
-                              Icons.search,
-                              size: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: grey3.withOpacity(0.3),
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: InkWell(
-                          onTap: () {},
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 5, vertical: 5),
-                            child: SvgPicture.asset(
-                              'images/filter.svg',
-                              color: grey2,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+          SearchButton(
+            onChange: (query) {
+              onChange(query);
+            },
+            color: productColor,
+            textColor: productColor,
+            borderColor: productColor,
           ),
           isLoading == true
               ? Center(
@@ -138,7 +91,22 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
                           )
                           .toList(),
                     )
-                  : InvoiceEmpty(),
+                  : Column(
+                      children: [
+                        Center(
+                          child: Lottie.asset(
+                            'images/pnfound.json',
+                          ),
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        Text(
+                          'Бараа олдсонгүй!!!',
+                          style: TextStyle(color: productColor),
+                        ),
+                      ],
+                    ),
         ],
       ),
     );

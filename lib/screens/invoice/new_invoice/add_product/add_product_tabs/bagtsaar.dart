@@ -77,6 +77,8 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
               child: Column(
                 children: [
                   SearchButton(
+                    borderColor: invoiceColor,
+                    textColor: invoiceColor,
                     onChange: (_query) {
                       onChange(_query);
                     },

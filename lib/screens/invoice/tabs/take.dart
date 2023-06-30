@@ -305,8 +305,10 @@ class _TakePageState extends State<TakePage>
                           body = const CupertinoActivityIndicator();
                         } else if (mode == LoadStatus.failed) {
                           body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                        } else {
+                        } else if (mode == LoadStatus.noMore) {
                           body = const Text("Мэдээлэл алга байна");
+                        } else {
+                          body = const Text('Мэдээлэл алга байна');
                         }
                         return SizedBox(
                           height: 55.0,

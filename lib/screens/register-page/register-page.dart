@@ -1,3 +1,5 @@
+import 'package:dehub/api/partner_api.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/screens/otp_page/otp_page.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -15,9 +17,43 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   bool isCheck = false;
   bool isCheck1 = false;
-  String? legalEntityType;
+  String legalEntityType = '';
+  bool validate = false;
+  User user = User();
+  User otpverify = User();
+
+  legalEntityTypeValidate() async {
+    if (legalEntityType == "") {
+      setState(() {
+        validate = true;
+      });
+    }
+    if (validate == false) {
+      onSubmit();
+    }
+  }
+
+  onSubmit() async {
+    if (fbKey.currentState!.saveAndValidate()) {
+      try {
+        user = User.fromJson(fbKey.currentState!.value);
+        user.type = legalEntityType;
+        otpverify = await PartnerApi().register(user);
+        await Navigator.of(context).pushNamed(OtpVerifyPage.routeName,
+            arguments: OtpVerifyPageArguments(
+              verifyId: otpverify.verifyId!,
+              email: user.email!,
+              phone: user.phone!,
+            ));
+      } catch (e) {
+        print(e.toString());
+        print('======error======');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 color: buttonColor,
               ),
               SizedBox(
-                width: 15,
+                width: 10,
               ),
               Text(
                 'Буцах',
@@ -101,8 +137,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         onChanged: (bool? newValue) {
                           setState(() {
                             isCheck = newValue!;
-                            legalEntityType = 'Хуулийн этгээд';
+                            legalEntityType = 'COMPANY';
                             isCheck1 = false;
+                            setState(() {
+                              validate = false;
+                            });
                           });
                         },
                       ),
@@ -132,8 +171,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         onChanged: (bool? newValue) {
                           setState(() {
                             isCheck1 = newValue!;
-                            legalEntityType = 'Бизнес эрхлэгч';
+                            legalEntityType = 'CITIZEN';
                             isCheck = false;
+                            setState(() {
+                              validate = false;
+                            });
                           });
                         },
                       ),
@@ -148,6 +190,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ],
               ),
+              validate == true
+                  ? Text(
+                      'Төрөл сонгоно уу',
+                      style: TextStyle(color: red),
+                    )
+                  : SizedBox(),
               SizedBox(
                 height: 10,
               ),
@@ -162,12 +210,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 height: 5,
               ),
               FormBuilder(
+                key: fbKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     FormTextField(
-                      name: "id",
-                      inputType: TextInputType.text,
+                      textColor: buttonColor,
+                      name: "regNumber",
                       decoration: InputDecoration(
                         suffixIcon: Icon(
                           Icons.search,
@@ -186,6 +235,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderSide: BorderSide(
                             color: Color(0xff44566C30),
                           ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: red),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -213,8 +268,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 5,
                     ),
                     FormTextField(
-                      name: "ide",
-                      inputType: TextInputType.text,
+                      textColor: buttonColor,
+                      name: "businessName",
                       decoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 10),
@@ -229,6 +284,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderSide: BorderSide(
                             color: Color(0xff44566C30),
                           ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: red),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -256,8 +317,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 5,
                     ),
                     FormTextField(
-                      name: "idc",
-                      inputType: TextInputType.text,
+                      textColor: buttonColor,
+                      name: "firstName",
                       decoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 10),
@@ -272,6 +333,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderSide: BorderSide(
                             color: Color(0xff44566C30),
                           ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: red),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -299,14 +366,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 5,
                     ),
                     FormTextField(
-                      name: "idb",
+                      name: "email",
                       inputType: TextInputType.text,
                       decoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 10),
                         fillColor: Colors.white,
                         filled: true,
-                        hintText: "И-мэйл хаяг",
+                        hintText: "И-мэйл",
                         hintStyle: TextStyle(
                           color: grey2,
                           fontSize: 14,
@@ -315,6 +382,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderSide: BorderSide(
                             color: Color(0xff44566C30),
                           ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: red),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -342,7 +415,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 5,
                     ),
                     FormTextField(
-                      name: "ida",
+                      name: "phone",
                       inputType: TextInputType.phone,
                       decoration: InputDecoration(
                         contentPadding:
@@ -358,6 +431,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderSide: BorderSide(
                             color: Color(0xff44566C30),
                           ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: red),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -379,7 +458,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               CustomButton(
                 onClick: () {
-                  Navigator.of(context).pushNamed(OtpVerifyPage.routeName);
+                  legalEntityTypeValidate();
                 },
                 labelColor: buttonColor,
                 labelText: "Бүртгүүлэх",

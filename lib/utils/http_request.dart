@@ -28,13 +28,17 @@ class HttpRequest {
 
   Dio dio = Dio();
 
-  Future<dynamic> request(String api, String method, dynamic data, String? type,
+  Future<dynamic> request(
+      String api, String method, dynamic data, String? type, bool isVersionTrue,
       {bool handler = true, bool approve = false}) async {
     Response? response;
     final String uri;
 
     if (type == "PARTNER") {
-      uri = '$partnerHost$version$api';
+      if (isVersionTrue == false) {
+        uri = '$partnerHost$api';
+      } else
+        uri = '$partnerHost$version$api';
     } else if (type == "INVOICE") {
       uri = '$invoiceHost$version$api';
     } else if (type == "BUSINESS") {
@@ -60,9 +64,9 @@ class HttpRequest {
 
       var token = await UserProvider.getAccessToken();
       var deviceToken = "";
-      // debugPrint('++++++++++++++++++++++deviceToken+++++++++++++++ ');
-      // debugPrint(deviceToken);
-      // debugPrint('+++++++++++++++++++++++deviceToken++++++++++++++ ');
+      debugPrint('++++++++++++++++++++++token++++++++++++++++++');
+      debugPrint(token);
+      debugPrint('++++++++++++++++++++++token++++++++++++++++++');
 
       dio.options.headers = {
         'authorization': 'Bearer $token',
@@ -131,17 +135,18 @@ class HttpRequest {
     }
   }
 
-  Future<dynamic> get(String url, String type,
+  Future<dynamic> get(String url, String type, bool isVersionTrue,
       {dynamic data, bool handler = true}) async {
     try {
-      return await request(url, 'GET', data, type, handler: handler);
+      return await request(url, 'GET', data, type, isVersionTrue,
+          handler: handler);
     } catch (e) {
       debugPrint("GET =>" + e.toString());
       rethrow;
     }
   }
 
-  Future<dynamic> post(String url, String type,
+  Future<dynamic> post(String url, String type, bool isVersionTrue,
       {dynamic data, bool handler = true, bool approve = false}) async {
     try {
       return await request(
@@ -149,6 +154,7 @@ class HttpRequest {
         'POST',
         data,
         type,
+        isVersionTrue,
         handler: handler,
         approve: approve,
       );
@@ -158,18 +164,20 @@ class HttpRequest {
     }
   }
 
-  Future<dynamic> put(String url, String type,
+  Future<dynamic> put(String url, String type, bool isVersionTrue,
       {dynamic data, bool handler = true}) async {
     try {
-      return await request(url, 'PUT', data, type, handler: handler);
+      return await request(url, 'PUT', data, type, isVersionTrue,
+          handler: handler);
     } catch (e) {
       debugPrint(e.toString());
       rethrow;
     }
   }
 
-  Future<dynamic> del(String url, String type,
+  Future<dynamic> del(String url, String type, bool isVersionTrue,
       {dynamic data, bool handler = true}) async {
-    return await request(url, 'DELETE', data, type, handler: handler);
+    return await request(url, 'DELETE', data, type, isVersionTrue,
+        handler: handler);
   }
 }

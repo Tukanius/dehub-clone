@@ -123,9 +123,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
     currentBusiness: json['currentBusiness'] != null
         ? User.fromJson(json['currentBusiness'] as Map<String, dynamic>)
         : null,
-    regNumber: json['regNumber'] != null
-        ? double.parse(json['regNumber'].toString())
-        : null,
+    regNumber: json['regNumber'] != null ? json['regNumber'] as String : null,
     stateRegNum: json['stateRegNum'] != null
         ? double.parse(json['stateRegNum'].toString())
         : null,
@@ -178,12 +176,35 @@ User _$UserFromJson(Map<String, dynamic> json) {
     isAnchorBusiness: json['isAnchorBusiness'] != null
         ? json['isAnchorBusiness'] as bool
         : null,
+
+    verifyId: json['verifyId'] != null ? json['verifyId'] as String : null,
+    otpCode: json['otpCode'] != null ? json['otpCode'] as String : null,
+    message: json['message'] != null ? json['message'] as String : null,
+    expiryIn: json['expiryIn'] != null
+        ? int.parse(json['expiryIn'].toString())
+        : null,
+    otpCharset:
+        json['otpCharset'] != null ? json['otpCharset'] as String : null,
+    otpMethod: json['otpMethod'] != null ? json['otpMethod'] as String : null,
+    oldPassword:
+        json['oldPassword'] != null ? json['oldPassword'] as String : null,
+    businessName:
+        json['businessName'] != null ? json['businessName'] as String : null,
   );
 }
 
 Map<String, dynamic> _$UserToJson(User instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.businessName != null)
+    json["businessName"] = instance.businessName;
+  if (instance.verifyId != null) json["verifyId"] = instance.verifyId;
+  if (instance.otpCode != null) json["otpCode"] = instance.otpCode;
+  if (instance.message != null) json["message"] = instance.message;
+  if (instance.expiryIn != null) json["expiryIn"] = instance.expiryIn;
+  if (instance.otpCharset != null) json["otpCharset"] = instance.otpCharset;
+  if (instance.otpMethod != null) json["otpMethod"] = instance.otpMethod;
+  if (instance.oldPassword != null) json["oldPassword"] = instance.oldPassword;
   if (instance.roleDisableDate != null)
     json["roleDisableDate"] = instance.roleDisableDate;
   if (instance.emailVerifiedDate != null)

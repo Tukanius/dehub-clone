@@ -54,7 +54,6 @@ class Partner {
   Partner? employeeUnit;
   bool? isAdmin;
   String? registrationType;
-
   String? username;
   String? sessionId;
   String? partnerId;
@@ -89,7 +88,6 @@ class Partner {
   bool? isAnchorBusiness;
   List<BusinessStaffs>? businessStaffs;
   Partner? user;
-
   bool? isSysUser;
   bool? isAppUser;
   bool? isEmailVerified;

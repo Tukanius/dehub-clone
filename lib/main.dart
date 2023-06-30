@@ -266,17 +266,28 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return GereetBish();
                     });
+
                   case OtpVerifyPage.routeName:
+                    OtpVerifyPageArguments arguments =
+                        settings.arguments as OtpVerifyPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return OtpVerifyPage();
+                      return OtpVerifyPage(
+                        verifyId: arguments.verifyId,
+                        email: arguments.email,
+                        phone: arguments.phone,
+                      );
                     });
                   case CreatePasswordPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return CreatePasswordPage();
                     });
                   case OtpPhoneVerify.routeName:
+                    OtpPhoneVerifyArguments arguments =
+                        settings.arguments as OtpPhoneVerifyArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return OtpPhoneVerify();
+                      return OtpPhoneVerify(
+                        phone: arguments.phone,
+                      );
                     });
                   case RegisterPage.routeName:
                     return MaterialPageRoute(builder: (context) {

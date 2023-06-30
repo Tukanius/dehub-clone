@@ -6,6 +6,7 @@ import 'package:dehub/screens/invoice/new_invoice/add_product/add_product.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/harah.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
+import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -23,6 +24,7 @@ class _NewInvoiceState extends State<NewInvoice> {
   ListenController listenController = ListenController();
   ListenController partnerListenController = ListenController();
   ListenController goodsListenController = ListenController();
+  TextEditingController textController = TextEditingController();
   Invoice invoice = Invoice();
   Invoice createInvoice = Invoice();
   Invoice partnerInvoice = Invoice();
@@ -31,6 +33,7 @@ class _NewInvoiceState extends State<NewInvoice> {
   List<Invoice> inventory = [];
   List<Invoice> data = [];
   int quantity = 0;
+  bool isSubmit = false;
 
   @override
   void initState() {
@@ -55,6 +58,9 @@ class _NewInvoiceState extends State<NewInvoice> {
   }
 
   onSubmit(bool value) async {
+    setState(() {
+      isSubmit = true;
+    });
     for (var i = 0; i < inventory.length; i++) {
       data[i] = Invoice();
       data[i].unitVariantId = inventory[i].unitVariantId;
@@ -64,8 +70,20 @@ class _NewInvoiceState extends State<NewInvoice> {
     createInvoice.receiverBusinessId = invoice.id;
     createInvoice.send = value;
     createInvoice.items = data;
-    createInvoice.description = "123213";
+    createInvoice.description = textController.text;
     await InvoiceApi().createInvoice(createInvoice);
+    setState(() {
+      isSubmit = false;
+    });
+  }
+
+  show(ctx) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Container();
+      },
+    );
   }
 
   @override
@@ -618,6 +636,14 @@ class _NewInvoiceState extends State<NewInvoice> {
                           ),
                         ),
                       ),
+                      // goodsValidate == false
+                      //     ? SizedBox()
+                      //     : Container(
+                      //         child: Text(
+                      //           'Бараа сонгоно уу',
+                      //           style: TextStyle(color: red),
+                      //         ),
+                      //       ),
                       Column(
                         children: inventory
                             .map(
@@ -625,9 +651,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                                 index: inventory.indexOf(data),
                                 data: data,
                                 isCheck: false,
-                                onClick: () {
-                                  print(data.toJson());
-                                },
+                                onClick: () {},
                                 color: invoiceColor,
                               ),
                             )
@@ -835,17 +859,20 @@ class _NewInvoiceState extends State<NewInvoice> {
                       SizedBox(
                         height: 10,
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 8),
-                        height: 125,
-                        color: white,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: grey3.withOpacity(0.3),
-                            ),
+                      FormTextField(
+                        controller: textController,
+                        name: 'description',
+                        decoration: InputDecoration(
+                          fillColor: white,
+                          hintText: 'Тайлбар оруулна уу',
+                          hintStyle:
+                              TextStyle(color: invoiceColor, fontSize: 14),
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
                           ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 15),
                         ),
                       ),
                       SizedBox(
@@ -1085,7 +1112,9 @@ class _NewInvoiceState extends State<NewInvoice> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                onSubmit(false);
+                                if (isSubmit == false) {
+                                  onSubmit(false);
+                                } else {}
                               },
                               child: Column(
                                 children: [
@@ -1105,7 +1134,20 @@ class _NewInvoiceState extends State<NewInvoice> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                onSubmit(true);
+                                print("inventory:${inventory}");
+                                if (data == []) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      backgroundColor: invoiceColor,
+                                      shape: StadiumBorder(),
+                                      content: Center(
+                                        child: Text('Бараа сонгоно уу'),
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  onSubmit(true);
+                                }
                               },
                               child: Column(
                                 children: [

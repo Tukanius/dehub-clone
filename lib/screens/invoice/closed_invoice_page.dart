@@ -121,6 +121,8 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 5),
                           child: SearchButton(
+                            borderColor: invoiceColor,
+                            textColor: invoiceColor,
                             color: invoiceColor,
                           ),
                         ),

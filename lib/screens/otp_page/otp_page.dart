@@ -1,27 +1,68 @@
 import 'dart:async';
-
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/otp_page/otp-phone-verify.dart';
-import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pinput/pinput.dart';
+import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
+
+class OtpVerifyPageArguments {
+  String phone;
+  String email;
+  String verifyId;
+  OtpVerifyPageArguments({
+    required this.phone,
+    required this.email,
+    required this.verifyId,
+  });
+}
 
 class OtpVerifyPage extends StatefulWidget {
+  final String phone;
+  final String verifyId;
+  final String email;
   static const routeName = '/OtpVerifyPage';
-  const OtpVerifyPage({Key? key}) : super(key: key);
+  const OtpVerifyPage({
+    Key? key,
+    required this.phone,
+    required this.email,
+    required this.verifyId,
+  }) : super(key: key);
 
   @override
   State<OtpVerifyPage> createState() => _OtpVerifyPageState();
 }
 
-class _OtpVerifyPageState extends State<OtpVerifyPage> {
+class _OtpVerifyPageState extends State<OtpVerifyPage> with AfterLayoutMixin {
   int _counter = 120;
   TextEditingController controller = TextEditingController();
   bool isGetCode = false;
   bool isSubmit = false;
   late Timer _timer;
   String username = "";
+  User user = User();
+
+  @override
+  afterFirstLayout(BuildContext context) {
+    _startTimer();
+  }
+
+  checkOtp(value) async {
+    try {
+      user.otpCode = value;
+      user.verifyId = widget.verifyId;
+      await Provider.of<UserProvider>(context, listen: false).mailOtp(user);
+      await Navigator.of(context).pushNamed(
+        OtpPhoneVerify.routeName,
+        arguments: OtpPhoneVerifyArguments(phone: widget.phone),
+      );
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   String intToTimeLeft(int value) {
     int h, m, s;
@@ -37,7 +78,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
       setState(() {
         isGetCode = false;
       });
-      _counter = 120;
+      _counter = 180;
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
         if (_counter > 0) {
           setState(() {
@@ -77,9 +118,9 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
       text: TextSpan(
         text: 'Таны ',
         style: TextStyle(color: buttonColor),
-        children: const <TextSpan>[
+        children: <TextSpan>[
           TextSpan(
-            text: 'burd***gd@gmail.com ',
+            text: '${widget.email} ',
             style: TextStyle(
               color: Colors.blue,
             ),
@@ -102,27 +143,30 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: Row(
-            children: [
-              SizedBox(
-                width: 10,
-              ),
-              Icon(
-                Icons.arrow_back_ios_new,
-                color: buttonColor,
-              ),
-              SizedBox(
-                width: 15,
-              ),
-              Text(
-                'Буцах',
-                style: TextStyle(
-                  color: buttonColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
+          child: Container(
+            color: transparent,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 10,
                 ),
-              ),
-            ],
+                Icon(
+                  Icons.arrow_back_ios_new,
+                  color: buttonColor,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  'Буцах',
+                  style: TextStyle(
+                    color: buttonColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -144,6 +188,9 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
               height: 15,
             ),
             Pinput(
+              onCompleted: (value) {
+                checkOtp(value);
+              },
               defaultPinTheme: PinTheme(
                 height: 60,
                 width: 45,
@@ -209,26 +256,16 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                 ],
               ),
             SizedBox(
-              height: 15,
-            ),
-            Text(
-              'Дахин илгээх',
-              style: TextStyle(
-                color: buttonColor,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            SizedBox(
               height: 50,
             ),
-            CustomButton(
-              onClick: () {
-                Navigator.of(context).pushNamed(OtpPhoneVerify.routeName);
-              },
-              labelColor: buttonColor,
-              labelText: 'И-мэйл баталгаажуулах',
-              textColor: white,
-            ),
+            // CustomButton(
+            //   onClick: () {
+            //     Navigator.of(context).pushNamed(OtpPhoneVerify.routeName);
+            //   },
+            //   labelColor: buttonColor,
+            //   labelText: 'И-мэйл баталгаажуулах',
+            //   textColor: white,
+            // ),
           ],
         ),
       ),

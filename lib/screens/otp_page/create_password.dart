@@ -1,4 +1,5 @@
-import 'dart:async';
+import 'package:dehub/api/auth_api.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:lottie/lottie.dart';
 
 class CreatePasswordPage extends StatefulWidget {
   static const routeName = '/CreatePasswordPage';
@@ -17,57 +19,80 @@ class CreatePasswordPage extends StatefulWidget {
 
 class _CreatePasswordPageState extends State<CreatePasswordPage> {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
-  int _counter = 120;
   TextEditingController controller = TextEditingController();
-  bool isGetCode = false;
-  bool isSubmit = false;
-  late Timer _timer;
-  String username = "";
+  bool isVisible = true;
+  bool isVisible1 = true;
+  User user = User();
 
-  String intToTimeLeft(int value) {
-    int h, m, s;
-    h = value ~/ 3600;
-    m = ((value - h * 3600)) ~/ 60;
-    s = value - (h * 3600) - (m * 60);
-    String result = "$m:$s";
-    return result;
+  show(ctx) async {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return Container(
+            alignment: Alignment.center,
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: <Widget>[
+                Container(
+                  margin: const EdgeInsets.only(top: 75),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: const EdgeInsets.only(top: 90, left: 20, right: 20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const Text(
+                        'Амжилттай',
+                        style: TextStyle(
+                            color: dark,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      const Text(
+                        'Таны бүртгэл амжилттай үүслээ. Цахим хаягт ирсэн бизнесийн кодоор нэвтэрнэ үү.',
+                        textAlign: TextAlign.center,
+                      ),
+                      ButtonBar(
+                        buttonMinWidth: 100,
+                        alignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          TextButton(
+                            child: const Text(
+                              "Нэвтрэх",
+                              style: TextStyle(color: dark),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              Navigator.of(ctx).pop();
+                              Navigator.of(ctx).pop();
+                              Navigator.of(ctx).pop();
+                              Navigator.of(ctx).pop();
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Lottie.asset('images/success.json', height: 150, repeat: false),
+              ],
+            ),
+          );
+        });
   }
 
-  void _startTimer() async {
-    if (isSubmit == true) {
-      setState(() {
-        isGetCode = false;
-      });
-      _counter = 120;
-      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        if (_counter > 0) {
-          setState(() {
-            _counter--;
-          });
-        } else {
-          setState(() {
-            isGetCode = true;
-          });
-          _timer.cancel();
-        }
-      });
-    } else {
-      setState(() {
-        isGetCode = false;
-      });
-      _counter = 120;
-      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        if (_counter > 0) {
-          setState(() {
-            _counter--;
-          });
-        } else {
-          setState(() {
-            isGetCode = true;
-          });
-          _timer.cancel();
-        }
-      });
+  onSubmit() async {
+    if (fbKey.currentState!.saveAndValidate()) {
+      user = User.fromJson(fbKey.currentState!.value);
+      await AuthApi().createPassword(user);
+      await show(context);
     }
   }
 
@@ -147,12 +172,29 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                   FormTextField(
                     name: "password",
                     inputType: TextInputType.text,
+                    obscureText: isVisible,
                     decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isVisible = !isVisible;
+                          });
+                        },
+                        icon: isVisible == true
+                            ? Icon(
+                                Icons.visibility_off,
+                                color: buttonColor,
+                              )
+                            : Icon(
+                                Icons.visibility,
+                                color: buttonColor,
+                              ),
+                      ),
                       contentPadding:
                           const EdgeInsets.symmetric(horizontal: 10),
                       fillColor: Colors.white,
                       filled: true,
-                      hintText: "Нууц үгээ оруулна уу",
+                      hintText: "Системд нэвтрэх бизнесийн код",
                       hintStyle: TextStyle(
                         color: grey2,
                         fontSize: 14,
@@ -161,6 +203,12 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                         borderSide: BorderSide(
                           color: Color(0xff44566C30),
                         ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: red),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -188,23 +236,45 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                     height: 5,
                   ),
                   FormTextField(
+                    obscureText: isVisible1,
                     name: "passwordVerify",
                     inputType: TextInputType.text,
                     decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isVisible1 = !isVisible1;
+                          });
+                        },
+                        icon: isVisible1 == true
+                            ? Icon(
+                                Icons.visibility_off,
+                                color: buttonColor,
+                              )
+                            : Icon(
+                                Icons.visibility,
+                                color: buttonColor,
+                              ),
+                      ),
                       contentPadding:
                           const EdgeInsets.symmetric(horizontal: 10),
                       fillColor: Colors.white,
                       filled: true,
-                      hintText: "Дахин оруулна уу",
+                      hintText: "Нууц үг давтан оруулна уу",
                       hintStyle: TextStyle(
                         color: grey2,
                         fontSize: 14,
                       ),
-                      suffixIcon: Icon(Icons.visibility_off),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Color(0xff44566C30),
                         ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: red),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -236,7 +306,7 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
             ),
             CustomButton(
               onClick: () {
-                // Navigator.of(context).pushNamed(FirstPage.routeName);
+                onSubmit();
               },
               labelColor: buttonColor,
               labelText: 'Нууц үг үүсгэх',

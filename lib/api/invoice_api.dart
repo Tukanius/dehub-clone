@@ -5,37 +5,42 @@ import '../utils/http_request.dart';
 
 class InvoiceApi extends HttpRequest {
   Future<Result> list(ResultArguments resultArguments) async {
-    var res =
-        await get('/invoice/sent', "INVOICE", data: resultArguments.toJson());
+    var res = await get('/invoice/sent', "INVOICE", true,
+        data: resultArguments.toJson());
     return Result.fromJson(res, Invoice.$fromJson);
   }
 
   Future<Result> listReceived(ResultArguments resultArguments) async {
-    var res = await get('/invoice/received', "INVOICE",
+    var res = await get('/invoice/received', "INVOICE", true,
         data: resultArguments.toJson());
     return Result.fromJson(res, Invoice.$fromJson);
   }
 
   Future<Invoice> getInvoice(String id) async {
-    var res = await get('/invoice/$id', "INVOICE", handler: true);
+    var res = await get('/invoice/$id', "INVOICE", true, handler: true);
     return Invoice.fromJson(res as Map<String, dynamic>);
   }
 
   Future<Result> listClosed(ResultArguments resultArguments) async {
-    var res =
-        await get("/invoice/closed", "INVOICE", data: resultArguments.toJson());
+    var res = await get("/invoice/closed", "INVOICE", true,
+        data: resultArguments.toJson());
     return Result.fromJson(res, Invoice.fromJson);
   }
 
   pay(String id, Invoice data) async {
     var res = await put(
-        '/invoice/$id/pay', data: data.toJson(), "INVOICE", handler: true);
+        '/invoice/$id/pay',
+        data: data.toJson(),
+        "INVOICE",
+        true,
+        handler: true);
     print(res);
     return Invoice.fromJson(res as Map<String, dynamic>);
   }
 
   Future<Result> network(String query) async {
-    var res = await get("/network?query=${query}", "INVOICE", handler: true);
+    var res =
+        await get("/network?query=${query}", "INVOICE", true, handler: true);
     return Result.fromJson(res, Invoice.fromJson);
   }
 
@@ -43,13 +48,14 @@ class InvoiceApi extends HttpRequest {
     var res = await get(
       "/branch?businessId=$businessId&query=$query",
       "INVOICE",
+      true,
     );
     return Result.fromJson(res, Invoice.fromJson);
   }
 
   Future<Invoice> createInvoice(Invoice data) async {
-    var res =
-        await post('/invoice', "INVOICE", data: data.toJson(), handler: true);
+    var res = await post('/invoice', "INVOICE", true,
+        data: data.toJson(), handler: true);
     return Invoice.fromJson(res as Map<String, dynamic>);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:dehub/api/auth_api.dart';
+import 'package:dehub/api/partner_api.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -29,6 +30,18 @@ class UserProvider extends ChangeNotifier {
   login(User data) async {
     user = await AuthApi().login(data);
     setAccessToken(user.accessToken);
+    notifyListeners();
+  }
+
+  mailOtp(User data) async {
+    User res = await PartnerApi().mailOtp(data);
+    await setAccessToken(res.accessToken);
+    return res;
+  }
+
+  phoneOtp(User data) async {
+    user = await PartnerApi().phoneOtp(data);
+    await setAccessToken(user.accessToken);
     notifyListeners();
   }
 

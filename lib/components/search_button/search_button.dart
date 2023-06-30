@@ -6,9 +6,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 class SearchButton extends StatefulWidget {
   final Color? color;
   final Function(String query)? onChange;
-
+  final Color? textColor;
+  final Color? borderColor;
   const SearchButton({
     Key? key,
+    this.borderColor,
+    this.textColor,
     this.color,
     this.onChange,
   }) : super(key: key);
@@ -32,7 +35,7 @@ class _SearchButtonState extends State<SearchButton> {
               margin: const EdgeInsets.only(left: 15, right: 5),
               height: 30,
               child: FormTextField(
-                textColor: invoiceColor,
+                textColor: widget.textColor ?? invoiceColor,
                 controller: textController,
                 name: 'query',
                 onChanged: (value) {
@@ -41,6 +44,16 @@ class _SearchButtonState extends State<SearchButton> {
                   }
                 },
                 decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: widget.borderColor ?? Colors.grey,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: widget.borderColor ?? Colors.grey,
+                    ),
+                  ),
                   prefixIcon: Container(
                     padding: const EdgeInsets.symmetric(vertical: 7),
                     child: SvgPicture.asset('images/search.svg'),
@@ -61,14 +74,15 @@ class _SearchButtonState extends State<SearchButton> {
           Container(
             margin: const EdgeInsets.only(right: 10),
             width: 30,
+            height: 30,
             decoration: BoxDecoration(
               border: Border.all(
-                color: Colors.grey,
+                color: widget.borderColor ?? Colors.grey,
               ),
               borderRadius: BorderRadius.circular(5),
             ),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
               child: SvgPicture.asset(
                 'images/yuluur.svg',
                 color: widget.color,

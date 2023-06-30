@@ -5,18 +5,23 @@ import 'package:dehub/models/result.dart';
 
 class InventoryApi extends HttpRequest {
   Future<Result> listGoods(ResultArguments resultArguments) async {
-    var res = await get("/invoice/variant", "INVENTORY",
+    var res = await get("/invoice/variant", "INVENTORY", true,
         data: resultArguments.toJson());
     return Result.fromJson(res, Invoice.fromJson);
   }
 
   Future<Result> listProduct(ResultArguments resultArguments) async {
-    var res = await get("/goods", "INVENTORY", data: resultArguments.toJson());
+    var res =
+        await get("/goods", "INVENTORY", true, data: resultArguments.toJson());
     return Result.fromJson(res, InventoryGoods.fromJson);
   }
 
   goodsGet(String id) async {
-    var res = await get('/goods/$id', "INVENTORY");
+    var res = await get(
+      '/goods/$id',
+      "INVENTORY",
+      true,
+    );
     return InventoryGoods.fromJson(res);
   }
 }
