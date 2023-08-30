@@ -46,7 +46,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
       appBar: AppBar(
         elevation: 0,
         backgroundColor: backgroundColor,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },
@@ -494,62 +494,62 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                   SizedBox(
                     height: 25,
                   ),
-                  invitation.invitationStatus == "SENT"
-                      ? Container(
-                          margin: const EdgeInsets.only(bottom: 50),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  margin: const EdgeInsets.only(left: 15),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(
-                                      color: networkColor,
-                                    ),
-                                  ),
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 12),
-                                  child: Center(
-                                    child: Text(
-                                      'Татгалзах',
-                                      style: TextStyle(
-                                        color: networkColor,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Expanded(
-                                child: Container(
-                                  margin: const EdgeInsets.only(right: 15),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: networkColor,
-                                  ),
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 12),
-                                  child: Center(
-                                    child: Text(
-                                      'Батлах',
-                                      style: TextStyle(
-                                        color: white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      : SizedBox(),
+                  // invitation.invitationStatus == "SENT"
+                  //     ? Container(
+                  //         margin: const EdgeInsets.only(bottom: 50),
+                  //         child: Row(
+                  //           children: [
+                  //             Expanded(
+                  //               child: Container(
+                  //                 margin: const EdgeInsets.only(left: 15),
+                  //                 decoration: BoxDecoration(
+                  //                   borderRadius: BorderRadius.circular(5),
+                  //                   border: Border.all(
+                  //                     color: networkColor,
+                  //                   ),
+                  //                 ),
+                  //                 padding:
+                  //                     const EdgeInsets.symmetric(vertical: 12),
+                  //                 child: Center(
+                  //                   child: Text(
+                  //                     'Татгалзах',
+                  //                     style: TextStyle(
+                  //                       color: networkColor,
+                  //                       fontSize: 16,
+                  //                       fontWeight: FontWeight.w500,
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //             SizedBox(
+                  //               width: 5,
+                  //             ),
+                  //             Expanded(
+                  //               child: Container(
+                  //                 margin: const EdgeInsets.only(right: 15),
+                  //                 decoration: BoxDecoration(
+                  //                   borderRadius: BorderRadius.circular(5),
+                  //                   color: networkColor,
+                  //                 ),
+                  //                 padding:
+                  //                     const EdgeInsets.symmetric(vertical: 12),
+                  //                 child: Center(
+                  //                   child: Text(
+                  //                     'Батлах',
+                  //                     style: TextStyle(
+                  //                       color: white,
+                  //                       fontSize: 16,
+                  //                       fontWeight: FontWeight.w500,
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             )
+                  //           ],
+                  //         ),
+                  //       )
+                  //     : SizedBox(),
                 ],
               ),
             ),

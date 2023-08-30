@@ -21,7 +21,7 @@ class _OrderCardState extends State<OrderCard> {
           SizedBox(
             height: 5,
           ),
-          InkWell(
+          GestureDetector(
             child: Container(
               color: white,
               child: Column(

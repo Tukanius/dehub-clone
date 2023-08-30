@@ -57,6 +57,7 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     description:
         json['description'] != null ? json['description'] as String : null,
     hasVariant: json['hasVariant'] != null ? json['hasVariant'] as bool : null,
+    reOrder: json['reOrder'] != null ? json['reOrder'] as bool : null,
     hasUnit: json['hasUnit'] != null ? json['hasUnit'] as bool : null,
     departmentUnitId: json['departmentUnitId'] != null
         ? json['departmentUnitId'] as String
@@ -117,13 +118,12 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     manufacturer: json['manufacturer'] != null
         ? InventoryGoods.fromJson(json['manufacturer'] as Map<String, dynamic>)
         : null,
-    originCountry: json['originCountry'] != null
-        ? InventoryGoods.fromJson(json['originCountry'] as Map<String, dynamic>)
-        : null,
+    originCountry:
+        json['originCountry'] != null ? json['originCountry'] as String : null,
     importerCountry: json['importerCountry'] != null
-        ? InventoryGoods.fromJson(
-            json['importerCountry'] as Map<String, dynamic>)
+        ? json['importerCountry'] as String
         : null,
+
     distributor: json['distributor'] != null
         ? InventoryGoods.fromJson(json['distributor'] as Map<String, dynamic>)
         : null,
@@ -196,12 +196,71 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
         : null,
     text: json['text'] != null ? json['text'] as String : null,
     url: json['url'] != null ? json['url'] as String : null,
+    minBalance: json['minBalance'] != null
+        ? double.parse(json['minBalance'].toString())
+        : null,
+    maxBalance: json['maxBalance'] != null
+        ? double.parse(json['maxBalance'].toString())
+        : null,
+    minOrderNum: json['minOrderNum'] != null
+        ? double.parse(json['minOrderNum'].toString())
+        : null,
+    reOrderNum: json['reOrderNum'] != null
+        ? double.parse(json['reOrderNum'].toString())
+        : null,
+    reOrderMinNum: json['reOrderMinNum'] != null
+        ? double.parse(json['reOrderMinNum'].toString())
+        : null,
+    optionValues: json['optionValues'] != null
+        ? (json['optionValues'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
+    variants: json['variants'] != null
+        ? (json['variants'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
+    additionalUnits: json['additionalUnits'] != null
+        ? (json['additionalUnits'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
+    itemUnits: json['itemUnits'] != null
+        ? (json['itemUnits'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
+    // values: json['values'] != null
+    //     ? InventoryGoods.fromJson(json['values'] as Map<String, dynamic>)
+    //     : null,
+    hasAdditionalUnit: json['hasAdditionalUnit'] != null
+        ? json['hasAdditionalUnit'] as bool
+        : null,
+    isBase: json['isBase'] != null ? json['isBase'] as bool : null,
   );
 }
 
 Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.optionValues != null)
+    json['optionValues'] = instance.optionValues;
+  if (instance.isBase != null) json['isBase'] = instance.isBase;
+  if (instance.variants != null) json['variants'] = instance.variants;
+  if (instance.additionalUnits != null)
+    json['additionalUnits'] = instance.additionalUnits;
+  if (instance.itemUnits != null) json['itemUnits'] = instance.itemUnits;
+  // if (instance.values != null) json['values'] = instance.values;
+  if (instance.hasAdditionalUnit != null)
+    json['hasAdditionalUnit'] = instance.hasAdditionalUnit;
+  if (instance.reOrderMinNum != null)
+    json['reOrderMinNum'] = instance.reOrderMinNum;
+  if (instance.reOrderNum != null) json['reOrderNum'] = instance.reOrderNum;
+  if (instance.reOrder != null) json['reOrder'] = instance.reOrder;
+  if (instance.minOrderNum != null) json['minOrderNum'] = instance.minOrderNum;
+  if (instance.maxBalance != null) json['maxBalance'] = instance.maxBalance;
+  if (instance.minBalance != null) json['minBalance'] = instance.minBalance;
   if (instance.url != null) json['url'] = instance.url;
   if (instance.text != null) json['text'] = instance.text;
   if (instance.brand != null) json['brand'] = instance.brand;

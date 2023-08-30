@@ -24,4 +24,19 @@ class InventoryApi extends HttpRequest {
     );
     return InventoryGoods.fromJson(res);
   }
+
+  Future<Result> orderListGoods(ResultArguments resultArguments) async {
+    var res =
+        await get('/order/variant/select?', "INVENTORY", true, handler: true);
+    return Result.fromJson(res, Invoice.fromJson);
+  }
+
+  Future<Result> category(String orderType, String businessId) async {
+    var res = await get(
+        '/order/category?orderType=$orderType&businessId=$businessId',
+        "INVENTORY",
+        true,
+        handler: true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
 }

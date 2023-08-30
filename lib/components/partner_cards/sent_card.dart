@@ -16,6 +16,34 @@ class SentCard extends StatefulWidget {
 }
 
 class _SentCardState extends State<SentCard> {
+  invitationStatus() {
+    switch (widget.data?.invitationStatus) {
+      case "SENT":
+        return 'Илгээсэн';
+      case "DRAFT":
+        return "Түр төлөв";
+      case "ACCEPTED":
+        return "Зөвшөөрсөн";
+      case "REJECTED":
+        return "Цуцлагдсан";
+      default:
+    }
+  }
+
+  invitationStatusColor() {
+    switch (widget.data?.invitationStatus) {
+      case "SENT":
+        return orange;
+      case "DRAFT":
+        return grey;
+      case "ACCEPTED":
+        return green;
+      case "REJECTED":
+        return red;
+      default:
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -41,7 +69,7 @@ class _SentCardState extends State<SentCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${widget.data!.sender!.partner!.businessName}',
+                          '${widget.data?.receiver?.partner?.businessName}',
                           style: TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
                         ),
@@ -49,14 +77,14 @@ class _SentCardState extends State<SentCard> {
                           height: 5,
                         ),
                         Text(
-                          '${widget.data!.sender!.partnerName}',
+                          '${widget.data?.receiver?.partnerName}',
                           style: TextStyle(fontSize: 12, color: grey3),
                         ),
                         SizedBox(
                           height: 5,
                         ),
                         Text(
-                          'Нэхэмжлэх - 30 хоног дараа',
+                          '${widget.data?.sender?.staff?.firstName}, ${widget.data?.sender?.staff?.phone}',
                           style: TextStyle(fontSize: 12, color: grey3),
                         ),
                       ],
@@ -67,10 +95,10 @@ class _SentCardState extends State<SentCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          'BusRef#',
+                          '${widget.data?.receiver?.refCode}',
                           style: TextStyle(
                             fontSize: 12,
                             color: grey3,
@@ -83,11 +111,11 @@ class _SentCardState extends State<SentCard> {
                         Row(
                           children: [
                             Text(
-                              'ТТД: ',
+                              'Урилга №: ',
                               style: TextStyle(color: grey3, fontSize: 10),
                             ),
                             Text(
-                              '6324142',
+                              '${widget.data?.refCode}',
                               style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w600,
@@ -101,13 +129,13 @@ class _SentCardState extends State<SentCard> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 7),
                           decoration: BoxDecoration(
+                            border: Border.all(color: invitationStatusColor()),
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xffEDF4E9),
                           ),
                           child: Text(
-                            'Ангилал',
+                            invitationStatus(),
                             style: TextStyle(
-                              color: Color(0xff333333),
+                              color: invitationStatusColor(),
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
                             ),

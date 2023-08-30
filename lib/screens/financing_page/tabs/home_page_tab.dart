@@ -28,11 +28,11 @@ class _HomePageTabState extends State<HomePageTab> {
             ),
           ),
           Container(
-            height: 90,
+            height: 100,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                InkWell(
+                GestureDetector(
                   onTap: () {
                     Navigator.of(context)
                         .pushNamed(ReceivedFundingPage.routeName);
@@ -44,13 +44,16 @@ class _HomePageTabState extends State<HomePageTab> {
                       color: white,
                     ),
                     padding: const EdgeInsets.all(10),
-                    width: 90,
-                    height: 90,
+                    width: 100,
+                    height: 100,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(10),
+                          height: 36,
+                          width: 36,
+                          padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: financingColor.withOpacity(0.1),
@@ -80,13 +83,16 @@ class _HomePageTabState extends State<HomePageTab> {
                     color: white,
                   ),
                   padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(10),
+                        height: 36,
+                        width: 36,
+                        padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: financingColor.withOpacity(0.1),
@@ -115,13 +121,16 @@ class _HomePageTabState extends State<HomePageTab> {
                     color: white,
                   ),
                   padding: const EdgeInsets.all(10),
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(10),
+                        height: 36,
+                        width: 36,
+                        padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: financingColor.withOpacity(0.1),
@@ -140,7 +149,7 @@ class _HomePageTabState extends State<HomePageTab> {
                     ],
                   ),
                 ),
-                InkWell(
+                GestureDetector(
                   onTap: () {
                     Navigator.of(context)
                         .pushNamed(FundingRequestPage.routeName);
@@ -152,13 +161,16 @@ class _HomePageTabState extends State<HomePageTab> {
                       color: white,
                     ),
                     padding: const EdgeInsets.all(10),
-                    width: 90,
-                    height: 90,
+                    width: 100,
+                    height: 100,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(10),
+                          height: 36,
+                          width: 36,
+                          padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: financingColor.withOpacity(0.1),
@@ -181,7 +193,7 @@ class _HomePageTabState extends State<HomePageTab> {
                     ),
                   ),
                 ),
-                InkWell(
+                GestureDetector(
                   onTap: () {
                     Navigator.of(context)
                         .pushNamed(AvaibleFundingPage.routeName);
@@ -193,13 +205,16 @@ class _HomePageTabState extends State<HomePageTab> {
                       color: white,
                     ),
                     padding: const EdgeInsets.all(10),
-                    width: 90,
-                    height: 90,
+                    width: 100,
+                    height: 100,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(10),
+                          height: 36,
+                          width: 36,
+                          padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: financingColor.withOpacity(0.1),

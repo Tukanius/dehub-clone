@@ -16,7 +16,7 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        InkWell(
+        GestureDetector(
           onTap: () {
             Navigator.of(context)
                 .pushNamed(ReceivedFundingDetailPage.routeName);

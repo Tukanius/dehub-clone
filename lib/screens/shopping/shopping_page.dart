@@ -179,7 +179,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
                                 ),
                                 borderRadius: BorderRadius.circular(5),
                               ),
-                              child: InkWell(
+                              child: GestureDetector(
                                 onTap: () {
                                   setState(() {
                                     gridview = !gridview;

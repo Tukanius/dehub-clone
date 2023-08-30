@@ -71,7 +71,7 @@ class _SalbarSongohState extends State<SalbarSongoh> with AfterLayoutMixin {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },

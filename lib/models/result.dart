@@ -7,8 +7,30 @@ class Filter {
   String? orderConfirmTerm;
   bool? isParent;
   String? businessId;
+  String? regNumber;
+  String? partnerName;
+  String? staffId;
+  String? regionId;
+  String? categoryId;
+  String? priorityId;
+  String? paymentTermId;
+  String? condition;
+  String? configType;
+  String? partnerId;
+  String? pullSheetStatus;
 
   Filter({
+    this.pullSheetStatus,
+    this.partnerId,
+    this.condition,
+    this.configType,
+    this.regNumber,
+    this.partnerName,
+    this.staffId,
+    this.regionId,
+    this.categoryId,
+    this.priorityId,
+    this.paymentTermId,
     this.businessId,
     this.isParent,
     this.type,

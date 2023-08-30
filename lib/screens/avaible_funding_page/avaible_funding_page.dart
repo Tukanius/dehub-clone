@@ -20,7 +20,7 @@ class _AvaibleFundingPageState extends State<AvaibleFundingPage> {
         leadingWidth: 100,
         elevation: 0,
         backgroundColor: backgroundColor,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },

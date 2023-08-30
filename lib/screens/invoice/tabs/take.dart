@@ -37,10 +37,6 @@ class _TakePageState extends State<TakePage>
     await list(page, limit);
   }
 
-  void dispose() {
-    super.dispose();
-  }
-
   void _onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
@@ -139,7 +135,7 @@ class _TakePageState extends State<TakePage>
                             ? invoiceColor
                             : Colors.grey.shade100,
                       ),
-                      child: InkWell(
+                      child: GestureDetector(
                         onTap: () {
                           setState(() {
                             currentIndex = 0;
@@ -167,7 +163,7 @@ class _TakePageState extends State<TakePage>
                             ? invoiceColor
                             : Colors.grey.shade100,
                       ),
-                      child: InkWell(
+                      child: GestureDetector(
                         onTap: () {
                           setState(() {
                             currentIndex = 1;
@@ -195,7 +191,7 @@ class _TakePageState extends State<TakePage>
                             ? invoiceColor
                             : Colors.grey.shade100,
                       ),
-                      child: InkWell(
+                      child: GestureDetector(
                         onTap: () {
                           setState(() {
                             currentIndex = 2;
@@ -223,7 +219,7 @@ class _TakePageState extends State<TakePage>
                             ? invoiceColor
                             : Colors.grey.shade100,
                       ),
-                      child: InkWell(
+                      child: GestureDetector(
                         onTap: () {
                           setState(() {
                             currentIndex = 3;
@@ -251,7 +247,7 @@ class _TakePageState extends State<TakePage>
                             ? invoiceColor
                             : Colors.grey.shade100,
                       ),
-                      child: InkWell(
+                      child: GestureDetector(
                         onTap: () {
                           setState(() {
                             currentIndex = 4;
@@ -320,15 +316,31 @@ class _TakePageState extends State<TakePage>
                       child: Column(
                         children: invoice.rows!
                             .map(
-                              (item) => InvoiceCardSent(
-                                data: item,
-                                onClick: () {
-                                  Navigator.of(context).pushNamed(
-                                    InvoiceDetailPage.routeName,
-                                    arguments:
-                                        InvoiceDetailPageArguments(id: item.id),
-                                  );
-                                },
+                              (item) => Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                        left: 15, top: 10),
+                                    child: Text(
+                                      "${item.getPostDate()}",
+                                      style: TextStyle(
+                                        color: grey3,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  InvoiceCardSent(
+                                    data: item,
+                                    onClick: () {
+                                      Navigator.of(context).pushNamed(
+                                        InvoiceDetailPage.routeName,
+                                        arguments: InvoiceDetailPageArguments(
+                                            id: item.id),
+                                      );
+                                    },
+                                  ),
+                                ],
                               ),
                             )
                             .toList(),

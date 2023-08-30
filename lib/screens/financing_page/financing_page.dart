@@ -37,7 +37,7 @@ class _FinancingPageState extends State<FinancingPage> {
         leadingWidth: 100,
         elevation: 0,
         backgroundColor: selectedIndex != 3 ? backgroundColor : financingColor,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },

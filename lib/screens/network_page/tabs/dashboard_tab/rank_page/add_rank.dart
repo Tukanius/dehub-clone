@@ -1,8 +1,11 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
-import 'package:dehub/models/business.dart';
+import 'package:dehub/models/business-staffs.dart';
 import 'package:dehub/models/general.dart';
+import 'package:dehub/models/partner.dart';
+import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -11,6 +14,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
+import 'package:moment_dart/moment_dart.dart';
+import 'package:after_layout/after_layout.dart';
 
 class AddRankArguments {
   ListenController listenController;
@@ -31,12 +36,32 @@ class AddRank extends StatefulWidget {
   State<AddRank> createState() => _AddRankState();
 }
 
-class _AddRankState extends State<AddRank> {
+class _AddRankState extends State<AddRank> with AfterLayoutMixin {
   bool isSwitch = false;
+  int page = 1;
+  int limit = 10;
   General general = General();
+  Result reference = Result(count: 0, rows: []);
   String? parentId;
+  bool isLoading = true;
   String? refcode;
+  Partner partner = Partner();
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
+
+  @override
+  afterFirstLayout(BuildContext context) {
+    clientClassificationList(page, limit);
+  }
+
+  clientClassificationList(page, limit) async {
+    Offset offset = Offset(limit: limit, page: page);
+    Filter filter = Filter(isParent: true);
+    reference = await BusinessApi().clientClassificationList(
+        ResultArguments(offset: offset, filter: filter));
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   onSubmit() async {
     if (fbKey.currentState!.saveAndValidate()) {
@@ -57,13 +82,13 @@ class _AddRankState extends State<AddRank> {
   Widget build(BuildContext context) {
     general =
         Provider.of<GeneralProvider>(context, listen: true).businessGeneral;
-    print(general.toJson());
+    partner = Provider.of<UserProvider>(context, listen: true).partnerUser;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: networkColor,
         elevation: 0,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },
@@ -93,6 +118,92 @@ class _AddRankState extends State<AddRank> {
                   color: grey3,
                   fontWeight: FontWeight.w600,
                 ),
+              ),
+            ),
+            reference.rows!.isEmpty
+                ? Container(
+                    color: white,
+                    padding: const EdgeInsets.all(15),
+                    child: Text('Бүсчлэл сонгоно уу'),
+                  )
+                : DropdownButtonFormField(
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Заавал оруулна уу.')
+                    ]),
+                    icon: Container(
+                      decoration: BoxDecoration(
+                        color: white,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Сонгох',
+                            style: TextStyle(color: networkColor, fontSize: 14),
+                          ),
+                          Icon(
+                            Icons.arrow_drop_down,
+                            color: dark,
+                          ),
+                        ],
+                      ),
+                    ),
+                    onChanged: (value) {},
+                    dropdownColor: white,
+                    elevation: 2,
+                    decoration: InputDecoration(
+                      hintText: 'Ангилал нэр',
+                      hintStyle: TextStyle(fontSize: 14, color: dark),
+                      filled: true,
+                      fillColor: white,
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 15),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                    items: reference.rows!
+                        .map(
+                          (item) => DropdownMenuItem(
+                            onTap: () {
+                              parentId = item.id;
+                              refcode = item.refCode;
+                            },
+                            value: item,
+                            child: Text(
+                              '${item.name}',
+                              style: TextStyle(
+                                color: dark,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
+            Container(
+              color: white,
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Ангилал код',
+                    style: TextStyle(color: dark),
+                  ),
+                  refcode == null
+                      ? Text(
+                          'Ангилал код',
+                          style: TextStyle(color: networkColor),
+                        )
+                      : Text(
+                          '${refcode}',
+                          style: TextStyle(
+                            color: networkColor,
+                          ),
+                        )
+                ],
               ),
             ),
             Container(
@@ -150,96 +261,6 @@ class _AddRankState extends State<AddRank> {
                           errorText: 'Ангилал нэр оруулна уу'),
                     ]),
                   ),
-                  general.clientClassifications == []
-                      ? Container(
-                          color: white,
-                          padding: const EdgeInsets.all(15),
-                          child: Text('Бүсчлэл сонгоно уу'),
-                        )
-                      : DropdownButtonFormField(
-                          validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(
-                                errorText: 'Заавал оруулна уу.')
-                          ]),
-                          icon: Container(
-                            decoration: BoxDecoration(
-                              color: white,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  'Сонгох',
-                                  style: TextStyle(
-                                      color: networkColor, fontSize: 14),
-                                ),
-                                Icon(
-                                  Icons.arrow_drop_down,
-                                  color: dark,
-                                ),
-                              ],
-                            ),
-                          ),
-                          onChanged: (value) {
-                            setState(() {});
-                          },
-                          dropdownColor: white,
-                          elevation: 2,
-                          decoration: InputDecoration(
-                            hintText: 'Бүсийн нэр',
-                            hintStyle: TextStyle(fontSize: 14, color: dark),
-                            filled: true,
-                            fillColor: white,
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 15),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                          items: general.clientClassifications!
-                              .map(
-                                (item) => DropdownMenuItem(
-                                  onTap: () {
-                                    parentId = item.id;
-                                    refcode = item.refCode;
-                                  },
-                                  value: item,
-                                  child: Text(
-                                    '${item.name}',
-                                    style: TextStyle(
-                                      color: dark,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                        ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 15, horizontal: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Ангилал код',
-                          style: TextStyle(color: dark),
-                        ),
-                        refcode == null
-                            ? Text(
-                                'Ангилал код',
-                                style: TextStyle(color: networkColor),
-                              )
-                            : Text(
-                                '${refcode}',
-                                style: TextStyle(
-                                  color: networkColor,
-                                ),
-                              )
-                      ],
-                    ),
-                  ),
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
@@ -281,7 +302,7 @@ class _AddRankState extends State<AddRank> {
                     style: TextStyle(color: dark),
                   ),
                   Text(
-                    '2023-04-08 16:24 PM',
+                    '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD HH:mm")}',
                     style: TextStyle(
                       color: dark,
                     ),
@@ -300,7 +321,7 @@ class _AddRankState extends State<AddRank> {
                     style: TextStyle(color: dark),
                   ),
                   Text(
-                    'Username',
+                    '${partner.user?.firstName}',
                     style: TextStyle(
                       color: networkColor,
                     ),

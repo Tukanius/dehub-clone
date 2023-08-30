@@ -1,9 +1,14 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/models/general.dart';
+import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/screens/main_invoice_page/tabs/dashboard_tab/dashboard_tab.dart';
+import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 
 class MainInvoicePage extends StatefulWidget {
   static const routeName = '/MainInvoicePage';
@@ -15,7 +20,16 @@ class MainInvoicePage extends StatefulWidget {
 
 int selectedIndex = 0;
 
-class _MainInvoicePageState extends State<MainInvoicePage> {
+class _MainInvoicePageState extends State<MainInvoicePage>
+    with AfterLayoutMixin {
+  General general = General();
+
+  @override
+  afterFirstLayout(BuildContext context) async {
+    await Provider.of<GeneralProvider>(context, listen: false).init(true);
+    await Provider.of<UserProvider>(context, listen: false).invoice(true);
+  }
+
   static const List<Widget> currentPages = [
     Text('1'),
     DashBoardTab(),
@@ -37,7 +51,7 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
         leadingWidth: 100,
         elevation: 0,
         backgroundColor: selectedIndex != 3 ? backgroundColor : invoiceColor,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },

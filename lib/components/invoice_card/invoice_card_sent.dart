@@ -19,6 +19,8 @@ class InvoiceCardSent extends StatefulWidget {
 }
 
 class _InvoiceCardSentState extends State<InvoiceCardSent> {
+  bool value = false;
+
   invoiceStatus() {
     switch (widget.data!.invoiceStatus) {
       case "CONFIRMED":
@@ -65,8 +67,6 @@ class _InvoiceCardSentState extends State<InvoiceCardSent> {
         return "Хугацаа хэтэрсэн";
       case "CLOSED":
         return "Хаасан";
-      case "PENDING":
-        return "Хүлээгдэж буй";
       default:
     }
   }
@@ -119,27 +119,26 @@ class _InvoiceCardSentState extends State<InvoiceCardSent> {
     }
   }
 
-  bool value = false;
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            margin: const EdgeInsets.only(left: 15, top: 10),
-            child: Text(
-              "${widget.data!.getPostDate()}",
-              style: TextStyle(
-                color: grey3,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
+          // Container(
+          //   margin: const EdgeInsets.only(left: 15, top: 10),
+          //   child: Text(
+          //     "${widget.data!.getPostDate()}",
+          //     style: TextStyle(
+          //       color: grey3,
+          //       fontWeight: FontWeight.w600,
+          //     ),
+          //   ),
+          // ),
           SizedBox(
             height: 10,
           ),
-          InkWell(
+          GestureDetector(
             onTap: widget.onClick,
             child: Container(
               color: white,
@@ -217,7 +216,8 @@ class _InvoiceCardSentState extends State<InvoiceCardSent> {
                                       ),
                                     ),
                                     Text(
-                                      '${widget.data!.getPaymentDate()}',
+                                      // '${widget.data!.getPaymentDate()}',
+                                      '',
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Color(0xff555555),
@@ -263,7 +263,8 @@ class _InvoiceCardSentState extends State<InvoiceCardSent> {
                               height: 10,
                             ),
                             Text(
-                              '${Utils().formatCurrency(widget.data!.amountToPay.toString())}₮',
+                              // '${Utils().formatCurrency(widget.data!.amountToPay.toString())}₮',
+                              '1',
                               style: TextStyle(
                                 color: black,
                                 fontWeight: FontWeight.w500,
@@ -323,7 +324,7 @@ class _InvoiceCardSentState extends State<InvoiceCardSent> {
                                     color: Color(0xff555555),
                                   ),
                                 ),
-                                widget.data!.overDueStatus == "NORMAL"
+                                widget.data!.overdueStatus == "NORMAL"
                                     ? Text(
                                         'Хэвийн',
                                         style: TextStyle(
@@ -334,7 +335,7 @@ class _InvoiceCardSentState extends State<InvoiceCardSent> {
                                     : Text(
                                         'Хугацаа хэтэрсэн',
                                         style: TextStyle(
-                                          color: buttonColor,
+                                          color: red,
                                           fontSize: 12,
                                         ),
                                       )

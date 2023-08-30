@@ -19,9 +19,9 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
     staffs: json['staffs'] != null
         ? (json['staffs'] as List).map((e) => Staffs.fromJson(e)).toList()
         : null,
-    networks: json['networks'] != null
-        ? (json['networks'] as List).map((e) => Networks.fromJson(e)).toList()
-        : null,
+    // networks: json['networks'] != null
+    //     ? (json['networks'] as List).map((e) => Networks.fromJson(e)).toList()
+    //     : null,
     currencies: json['currencies'] != null
         ? (json['currencies'] as List)
             .map((e) => Currencies.fromJson(e))
@@ -203,10 +203,10 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => PurchaseTypes.fromJson(e))
             .toList()
         : null,
-    referenceListTypes: json['referenceListTypes'] != null
-        ? ReferenceListTypes.fromJson(
-            json['referenceListTypes'] as Map<String, dynamic>)
-        : null,
+    // referenceListTypes: json['referenceListTypes'] != null
+    //     ? ReferenceListTypes.fromJson(
+    //         json['referenceListTypes'] as Map<String, dynamic>)
+    //     : null,
     referenceTypes: json['referenceTypes'] != null
         ? (json['referenceTypes'] as List)
             .map((e) => ReferenceTypes.fromJson(e))
@@ -279,7 +279,7 @@ Map<String, dynamic> _$GeneralToJson(General instance) {
   if (instance.bankAccounts != null)
     json['bankAccounts'] = instance.bankAccounts;
   if (instance.staffs != null) json['staffs'] = instance.staffs;
-  if (instance.networks != null) json['networks'] = instance.networks;
+  // if (instance.networks != null) json['networks'] = instance.networks;
   if (instance.currencies != null) json['currencies'] = instance.currencies;
   if (instance.discountTypes != null)
     json['discountTypes'] = instance.discountTypes;

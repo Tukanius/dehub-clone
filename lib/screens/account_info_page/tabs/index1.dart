@@ -58,7 +58,7 @@ class _Index1State extends State<Index1> with SingleTickerProviderStateMixin {
               SliverToBoxAdapter(
                 child: Column(
                   children: [
-                    InkWell(
+                    GestureDetector(
                       onTap: () {
                         pickDateRange();
                       },

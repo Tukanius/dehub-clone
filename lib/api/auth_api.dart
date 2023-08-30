@@ -27,13 +27,33 @@ class AuthApi extends HttpRequest {
   }
 
   businessMe(bool handler) async {
-    var res = await get('auth/me', "BUSINESS", true, handler: handler);
+    var res = await get('/auth/me', "BUSINESS", true, handler: handler);
     return User.fromJson(res as Map<String, dynamic>);
   }
 
   createPassword(User data) async {
     var res =
         await post("/auth/password/change", "AUTH", true, data: data.toJson());
+    return User.fromJson(res as Map<String, dynamic>);
+  }
+
+  invoiceMe(bool handler) async {
+    var res = await get('/auth/me', "INVOICE", true, handler: handler);
+    return User.fromJson(res as Map<String, dynamic>);
+  }
+
+  orderMe(bool handler) async {
+    var res = await get('/auth/me', "ORDER", true, handler: handler);
+    return User.fromJson(res as Map<String, dynamic>);
+  }
+
+  paymentMe(bool handler) async {
+    var res = await get('/auth/me', "PAYMENT", true, handler: handler);
+    return User.fromJson(res as Map<String, dynamic>);
+  }
+
+  inventoryMe(bool handler) async {
+    var res = await get('/auth/me', "INVENTORY", true, handler: handler);
     return User.fromJson(res as Map<String, dynamic>);
   }
 }

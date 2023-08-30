@@ -42,7 +42,7 @@ class _PdfPageState extends State<PdfPage> {
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         child: Column(
           children: [
-            InkWell(
+            GestureDetector(
               onTap: () {
                 Navigator.of(context).pop();
               },
@@ -59,7 +59,7 @@ class _PdfPageState extends State<PdfPage> {
             SizedBox(
               height: 10,
             ),
-            InkWell(
+            GestureDetector(
               onTap: () {
                 show(context);
               },

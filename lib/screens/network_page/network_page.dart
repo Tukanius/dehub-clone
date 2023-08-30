@@ -1,4 +1,6 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/inbox_tab.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/new_invitation_page/new_invitation_page.dart';
 import 'package:dehub/screens/network_page/tabs/sent_tab/sent_tab.dart';
@@ -8,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/dashboard_tab.dart';
 import 'package:dehub/screens/network_page/tabs/home_tab/home_tab.dart';
+import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 
 class NetworkPage extends StatefulWidget {
   static const routeName = 'networkpage';
@@ -17,7 +21,14 @@ class NetworkPage extends StatefulWidget {
   _NetworkPageState createState() => _NetworkPageState();
 }
 
-class _NetworkPageState extends State<NetworkPage> {
+class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
+  @override
+  afterFirstLayout(BuildContext context) async {
+    await Provider.of<UserProvider>(context, listen: false).businessMe(true);
+    await Provider.of<GeneralProvider>(context, listen: false)
+        .businessInit(true);
+  }
+
   int selectedIndex = 0;
   static const List<Widget> currentPages = [
     HomeTab(),

@@ -36,11 +36,17 @@ const Color mainColor = Color(0xff040325);
 const Color partnerColor = Color(0xff7C7A83);
 const Color financingColor = Color(0xff68199D);
 const Color invoiceColor = Color(0xff00B3D3);
-const Color orderColor = Color(0xffE97027);
+const Color orderColor = Color(0xff00B8BA);
 const Color paymentColor = Color(0xffD60B9D);
 const Color productColor = Color(0xff6883BC);
 const Color userColor = Color(0xff000000);
 const Color debtColor = Color(0xffD60B9D);
+const Color depBrown = Color(0xff555555);
+const Color coolGrey = Color(0xff8181A5);
+const Color lightGrey = Color(0xffE9EDF0);
+const Color whiteGrey = Color(0xffF1F5F8);
+const Color darkGreen = Color(0xff0E889D);
+const Color grey4 = Color(0xffF5F5FF);
 
 const gradient2 = LinearGradient(colors: [
   Color(0xff5D7128),
@@ -51,11 +57,11 @@ const gradientDark1 = LinearGradient(colors: [primaryColor, dark]);
 const gradientDark2 = LinearGradient(colors: [dark, primaryColor]);
 
 const gradient = LinearGradient(
-    end: Alignment.topCenter,
-    begin: Alignment.bottomCenter,
+    end: Alignment.bottomRight,
+    begin: Alignment.topLeft,
     colors: [
-      Color(0xffF00500),
-      Color(0XFFFFA409),
+      Color(0xffF00FFED),
+      Color(0XFF00B8BA),
     ]);
 
 const gradient3 = LinearGradient(colors: [

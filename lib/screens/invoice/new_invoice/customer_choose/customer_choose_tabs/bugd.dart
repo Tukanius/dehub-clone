@@ -35,14 +35,6 @@ class _BugdState extends State<Bugd> with AfterLayoutMixin {
   bool isSubmit = false;
 
   @override
-  void initState() {
-    listenController.addListener(() async {
-      invoice = await InvoiceApi().network(query);
-    });
-    super.initState();
-  }
-
-  @override
   afterFirstLayout(BuildContext context) async {
     setState(() {
       isLoading = true;

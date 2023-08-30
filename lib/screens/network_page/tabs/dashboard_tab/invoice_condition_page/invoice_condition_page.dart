@@ -45,21 +45,6 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
   bool isLoading = true;
   ListenController listenController = ListenController();
 
-  // bottomSheet() {
-  //   switch (widget.data.listType) {
-  //     case "DIRECTION":
-  //       return buildSheet();
-  //     case "INV_NET2":
-  //       return addInvoiceTerm(listenController);
-  //     case "REGION":
-  //       return addZoning();
-  //     case "CLIENT_CATEGORY":
-  //       return addCategory();
-  //     case "CLIENT_PRIORITY":
-  //       return addRank();
-  //   }
-  // }
-
   @override
   afterFirstLayout(BuildContext context) async {
     switch (widget.data.type) {
@@ -93,7 +78,7 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
 
   list(page, limit) async {
     Offset offset = Offset(limit: limit, page: page);
-    Filter filter = Filter(orderConfirmTerm: widget.data.listType);
+    Filter filter = Filter(condition: widget.data.listType);
     reference = await BusinessApi()
         .paymentTermList(ResultArguments(offset: offset, filter: filter));
     setState(() {
@@ -131,7 +116,7 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
         backgroundColor: backgroundColor,
         elevation: 0,
         leadingWidth: 100,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },

@@ -1,12 +1,9 @@
-import 'dart:async';
-
 import 'package:dehub/components/invoice_approve_card/invoice_approve_card.dart';
 import 'package:dehub/components/modules_card/modules_card.dart';
 import 'package:dehub/components/schedule_card/schedule_card.dart';
 import 'package:dehub/components/take_give_card/take_give_card.dart';
 import 'package:dehub/components/tutorial_card/tutorial_card.dart';
 import 'package:dehub/models/partner.dart';
-import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/menu/menu_page.dart';
 import 'package:dehub/screens/profile/profile_page.dart';
@@ -28,7 +25,6 @@ class FirstPage extends StatefulWidget {
 
 class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
   bool isNew = false;
-  User user = User();
   Partner partnerUser = Partner();
 
   show(context) {
@@ -197,7 +193,6 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserProvider>(context, listen: true).user;
     partnerUser = Provider.of<UserProvider>(context, listen: true).partnerUser;
     return WillPopScope(
       child: SafeArea(
@@ -221,7 +216,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                   },
                   child: Container(
                     decoration: BoxDecoration(),
-                    child: user.avatar == null
+                    child: partnerUser.user?.avatar == null
                         ? CircleAvatar(
                             radius: 13,
                             child: ClipOval(
@@ -233,7 +228,8 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                           )
                         : CircleAvatar(
                             radius: 13,
-                            backgroundImage: NetworkImage('${user.avatar}'),
+                            backgroundImage:
+                                NetworkImage('${partnerUser.user?.avatar}'),
                           ),
                   ),
                 ),
@@ -306,10 +302,13 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                         ],
                       ),
                     ),
-                    ModulesCard(),
+                    ModulesCard(
+                      partner: partnerUser,
+                    ),
                   ],
                 ),
-                isNew != false
+                partnerUser.user?.currentBusiness?.type == "BUYER" ||
+                        partnerUser.user?.currentBusiness?.type == "SUPPLIER"
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

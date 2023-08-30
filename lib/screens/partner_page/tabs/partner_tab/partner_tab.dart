@@ -1,4 +1,3 @@
-import 'package:dehub/components/partner_cards/partner_card.dart';
 import 'package:flutter/material.dart';
 
 class PartnerTab extends StatefulWidget {
@@ -27,10 +26,11 @@ class _PartnerTabState extends State<PartnerTab> {
             SizedBox(
               height: 10,
             ),
-            for (var i = 0; i < 10; i++)
-              PartnerCard(
-                type: false,
-              ),
+            // for (var i = 0; i < 10; i++)
+            //   PartnerCard(
+
+            //     type: false,
+            //   ),
           ],
         ),
       ),

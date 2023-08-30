@@ -20,7 +20,7 @@ class _GiveFundingDetailPageState extends State<GiveFundingDetailPage> {
         backgroundColor: backgroundColor,
         elevation: 0,
         leadingWidth: 200,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },

@@ -112,6 +112,10 @@ class _LoginPageState extends State<LoginPage> {
                               height: 8,
                             ),
                             FormTextField(
+                              inputAction: TextInputAction.next,
+                              onComplete: () {
+                                FocusScope.of(context).nextFocus();
+                              },
                               textColor: buttonColor,
                               name: "code",
                               decoration: InputDecoration(
@@ -162,7 +166,11 @@ class _LoginPageState extends State<LoginPage> {
                               height: 8,
                             ),
                             FormTextField(
+                              inputAction: TextInputAction.next,
                               labelText: 'Хэрэглэгчийн нэр',
+                              onComplete: () {
+                                FocusScope.of(context).nextFocus();
+                              },
                               // labelStyle: TextStyle(
                               //   color: buttonColor,
                               //   fontWeight: FontWeight.w500,
@@ -219,6 +227,10 @@ class _LoginPageState extends State<LoginPage> {
                               height: 8,
                             ),
                             FormTextField(
+                              onComplete: () {
+                                onSubmit();
+                              },
+                              inputAction: TextInputAction.done,
                               textColor: buttonColor,
                               name: "password",
                               inputType: TextInputType.text,

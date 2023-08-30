@@ -615,6 +615,7 @@ class _OnboardTabState extends State<OnboardTab> {
             color: networkColor,
             fontSize: 14,
           ),
+          textAlign: TextAlign.end,
         ),
       );
 }

@@ -39,14 +39,14 @@ class InvoiceApi extends HttpRequest {
   }
 
   Future<Result> network(String query) async {
-    var res =
-        await get("/network?query=${query}", "INVOICE", true, handler: true);
+    var res = await get("/network/select?query=${query}", "INVOICE", true,
+        handler: true);
     return Result.fromJson(res, Invoice.fromJson);
   }
 
   Future<Result> brach(String businessId, String query) async {
     var res = await get(
-      "/branch?businessId=$businessId&query=$query",
+      "/branch/select?businessId=$businessId&query=$query",
       "INVOICE",
       true,
     );
@@ -56,6 +56,11 @@ class InvoiceApi extends HttpRequest {
   Future<Invoice> createInvoice(Invoice data) async {
     var res = await post('/invoice', "INVOICE", true,
         data: data.toJson(), handler: true);
+    return Invoice.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Invoice> networkGet(String id) async {
+    var res = await get("/network/$id", 'INVOICE', true);
     return Invoice.fromJson(res as Map<String, dynamic>);
   }
 }

@@ -75,7 +75,7 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
         backgroundColor: invoiceColor,
         leading: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-          child: InkWell(
+          child: GestureDetector(
             onTap: () {
               Navigator.of(context).pop();
             },
@@ -444,7 +444,7 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                                       .toList(),
                                 )
                               : selectedMethod == "QPAY"
-                                  ? InkWell(
+                                  ? GestureDetector(
                                       onTap: () {
                                         Navigator.of(context)
                                             .pushNamed(QpayPage.routeName);

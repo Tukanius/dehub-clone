@@ -41,7 +41,12 @@ Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
     if (instance.filter!.query != null) {
       params['filter']['query'] = instance.filter!.query;
     }
-
+    if (instance.filter!.condition != null) {
+      params['filter']['condition'] = instance.filter!.condition;
+    }
+    if (instance.filter!.configType != null) {
+      params['filter']['configType'] = instance.filter!.configType;
+    }
     if (instance.filter!.isReceived != null) {
       params['filter']['isReceived'] = instance.filter!.isReceived;
     }
@@ -54,6 +59,33 @@ Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
     }
     if (instance.filter!.isParent != null) {
       params['filter']['isParent'] = instance.filter!.isParent;
+    }
+    if (instance.filter!.pullSheetStatus != null) {
+      params['filter']['pullSheetStatus'] = instance.filter!.pullSheetStatus;
+    }
+    if (instance.filter!.regNumber != null) {
+      params['filter']['regNumber'] = instance.filter!.regNumber;
+    }
+    if (instance.filter!.partnerName != null) {
+      params['filter']['partnerName'] = instance.filter!.partnerName;
+    }
+    if (instance.filter!.staffId != null) {
+      params['filter']['staffId'] = instance.filter!.staffId;
+    }
+    if (instance.filter!.partnerId != null) {
+      params['filter']['partnerId'] = instance.filter!.partnerId;
+    }
+    if (instance.filter!.regionId != null) {
+      params['filter']['regionId'] = instance.filter!.regionId;
+    }
+    if (instance.filter!.categoryId != null) {
+      params['filter']['categoryId'] = instance.filter!.categoryId;
+    }
+    if (instance.filter!.priorityId != null) {
+      params['filter']['priorityId'] = instance.filter!.priorityId;
+    }
+    if (instance.filter!.paymentTermId != null) {
+      params['filter']['paymentTermId'] = instance.filter!.paymentTermId;
     }
 
     if (instance.offset!.page! > 0) {

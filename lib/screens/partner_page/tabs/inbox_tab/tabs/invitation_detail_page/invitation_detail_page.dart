@@ -16,7 +16,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: networkColor,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },

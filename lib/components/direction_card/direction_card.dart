@@ -16,7 +16,7 @@ class DirectionCard extends StatefulWidget {
 class _DirectionCardState extends State<DirectionCard> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(DirectionDetailPage.routeName);
       },

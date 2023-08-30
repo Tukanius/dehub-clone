@@ -1,22 +1,29 @@
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/invitation_received.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:moment_dart/moment_dart.dart';
+import 'package:lottie/lottie.dart';
 
 class InvitationDetailPageArguments {
+  ListenController listenController;
   String id;
   InvitationDetailPageArguments({
+    required this.listenController,
     required this.id,
   });
 }
 
 class InvitationDetailPage extends StatefulWidget {
   final String id;
+  final ListenController listenController;
   static const routeName = '/invitationdetailpage';
   const InvitationDetailPage({
     Key? key,
+    required this.listenController,
     required this.id,
   }) : super(key: key);
 
@@ -28,6 +35,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
     with AfterLayoutMixin {
   bool isLoading = false;
   InvitationReceived invitation = InvitationReceived();
+  InvitationReceived respond = InvitationReceived();
   @override
   afterFirstLayout(BuildContext context) async {
     setState(() {
@@ -39,9 +47,80 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
     });
   }
 
-  approve() async {
+  showSuccess(ctx, String labeltext) async {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return Container(
+          alignment: Alignment.center,
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.only(top: 75),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.only(top: 90, left: 20, right: 20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    const Text(
+                      'Амжилттай',
+                      style: TextStyle(
+                          color: dark,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Text(
+                      '${labeltext}',
+                      textAlign: TextAlign.center,
+                    ),
+                    ButtonBar(
+                      buttonMinWidth: 100,
+                      alignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        TextButton(
+                          style: ButtonStyle(
+                            overlayColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                          ),
+                          child: const Text(
+                            "Буцах",
+                            style: TextStyle(color: dark),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            Navigator.of(ctx).pop();
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Lottie.asset('images/success.json', height: 150, repeat: false),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  onSubmit(bool accept) async {
     try {
-      await BusinessApi().respond(invitation, widget.id);
+      respond.accept = accept;
+      respond.responseMessage = 'accept';
+      await BusinessApi().respond(respond, widget.id);
+      showSuccess(context,
+          accept == true ? "Амжилттай зөвшөөрлөө" : "Амжилттай цуцаллаа");
+      widget.listenController.changeVariable('refresh');
     } catch (e) {
       print('===============ERROR===============');
       print(e.toString());
@@ -49,13 +128,17 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
     }
   }
 
-  refuse() async {
-    try {
-      await BusinessApi().refuse(invitation, widget.id);
-    } catch (e) {
-      print('===============ERROR===============');
-      print(e.toString());
-      print('===============ERROR===============');
+  invitationStatus() {
+    switch (invitation.invitationStatus) {
+      case "DRAFT":
+        return "Түр төлөв";
+      case "SENT":
+        return "Илгээгдсэн";
+      case "ACCEPTED":
+        return "Зөвшөөрсөн";
+      case "REJECTED":
+        return "Цуцлагдсан";
+      default:
     }
   }
 
@@ -66,7 +149,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
       appBar: AppBar(
         elevation: 0,
         backgroundColor: backgroundColor,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },
@@ -143,7 +226,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          '2023-04-08 16:24 PM',
+                          '${Moment.parse(invitation.createdAt.toString()).format("YYYY-MM-DD HH:mm")}',
                           style: TextStyle(color: dark),
                         ),
                       ],
@@ -168,7 +251,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                             color: Color(0xff71717A).withOpacity(0.1),
                           ),
                           child: Text(
-                            '${invitation.invitationStatus}',
+                            invitationStatus(),
                             style: TextStyle(
                               color: dark,
                               fontSize: 12,
@@ -203,7 +286,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          'PartnerName',
+                          '${invitation.sender?.partnerName}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -221,7 +304,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          'PartnerRef#',
+                          '${invitation.sender?.partner?.refCode}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -239,7 +322,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          'BusinessName',
+                          '${invitation.sender?.partner?.businessName}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -257,43 +340,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          'BusRef#',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
-                    color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Buyer роль',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          'Тийм',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
-                    color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Supplier роль',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          'Үгүй',
+                          '${invitation.sender?.refCode}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -311,7 +358,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          'Username',
+                          '${invitation.senderUser?.firstName}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -325,11 +372,11 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Урьсан и-мэйл хаяг',
+                          'И-мэйл хаяг',
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          'email',
+                          '${invitation.senderUser?.email}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -343,13 +390,59 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Урьсан утас',
+                          'Утас',
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          'Mobile',
+                          '${invitation.senderUser?.phone}',
                           style: TextStyle(color: networkColor),
                         ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 15),
+                    color: white,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Buyer-с ирсэн',
+                          style: TextStyle(color: dark),
+                        ),
+                        invitation.sender?.type == "BUYER"
+                            ? Text(
+                                'Тийм',
+                                style: TextStyle(color: networkColor),
+                              )
+                            : Text(
+                                'Үгүй',
+                                style: TextStyle(color: networkColor),
+                              ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 15),
+                    color: white,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Supplier-с ирсэн',
+                          style: TextStyle(color: dark),
+                        ),
+                        invitation.sender?.type == "SUPPLIER"
+                            ? Text(
+                                'Тийм',
+                                style: TextStyle(color: networkColor),
+                              )
+                            : Text(
+                                'Үгүй',
+                                style: TextStyle(color: networkColor),
+                              ),
                       ],
                     ),
                   ),
@@ -365,7 +458,25 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          'Username',
+                          '${invitation.senderFinStaff?.firstName}',
+                          style: TextStyle(color: networkColor),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 15),
+                    color: white,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Урилга төрөл',
+                          style: TextStyle(color: dark),
+                        ),
+                        Text(
+                          '${invitation.type}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -401,7 +512,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                           color: grey3.withOpacity(0.3),
                         ),
                       ),
-                      child: Text(''),
+                      child: Text('${invitation.toMessage}'),
                     ),
                   ),
                   SizedBox(
@@ -433,7 +544,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          'PartnerName',
+                          '${invitation.receiver?.partnerName}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -451,7 +562,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          'PartnerRef#',
+                          '${invitation.receiver?.partner?.refCode}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -469,7 +580,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          'RegisterID',
+                          '${invitation.receiver?.regNumber}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -487,7 +598,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          'BusinessName',
+                          '${invitation.receiver?.profileName}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -505,7 +616,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          'BusRef#',
+                          '${invitation.receiver?.refCode}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -530,7 +641,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                                     labelColor: backgroundColor,
                                     labelText: "Татгалзах",
                                     onClick: () {
-                                      refuse();
+                                      onSubmit(false);
                                     },
                                     textColor: networkColor,
                                   ),
@@ -546,9 +657,9 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                                     textColor: white,
                                     labelColor: networkColor,
                                     onClick: () {
-                                      approve();
+                                      onSubmit(true);
                                     },
-                                    labelText: "Батлах",
+                                    labelText: "Зөвшөөрөх",
                                   ),
                                 ),
                               ),

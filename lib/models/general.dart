@@ -26,7 +26,7 @@ import 'package:dehub/models/bank_accounts.dart';
 import 'package:dehub/models/discount_types.dart';
 import 'package:dehub/models/unit_space_labels.dart';
 import 'package:dehub/models/unit_weight_labels.dart';
-import 'package:dehub/models/networks.dart';
+// import 'package:dehub/models/networks.dart';
 import 'package:dehub/models/transaction_types.dart';
 import 'package:dehub/models/currencies.dart';
 import 'package:dehub/models/staffs.dart';
@@ -54,7 +54,7 @@ class General {
   List<Khoroos>? khoroos;
   List<BankAccounts>? bankAccounts;
   List<Staffs>? staffs;
-  List<Networks>? networks;
+  // List<Networks>? networks;
   List<Currencies>? currencies;
   List<DiscountTypes>? discountTypes;
   List<InvoiceHistoryTypes>? invoiceHistoryTypes;
@@ -76,7 +76,6 @@ class General {
   List<UnitConvertTypes>? unitConvertTypes;
   List<UnitSpaceLabels>? unitSpaceLabels;
   List<UnitWeightLabels>? unitWeightLabels;
-
   List<BranchStatus>? branchStatus;
   List<BranchTypes>? branchTypes;
   List<BusinessSectors>? businessSectors;
@@ -108,7 +107,7 @@ class General {
     this.khoroos,
     this.bankAccounts,
     this.staffs,
-    this.networks,
+    // this.networks,
     this.currencies,
     this.discountTypes,
     this.invoiceHistoryTypes,

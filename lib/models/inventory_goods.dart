@@ -35,6 +35,7 @@ class InventoryGoods {
   String? description;
   bool? hasVariant;
   bool? hasUnit;
+  bool? reOrder;
   String? departmentUnitId;
   String? departmentSubUnitId;
   String? unitId;
@@ -64,12 +65,16 @@ class InventoryGoods {
   double? quantity;
   String? text;
   String? url;
-
+  double? minBalance;
+  double? maxBalance;
+  double? minOrderNum;
+  double? reOrderNum;
+  double? reOrderMinNum;
   InventoryGoods? brand;
   InventoryGoods? supplier;
   InventoryGoods? manufacturer;
-  InventoryGoods? originCountry;
-  InventoryGoods? importerCountry;
+  String? originCountry;
+  String? importerCountry;
   InventoryGoods? distributor;
   InventoryGoods? itemType;
   InventoryGoods? classification;
@@ -87,8 +92,29 @@ class InventoryGoods {
   List<InventoryGoods>? itemFieldValues;
   List<InventoryGoods>? quantityPrices;
   List<InventoryGoods>? units;
+  bool? hasAdditionalUnit;
+  InventoryGoods? values;
+  List<InventoryGoods>? optionValues;
+  List<InventoryGoods>? variants;
+  List<InventoryGoods>? additionalUnits;
+  List<InventoryGoods>? itemUnits;
+
+  bool? isBase;
 
   InventoryGoods({
+    this.isBase,
+    this.optionValues,
+    this.variants,
+    this.additionalUnits,
+    this.itemUnits,
+    this.values,
+    this.hasAdditionalUnit,
+    this.reOrderMinNum,
+    this.reOrder,
+    this.minOrderNum,
+    this.maxBalance,
+    this.reOrderNum,
+    this.minBalance,
     this.url,
     this.text,
     this.count,

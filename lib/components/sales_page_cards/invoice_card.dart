@@ -21,7 +21,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
           SizedBox(
             height: 5,
           ),
-          InkWell(
+          GestureDetector(
             child: Container(
               color: white,
               child: Column(

@@ -18,19 +18,34 @@ class _MenuPageState extends State<MenuPage> {
       appBar: AppBar(
         backgroundColor: purpleButtonColor,
         elevation: 0,
-        title: Text(
-          'Буцах',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        leading: IconButton(
-          onPressed: () {
+        centerTitle: false,
+        leadingWidth: 130,
+        leading: GestureDetector(
+          onTap: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(
-            Icons.arrow_back_ios,
+          child: Container(
+            color: transparent,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 15,
+                ),
+                Icon(
+                  Icons.arrow_back_ios,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  'Буцах',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

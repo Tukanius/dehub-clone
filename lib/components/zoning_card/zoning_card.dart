@@ -16,7 +16,7 @@ class ZoningCard extends StatefulWidget {
 class _ZoningCardState extends State<ZoningCard> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(ZoningDetailPage.routeName);
       },

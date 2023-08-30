@@ -27,7 +27,7 @@ class _CategoryPageState extends State<CategoryPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: backgroundColor,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },

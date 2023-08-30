@@ -14,7 +14,7 @@ class RequestedFundingCard extends StatefulWidget {
 class _RequestedFundingCardState extends State<RequestedFundingCard> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(FundingRequestDetailPage.routeName);
       },

@@ -18,7 +18,7 @@ class CategoryCard extends StatefulWidget {
 class _CategoryCardState extends State<CategoryCard> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         if (widget.text == 'Товч тайлбар') {
           Navigator.of(context).pushNamed(CategoryDetailPage.routeName);

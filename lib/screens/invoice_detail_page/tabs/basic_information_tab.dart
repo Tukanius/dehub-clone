@@ -38,8 +38,8 @@ class _BasicInformationTabState extends State<BasicInformationTab>
     });
   }
 
-  overDueStatus() {
-    switch (invoice.overDueStatus) {
+  overdueStatus() {
+    switch (invoice.overdueStatus) {
       case "NORMAL":
         return "Хэвийн";
       case "ONE_TO_THREE":
@@ -223,6 +223,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         ),
                         Text(
                           '${Utils().formatCurrency(invoice.itemsTotal.toString())}',
+                          // '',
                           style: TextStyle(color: invoiceColor),
                         ),
                       ],
@@ -256,7 +257,8 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          '${Utils().formatCurrency(invoice.amountToPay.toString())}',
+                          // '${Utils().formatCurrency(invoice.amountToPay.toString())}',
+                          '',
                           style: TextStyle(color: invoiceColor),
                         ),
                       ],
@@ -273,7 +275,8 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          invoice.getPaymentDate(),
+                          // invoice.getPaymentDate(),
+                          '',
                           style: TextStyle(color: invoiceColor),
                         ),
                       ],
@@ -291,7 +294,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                           ),
                         ),
                         Text(
-                          '${overDueStatus()}',
+                          '${overdueStatus()}',
                           style: TextStyle(color: invoiceColor),
                         ),
                       ],
@@ -882,7 +885,8 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                           children: [
                             Container(
                               child: Text(
-                                '${Utils().formatCurrency(invoice.totalAmount.toString())}₮',
+                                // '${Utils().formatCurrency(invoice.totalAmount.toString())}₮',
+                                '',
                                 style: TextStyle(
                                   color: invoiceColor,
                                   fontSize: 24,
@@ -941,9 +945,15 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        InkWell(
+                        GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushNamed(Harah.routeName);
+                            Navigator.of(context).pushNamed(
+                              Harah.routeName,
+                              arguments: HarahArguments(
+                                invoice: invoice,
+                                data: invoice.invoiceLines!,
+                              ),
+                            );
                           },
                           child: Column(
                             children: [
@@ -962,16 +972,8 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                             ],
                           ),
                         ),
-                        InkWell(
-                          onTap: () {
-                            showModalBottomSheet(
-                              isScrollControlled: true,
-                              useSafeArea: true,
-                              backgroundColor: transparent,
-                              context: context,
-                              builder: (context) => buildSheet(),
-                            );
-                          },
+                        GestureDetector(
+                          onTap: () {},
                           child: Column(
                             children: [
                               SizedBox(
@@ -994,7 +996,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                             ],
                           ),
                         ),
-                        InkWell(
+                        GestureDetector(
                           onTap: () {},
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -1014,7 +1016,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                             ],
                           ),
                         ),
-                        InkWell(
+                        GestureDetector(
                           onTap: () {},
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,

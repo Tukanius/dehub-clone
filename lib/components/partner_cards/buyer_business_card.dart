@@ -1,11 +1,14 @@
+import 'package:dehub/models/business.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class BuyerBusinessCard extends StatefulWidget {
   final Function()? onClick;
+  final Business? data;
   const BuyerBusinessCard({
     Key? key,
+    this.data,
     this.onClick,
   }) : super(key: key);
 
@@ -14,6 +17,7 @@ class BuyerBusinessCard extends StatefulWidget {
 }
 
 class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
+  bool isCheck = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -36,17 +40,26 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      height: 40,
-                      width: 40,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Image(
-                          image: AssetImage('images/map.jpg'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
+                    widget.data?.logo == null
+                        ? Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: grey,
+                            ),
+                          )
+                        : Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: grey,
+                              image: DecorationImage(
+                                image: NetworkImage('${widget.data?.logo}'),
+                              ),
+                            ),
+                          ),
                     SizedBox(
                       width: 10,
                     ),
@@ -56,12 +69,12 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                         Row(
                           children: [
                             Text(
-                              'Business name,',
+                              '${widget.data?.partner?.businessName},',
                               style: TextStyle(
                                   fontSize: 12, fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              'BusRef#',
+                              '${widget.data?.refCode}',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: grey3,
@@ -76,11 +89,11 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                         Row(
                           children: [
                             Text(
-                              'Партнерийн нэр,',
+                              '${widget.data?.partnerName},',
                               style: TextStyle(fontSize: 12, color: grey3),
                             ),
                             Text(
-                              'PartnerRef#',
+                              '${widget.data?.partner?.refCode}',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: grey3,
@@ -99,7 +112,7 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                               style: TextStyle(color: grey3, fontSize: 10),
                             ),
                             Text(
-                              '6324142',
+                              '${widget.data?.partner?.regNumber}',
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,
@@ -121,18 +134,25 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                             children: [
                               Row(
                                 children: [
-                                  CircleAvatar(
-                                    radius: 12,
-                                    backgroundImage:
-                                        AssetImage('images/map.jpg'),
-                                  ),
+                                  widget.data?.staff?.avatar == null
+                                      ? CircleAvatar(
+                                          radius: 12,
+                                          backgroundColor: grey,
+                                        )
+                                      : CircleAvatar(
+                                          radius: 12,
+                                          backgroundImage: NetworkImage(
+                                              '${widget.data?.staff?.avatar}'),
+                                        ),
                                   SizedBox(
                                     width: 5,
                                   ),
-                                  Text(
-                                    'UserName',
-                                    style: TextStyle(
-                                      fontSize: 16,
+                                  Container(
+                                    child: Text(
+                                      '${widget.data?.staff?.firstName}',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -141,12 +161,12 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    'mail@address.com',
+                                    '${widget.data?.staff?.email}',
                                     style:
                                         TextStyle(color: grey3, fontSize: 10),
                                   ),
                                   Text(
-                                    '9919-3460',
+                                    '${widget.data?.staff?.phone}',
                                     style:
                                         TextStyle(color: grey3, fontSize: 10),
                                   ),

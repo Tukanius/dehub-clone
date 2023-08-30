@@ -20,7 +20,7 @@ class PartnerCard extends StatefulWidget {
 class _PartnerCardState extends State<PartnerCard> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: widget.onClick,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 2),
@@ -43,11 +43,13 @@ class _PartnerCardState extends State<PartnerCard> {
                     Container(
                       height: 40,
                       width: 40,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Image(
-                          image: AssetImage('images/map.jpg'),
-                          fit: BoxFit.cover,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: widget.data?.logo == null
+                              ? NetworkImage(
+                                  'https://camo.githubusercontent.com/137115c4e2eab897b580d1f0db934f330d84654bccb0947c5e9af4bc8a66c6b6/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f323639323831302f323130343036312f34643839316563302d386637362d313165332d393230322d6637333934306431306632302e706e67')
+                              : NetworkImage('${widget.data?.logo}'),
                         ),
                       ),
                     ),
@@ -58,7 +60,7 @@ class _PartnerCardState extends State<PartnerCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${widget.data!.partnerName}',
+                          '${widget.data!.partner?.businessName}',
                           style: TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
                         ),
@@ -66,7 +68,7 @@ class _PartnerCardState extends State<PartnerCard> {
                           height: 5,
                         ),
                         Text(
-                          'Партнерийн нэр',
+                          '${widget.data?.partnerName}',
                           style: TextStyle(fontSize: 12, color: grey3),
                         ),
                         SizedBox(
@@ -104,7 +106,7 @@ class _PartnerCardState extends State<PartnerCard> {
                               style: TextStyle(color: grey3, fontSize: 10),
                             ),
                             Text(
-                              '6324142',
+                              '${widget.data?.regNumber}',
                               style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w600,

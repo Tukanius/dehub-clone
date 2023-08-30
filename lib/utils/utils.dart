@@ -7,7 +7,7 @@ class Utils {
       return result = '0.00';
     }
     var formattedNumber =
-        NumberFormat("#,###.00", "en_US").format(double.parse(value));
+        NumberFormat("#,###", "en_US").format(double.parse(value));
     result = formattedNumber.replaceAllMapped(
         RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => "${m[1]}'");
 

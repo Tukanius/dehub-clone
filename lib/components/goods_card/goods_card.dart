@@ -18,7 +18,7 @@ class GoodsCard extends StatefulWidget {
 class _GoodsCardState extends State<GoodsCard> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: widget.onClick,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 1),
@@ -111,7 +111,7 @@ class _GoodsCardState extends State<GoodsCard> {
                         ],
                       ),
                       Text(
-                        'Үлдэгдэл',
+                        'Үлдэгдэл: ${widget.data?.quantity?.toInt()}',
                         style: TextStyle(
                           color: productColor,
                           fontSize: 12,

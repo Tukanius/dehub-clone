@@ -50,7 +50,7 @@ class _CustomerChooseState extends State<CustomerChoose> {
           backgroundColor: backgroundColor,
           appBar: AppBar(
             backgroundColor: invoiceColor,
-            leading: InkWell(
+            leading: GestureDetector(
               onTap: () {
                 Navigator.of(context).pop();
               },

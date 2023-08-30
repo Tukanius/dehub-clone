@@ -1,0 +1,617 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		041976162A9DF1B100ED7997 /* DeHUBApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041976152A9DF1B100ED7997 /* DeHUBApp.swift */; };
+		041976182A9DF1B100ED7997 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041976172A9DF1B100ED7997 /* ContentView.swift */; };
+		0419761A2A9DF1B300ED7997 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 041976192A9DF1B300ED7997 /* Assets.xcassets */; };
+		0419761E2A9DF1B300ED7997 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0419761D2A9DF1B300ED7997 /* Preview Assets.xcassets */; };
+		041976282A9DF1B300ED7997 /* DeHUBTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041976272A9DF1B300ED7997 /* DeHUBTests.swift */; };
+		041976322A9DF1B300ED7997 /* DeHUBUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041976312A9DF1B300ED7997 /* DeHUBUITests.swift */; };
+		041976342A9DF1B300ED7997 /* DeHUBUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041976332A9DF1B300ED7997 /* DeHUBUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		041976242A9DF1B300ED7997 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0419760A2A9DF1B100ED7997 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 041976112A9DF1B100ED7997;
+			remoteInfo = DeHUB;
+		};
+		0419762E2A9DF1B300ED7997 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0419760A2A9DF1B100ED7997 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 041976112A9DF1B100ED7997;
+			remoteInfo = DeHUB;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		041976122A9DF1B100ED7997 /* DeHUB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeHUB.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		041976152A9DF1B100ED7997 /* DeHUBApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeHUBApp.swift; sourceTree = "<group>"; };
+		041976172A9DF1B100ED7997 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		041976192A9DF1B300ED7997 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0419761B2A9DF1B300ED7997 /* DeHUB.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeHUB.entitlements; sourceTree = "<group>"; };
+		0419761D2A9DF1B300ED7997 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		041976232A9DF1B300ED7997 /* DeHUBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DeHUBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		041976272A9DF1B300ED7997 /* DeHUBTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeHUBTests.swift; sourceTree = "<group>"; };
+		0419762D2A9DF1B300ED7997 /* DeHUBUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DeHUBUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		041976312A9DF1B300ED7997 /* DeHUBUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeHUBUITests.swift; sourceTree = "<group>"; };
+		041976332A9DF1B300ED7997 /* DeHUBUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeHUBUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0419760F2A9DF1B100ED7997 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		041976202A9DF1B300ED7997 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0419762A2A9DF1B300ED7997 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		041976092A9DF1B100ED7997 = {
+			isa = PBXGroup;
+			children = (
+				041976142A9DF1B100ED7997 /* DeHUB */,
+				041976262A9DF1B300ED7997 /* DeHUBTests */,
+				041976302A9DF1B300ED7997 /* DeHUBUITests */,
+				041976132A9DF1B100ED7997 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		041976132A9DF1B100ED7997 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				041976122A9DF1B100ED7997 /* DeHUB.app */,
+				041976232A9DF1B300ED7997 /* DeHUBTests.xctest */,
+				0419762D2A9DF1B300ED7997 /* DeHUBUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		041976142A9DF1B100ED7997 /* DeHUB */ = {
+			isa = PBXGroup;
+			children = (
+				041976152A9DF1B100ED7997 /* DeHUBApp.swift */,
+				041976172A9DF1B100ED7997 /* ContentView.swift */,
+				041976192A9DF1B300ED7997 /* Assets.xcassets */,
+				0419761B2A9DF1B300ED7997 /* DeHUB.entitlements */,
+				0419761C2A9DF1B300ED7997 /* Preview Content */,
+			);
+			path = DeHUB;
+			sourceTree = "<group>";
+		};
+		0419761C2A9DF1B300ED7997 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				0419761D2A9DF1B300ED7997 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		041976262A9DF1B300ED7997 /* DeHUBTests */ = {
+			isa = PBXGroup;
+			children = (
+				041976272A9DF1B300ED7997 /* DeHUBTests.swift */,
+			);
+			path = DeHUBTests;
+			sourceTree = "<group>";
+		};
+		041976302A9DF1B300ED7997 /* DeHUBUITests */ = {
+			isa = PBXGroup;
+			children = (
+				041976312A9DF1B300ED7997 /* DeHUBUITests.swift */,
+				041976332A9DF1B300ED7997 /* DeHUBUITestsLaunchTests.swift */,
+			);
+			path = DeHUBUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		041976112A9DF1B100ED7997 /* DeHUB */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 041976372A9DF1B300ED7997 /* Build configuration list for PBXNativeTarget "DeHUB" */;
+			buildPhases = (
+				0419760E2A9DF1B100ED7997 /* Sources */,
+				0419760F2A9DF1B100ED7997 /* Frameworks */,
+				041976102A9DF1B100ED7997 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DeHUB;
+			productName = DeHUB;
+			productReference = 041976122A9DF1B100ED7997 /* DeHUB.app */;
+			productType = "com.apple.product-type.application";
+		};
+		041976222A9DF1B300ED7997 /* DeHUBTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0419763A2A9DF1B300ED7997 /* Build configuration list for PBXNativeTarget "DeHUBTests" */;
+			buildPhases = (
+				0419761F2A9DF1B300ED7997 /* Sources */,
+				041976202A9DF1B300ED7997 /* Frameworks */,
+				041976212A9DF1B300ED7997 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				041976252A9DF1B300ED7997 /* PBXTargetDependency */,
+			);
+			name = DeHUBTests;
+			productName = DeHUBTests;
+			productReference = 041976232A9DF1B300ED7997 /* DeHUBTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0419762C2A9DF1B300ED7997 /* DeHUBUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0419763D2A9DF1B300ED7997 /* Build configuration list for PBXNativeTarget "DeHUBUITests" */;
+			buildPhases = (
+				041976292A9DF1B300ED7997 /* Sources */,
+				0419762A2A9DF1B300ED7997 /* Frameworks */,
+				0419762B2A9DF1B300ED7997 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0419762F2A9DF1B300ED7997 /* PBXTargetDependency */,
+			);
+			name = DeHUBUITests;
+			productName = DeHUBUITests;
+			productReference = 0419762D2A9DF1B300ED7997 /* DeHUBUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0419760A2A9DF1B100ED7997 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					041976112A9DF1B100ED7997 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					041976222A9DF1B300ED7997 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = 041976112A9DF1B100ED7997;
+					};
+					0419762C2A9DF1B300ED7997 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = 041976112A9DF1B100ED7997;
+					};
+				};
+			};
+			buildConfigurationList = 0419760D2A9DF1B100ED7997 /* Build configuration list for PBXProject "DeHUB" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 041976092A9DF1B100ED7997;
+			productRefGroup = 041976132A9DF1B100ED7997 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				041976112A9DF1B100ED7997 /* DeHUB */,
+				041976222A9DF1B300ED7997 /* DeHUBTests */,
+				0419762C2A9DF1B300ED7997 /* DeHUBUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		041976102A9DF1B100ED7997 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0419761E2A9DF1B300ED7997 /* Preview Assets.xcassets in Resources */,
+				0419761A2A9DF1B300ED7997 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		041976212A9DF1B300ED7997 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0419762B2A9DF1B300ED7997 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0419760E2A9DF1B100ED7997 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				041976182A9DF1B100ED7997 /* ContentView.swift in Sources */,
+				041976162A9DF1B100ED7997 /* DeHUBApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0419761F2A9DF1B300ED7997 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				041976282A9DF1B300ED7997 /* DeHUBTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		041976292A9DF1B300ED7997 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				041976322A9DF1B300ED7997 /* DeHUBUITests.swift in Sources */,
+				041976342A9DF1B300ED7997 /* DeHUBUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		041976252A9DF1B300ED7997 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 041976112A9DF1B100ED7997 /* DeHUB */;
+			targetProxy = 041976242A9DF1B300ED7997 /* PBXContainerItemProxy */;
+		};
+		0419762F2A9DF1B300ED7997 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 041976112A9DF1B100ED7997 /* DeHUB */;
+			targetProxy = 0419762E2A9DF1B300ED7997 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		041976352A9DF1B300ED7997 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		041976362A9DF1B300ED7997 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		041976382A9DF1B300ED7997 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DeHUB/DeHUB.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DeHUB/Preview Content\"";
+				DEVELOPMENT_TEAM = K6C2H4TJ2A;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.dehub.DeHUB;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		041976392A9DF1B300ED7997 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DeHUB/DeHUB.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DeHUB/Preview Content\"";
+				DEVELOPMENT_TEAM = K6C2H4TJ2A;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.dehub.DeHUB;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0419763B2A9DF1B300ED7997 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K6C2H4TJ2A;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.dehub.DeHUBTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DeHUB.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DeHUB";
+			};
+			name = Debug;
+		};
+		0419763C2A9DF1B300ED7997 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K6C2H4TJ2A;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.dehub.DeHUBTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DeHUB.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DeHUB";
+			};
+			name = Release;
+		};
+		0419763E2A9DF1B300ED7997 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K6C2H4TJ2A;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.dehub.DeHUBUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DeHUB;
+			};
+			name = Debug;
+		};
+		0419763F2A9DF1B300ED7997 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K6C2H4TJ2A;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.dehub.DeHUBUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DeHUB;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0419760D2A9DF1B100ED7997 /* Build configuration list for PBXProject "DeHUB" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				041976352A9DF1B300ED7997 /* Debug */,
+				041976362A9DF1B300ED7997 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		041976372A9DF1B300ED7997 /* Build configuration list for PBXNativeTarget "DeHUB" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				041976382A9DF1B300ED7997 /* Debug */,
+				041976392A9DF1B300ED7997 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0419763A2A9DF1B300ED7997 /* Build configuration list for PBXNativeTarget "DeHUBTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0419763B2A9DF1B300ED7997 /* Debug */,
+				0419763C2A9DF1B300ED7997 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0419763D2A9DF1B300ED7997 /* Build configuration list for PBXNativeTarget "DeHUBUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0419763E2A9DF1B300ED7997 /* Debug */,
+				0419763F2A9DF1B300ED7997 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0419760A2A9DF1B100ED7997 /* Project object */;
+}

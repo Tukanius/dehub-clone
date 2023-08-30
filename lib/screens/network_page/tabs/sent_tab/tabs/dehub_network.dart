@@ -2,8 +2,12 @@ import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/partner_cards/sent_card.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/screens/network_page/tabs/sent_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
+import 'package:dehub/widgets/dialog_manager/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:lottie/lottie.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class DehubNetwork extends StatefulWidget {
   const DehubNetwork({Key? key}) : super(key: key);
@@ -16,6 +20,9 @@ class _DehubNetworkState extends State<DehubNetwork> with AfterLayoutMixin {
   int page = 1;
   int limit = 10;
   Result invitation = Result(rows: [], count: 0);
+  bool isLoading = true;
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: false);
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
@@ -25,7 +32,29 @@ class _DehubNetworkState extends State<DehubNetwork> with AfterLayoutMixin {
     );
     setState(() {
       invitation = res;
+      isLoading = false;
     });
+  }
+
+  void _onLoading() async {
+    setState(() {
+      limit += 10;
+    });
+    await list(page, limit);
+    refreshController.refreshCompleted();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  void _onRefresh() async {
+    await Future.delayed(Duration(milliseconds: 1000));
+    setState(() {
+      isLoading = true;
+    });
+    await list(page, limit);
+    refreshController.refreshCompleted();
+    isLoading = false;
   }
 
   @override
@@ -35,33 +64,79 @@ class _DehubNetworkState extends State<DehubNetwork> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 15,
+    return isLoading == true
+        ? Center(
+            child: CircularProgressIndicator(
+              color: networkColor,
             ),
-            Column(
-              children: invitation.rows!
-                  .map(
-                    (e) => SentCard(
-                      data: e,
-                      onClick: () {
-                        Navigator.of(context).pushNamed(
-                          SentInvitationDetail.routeName,
-                          arguments: SentInvitationDetailArguments(id: e.id),
-                        );
-                      },
+          )
+        : SmartRefresher(
+            enablePullDown: true,
+            enablePullUp: true,
+            controller: refreshController,
+            header: WaterDropHeader(
+              waterDropColor: networkColor,
+            ),
+            onRefresh: _onRefresh,
+            onLoading: _onLoading,
+            footer: CustomFooter(
+              builder: (context, mode) {
+                Widget body;
+                if (mode == LoadStatus.idle) {
+                  body = const Text("");
+                } else if (mode == LoadStatus.loading) {
+                  body = const CupertinoActivityIndicator();
+                } else if (mode == LoadStatus.failed) {
+                  body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
+                } else {
+                  body = const Text("Мэдээлэл алга байна");
+                }
+                return SizedBox(
+                  height: 55.0,
+                  child: Center(child: body),
+                );
+              },
+            ),
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 15,
                     ),
-                  )
-                  .toList(),
-            )
-          ],
-        ),
-      ),
-    );
+                    invitation.rows?.length != 0
+                        ? Column(
+                            children: invitation.rows!
+                                .map(
+                                  (item) => SentCard(
+                                    data: item,
+                                    onClick: () {
+                                      Navigator.of(context).pushNamed(
+                                        SentInvitationDetail.routeName,
+                                        arguments:
+                                            SentInvitationDetailArguments(
+                                                id: item.id),
+                                      );
+                                    },
+                                  ),
+                                )
+                                .toList(),
+                          )
+                        : Column(
+                            children: [
+                              Lottie.asset('images/network-not-found.json'),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Text('Урилга олдсонгүй'),
+                            ],
+                          )
+                  ],
+                ),
+              ),
+            ),
+          );
   }
 }

@@ -14,7 +14,24 @@ class AvaibleFundingDetailPage extends StatefulWidget {
       _AvaibleFundingDetailPageState();
 }
 
-class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage> {
+class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
+    with SingleTickerProviderStateMixin {
+  ScrollController scrollController = ScrollController();
+  late TabController tabController;
+  int tabIndex = 0;
+
+  @override
+  void initState() {
+    tabController = TabController(length: 3, vsync: this);
+    super.initState();
+  }
+
+  changePage(index) {
+    setState(() {
+      index = tabController.index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +40,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage> {
         leadingWidth: 200,
         elevation: 0,
         backgroundColor: backgroundColor,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },
@@ -79,6 +96,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage> {
                     ],
                   ),
                   child: TabBar(
+                    controller: tabController,
                     indicatorColor: financingColor,
                     labelColor: financingColor,
                     unselectedLabelColor: grey2,
@@ -108,6 +126,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage> {
             ];
           },
           body: TabBarView(
+            controller: tabController,
             children: [
               Stack(
                 children: [
@@ -118,7 +137,9 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage> {
                     alignment: Alignment.bottomRight,
                     child: FloatingActionButton.small(
                       hoverColor: financingColor,
-                      onPressed: () {},
+                      onPressed: () {
+                        tabController.animateTo(tabController.index + 1);
+                      },
                       child: Icon(
                         Icons.fast_forward_outlined,
                         color: white,
@@ -137,7 +158,9 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage> {
                     alignment: Alignment.bottomRight,
                     child: FloatingActionButton.small(
                       hoverColor: financingColor,
-                      onPressed: () {},
+                      onPressed: () {
+                        tabController.animateTo(tabController.index + 1);
+                      },
                       child: Icon(
                         Icons.fast_forward_outlined,
                         color: white,
@@ -151,7 +174,9 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage> {
                     alignment: Alignment.bottomRight,
                     child: FloatingActionButton.small(
                       hoverColor: financingColor,
-                      onPressed: () {},
+                      onPressed: () {
+                        tabController.animateTo(tabController.index - 1);
+                      },
                       child: Icon(
                         Icons.fast_rewind_outlined,
                         color: white,
@@ -167,7 +192,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage> {
                   Positioned(
                     bottom: 20,
                     right: 20,
-                    child: InkWell(
+                    child: GestureDetector(
                       onTap: () {
                         Navigator.of(context)
                             .pushNamed(RequestApprovalPage.routeName);
@@ -198,7 +223,9 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage> {
                     alignment: Alignment.bottomLeft,
                     child: FloatingActionButton.small(
                       hoverColor: financingColor,
-                      onPressed: () {},
+                      onPressed: () {
+                        tabController.animateTo(tabController.index - 1);
+                      },
                       child: Icon(
                         Icons.fast_rewind_outlined,
                         color: white,

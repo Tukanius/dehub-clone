@@ -15,7 +15,7 @@ class BankAccountCard extends StatefulWidget {
 class _BankAccountCardState extends State<BankAccountCard> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(AccountInfoPage.routeName);
       },

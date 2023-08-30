@@ -174,7 +174,7 @@ class _ActiveTabState extends State<ActiveTab> {
               ],
             ),
           ),
-          InkWell(
+          GestureDetector(
             onTap: () {
               showCupertinoModalPopup(
                 context: context,
@@ -236,7 +236,7 @@ class _ActiveTabState extends State<ActiveTab> {
               ),
             ),
           ),
-          InkWell(
+          GestureDetector(
             onTap: () {
               showCupertinoModalPopup(
                   context: context,

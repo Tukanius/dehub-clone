@@ -1,6 +1,6 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
-import 'package:dehub/models/business.dart';
+import 'package:dehub/models/business-staffs.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -140,7 +140,7 @@ class _NewConditionPageState extends State<NewConditionPage> {
                           ),
                         ),
                       ),
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           showCupertinoModalPopup(
                             context: context,
@@ -235,7 +235,7 @@ class _NewConditionPageState extends State<NewConditionPage> {
                               ),
                             ),
                           ),
-                          InkWell(
+                          GestureDetector(
                             onTap: () {
                               showCupertinoModalPopup(
                                 context: context,
@@ -319,7 +319,7 @@ class _NewConditionPageState extends State<NewConditionPage> {
                               ),
                             ),
                           ),
-                          InkWell(
+                          GestureDetector(
                             onTap: () {
                               showCupertinoModalPopup(
                                 context: context,

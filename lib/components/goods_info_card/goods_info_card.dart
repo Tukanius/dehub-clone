@@ -1,4 +1,5 @@
 import 'package:dehub/models/invoice.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +40,7 @@ class _GoodsInfoCardState extends State<GoodsInfoCard> {
                       ),
                     ),
                     Container(
-                      width: 160,
+                      width: 155,
                       child: Text(
                         '${widget.data?.nameMon} SKU ${widget.data?.skuCode}',
                         style: TextStyle(
@@ -69,17 +70,19 @@ class _GoodsInfoCardState extends State<GoodsInfoCard> {
                       ),
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          '${widget.data?.quantity?.toInt()}',
-                          style: TextStyle(
-                            color: black,
-                            fontSize: 12,
-                          ),
-                        ),
+                        child: widget.data?.quantity == null
+                            ? Text('0')
+                            : Text(
+                                '${widget.data?.quantity?.toInt()}',
+                                style: TextStyle(
+                                  color: black,
+                                  fontSize: 12,
+                                ),
+                              ),
                       ),
                       Container(
                         child: Text(
-                          '${widget.data?.price}₮',
+                          '${Utils().formatCurrency(widget.data?.price.toString())}₮',
                           style: TextStyle(
                             color: black,
                             fontSize: 12,
@@ -113,7 +116,7 @@ class _GoodsInfoCardState extends State<GoodsInfoCard> {
               ),
               Container(
                 child: Text(
-                  '${widget.data?.price}₮',
+                  '${Utils().formatCurrency("${double.parse(widget.data!.price.toString()) * double.parse(widget.data!.quantity!.toString())}")}₮',
                   style: TextStyle(
                     color: black,
                     fontSize: 12,
@@ -126,6 +129,7 @@ class _GoodsInfoCardState extends State<GoodsInfoCard> {
               ),
             ],
           ),
+          Divider(),
         ],
       ),
     );

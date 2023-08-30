@@ -66,7 +66,7 @@ class _AccountInfoPageState extends State<AccountInfoPage>
         centerTitle: true,
         actions: [
           tabController.index == 1
-              ? InkWell(
+              ? GestureDetector(
                   onTap: () {},
                   child: Container(
                     padding: const EdgeInsets.all(7),

@@ -27,6 +27,7 @@ class _InvoiceConditionCardState extends State<InvoiceConditionCard>
 
   @override
   Widget build(BuildContext context) {
+    print(widget.data?.toJson());
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(

@@ -20,6 +20,10 @@ class HttpRequest {
 
   static const inventoryHost = 'http://dev-de-inventory.zto.mn/erp';
 
+  static const orderHost = 'http://dev-de-order.zto.mn/ord';
+
+  static const paymentHost = 'http://dev-de-payment.zto.mn/pay';
+
   static const s3host = 'https://dev-de-dehub.zto.mn/s3';
 
   static const version = '/app';
@@ -45,6 +49,10 @@ class HttpRequest {
       uri = '$businessHost$version$api';
     } else if (type == "INVENTORY") {
       uri = '$inventoryHost$version$api';
+    } else if (type == "ORDER") {
+      uri = "$orderHost$version$api";
+    } else if (type == "PAYMENT") {
+      uri = "$paymentHost$version$api";
     } else {
       uri = '$host$version$api';
     }
@@ -52,7 +60,7 @@ class HttpRequest {
     debugPrint(uri);
 
     debugPrint('+++++++++++++++++++++++++++++++++++++++++++++++++++');
-    debugPrint('handler: ' + handler.toString());
+    debugPrint('handler: ' + handler.toString() + ", " + uri);
     debugPrint('+++++++++++++++++++++++++++++++++++++++++++++++++++ ');
 
     try {

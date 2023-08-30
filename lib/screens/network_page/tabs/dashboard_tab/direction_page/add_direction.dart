@@ -1,16 +1,15 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
-import 'package:dehub/models/business.dart';
-import 'package:dehub/models/general.dart';
-import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/models/business-staffs.dart';
+import 'package:dehub/models/result.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:after_layout/after_layout.dart';
 
 class AddDirectionArguments {
   ListenController listenController;
@@ -31,11 +30,31 @@ class AddDirection extends StatefulWidget {
   State<AddDirection> createState() => _AddDirectionState();
 }
 
-class _AddDirectionState extends State<AddDirection> {
+class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   bool isSwitch = false;
   String? selectedValue;
   String? refcode;
+  int page = 1;
+  int limit = 10;
+  Result distributionArea = Result(count: 0, rows: []);
+  bool isLoading = true;
+
+  list(page, limit) async {
+    Offset offset = Offset(page: page, limit: limit);
+    Filter filter = Filter(isParent: true);
+    var res = await BusinessApi()
+        .distributionAreaList(ResultArguments(filter: filter, offset: offset));
+    setState(() {
+      distributionArea = res;
+      isLoading = false;
+    });
+  }
+
+  @override
+  afterFirstLayout(BuildContext context) {
+    list(page, limit);
+  }
 
   onSubmit() async {
     if (fbKey.currentState!.saveAndValidate()) {
@@ -52,18 +71,14 @@ class _AddDirectionState extends State<AddDirection> {
     }
   }
 
-  General general = General();
-
   @override
   Widget build(BuildContext context) {
-    general =
-        Provider.of<GeneralProvider>(context, listen: false).businessGeneral;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: networkColor,
         elevation: 0,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },
@@ -151,7 +166,7 @@ class _AddDirectionState extends State<AddDirection> {
                             errorText: 'Бүсийн нэр оруулна уу'),
                       ]),
                     ),
-                    general.distributionAreas == []
+                    distributionArea.rows!.isEmpty
                         ? Container(
                             color: white,
                             padding: const EdgeInsets.all(15),
@@ -197,7 +212,7 @@ class _AddDirectionState extends State<AddDirection> {
                                 borderSide: BorderSide.none,
                               ),
                             ),
-                            items: general.distributionAreas!
+                            items: distributionArea.rows!
                                 .map(
                                   (item) => DropdownMenuItem(
                                     onTap: () {

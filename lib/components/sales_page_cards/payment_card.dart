@@ -21,7 +21,7 @@ class _PaymentCardState extends State<PaymentCard> {
           SizedBox(
             height: 5,
           ),
-          InkWell(
+          GestureDetector(
             child: Container(
               color: white,
               child: Column(

@@ -1,6 +1,6 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
-import 'package:dehub/models/business.dart';
+import 'package:dehub/models/business-staffs.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -52,7 +52,7 @@ class _AddCategoryState extends State<AddCategory> {
       appBar: AppBar(
         backgroundColor: networkColor,
         elevation: 0,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },

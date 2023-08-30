@@ -44,7 +44,7 @@ class _GolomtState extends State<Golomt> {
                                 fontSize: 16, fontWeight: FontWeight.w500),
                           ),
                         ),
-                        InkWell(
+                        GestureDetector(
                           onTap: () {
                             Navigator.of(context)
                                 .pushNamed(LinkAccountPage.routeName);

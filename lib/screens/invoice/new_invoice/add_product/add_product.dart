@@ -1,5 +1,6 @@
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/models/invoice.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product_tabs/bagtsaar.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product_tabs/shirhegeer.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -8,18 +9,22 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class AddProductArguments {
   ListenController goodsListenController;
+  List<Invoice> data;
   String businessId;
   AddProductArguments({
     required this.goodsListenController,
+    required this.data,
     required this.businessId,
   });
 }
 
 class AddProduct extends StatefulWidget {
+  final List<Invoice> data;
   final ListenController goodsListenController;
   final String businessId;
   static const routeName = '/addproduct';
   const AddProduct({
+    required this.data,
     required this.businessId,
     Key? key,
     required this.goodsListenController,
@@ -42,7 +47,7 @@ class _AddProductState extends State<AddProduct> {
           backgroundColor: backgroundColor,
           appBar: AppBar(
             backgroundColor: invoiceColor,
-            leading: InkWell(
+            leading: GestureDetector(
               onTap: () {
                 Navigator.of(context).pop();
               },
@@ -106,6 +111,7 @@ class _AddProductState extends State<AddProduct> {
               physics: NeverScrollableScrollPhysics(),
               children: [
                 Bagtsaar(
+                  data: widget.data,
                   goodsListenController: widget.goodsListenController,
                   businessId: widget.businessId,
                 ),

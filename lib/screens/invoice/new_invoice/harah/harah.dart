@@ -7,16 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 
 class HarahArguments {
+  Invoice invoice;
   List<Invoice> data;
   HarahArguments({
+    required this.invoice,
     required this.data,
   });
 }
 
 class Harah extends StatefulWidget {
+  final Invoice invoice;
   final List<Invoice> data;
   static const routeName = '/harah';
   const Harah({
+    required this.invoice,
     required this.data,
     Key? key,
   }) : super(key: key);
@@ -163,6 +167,11 @@ class _HarahState extends State<Harah>
                         currentIndex = 2;
                       });
                       showModalBottomSheet(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20),
+                          ),
+                        ),
                         backgroundColor: transparent,
                         isScrollControlled: true,
                         useSafeArea: true,
@@ -223,6 +232,7 @@ class _HarahState extends State<Harah>
             ),
             currentIndex == 1
                 ? Index1(
+                    invoice: widget.invoice,
                     data: widget.data,
                   )
                 : SizedBox(),

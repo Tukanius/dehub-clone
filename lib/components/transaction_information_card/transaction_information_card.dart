@@ -48,7 +48,7 @@ class _TransactionInformationCardState
                     'Гүйлгээний утга',
                     style: TextStyle(color: grey2, fontWeight: FontWeight.w600),
                   ),
-                  InkWell(
+                  GestureDetector(
                     onTap: () {
                       Navigator.of(context)
                           .pushNamed(TransactionDetailPage.routeName);

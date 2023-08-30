@@ -48,7 +48,7 @@ class _ReferenceInformationPageState extends State<ReferenceInformationPage>
         elevation: 0,
         backgroundColor: backgroundColor,
         leadingWidth: 100,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },

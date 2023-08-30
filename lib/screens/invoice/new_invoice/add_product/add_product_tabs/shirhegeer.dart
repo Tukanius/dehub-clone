@@ -35,7 +35,7 @@ class _ShirhegeerState extends State<Shirhegeer> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(
+                  GestureDetector(
                     onTap: () {},
                     child: Column(
                       children: [
@@ -63,7 +63,7 @@ class _ShirhegeerState extends State<Shirhegeer> {
                   Container(
                     child: Row(
                       children: [
-                        InkWell(
+                        GestureDetector(
                           onTap: () {},
                           child: Column(
                             children: [
@@ -84,7 +84,7 @@ class _ShirhegeerState extends State<Shirhegeer> {
                         SizedBox(
                           width: 40,
                         ),
-                        InkWell(
+                        GestureDetector(
                           onTap: () {},
                           child: Column(
                             children: [

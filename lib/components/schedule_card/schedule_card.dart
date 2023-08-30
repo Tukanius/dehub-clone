@@ -1,6 +1,5 @@
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class ScheduleCard extends StatefulWidget {
   const ScheduleCard({super.key});
@@ -49,14 +48,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
             SizedBox(
               height: 10,
             ),
-            LinearPercentIndicator(
-              lineHeight: 4,
-              percent: 0.5,
-              backgroundColor: Color(0xffF6F6F6),
-              progressColor: Color(0xffFF808B),
-              barRadius: Radius.circular(10),
-              alignment: MainAxisAlignment.center,
-            ),
+            Container(),
           ],
         ),
       ),

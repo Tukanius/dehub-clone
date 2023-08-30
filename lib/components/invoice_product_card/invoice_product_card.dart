@@ -52,7 +52,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
                     height: 56,
                     width: 56,
                     child: Image(
-                      image: NetworkImage('${widget.data!.image}'),
+                      image: NetworkImage('${widget.data?.image}'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -63,7 +63,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${widget.data!.nameMon}',
+                        '${widget.data?.nameMon}',
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 16,
@@ -74,7 +74,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
                       ),
                       Container(
                         child: Text(
-                          '${widget.data!.skuCode}',
+                          '${widget.data?.skuCode}',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 3,
                           softWrap: false,
@@ -112,7 +112,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
                           height: 5,
                         ),
                         Text(
-                          '${widget.data!.price!.toInt()} ₮',
+                          '${widget.data?.price?.toInt()} ₮',
                           style: TextStyle(
                             color: widget.color,
                             fontWeight: FontWeight.bold,
@@ -123,7 +123,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
                           height: 5,
                         ),
                         Text(
-                          '${widget.data!.unit!.name}',
+                          '${widget.data?.unit?.name}',
                           style: TextStyle(
                             color: grey2,
                             fontSize: 20,
@@ -148,9 +148,9 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
                         SizedBox(
                           height: 5,
                         ),
-                        widget.data!.discountAmount != null
+                        widget.data?.discountAmount != null
                             ? Text(
-                                '${widget.data!.discountAmount}',
+                                '${widget.data?.discountAmount}',
                                 style: TextStyle(
                                   color: widget.color,
                                   fontWeight: FontWeight.bold,
@@ -168,7 +168,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
                         SizedBox(
                           height: 5,
                         ),
-                        widget.data!.discountAmount != null
+                        widget.data?.discountAmount != null
                             ? Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 7, vertical: 4),
@@ -179,7 +179,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
                                   borderRadius: BorderRadius.circular(5),
                                   color: Color(0xffEBFAFA),
                                 ),
-                                child: widget.data!.discountType == "PERCENTAGE"
+                                child: widget.data?.discountType == "PERCENTAGE"
                                     ? Text(
                                         'хувиар',
                                         style: TextStyle(
@@ -188,7 +188,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
                                           color: grey2,
                                         ),
                                       )
-                                    : widget.data!.discountType == "AMOUNT"
+                                    : widget.data?.discountType == "AMOUNT"
                                         ? Text(
                                             'дүн',
                                             style: TextStyle(
@@ -208,7 +208,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
                 ),
                 Row(
                   children: [
-                    InkWell(
+                    GestureDetector(
                       onTap: () {
                         setState(() {
                           if (_count > 0) {
@@ -243,12 +243,12 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
                         ),
                       ),
                       child: Text(
-                        '${widget.data!.quantity!.toInt()}',
+                        '${widget.data?.quantity?.toInt()}',
                         style: TextStyle(color: grey3, fontSize: 20),
                         textAlign: TextAlign.end,
                       ),
                     ),
-                    InkWell(
+                    GestureDetector(
                       onTap: () {
                         setState(() {
                           _count++;
@@ -289,7 +289,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard>
                 ),
               ),
               Text(
-                '${Utils().formatCurrency(widget.data!.lineTotalAmount!.toStringAsFixed(2))} ₮',
+                '${Utils().formatCurrency(widget.data?.lineTotalAmount?.toStringAsFixed(2))} ₮',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,

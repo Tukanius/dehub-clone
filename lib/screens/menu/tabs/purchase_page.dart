@@ -68,7 +68,7 @@ class _PurchasePageState extends State<PurchasePage> {
                     ],
                   ),
                 ),
-                InkWell(
+                GestureDetector(
                   onTap: () {
                     Navigator.of(context).pushNamed(SuppliersPage.routeName);
                   },

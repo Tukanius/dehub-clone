@@ -1,7 +1,9 @@
+import 'package:dehub/models/partner.dart';
+import 'package:dehub/screens/auth/financing_login.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dehub/screens/debt_page/debt_page.dart';
-import 'package:dehub/screens/financing_page/financing_page.dart';
+// import 'package:dehub/screens/financing_page/financing_page.dart';
 import 'package:dehub/screens/main_invoice_page/invoice_page.dart';
 import 'package:dehub/screens/network_page/network_page.dart';
 import 'package:dehub/screens/order_page/order_page.dart';
@@ -12,7 +14,8 @@ import 'package:dehub/screens/user_management_page/user_management_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ModulesCard extends StatefulWidget {
-  const ModulesCard({super.key});
+  final Partner? partner;
+  const ModulesCard({Key? key, this.partner}) : super(key: key);
 
   @override
   State<ModulesCard> createState() => _ModulesCardState();
@@ -23,7 +26,7 @@ class _ModulesCardState extends State<ModulesCard> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(15),
         color: white,
       ),
       margin: const EdgeInsets.only(top: 70, left: 20, right: 20, bottom: 20),
@@ -36,10 +39,13 @@ class _ModulesCardState extends State<ModulesCard> {
             shrinkWrap: true,
             crossAxisCount: 3,
             children: [
-              InkWell(
+              GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed(MainInvoicePage.routeName);
-                  // Navigator.of(context).pushNamed(MainPage.routeName);
+                  if (widget.partner?.user?.currentBusiness!.type ==
+                          'SUPPLIER' ||
+                      widget.partner?.user?.currentBusiness!.type == "BUYER") {
+                    Navigator.of(context).pushNamed(MainInvoicePage.routeName);
+                  }
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -68,9 +74,13 @@ class _ModulesCardState extends State<ModulesCard> {
                   ],
                 ),
               ),
-              InkWell(
+              GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed(OrderPage.routeName);
+                  if (widget.partner?.user?.currentBusiness!.type ==
+                          'SUPPLIER' ||
+                      widget.partner?.user?.currentBusiness!.type == "BUYER") {
+                    Navigator.of(context).pushNamed(OrderPage.routeName);
+                  }
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -103,9 +113,13 @@ class _ModulesCardState extends State<ModulesCard> {
                   ],
                 ),
               ),
-              InkWell(
+              GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed(PaymentPage.routeName);
+                  if (widget.partner?.user?.currentBusiness!.type ==
+                          'SUPPLIER' ||
+                      widget.partner?.user?.currentBusiness!.type == "BUYER") {
+                    Navigator.of(context).pushNamed(PaymentPage.routeName);
+                  }
                   // Navigator.of(context)
                   //     .pushNamed(AddBankAccountPage.routeName);
                 },
@@ -138,9 +152,14 @@ class _ModulesCardState extends State<ModulesCard> {
                   ],
                 ),
               ),
-              InkWell(
+              GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed(FinancingPage.routeName);
+                  // Navigator.of(context).pushNamed(FinancingPage.routeName);
+                  if (widget.partner?.user?.currentBusiness!.type ==
+                          'SUPPLIER' ||
+                      widget.partner?.user?.currentBusiness!.type == "BUYER") {
+                    Navigator.of(context).pushNamed(FinancingLogin.routeName);
+                  }
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -171,9 +190,13 @@ class _ModulesCardState extends State<ModulesCard> {
                   ],
                 ),
               ),
-              InkWell(
+              GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed(DebtPage.routeName);
+                  if (widget.partner?.user?.currentBusiness!.type ==
+                          'SUPPLIER' ||
+                      widget.partner?.user?.currentBusiness!.type == "BUYER") {
+                    Navigator.of(context).pushNamed(DebtPage.routeName);
+                  }
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -204,9 +227,13 @@ class _ModulesCardState extends State<ModulesCard> {
                   ],
                 ),
               ),
-              InkWell(
+              GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed(ProductPage.routeName);
+                  if (widget.partner?.user?.currentBusiness!.type ==
+                          'SUPPLIER' ||
+                      widget.partner?.user?.currentBusiness!.type == "BUYER") {
+                    Navigator.of(context).pushNamed(ProductPage.routeName);
+                  }
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -237,9 +264,13 @@ class _ModulesCardState extends State<ModulesCard> {
                   ],
                 ),
               ),
-              InkWell(
+              GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed(NetworkPage.routeName);
+                  if (widget.partner?.user?.currentBusiness!.type ==
+                          'SUPPLIER' ||
+                      widget.partner?.user?.currentBusiness!.type == "BUYER") {
+                    Navigator.of(context).pushNamed(NetworkPage.routeName);
+                  }
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -262,7 +293,7 @@ class _ModulesCardState extends State<ModulesCard> {
                       height: 5,
                     ),
                     Text(
-                      'Партнерууд',
+                      'Бизнес нетворк',
                       style: TextStyle(
                         fontSize: 12,
                       ),
@@ -270,9 +301,14 @@ class _ModulesCardState extends State<ModulesCard> {
                   ],
                 ),
               ),
-              InkWell(
+              GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed(PartnerPage.routeName);
+                  if (widget.partner?.user?.currentBusiness!.type ==
+                          'SUPPLIER' ||
+                      widget.partner?.user?.currentBusiness!.type == "BUYER") {
+                  } else {
+                    Navigator.of(context).pushNamed(PartnerPage.routeName);
+                  }
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -284,11 +320,21 @@ class _ModulesCardState extends State<ModulesCard> {
                           horizontal: 6, vertical: 6),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: networkColor.withOpacity(0.2),
+                        color: widget.partner?.user?.currentBusiness!.type ==
+                                    'SUPPLIER' ||
+                                widget.partner?.user?.currentBusiness!.type ==
+                                    "BUYER"
+                            ? partnerColor.withOpacity(0.1)
+                            : partnerColor.withOpacity(0.2),
                       ),
                       child: SvgPicture.asset(
                         'images/partner.svg',
-                        color: buttonColor,
+                        color: widget.partner?.user?.currentBusiness!.type ==
+                                    'SUPPLIER' ||
+                                widget.partner?.user?.currentBusiness!.type ==
+                                    "BUYER"
+                            ? partnerColor.withOpacity(0.3)
+                            : buttonColor,
                       ),
                     ),
                     SizedBox(
@@ -303,9 +349,15 @@ class _ModulesCardState extends State<ModulesCard> {
                   ],
                 ),
               ),
-              InkWell(
+              GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed(UserMangementPage.routeName);
+                  if (widget.partner?.user?.currentBusiness!.type ==
+                          'SUPPLIER' ||
+                      widget.partner?.user?.currentBusiness!.type == "BUYER") {
+                  } else {
+                    Navigator.of(context)
+                        .pushNamed(UserMangementPage.routeName);
+                  }
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -317,11 +369,21 @@ class _ModulesCardState extends State<ModulesCard> {
                           horizontal: 6, vertical: 6),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: userColor.withOpacity(0.2),
+                        color: widget.partner?.user?.currentBusiness!.type ==
+                                    'SUPPLIER' ||
+                                widget.partner?.user?.currentBusiness!.type ==
+                                    "BUYER"
+                            ? userColor.withOpacity(0.1)
+                            : userColor.withOpacity(0.2),
                       ),
                       child: SvgPicture.asset(
                         'images/hereglegch.svg',
-                        color: buttonColor,
+                        color: widget.partner?.user?.currentBusiness!.type ==
+                                    'SUPPLIER' ||
+                                widget.partner?.user?.currentBusiness!.type ==
+                                    "BUYER"
+                            ? userColor.withOpacity(0.3)
+                            : buttonColor,
                       ),
                     ),
                     SizedBox(

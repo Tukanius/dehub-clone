@@ -182,7 +182,7 @@ class _InformationTabState extends State<InformationTab> {
               ),
             ),
           ),
-          InkWell(
+          GestureDetector(
             onTap: () {
               Navigator.of(context).pushNamed(PaymentConditionPage.routeName);
             },

@@ -1,12 +1,10 @@
 import 'dart:async';
 
 import 'package:dehub/api/invoice_api.dart';
-import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/invoice_card/invoice_card.dart';
 import 'package:dehub/components/invoice_empty/invoice_empty.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
 import 'package:dehub/screens/invoice_detail_page/invoice_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/page_change_controller.dart';
@@ -127,14 +125,6 @@ class _GivePageState extends State<GivePage>
             color: invoiceColor,
           ),
         ),
-        actions: [
-          AddButton(
-            color: invoiceColor,
-            onClick: () {
-              Navigator.of(context).pushNamed(NewInvoice.routeName);
-            },
-          )
-        ],
       ),
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -161,7 +151,7 @@ class _GivePageState extends State<GivePage>
                             ? invoiceColor
                             : Colors.grey.shade100,
                       ),
-                      child: InkWell(
+                      child: GestureDetector(
                         onTap: () {
                           setState(() {
                             currentIndex = 0;
@@ -189,7 +179,7 @@ class _GivePageState extends State<GivePage>
                             ? invoiceColor
                             : Colors.grey.shade100,
                       ),
-                      child: InkWell(
+                      child: GestureDetector(
                         onTap: () {
                           setState(() {
                             currentIndex = 1;
@@ -228,7 +218,7 @@ class _GivePageState extends State<GivePage>
                             ? invoiceColor
                             : Colors.grey.shade100,
                       ),
-                      child: InkWell(
+                      child: GestureDetector(
                         onTap: () {
                           setState(() {
                             currentIndex = 2;
@@ -267,7 +257,7 @@ class _GivePageState extends State<GivePage>
                             ? invoiceColor
                             : Colors.grey.shade100,
                       ),
-                      child: InkWell(
+                      child: GestureDetector(
                         onTap: () {
                           setState(() {
                             currentIndex = 3;
@@ -306,7 +296,7 @@ class _GivePageState extends State<GivePage>
                             ? invoiceColor
                             : Colors.grey.shade100,
                       ),
-                      child: InkWell(
+                      child: GestureDetector(
                         onTap: () {
                           setState(() {
                             currentIndex = 4;

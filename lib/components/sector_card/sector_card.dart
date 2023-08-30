@@ -18,7 +18,7 @@ class SectorCard extends StatefulWidget {
 class _SectorCardState extends State<SectorCard> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: widget.onClick,
       child: Container(
         padding: const EdgeInsets.all(15),
@@ -38,7 +38,7 @@ class _SectorCardState extends State<SectorCard> {
                       )
                     : CircleAvatar(
                         radius: 20,
-                        backgroundImage: AssetImage('images/map.jpg'),
+                        backgroundImage: AssetImage('images/empty-avatar.webp'),
                       ),
                 SizedBox(
                   width: 16,

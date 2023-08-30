@@ -16,7 +16,7 @@ class RankCard extends StatefulWidget {
 class _RankCardState extends State<RankCard> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(RankDetailPage.routeName);
       },

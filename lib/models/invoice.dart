@@ -36,7 +36,7 @@ class Invoice {
   double? amountToPay;
   String? paymentStatus;
   String? invoiceStatus;
-  String? overDueStatus;
+  String? overdueStatus;
   String? sentDate;
   String? description;
   String? confirmedUserId;
@@ -67,7 +67,6 @@ class Invoice {
   Invoice? salesOrder;
   Invoice? purchaseOrder;
   int? remainingDays;
-
   Invoice? senderBusiness;
   Invoice? senderFinUser;
   Invoice? senderBranch;
@@ -104,7 +103,7 @@ class Invoice {
   Invoice? receiverAcc;
   List<Invoice>? invoiceLines;
   String? invoiceId;
-  String? unitVariantId;
+  String? variantId;
   double? price;
   double? quantity;
   bool? hasVat;
@@ -131,20 +130,37 @@ class Invoice {
   String? unitName;
   bool? send;
   List<Invoice>? items;
+  String? phone;
+  String? businessAddress;
+  Invoice? staff;
+
+  String? category;
+  String? supplier;
+  String? brand;
+  List<Invoice>? optionValues;
+  String? optionId;
 
   String getPostDate() {
     return Moment.parse(createdAt!).format("YYYY-MM-DD");
   }
 
   String getsentDate() {
-    return Moment.parse(createdAt!).format("YYYY-MM-DD");
+    return Moment.parse(createdAt!).format("YYYY-MM-DD HH:mm");
   }
 
   String getPaymentDate() {
-    return Moment.parse(paymentDate!).format('YYYY-MM-DD ');
+    return Moment.parse(paymentDate!).format('YYYY-MM-DD');
   }
 
   Invoice({
+    this.category,
+    this.supplier,
+    this.brand,
+    this.optionValues,
+    this.optionId,
+    this.phone,
+    this.businessAddress,
+    this.staff,
     this.unitName,
     this.send,
     this.items,
@@ -185,7 +201,7 @@ class Invoice {
     this.amountToPay,
     this.paymentStatus,
     this.invoiceStatus,
-    this.overDueStatus,
+    this.overdueStatus,
     this.sentDate,
     this.description,
     this.confirmedUserId,
@@ -252,7 +268,7 @@ class Invoice {
     this.receiverAcc,
     this.invoiceLines,
     this.invoiceId,
-    this.unitVariantId,
+    this.variantId,
     this.price,
     this.quantity,
     this.hasVat,

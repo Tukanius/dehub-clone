@@ -2,13 +2,20 @@ import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/invoice_product_card/add_product_card.dart';
 import 'package:dehub/models/invoice.dart';
+import 'package:dehub/models/partner.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/harah.dart';
+import 'package:dehub/screens/invoice/new_invoice/sector-choose/sector-choose.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:moment_dart/moment_dart.dart';
 
 class NewInvoice extends StatefulWidget {
   static const routeName = '/newinvoice';
@@ -21,19 +28,31 @@ class NewInvoice extends StatefulWidget {
 }
 
 class _NewInvoiceState extends State<NewInvoice> {
+  GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   ListenController listenController = ListenController();
   ListenController partnerListenController = ListenController();
   ListenController goodsListenController = ListenController();
+  ListenController sectorListenController = ListenController();
   TextEditingController textController = TextEditingController();
   Invoice invoice = Invoice();
   Invoice createInvoice = Invoice();
   Invoice partnerInvoice = Invoice();
+  Invoice sectorInvoice = Invoice();
   Invoice goodsInvoice = Invoice();
   bool isLoading = false;
   List<Invoice> inventory = [];
   List<Invoice> data = [];
   int quantity = 0;
   bool isSubmit = false;
+  Partner user = Partner();
+  String dropdownValue = "Сонгох";
+  List<Invoice> newList = [];
+  bool? el;
+
+  List<String> list = <String>[
+    "Хувиар",
+    "Дүнгээр",
+  ];
 
   @override
   void initState() {
@@ -54,6 +73,11 @@ class _NewInvoiceState extends State<NewInvoice> {
         partnerInvoice = partnerListenController.partnerInvoice!;
       });
     });
+    sectorListenController.addListener(() {
+      setState(() {
+        sectorInvoice = sectorListenController.sectorInvoice!;
+      });
+    });
     super.initState();
   }
 
@@ -61,33 +85,29 @@ class _NewInvoiceState extends State<NewInvoice> {
     setState(() {
       isSubmit = true;
     });
-    for (var i = 0; i < inventory.length; i++) {
-      data[i] = Invoice();
-      data[i].unitVariantId = inventory[i].unitVariantId;
-      data[i].quantity = inventory[i].quantity;
+    if (fbKey.currentState!.saveAndValidate()) {
+      for (var i = 0; i < inventory.length; i++) {
+        data[i] = Invoice();
+        data[i].variantId = inventory[i].id;
+        data[i].quantity = inventory[i].quantity;
+      }
+      createInvoice.senderBranchId = sectorInvoice.id;
+      createInvoice.receiverBranchId = partnerInvoice.id;
+      createInvoice.receiverBusinessId = invoice.id;
+      createInvoice.send = value;
+      createInvoice.items = data;
+      createInvoice.description = textController.text;
+      await InvoiceApi().createInvoice(createInvoice);
+      Navigator.of(context).pop();
     }
-    createInvoice.receiverBranchId = partnerInvoice.id;
-    createInvoice.receiverBusinessId = invoice.id;
-    createInvoice.send = value;
-    createInvoice.items = data;
-    createInvoice.description = textController.text;
-    await InvoiceApi().createInvoice(createInvoice);
     setState(() {
       isSubmit = false;
     });
   }
 
-  show(ctx) async {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return Container();
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).partnerUser;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -124,33 +144,22 @@ class _NewInvoiceState extends State<NewInvoice> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            invoice.partner?.refCode == null
-                                ? Container(
-                                    child: Text(
-                                      'INV-290812',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  )
-                                : Container(
-                                    child: Text(
-                                      '${invoice.partner?.refCode}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ),
+                            Container(
+                              child: Text(
+                                '${user.partner?.refCode}',
+                                style: TextStyle(
+                                  color: black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
                             SizedBox(
                               height: 5,
                             ),
                             Container(
                               child: Text(
-                                'Үүссэн: 2021-12-11 16:24 PM',
+                                'Үүссэн: ${Moment.parse(DateTime.now().toString()).format('YYYY-MM-DD HH:mm')}',
                                 style: TextStyle(
                                   color: black,
                                   fontSize: 14,
@@ -177,23 +186,22 @@ class _NewInvoiceState extends State<NewInvoice> {
                       SizedBox(
                         height: 10,
                       ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 20),
-                        color: white,
-                        child: Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushNamed(
-                                  CustomerChoose.routeName,
-                                  arguments: CustomerChooseArguments(
-                                    listenController: listenController,
-                                    partnerListenController:
-                                        partnerListenController,
-                                  ),
-                                );
-                              },
-                              child: Row(
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            CustomerChoose.routeName,
+                            arguments: CustomerChooseArguments(
+                              listenController: listenController,
+                              partnerListenController: partnerListenController,
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.only(left: 20),
+                          color: white,
+                          child: Column(
+                            children: [
+                              Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -208,14 +216,14 @@ class _NewInvoiceState extends State<NewInvoice> {
                                       SizedBox(
                                         width: 10,
                                       ),
-                                      invoice.partnerName == null
+                                      invoice.partner?.businessName == null
                                           ? Text(
                                               'Харилцагч сонгох',
                                               style: TextStyle(
                                                   color: invoiceColor),
                                             )
                                           : Text(
-                                              '${invoice.partnerName}',
+                                              '${invoice.partner?.businessName}',
                                               style: TextStyle(
                                                   color: invoiceColor),
                                             )
@@ -230,116 +238,127 @@ class _NewInvoiceState extends State<NewInvoice> {
                                   ),
                                 ],
                               ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  child: Text(
-                                    'Хүргэлтийн хаяг',
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    child: Text(
+                                      'Хүргэлтийн хаяг',
+                                    ),
                                   ),
-                                ),
-                                partnerInvoice.type == null
-                                    ? Row(
-                                        children: [
-                                          Text('-'),
-                                          IconButton(
-                                            onPressed: () {},
-                                            icon: Icon(
-                                              Icons.arrow_forward_ios,
-                                              size: 12,
+                                  partnerInvoice.name == null
+                                      ? Row(
+                                          children: [
+                                            Text('-'),
+                                            IconButton(
+                                              onPressed: () {},
+                                              icon: Icon(
+                                                Icons.arrow_forward_ios,
+                                                size: 12,
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      )
-                                    : Row(
-                                        children: [
-                                          Text(
-                                            '${partnerInvoice.type}',
-                                            style:
-                                                TextStyle(color: invoiceColor),
-                                          ),
-                                          IconButton(
-                                            onPressed: () {},
-                                            icon: Icon(
-                                              Icons.arrow_forward_ios,
-                                              size: 12,
+                                          ],
+                                        )
+                                      : Row(
+                                          children: [
+                                            Text(
+                                              '${partnerInvoice.name}',
+                                              style: TextStyle(
+                                                  color: invoiceColor),
                                             ),
-                                          ),
-                                        ],
-                                      )
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  child: Text(
-                                    'Нэхэмжлэх илгээх',
+                                            IconButton(
+                                              onPressed: () {},
+                                              icon: Icon(
+                                                Icons.arrow_forward_ios,
+                                                size: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    child: Text(
+                                      'Нэхэмжлэх илгээх',
+                                    ),
                                   ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text('-'),
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 12,
+                                  Row(
+                                    children: [
+                                      invoice.partnerName == null
+                                          ? Text('-')
+                                          : Text(
+                                              invoice.partnerName.toString(),
+                                              style: TextStyle(
+                                                color: invoiceColor,
+                                              ),
+                                            ),
+                                      IconButton(
+                                        onPressed: () {},
+                                        icon: Icon(
+                                          Icons.arrow_forward_ios,
+                                          size: 12,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  child: Text(
-                                    'Нэхэмжлэх статус',
+                                    ],
                                   ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'Үүссэн',
-                                      style: TextStyle(color: invoiceColor),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  child: Text(
-                                    'Баталсан',
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text('-'),
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceBetween,
+                              //   children: [
+                              //     Container(
+                              //       child: Text(
+                              //         'Нэхэмжлэх статус',
+                              //       ),
+                              //     ),
+                              //     Row(
+                              //       children: [
+                              //         Text(
+                              //           'Үүссэн',
+                              //           style: TextStyle(color: invoiceColor),
+                              //         ),
+                              //         IconButton(
+                              //           onPressed: () {},
+                              //           icon: Icon(
+                              //             Icons.arrow_forward_ios,
+                              //             size: 12,
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ],
+                              // ),
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceBetween,
+                              //   children: [
+                              //     Container(
+                              //       child: Text(
+                              //         'Баталсан',
+                              //       ),
+                              //     ),
+                              //     Row(
+                              //       children: [
+                              //         Text('-'),
+                              //         IconButton(
+                              //           onPressed: () {},
+                              //           icon: Icon(
+                              //             Icons.arrow_forward_ios,
+                              //             size: 12,
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ],
+                              // ),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -360,31 +379,54 @@ class _NewInvoiceState extends State<NewInvoice> {
                         height: 10,
                       ),
                       Container(
-                        padding: const EdgeInsets.only(
-                          left: 20,
-                        ),
+                        padding: const EdgeInsets.only(left: 20),
                         color: white,
-                        child: Column(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      child: Icon(
-                                        Icons.perm_contact_cal_outlined,
-                                        color: invoiceColor,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      'Supplier Business Name',
-                                      style: TextStyle(color: invoiceColor),
-                                    ),
-                                  ],
+                                Container(
+                                  child: Icon(
+                                    Icons.perm_contact_cal_outlined,
+                                    color: invoiceColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  '${user.user?.currentBusiness?.profileName}',
+                                  style: TextStyle(color: invoiceColor),
+                                ),
+                              ],
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.arrow_forward_ios,
+                                size: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(left: 20),
+                        color: white,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              child: Text(
+                                'Партнерийн нэр',
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  '${user.user?.currentBusiness?.partnerName}',
+                                  style: TextStyle(color: invoiceColor),
                                 ),
                                 IconButton(
                                   onPressed: () {},
@@ -395,57 +437,50 @@ class _NewInvoiceState extends State<NewInvoice> {
                                 ),
                               ],
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  child: Text(
-                                    'Партнерийн нэр',
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'Партнер нэр',
-                                      style: TextStyle(color: invoiceColor),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  child: Text(
-                                    'Салбарын нэр',
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'Салбарын нэр',
-                                      style: TextStyle(color: invoiceColor),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
                           ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            SectorChoose.routeName,
+                            arguments: SectorChooseArguments(
+                                sectorListenController: sectorListenController),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.only(left: 20),
+                          color: white,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                child: Text(
+                                  'Салбарын нэр',
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  sectorInvoice.name == null
+                                      ? Text(
+                                          'Салбар сонгох',
+                                          style: TextStyle(color: invoiceColor),
+                                        )
+                                      : Text(
+                                          '${sectorInvoice.name}',
+                                          style: TextStyle(color: invoiceColor),
+                                        ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -569,11 +604,13 @@ class _NewInvoiceState extends State<NewInvoice> {
                         onTap: () {
                           if (invoice.id != null && partnerInvoice.id != null) {
                             Navigator.of(context).pushNamed(
-                                AddProduct.routeName,
-                                arguments: AddProductArguments(
-                                    businessId: invoice.id!,
-                                    goodsListenController:
-                                        goodsListenController));
+                              AddProduct.routeName,
+                              arguments: AddProductArguments(
+                                data: inventory,
+                                businessId: invoice.id!,
+                                goodsListenController: goodsListenController,
+                              ),
+                            );
                           } else {
                             if (invoice.id == null) {
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -619,7 +656,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                                       width: 10,
                                     ),
                                     Text(
-                                      'Мөр нэмэх',
+                                      'Бараа нэмэх',
                                       style: TextStyle(color: invoiceColor),
                                     ),
                                   ],
@@ -647,11 +684,22 @@ class _NewInvoiceState extends State<NewInvoice> {
                       Column(
                         children: inventory
                             .map(
-                              (data) => AddProductCard(
-                                index: inventory.indexOf(data),
-                                data: data,
+                              (item) => AddProductCard(
+                                hasCount: true,
+                                closeClick: () {
+                                  setState(() {
+                                    inventory.removeWhere((element) =>
+                                        element.variantId == item.variantId);
+                                    data.removeWhere((element) =>
+                                        element.variantId == item.variantId);
+                                  });
+                                },
+                                index: inventory.indexOf(item),
+                                data: item,
                                 isCheck: false,
-                                onClick: () {},
+                                onClick: () {
+                                  print(item.quantity);
+                                },
                                 color: invoiceColor,
                               ),
                             )
@@ -684,54 +732,130 @@ class _NewInvoiceState extends State<NewInvoice> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
+                                Expanded(
                                   child: Text(
                                     'Хөнгөлөлт',
                                   ),
                                 ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'Нэмэх',
-                                      style: TextStyle(color: invoiceColor),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 12,
+                                Expanded(
+                                  child: DropdownButtonFormField(
+                                    onChanged: (value) {
+                                      setState(() {
+                                        dropdownValue = "${value}";
+                                      });
+                                      ;
+                                    },
+                                    dropdownColor: white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    isExpanded: false,
+                                    hint: Container(
+                                      width: 135,
+                                      child: Text(
+                                        "Сонгох",
+                                        style: TextStyle(
+                                            color: invoiceColor, fontSize: 14),
+                                        textAlign: TextAlign.end,
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  child: Text(
-                                    'Нийт дүн',
+                                    icon: Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 12,
+                                      color: black,
+                                    ),
+                                    decoration: InputDecoration(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 15),
+                                      hintStyle: TextStyle(
+                                          color: invoiceColor, fontSize: 14),
+                                      filled: true,
+                                      fillColor: white,
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                      ),
+                                    ),
+                                    items: list
+                                        .map(
+                                          (item) => DropdownMenuItem(
+                                            enabled: true,
+                                            value: item,
+                                            child: Container(
+                                              width: 130,
+                                              child: Align(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: Text(
+                                                  "${item}",
+                                                  style: TextStyle(
+                                                    color: invoiceColor,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                        .toList(),
                                   ),
                                 ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(right: 20),
-                                      child: Text(
-                                        '00.00₮',
-                                        style: TextStyle(color: invoiceColor),
-                                      ),
-                                    ),
-                                  ],
-                                ),
                               ],
                             ),
+                            FormTextField(
+                              maxLenght: dropdownValue == 'Хувиар'
+                                  ? 2
+                                  : dropdownValue == "Сонгох"
+                                      ? 1
+                                      : null,
+                              showCounter: false,
+                              textColor: networkColor,
+                              textAlign: TextAlign.end,
+                              name: 'name',
+                              inputType: TextInputType.number,
+                              decoration: InputDecoration(
+                                prefixIcon: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 15,
+                                  ),
+                                  child: Text(
+                                    'Хөнгөлөлтийн дүн',
+                                    style: TextStyle(color: dark),
+                                  ),
+                                ),
+                                suffixIcon: dropdownValue == 'Хувиар'
+                                    ? Icon(
+                                        Icons.percent,
+                                        size: 15,
+                                        color: invoiceColor,
+                                      )
+                                    : dropdownValue == 'Дүнгээр'
+                                        ? Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 15),
+                                            child: Text(
+                                              '₮',
+                                              style: TextStyle(
+                                                color: invoiceColor,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          )
+                                        : null,
+                                fillColor: white,
+                                filled: true,
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 15),
+                                hintStyle: TextStyle(color: invoiceColor),
+                                hintText: 'Дүн оруулна уу',
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                            ),
                             SizedBox(
-                              height: 25,
+                              height: 7,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -859,20 +983,27 @@ class _NewInvoiceState extends State<NewInvoice> {
                       SizedBox(
                         height: 10,
                       ),
-                      FormTextField(
-                        controller: textController,
-                        name: 'description',
-                        decoration: InputDecoration(
-                          fillColor: white,
-                          hintText: 'Тайлбар оруулна уу',
-                          hintStyle:
-                              TextStyle(color: invoiceColor, fontSize: 14),
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
+                      FormBuilder(
+                        key: fbKey,
+                        child: FormTextField(
+                          controller: textController,
+                          name: 'description',
+                          decoration: InputDecoration(
+                            fillColor: white,
+                            hintText: 'Тайлбар оруулна уу',
+                            hintStyle:
+                                TextStyle(color: invoiceColor, fontSize: 14),
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 15),
                           ),
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 15),
+                          validators: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                                errorText: "Заавал оруулна"),
+                          ]),
                         ),
                       ),
                       SizedBox(
@@ -1089,6 +1220,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                                 Navigator.of(context).pushNamed(
                                   Harah.routeName,
                                   arguments: HarahArguments(
+                                    invoice: invoice,
                                     data: inventory,
                                   ),
                                 );
@@ -1134,7 +1266,6 @@ class _NewInvoiceState extends State<NewInvoice> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                print("inventory:${inventory}");
                                 if (data == []) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(

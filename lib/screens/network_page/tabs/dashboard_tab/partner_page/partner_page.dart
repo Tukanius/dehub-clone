@@ -5,6 +5,7 @@ import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partn
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:lottie/lottie.dart';
 
 class NetworkPartnerPage extends StatefulWidget {
   static const routeName = '/NetworkPartnerPage';
@@ -19,6 +20,7 @@ class _NetworkPartnerPageState extends State<NetworkPartnerPage>
   int page = 1;
   int limit = 10;
   Result businessNetwork = Result(count: 0, rows: []);
+  bool isLoading = true;
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -27,12 +29,13 @@ class _NetworkPartnerPageState extends State<NetworkPartnerPage>
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter();
+    Filter filter = Filter(query: '');
     Result res = await BusinessApi().networkList(
       ResultArguments(offset: offset, filter: filter),
     );
     setState(() {
       businessNetwork = res;
+      isLoading = false;
     });
   }
 
@@ -44,64 +47,84 @@ class _NetworkPartnerPageState extends State<NetworkPartnerPage>
         elevation: 0,
         backgroundColor: backgroundColor,
         leadingWidth: 100,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: Row(
-            children: [
-              Icon(
-                Icons.arrow_back_ios_new,
+          child: Container(
+            margin: const EdgeInsets.only(left: 10),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.arrow_back_ios_new,
+                  color: networkColor,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  'Буцах',
+                  style: TextStyle(color: networkColor, fontSize: 17),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+      body: isLoading == true
+          ? Center(
+              child: CircularProgressIndicator(
                 color: networkColor,
               ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                'Буцах',
-                style: TextStyle(color: networkColor, fontSize: 17),
-              )
-            ],
-          ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 15, top: 5),
-                child: Text(
-                  'Харилцагч',
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+            )
+          : SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 15, top: 5),
+                      child: Text(
+                        'Харилцагч',
+                        style: TextStyle(
+                            fontSize: 32, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    businessNetwork.rows?.length != 0
+                        ? Column(
+                            children: businessNetwork.rows!
+                                .map(
+                                  (e) => PartnerCard(
+                                    data: e,
+                                    onClick: () {
+                                      Navigator.of(context).pushNamed(
+                                        PartnerDetailPage.routeName,
+                                        arguments: PartnerDetailPageArguments(
+                                          id: e.id,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                )
+                                .toList(),
+                          )
+                        : Column(
+                            children: [
+                              Lottie.asset('images/network-not-found.json'),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Text("Харилцагч олдсонгүй"),
+                            ],
+                          ),
+                  ],
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Column(
-                children: businessNetwork.rows!
-                    .map(
-                      (e) => PartnerCard(
-                        data: e,
-                        onClick: () {
-                          Navigator.of(context).pushNamed(
-                            PartnerDetailPage.routeName,
-                            arguments: PartnerDetailPageArguments(
-                              id: e.id,
-                            ),
-                          );
-                        },
-                      ),
-                    )
-                    .toList(),
-              )
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }

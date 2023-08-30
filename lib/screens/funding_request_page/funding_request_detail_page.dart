@@ -22,7 +22,7 @@ class _FundingRequestDetailPageState extends State<FundingRequestDetailPage> {
         leadingWidth: 200,
         elevation: 0,
         backgroundColor: backgroundColor,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },

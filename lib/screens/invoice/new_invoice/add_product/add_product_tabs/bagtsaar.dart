@@ -12,9 +12,11 @@ import 'package:lottie/lottie.dart';
 
 class Bagtsaar extends StatefulWidget {
   final ListenController goodsListenController;
+  final List<Invoice> data;
   final String businessId;
   static const routeName = '/bagtsaar';
   Bagtsaar({
+    required this.data,
     required this.goodsListenController,
     required this.businessId,
     Key? key,
@@ -27,9 +29,9 @@ class Bagtsaar extends StatefulWidget {
 class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
   bool isLoading = true;
   Result inventory = Result(rows: [], count: 0);
+  Result removedList = Result(rows: [], count: 0);
   int page = 1;
   int limit = 10;
-  Invoice invoice = Invoice();
   Timer? timer;
   bool isSubmit = false;
   String query = "";
@@ -48,6 +50,15 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
     setState(() {
       isLoading = false;
     });
+    // removedList.rows = inventory.rows!.removeWhere(
+    //   (element) =>
+    //       element.unitVariantId ==
+    //       widget.data.map(
+    //         (e) {
+    //           return e.unitVariantId;
+    //         },
+    //       ),
+    // );
   }
 
   onChange(String value) async {
@@ -110,6 +121,7 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
                                   children: inventory.rows!
                                       .map(
                                         (data) => AddProductCard(
+                                          hasCount: false,
                                           isCheck: false,
                                           onClick: () {
                                             widget.goodsListenController
@@ -168,7 +180,7 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
                                 //       Container(
                                 //         child: Row(
                                 //           children: [
-                                //             InkWell(
+                                //             GestureDetector(
                                 //               onTap: () {},
                                 //               child: Column(
                                 //                 children: [
@@ -189,7 +201,7 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
                                 //             SizedBox(
                                 //               width: 40,
                                 //             ),
-                                //             InkWell(
+                                //             GestureDetector(
                                 //               onTap: () {},
                                 //               child: Column(
                                 //                 children: [

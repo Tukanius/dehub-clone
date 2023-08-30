@@ -45,7 +45,7 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
         backgroundColor: backgroundColor,
         elevation: 0,
         leadingWidth: 100,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },
@@ -89,12 +89,15 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
                         color: white,
                       ),
                       padding: const EdgeInsets.all(10),
-                      width: 90,
-                      height: 90,
+                      width: 100,
+                      height: 100,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
+                            height: 36,
+                            width: 36,
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -133,7 +136,7 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
                         SizedBox(
                           width: 15,
                         ),
-                        InkWell(
+                        GestureDetector(
                           onTap: () {
                             changePage(0);
                           },
@@ -159,7 +162,7 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
                         SizedBox(
                           width: 20,
                         ),
-                        InkWell(
+                        GestureDetector(
                           onTap: () {
                             changePage(1);
                           },

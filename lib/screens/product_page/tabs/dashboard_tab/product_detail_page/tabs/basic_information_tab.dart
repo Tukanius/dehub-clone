@@ -34,12 +34,24 @@ class _BasicInformationTabState extends State<BasicInformationTab>
       isLoading = true;
     });
     inventory = await InventoryApi().goodsGet(widget.id);
-    print('======inventory========');
-    print(inventory.brand?.toJson());
-    print('======inventory========');
+
     setState(() {
       isLoading = false;
     });
+  }
+
+  itemStatus() {
+    switch (inventory.itemStatus) {
+      case 'ACTIVE':
+        return "Идэвхитэй";
+      case 'INACTIVE':
+        return "Идэвхигүй";
+      case 'DRAFT':
+        return "Түр төлөв";
+      case 'REGISTERED':
+        return "Бүртгэсэн";
+      default:
+    }
   }
 
   @override
@@ -103,7 +115,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Text(
-                          '${inventory.itemStatus}',
+                          itemStatus().toString(),
                           style: TextStyle(
                             color: grey2,
                             fontSize: 12,
@@ -354,7 +366,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         style: TextStyle(color: grey2),
                       ),
                       Text(
-                        '${inventory.originCountry?.name}',
+                        '${inventory.originCountry}',
                         style: TextStyle(color: grey2),
                       ),
                     ],
@@ -372,7 +384,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         style: TextStyle(color: grey2),
                       ),
                       Text(
-                        '${inventory.importerCountry?.name}',
+                        '${inventory.importerCountry}',
                         style: TextStyle(color: grey2),
                       ),
                     ],
@@ -527,8 +539,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                   height: 200,
                   color: white,
                   child: Image(
-                    image: AssetImage('images/map.jpg'),
-                    fit: BoxFit.fitHeight,
+                    image: NetworkImage('${inventory.image}'),
                   ),
                 ),
                 Container(
@@ -551,8 +562,8 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                           children: inventory.detailImages!
                               .map(
                                 (e) => Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  margin: const EdgeInsets.only(
+                                      left: 5, right: 5, bottom: 5),
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 30),
                                   height: 200,

@@ -108,7 +108,7 @@ class _Page3State extends State<Page3> {
               border: Border.all(color: grey3),
             ),
             child: Text(
-              '${partnerUser.partner!.province!.name}',
+              '${partnerUser.partner?.province?.name}',
               style: TextStyle(
                 fontSize: 14,
                 color: grey3,
@@ -143,7 +143,7 @@ class _Page3State extends State<Page3> {
               border: Border.all(color: grey3),
             ),
             child: Text(
-              '${partnerUser.partner!.district!.name}',
+              '${partnerUser.partner?.district?.name}',
               style: TextStyle(
                 fontSize: 14,
                 color: grey3,
@@ -178,7 +178,7 @@ class _Page3State extends State<Page3> {
               border: Border.all(color: grey3),
             ),
             child: Text(
-              '${partnerUser.partner!.khoroo!.name}',
+              '${partnerUser.partner?.khoroo?.name}',
               style: TextStyle(
                 fontSize: 14,
                 color: grey3,

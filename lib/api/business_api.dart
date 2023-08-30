@@ -1,3 +1,4 @@
+import 'package:dehub/models/business-staffs.dart';
 import 'package:dehub/models/business.dart';
 import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/invitation_received.dart';
@@ -8,13 +9,19 @@ import 'package:dehub/utils/http_request.dart';
 
 class BusinessApi extends HttpRequest {
   Future<Result> list(ResultArguments resultArguments) async {
-    var res = await get('/invitation/received/', "BUSINESS", true,
-        data: resultArguments.toJson());
-    return Result.fromJson(res, InvitationReceived.$fromJson);
+    var res = await get('/invitation/received', "BUSINESS", true,
+        handler: true, data: resultArguments.toJson());
+    return Result.fromJson(res, InvitationReceived.fromJson);
+  }
+
+  Future<Result> funder(ResultArguments resultArguments) async {
+    var res = await get('/invitation/funder', "BUSINESS", true,
+        handler: true, data: resultArguments.toJson());
+    return Result.fromJson(res, InvitationReceived.fromJson);
   }
 
   Future<Result> listSent(ResultArguments resultArguments) async {
-    var res = await get('/invitation/sent/', "BUSINESS", true,
+    var res = await get('/invitation/sent', "BUSINESS", true,
         data: resultArguments.toJson());
     return Result.fromJson(res, InvitationReceived.$fromJson);
   }
@@ -35,21 +42,9 @@ class BusinessApi extends HttpRequest {
   // }
 
   respond(InvitationReceived data, String id) async {
-    Map<String, dynamic> json = {};
-    json['accept'] = data.accept == true;
-    json['responseMessage'] = "accept";
-    var res =
-        await put("/invitation/$id/respond", "BUSINESS", true, data: json);
-    return res['accept'] == true;
-  }
-
-  refuse(InvitationReceived data, String id) async {
-    Map<String, dynamic> json = {};
-    json['accept'] = data.accept == false;
-    json['responseMessage'] = "accept";
-    var res =
-        await put("/invitation/$id/respond", "BUSINESS", true, data: json);
-    return res['accept'] == false;
+    var res = await put("/invitation/$id/respond", "BUSINESS", true,
+        data: data.toJson());
+    return res;
   }
 
   Future<Result> networkList(ResultArguments resultArguments) async {
@@ -135,5 +130,23 @@ class BusinessApi extends HttpRequest {
     var res = await post("/client_classification", "BUSINESS", true,
         data: data.toJson());
     return BusinessStaffs.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> businessList(ResultArguments resultArguments) async {
+    var res = await get('/invitation/business_list', "BUSINESS", true,
+        data: resultArguments.toJson());
+    return Result.fromJson(res, Business.fromJson);
+  }
+
+  Future<Result> businessSuggest(ResultArguments resultArguments) async {
+    var res = await get('/invitation/business_suggest', "BUSINESS", true,
+        handler: true, data: resultArguments.toJson());
+    return Result.fromJson(res, Business.fromJson);
+  }
+
+  Future<Business> createInvitation(Business data) async {
+    var res = await post('/invitation', "BUSINESS", true,
+        handler: true, data: data.toJson());
+    return Business.fromJson(res as Map<String, dynamic>);
   }
 }

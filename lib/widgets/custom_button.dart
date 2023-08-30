@@ -6,7 +6,11 @@ class CustomButton extends StatefulWidget {
   final Function()? onClick;
   final Color? labelColor;
   final Color? textColor;
+  final bool? isGradient;
+  final Container? container;
   CustomButton({
+    this.container,
+    this.isGradient,
     this.textColor,
     this.labelColor,
     this.onClick,
@@ -22,23 +26,44 @@ class _CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SizedBox(
-        height: 48,
-        width: 360,
-        child: ElevatedButton(
-          onPressed: widget.onClick,
-          child: Text(
-            widget.labelText.toString(),
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 16,
-              color: widget.textColor == null ? white : widget.textColor,
-            ),
+      child: GestureDetector(
+        onTap: widget.onClick,
+        child: Container(
+          height: 48,
+          width: 360,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: widget.isGradient == false || widget.isGradient == null
+                ? widget.labelColor
+                : null,
+            gradient: widget.isGradient == true ? gradient : null,
           ),
-          style: ElevatedButton.styleFrom(
-            shadowColor: Colors.transparent,
-            backgroundColor: widget.labelColor,
-          ),
+          child: widget.isGradient != true
+              ? Center(
+                  child: Text(
+                    '${widget.labelText}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color:
+                          widget.textColor == null ? white : widget.textColor,
+                    ),
+                  ),
+                )
+              : widget.container != null
+                  ? widget.container
+                  : Center(
+                      child: Text(
+                        '${widget.labelText}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: widget.textColor == null
+                              ? white
+                              : widget.textColor,
+                        ),
+                      ),
+                    ),
         ),
       ),
     );

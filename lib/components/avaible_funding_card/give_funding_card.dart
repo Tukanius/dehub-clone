@@ -16,7 +16,7 @@ class _GiveFundingCardState extends State<GiveFundingCard> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        InkWell(
+        GestureDetector(
           onTap: () {
             Navigator.of(context).pushNamed(GiveFundingDetailPage.routeName);
           },

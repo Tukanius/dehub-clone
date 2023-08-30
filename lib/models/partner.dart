@@ -1,4 +1,4 @@
-import 'package:dehub/models/business.dart';
+import 'package:dehub/models/business-staffs.dart';
 
 part '../parts/partner.dart';
 

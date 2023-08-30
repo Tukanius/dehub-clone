@@ -20,7 +20,7 @@ class _ZoningPageState extends State<ZoningPage> {
         backgroundColor: backgroundColor,
         elevation: 0,
         leadingWidth: 100,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },

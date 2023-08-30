@@ -120,7 +120,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
           SizedBox(
             height: 10,
           ),
-          InkWell(
+          GestureDetector(
             onTap: widget.onClick,
             child: Container(
               color: white,
@@ -304,7 +304,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                     color: Color(0xff555555),
                                   ),
                                 ),
-                                widget.data!.overDueStatus == "NORMAL"
+                                widget.data!.overdueStatus == "NORMAL"
                                     ? Text(
                                         'Хэвийн',
                                         style: TextStyle(

@@ -11,9 +11,33 @@ class UserProvider extends ChangeNotifier {
   User user = User();
   Partner partnerUser = Partner();
   User businessUser = User();
+  User invoiceMe = User();
+  User orderMe = User();
+  User paymentMe = User();
+  User inventoryMe = User();
 
   me(bool handler) async {
     user = await AuthApi().me(handler);
+    notifyListeners();
+  }
+
+  invoice(bool handler) async {
+    invoiceMe = await AuthApi().invoiceMe(handler);
+    notifyListeners();
+  }
+
+  order(bool handler) async {
+    orderMe = await AuthApi().orderMe(handler);
+    notifyListeners();
+  }
+
+  payment(bool handler) async {
+    paymentMe = await AuthApi().paymentMe(handler);
+    notifyListeners();
+  }
+
+  inventory(bool handler) async {
+    inventoryMe = await AuthApi().inventoryMe(handler);
     notifyListeners();
   }
 

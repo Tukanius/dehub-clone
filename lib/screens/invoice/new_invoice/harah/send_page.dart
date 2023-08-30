@@ -18,7 +18,7 @@ class _SendPageState extends State<SendPage> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: invoiceColor,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },

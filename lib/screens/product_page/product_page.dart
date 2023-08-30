@@ -1,10 +1,14 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/product_page/tabs/dashboard_tab/dashboard_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/screens/product_page/tabs/home_page_tab/home_page_tab.dart';
+import 'package:provider/provider.dart';
+import 'package:after_layout/after_layout.dart';
 
 class ProductPage extends StatefulWidget {
   static const routeName = '/productpage';
@@ -16,7 +20,14 @@ class ProductPage extends StatefulWidget {
 
 int selectedIndex = 0;
 
-class _ProductPageState extends State<ProductPage> {
+class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
+  @override
+  afterFirstLayout(BuildContext context) async {
+    await Provider.of<GeneralProvider>(context, listen: false)
+        .inventoryInit(true);
+    await Provider.of<UserProvider>(context, listen: false).inventory(true);
+  }
+
   static const List<Widget> currentPages = [
     HomePageTab(),
     DashboardTab(),
@@ -38,7 +49,7 @@ class _ProductPageState extends State<ProductPage> {
         leadingWidth: 100,
         elevation: 0,
         backgroundColor: selectedIndex != 3 ? backgroundColor : productColor,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },
