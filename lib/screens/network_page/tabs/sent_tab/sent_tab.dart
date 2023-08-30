@@ -39,11 +39,16 @@ class _SentTabState extends State<SentTab> {
                         ),
                       ),
                     ),
-                    Text(
-                      'Onboard урилга',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                    Container(
+                      height: 40,
+                      child: Center(
+                        child: Text(
+                          'Onboard урилга',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
                       ),
                     ),
                   ],

@@ -65,6 +65,7 @@ dev_dependencies:
   convex_bottom_bar: ^3.2.0
   intl: ^0.18.0
   moment_dart: ^0.17.4
+  file_picker: ^5.3.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

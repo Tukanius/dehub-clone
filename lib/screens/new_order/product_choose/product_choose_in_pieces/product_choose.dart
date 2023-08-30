@@ -51,11 +51,9 @@ class _ProductChooseState extends State<ProductChoose>
   String query = '';
   int limit = 10;
   Timer? timer;
-  // int currentIndex = 0;
   bool isSubmit = false;
-  // late TabController tabController;
   User user = User();
-  String type = 'Бүгд';
+  String type = '';
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -83,9 +81,9 @@ class _ProductChooseState extends State<ProductChoose>
       invoice = await OrderApi().variantSelect(
           user.currentBusiness?.type == "SUPPLIER" ? "SALES" : "PURCHASE",
           'a',
-          query,
+          value,
           "",
-          '',
+          '${type}',
           '');
       setState(() {
         isSubmit = false;

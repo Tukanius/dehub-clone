@@ -620,8 +620,12 @@ class MyApp extends StatelessWidget {
                       return PaymentConditionPage();
                     });
                   case AddAttachment.routeName:
+                    AddAttachmentArguments arguments =
+                        settings.arguments as AddAttachmentArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return AddAttachment();
+                      return AddAttachment(
+                        pickedFile: arguments.pickedFile,
+                      );
                     });
                   case AddRow.routeName:
                     AddRowArguments arguments =
@@ -632,7 +636,6 @@ class MyApp extends StatelessWidget {
                             arguments.additionalRowsListenController,
                       );
                     });
-
                   case ReceivedOrderDetail.routeName:
                     ReceivedOrderDetailArguments arguments =
                         settings.arguments as ReceivedOrderDetailArguments;

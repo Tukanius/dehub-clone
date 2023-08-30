@@ -1,6 +1,7 @@
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/order.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:file_picker/file_picker.dart';
 
 class ListenController extends ChangeNotifier {
   String? value;
@@ -13,6 +14,7 @@ class ListenController extends ChangeNotifier {
   Order? productOrder;
   Order? additionalRows;
   Order? receiverBranch;
+  FilePickerResult? result;
 
   ListenController();
 
@@ -63,6 +65,11 @@ class ListenController extends ChangeNotifier {
 
   receiverBranchChange(Order value) {
     this.receiverBranch = value;
+    notifyListeners();
+  }
+
+  filPickerChange(FilePickerResult? value) {
+    this.result = value;
     notifyListeners();
   }
 }

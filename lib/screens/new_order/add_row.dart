@@ -535,12 +535,15 @@ class _AddRowState extends State<AddRow> {
               SizedBox(
                 height: 70,
               ),
-              CustomButton(
-                isGradient: true,
-                onClick: () {
-                  onSubmit();
-                },
-                labelText: "Болсон. Нэмье",
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 15),
+                child: CustomButton(
+                  isGradient: true,
+                  onClick: () {
+                    onSubmit();
+                  },
+                  labelText: "Болсон. Нэмье",
+                ),
               )
             ],
           ),

@@ -20,6 +20,7 @@ import 'package:dehub/models/order.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:file_picker/file_picker.dart';
 
 class NewOrderArguments {
   String? id;
@@ -50,13 +51,16 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   Order createOrder = Order();
   Order receiverBranch = Order();
   String selectedDate = '';
+  FilePickerResult? result;
   List<Order> product = [];
   List<Order> data = [];
   List<Order> additionalLines = [];
+  List<FilePickerResult> files = [];
   ListenController receiverBranchController = ListenController();
   ListenController customerListenController = ListenController();
   ListenController additionalRowsListenController = ListenController();
   ListenController productListenController = ListenController();
+  ListenController pickedFile = ListenController();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -71,114 +75,28 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
     });
   }
 
-  List<String> dates = [
-    "${DateTime.now().add(Duration(days: 1))}",
-    "${DateTime.now().add(Duration(days: 2))}",
-    "${DateTime.now().add(Duration(days: 3))}",
-    "${DateTime.now().add(Duration(days: 4))}",
-    "${DateTime.now().add(Duration(days: 5))}",
-    "${DateTime.now().add(Duration(days: 6))}",
-  ];
-
-  showSuccess(ctx) async {
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) {
-        return Container(
-          alignment: Alignment.center,
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          child: Stack(
-            alignment: Alignment.topCenter,
-            children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(top: 75),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                padding: const EdgeInsets.only(top: 90, left: 20, right: 20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const Text(
-                      'Амжилттай',
-                      style: TextStyle(
-                          color: dark,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    const Text(
-                      'Захиалга амжилттай илгээгдлээ.',
-                      textAlign: TextAlign.center,
-                    ),
-                    ButtonBar(
-                      buttonMinWidth: 100,
-                      alignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        TextButton(
-                          style: ButtonStyle(
-                            overlayColor:
-                                MaterialStateProperty.all(Colors.transparent),
-                          ),
-                          child: const Text(
-                            "Буцах",
-                            style: TextStyle(color: dark),
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            Navigator.of(ctx).pop();
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Lottie.asset('images/success.json', height: 150, repeat: false),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  totalPrice() {
-    setState(() {});
-  }
-
-  int quantity = 0;
-
-  totalQuantity() async {
-    setState(() {
-      quantity = product
-          .map((e) => e.quantity)
-          .reduce((value, element) => value! + element!)!;
-    });
-  }
-
   onSubmit(bool toReview, bool send) async {
     try {
-      for (var i = 0; i < product.length; i++) {
-        data[i] = Order();
-        data[i].variantId = product[i].id;
-        data[i].quantity = product[i].quantity;
-      }
-      createOrder.businessId = order.id;
-      createOrder.receiverBranchId = order.receiverBranches?.first.id;
-      createOrder.deliveryType = "DEFAULT_DATE";
-      createOrder.receiverStaffId = order.receiverStaff?.id;
-      createOrder.lines = data;
-      createOrder.discountType = "AMOUNT";
-      createOrder.discountValue = 0;
-      createOrder.toReview = toReview;
-      createOrder.send = send;
-      createOrder.additionalLines = additionalLines;
-      await OrderApi().createOrder(createOrder);
-      showSuccess(context);
+      if (data.isNotEmpty) {
+        for (var i = 0; i < product.length; i++) {
+          data[i] = Order();
+          data[i].variantId = product[i].id;
+          data[i].quantity = product[i].quantity;
+        }
+        createOrder.businessId = order.id;
+        createOrder.receiverBranchId = order.receiverBranches?.first.id;
+        createOrder.deliveryType = "DEFAULT_DATE";
+        createOrder.receiverStaffId = order.receiverStaff?.id;
+        createOrder.lines = data;
+        createOrder.discountType = "AMOUNT";
+        createOrder.attachments = files;
+        createOrder.discountValue = 0;
+        createOrder.toReview = toReview;
+        createOrder.send = send;
+        createOrder.additionalLines = additionalLines;
+        await OrderApi().createOrder(createOrder);
+        showSuccess(context);
+      } else {}
     } catch (e) {
       print('==========e========');
       print(e.toString());
@@ -1308,7 +1226,11 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushNamed(AddAttachment.routeName);
+                      Navigator.of(context).pushNamed(
+                        AddAttachment.routeName,
+                        arguments:
+                            AddAttachmentArguments(pickedFile: pickedFile),
+                      );
                     },
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 3),
@@ -1330,6 +1252,19 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                         ],
                       ),
                     ),
+                  ),
+                  Column(
+                    children: files
+                        .map(
+                          (e) => Container(
+                            margin: const EdgeInsets.only(bottom: 3),
+                            width: MediaQuery.of(context).size.width,
+                            padding: const EdgeInsets.all(15),
+                            color: white,
+                            child: Text('${e}'),
+                          ),
+                        )
+                        .toList(),
                   ),
                   SizedBox(
                     height: 40,
@@ -1467,6 +1402,12 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
         isLoading = false;
       });
     });
+    pickedFile.addListener(() {
+      result = pickedFile.result;
+      setState(() {
+        files.add(result!);
+      });
+    });
     productListenController.addListener(() {
       productOrder = productListenController.productOrder!;
       setState(() {
@@ -1487,4 +1428,79 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
     });
     super.initState();
   }
+
+  showSuccess(ctx) async {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return Container(
+          alignment: Alignment.center,
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.only(top: 75),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.only(top: 90, left: 20, right: 20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    const Text(
+                      'Амжилттай',
+                      style: TextStyle(
+                          color: dark,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    const Text(
+                      'Захиалга амжилттай илгээгдлээ.',
+                      textAlign: TextAlign.center,
+                    ),
+                    ButtonBar(
+                      buttonMinWidth: 100,
+                      alignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        TextButton(
+                          style: ButtonStyle(
+                            overlayColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                          ),
+                          child: const Text(
+                            "Буцах",
+                            style: TextStyle(color: dark),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            Navigator.of(ctx).pop();
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Lottie.asset('images/success.json', height: 150, repeat: false),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  List<String> dates = [
+    "${DateTime.now().add(Duration(days: 1))}",
+    "${DateTime.now().add(Duration(days: 2))}",
+    "${DateTime.now().add(Duration(days: 3))}",
+    "${DateTime.now().add(Duration(days: 4))}",
+    "${DateTime.now().add(Duration(days: 5))}",
+    "${DateTime.now().add(Duration(days: 6))}",
+  ];
 }
