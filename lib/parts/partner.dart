@@ -85,16 +85,10 @@ Partner _$PartnerFromJson(Map<String, dynamic> json) {
     isSupplier: json['isSupplier'] != null ? json['isSupplier'] as bool : null,
     isConfirmed:
         json['isConfirmed'] != null ? json['isConfirmed'] as bool : null,
-    province: json['province'] != null
-        ? Partner.fromJson(json['province'] as Map<String, dynamic>)
-        : null,
+    province: json['province'] != null ? json['province'] as String : null,
     name: json['name'] != null ? json['name'] as String : null,
-    district: json['district'] != null
-        ? Partner.fromJson(json['district'] as Map<String, dynamic>)
-        : null,
-    khoroo: json['khoroo'] != null
-        ? Partner.fromJson(json['khoroo'] as Map<String, dynamic>)
-        : null,
+    district: json['district'] != null ? json['district'] as String : null,
+    khoroo: json['khoroo'] != null ? json['khoroo'] as String : null,
     isAdmin: json['isAdmin'] != null ? json['isAdmin'] as bool : null,
     registrationType: json['registrationType'] != null
         ? json['registrationType'] as String

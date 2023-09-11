@@ -47,10 +47,10 @@ class Partner {
   bool? isBuyer;
   bool? isSupplier;
   bool? isConfirmed;
-  Partner? province;
+  String? province;
   String? name;
-  Partner? district;
-  Partner? khoroo;
+  String? district;
+  String? khoroo;
   Partner? employeeUnit;
   bool? isAdmin;
   String? registrationType;
