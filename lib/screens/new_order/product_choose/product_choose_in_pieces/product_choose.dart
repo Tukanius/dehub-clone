@@ -8,7 +8,7 @@ import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/widgets/custom_button.dart';
+// import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -44,7 +44,6 @@ class ProductChoose extends StatefulWidget {
 
 class _ProductChooseState extends State<ProductChoose>
     with AfterLayoutMixin, SingleTickerProviderStateMixin {
-  Result invoice = Result(count: 0, rows: []);
   Result category = Result(count: 0, rows: []);
   Result order = Result(count: 0, rows: []);
   bool isLoading = true;
@@ -57,7 +56,7 @@ class _ProductChooseState extends State<ProductChoose>
 
   @override
   afterFirstLayout(BuildContext context) async {
-    invoice = await OrderApi().variantSelect(
+    order = await OrderApi().variantSelect(
         user.currentBusiness?.type == "SUPPLIER" ? "SALES" : "PURCHASE",
         'a',
         query,
@@ -78,7 +77,7 @@ class _ProductChooseState extends State<ProductChoose>
       setState(() {
         isSubmit = true;
       });
-      invoice = await OrderApi().variantSelect(
+      order = await OrderApi().variantSelect(
           user.currentBusiness?.type == "SUPPLIER" ? "SALES" : "PURCHASE",
           'a',
           value,
@@ -142,7 +141,7 @@ class _ProductChooseState extends State<ProductChoose>
                                   setState(() {
                                     isSubmit = true;
                                   });
-                                  invoice = await OrderApi().variantSelect(
+                                  order = await OrderApi().variantSelect(
                                       user.currentBusiness?.type == "SUPPLIER"
                                           ? "SALES"
                                           : "PURCHASE",
@@ -199,23 +198,24 @@ class _ProductChooseState extends State<ProductChoose>
                                       children: [
                                         OrderProductCard(
                                           onClick: () {
-                                            if (item.quantity > 0 ||
-                                                item.quantity == null) {
+                                            print(item.quantity);
+                                            if (item.quantity != null &&
+                                                item.quantity > 0) {
                                               widget.productListenController
                                                   .productOrderChange(item);
                                               Navigator.of(context).pop();
                                             } else {
-                                              // ScaffoldMessenger.of(context)
-                                              //     .showSnackBar(
-                                              //   const SnackBar(
-                                              //     backgroundColor: orderColor,
-                                              //     shape: StadiumBorder(),
-                                              //     content: Center(
-                                              //       child: Text(
-                                              //           'Тоо ширхэг нэмнэ үү!'),
-                                              //     ),
-                                              //   ),
-                                              // );
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  backgroundColor: orderColor,
+                                                  shape: StadiumBorder(),
+                                                  content: Center(
+                                                    child: Text(
+                                                        'Тоо ширхэг нэмнэ үү!'),
+                                                  ),
+                                                ),
+                                              );
                                             }
                                           },
                                           data: item,

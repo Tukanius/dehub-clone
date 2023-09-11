@@ -3,6 +3,7 @@ import 'package:dehub/models/reference_information_get.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:moment_dart/moment_dart.dart';
 
 class DirectionDetailPageArguments {
   String id;
@@ -130,7 +131,7 @@ class _DirectionDetailPageState extends State<DirectionDetailPage>
                     style: TextStyle(color: dark),
                   ),
                   Text(
-                    'Чиглэл нэр',
+                    '${referenceGet.name}',
                     style: TextStyle(
                       color: networkColor,
                     ),
@@ -144,14 +145,15 @@ class _DirectionDetailPageState extends State<DirectionDetailPage>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Тайлбар',
-                    style: TextStyle(color: dark),
-                  ),
-                  Container(
-                    width: 200,
+                  Expanded(
                     child: Text(
-                      'ТОП харилцагчид бла бла бла бла бла бла бла',
+                      'Тайлбар',
+                      style: TextStyle(color: dark),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      '${referenceGet.description}',
                       style: TextStyle(
                         color: networkColor,
                       ),
@@ -249,7 +251,7 @@ class _DirectionDetailPageState extends State<DirectionDetailPage>
                     style: TextStyle(color: dark),
                   ),
                   Text(
-                    'Огноо, цаг',
+                    '${Moment.parse(referenceGet.createdAt.toString()).format("YYYY-MM-DD HH-mm")}',
                     style: TextStyle(
                       color: networkColor,
                     ),

@@ -1,4 +1,5 @@
 import 'package:dehub/models/order.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,6 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                 child: Row(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 5, right: 10),
                       child: Text(
                         '${widget.index! + 1} ',
                         style: TextStyle(
@@ -38,10 +38,12 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                         ),
                       ),
                     ),
-                    Container(
-                      width: 155,
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
                       child: Text(
-                        '${widget.data?.nameMon} SKU ${widget.data?.skuCode}',
+                        '${widget.data?.nameMon} SKU ${widget.data?.skuCode} asdfa sdf asdf asdfa sdfa s',
                         style: TextStyle(
                           color: black,
                           fontSize: 12,
@@ -79,14 +81,14 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                                 ),
                               ),
                       ),
-                      Container(
+                      Expanded(
                         child: Text(
-                          // '${Utils().formatCurrency(widget.data?.price.toString())}₮',
-                          '',
+                          '${Utils().formatCurrency(widget.data?.price.toString())}₮',
                           style: TextStyle(
                             color: black,
                             fontSize: 12,
                           ),
+                          textAlign: TextAlign.end,
                         ),
                       ),
                     ],
@@ -116,8 +118,7 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
               ),
               Container(
                 child: Text(
-                  // '${Utils().formatCurrency("${double.parse(widget.data!.price.toString()) * double.parse(widget.data!.quantity!.toString())}")}₮',
-                  '',
+                  '${Utils().formatCurrency("${double.parse(widget.data!.price.toString()) * double.parse(widget.data!.quantity!.toString())}")}₮',
                   style: TextStyle(
                     color: black,
                     fontSize: 12,

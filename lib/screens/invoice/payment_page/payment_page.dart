@@ -3,7 +3,7 @@ import 'package:dehub/models/invoice.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/screens/invoice/payment_page/payment_approval_page.dart';
 import 'package:dehub/screens/invoice/payment_page/qpay_page.dart';
-import 'package:dehub/utils/utils.dart';
+// import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -14,7 +14,17 @@ import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
+class InvoicePaymentPageArguments {
+  Invoice data;
+  String id;
+  InvoicePaymentPageArguments({
+    required this.data,
+    required this.id,
+  });
+}
+
 class InvoicePaymentPage extends StatefulWidget {
+  static const routeName = '/InvoicePaymentPage';
   final Invoice data;
   final String id;
   InvoicePaymentPage({
@@ -137,7 +147,8 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                           Row(
                             children: [
                               Text(
-                                '${Utils().formatCurrency(widget.data.amountToPay.toString())}',
+                                // '${Utils().formatCurrency(widget.data.amountToPay.toString())}',
+                                '',
                                 style: TextStyle(color: invoiceColor),
                               ),
                               SizedBox(
@@ -166,7 +177,8 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                           Row(
                             children: [
                               Text(
-                                '${Utils().formatCurrency(widget.data.amountToPay.toString())}',
+                                // '${Utils().formatCurrency(widget.data.amountToPay.toString())}',
+                                '',
                                 style: TextStyle(color: invoiceColor),
                               ),
                               SizedBox(
@@ -211,7 +223,7 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                                 width: 10,
                               ),
                               Text(
-                                '${widget.data.receiverBusiness!.profileName}',
+                                '${widget.data.receiverBusiness?.profileName}',
                                 style: TextStyle(color: invoiceColor),
                               ),
                             ],
@@ -240,7 +252,7 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                           Row(
                             children: [
                               Text(
-                                '${widget.data.receiverAcc!.number}',
+                                '${widget.data.receiverAcc?.number}',
                                 style: TextStyle(color: invoiceColor),
                               ),
                               SizedBox(

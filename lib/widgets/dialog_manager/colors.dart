@@ -47,6 +47,9 @@ const Color lightGrey = Color(0xffE9EDF0);
 const Color whiteGrey = Color(0xffF1F5F8);
 const Color darkGreen = Color(0xff0E889D);
 const Color grey4 = Color(0xffF5F5FF);
+const Color saaral = Color(0xff8181A5);
+const Color pink = Color(0xffFF808B);
+const Color chatGrey = Color(0xffE1E8ED);
 
 const gradient2 = LinearGradient(colors: [
   Color(0xff5D7128),

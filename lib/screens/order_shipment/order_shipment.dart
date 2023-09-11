@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/goods_info_card/order_goods_info_card.dart';
+import 'package:dehub/components/shipment_product_card/shipment_product_card.dart';
 // import 'package:dehub/components/order_product_card/order_product_card.dart';
 import 'package:dehub/components/shipping_card/shipping_card.dart';
 import 'package:dehub/models/order.dart';
@@ -32,57 +33,73 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
   bool isStart = false;
   Duration duration = Duration();
   TextEditingController controller = TextEditingController();
-  int _counter = 0;
   bool isSubmit = false;
-  bool isGetCode = false;
   late Timer _timer;
   bool isLoading = true;
   Order shipment = Order();
+  Timer? timer;
+  bool isCountDown = true;
+  String? minutes;
+  String? seconds;
+  bool startShipment = false;
 
-  @override
-  afterFirstLayout(BuildContext context) async {
-    shipment = await OrderApi().pullSheetGet(widget.data.id!);
+  void addTimer() {
+    final addSeconds = 1;
+
     setState(() {
-      isLoading = false;
+      final seconds = duration.inSeconds + addSeconds;
+      duration = Duration(seconds: seconds);
     });
   }
 
-  pause() async {
+  void reset() {
+    if (isCountDown) {
+      setState(() => duration = Duration());
+    } else {
+      setState(() => duration = Duration());
+    }
+  }
+
+  void startTimer() async {
+    if (shipment.isPaused == false) {
+      try {
+        await OrderApi().pullSheetStart(widget.data.id!);
+        timer = Timer.periodic(Duration(seconds: 1), (timer) => addTimer());
+        setState(() {
+          isStart = true;
+        });
+      } catch (e) {
+        print('=======start================');
+        print(e);
+      }
+    } else {
+      try {
+        await OrderApi().pullSheetProceed(widget.data.id!);
+      } catch (e) {
+        print('=======proceed================');
+        print(e);
+      }
+    }
+    shipment = await OrderApi().pullSheetGet(widget.data.id!);
+  }
+
+  Widget buildTime() {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+
+    return Text('$minutes:$seconds');
+  }
+
+  void stopTimer({bool resets = true}) async {
+    if (resets) {
+      reset();
+    }
     await OrderApi().pullSheetPause(widget.data.id!);
     setState(() {
-      isStart = false;
-      _timer.cancel();
+      startShipment = false;
     });
-  }
-
-  end() async {
-    await OrderApi().pullSheetEnd(widget.data.id!);
-    Navigator.of(context).pop();
-  }
-
-  String intToTimeLeft(int value) {
-    int h, m, s;
-    h = value ~/ 3600;
-    m = ((value - h * 3600)) ~/ 60;
-    s = value - (h * 3600) - (m * 60);
-    String result = "$m:$s";
-    return result;
-  }
-
-  void _startTimer(bool pause) async {
-    setState(() {
-      isGetCode = false;
-    });
-    _counter = 0;
-    await OrderApi().pullSheetStart(widget.data.id!);
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        _counter++;
-      });
-      if (pause == true) {
-        _timer.cancel();
-      }
-    });
+    setState(() => timer?.cancel());
   }
 
   @override
@@ -129,9 +146,11 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                       children: [
                         GestureDetector(
                           onTap: () {
+                            if (startShipment == false) {
+                              startTimer();
+                            }
                             setState(() {
-                              isStart = true;
-                              _startTimer(false);
+                              startShipment = true;
                             });
                           },
                           child: Container(
@@ -173,28 +192,14 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                                 'images/timer.svg',
                                 color: buttonColor,
                               ),
-                              _counter == 0
-                                  ? Text(
-                                      'Хугацаа',
-                                      style: TextStyle(
-                                        color: isStart == true
-                                            ? white
-                                            : buttonColor,
-                                      ),
-                                    )
-                                  : Text(
-                                      '${intToTimeLeft(_counter)}',
-                                      style: TextStyle(color: buttonColor),
-                                    ),
+                              buildTime()
                             ],
                           ),
                         ),
                         GestureDetector(
                           onTap: () {
-                            setState(() {
-                              isStart = false;
-                              _timer.cancel();
-                            });
+                            // pause();
+                            stopTimer(resets: false);
                           },
                           child: Container(
                             height: 60,
@@ -355,9 +360,16 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                                     ],
                                   ),
                                   Divider(),
-                                  OrderGoodsInfo(
-                                    index: 1,
-                                    data: widget.data,
+                                  Column(
+                                    children: shipment.pullSheetLines!
+                                        .map(
+                                          (e) => OrderGoodsInfo(
+                                            index: shipment.pullSheetLines
+                                                ?.indexOf(e),
+                                            data: e,
+                                          ),
+                                        )
+                                        .toList(),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -368,11 +380,29 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                           ],
                         )
                       : Column(
-                          children: [
-                            // OrderProductCard(),
-                            // OrderProductCard(),
-                            // OrderProductCard(),
-                          ],
+                          children: shipment.pullSheetLines!
+                              .map(
+                                (e) => Column(
+                                  children: [
+                                    ShipmentProductCard(
+                                      approveButtonClick: () async {
+                                        await OrderApi().lineConfirm(
+                                          Order(
+                                            pullSheetLineId: e.id,
+                                            confirmedQuantity: e.quantity,
+                                          ),
+                                          widget.data.id!,
+                                        );
+                                      },
+                                      data: e,
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                  ],
+                                ),
+                              )
+                              .toList(),
                         ),
                   Container(
                     margin: const EdgeInsets.symmetric(
@@ -422,7 +452,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                           ),
                         ),
                         Text(
-                          "13",
+                          "${shipment.pullSheetLines!.fold(0, (previousValue, element) => previousValue + element.quantity!)}",
                           style: TextStyle(
                             color: orderColor,
                           ),
@@ -452,9 +482,38 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                       ],
                     ),
                   ),
+                  SizedBox(
+                    height: 100,
+                  ),
                 ],
               ),
             ),
     );
+  }
+
+  pause() async {
+    await OrderApi().pullSheetPause(widget.data.id!);
+    setState(() {
+      isStart = false;
+      _timer.cancel();
+    });
+  }
+
+  resume() async {
+    await OrderApi().pullSheetProceed(widget.data.id!);
+    setState(() {});
+  }
+
+  end() async {
+    await OrderApi().pullSheetEnd(widget.data.id!);
+    Navigator.of(context).pop();
+  }
+
+  @override
+  afterFirstLayout(BuildContext context) async {
+    shipment = await OrderApi().pullSheetGet(widget.data.id!);
+    setState(() {
+      isLoading = false;
+    });
   }
 }

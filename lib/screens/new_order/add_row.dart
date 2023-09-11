@@ -1,6 +1,7 @@
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/utils/currency_formatter.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -505,7 +506,7 @@ class _AddRowState extends State<AddRow> {
                             style: TextStyle(color: orderColor),
                           )
                         : Text(
-                            '${totalAmount}',
+                            '${Utils().formatCurrency(totalAmount.toString())}₮',
                             style: TextStyle(color: orderColor),
                           )
                   ],
@@ -544,7 +545,10 @@ class _AddRowState extends State<AddRow> {
                   },
                   labelText: "Болсон. Нэмье",
                 ),
-              )
+              ),
+              SizedBox(
+                height: 50,
+              ),
             ],
           ),
         ),

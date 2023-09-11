@@ -1,9 +1,14 @@
+import 'package:dehub/models/business_network.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_detail_page/payment_condition_page/payment_condition_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class InformationTab extends StatefulWidget {
-  const InformationTab({super.key});
+  final BusinessNetwork? data;
+  const InformationTab({
+    Key? key,
+    this.data,
+  }) : super(key: key);
 
   @override
   State<InformationTab> createState() => _InformationTabState();
@@ -37,7 +42,7 @@ class _InformationTabState extends State<InformationTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  'PartnerName',
+                  '${widget.data?.partnerName}',
                   style: TextStyle(color: networkColor),
                 ),
               ],
@@ -54,7 +59,7 @@ class _InformationTabState extends State<InformationTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  'PartnerRef#',
+                  '${widget.data?.partner?.refCode}',
                   style: TextStyle(color: networkColor),
                 ),
               ],
@@ -71,7 +76,7 @@ class _InformationTabState extends State<InformationTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  'BusinessName',
+                  '${widget.data?.partner?.businessName}',
                   style: TextStyle(color: networkColor),
                 ),
               ],
@@ -88,7 +93,7 @@ class _InformationTabState extends State<InformationTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  'BusRef#',
+                  '${widget.data?.refCode}',
                   style: TextStyle(color: networkColor),
                 ),
               ],
@@ -105,7 +110,7 @@ class _InformationTabState extends State<InformationTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  'Username',
+                  '${widget.data?.financeStaff?.firstName}',
                   style: TextStyle(color: networkColor),
                 ),
               ],
@@ -122,7 +127,7 @@ class _InformationTabState extends State<InformationTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  'email',
+                  '${widget.data?.financeStaff?.email}',
                   style: TextStyle(color: networkColor),
                 ),
               ],
@@ -139,7 +144,7 @@ class _InformationTabState extends State<InformationTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  'Mobile',
+                  '${widget.data?.financeStaff?.phone}',
                   style: TextStyle(color: networkColor),
                 ),
               ],

@@ -1,14 +1,18 @@
 import 'package:dehub/models/order.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
+import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class OrderProductCard extends StatefulWidget {
   final Function()? onClick;
   final Function()? onCloseClick;
   final Order? data;
+  final bool? readOnly;
   const OrderProductCard({
     this.onCloseClick,
+    this.readOnly,
     Key? key,
     this.data,
     this.onClick,
@@ -19,16 +23,33 @@ class OrderProductCard extends StatefulWidget {
 }
 
 class _OrderProductCardState extends State<OrderProductCard> {
-  int count = 0;
+  TextEditingController quantityController = TextEditingController();
+  GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
+  int newValue = 0;
 
   decrease() {
     setState(() {
-      if (count > 0) {
-        setState(() {
-          count--;
-        });
+      if (int.parse(quantityController.text) > 0) {
+        int currentValue = int.tryParse(quantityController.text) ?? 0;
+        newValue = currentValue - 1;
+        quantityController.text = newValue.toString();
+        widget.data?.quantity = int.parse(quantityController.text.toString());
       }
-      widget.data?.quantity = count;
+    });
+  }
+
+  @override
+  void dispose() {
+    quantityController.dispose();
+    super.dispose();
+  }
+
+  increase() {
+    setState(() {
+      int currentValue = int.tryParse(quantityController.text) ?? 0;
+      newValue = currentValue + 1;
+      quantityController.text = newValue.toString();
+      widget.data?.quantity = int.parse(quantityController.text.toString());
     });
   }
 
@@ -80,9 +101,24 @@ class _OrderProductCardState extends State<OrderProductCard> {
                       SizedBox(
                         height: 5,
                       ),
-                      Text(
-                        'SKU ${widget.data?.skuCode}, ${widget.data?.brand},${widget.data?.category ?? widget.data?.category}, ${widget.data?.optionValues?.map((e) => e.name).join()}',
-                        style: TextStyle(color: dark),
+                      RichText(
+                        text: TextSpan(
+                          style: TextStyle(color: dark),
+                          children: [
+                            widget.data?.skuCode != null
+                                ? TextSpan(text: "${widget.data?.skuCode}, ")
+                                : TextSpan(),
+                            widget.data?.brand != null
+                                ? TextSpan(text: "${widget.data?.brand}, ")
+                                : TextSpan(),
+                            widget.data?.category != null
+                                ? TextSpan(text: "${widget.data?.category}, ")
+                                : TextSpan(),
+                            TextSpan(
+                                text:
+                                    "${widget.data?.optionValues?.map((e) => e.name).join(', ')}")
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -313,7 +349,9 @@ class _OrderProductCardState extends State<OrderProductCard> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        decrease();
+                        if (widget.readOnly != true) {
+                          decrease();
+                        }
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 7),
@@ -329,41 +367,67 @@ class _OrderProductCardState extends State<OrderProductCard> {
                     SizedBox(
                       width: 10,
                     ),
-                    Container(
-                        padding: const EdgeInsets.only(right: 5),
-                        alignment: Alignment.centerRight,
-                        height: 36,
-                        width: 90,
-                        decoration: BoxDecoration(
-                          color: Color(0xffF2F3F7),
-                          border: Border.all(
-                            color: Color(0xffD9DCDE),
+                    widget.readOnly == true
+                        ? Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 6, horizontal: 5),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Color(0xffD9DCDE),
+                              ),
+                            ),
+                            width: 90,
+                            child: Text(
+                              '${widget.data?.quantity}',
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                              textAlign: TextAlign.end,
+                            ),
+                          )
+                        : SizedBox(
+                            width: 90,
+                            child: FormBuilder(
+                              key: fbKey,
+                              child: FormTextField(
+                                onChanged: (value) {
+                                  setState(() {
+                                    newValue =
+                                        int.parse(quantityController.text);
+                                    widget.data?.quantity = newValue;
+                                  });
+                                },
+                                fontSize: 18,
+                                inputType: TextInputType.number,
+                                controller: quantityController,
+                                textAlign: TextAlign.end,
+                                decoration: InputDecoration(
+                                  labelStyle: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                  hintText: '0',
+                                  isDense: true,
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 6, horizontal: 5),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.zero,
+                                    borderSide: BorderSide(
+                                      color: Color(0xffD9DCDE),
+                                    ),
+                                  ),
+                                ),
+                                name: 'quantity',
+                              ),
+                            ),
                           ),
-                        ),
-                        child: widget.data?.quantity != null
-                            ? Text(
-                                '${widget.data?.quantity}',
-                                style: TextStyle(
-                                  color: grey3,
-                                  fontSize: 20,
-                                ),
-                              )
-                            : Text(
-                                '0',
-                                style: TextStyle(
-                                  color: grey3,
-                                  fontSize: 20,
-                                ),
-                              )),
                     SizedBox(
                       width: 10,
                     ),
                     GestureDetector(
                       onTap: () {
-                        setState(() {
-                          count++;
-                          widget.data?.quantity = count;
-                        });
+                        if (widget.readOnly != true) {
+                          increase();
+                        }
                       },
                       child: Container(
                         height: 40,
@@ -388,7 +452,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                count == 0 || widget.data?.quantity == null
+                widget.data?.quantity == null || widget.data?.quantity == 0
                     ? Text(
                         '... ширхэг',
                         style: TextStyle(
@@ -398,14 +462,14 @@ class _OrderProductCardState extends State<OrderProductCard> {
                         ),
                       )
                     : Text(
-                        '${count} ширхэг',
+                        '${widget.data?.quantity} ширхэг',
                         style: TextStyle(
                           color: grey2,
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
                         ),
                       ),
-                widget.data?.quantity != null
+                widget.data?.quantity != null && widget.data?.price != null
                     ? Text(
                         '${widget.data!.price! * widget.data!.quantity!}₮',
                         style: TextStyle(
@@ -414,14 +478,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                           fontSize: 16,
                         ),
                       )
-                    : Text(
-                        '${widget.data!.price! * count}₮',
-                        style: TextStyle(
-                          color: grey2,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                        ),
-                      ),
+                    : Text(''),
               ],
             )
           ],

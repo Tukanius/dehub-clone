@@ -28,10 +28,14 @@ class PartnerDetailPage extends StatefulWidget {
 class _PartnerDetailPageState extends State<PartnerDetailPage>
     with SingleTickerProviderStateMixin, AfterLayoutMixin {
   BusinessNetwork businessNetwork = BusinessNetwork();
+  bool isLoading = true;
 
   @override
   afterFirstLayout(BuildContext context) async {
     businessNetwork = await BusinessApi().partnerDetail(widget.id);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -59,68 +63,77 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
           ),
         ),
       ),
-      body: DefaultTabController(
-        length: 3,
-        child: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, innerBoxIsScrolled) {
-            return <Widget>[
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    Container(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      child: Image(
-                        image: AssetImage('images/map.jpg'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    // PartnerCard(
-                    //   type: false,
-                    // ),
-                    Container(
-                      color: white,
-                      child: TabBar(
-                        indicatorColor: networkColor,
-                        labelColor: networkColor,
-                        unselectedLabelColor: dark,
-                        tabs: [
+      body: isLoading == true
+          ? Center(
+              child: CircularProgressIndicator(
+                color: networkColor,
+              ),
+            )
+          : DefaultTabController(
+              length: 3,
+              child: NestedScrollView(
+                headerSliverBuilder:
+                    (BuildContext context, innerBoxIsScrolled) {
+                  return <Widget>[
+                    SliverToBoxAdapter(
+                      child: Column(
+                        children: [
                           Container(
-                            height: 40,
-                            child: Center(
-                              child: Text('Мэдээлэл'),
+                            height: 200,
+                            width: MediaQuery.of(context).size.width,
+                            child: Image(
+                              image: AssetImage('images/map.jpg'),
+                              fit: BoxFit.cover,
                             ),
                           ),
+                          // PartnerCard(
+                          //   type: false,
+                          // ),
                           Container(
-                            height: 40,
-                            child: Center(
-                              child: Text('Ажилтан'),
-                            ),
-                          ),
-                          Container(
-                            height: 40,
-                            child: Center(
-                              child: Text('Салбар'),
+                            color: white,
+                            child: TabBar(
+                              indicatorColor: networkColor,
+                              labelColor: networkColor,
+                              unselectedLabelColor: dark,
+                              tabs: [
+                                Container(
+                                  height: 40,
+                                  child: Center(
+                                    child: Text('Мэдээлэл'),
+                                  ),
+                                ),
+                                Container(
+                                  height: 40,
+                                  child: Center(
+                                    child: Text('Ажилтан'),
+                                  ),
+                                ),
+                                Container(
+                                  height: 40,
+                                  child: Center(
+                                    child: Text('Салбар'),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
+                    )
+                  ];
+                },
+                body: TabBarView(
+                  physics: NeverScrollableScrollPhysics(),
+                  children: [
+                    InformationTab(
+                      data: businessNetwork,
                     ),
+                    Text('1'),
+                    SectorTab(),
                   ],
                 ),
-              )
-            ];
-          },
-          body: TabBarView(
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              InformationTab(),
-              Text('1'),
-              SectorTab(),
-            ],
-          ),
-        ),
-      ),
+              ),
+            ),
     );
   }
 }

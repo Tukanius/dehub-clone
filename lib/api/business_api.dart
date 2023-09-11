@@ -54,7 +54,7 @@ class BusinessApi extends HttpRequest {
   }
 
   Future<BusinessNetwork> partnerDetail(String id) async {
-    var res = get(
+    var res = await get(
       "/network/$id",
       "BUSINESS",
       true,

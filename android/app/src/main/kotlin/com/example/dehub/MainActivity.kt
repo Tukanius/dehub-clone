@@ -1,4 +1,4 @@
-package com.example.dehub
+package com.dehub.flutter
 
 import io.flutter.embedding.android.FlutterActivity
 

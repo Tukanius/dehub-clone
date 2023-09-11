@@ -8,7 +8,9 @@ class CustomButton extends StatefulWidget {
   final Color? textColor;
   final bool? isGradient;
   final Container? container;
+  final LinearGradient? gradient;
   CustomButton({
+    this.gradient,
     this.container,
     this.isGradient,
     this.textColor,
@@ -36,7 +38,7 @@ class _CustomButtonState extends State<CustomButton> {
             color: widget.isGradient == false || widget.isGradient == null
                 ? widget.labelColor
                 : null,
-            gradient: widget.isGradient == true ? gradient : null,
+            gradient: widget.isGradient == true ? widget.gradient : null,
           ),
           child: widget.isGradient != true
               ? Center(

@@ -19,6 +19,7 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
   int page = 1;
   int limit = 10;
   Result pullSheet = Result(count: 0, rows: []);
+  bool isLoading = true;
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -32,48 +33,56 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
         .pullSheet(ResultArguments(filter: filter, offset: offset));
     setState(() {
       pullSheet = res;
+      isLoading = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(
-            height: 5,
-          ),
-          SearchButton(
-            color: orderColor,
-            textColor: orderColor,
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          pullSheet.rows?.length != 0
-              ? Column(
-                  children: pullSheet.rows!
-                      .map(
-                        (data) => ShippingCard(
-                          data: data,
-                          onClick: () {
-                            Navigator.of(context).pushNamed(
-                              OrderShipment.routeName,
-                              arguments: OrderShipmentArguments(data: data),
-                            );
-                          },
-                        ),
-                      )
-                      .toList(),
-                )
-              : Column(
-                  children: [
-                    Lottie.asset('images/order-not-found.json'),
-                    Text('Хоосон байна')
-                  ],
+    return isLoading == true
+        ? Center(
+            child: CircularProgressIndicator(
+              color: orderColor,
+            ),
+          )
+        : SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 5,
                 ),
-        ],
-      ),
-    );
+                SearchButton(
+                  color: orderColor,
+                  textColor: orderColor,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                pullSheet.rows?.length != 0
+                    ? Column(
+                        children: pullSheet.rows!
+                            .map(
+                              (data) => ShippingCard(
+                                data: data,
+                                onClick: () {
+                                  Navigator.of(context).pushNamed(
+                                    OrderShipment.routeName,
+                                    arguments:
+                                        OrderShipmentArguments(data: data),
+                                  );
+                                },
+                              ),
+                            )
+                            .toList(),
+                      )
+                    : Column(
+                        children: [
+                          Lottie.asset('images/order-not-found.json'),
+                          Text('Хоосон байна')
+                        ],
+                      ),
+              ],
+            ),
+          );
   }
 }

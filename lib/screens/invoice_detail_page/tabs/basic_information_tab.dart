@@ -4,6 +4,7 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/harah.dart';
+// import 'package:dehub/screens/payment_page/payment_page.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class BasicInformationTab extends StatefulWidget {
 class _BasicInformationTabState extends State<BasicInformationTab>
     with AfterLayoutMixin {
   Invoice invoice = Invoice();
-
+  General general = General();
   bool isLoading = true;
 
   @override
@@ -38,92 +39,10 @@ class _BasicInformationTabState extends State<BasicInformationTab>
     });
   }
 
-  overdueStatus() {
-    switch (invoice.overdueStatus) {
-      case "NORMAL":
-        return "Хэвийн";
-      case "ONE_TO_THREE":
-        return "1-3 хоног";
-      case "FOUR_TO_THIRTY":
-        return "4-30 хоног";
-      case "THIRTY_ONE_TO_SIXTY":
-        return "31-60 хоног";
-      case "SIXTY_ONE_TO_NINETY":
-        return "61-90 хоног";
-      case "MORE_THAN_NINETY":
-        return "91 < хоног";
-    }
-  }
-
-  invoicePaymentStatus() {
-    switch (invoice.paymentStatus) {
-      case "PENDING":
-        return "Хүлээгдэж буй";
-      case "DIVIDED":
-        return "Хуваасан";
-      case "OVER_DUE":
-        return "Хугацаа хэтэрсэн";
-      case "CLOSED":
-        return "Хаасан";
-      default:
-    }
-  }
-
-  textColor() {
-    switch (invoice.paymentStatus) {
-      case "PENDING":
-        return yellow;
-      case "DIVIDED":
-        return buttonColor;
-      case "OVER_DUE":
-        return red;
-      case "CLOSED":
-        return green;
-      default:
-    }
-  }
-
-  invoiceStatus() {
-    switch (invoice.invoiceStatus) {
-      case "DRAFT":
-        return "Түр төлөв";
-      case "SENT":
-        return "Илгээсэн";
-      case "CONFIRMED":
-        return "Баталсан";
-      case "REJECTED":
-        return "Татгалзсан";
-      case "RETURNED":
-        return "Буцаасан";
-      case "CLOSED":
-        return "Хаасан";
-      default:
-    }
-  }
-
-  invoiceStatusColor() {
-    switch (invoice.invoiceStatus) {
-      case "DRAFT":
-        return grey;
-      case "SENT":
-        return Colors.indigo;
-      case "CONFIRMED":
-        return Colors.lightBlue;
-      case "REJECTED":
-        return red;
-      case "RETURNED":
-        return Colors.pink;
-      case "CLOSED":
-        return green;
-      default:
-    }
-  }
-
-  General general = General();
-
   @override
   Widget build(BuildContext context) {
     general = Provider.of<GeneralProvider>(context, listen: false).general;
+
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Container(
@@ -973,7 +892,15 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                              InvoicePaymentPage.routeName,
+                              arguments: InvoicePaymentPageArguments(
+                                data: Invoice(),
+                                id: '',
+                              ),
+                            );
+                          },
                           child: Column(
                             children: [
                               SizedBox(
@@ -1057,4 +984,84 @@ class _BasicInformationTabState extends State<BasicInformationTab>
           data: invoice,
         ),
       );
+  overdueStatus() {
+    switch (invoice.overdueStatus) {
+      case "NORMAL":
+        return "Хэвийн";
+      case "ONE_TO_THREE":
+        return "1-3 хоног";
+      case "FOUR_TO_THIRTY":
+        return "4-30 хоног";
+      case "THIRTY_ONE_TO_SIXTY":
+        return "31-60 хоног";
+      case "SIXTY_ONE_TO_NINETY":
+        return "61-90 хоног";
+      case "MORE_THAN_NINETY":
+        return "91 < хоног";
+    }
+  }
+
+  invoicePaymentStatus() {
+    switch (invoice.paymentStatus) {
+      case "PENDING":
+        return "Хүлээгдэж буй";
+      case "DIVIDED":
+        return "Хуваасан";
+      case "OVER_DUE":
+        return "Хугацаа хэтэрсэн";
+      case "CLOSED":
+        return "Хаасан";
+      default:
+    }
+  }
+
+  textColor() {
+    switch (invoice.paymentStatus) {
+      case "PENDING":
+        return yellow;
+      case "DIVIDED":
+        return buttonColor;
+      case "OVER_DUE":
+        return red;
+      case "CLOSED":
+        return green;
+      default:
+    }
+  }
+
+  invoiceStatus() {
+    switch (invoice.invoiceStatus) {
+      case "DRAFT":
+        return "Түр төлөв";
+      case "SENT":
+        return "Илгээсэн";
+      case "CONFIRMED":
+        return "Баталсан";
+      case "REJECTED":
+        return "Татгалзсан";
+      case "RETURNED":
+        return "Буцаасан";
+      case "CLOSED":
+        return "Хаасан";
+      default:
+    }
+  }
+
+  invoiceStatusColor() {
+    switch (invoice.invoiceStatus) {
+      case "DRAFT":
+        return grey;
+      case "SENT":
+        return Colors.indigo;
+      case "CONFIRMED":
+        return Colors.lightBlue;
+      case "REJECTED":
+        return red;
+      case "RETURNED":
+        return Colors.pink;
+      case "CLOSED":
+        return green;
+      default:
+    }
+  }
 }

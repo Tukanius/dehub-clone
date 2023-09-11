@@ -9,13 +9,17 @@ import 'package:dehub/screens/avaible_funding_page/avaible_funding_detail_page.d
 import 'package:dehub/screens/avaible_funding_page/avaible_funding_page.dart';
 import 'package:dehub/screens/avaible_funding_page/request_approval_page.dart';
 import 'package:dehub/screens/debt_page/debt_page.dart';
+import 'package:dehub/screens/enter_phone_page/enter_phone_page.dart';
+import 'package:dehub/screens/expenses_page/expenses_page.dart';
 import 'package:dehub/screens/financing_page/financing_page.dart';
 import 'package:dehub/screens/first_page/first_page.dart';
 import 'package:dehub/screens/funding_request_page/funding_request_detail_page.dart';
 import 'package:dehub/screens/home_page/home_page.dart';
+import 'package:dehub/screens/income_guarantee/income_Guarantee.dart';
 import 'package:dehub/screens/invoice/closed_invoice_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product.dart';
 import 'package:dehub/screens/invoice/new_invoice/sector-choose/sector-choose.dart';
+import 'package:dehub/screens/invoice/payment_page/payment_page.dart';
 import 'package:dehub/screens/invoice/payment_page/qpay_page.dart';
 import 'package:dehub/screens/invoice/tabs/give.dart';
 import 'package:dehub/screens/invoice/tabs/take.dart';
@@ -68,8 +72,14 @@ import 'package:dehub/screens/new_order/order_payment.dart';
 import 'package:dehub/screens/new_order/order_send/order_send_customer.dart';
 import 'package:dehub/screens/new_order/order_send/order_send_page.dart';
 import 'package:dehub/screens/new_order/product_choose/product_choose_in_pieces/product_choose.dart';
+import 'package:dehub/screens/order_cash_approval/order_cash_approval.dart';
+import 'package:dehub/screens/order_delivery/delivery_detail/delivery_detail.dart';
 import 'package:dehub/screens/order_delivery/order_delivery.dart';
+import 'package:dehub/screens/order_delivery/delivery/delivery.dart';
+import 'package:dehub/screens/order_invoice/order_invoice.dart';
 import 'package:dehub/screens/order_page/order_page.dart';
+import 'package:dehub/screens/order_cash_payment/order_cash_payment.dart';
+import 'package:dehub/screens/order_payment_page/order_payment_page.dart';
 import 'package:dehub/screens/order_shipment/order_shipment.dart';
 import 'package:dehub/screens/order_shipping/order_shipping.dart';
 import 'package:dehub/screens/otp_page/create_password.dart';
@@ -77,6 +87,7 @@ import 'package:dehub/screens/otp_page/otp-phone-verify.dart';
 import 'package:dehub/screens/otp_page/otp_page.dart';
 import 'package:dehub/screens/partner_page/partner_page.dart';
 import 'package:dehub/screens/payment_page/payment_page.dart';
+import 'package:dehub/screens/product_give/product_give.dart';
 import 'package:dehub/screens/product_page/product_page.dart';
 import 'package:dehub/screens/product_page/tabs/dashboard_tab/product_detail_page/product_detail_page.dart';
 import 'package:dehub/screens/product_page/tabs/dashboard_tab/product_list_page/product_list_page.dart';
@@ -84,6 +95,7 @@ import 'package:dehub/screens/received_funding_page/give_funding_detail_page.dar
 import 'package:dehub/screens/received_funding_page/received_funding_detail_page.dart';
 import 'package:dehub/screens/received_funding_page/received_funding_page.dart';
 import 'package:dehub/screens/received_order_detail/received_order_detail.dart';
+import 'package:dehub/screens/receiver_otp_verify/receiver_otp_verify.dart';
 import 'package:dehub/screens/register-page/register-page.dart';
 import 'package:dehub/screens/shopping/shopping_page.dart';
 import 'package:dehub/screens/menu/suppliers/suppliers_page.dart';
@@ -464,6 +476,30 @@ class MyApp extends StatelessWidget {
                         );
                       },
                     );
+                  case InvoicePaymentPage.routeName:
+                    InvoicePaymentPageArguments arguments =
+                        settings.arguments as InvoicePaymentPageArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          InvoicePaymentPage(
+                        id: arguments.id,
+                        data: arguments.data,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 0.1);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
                   case OrderCustomerChoose.routeName:
                     OrderCustomerChooseArguments arguments =
                         settings.arguments as OrderCustomerChooseArguments;
@@ -473,6 +509,54 @@ class MyApp extends StatelessWidget {
                         customerListenController:
                             arguments.customerListenController,
                       ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
+                  case OrderInvoice.routeName:
+                    // OrderInvoiceArguments arguments =
+                    // settings.arguments as OrderInvoiceArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          OrderInvoice(
+                              // customerListenController:
+                              // arguments.customerListenController,
+                              ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
+                  case OrderCashPayment.routeName:
+                    // OrderCashPaymentArguments arguments =
+                    // settings.arguments as OrderCashPaymentArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          OrderCashPayment(
+                              // customerListenController:
+                              // arguments.customerListenController,
+                              ),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                         var begin = const Offset(0.0, 1.0);
@@ -499,6 +583,30 @@ class MyApp extends StatelessWidget {
                       return NewOrder(
                         id: arguments.id,
                       );
+                    });
+                  case IncomeGuarantee.routeName:
+                    // IncomeGuaranteeArguments arguments =
+                    // settings.arguments as IncomeGuaranteeArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return IncomeGuarantee(
+                          // id: arguments.id,
+                          );
+                    });
+                  case OrderCashApproval.routeName:
+                    // OrderCashApprovalArguments arguments =
+                    // settings.arguments as OrderCashApprovalArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return OrderCashApproval(
+                          // id: arguments.id,
+                          );
+                    });
+                  case OrderPaymentPage.routeName:
+                    // OrderPaymentPageArguments arguments =
+                    // settings.arguments as OrderPaymentPageArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return OrderPaymentPage(
+                          // id: arguments.id,
+                          );
                     });
                   case FinancingPage.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -634,6 +742,56 @@ class MyApp extends StatelessWidget {
                       return AddRow(
                         additionalRowsListenController:
                             arguments.additionalRowsListenController,
+                      );
+                    });
+                  case ProductGive.routeName:
+                    ProductGiveArguments arguments =
+                        settings.arguments as ProductGiveArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return ProductGive(
+                        data: arguments.data,
+                      );
+                    });
+                  case ReceiverOtpVerify.routeName:
+                    // ReceiverOtpVerifyArguments arguments =
+                    // settings.arguments as ReceiverOtpVerifyArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return ReceiverOtpVerify(
+                          // additionalRowsListenController:
+                          // arguments.additionalRowsListenController,
+                          );
+                    });
+                  case EnterPhonePage.routeName:
+                    // EnterPhonePageArguments arguments =
+                    // settings.arguments as EnterPhonePageArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return EnterPhonePage(
+                          // additionalRowsListenController:
+                          // arguments.additionalRowsListenController,
+                          );
+                    });
+                  case ExpensesPage.routeName:
+                    ExpensesPageArguments arguments =
+                        settings.arguments as ExpensesPageArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return ExpensesPage(
+                        data: arguments.data,
+                      );
+                    });
+                  case DeliveryPage.routeName:
+                    DeliveryPageArguments arguments =
+                        settings.arguments as DeliveryPageArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return DeliveryPage(
+                        data: arguments.data,
+                      );
+                    });
+                  case DeliveryDetail.routeName:
+                    DeliveryDetailArguments arguments =
+                        settings.arguments as DeliveryDetailArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return DeliveryDetail(
+                        data: arguments.data,
                       );
                     });
                   case ReceivedOrderDetail.routeName:

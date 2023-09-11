@@ -2,6 +2,8 @@ import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/business-staffs.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -10,6 +12,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:moment_dart/moment_dart.dart';
+import 'package:provider/provider.dart';
 
 class AddDirectionArguments {
   ListenController listenController;
@@ -39,6 +43,7 @@ class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
   int limit = 10;
   Result distributionArea = Result(count: 0, rows: []);
   bool isLoading = true;
+  User user = User();
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
@@ -73,6 +78,7 @@ class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: false).businessUser;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -298,7 +304,7 @@ class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
                                   style: TextStyle(color: dark),
                                 ),
                                 Text(
-                                  '2023-04-08 16:24 PM',
+                                  '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD HH:mm")}',
                                   style: TextStyle(
                                     color: dark,
                                   ),
@@ -317,7 +323,7 @@ class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
                                   style: TextStyle(color: dark),
                                 ),
                                 Text(
-                                  'Username',
+                                  '',
                                   style: TextStyle(
                                     color: networkColor,
                                   ),

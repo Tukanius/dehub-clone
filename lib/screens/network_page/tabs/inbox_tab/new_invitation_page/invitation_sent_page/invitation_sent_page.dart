@@ -1,6 +1,7 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/partner_cards/business_suggest_card.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/business.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/result.dart';
@@ -13,7 +14,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moment_dart/moment_dart.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:lottie/lottie.dart';
 
 class InvitationSentPageArguments {
   ListenController listenController;
@@ -70,75 +70,17 @@ class _InvitationSentPageState extends State<InvitationSentPage>
     });
   }
 
-  showSuccess(ctx, String labeltext) async {
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) {
-        return Container(
-          alignment: Alignment.center,
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          child: Stack(
-            alignment: Alignment.topCenter,
-            children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(top: 75),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                padding: const EdgeInsets.only(top: 90, left: 20, right: 20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const Text(
-                      'Амжилттай',
-                      style: TextStyle(
-                          color: dark,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                      '${labeltext}',
-                      textAlign: TextAlign.center,
-                    ),
-                    ButtonBar(
-                      buttonMinWidth: 100,
-                      alignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        TextButton(
-                          style: ButtonStyle(
-                            overlayColor:
-                                MaterialStateProperty.all(Colors.transparent),
-                          ),
-                          child: const Text(
-                            "Буцах",
-                            style: TextStyle(color: dark),
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            Navigator.of(ctx).pop();
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Lottie.asset('images/success.json', height: 150, repeat: false),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
   validateCheck() async {
     if (receiverIds.isEmpty) {
-      show(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: invoiceColor,
+          shape: StadiumBorder(),
+          content: Center(
+            child: Text('Харилцагч сонгоно уу!'),
+          ),
+        ),
+      );
     } else {
       onSubmit(true);
     }
@@ -155,7 +97,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
   show(ctx) {
     showDialog<void>(
       context: context,
-      barrierDismissible: false, // user must tap button!
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
           content: const SingleChildScrollView(
@@ -194,11 +136,13 @@ class _InvitationSentPageState extends State<InvitationSentPage>
       invitation.receiverIds = receiverIds;
       await BusinessApi().createInvitation(invitation);
       widget.listenController.changeVariable('invitationSent');
-      showSuccess(
-          context,
-          send == true
-              ? 'Урилга амжилттай илгээгдлээ'
-              : "Урилга амжилттай хадгалагдлаа");
+      showCustomDialog(
+        context,
+        "Урилга амжилттай илгээгдлээ",
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      );
       setState(() {
         isLoading = false;
       });

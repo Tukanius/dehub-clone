@@ -1,12 +1,12 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/invitation_received.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:moment_dart/moment_dart.dart';
-import 'package:lottie/lottie.dart';
 
 class InvitationDetailPageArguments {
   ListenController listenController;
@@ -47,79 +47,18 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
     });
   }
 
-  showSuccess(ctx, String labeltext) async {
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) {
-        return Container(
-          alignment: Alignment.center,
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          child: Stack(
-            alignment: Alignment.topCenter,
-            children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(top: 75),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                padding: const EdgeInsets.only(top: 90, left: 20, right: 20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const Text(
-                      'Амжилттай',
-                      style: TextStyle(
-                          color: dark,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                      '${labeltext}',
-                      textAlign: TextAlign.center,
-                    ),
-                    ButtonBar(
-                      buttonMinWidth: 100,
-                      alignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        TextButton(
-                          style: ButtonStyle(
-                            overlayColor:
-                                MaterialStateProperty.all(Colors.transparent),
-                          ),
-                          child: const Text(
-                            "Буцах",
-                            style: TextStyle(color: dark),
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            Navigator.of(ctx).pop();
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Lottie.asset('images/success.json', height: 150, repeat: false),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
   onSubmit(bool accept) async {
     try {
       respond.accept = accept;
       respond.responseMessage = 'accept';
       await BusinessApi().respond(respond, widget.id);
-      showSuccess(context,
-          accept == true ? "Амжилттай зөвшөөрлөө" : "Амжилттай цуцаллаа");
+      showCustomDialog(
+        context,
+        "Амжилттай зөвшөөрлөө",
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      );
       widget.listenController.changeVariable('refresh');
     } catch (e) {
       print('===============ERROR===============');

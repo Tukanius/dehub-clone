@@ -324,6 +324,9 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     orderId: json['orderId'] != null ? json['orderId'] as String : null,
     pullSheetId:
         json['pullSheetId'] != null ? json['pullSheetId'] as String : null,
+    deliveryNoteStatus: json['deliveryNoteStatus'] != null
+        ? json['deliveryNoteStatus'] as String
+        : null,
     variantParentId: json['variantParentId'] != null
         ? json['variantParentId'] as String
         : null,
@@ -360,12 +363,22 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     totalLineQuantity: json['totalLineQuantity'] != null
         ? int.parse(json['totalLineQuantity'].toString())
         : null,
+    pullSheetLineId: json['pullSheetLineId'] != null
+        ? json['pullSheetLineId'] as String
+        : null,
+    confirmedQuantity: json['confirmedQuantity'] != null
+        ? int.parse(json['confirmedQuantity'].toString())
+        : null,
   );
 }
 
 Map<String, dynamic> _$OrderToJson(Order instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.confirmedQuantity != null)
+    json['confirmedQuantity'] = instance.confirmedQuantity;
+  if (instance.pullSheetLineId != null)
+    json['pullSheetLineId'] = instance.pullSheetLineId;
   if (instance.totalLineQuantity != null)
     json['totalLineQuantity'] = instance.totalLineQuantity;
   if (instance.totalLineType != null)
@@ -479,6 +492,8 @@ Map<String, dynamic> _$OrderToJson(Order instance) {
     json['senderBusinessId'] = instance.senderBusinessId;
   if (instance.orderedUserId != null)
     json['orderedUserId'] = instance.orderedUserId;
+  if (instance.deliveryNoteStatus != null)
+    json['deliveryNoteStatus'] = instance.deliveryNoteStatus;
   if (instance.orderStatus != null) json['orderStatus'] = instance.orderStatus;
   if (instance.salesCode != null) json['salesCode'] = instance.salesCode;
   if (instance.purchaseCode != null)

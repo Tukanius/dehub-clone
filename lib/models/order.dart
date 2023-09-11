@@ -148,7 +148,6 @@ class Order {
   Order? warehouse;
   String? warehouseUserId;
   Order? warehouseUser;
-
   Order? regUser;
   String? warehouseStatus;
   List<Order>? deliveryNotes;
@@ -169,8 +168,15 @@ class Order {
   String? deliveryNoteId;
   int? totalLineType;
   int? totalLineQuantity;
+  String? pullSheetLineId;
+  int? confirmedQuantity;
+
+  String? deliveryNoteStatus;
 
   Order({
+    this.deliveryNoteStatus,
+    this.pullSheetLineId,
+    this.confirmedQuantity,
     this.regUser,
     this.warehouseStatus,
     this.deliveryNotes,
