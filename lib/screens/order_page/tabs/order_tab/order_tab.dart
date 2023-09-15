@@ -1,4 +1,4 @@
-import 'package:dehub/screens/order_page/tabs/order_tab/tabs/customer_tab.dart';
+import 'package:dehub/screens/order_page/tabs/order_tab/tabs/received_tab.dart';
 import 'package:dehub/screens/order_page/tabs/order_tab/tabs/sales_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +51,7 @@ class _OrderTabState extends State<OrderTab> {
         body: TabBarView(
           children: [
             SalesTab(),
-            CustomerTab(),
+            ReceivedTab(),
           ],
         ),
       ),

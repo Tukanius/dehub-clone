@@ -1,15 +1,12 @@
 import 'dart:async';
-// import 'package:dehub/api/order_api.dart';
-// import 'package:dehub/components/goods_info_card/order_goods_info_card.dart';
-import 'package:dehub/components/product_give_card/product_give_card.dart';
-// import 'package:dehub/components/shipment_product_card/shipment_product_card.dart';
-// import 'package:dehub/components/order_product_card/order_product_card.dart';
-// import 'package:dehub/components/shipping_card/shipping_card.dart';
+import 'package:dehub/api/order_api.dart';
+import 'package:dehub/components/shipment_product_card/shipment_product_card.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/expenses_page/expenses_page.dart';
 import 'package:dehub/screens/income_guarantee/income_Guarantee.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -39,25 +36,45 @@ class ProductGive extends StatefulWidget {
 class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
   bool isStart = false;
   Duration duration = Duration();
-  TextEditingController controller = TextEditingController();
-  bool isSubmit = false;
-  late Timer _timer;
   bool isLoading = true;
   Order shipment = Order();
+  User user = User();
   Timer? timer;
   bool isCountDown = true;
-  String? minutes;
-  String? seconds;
   bool startShipment = false;
-  User user = User();
+  Duration resume = Duration();
+  Duration difference = Duration();
+
+  @override
+  afterFirstLayout(BuildContext context) async {
+    shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
+    if (shipment.startedDate != null) {
+      difference = DateTime.now()
+          .difference(DateTime.parse(shipment.startedDate.toString()));
+      int pausedDurationInSeconds = (shipment.pausedDuration!).round();
+      resume = difference - Duration(seconds: pausedDurationInSeconds);
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   void addTimer() {
-    final addSeconds = 1;
+    if (shipment.startedDate == null) {
+      final addSeconds = 1;
 
-    setState(() {
-      final seconds = duration.inSeconds + addSeconds;
-      duration = Duration(seconds: seconds);
-    });
+      setState(() {
+        final seconds = duration.inSeconds + addSeconds;
+        duration = Duration(seconds: seconds);
+      });
+    } else {
+      final addSeconds = 1;
+
+      setState(() {
+        final seconds = resume.inSeconds + addSeconds;
+        resume = Duration(seconds: seconds);
+      });
+    }
   }
 
   void reset() {
@@ -69,45 +86,72 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
   }
 
   void startTimer() async {
-    if (shipment.isPaused == false) {
+    if (shipment.startedDate == null) {
       try {
-        // await OrderApi().pullSheetStart(widget.data.id!);
+        await OrderApi().deliveryNotestart(widget.data.id!);
         timer = Timer.periodic(Duration(seconds: 1), (timer) => addTimer());
+        shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
         setState(() {
           isStart = true;
         });
       } catch (e) {
-        print('=======start================');
+        print('================start================');
         print(e);
       }
     } else {
       try {
-        // await OrderApi().pullSheetProceed(widget.data.id!);
+        await OrderApi().deliveryNoteProceed(widget.data.id!);
+        timer = Timer.periodic(Duration(seconds: 1), (timer) => addTimer());
+        shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
+        setState(() {
+          isStart = true;
+        });
       } catch (e) {
-        print('=======proceed================');
+        print('================proceed================');
         print(e);
       }
     }
-    // shipment = await OrderApi().pullSheetGet(widget.data.id!);
+    shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
   }
 
   Widget buildTime() {
-    String twoDigits(int n) => n.toString().padLeft(2, "0");
-    final minutes = twoDigits(duration.inMinutes.remainder(60));
-    final seconds = twoDigits(duration.inSeconds.remainder(60));
-
-    return Text('$minutes:$seconds');
+    if (shipment.startedDate == null) {
+      String twoDigits(int n) => n.toString().padLeft(2, "0");
+      final hours = twoDigits(duration.inHours);
+      final minutes = twoDigits(duration.inMinutes.remainder(60));
+      final seconds = twoDigits(duration.inSeconds.remainder(60));
+      return Text('$hours:$minutes:$seconds');
+    } else {
+      String twoDigits(int n) => n.toString().padLeft(2, "0");
+      final hours = twoDigits(resume.inHours);
+      final minutes = twoDigits(resume.inMinutes.remainder(60));
+      final seconds = twoDigits(resume.inSeconds.remainder(60));
+      return Text('$hours:$minutes:$seconds');
+    }
   }
 
   void stopTimer({bool resets = true}) async {
     if (resets) {
       reset();
     }
-    // await OrderApi().pullSheetPause(widget.data.id!);
+    shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
+    await OrderApi().deliveryNotePause(widget.data.id!);
     setState(() {
       startShipment = false;
+      isStart = false;
     });
     setState(() => timer?.cancel());
+  }
+
+  end() async {
+    try {
+      await OrderApi().deliveryNoteEnd(widget.data.id!);
+      Navigator.of(context).pop();
+    } catch (e) {
+      print('============endError==========');
+      print(e.toString());
+      print('============endError==========');
+    }
   }
 
   @override
@@ -184,14 +228,24 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                             ? white
                                             : buttonColor,
                                       ),
-                                      Text(
-                                        'Эхлэх',
-                                        style: TextStyle(
-                                          color: isStart == true
-                                              ? white
-                                              : buttonColor,
-                                        ),
-                                      ),
+                                      shipment.startedDate == null
+                                          ? Text(
+                                              'Эхлэх',
+                                              style: TextStyle(
+                                                color: isStart == true
+                                                    ? white
+                                                    : buttonColor,
+                                              ),
+                                            )
+                                          : Text(
+                                              'Үргэлжлүүлэх',
+                                              style: TextStyle(
+                                                fontSize: 9,
+                                                color: isStart == true
+                                                    ? white
+                                                    : buttonColor,
+                                              ),
+                                            ),
                                     ],
                                   ),
                                 ),
@@ -216,8 +270,9 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  // pause();
-                                  stopTimer(resets: false);
+                                  if (shipment.isPaused == false) {
+                                    stopTimer(resets: false);
+                                  }
                                 },
                                 child: Container(
                                   height: 60,
@@ -245,9 +300,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  // end();
-                                  Navigator.of(context)
-                                      .pushNamed(ExpensesPage.routeName);
+                                  end();
                                 },
                                 child: Container(
                                   height: 60,
@@ -279,149 +332,22 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                             ],
                           ),
                         ),
-                        // isStart == false
-                        //     ? Column(
-                        //         children: [
-                        //           ShippingCard(
-                        //               // data: widget.data,
-                        //               ),
-                        //           Container(
-                        //             color: white,
-                        //             child: Column(
-                        //               crossAxisAlignment: CrossAxisAlignment.start,
-                        //               children: [
-                        //                 Container(
-                        //                   margin: const EdgeInsets.only(
-                        //                       top: 10, left: 15),
-                        //                   child: Text(
-                        //                     'Барааны мэдээлэл',
-                        //                     style: TextStyle(
-                        //                       fontWeight: FontWeight.w600,
-                        //                       color: grey3,
-                        //                     ),
-                        //                   ),
-                        //                 ),
-                        //                 Divider(),
-                        //                 Row(
-                        //                   mainAxisAlignment:
-                        //                       MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Expanded(
-                        //                       child: Row(
-                        //                         children: [
-                        //                           SizedBox(
-                        //                             width: 5,
-                        //                           ),
-                        //                           Text(
-                        //                             '#',
-                        //                             style: TextStyle(
-                        //                               fontSize: 12,
-                        //                               color: black,
-                        //                             ),
-                        //                           ),
-                        //                           SizedBox(
-                        //                             width: 20,
-                        //                           ),
-                        //                           Text(
-                        //                             'Бараа',
-                        //                             style: TextStyle(
-                        //                               color: black,
-                        //                               fontWeight: FontWeight.w500,
-                        //                               fontSize: 12,
-                        //                             ),
-                        //                           ),
-                        //                         ],
-                        //                       ),
-                        //                     ),
-                        //                     Expanded(
-                        //                       child: Row(
-                        //                         mainAxisAlignment:
-                        //                             MainAxisAlignment.spaceEvenly,
-                        //                         children: [
-                        //                           Container(
-                        //                             child: Text(
-                        //                               'Хэм.н',
-                        //                               style: TextStyle(
-                        //                                 color: black,
-                        //                                 fontWeight: FontWeight.w500,
-                        //                                 fontSize: 12,
-                        //                               ),
-                        //                             ),
-                        //                           ),
-                        //                           SizedBox(
-                        //                             width: 20,
-                        //                           ),
-                        //                           Container(
-                        //                             child: Text(
-                        //                               'Тоо',
-                        //                               style: TextStyle(
-                        //                                 color: black,
-                        //                                 fontWeight: FontWeight.w500,
-                        //                                 fontSize: 12,
-                        //                               ),
-                        //                             ),
-                        //                           ),
-                        //                           SizedBox(
-                        //                             width: 30,
-                        //                           ),
-                        //                           Container(
-                        //                             child: Text(
-                        //                               'Нэгж үнэ',
-                        //                               style: TextStyle(
-                        //                                 color: black,
-                        //                                 fontWeight: FontWeight.w500,
-                        //                                 fontSize: 12,
-                        //                               ),
-                        //                             ),
-                        //                           ),
-                        //                         ],
-                        //                       ),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //                 Divider(),
-                        //                 // Column(
-                        //                 //   children: shipment.pullSheetLines!
-                        //                 //       .map(
-                        //                 //         (e) => OrderGoodsInfo(
-                        //                 //           index: shipment.pullSheetLines
-                        //                 //               ?.indexOf(e),
-                        //                 //           data: e,
-                        //                 //         ),
-                        //                 //       )
-                        //                 //       .toList(),
-                        //                 // ),
-                        //                 SizedBox(
-                        //                   height: 10,
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //           ),
-                        //         ],
-                        //       )
                         Column(
-                          children: [1, 2, 3]
+                          children: shipment.lines!
                               .map(
-                                (e) => Column(
+                                (item) => Column(
                                   children: [
-                                    ProductGiveCard(
+                                    ShipmentProductCard(
                                       approveButtonClick: () async {
-                                        // await OrderApi().lineConfirm(
-                                        //   Order(
-                                        //     pullSheetLineId: e.id,
-                                        //     confirmedQuantity: e.quantity,
-                                        //   ),
-                                        // widget.data.id!,
-                                        // );
+                                        await OrderApi()
+                                            .deliveryNoteLineConfirm(item.id!);
                                       },
-                                      data: Order(
-                                        nameMon: "Гурванжин будаа",
-                                        quantity: 123,
-                                        price: 10000,
-                                        unit: "Ширхэг",
-                                        skuCode: "SKU_123123",
-                                        brand: "Талын монгол",
-                                      ),
+                                      lineConfirmText:
+                                          user.currentBusiness?.type ==
+                                                  "SUPPLIER"
+                                              ? "Өгсөн"
+                                              : "Авсан",
+                                      data: item,
                                     ),
                                     SizedBox(
                                       height: 5,
@@ -456,7 +382,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                 ),
                               ),
                               Text(
-                                "351,671 ₮",
+                                "${Utils().formatCurrency(shipment.lines?.map((e) => e.totalAmount).reduce((value, element) => value! + element!).toString())} ₮",
                                 style: TextStyle(
                                   color: orderColor,
                                   fontWeight: FontWeight.bold,
@@ -478,12 +404,12 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                   color: buttonColor,
                                 ),
                               ),
-                              // Text(
-                              //   "${shipment.pullSheetLines!.fold(0, (previousValue, element) => previousValue + element.quantity!)}",
-                              //   style: TextStyle(
-                              //     color: orderColor,
-                              //   ),
-                              // ),
+                              Text(
+                                "${shipment.lines?.length}",
+                                style: TextStyle(
+                                  color: orderColor,
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -501,7 +427,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                 ),
                               ),
                               Text(
-                                "90",
+                                "${shipment.lines?.fold(0, (previousValue, element) => previousValue + element.quantity!)}",
                                 style: TextStyle(
                                   color: orderColor,
                                 ),
@@ -516,59 +442,36 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                     ),
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 25),
-                  child: CustomButton(
-                    onClick: () {
-                      if (user.currentBusiness?.type == "SUPPLIER") {
-                        Navigator.of(context).pushNamed(
-                          ExpensesPage.routeName,
-                          arguments: ExpensesPageArguments(data: widget.data),
-                        );
-                      } else {
-                        Navigator.of(context)
-                            .pushNamed(IncomeGuarantee.routeName);
-                      }
-                    },
-                    labelText: "Шалгаж хүлээн авлаа",
-                    labelColor: orderColor,
-                  ),
-                ),
+                user.currentBusiness?.type == "BUYER"
+                    ? Container(
+                        decoration: BoxDecoration(
+                          color: white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 25),
+                        child: CustomButton(
+                          onClick: () {
+                            if (user.currentBusiness?.type == "SUPPLIER") {
+                              Navigator.of(context).pushNamed(
+                                ExpensesPage.routeName,
+                                arguments:
+                                    ExpensesPageArguments(data: widget.data),
+                              );
+                            } else {
+                              Navigator.of(context)
+                                  .pushNamed(IncomeGuarantee.routeName);
+                            }
+                          },
+                          labelText: "Шалгаж хүлээн авлаа",
+                          labelColor: orderColor,
+                        ),
+                      )
+                    : SizedBox(),
               ],
             ),
     );
-  }
-
-  pause() async {
-    // await OrderApi().pullSheetPause(widget.data.id!);
-    setState(() {
-      isStart = false;
-      _timer.cancel();
-    });
-  }
-
-  resume() async {
-    // await OrderApi().pullSheetProceed(widget.data.id!);
-    setState(() {});
-  }
-
-  end() async {
-    // await OrderApi().pullSheetEnd(widget.data.id!);
-    Navigator.of(context).pop();
-  }
-
-  @override
-  afterFirstLayout(BuildContext context) async {
-    // shipment = await OrderApi().pullSheetGet(widget.data.id!);
-    setState(() {
-      isLoading = false;
-    });
   }
 }

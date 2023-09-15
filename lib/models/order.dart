@@ -170,10 +170,16 @@ class Order {
   int? totalLineQuantity;
   String? pullSheetLineId;
   int? confirmedQuantity;
-
   String? deliveryNoteStatus;
 
+  String? condition;
+  String? text;
+  Order? user;
+
   Order({
+    this.user,
+    this.text,
+    this.condition,
     this.deliveryNoteStatus,
     this.pullSheetLineId,
     this.confirmedQuantity,

@@ -1,13 +1,15 @@
+import 'package:dehub/models/order.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:moment_dart/moment_dart.dart';
 
 class ChatCard extends StatefulWidget {
+  final Order? data;
   final bool? isOwnChat;
-  final String? chat;
   const ChatCard({
-    Key? key,
-    this.chat,
     this.isOwnChat,
+    Key? key,
+    this.data,
   }) : super(key: key);
 
   @override
@@ -31,15 +33,28 @@ class _ChatCardState extends State<ChatCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               widget.isOwnChat == false
-                  ? Container(
-                      margin: const EdgeInsets.only(right: 5),
-                      height: 36,
-                      width: 36,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: grey,
-                      ),
-                    )
+                  ? widget.data?.user?.avatar == null
+                      ? Container(
+                          margin: const EdgeInsets.only(right: 5),
+                          height: 36,
+                          width: 36,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: grey,
+                          ),
+                        )
+                      : Container(
+                          margin: const EdgeInsets.only(right: 5),
+                          height: 36,
+                          width: 36,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image:
+                                  NetworkImage('${widget.data?.user?.avatar}'),
+                            ),
+                          ),
+                        )
                   : SizedBox(),
               Expanded(
                 child: Container(
@@ -59,7 +74,7 @@ class _ChatCardState extends State<ChatCard> {
                     horizontal: 13,
                   ),
                   child: Text(
-                    '${widget.chat}',
+                    '${widget.data?.text}',
                     textAlign: widget.isOwnChat == true
                         ? TextAlign.end
                         : TextAlign.start,
@@ -67,15 +82,29 @@ class _ChatCardState extends State<ChatCard> {
                 ),
               ),
               widget.isOwnChat == true
-                  ? Container(
-                      margin: const EdgeInsets.only(left: 5),
-                      height: 36,
-                      width: 36,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: grey,
-                      ),
-                    )
+                  ? widget.data?.user?.avatar == null
+                      ? Container(
+                          margin: const EdgeInsets.only(left: 5),
+                          height: 36,
+                          width: 36,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: grey,
+                          ),
+                        )
+                      : Container(
+                          margin: const EdgeInsets.only(left: 5),
+                          height: 36,
+                          width: 36,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image:
+                                  NetworkImage('${widget.data?.user?.avatar}'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        )
                   : SizedBox(),
             ],
           ),
@@ -84,7 +113,7 @@ class _ChatCardState extends State<ChatCard> {
                 left: widget.isOwnChat == false ? 40 : 0,
                 right: widget.isOwnChat == true ? 40 : 0),
             child: Text(
-              '2021-12-24',
+              '${Moment.parse(widget.data!.createdAt.toString()).format("YYYY-MM-DD")}',
               style: TextStyle(
                   color: saaral, fontSize: 12, fontWeight: FontWeight.bold),
             ),

@@ -51,6 +51,18 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
     }
   }
 
+  paymentTerm() {
+    switch (widget.data?.paymentTerm?.condition) {
+      case "COD":
+        return "Бэлэн төлөх нөхцөл";
+      case "INV_CONFIG":
+        return "Нэхэмжлэхээр төлөх нөхцөл";
+      case "AR_NET30":
+        return "Авлага";
+      default:
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -151,23 +163,28 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      'Нөхцөл: ',
-                      style: TextStyle(
-                        color: grey2,
-                        fontSize: 12,
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Нөхцөл: ',
+                        style: TextStyle(
+                          color: grey2,
+                          fontSize: 12,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'Урьдчилсан төлбөр',
-                      style: TextStyle(
-                        color: orderColor,
-                        fontSize: 12,
+                      Expanded(
+                        child: Text(
+                          paymentTerm(),
+                          style: TextStyle(
+                            color: orderColor,
+                            fontSize: 12,
+                          ),
+                        ),
                       ),
-                    )
-                  ],
+                    ],
+                  ),
                 ),
                 Row(
                   children: [
@@ -242,7 +259,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                       width: 5,
                     ),
                     Text(
-                      '8,820,000.00₮',
+                      '${Utils().formatCurrency(widget.data?.amountToPay.toString())}₮',
                       style: TextStyle(
                         color: orderColor,
                         fontSize: 12,

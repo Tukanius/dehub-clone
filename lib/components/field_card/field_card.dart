@@ -13,8 +13,12 @@ class FieldCard extends StatefulWidget {
   final bool? hasThirdText;
   final Color? thirdTextColor;
   final Color? arrowColor;
+  final double? fontSize;
+  final FontWeight? fontWeight;
   const FieldCard({
     Key? key,
+    this.fontWeight,
+    this.fontSize,
     this.arrowColor,
     this.thirdTextColor,
     this.thirdText,
@@ -63,6 +67,8 @@ class _FieldCardState extends State<FieldCard> {
                   '${widget.secondText}',
                   style: TextStyle(
                     color: widget.secondTextColor,
+                    fontSize: widget.fontSize ?? widget.fontSize,
+                    fontWeight: widget.fontWeight ?? widget.fontWeight,
                   ),
                 ),
                 widget.hasThirdText == true

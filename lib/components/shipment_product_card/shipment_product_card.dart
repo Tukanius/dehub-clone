@@ -10,8 +10,10 @@ class ShipmentProductCard extends StatefulWidget {
   final Function()? onCloseClick;
   final Order? data;
   final Function()? approveButtonClick;
+  final String? lineConfirmText;
   const ShipmentProductCard({
     this.onCloseClick,
+    this.lineConfirmText,
     this.approveButtonClick,
     Key? key,
     this.data,
@@ -24,6 +26,7 @@ class ShipmentProductCard extends StatefulWidget {
 
 class _ShipmentProductCardState extends State<ShipmentProductCard> {
   int count = 0;
+  String quantity = '0';
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   TextEditingController quantityController = TextEditingController();
 
@@ -32,20 +35,25 @@ class _ShipmentProductCardState extends State<ShipmentProductCard> {
       if (count > 0) {
         setState(() {
           count--;
-          widget.data?.quantity = int.parse(quantityController.text);
+          int.parse(fbKey.currentState?.fields['quantity']?.value);
+          // fbKey.currentState?.fields['quantity']?.value = count;
         });
       }
     });
-    print(widget.data?.quantity);
+    print(fbKey.currentState?.fields['quantity']?.value);
   }
 
   increase() {
     setState(() {
-      count++;
-      // fbKey.currentState?.fields['quantity']?.value = count.toString();
-      widget.data?.quantity = fbKey.currentState?.fields['quantity']?.value;
+      int count = int.parse(fbKey.currentState?.fields['quantity']?.value) + 1;
+      // fbKey.currentState?.fields['quantity']?.value = count;
+      widget.data?.quantity = count;
+      // int currentValue =
+      //     int.tryParse(fbKey.currentState?.fields['quantity']?.value) ?? 0;
+      // int newValue = currentValue + 1;
+      // fbKey.currentState?.fields['quantity']?.value = newValue;
     });
-    print(fbKey.currentState?.fields['quantity']!.value);
+    print(fbKey.currentState?.fields['quantity']?.value);
   }
 
   @override
@@ -243,23 +251,31 @@ class _ShipmentProductCardState extends State<ShipmentProductCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                widget.data?.quantity == null
-                    ? Text(
-                        '... ширхэг',
-                        style: TextStyle(
-                          color: grey2,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                        ),
-                      )
-                    : Text(
-                        '${fbKey.currentState?.fields['quantity']?.value} ширхэг',
-                        style: TextStyle(
-                          color: grey2,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                        ),
-                      ),
+                // widget.data?.quantity == null
+                //     ? Text(
+                //         '... ширхэг',
+                //         style: TextStyle(
+                //           color: grey2,
+                //           fontWeight: FontWeight.w600,
+                //           fontSize: 16,
+                //         ),
+                //       )
+                //     : Text(
+                //         '${fbKey.currentState?.fields['quantity']?.value} ширхэг',
+                //         style: TextStyle(
+                //           color: grey2,
+                //           fontWeight: FontWeight.w600,
+                //           fontSize: 16,
+                //         ),
+                //       ),
+                Text(
+                  'Нийт дүн',
+                  style: TextStyle(
+                    color: grey2,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                  ),
+                ),
                 widget.data?.quantity != null && widget.data?.price != null
                     ? Text(
                         '${widget.data!.price! * widget.data!.quantity!}₮',
@@ -305,8 +321,8 @@ class _ShipmentProductCardState extends State<ShipmentProductCard> {
                         child: FormTextField(
                           onChanged: (p0) {
                             setState(() {
-                              widget.data?.quantity =
-                                  fbKey.currentState?.fields['quantity']?.value;
+                              widget.data?.quantity = int.parse(fbKey
+                                  .currentState?.fields['quantity']?.value);
                               print(widget.data?.quantity);
                             });
                           },
@@ -318,7 +334,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard> {
                             labelStyle: TextStyle(
                               fontSize: 15,
                             ),
-                            hintText: '00',
+                            hintText: '0',
                             isDense: true,
                             contentPadding: const EdgeInsets.symmetric(
                                 vertical: 6, horizontal: 5),
@@ -371,13 +387,21 @@ class _ShipmentProductCardState extends State<ShipmentProductCard> {
                         SizedBox(
                           width: 5,
                         ),
-                        Text(
-                          'Зөв байна',
-                          style: TextStyle(
-                            color: orderColor,
-                            fontSize: 18,
-                          ),
-                        )
+                        widget.lineConfirmText == null
+                            ? Text(
+                                'Зөв байна',
+                                style: TextStyle(
+                                  color: orderColor,
+                                  fontSize: 18,
+                                ),
+                              )
+                            : Text(
+                                '${widget.lineConfirmText}',
+                                style: TextStyle(
+                                  color: orderColor,
+                                  fontSize: 18,
+                                ),
+                              ),
                       ],
                     ),
                   ),

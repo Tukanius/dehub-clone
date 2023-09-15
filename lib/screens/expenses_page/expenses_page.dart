@@ -3,7 +3,8 @@ import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/enter_phone_page/enter_phone_page.dart';
-import 'package:dehub/screens/product_give/product_give.dart';
+import 'package:dehub/screens/receiver_otp_verify/receiver_otp_verify.dart';
+// import 'package:dehub/screens/product_give/product_give.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -52,14 +53,23 @@ class _ExpensesPageState extends State<ExpensesPage> {
           ),
         ),
         centerTitle: false,
-        title: Text(
-          "ЗАРЛАГЫН ПАДААН",
-          style: TextStyle(
-            color: white,
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
+        title: user.currentBusiness?.type == "SUPPLIER"
+            ? Text(
+                "ЗАРЛАГЫН ПАДААН",
+                style: TextStyle(
+                  color: white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              )
+            : Text(
+                "ОРЛОГЫН ПАДААН",
+                style: TextStyle(
+                  color: white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
         actions: [
           Center(
             child: Text(
@@ -485,108 +495,128 @@ class _ExpensesPageState extends State<ExpensesPage> {
               ),
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
-            ),
-            padding: const EdgeInsets.symmetric(vertical: 25),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 25),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: orderColor),
+          user.currentBusiness?.type == "SUPPLIER"
+              ? Container(
+                  decoration: BoxDecoration(
+                    color: white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
                     ),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 25),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 25),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: orderColor),
+                          ),
+                          child: CustomButton(
+                            isGradient: true,
+                            onClick: () {
+                              Navigator.of(context)
+                                  .pushNamed(EnterPhonePage.routeName);
+                            },
+                            gradient: LinearGradient(
+                              colors: [white, white],
+                            ),
+                            container: Container(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    'images/lock.svg',
+                                    height: 16,
+                                    width: 16,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    'Код илгээх',
+                                    style: TextStyle(
+                                      color: orderColor,
+                                      fontSize: 18,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.only(right: 20),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: orderColor),
+                          ),
+                          child: CustomButton(
+                            isGradient: true,
+                            onClick: () {},
+                            gradient: LinearGradient(
+                              colors: [orderColor, orderColor],
+                            ),
+                            container: Container(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    'images/mobile_message.svg',
+                                    height: 16,
+                                    width: 16,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    'Батлуулах',
+                                    style: TextStyle(
+                                      color: white,
+                                      fontSize: 18,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                    ],
+                  ),
+                )
+              : Container(
+                  decoration: BoxDecoration(
+                    color: white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 25),
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 30, left: 30),
                     child: CustomButton(
-                      isGradient: true,
+                      labelColor: orderColor,
+                      labelText: "Баталгаажуулах",
                       onClick: () {
                         Navigator.of(context)
-                            .pushNamed(EnterPhonePage.routeName);
+                            .pushNamed(ReceiverOtpVerify.routeName);
                       },
-                      gradient: LinearGradient(
-                        colors: [white, white],
-                      ),
-                      container: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              'images/lock.svg',
-                              height: 16,
-                              width: 16,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              'Код илгээх',
-                              style: TextStyle(
-                                color: orderColor,
-                                fontSize: 18,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 20),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: orderColor),
-                    ),
-                    child: CustomButton(
-                      isGradient: true,
-                      onClick: () {
-                        // Navigator.of(context).pushNamed(ProductGive.routeName);
-                      },
-                      gradient: LinearGradient(
-                        colors: [orderColor, orderColor],
-                      ),
-                      container: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              'images/mobile_message.svg',
-                              height: 16,
-                              width: 16,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              'Батлуулах',
-                              style: TextStyle(
-                                color: white,
-                                fontSize: 18,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );

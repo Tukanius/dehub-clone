@@ -140,7 +140,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                 Row(
                   children: [
                     Text(
-                      'Нийт дүн',
+                      'Нийт дүн:',
                       style: TextStyle(
                         color: depBrown,
                         fontWeight: FontWeight.w500,
@@ -170,7 +170,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                 Row(
                   children: [
                     Text(
-                      'Статус: ',
+                      'Статус:',
                       style: TextStyle(
                         color: buttonColor,
                         fontSize: 12,
@@ -189,7 +189,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                 Row(
                   children: [
                     Text(
-                      'Төлбөр',
+                      'Төлбөр:',
                       style: TextStyle(
                         color: buttonColor,
                         fontWeight: FontWeight.w500,
@@ -247,7 +247,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                 Row(
                   children: [
                     Text(
-                      'Хүргэх',
+                      'Хүргэх:',
                       style: TextStyle(
                         color: depBrown,
                         fontWeight: FontWeight.w500,
@@ -342,7 +342,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                         ),
                       )
                     ],
-                  )
+                  ),
           ],
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/account_info_page/account_info_page.dart';
 import 'package:dehub/screens/account_info_page/tabs/tabs/transaction_detail_page.dart';
 import 'package:dehub/screens/add_bank_account_page/add_bank_account_page.dart';
+import 'package:dehub/screens/auth/check-biometric.dart';
 import 'package:dehub/screens/auth/financing_login.dart';
 import 'package:dehub/screens/auth/login_page.dart';
 import 'package:dehub/screens/avaible_funding_page/avaible_funding_detail_page.dart';
@@ -487,7 +488,7 @@ class MyApp extends StatelessWidget {
                       ),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
-                        var begin = const Offset(0.0, 0.1);
+                        var begin = const Offset(0.0, 1.0);
                         var end = Offset.zero;
                         var curve = Curves.ease;
 
@@ -1035,6 +1036,10 @@ class MyApp extends StatelessWidget {
                   case RankDetailPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return RankDetailPage();
+                    });
+                  case CheckBiometric.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return CheckBiometric();
                     });
                   case RankPage.routeName:
                     return MaterialPageRoute(builder: (context) {

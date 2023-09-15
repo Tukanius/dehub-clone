@@ -74,7 +74,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
           ),
         ),
         title: Text(
-          'Хүлээн авсан захиалга',
+          'Захиалгын дэлгэрэнгүй',
           style: TextStyle(
             color: orderColor,
             fontSize: 17,

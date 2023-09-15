@@ -46,7 +46,6 @@ class User {
   String? refreshToken;
   bool? success;
   String? sessionState;
-
   String? code;
   String? password;
   String? regUserId;
@@ -93,7 +92,6 @@ class User {
   String? pin;
   bool? isAdmin;
   String? employeeUnit;
-
   String? verifyId;
   String? otpCode;
   String? message;
@@ -102,6 +100,8 @@ class User {
   String? otpMethod;
   String? oldPassword;
   String? businessName;
+
+  String? deliveryNoteId;
 
   getAvatar() {
     return HttpRequest.s3host + avatar.toString();

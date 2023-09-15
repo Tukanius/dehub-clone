@@ -34,7 +34,6 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
   Duration duration = Duration();
   TextEditingController controller = TextEditingController();
   bool isSubmit = false;
-  late Timer _timer;
   bool isLoading = true;
   Order shipment = Order();
   Timer? timer;
@@ -42,14 +41,39 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
   String? minutes;
   String? seconds;
   bool startShipment = false;
+  Duration resume = Duration();
+  Duration difference = Duration();
+
+  @override
+  afterFirstLayout(BuildContext context) async {
+    shipment = await OrderApi().pullSheetGet(widget.data.id!);
+    if (shipment.startedDate != null) {
+      difference = DateTime.now()
+          .difference(DateTime.parse(shipment.startedDate.toString()));
+      int pausedDurationInSeconds = (shipment.pausedDuration!).round();
+      resume = difference - Duration(seconds: pausedDurationInSeconds);
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   void addTimer() {
-    final addSeconds = 1;
+    if (shipment.startedDate == null) {
+      final addSeconds = 1;
 
-    setState(() {
-      final seconds = duration.inSeconds + addSeconds;
-      duration = Duration(seconds: seconds);
-    });
+      setState(() {
+        final seconds = duration.inSeconds + addSeconds;
+        duration = Duration(seconds: seconds);
+      });
+    } else {
+      final addSeconds = 1;
+
+      setState(() {
+        final seconds = resume.inSeconds + addSeconds;
+        resume = Duration(seconds: seconds);
+      });
+    }
   }
 
   void reset() {
@@ -61,22 +85,28 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
   }
 
   void startTimer() async {
-    if (shipment.isPaused == false) {
+    if (shipment.startedDate == null) {
       try {
         await OrderApi().pullSheetStart(widget.data.id!);
         timer = Timer.periodic(Duration(seconds: 1), (timer) => addTimer());
+        shipment = await OrderApi().pullSheetGet(widget.data.id!);
         setState(() {
           isStart = true;
         });
       } catch (e) {
-        print('=======start================');
+        print('================start================');
         print(e);
       }
     } else {
       try {
         await OrderApi().pullSheetProceed(widget.data.id!);
+        timer = Timer.periodic(Duration(seconds: 1), (timer) => addTimer());
+        shipment = await OrderApi().pullSheetGet(widget.data.id!);
+        setState(() {
+          isStart = true;
+        });
       } catch (e) {
-        print('=======proceed================');
+        print('================proceed================');
         print(e);
       }
     }
@@ -84,22 +114,43 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
   }
 
   Widget buildTime() {
-    String twoDigits(int n) => n.toString().padLeft(2, "0");
-    final minutes = twoDigits(duration.inMinutes.remainder(60));
-    final seconds = twoDigits(duration.inSeconds.remainder(60));
-
-    return Text('$minutes:$seconds');
+    if (shipment.startedDate == null) {
+      String twoDigits(int n) => n.toString().padLeft(2, "0");
+      final hours = twoDigits(duration.inHours);
+      final minutes = twoDigits(duration.inMinutes.remainder(60));
+      final seconds = twoDigits(duration.inSeconds.remainder(60));
+      return Text('$hours:$minutes:$seconds');
+    } else {
+      String twoDigits(int n) => n.toString().padLeft(2, "0");
+      final hours = twoDigits(resume.inHours);
+      final minutes = twoDigits(resume.inMinutes.remainder(60));
+      final seconds = twoDigits(resume.inSeconds.remainder(60));
+      return Text('$hours:$minutes:$seconds');
+    }
   }
 
   void stopTimer({bool resets = true}) async {
     if (resets) {
       reset();
     }
+    shipment = await OrderApi().pullSheetGet(widget.data.id!);
     await OrderApi().pullSheetPause(widget.data.id!);
     setState(() {
       startShipment = false;
+      isStart = false;
     });
     setState(() => timer?.cancel());
+  }
+
+  end() async {
+    try {
+      await OrderApi().pullSheetEnd(widget.data.id!);
+      Navigator.of(context).pop();
+    } catch (e) {
+      print('============err==========');
+      print(e.toString());
+      print('============err==========');
+    }
   }
 
   @override
@@ -167,13 +218,24 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                                   'images/bx_timer.svg',
                                   color: isStart == true ? white : buttonColor,
                                 ),
-                                Text(
-                                  'Эхлэх',
-                                  style: TextStyle(
-                                    color:
-                                        isStart == true ? white : buttonColor,
-                                  ),
-                                )
+                                shipment.startedDate == null
+                                    ? Text(
+                                        'Эхлэх',
+                                        style: TextStyle(
+                                          color: isStart == true
+                                              ? white
+                                              : buttonColor,
+                                        ),
+                                      )
+                                    : Text(
+                                        'Үргэлжлүүлэх',
+                                        style: TextStyle(
+                                          fontSize: 9,
+                                          color: isStart == true
+                                              ? white
+                                              : buttonColor,
+                                        ),
+                                      ),
                               ],
                             ),
                           ),
@@ -198,8 +260,9 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                         ),
                         GestureDetector(
                           onTap: () {
-                            // pause();
-                            stopTimer(resets: false);
+                            if (shipment.isPaused == false) {
+                              stopTimer(resets: false);
+                            }
                           },
                           child: Container(
                             height: 60,
@@ -489,31 +552,5 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
               ),
             ),
     );
-  }
-
-  pause() async {
-    await OrderApi().pullSheetPause(widget.data.id!);
-    setState(() {
-      isStart = false;
-      _timer.cancel();
-    });
-  }
-
-  resume() async {
-    await OrderApi().pullSheetProceed(widget.data.id!);
-    setState(() {});
-  }
-
-  end() async {
-    await OrderApi().pullSheetEnd(widget.data.id!);
-    Navigator.of(context).pop();
-  }
-
-  @override
-  afterFirstLayout(BuildContext context) async {
-    shipment = await OrderApi().pullSheetGet(widget.data.id!);
-    setState(() {
-      isLoading = false;
-    });
   }
 }

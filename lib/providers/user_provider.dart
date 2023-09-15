@@ -90,4 +90,21 @@ class UserProvider extends ChangeNotifier {
     user = User();
     clearAccessToken();
   }
+
+  Future<String?> getUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? username = prefs.getString("EMAIL");
+    return username;
+  }
+
+  Future<String?> getCode() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? username = prefs.getString("code");
+    return username;
+  }
+
+  setEmail(String email) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("EMAIL", email);
+  }
 }

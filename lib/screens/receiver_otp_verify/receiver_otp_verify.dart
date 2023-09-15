@@ -1,9 +1,12 @@
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/order_payment_page/order_payment_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class ReceiverOtpVerify extends StatefulWidget {
   static const routeName = '/ReceiverOtpVerify';
@@ -14,6 +17,8 @@ class ReceiverOtpVerify extends StatefulWidget {
 }
 
 class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
+  User user = User();
+
   final defaultPinTheme = PinTheme(
     height: 50,
     width: 45,
@@ -27,6 +32,8 @@ class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
   );
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: false).orderMe;
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -83,14 +90,23 @@ class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
                 margin: const EdgeInsets.symmetric(
                   horizontal: 100,
                 ),
-                child: Text(
-                  'Хүлээн авагч ажилтаны утсанд ирсэн 6 оронтой кодыг оруулна уу',
-                  style: TextStyle(
-                    color: buttonColor,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+                child: user.currentBusiness?.type == "SUPPLIER"
+                    ? Text(
+                        'Хүлээн авагч ажилтаны утсанд ирсэн 6 оронтой кодыг оруулна уу',
+                        style: TextStyle(
+                          color: buttonColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    : Text(
+                        'Захиалга хүлээн авснаа баталгаажуулан ПИН кодоо оруулна уу.',
+                        style: TextStyle(
+                          color: buttonColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
               ),
               SizedBox(
                 height: 45,

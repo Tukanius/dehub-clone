@@ -1,5 +1,5 @@
 import 'package:dehub/models/order.dart';
-import 'package:dehub/utils/utils.dart';
+// import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -83,7 +83,8 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                       ),
                       Expanded(
                         child: Text(
-                          '${Utils().formatCurrency(widget.data?.price.toString())}₮',
+                          // '${Utils().formatCurrency(widget.data?.price.toString())}₮',
+                          '',
                           style: TextStyle(
                             color: black,
                             fontSize: 12,
@@ -118,7 +119,8 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
               ),
               Container(
                 child: Text(
-                  '${Utils().formatCurrency("${double.parse(widget.data!.price.toString()) * double.parse(widget.data!.quantity!.toString())}")}₮',
+                  // '${Utils().formatCurrency("${double.parse(widget.data!.price.toString()) * double.parse(widget.data!.quantity!.toString())}")}₮',
+                  '',
                   style: TextStyle(
                     color: black,
                     fontSize: 12,

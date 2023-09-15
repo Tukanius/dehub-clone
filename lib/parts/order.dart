@@ -146,6 +146,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         ? double.parse(json['shippingAmount'].toString())
         : null,
     url: json['url'] != null ? json['url'] as String : null,
+    text: json['text'] != null ? json['text'] as String : null,
     description:
         json['description'] != null ? json['description'] as String : null,
     toReview: json['toReview'] != null ? json['toReview'] as bool : null,
@@ -301,6 +302,9 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     warehouse: json['warehouse'] != null
         ? Order.fromJson(json['warehouse'] as Map<String, dynamic>)
         : null,
+    user: json['user'] != null
+        ? Order.fromJson(json['user'] as Map<String, dynamic>)
+        : null,
     warehouseUserId: json['warehouseUserId'] != null
         ? json['warehouseUserId'] as String
         : null,
@@ -335,6 +339,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     baseUnitId:
         json['baseUnitId'] != null ? json['baseUnitId'] as String : null,
     baseUnit: json['baseUnit'] != null ? json['baseUnit'] as String : null,
+    condition: json['condition'] != null ? json['condition'] as String : null,
     unitId: json['unitId'] != null ? json['unitId'] as String : null,
     unitConvertType: json['unitConvertType'] != null
         ? json['unitConvertType'] as String
@@ -397,9 +402,11 @@ Map<String, dynamic> _$OrderToJson(Order instance) {
     json['unitConvertValue'] = instance.unitConvertValue;
   if (instance.unitConvertType != null)
     json['unitConvertType'] = instance.unitConvertType;
+  if (instance.condition != null) json['condition'] = instance.condition;
   if (instance.unitId != null) json['unitId'] = instance.unitId;
   if (instance.baseUnit != null) json['baseUnit'] = instance.baseUnit;
   if (instance.baseUnitId != null) json['baseUnitId'] = instance.baseUnitId;
+  if (instance.text != null) json['text'] = instance.text;
   if (instance.optionValue != null) json['optionValue'] = instance.optionValue;
   if (instance.variantParentId != null)
     json['variantParentId'] = instance.variantParentId;
@@ -548,6 +555,7 @@ Map<String, dynamic> _$OrderToJson(Order instance) {
   if (instance.send != null) json['send'] = instance.send;
   if (instance.branchStatus != null)
     json['branchStatus'] = instance.branchStatus;
+  if (instance.user != null) json['user'] = instance.user;
   if (instance.isBuyer != null) json['isBuyer'] = instance.isBuyer;
   if (instance.isSupplier != null) json['isSupplier'] = instance.isSupplier;
   if (instance.deliveryDate != null)

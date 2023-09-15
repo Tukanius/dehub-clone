@@ -9,7 +9,9 @@ class CustomButton extends StatefulWidget {
   final bool? isGradient;
   final Container? container;
   final LinearGradient? gradient;
+  final bool? isLoading;
   CustomButton({
+    this.isLoading,
     this.gradient,
     this.container,
     this.isGradient,
@@ -40,21 +42,19 @@ class _CustomButtonState extends State<CustomButton> {
                 : null,
             gradient: widget.isGradient == true ? widget.gradient : null,
           ),
-          child: widget.isGradient != true
+          child: widget.isLoading == true
               ? Center(
-                  child: Text(
-                    '${widget.labelText}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                      color:
-                          widget.textColor == null ? white : widget.textColor,
+                  child: SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 1.5,
+                      color: white,
                     ),
                   ),
                 )
-              : widget.container != null
-                  ? widget.container
-                  : Center(
+              : widget.isGradient != true
+                  ? Center(
                       child: Text(
                         '${widget.labelText}',
                         style: TextStyle(
@@ -65,7 +65,21 @@ class _CustomButtonState extends State<CustomButton> {
                               : widget.textColor,
                         ),
                       ),
-                    ),
+                    )
+                  : widget.container != null
+                      ? widget.container
+                      : Center(
+                          child: Text(
+                            '${widget.labelText}',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                              color: widget.textColor == null
+                                  ? white
+                                  : widget.textColor,
+                            ),
+                          ),
+                        ),
         ),
       ),
     );

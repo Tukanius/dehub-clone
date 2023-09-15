@@ -1,7 +1,9 @@
 import 'package:dehub/api/order_api.dart';
-import 'package:dehub/components/sales_order_card/sales_order_received.dart';
+import 'package:dehub/components/sales_order_card/sales_order_card.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/received_order_detail/received_order_detail.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,19 +11,21 @@ import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
-class CustomerTab extends StatefulWidget {
-  const CustomerTab({super.key});
+class ReceivedTab extends StatefulWidget {
+  const ReceivedTab({super.key});
 
   @override
-  State<CustomerTab> createState() => _CustomerTabState();
+  State<ReceivedTab> createState() => _ReceivedTabState();
 }
 
-class _CustomerTabState extends State<CustomerTab> with AfterLayoutMixin {
+class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
   Result order = Result(count: 0, rows: []);
   int page = 1;
   int limit = 10;
   bool isLoading = true;
+  User user = User();
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
 
@@ -53,7 +57,8 @@ class _CustomerTabState extends State<CustomerTab> with AfterLayoutMixin {
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(type: "PURCHASE");
+    Filter filter = Filter(
+        type: user.currentBusiness?.type == "SUPPLIER" ? "PURCHASE" : "SALES");
     var res = await OrderApi()
         .orderList(ResultArguments(filter: filter, offset: offset));
     setState(() {
@@ -64,6 +69,8 @@ class _CustomerTabState extends State<CustomerTab> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: false).orderMe;
+
     return isLoading == true
         ? Center(
             child: CircularProgressIndicator(
@@ -112,10 +119,15 @@ class _CustomerTabState extends State<CustomerTab> with AfterLayoutMixin {
                         Column(
                           children: order.rows!
                               .map(
-                                (e) => SalesOrderReceived(
+                                (item) => SalesOrderCard(
+                                  data: item,
                                   onClick: () {
                                     Navigator.of(context).pushNamed(
-                                        ReceivedOrderDetail.routeName);
+                                      ReceivedOrderDetail.routeName,
+                                      arguments: ReceivedOrderDetailArguments(
+                                        id: item.id,
+                                      ),
+                                    );
                                   },
                                 ),
                               )

@@ -49,18 +49,27 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
 
   onSubmit(bool accept) async {
     try {
+      setState(() {
+        isLoading = true;
+      });
       respond.accept = accept;
       respond.responseMessage = 'accept';
       await BusinessApi().respond(respond, widget.id);
       showCustomDialog(
         context,
-        "Амжилттай зөвшөөрлөө",
+        accept == true ? "Амжилттай зөвшөөрлөө" : "Амжилттай татгалзлаа",
         onPressed: () {
           Navigator.of(context).pop();
         },
       );
       widget.listenController.changeVariable('refresh');
+      setState(() {
+        isLoading = false;
+      });
     } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
       print('===============ERROR===============');
       print(e.toString());
       print('===============ERROR===============');

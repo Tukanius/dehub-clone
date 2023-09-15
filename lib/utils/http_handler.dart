@@ -48,6 +48,8 @@ class HttpHandler {
       case 200:
       case 304:
         return data;
+      case 401:
+        return;
       // case 401:
       //   locator<DialogService>().showErrorDialogListener("Нэвтэрнэ үү");
       //   break;

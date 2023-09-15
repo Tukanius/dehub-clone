@@ -115,4 +115,53 @@ class OrderApi extends HttpRequest {
         await put('/delivery_note/$id/start', "ORDER", true, handler: true);
     return Order.fromJson(res as Map<String, dynamic>);
   }
+
+  Future<Order> createConversation(Order data) async {
+    var res = await post('/delivery_note/conversation', 'ORDER', true,
+        data: data.toJson(), handler: true);
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> conversationList(String id, int limit) async {
+    var res = await get(
+        '/delivery_note/conversation?deliveryNoteId=$id&limit=$limit',
+        "ORDER",
+        true,
+        handler: true);
+    return Result.fromJson(res, Order.fromJson);
+  }
+
+  Future<Order> deliveryNoteGet(String id) async {
+    var res = await get('/delivery_note/$id', 'ORDER', true, handler: true);
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Order> deliveryNotestart(String id) async {
+    var res =
+        await put('/delivery_note/$id/start', "ORDER", true, handler: true);
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Order> deliveryNoteProceed(String id) async {
+    var res =
+        await put('/delivery_note/$id/proceed', 'ORDER', true, handler: true);
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Order> deliveryNotePause(String id) async {
+    var res =
+        await put('/delivery_note/$id/pause', 'ORDER', true, handler: true);
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Order> deliveryNoteEnd(String id) async {
+    var res = await put('/delivery_note/$id/end', "ORDER", true, handler: true);
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Order> deliveryNoteLineConfirm(String id) async {
+    var res = await put('/delivery_note/$id/line_confirm', "ORDER", true,
+        handler: true);
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
 }
