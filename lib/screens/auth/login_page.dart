@@ -8,6 +8,7 @@ import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -85,7 +86,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
           });
         }
         setState(() {
-          codeController.text = username!;
+          emailController.text = username!;
         });
       }
     }
@@ -197,6 +198,12 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                               height: 8,
                             ),
                             FormTextField(
+                              onChanged: (_) {
+                                secureStorage.deleteAll();
+                                setState(() {
+                                  isBioMetric = false;
+                                });
+                              },
                               controller: codeController,
                               inputAction: TextInputAction.next,
                               onComplete: () {
@@ -252,6 +259,12 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                               height: 8,
                             ),
                             FormTextField(
+                              onChanged: (p0) {
+                                secureStorage.deleteAll();
+                                setState(() {
+                                  isBioMetric = false;
+                                });
+                              },
                               inputAction: TextInputAction.next,
                               labelText: 'Хэрэглэгчийн нэр',
                               onComplete: () {
@@ -388,37 +401,38 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                         ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 30,
                       ),
-                      Row(
-                        children: [
-                          Checkbox(
-                            fillColor: MaterialStateProperty.resolveWith(
-                                (states) => buttonColor),
-                            value: saveUserName,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                saveUserName = value!;
-                              });
-                            },
-                          ),
-                          Text(
-                            'Нэвтрэх мэдээлэл сануулах',
-                            style: TextStyle(
-                              color: grey2,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 42,
-                      ),
+                      // Row(
+                      //   children: [
+                      //     Checkbox(
+                      //       fillColor: MaterialStateProperty.resolveWith(
+                      //           (states) => buttonColor),
+                      //       value: saveUserName,
+                      //       onChanged: (bool? value) {
+                      //         setState(() {
+                      //           saveUserName = value!;
+                      //         });
+                      //       },
+                      //     ),
+                      //     Text(
+                      //       'Нэвтрэх мэдээлэл сануулах',
+                      //       style: TextStyle(
+                      //         color: grey2,
+                      //         fontWeight: FontWeight.w500,
+                      //         fontSize: 16,
+                      //       ),
+                      //     )
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //   height: 42,
+                      // ),
                       CustomButton(
                         isLoading: isSubmit,
                         onClick: () {
                           _performLogin(context);
+
                           // show(context);
                         },
                         labelText: "Нэвтрэх",
@@ -526,14 +540,14 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
         ),
       );
   void _performLogin(BuildContext context) async {
+    final String code;
     final String email;
     final String password;
-    final String code;
     final List<BiometricType> availableBiometrics =
         await auth.getAvailableBiometrics();
     if (fbKey.currentState!.saveAndValidate()) {
-      email = fbKey.currentState?.fields['email']?.value;
       code = fbKey.currentState?.fields['code']?.value;
+      email = fbKey.currentState?.fields['email']?.value;
       password = fbKey.currentState?.fields['password']?.value;
       try {
         setState(() {
@@ -542,15 +556,14 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
         User save = User.fromJson(fbKey.currentState!.value);
         UserProvider().setEmail(save.email.toString());
         await Provider.of<UserProvider>(context, listen: false).login(save);
-        await _storeCredentials(email, code, password);
+        await _storeCredentials(code, email, password);
         if (activeBio == true && availableBiometrics.isNotEmpty) {
           Navigator.of(context).pushNamed(CheckBiometric.routeName);
         } else {
-          // Navigator.of(context).pushNamed(CheckBiometric.routeName);
           Navigator.of(context).pushNamed(SplashPage.routeName);
         }
       } catch (e) {
-        debugPrint(e.toString());
+        print(e.toString());
         setState(() {
           isSubmit = false;
         });
@@ -566,18 +579,18 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
         isSubmit = true;
       });
       authenticated = await auth.authenticate(
-        localizedReason:
-            'Scan your fingerprint (or face or whatever) to authenticate',
+        localizedReason: '',
         options: const AuthenticationOptions(
           stickyAuth: true,
           biometricOnly: true,
         ),
       );
       if (authenticated == true) {
-        Future<String?> username = secureStorage.getUserName();
+        Future<String?> code = secureStorage.getCode();
+        Future<String?> email = secureStorage.getEmail();
         Future<String?> password = secureStorage.getPassWord();
-        String resultEmail = await username ?? "";
-        String resultCode = await username ?? "";
+        String resultCode = await code ?? "";
+        String resultEmail = await email ?? "";
         String resultPassword = await password ?? "";
         save.code = resultEmail;
         save.email = resultCode;
@@ -600,9 +613,9 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
     }
   }
 
-  _storeCredentials(String email, String code, String password) async {
-    await secureStorage.setEmail(email);
+  _storeCredentials(String code, String email, String password) async {
     await secureStorage.setCode(code);
+    await secureStorage.setEmail(email);
     await secureStorage.setPassWord(password);
   }
 }

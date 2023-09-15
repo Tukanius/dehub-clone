@@ -16,7 +16,11 @@ class SecureStorage {
     await storage.write(key: _keyCode, value: code);
   }
 
-  Future<String?> getUserName() async {
+  Future<String?> getEmail() async {
+    return await storage.read(key: _keyEmail);
+  }
+
+  Future<String?> getCode() async {
     return await storage.read(key: _keyCode);
   }
 
