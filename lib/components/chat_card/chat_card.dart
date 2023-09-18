@@ -21,15 +21,15 @@ class _ChatCardState extends State<ChatCard> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerRight,
-      margin: EdgeInsets.only(
-          left: widget.isOwnChat == true ? 150 : 0,
-          right: widget.isOwnChat == false ? 150 : 0),
       child: Column(
         crossAxisAlignment: widget.isOwnChat == false
             ? CrossAxisAlignment.start
             : CrossAxisAlignment.end,
         children: [
           Row(
+            mainAxisAlignment: widget.isOwnChat == true
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               widget.isOwnChat == false
@@ -56,29 +56,29 @@ class _ChatCardState extends State<ChatCard> {
                           ),
                         )
                   : SizedBox(),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: chatGrey,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                      bottomRight:
-                          Radius.circular(widget.isOwnChat == true ? 0 : 20),
-                      bottomLeft:
-                          Radius.circular(widget.isOwnChat == true ? 20 : 0),
-                    ),
+              Container(
+                constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width * 0.5),
+                decoration: BoxDecoration(
+                  color: chatGrey,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                    bottomRight:
+                        Radius.circular(widget.isOwnChat == true ? 0 : 20),
+                    bottomLeft:
+                        Radius.circular(widget.isOwnChat == true ? 20 : 0),
                   ),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 6,
-                    horizontal: 13,
-                  ),
-                  child: Text(
-                    '${widget.data?.text}',
-                    textAlign: widget.isOwnChat == true
-                        ? TextAlign.end
-                        : TextAlign.start,
-                  ),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 6,
+                  horizontal: 13,
+                ),
+                child: Text(
+                  '${widget.data?.text}',
+                  textAlign: widget.isOwnChat == true
+                      ? TextAlign.end
+                      : TextAlign.start,
                 ),
               ),
               widget.isOwnChat == true

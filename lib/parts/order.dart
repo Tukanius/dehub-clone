@@ -296,6 +296,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         ? double.parse(json['pausedDuration'].toString())
         : null,
     endedDate: json['endedDate'] != null ? json['endedDate'] as String : null,
+    lineId: json['lineId'] != null ? json['lineId'] as String : null,
     dispatchedDate: json['dispatchedDate'] != null
         ? json['dispatchedDate'] as String
         : null,
@@ -374,12 +375,23 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     confirmedQuantity: json['confirmedQuantity'] != null
         ? int.parse(json['confirmedQuantity'].toString())
         : null,
+
+    supplierStaff: json['supplierStaff'] != null
+        ? Order.fromJson(json['supplierStaff'] as Map<String, dynamic>)
+        : null,
+    buyerStaff: json['buyerStaff'] != null
+        ? Order.fromJson(json['buyerStaff'] as Map<String, dynamic>)
+        : null,
   );
 }
 
 Map<String, dynamic> _$OrderToJson(Order instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.supplierStaff != null)
+    json['supplierStaff'] = instance.supplierStaff;
+  if (instance.lineId != null) json['lineId'] = instance.lineId;
+  if (instance.buyerStaff != null) json['buyerStaff'] = instance.buyerStaff;
   if (instance.confirmedQuantity != null)
     json['confirmedQuantity'] = instance.confirmedQuantity;
   if (instance.pullSheetLineId != null)

@@ -22,20 +22,24 @@ class PersonalInfo extends StatefulWidget {
 
 class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
   User user = User();
+  bool isLoading = false;
 
   afterFirstLayout(BuildContext context) async {}
 
   logout() async {
+    setState(() {
+      isLoading = true;
+    });
     await Provider.of<UserProvider>(context, listen: false).logout();
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const SplashPage()),
-        (Route<dynamic> route) => false);
+    Navigator.of(context).pushNamed(SplashPage.routeName);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).user;
-    print(user.toJson());
     return SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),
       child: Container(
@@ -465,6 +469,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                       height: 42,
                     ),
                     CustomButton(
+                      isLoading: isLoading,
                       onClick: () {
                         logout();
                       },

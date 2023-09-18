@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dehub/components/order_product_card/order_product_card.dart';
-import 'package:lottie/lottie.dart';
 import 'package:after_layout/after_layout.dart';
 
 class AllTab extends StatefulWidget {
@@ -81,11 +81,9 @@ class _AllTabState extends State<AllTab> with AfterLayoutMixin {
                         ),
                       )
                     : order.rows?.length == 0
-                        ? Column(
-                            children: [
-                              Lottie.asset('images/order-not-found.json'),
-                              Text('Бараа олдсонгүй')
-                            ],
+                        ? NotFound(
+                            module: "ORDER",
+                            labelText: "Бараа олдсонгүй",
                           )
                         : Column(
                             children: order.rows!

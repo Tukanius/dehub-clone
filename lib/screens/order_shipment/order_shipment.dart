@@ -133,8 +133,8 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
     if (resets) {
       reset();
     }
-    shipment = await OrderApi().pullSheetGet(widget.data.id!);
     await OrderApi().pullSheetPause(widget.data.id!);
+    shipment = await OrderApi().pullSheetGet(widget.data.id!);
     setState(() {
       startShipment = false;
       isStart = false;
@@ -269,19 +269,25 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                             width: 70,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: lightGrey,
+                              color: shipment.isPaused == true
+                                  ? orderColor
+                                  : lightGrey,
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
                                   Icons.pause_circle,
-                                  color: buttonColor,
+                                  color: shipment.isPaused == true
+                                      ? white
+                                      : buttonColor,
                                 ),
                                 Text(
                                   'Зогсоох',
                                   style: TextStyle(
-                                    color: buttonColor,
+                                    color: shipment.isPaused == true
+                                        ? white
+                                        : buttonColor,
                                   ),
                                 ),
                               ],

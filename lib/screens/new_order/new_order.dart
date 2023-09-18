@@ -77,32 +77,44 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
 
   onSubmit(bool toReview, bool send) async {
     try {
-      if (data.isNotEmpty) {
-        for (var i = 0; i < product.length; i++) {
-          data[i] = Order();
-          data[i].variantId = product[i].id;
-          data[i].quantity = product[i].quantity;
-        }
-        createOrder.businessId = order.id;
-        createOrder.receiverBranchId = order.receiverBranches?.first.id;
-        createOrder.deliveryType = "DEFAULT_DATE";
-        createOrder.receiverStaffId = order.receiverStaff?.id;
-        createOrder.lines = data;
-        createOrder.discountType = "AMOUNT";
-        createOrder.attachments = files;
-        createOrder.discountValue = 0;
-        createOrder.toReview = toReview;
-        createOrder.send = send;
-        createOrder.additionalLines = additionalLines;
-        await OrderApi().createOrder(createOrder);
-        showCustomDialog(
-          context,
-          "Захиалга амжилттай илгээгдлээ",
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        );
-      } else {}
+      // if (data.isNotEmpty) {
+      for (var i = 0; i < product.length; i++) {
+        data[i] = Order();
+        data[i].variantId = product[i].id;
+        data[i].quantity = product[i].quantity;
+      }
+      createOrder.businessId = order.id;
+      createOrder.receiverBranchId = receiverBranch.id == null
+          ? order.receiverBranches?.first.id
+          : receiverBranch.id;
+      createOrder.deliveryType = "DEFAULT_DATE";
+      createOrder.receiverStaffId = order.receiverStaff?.id;
+      createOrder.lines = data;
+      createOrder.discountType = "AMOUNT";
+      createOrder.attachments = files;
+      createOrder.discountValue = 0;
+      createOrder.toReview = toReview;
+      createOrder.send = send;
+      createOrder.additionalLines = additionalLines;
+      await OrderApi().createOrder(createOrder);
+      showCustomDialog(
+        context,
+        "Захиалга амжилттай илгээгдлээ",
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      );
+      // } else {
+      // ScaffoldMessenger.of(context).showSnackBar(
+      // const SnackBar(
+      // backgroundColor: invoiceColor,
+      // shape: StadiumBorder(),
+      // content: Center(
+      // child: Text('Бараа сонгоно уу'),
+      // ),
+      // ),
+      // );
+      // }
     } catch (e) {
       print('==========e========');
       print(e.toString());
@@ -262,10 +274,12 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context).pushNamed(
-                                OrderCustomerChoose.routeName,
-                                arguments: OrderCustomerChooseArguments(
-                                    customerListenController:
-                                        customerListenController));
+                              OrderCustomerChoose.routeName,
+                              arguments: OrderCustomerChooseArguments(
+                                customerListenController:
+                                    customerListenController,
+                              ),
+                            );
                           },
                           child: Container(
                             color: transparent,
@@ -334,39 +348,45 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                           'Партнер нэр',
                           style: TextStyle(color: buttonColor),
                         ),
-                        Row(
-                          children: [
-                            customer.partnerName != null
-                                ? Text(
-                                    '${customer.partnerName}, ',
-                                    style: TextStyle(
-                                      color: buttonColor,
-                                      fontWeight: FontWeight.w500,
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              customer.partnerName != null
+                                  ? Expanded(
+                                      child: Text(
+                                        '${customer.partnerName},',
+                                        style: TextStyle(
+                                          color: buttonColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                        textAlign: TextAlign.end,
+                                      ),
+                                    )
+                                  : Text(
+                                      'Партнер нэр, ',
+                                      style: TextStyle(
+                                        color: buttonColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  )
-                                : Text(
-                                    'Партнер нэр, ',
-                                    style: TextStyle(
-                                      color: buttonColor,
-                                      fontWeight: FontWeight.w500,
+                              customer.partner?.refCode != null
+                                  ? Text(
+                                      ' ${customer.partner?.refCode}',
+                                      style: TextStyle(
+                                        color: orderColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    )
+                                  : Text(
+                                      '#PartnerRef',
+                                      style: TextStyle(
+                                        color: orderColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                            customer.partner?.refCode != null
-                                ? Text(
-                                    '${customer.partner?.refCode}',
-                                    style: TextStyle(
-                                      color: orderColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  )
-                                : Text(
-                                    '#PartnerRef',
-                                    style: TextStyle(
-                                      color: orderColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                          ],
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -512,19 +532,15 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                             ? order.receiverBranches!.length > 1
                                 ? GestureDetector(
                                     onTap: () {
-                                      if (order.receiverBranches!.length > 1) {
-                                        Navigator.of(context).pushNamed(
-                                          ChangeBranchNamePage.routeName,
-                                          arguments:
-                                              ChangeBranchNamePageArguments(
-                                            data: order.receiverBranches!,
-                                            receiverBranchController:
-                                                receiverBranchController,
-                                          ),
-                                        );
-                                      } else {
-                                        print('asdf');
-                                      }
+                                      Navigator.of(context).pushNamed(
+                                        ChangeBranchNamePage.routeName,
+                                        arguments:
+                                            ChangeBranchNamePageArguments(
+                                          data: order.receiverBranches!,
+                                          receiverBranchController:
+                                              receiverBranchController,
+                                        ),
+                                      );
                                     },
                                     child: Container(
                                       color: transparent,
@@ -577,7 +593,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                         ),
                         Expanded(
                           child: order.receiverBranches != null
-                              ? receiverBranch != {}
+                              ? receiverBranch.branchAddress == null
                                   ? Text(
                                       '${order.receiverBranches?.first.branchAddress}',
                                       style: TextStyle(

@@ -1,4 +1,5 @@
 import 'package:dehub/api/order_api.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/sales_order_card/sales_order_card.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
@@ -10,7 +11,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class ReceivedTab extends StatefulWidget {
@@ -120,6 +120,7 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
                           children: order.rows!
                               .map(
                                 (item) => SalesOrderCard(
+                                  isReceiver: false,
                                   data: item,
                                   onClick: () {
                                     Navigator.of(context).pushNamed(
@@ -136,11 +137,9 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
                       ],
                     ),
                   )
-                : Column(
-                    children: [
-                      Lottie.asset('images/order-not-found.json'),
-                      Text('Захиалга олдсонгүй'),
-                    ],
+                : NotFound(
+                    module: "ORDER",
+                    labelText: "Захиалга олдсонгүй",
                   ),
           );
   }

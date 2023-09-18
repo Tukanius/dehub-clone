@@ -1,13 +1,17 @@
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/order_product_card/order_product_card.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/order.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/new_order/add_attachment.dart';
-import 'package:dehub/screens/new_order/add_row.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:moment_dart/moment_dart.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 
 class ReceivedOrderDetailArguments {
   String id;
@@ -33,10 +37,15 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
   Order order = Order();
   Order approve = Order();
   bool isLoading = true;
+  User user = User();
+  double? totalAmount;
 
   @override
   afterFirstLayout(BuildContext context) async {
     order = await OrderApi().orderGet(widget.id);
+    totalAmount = order.lines!
+        .map((e) => e.quantity! * e.price!)
+        .reduce((value, element) => value + element);
     setState(() {
       isLoading = false;
     });
@@ -45,7 +54,13 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
   onSubmit(bool isApprove) async {
     approve.approve = isApprove;
     await OrderApi().respond(widget.id, approve);
-    Navigator.of(context).pop();
+    showCustomDialog(
+      context,
+      "Амжилттай зөвшөөрлөө",
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
   }
 
   review(bool isReview) async {
@@ -56,6 +71,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: false).orderMe;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -177,13 +193,21 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                             SizedBox(
                               width: 5,
                             ),
-                            Text(
-                              '${order.receiverBusiness?.profileName}',
-                              style: TextStyle(
-                                color: orderColor,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            )
+                            user.currentBusiness?.type == "SUPPLIER"
+                                ? Text(
+                                    '${order.receiverBusiness?.profileName}',
+                                    style: TextStyle(
+                                      color: orderColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  )
+                                : Text(
+                                    '${order.senderBusiness?.profileName}',
+                                    style: TextStyle(
+                                      color: orderColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                           ],
                         ),
                       ],
@@ -201,13 +225,21 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           'Бизнес код',
                           style: TextStyle(color: buttonColor),
                         ),
-                        Text(
-                          '${order.receiverBusiness?.refCode}',
-                          style: TextStyle(
-                            color: orderColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                        user.currentBusiness?.type == "SUPPLIER"
+                            ? Text(
+                                '${order.receiverBusiness?.refCode}',
+                                style: TextStyle(
+                                  color: orderColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )
+                            : Text(
+                                '${order.senderBusiness?.refCode}',
+                                style: TextStyle(
+                                  color: orderColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
                       ],
                     ),
                   ),
@@ -223,24 +255,43 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           'Партнер нэр',
                           style: TextStyle(color: buttonColor),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              '${order.receiverBusiness?.partner?.businessName}, ',
-                              style: TextStyle(
-                                color: buttonColor,
-                                fontWeight: FontWeight.w500,
+                        user.currentBusiness?.type == "SUPPLIER"
+                            ? Row(
+                                children: [
+                                  Text(
+                                    '${order.receiverBusiness?.partner?.businessName}, ',
+                                    style: TextStyle(
+                                      color: buttonColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${order.receiverBusiness?.partner?.refCode}',
+                                    style: TextStyle(
+                                      color: orderColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Row(
+                                children: [
+                                  Text(
+                                    '${order.senderBusiness?.partner?.businessName}, ',
+                                    style: TextStyle(
+                                      color: buttonColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${order.senderBusiness?.partner?.refCode}',
+                                    style: TextStyle(
+                                      color: orderColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            Text(
-                              '${order.receiverBusiness?.partner?.refCode}',
-                              style: TextStyle(
-                                color: orderColor,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ),
@@ -256,13 +307,21 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           'ТТД',
                           style: TextStyle(color: buttonColor),
                         ),
-                        Text(
-                          '6324512',
-                          style: TextStyle(
-                            color: buttonColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                        user.currentBusiness?.type == "SUPPLIER"
+                            ? Text(
+                                '${order.receiverBusiness?.regNumber}',
+                                style: TextStyle(
+                                  color: buttonColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )
+                            : Text(
+                                '${order.senderBusiness?.regNumber}',
+                                style: TextStyle(
+                                  color: buttonColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
                       ],
                     ),
                   ),
@@ -274,15 +333,20 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Төлбөрийн нөхцөл',
-                          style: TextStyle(color: buttonColor),
+                        Expanded(
+                          child: Text(
+                            'Төлбөрийн нөхцөл',
+                            style: TextStyle(color: buttonColor),
+                          ),
                         ),
-                        Text(
-                          '${order.paymentTerm?.description}',
-                          style: TextStyle(
-                            color: buttonColor,
-                            fontWeight: FontWeight.w500,
+                        Expanded(
+                          child: Text(
+                            '${order.paymentTerm?.description}',
+                            style: TextStyle(
+                              color: buttonColor,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            textAlign: TextAlign.end,
                           ),
                         ),
                       ],
@@ -323,12 +387,12 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           style: TextStyle(color: buttonColor),
                         ),
                         Text(
-                          '${order.receiverStaff?.firstName}',
+                          '${order.buyerStaff?.firstName}',
                           style: TextStyle(
                             color: orderColor,
                             fontWeight: FontWeight.w500,
                           ),
-                        ),
+                        )
                       ],
                     ),
                   ),
@@ -496,68 +560,74 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(AddRow.routeName);
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.only(bottom: 3),
-                      color: white,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Мөр нэмэх',
-                            style: TextStyle(
-                              color: orderColor,
-                              fontWeight: FontWeight.w500,
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Navigator.of(context).pushNamed(AddRow.routeName);
+                  //   },
+                  //   child: Container(
+                  //     margin: const EdgeInsets.only(bottom: 3),
+                  //     color: white,
+                  //     padding: const EdgeInsets.symmetric(
+                  //         horizontal: 15, vertical: 10),
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         Text(
+                  //           'Мөр нэмэх',
+                  //           style: TextStyle(
+                  //             color: orderColor,
+                  //             fontWeight: FontWeight.w500,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                  Column(
+                    children: order.additionalLines!
+                        .map(
+                          (e) => Container(
+                            margin: const EdgeInsets.only(bottom: 3),
+                            color: white,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Бараа, ажлын нэр',
+                                      style: TextStyle(
+                                        color: buttonColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      '20км-с дээш газарт',
+                                      style: TextStyle(
+                                        color: coolGrey,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  '20,000.00₮',
+                                  style: TextStyle(
+                                    color: orderColor,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
-                    color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Бараа, ажлын нэр',
-                              style: TextStyle(
-                                color: buttonColor,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              '20км-с дээш газарт',
-                              style: TextStyle(
-                                color: coolGrey,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          '20,000.00₮',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
+                        )
+                        .toList(),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(
@@ -974,7 +1044,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                               style: TextStyle(color: orderColor),
                             ),
                             Text(
-                              '8,820,000.00₮',
+                              '${Utils().formatCurrency(totalAmount.toString())}₮',
                               style: TextStyle(
                                 color: orderColor,
                                 fontWeight: FontWeight.w500,
@@ -982,75 +1052,149 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                             ),
                           ],
                         ),
-                        order.orderStatus == "REGISTERED"
-                            ? Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      if (order.orderStatus == "REGISTERED") {
-                                        review(false);
-                                      } else {
-                                        onSubmit(true);
-                                      }
-                                    },
-                                    child: Container(
-                                      height: 36,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SvgPicture.asset(
-                                            'images/alert-circle.svg',
+                        user.currentBusiness?.type == "SUPPLIER"
+                            ? order.orderStatus == "REGISTERED"
+                                ? Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          if (order.orderStatus ==
+                                              "REGISTERED") {
+                                            review(false);
+                                          } else {
+                                            onSubmit(true);
+                                          }
+                                        },
+                                        child: Container(
+                                          height: 36,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SvgPicture.asset(
+                                                'images/alert-circle.svg',
+                                              ),
+                                              Text(
+                                                'Татгалзах',
+                                                style: TextStyle(
+                                                  color: Color(0xffFE2413),
+                                                  fontSize: 10,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          Text(
-                                            'Татгалзах',
-                                            style: TextStyle(
-                                              color: Color(0xffFE2413),
-                                              fontSize: 10,
-                                            ),
-                                          ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      if (order.orderStatus == "REGISTERED") {
-                                        review(true);
-                                      } else {
-                                        onSubmit(true);
-                                      }
-                                    },
-                                    child: Container(
-                                      height: 36,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SvgPicture.asset(
-                                            'images/create-so.svg',
-                                            color: orderColor,
-                                          ),
-                                          Text(
-                                            'SO болгох',
-                                            style: TextStyle(
-                                              color: orderColor,
-                                              fontSize: 10,
-                                            ),
-                                          ),
-                                        ],
+                                      SizedBox(
+                                        width: 15,
                                       ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                ],
-                              )
-                            : SizedBox(),
+                                      GestureDetector(
+                                        onTap: () {
+                                          if (order.orderStatus ==
+                                              "REGISTERED") {
+                                            review(true);
+                                          } else {
+                                            onSubmit(true);
+                                          }
+                                        },
+                                        child: Container(
+                                          height: 36,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SvgPicture.asset(
+                                                'images/create-so.svg',
+                                                color: orderColor,
+                                              ),
+                                              Text(
+                                                'SO болгох',
+                                                style: TextStyle(
+                                                  color: orderColor,
+                                                  fontSize: 10,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                    ],
+                                  )
+                                : SizedBox()
+                            : order.orderStatus == "REVIEWED"
+                                ? Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          if (order.orderStatus ==
+                                              "REGISTERED") {
+                                            review(false);
+                                          } else {
+                                            onSubmit(true);
+                                          }
+                                        },
+                                        child: Container(
+                                          height: 36,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SvgPicture.asset(
+                                                'images/alert-circle.svg',
+                                              ),
+                                              Text(
+                                                'Татгалзах',
+                                                style: TextStyle(
+                                                  color: Color(0xffFE2413),
+                                                  fontSize: 10,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          if (order.orderStatus ==
+                                              "REGISTERED") {
+                                            review(true);
+                                          } else {
+                                            onSubmit(true);
+                                          }
+                                        },
+                                        child: Container(
+                                          height: 36,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SvgPicture.asset(
+                                                'images/create-so.svg',
+                                                color: orderColor,
+                                              ),
+                                              Text(
+                                                'Зөвшөөрөх',
+                                                style: TextStyle(
+                                                  color: orderColor,
+                                                  fontSize: 10,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                    ],
+                                  )
+                                : SizedBox(),
                       ],
                     ),
                   ),

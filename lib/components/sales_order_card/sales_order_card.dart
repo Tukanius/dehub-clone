@@ -1,15 +1,20 @@
 import 'package:dehub/models/order.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moment_dart/moment_dart.dart';
+import 'package:provider/provider.dart';
 
 class SalesOrderCard extends StatefulWidget {
   final Function()? onClick;
+  final bool isReceiver;
   final Order? data;
   const SalesOrderCard({
     Key? key,
+    required this.isReceiver,
     this.data,
     this.onClick,
   }) : super(key: key);
@@ -19,6 +24,7 @@ class SalesOrderCard extends StatefulWidget {
 }
 
 class _SalesOrderCardState extends State<SalesOrderCard> {
+  User user = User();
   orderStatus() {
     switch (widget.data?.orderStatus) {
       case "DRAFT":
@@ -65,6 +71,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: false).orderMe;
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
@@ -89,13 +96,21 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                     SizedBox(
                       width: 5,
                     ),
-                    Text(
-                      '${widget.data?.receiverBusiness?.partner?.businessName}',
-                      style: TextStyle(
-                        color: buttonColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    widget.isReceiver == true
+                        ? Text(
+                            '${widget.data?.receiverBusiness?.partner?.businessName}',
+                            style: TextStyle(
+                              color: buttonColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        : Text(
+                            '${widget.data?.senderBusiness?.partner?.businessName}',
+                            style: TextStyle(
+                              color: buttonColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ],
                 ),
                 Row(

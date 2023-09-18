@@ -340,7 +340,12 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                     ShipmentProductCard(
                                       approveButtonClick: () async {
                                         await OrderApi()
-                                            .deliveryNoteLineConfirm(item.id!);
+                                            .deliveryNoteLineConfirm(
+                                          Order(
+                                            lineId: item.id,
+                                            confirmedQuantity: item.quantity,
+                                          ),
+                                        );
                                       },
                                       lineConfirmText:
                                           user.currentBusiness?.type ==

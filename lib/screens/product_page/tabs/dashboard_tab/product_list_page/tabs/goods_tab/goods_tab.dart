@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/goods_card/goods_card.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/screens/product_page/tabs/dashboard_tab/product_detail_page/product_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:lottie/lottie.dart';
 
 class GoodsTab extends StatefulWidget {
   const GoodsTab({super.key});
@@ -91,21 +91,9 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
                           )
                           .toList(),
                     )
-                  : Column(
-                      children: [
-                        Center(
-                          child: Lottie.asset(
-                            'images/pnfound.json',
-                          ),
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        Text(
-                          'Бараа олдсонгүй!!!',
-                          style: TextStyle(color: productColor),
-                        ),
-                      ],
+                  : NotFound(
+                      module: 'INVENTORY',
+                      labelText: "Бараа олдсонгүй",
                     ),
         ],
       ),

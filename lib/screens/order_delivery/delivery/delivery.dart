@@ -471,6 +471,8 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                 },
                                 controller: chatController,
                                 name: 'chat',
+                                inputType: TextInputType.multiline,
+                                maxLines: null,
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.symmetric(
                                       horizontal: 15),

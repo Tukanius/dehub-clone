@@ -4,6 +4,7 @@ import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:after_layout/after_layout.dart';
 
 class ShipmentProductCard extends StatefulWidget {
   final Function()? onClick;
@@ -24,36 +25,38 @@ class ShipmentProductCard extends StatefulWidget {
   State<ShipmentProductCard> createState() => _ShipmentProductCardState();
 }
 
-class _ShipmentProductCardState extends State<ShipmentProductCard> {
+class _ShipmentProductCardState extends State<ShipmentProductCard>
+    with AfterLayoutMixin {
   int count = 0;
   String quantity = '0';
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   TextEditingController quantityController = TextEditingController();
 
+  @override
+  afterFirstLayout(BuildContext context) async {
+    setState(() {
+      quantityController.text = widget.data!.quantity.toString();
+    });
+  }
+
   decrease() {
     setState(() {
-      if (count > 0) {
-        setState(() {
-          count--;
-          int.parse(fbKey.currentState?.fields['quantity']?.value);
-          // fbKey.currentState?.fields['quantity']?.value = count;
-        });
-      }
+      // if (count > 0) {
+      setState(() {
+        int currentValue = int.tryParse(quantityController.text) ?? 0;
+        int newValue = currentValue - 1;
+        quantityController.text = newValue.toString();
+      });
+      // }
     });
-    print(fbKey.currentState?.fields['quantity']?.value);
   }
 
   increase() {
     setState(() {
-      int count = int.parse(fbKey.currentState?.fields['quantity']?.value) + 1;
-      // fbKey.currentState?.fields['quantity']?.value = count;
-      widget.data?.quantity = count;
-      // int currentValue =
-      //     int.tryParse(fbKey.currentState?.fields['quantity']?.value) ?? 0;
-      // int newValue = currentValue + 1;
-      // fbKey.currentState?.fields['quantity']?.value = newValue;
+      int currentValue = int.tryParse(quantityController.text) ?? 0;
+      int newValue = currentValue + 1;
+      quantityController.text = newValue.toString();
     });
-    print(fbKey.currentState?.fields['quantity']?.value);
   }
 
   @override
@@ -211,38 +214,38 @@ class _ShipmentProductCardState extends State<ShipmentProductCard> {
                     ),
                   ],
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Нэгж үнэ',
-                      style: TextStyle(
-                        color: coolGrey,
-                        fontSize: 12,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 3,
-                    ),
-                    Text(
-                      '${widget.data?.price}₮',
-                      style: TextStyle(
-                        color: orderColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      '1 ш',
-                      style: TextStyle(
-                        color: dark,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
+                // Column(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Text(
+                //       'Нэгж үнэ',
+                //       style: TextStyle(
+                //         color: coolGrey,
+                //         fontSize: 12,
+                //       ),
+                //     ),
+                //     SizedBox(
+                //       height: 3,
+                //     ),
+                //     Text(
+                //       '${widget.data?.price}₮',
+                //       style: TextStyle(
+                //         color: orderColor,
+                //         fontWeight: FontWeight.bold,
+                //         fontSize: 16,
+                //       ),
+                //     ),
+                //     Text(
+                //       '1 ш',
+                //       style: TextStyle(
+                //         color: dark,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w500,
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
             SizedBox(
@@ -314,38 +317,34 @@ class _ShipmentProductCardState extends State<ShipmentProductCard> {
                     SizedBox(
                       width: 10,
                     ),
-                    FormBuilder(
-                      key: fbKey,
-                      child: SizedBox(
-                        width: 90,
-                        child: FormTextField(
-                          onChanged: (p0) {
-                            setState(() {
-                              widget.data?.quantity = int.parse(fbKey
-                                  .currentState?.fields['quantity']?.value);
-                              print(widget.data?.quantity);
-                            });
-                          },
-                          initialValue: widget.data!.quantity.toString(),
-                          fontSize: 18,
-                          inputType: TextInputType.number,
-                          textAlign: TextAlign.end,
-                          decoration: InputDecoration(
-                            labelStyle: TextStyle(
-                              fontSize: 15,
-                            ),
-                            hintText: '0',
-                            isDense: true,
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 6, horizontal: 5),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xffD9DCDE),
-                              ),
+                    SizedBox(
+                      width: 90,
+                      child: FormTextField(
+                        onChanged: (p0) {
+                          setState(() {
+                            widget.data?.quantity =
+                                int.parse(quantityController.text);
+                          });
+                        },
+                        controller: quantityController,
+                        fontSize: 18,
+                        inputType: TextInputType.number,
+                        textAlign: TextAlign.end,
+                        decoration: InputDecoration(
+                          labelStyle: TextStyle(
+                            fontSize: 15,
+                          ),
+                          hintText: '0',
+                          isDense: true,
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 6, horizontal: 5),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xffD9DCDE),
                             ),
                           ),
-                          name: 'quantity',
                         ),
+                        name: 'quantity',
                       ),
                     ),
                     SizedBox(

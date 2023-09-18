@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/components/supplier_card/supplier_card.dart';
 import 'package:dehub/models/result.dart';
@@ -9,7 +10,6 @@ import 'package:dehub/screens/invoice/new_invoice/customer_choose/salbar_songoh.
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:lottie/lottie.dart';
 
 class Bugd extends StatefulWidget {
   static const routeName = '/bugd';
@@ -102,20 +102,9 @@ class _BugdState extends State<Bugd> with AfterLayoutMixin {
                                     )
                                     .toList(),
                               )
-                            : Column(
-                                children: [
-                                  Lottie.asset('images/not-found.json'),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  const Text(
-                                    'Мэдээлэл олдсонгүй!',
-                                    style: TextStyle(
-                                      color: invoiceColor,
-                                      fontSize: 16,
-                                    ),
-                                  )
-                                ],
+                            : NotFound(
+                                module: "INVOICE",
+                                labelText: "Мэдээлэл олдсонгүй!",
                               )
                         : const Center(
                             child: CircularProgressIndicator(

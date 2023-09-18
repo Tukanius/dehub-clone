@@ -1,4 +1,5 @@
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/partner_cards/sent_card.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/screens/network_page/tabs/sent_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
@@ -6,7 +7,6 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class DehubNetwork extends StatefulWidget {
@@ -124,15 +124,10 @@ class _DehubNetworkState extends State<DehubNetwork> with AfterLayoutMixin {
                                 )
                                 .toList(),
                           )
-                        : Column(
-                            children: [
-                              Lottie.asset('images/network-not-found.json'),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              Text('Урилга олдсонгүй'),
-                            ],
-                          )
+                        : NotFound(
+                            module: 'NETWORK',
+                            labelText: "Урилга олдсонгүй",
+                          ),
                   ],
                 ),
               ),

@@ -3,6 +3,7 @@ import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/close_button/close_button.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/order_product_card/order_product_card.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
@@ -12,7 +13,6 @@ import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class ProductChooseArguments {
@@ -58,7 +58,7 @@ class _ProductChooseState extends State<ProductChoose>
   afterFirstLayout(BuildContext context) async {
     order = await OrderApi().variantSelect(
         user.currentBusiness?.type == "SUPPLIER" ? "SALES" : "PURCHASE",
-        'a',
+        '${widget.businessId}',
         query,
         '',
         '',
@@ -145,7 +145,7 @@ class _ProductChooseState extends State<ProductChoose>
                                       user.currentBusiness?.type == "SUPPLIER"
                                           ? "SALES"
                                           : "PURCHASE",
-                                      'a',
+                                      '${widget.businessId}',
                                       query,
                                       '',
                                       '${e.id}',
@@ -185,11 +185,9 @@ class _ProductChooseState extends State<ProductChoose>
                           ),
                         )
                       : order.rows?.length == 0
-                          ? Column(
-                              children: [
-                                Lottie.asset('images/order-not-found.json'),
-                                Text('Бараа олдсонгүй')
-                              ],
+                          ? NotFound(
+                              module: "ORDER",
+                              labelText: "Бараа олдсонгүй",
                             )
                           : Column(
                               children: order.rows!

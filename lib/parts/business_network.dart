@@ -110,8 +110,9 @@ BusinessNetwork _$BusinessNetworkFromJson(Map<String, dynamic> json) {
         ? int.parse(json['expireDayCount'].toString())
         : null,
     month: json['month'] != null ? int.parse(json['month'].toString()) : null,
-    paymentDay:
-        json['paymentDay'] != null ? json['paymentDay'] as String : null,
+    paymentDay: json['paymentDay'] != null
+        ? int.parse(json['paymentDay'].toString())
+        : null,
     description:
         json['description'] != null ? json['description'] as String : null,
     isMain: json['isMain'] != null ? json['isMain'] as bool : null,

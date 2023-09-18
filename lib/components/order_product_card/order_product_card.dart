@@ -4,6 +4,7 @@ import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:after_layout/after_layout.dart';
 
 class OrderProductCard extends StatefulWidget {
   final Function()? onClick;
@@ -22,10 +23,22 @@ class OrderProductCard extends StatefulWidget {
   State<OrderProductCard> createState() => _OrderProductCardState();
 }
 
-class _OrderProductCardState extends State<OrderProductCard> {
+class _OrderProductCardState extends State<OrderProductCard>
+    with AfterLayoutMixin {
   TextEditingController quantityController = TextEditingController();
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   int newValue = 0;
+
+  @override
+  afterFirstLayout(BuildContext context) async {
+    setState(() {
+      if (widget.data?.quantity != null) {
+        quantityController.text = widget.data!.quantity.toString();
+      } else {
+        quantityController.text = "0";
+      }
+    });
+  }
 
   decrease() {
     setState(() {
@@ -387,37 +400,33 @@ class _OrderProductCardState extends State<OrderProductCard> {
                           )
                         : SizedBox(
                             width: 90,
-                            child: FormBuilder(
-                              key: fbKey,
-                              child: FormTextField(
-                                onChanged: (value) {
-                                  setState(() {
-                                    newValue =
-                                        int.parse(quantityController.text);
-                                    widget.data?.quantity = newValue;
-                                  });
-                                },
-                                fontSize: 18,
-                                inputType: TextInputType.number,
-                                controller: quantityController,
-                                textAlign: TextAlign.end,
-                                decoration: InputDecoration(
-                                  labelStyle: TextStyle(
-                                    fontSize: 15,
-                                  ),
-                                  hintText: '0',
-                                  isDense: true,
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 6, horizontal: 5),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.zero,
-                                    borderSide: BorderSide(
-                                      color: Color(0xffD9DCDE),
-                                    ),
+                            child: FormTextField(
+                              onChanged: (value) {
+                                setState(() {
+                                  widget.data!.quantity =
+                                      int.parse(quantityController.text);
+                                });
+                              },
+                              fontSize: 18,
+                              inputType: TextInputType.number,
+                              controller: quantityController,
+                              textAlign: TextAlign.end,
+                              decoration: InputDecoration(
+                                labelStyle: TextStyle(
+                                  fontSize: 15,
+                                ),
+                                hintText: '0',
+                                isDense: true,
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 6, horizontal: 5),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.zero,
+                                  borderSide: BorderSide(
+                                    color: Color(0xffD9DCDE),
                                   ),
                                 ),
-                                name: 'quantity',
                               ),
+                              name: 'quantity',
                             ),
                           ),
                     SizedBox(

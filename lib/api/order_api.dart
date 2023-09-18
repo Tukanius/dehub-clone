@@ -159,9 +159,10 @@ class OrderApi extends HttpRequest {
     return Order.fromJson(res as Map<String, dynamic>);
   }
 
-  Future<Order> deliveryNoteLineConfirm(String id) async {
-    var res = await put('/delivery_note/$id/line_confirm', "ORDER", true,
-        handler: true);
+  Future<Order> deliveryNoteLineConfirm(Order data) async {
+    var res = await put(
+        '/delivery_note/${data.lineId}/line_confirm', "ORDER", true,
+        data: data.toJson(), handler: true);
     return Order.fromJson(res as Map<String, dynamic>);
   }
 }

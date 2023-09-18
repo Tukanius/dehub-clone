@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:dehub/api/order_api.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/order_customer_card/order_customer_card.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
@@ -7,7 +8,6 @@ import 'package:dehub/screens/new_order/new_order.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:lottie/lottie.dart';
 
 class CustomerTab extends StatefulWidget {
   const CustomerTab({Key? key}) : super(key: key);
@@ -86,11 +86,9 @@ class _CustomerTabState extends State<CustomerTab> with AfterLayoutMixin {
                                 )
                                 .toList(),
                           )
-                        : Column(
-                            children: [
-                              Lottie.asset('images/order-not-found.json'),
-                              Text('Харилцагч олсонгүй')
-                            ],
+                        : NotFound(
+                            module: "ORDER",
+                            labelText: "Харилцагч олдсонгүй",
                           )
                     : Center(
                         child: CircularProgressIndicator(

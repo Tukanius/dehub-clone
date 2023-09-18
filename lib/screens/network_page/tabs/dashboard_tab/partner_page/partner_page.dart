@@ -1,11 +1,11 @@
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/partner_cards/partner_card.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_detail_page/partner_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:lottie/lottie.dart';
 
 class NetworkPartnerPage extends StatefulWidget {
   static const routeName = '/NetworkPartnerPage';
@@ -112,15 +112,10 @@ class _NetworkPartnerPageState extends State<NetworkPartnerPage>
                                 )
                                 .toList(),
                           )
-                        : Column(
-                            children: [
-                              Lottie.asset('images/network-not-found.json'),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              Text("Харилцагч олдсонгүй"),
-                            ],
-                          ),
+                        : NotFound(
+                            module: 'NETWORK',
+                            labelText: "Харилцагч олдсонгүй",
+                          )
                   ],
                 ),
               ),

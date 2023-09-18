@@ -1,4 +1,5 @@
 import 'package:dehub/components/delivery_card/delivery_card.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/screens/order_delivery/delivery_detail/delivery_detail.dart';
 import 'package:dehub/screens/order_delivery/delivery/delivery.dart';
@@ -58,44 +59,51 @@ class _DeliveryState extends State<Delivery> with AfterLayoutMixin {
                 SizedBox(
                   height: 5,
                 ),
-                Column(
-                  children: delivery.rows!
-                      .map((item) => DeliveryCard(
-                            onClick: () {
-                              Navigator.of(context).pushNamed(
-                                DeliveryDetail.routeName,
-                                arguments: DeliveryDetailArguments(data: item),
-                              );
-                            },
-                            refCodeClick: () {
-                              Navigator.of(context).pushNamed(
-                                DeliveryPage.routeName,
-                                arguments: DeliveryPageArguments(
+                delivery.rows?.length != 0
+                    ? Column(
+                        children: delivery.rows!
+                            .map((item) => DeliveryCard(
+                                  onClick: () {
+                                    Navigator.of(context).pushNamed(
+                                      DeliveryPage.routeName,
+                                      arguments: DeliveryPageArguments(
+                                        data: item,
+                                      ),
+                                    );
+                                  },
+                                  refCodeClick: () {
+                                    Navigator.of(context).pushNamed(
+                                      DeliveryDetail.routeName,
+                                      arguments:
+                                          DeliveryDetailArguments(data: item),
+                                    );
+                                  },
+                                  startClick: () async {
+                                    try {
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+                                      await OrderApi()
+                                          .deliveryNoteStart(item.id);
+                                      list(page, limit);
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                    } catch (e) {
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                    }
+                                  },
                                   data: item,
-                                ),
-                              );
-                            },
-                            startClick: () async {
-                              try {
-                                setState(() {
-                                  isLoading = true;
-                                });
-                                await OrderApi().deliveryNoteStart(item.id);
-                                list(page, limit);
-                                setState(() {
-                                  isLoading = false;
-                                });
-                              } catch (e) {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                              }
-                            },
-                            data: item,
-                            isDeliveried: false,
-                          ))
-                      .toList(),
-                )
+                                  isDeliveried: false,
+                                ))
+                            .toList(),
+                      )
+                    : NotFound(
+                        module: "ORDER",
+                        labelText: "Хоосон байна",
+                      ),
               ],
             ),
           );

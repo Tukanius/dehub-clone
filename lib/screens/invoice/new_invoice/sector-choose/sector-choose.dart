@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/close_button/close_button.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/components/sector_card/sector_card.dart';
 import 'package:dehub/models/partner.dart';
@@ -11,7 +12,6 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:lottie/lottie.dart';
 
 class SectorChooseArguments {
   ListenController sectorListenController;
@@ -127,20 +127,9 @@ class _SectorChooseState extends State<SectorChoose> with AfterLayoutMixin {
                                   )
                                   .toList(),
                             )
-                          : Column(
-                              children: [
-                                Lottie.asset('images/not-found.json'),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Text(
-                                  'Мэдээлэл олдсонгүй!',
-                                  style: TextStyle(
-                                    color: invoiceColor,
-                                    fontSize: 16,
-                                  ),
-                                )
-                              ],
+                          : NotFound(
+                              module: "INVOICE",
+                              labelText: "Мэдээлэл олдсонгүй",
                             )
                       : Center(
                           child: CircularProgressIndicator(

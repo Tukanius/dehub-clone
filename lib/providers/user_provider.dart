@@ -91,10 +91,10 @@ class UserProvider extends ChangeNotifier {
     clearAccessToken();
   }
 
-  Future<String?> getUsername() async {
+  Future<String?> getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? username = prefs.getString("EMAIL");
-    return username;
+    String? email = prefs.getString("EMAIL");
+    return email;
   }
 
   Future<String?> getCode() async {

@@ -1,4 +1,5 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
@@ -31,7 +32,10 @@ class _MainInvoicePageState extends State<MainInvoicePage>
   }
 
   static const List<Widget> currentPages = [
-    Text('1'),
+    NotFound(
+      module: "INVOICE",
+      labelText: 'Хоосон байна',
+    ),
     DashBoardTab(),
     Text('1'),
     Text('1'),

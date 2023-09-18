@@ -53,7 +53,7 @@ class BusinessNetwork {
   String? orderConfirmTerm;
   int? expireDayCount;
   int? month;
-  String? paymentDay;
+  int? paymentDay;
   String? description;
   bool? isMain;
   bool? isOpen;

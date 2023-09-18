@@ -146,11 +146,33 @@ class _CheckBiometricState extends State<CheckBiometric> with AfterLayoutMixin {
     if (availableBiometrics.contains(BiometricType.face)) {
       setState(() {
         bioType = "FACE";
+        print('FACE');
       });
     }
     if (availableBiometrics.contains(BiometricType.fingerprint)) {
       setState(() {
         bioType = "FINGER_PRINT";
+        print("FINGERPRINT");
+      });
+    }
+    if (availableBiometrics.contains(BiometricType.values)) {
+      setState(() {
+        bioType = "VALUES";
+      });
+    }
+    if (availableBiometrics.contains(BiometricType.iris)) {
+      setState(() {
+        bioType = "IRIS";
+      });
+    }
+    if (availableBiometrics.contains(BiometricType.strong)) {
+      setState(() {
+        bioType = "STRONG";
+      });
+    }
+    if (availableBiometrics.contains(BiometricType.weak)) {
+      setState(() {
+        bioType = "WEAK";
       });
     }
   }

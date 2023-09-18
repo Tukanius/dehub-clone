@@ -1,4 +1,5 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/product_page/tabs/dashboard_tab/dashboard_tab.dart';
@@ -31,7 +32,10 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
   static const List<Widget> currentPages = [
     HomePageTab(),
     DashboardTab(),
-    Text('1'),
+    NotFound(
+      module: "INVENTORY",
+      labelText: "Тун удахгүй",
+    ),
     Text('1'),
   ];
 

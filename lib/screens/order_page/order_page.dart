@@ -1,4 +1,5 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/new_order/new_order.dart';
@@ -30,7 +31,10 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
   }
 
   static const List<Widget> currentPages = [
-    Text('1'),
+    NotFound(
+      module: "ORDER",
+      labelText: "Хоосон байна",
+    ),
     DashboardTab(),
     OrderTab(),
     CustomerTab(),
