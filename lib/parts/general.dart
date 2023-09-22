@@ -227,12 +227,27 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => ClientClassifications.fromJson(e))
             .toList()
         : null,
+
+    deliveryNoteStatus: json['deliveryNoteStatus'] != null
+        ? (json['deliveryNoteStatus'] as List)
+            .map((e) => DeliveryNoteStatus.fromJson(e))
+            .toList()
+        : null,
+    pullSheetStatus: json['pullSheetStatus'] != null
+        ? (json['pullSheetStatus'] as List)
+            .map((e) => PullSheetStatus.fromJson(e))
+            .toList()
+        : null,
   );
 }
 
 Map<String, dynamic> _$GeneralToJson(General instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.pullSheetStatus != null)
+    json['pullSheetStatus'] = instance.pullSheetStatus;
+  if (instance.deliveryNoteStatus != null)
+    json['deliveryNoteStatus'] = instance.deliveryNoteStatus;
   if (instance.distributionAreas != null)
     json['distributionAreas'] = instance.distributionAreas;
   if (instance.branchStatus != null)

@@ -3,6 +3,7 @@ import 'package:dehub/models/business_sectors.dart';
 import 'package:dehub/models/business_staff_roles.dart';
 import 'package:dehub/models/business_status.dart';
 import 'package:dehub/models/client_classification.dart';
+import 'package:dehub/models/delivery_note_status.dart';
 import 'package:dehub/models/distribution_areas.dart';
 import 'package:dehub/models/equity_types.dart';
 import 'package:dehub/models/permissions.dart';
@@ -18,6 +19,7 @@ import 'package:dehub/models/item_status.dart';
 import 'package:dehub/models/invoice_payment_status.dart';
 import 'package:dehub/models/invoice_history_types.dart';
 import 'package:dehub/models/invoice_status.dart';
+import 'package:dehub/models/pull_sheet_status.dart';
 import 'package:dehub/models/purchase_types.dart';
 import 'package:dehub/models/service_category_types.dart';
 import 'package:dehub/models/types.dart';
@@ -96,10 +98,14 @@ class General {
   List<ReferenceTypes>? referenceTypes;
   List<ServiceCategoryTypes>? serviceCategoryTypes;
   List<DistributionAreas>? distributionAreas;
-
   List<ClientClassifications>? clientClassifications;
 
+  List<DeliveryNoteStatus>? deliveryNoteStatus;
+  List<PullSheetStatus>? pullSheetStatus;
+
   General({
+    this.pullSheetStatus,
+    this.deliveryNoteStatus,
     this.clientClassifications,
     this.distributionAreas,
     this.provinces,

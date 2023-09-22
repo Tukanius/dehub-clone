@@ -92,6 +92,7 @@ import 'package:dehub/screens/product_give/product_give.dart';
 import 'package:dehub/screens/product_page/product_page.dart';
 import 'package:dehub/screens/product_page/tabs/dashboard_tab/product_detail_page/product_detail_page.dart';
 import 'package:dehub/screens/product_page/tabs/dashboard_tab/product_list_page/product_list_page.dart';
+import 'package:dehub/screens/pull_sheet_expenses/pull_sheet_expenses.dart';
 import 'package:dehub/screens/received_funding_page/give_funding_detail_page.dart';
 import 'package:dehub/screens/received_funding_page/received_funding_detail_page.dart';
 import 'package:dehub/screens/received_funding_page/received_funding_page.dart';
@@ -585,6 +586,14 @@ class MyApp extends StatelessWidget {
                         id: arguments.id,
                       );
                     });
+                  case PullSheetExpenses.routeName:
+                    PullSheetExpensesArguments arguments =
+                        settings.arguments as PullSheetExpensesArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return PullSheetExpenses(
+                        data: arguments.data,
+                      );
+                    });
                   case IncomeGuarantee.routeName:
                     // IncomeGuaranteeArguments arguments =
                     // settings.arguments as IncomeGuaranteeArguments;
@@ -690,8 +699,12 @@ class MyApp extends StatelessWidget {
                       return ShoppingPage();
                     });
                   case QpayPage.routeName:
+                    QpayPageArguments arguments =
+                        settings.arguments as QpayPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return QpayPage();
+                      return QpayPage(
+                        data: arguments.data,
+                      );
                     });
                   case GiveFundingDetailPage.routeName:
                     return MaterialPageRoute(builder: (context) {

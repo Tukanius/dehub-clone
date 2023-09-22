@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 class OrderGoodsInfo extends StatefulWidget {
   final int? index;
   final Order? data;
+  final bool? isConfirmed;
   OrderGoodsInfo({
     this.data,
     Key? key,
+    this.isConfirmed,
     this.index,
   }) : super(key: key);
 
@@ -43,7 +45,7 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                     ),
                     Expanded(
                       child: Text(
-                        '${widget.data?.nameMon} SKU ${widget.data?.skuCode} asdfa sdf asdf asdfa sdfa s',
+                        '${widget.data?.name} SKU ${widget.data?.skuCode} ${widget.data?.brand}',
                         style: TextStyle(
                           color: black,
                           fontSize: 12,
@@ -62,7 +64,7 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 15),
                         child: Text(
-                          'ш',
+                          '${widget.data?.unit?[0]}'.toLowerCase(),
                           style: TextStyle(
                             color: black,
                             fontSize: 12,
@@ -73,18 +75,27 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                         margin: EdgeInsets.symmetric(horizontal: 20),
                         child: widget.data?.quantity == null
                             ? Text('0')
-                            : Text(
-                                '${widget.data?.quantity?.toInt()}',
-                                style: TextStyle(
-                                  color: black,
-                                  fontSize: 12,
-                                ),
-                              ),
+                            : widget.isConfirmed == true ||
+                                    widget.isConfirmed == null
+                                ? Text(
+                                    '${widget.data?.confirmedQuantity?.toInt()}',
+                                    style: TextStyle(
+                                      color: black,
+                                      fontSize: 12,
+                                    ),
+                                  )
+                                : Text(
+                                    '${widget.data?.quantity?.toInt()}',
+                                    style: TextStyle(
+                                      color: black,
+                                      fontSize: 12,
+                                    ),
+                                  ),
                       ),
                       Expanded(
                         child: Text(
                           // '${Utils().formatCurrency(widget.data?.price.toString())}₮',
-                          '',
+                          "",
                           style: TextStyle(
                             color: black,
                             fontSize: 12,
@@ -104,28 +115,24 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Container(
-                child: Text(
-                  'Нийт',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
+              Text(
+                'Нийт',
+                style: TextStyle(
+                  color: black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
               SizedBox(
                 width: 20,
               ),
-              Container(
-                child: Text(
-                  // '${Utils().formatCurrency("${double.parse(widget.data!.price.toString()) * double.parse(widget.data!.quantity!.toString())}")}₮',
-                  '',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
+              Text(
+                // '${Utils().formatCurrency("${double.parse(widget.data!.price.toString()) * double.parse(widget.data!.quantity!.toString())}")}₮',
+                "",
+                style: TextStyle(
+                  color: black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
               SizedBox(
@@ -133,7 +140,9 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
               ),
             ],
           ),
-          Divider(),
+          SizedBox(
+            height: 10,
+          ),
         ],
       ),
     );

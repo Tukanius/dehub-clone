@@ -4,7 +4,6 @@ import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/new_order/add_attachment.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -83,6 +82,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
             Navigator.of(context).pop();
           },
           child: Container(
+            color: transparent,
             child: Icon(
               Icons.arrow_back_ios_new,
               color: orderColor,
@@ -115,15 +115,23 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            user.currentBusiness?.type == "SUPPLIER"
+                                ? Text(
+                                    '${order.salesCode}',
+                                    style: TextStyle(
+                                      color: orderColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  )
+                                : Text(
+                                    '${order.purchaseCode}',
+                                    style: TextStyle(
+                                      color: orderColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                             Text(
-                              'PO-290812',
-                              style: TextStyle(
-                                color: orderColor,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            Text(
-                              '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD HH:mm")}',
+                              '${Moment.parse(order.createdAt.toString()).format("YYYY-MM-DD HH:mm")}',
                               style: TextStyle(
                                 color: buttonColor,
                               ),
@@ -152,11 +160,11 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                               ),
                             ),
                             Text(
-                              'Bolormaa.B',
+                              '${user.firstName}',
                               style: TextStyle(
                                 color: orderColor,
                               ),
-                            )
+                            ),
                           ],
                         ),
                         SizedBox(
@@ -386,13 +394,21 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           'Менежер',
                           style: TextStyle(color: buttonColor),
                         ),
-                        Text(
-                          '${order.buyerStaff?.firstName}',
-                          style: TextStyle(
-                            color: orderColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        )
+                        user.currentBusiness?.type == "BUYER"
+                            ? Text(
+                                '${order.buyerStaff?.firstName}',
+                                style: TextStyle(
+                                  color: orderColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )
+                            : Text(
+                                '${order.supplierStaff?.firstName}',
+                                style: TextStyle(
+                                  color: orderColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
                       ],
                     ),
                   ),
@@ -508,24 +524,10 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              'Солих',
-                              style: TextStyle(
-                                color: orderColor,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Icon(
-                              Icons.calendar_month,
-                              color: orderColor,
-                              size: 16,
-                            )
-                          ],
-                        )
+                        Text(
+                          '${Moment.parse(order.deliveryDate.toString()).format("YYYY-MM-DD HH:mm")}',
+                          style: TextStyle(color: orderColor),
+                        ),
                       ],
                     ),
                   ),
@@ -549,40 +551,19 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                         )
                         .toList(),
                   ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Text(
-                      'Нэмэлтээр',
-                      style: TextStyle(
-                        color: buttonColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     Navigator.of(context).pushNamed(AddRow.routeName);
-                  //   },
-                  //   child: Container(
-                  //     margin: const EdgeInsets.only(bottom: 3),
-                  //     color: white,
-                  //     padding: const EdgeInsets.symmetric(
-                  //         horizontal: 15, vertical: 10),
-                  //     child: Row(
-                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //       children: [
-                  //         Text(
-                  //           'Мөр нэмэх',
-                  //           style: TextStyle(
-                  //             color: orderColor,
-                  //             fontWeight: FontWeight.w500,
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
+                  order.additionalLines!.isNotEmpty
+                      ? Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Text(
+                            'Нэмэлтээр',
+                            style: TextStyle(
+                              color: buttonColor,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
                   Column(
                     children: order.additionalLines!
                         .map(
@@ -654,7 +635,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           ),
                         ),
                         Text(
-                          '...төрөл',
+                          '${order.lines?.length}',
                           style: TextStyle(
                             color: orderColor,
                           ),
@@ -676,7 +657,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           ),
                         ),
                         Text(
-                          '...ширхэг',
+                          '${order.lines?.fold(0, (previousValue, element) => previousValue + element.quantity!)} ширхэг',
                           style: TextStyle(
                             color: orderColor,
                           ),
@@ -897,6 +878,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                     ),
                   ),
                   Container(
+                    width: MediaQuery.of(context).size.width,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
                     height: 120,
@@ -905,6 +887,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                       decoration: BoxDecoration(
                         border: Border.all(width: 0.5, color: grey),
                       ),
+                      child: Text(''),
                     ),
                   ),
                   Container(
@@ -919,6 +902,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                     ),
                   ),
                   Container(
+                    width: MediaQuery.of(context).size.width,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
                     height: 120,
@@ -933,38 +917,38 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
                     child: Text(
-                      'Хавсралт нэмэх',
+                      'Нэмэлт хавсралтууд',
                       style: TextStyle(
                         color: buttonColor,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(AddAttachment.routeName);
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.only(bottom: 3),
-                      color: white,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: Row(
-                        children: [
-                          SvgPicture.asset('images/attachment_add.svg'),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            'Нэмэх',
-                            style: TextStyle(
-                              color: orderColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Navigator.of(context).pushNamed(AddAttachment.routeName);
+                  //   },
+                  //   child: Container(
+                  //     margin: const EdgeInsets.only(bottom: 3),
+                  //     color: white,
+                  //     padding: const EdgeInsets.symmetric(
+                  //         horizontal: 15, vertical: 10),
+                  //     child: Row(
+                  //       children: [
+                  //         SvgPicture.asset('images/attachment_add.svg'),
+                  //         SizedBox(
+                  //           width: 5,
+                  //         ),
+                  //         Text(
+                  //           'Нэмэх',
+                  //           style: TextStyle(
+                  //             color: orderColor,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 3),
                     color: white,
@@ -1000,7 +984,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              'Үзэх',
+                              'Татах',
                               style: TextStyle(
                                 color: orderColor,
                               ),

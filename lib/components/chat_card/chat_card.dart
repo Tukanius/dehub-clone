@@ -113,7 +113,7 @@ class _ChatCardState extends State<ChatCard> {
                 left: widget.isOwnChat == false ? 40 : 0,
                 right: widget.isOwnChat == true ? 40 : 0),
             child: Text(
-              '${Moment.parse(widget.data!.createdAt.toString()).format("YYYY-MM-DD")}',
+              '${Moment.parse(widget.data!.createdAt.toString()).format("YYYY-MM-DD HH:mm")}',
               style: TextStyle(
                   color: saaral, fontSize: 12, fontWeight: FontWeight.bold),
             ),

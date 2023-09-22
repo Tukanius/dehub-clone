@@ -42,7 +42,6 @@ class _BasicInformationTabState extends State<BasicInformationTab>
   @override
   Widget build(BuildContext context) {
     general = Provider.of<GeneralProvider>(context, listen: false).general;
-
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Container(
@@ -896,7 +895,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                             Navigator.of(context).pushNamed(
                               InvoicePaymentPage.routeName,
                               arguments: InvoicePaymentPageArguments(
-                                data: Invoice(),
+                                data: invoice,
                                 id: '',
                               ),
                             );

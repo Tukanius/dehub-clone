@@ -99,7 +99,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${widget.data?.nameMon}',
+                        '${widget.data?.name}',
                         style: TextStyle(
                           color: dark,
                           fontWeight: FontWeight.bold,
@@ -138,81 +138,84 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
             Divider(),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Нэгж',
-                      style: TextStyle(
-                        color: coolGrey,
-                        fontSize: 12,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 3,
-                    ),
-                    Text(
-                      '${widget.data?.unit}',
-                      style: TextStyle(
-                        color: orderColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 3,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'Солих',
-                          style: TextStyle(
-                            color: orderColor,
-                            fontSize: 12,
-                          ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Нэгж',
+                        style: TextStyle(
+                          color: coolGrey,
+                          fontSize: 12,
                         ),
-                        Icon(
-                          Icons.arrow_forward_ios,
+                      ),
+                      SizedBox(
+                        height: 3,
+                      ),
+                      Text(
+                        '${widget.data?.unit}',
+                        style: TextStyle(
                           color: orderColor,
-                          size: 12,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
                         ),
-                      ],
-                    )
-                  ],
+                      ),
+                      SizedBox(
+                        height: 3,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'Солих',
+                            style: TextStyle(
+                              color: orderColor,
+                              fontSize: 12,
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            color: orderColor,
+                            size: 12,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Тоо ширхэг',
-                      style: TextStyle(
-                        color: coolGrey,
-                        fontSize: 12,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Тоо ширхэг',
+                        style: TextStyle(
+                          color: coolGrey,
+                          fontSize: 12,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 3,
-                    ),
-                    Text(
-                      '0',
-                      style: TextStyle(
-                        color: orderColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                      SizedBox(
+                        height: 3,
                       ),
-                    ),
-                    Text(
-                      '50 ш',
-                      style: TextStyle(
-                        color: buttonColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
+                      Text(
+                        '0',
+                        style: TextStyle(
+                          color: orderColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
-                  ],
+                      Text(
+                        '50 ш',
+                        style: TextStyle(
+                          color: buttonColor,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 // Column(
                 //   crossAxisAlignment: CrossAxisAlignment.start,
@@ -301,7 +304,9 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                   children: [
                     GestureDetector(
                       onTap: () {
-                        decrease();
+                        if (widget.data?.isConfirmed == false) {
+                          decrease();
+                        }
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 7),
@@ -326,6 +331,8 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                                 int.parse(quantityController.text);
                           });
                         },
+                        readOnly:
+                            widget.data?.isConfirmed == false ? false : true,
                         controller: quantityController,
                         fontSize: 18,
                         inputType: TextInputType.number,
@@ -352,7 +359,9 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                     ),
                     GestureDetector(
                       onTap: () {
-                        increase();
+                        if (widget.data?.isConfirmed == false) {
+                          increase();
+                        }
                       },
                       child: Container(
                         height: 40,
@@ -377,12 +386,19 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                       borderRadius: BorderRadius.circular(5),
                       color: white,
                       border: Border.all(
-                        color: orderColor,
+                        color: widget.data?.isConfirmed == true
+                            ? orderColor.withOpacity(0.3)
+                            : orderColor,
                       ),
                     ),
                     child: Row(
                       children: [
-                        SvgPicture.asset('images/calculator.svg'),
+                        SvgPicture.asset(
+                          'images/calculator.svg',
+                          color: widget.data?.isConfirmed == true
+                              ? orderColor.withOpacity(0.3)
+                              : orderColor,
+                        ),
                         SizedBox(
                           width: 5,
                         ),
@@ -390,14 +406,18 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                             ? Text(
                                 'Зөв байна',
                                 style: TextStyle(
-                                  color: orderColor,
+                                  color: widget.data?.isConfirmed == true
+                                      ? orderColor.withOpacity(0.3)
+                                      : orderColor,
                                   fontSize: 18,
                                 ),
                               )
                             : Text(
                                 '${widget.lineConfirmText}',
                                 style: TextStyle(
-                                  color: orderColor,
+                                  color: widget.data?.isConfirmed == true
+                                      ? orderColor.withOpacity(0.3)
+                                      : orderColor,
                                   fontSize: 18,
                                 ),
                               ),

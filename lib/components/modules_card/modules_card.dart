@@ -41,9 +41,9 @@ class _ModulesCardState extends State<ModulesCard> {
             children: [
               GestureDetector(
                 onTap: () {
-                  if (widget.partner?.user?.currentBusiness!.type ==
+                  if (widget.partner?.user?.currentBusiness?.type ==
                           'SUPPLIER' ||
-                      widget.partner?.user?.currentBusiness!.type == "BUYER") {
+                      widget.partner?.user?.currentBusiness?.type == "BUYER") {
                     Navigator.of(context).pushNamed(MainInvoicePage.routeName);
                   }
                 },
@@ -303,9 +303,9 @@ class _ModulesCardState extends State<ModulesCard> {
               ),
               GestureDetector(
                 onTap: () {
-                  if (widget.partner?.user?.currentBusiness!.type ==
+                  if (widget.partner?.user?.currentBusiness?.type ==
                           'SUPPLIER' ||
-                      widget.partner?.user?.currentBusiness!.type == "BUYER") {
+                      widget.partner?.user?.currentBusiness?.type == "BUYER") {
                   } else {
                     Navigator.of(context).pushNamed(PartnerPage.routeName);
                   }
@@ -320,18 +320,18 @@ class _ModulesCardState extends State<ModulesCard> {
                           horizontal: 6, vertical: 6),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: widget.partner?.user?.currentBusiness!.type ==
+                        color: widget.partner?.user?.currentBusiness?.type ==
                                     'SUPPLIER' ||
-                                widget.partner?.user?.currentBusiness!.type ==
+                                widget.partner?.user?.currentBusiness?.type ==
                                     "BUYER"
                             ? partnerColor.withOpacity(0.1)
                             : partnerColor.withOpacity(0.2),
                       ),
                       child: SvgPicture.asset(
                         'images/partner.svg',
-                        color: widget.partner?.user?.currentBusiness!.type ==
+                        color: widget.partner?.user?.currentBusiness?.type ==
                                     'SUPPLIER' ||
-                                widget.partner?.user?.currentBusiness!.type ==
+                                widget.partner?.user?.currentBusiness?.type ==
                                     "BUYER"
                             ? partnerColor.withOpacity(0.3)
                             : buttonColor,
@@ -351,9 +351,9 @@ class _ModulesCardState extends State<ModulesCard> {
               ),
               GestureDetector(
                 onTap: () {
-                  if (widget.partner?.user?.currentBusiness!.type ==
+                  if (widget.partner?.user?.currentBusiness?.type ==
                           'SUPPLIER' ||
-                      widget.partner?.user?.currentBusiness!.type == "BUYER") {
+                      widget.partner?.user?.currentBusiness?.type == "BUYER") {
                   } else {
                     Navigator.of(context)
                         .pushNamed(UserMangementPage.routeName);
@@ -369,18 +369,18 @@ class _ModulesCardState extends State<ModulesCard> {
                           horizontal: 6, vertical: 6),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: widget.partner?.user?.currentBusiness!.type ==
+                        color: widget.partner?.user?.currentBusiness?.type ==
                                     'SUPPLIER' ||
-                                widget.partner?.user?.currentBusiness!.type ==
+                                widget.partner?.user?.currentBusiness?.type ==
                                     "BUYER"
                             ? userColor.withOpacity(0.1)
                             : userColor.withOpacity(0.2),
                       ),
                       child: SvgPicture.asset(
                         'images/hereglegch.svg',
-                        color: widget.partner?.user?.currentBusiness!.type ==
+                        color: widget.partner?.user?.currentBusiness?.type ==
                                     'SUPPLIER' ||
-                                widget.partner?.user?.currentBusiness!.type ==
+                                widget.partner?.user?.currentBusiness?.type ==
                                     "BUYER"
                             ? userColor.withOpacity(0.3)
                             : buttonColor,

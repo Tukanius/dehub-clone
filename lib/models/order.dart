@@ -176,10 +176,20 @@ class Order {
   Order? user;
   Order? supplierStaff;
   Order? buyerStaff;
-
   String? lineId;
+  bool? isConfirmed;
+  List<Order>? receiptLines;
+
+  Order? supplierBusiness;
+  Order? buyerBusiness;
+  Order? deliveryStaff;
 
   Order({
+    this.deliveryStaff,
+    this.supplierBusiness,
+    this.buyerBusiness,
+    this.receiptLines,
+    this.isConfirmed,
     this.lineId,
     this.supplierStaff,
     this.buyerStaff,

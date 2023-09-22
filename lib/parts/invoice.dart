@@ -283,12 +283,69 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
             .toList()
         : null,
     optionId: json['optionId'] != null ? json['optionId'] as String : null,
+    invoiceRefCode: json['invoiceRefCode'] != null
+        ? json['invoiceRefCode'] as String
+        : null,
+    creditAccountBank: json['creditAccountBank'] != null
+        ? json['creditAccountBank'] as String
+        : null,
+    creditAccountName: json['creditAccountName'] != null
+        ? json['creditAccountName'] as String
+        : null,
+    creditAccountNumber: json['creditAccountNumber'] != null
+        ? json['creditAccountNumber'] as String
+        : null,
+    creditAccountCurrency: json['creditAccountCurrency'] != null
+        ? json['creditAccountCurrency'] as String
+        : null,
+    debitAccountId: json['debitAccountId'] != null
+        ? json['debitAccountId'] as String
+        : null,
+    debitAccountBank: json['debitAccountBank'] != null
+        ? json['debitAccountBank'] as String
+        : null,
+    debitAccountName: json['debitAccountName'] != null
+        ? json['debitAccountName'] as String
+        : null,
+    debitAccountNumber: json['debitAccountNumber'] != null
+        ? json['debitAccountNumber'] as String
+        : null,
+    debitAccountCurrency: json['debitAccountCurrency'] != null
+        ? json['debitAccountCurrency'] as String
+        : null,
+
+    urls: json['urls'] != null
+        ? (json['urls'] as List).map((e) => Urls.fromJson(e)).toList()
+        : null,
+    qr_image: json['qr_image'] != null ? json['qr_image'] as String : null,
   );
 }
 
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.urls != null) json['urls'] = instance.urls;
+  if (instance.qr_image != null) json['qr_image'] = instance.qr_image;
+  if (instance.invoiceRefCode != null)
+    json['invoiceRefCode'] = instance.invoiceRefCode;
+  if (instance.creditAccountBank != null)
+    json['creditAccountBank'] = instance.creditAccountBank;
+  if (instance.creditAccountName != null)
+    json['creditAccountName'] = instance.creditAccountName;
+  if (instance.creditAccountNumber != null)
+    json['creditAccountNumber'] = instance.creditAccountNumber;
+  if (instance.creditAccountCurrency != null)
+    json['creditAccountCurrency'] = instance.creditAccountCurrency;
+  if (instance.debitAccountId != null)
+    json['debitAccountId'] = instance.debitAccountId;
+  if (instance.debitAccountBank != null)
+    json['debitAccountBank'] = instance.debitAccountBank;
+  if (instance.debitAccountName != null)
+    json['debitAccountName'] = instance.debitAccountName;
+  if (instance.debitAccountNumber != null)
+    json['debitAccountNumber'] = instance.debitAccountNumber;
+  if (instance.debitAccountCurrency != null)
+    json['debitAccountCurrency'] = instance.debitAccountCurrency;
   if (instance.category != null) json['category'] = instance.category;
   if (instance.supplier != null) json['supplier'] = instance.supplier;
   if (instance.brand != null) json['brand'] = instance.brand;

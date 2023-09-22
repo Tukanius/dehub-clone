@@ -42,17 +42,39 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
   Timer? timer;
   bool isCountDown = true;
   bool startShipment = false;
+  Order endResponse = Order();
   Duration resume = Duration();
   Duration difference = Duration();
+  List<Order> removedList = [];
+  List<Order> addedList = [];
+  Set<Order> seenObject = {};
 
   @override
   afterFirstLayout(BuildContext context) async {
     shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
-    if (shipment.startedDate != null) {
+    if (shipment.dispatchedDate != null) {
       difference = DateTime.now()
-          .difference(DateTime.parse(shipment.startedDate.toString()));
+          .difference(DateTime.parse(shipment.dispatchedDate.toString()));
       int pausedDurationInSeconds = (shipment.pausedDuration!).round();
       resume = difference - Duration(seconds: pausedDurationInSeconds);
+    }
+    for (Order obj in shipment.lines!) {
+      if (seenObject.contains(obj)) {
+        final existingObject = seenObject.firstWhere(
+          (element) => element == obj,
+        );
+        if (existingObject != {} &&
+            existingObject != obj.quantity &&
+            existingObject.confirmedQuantity != obj.confirmedQuantity) {
+          if (obj.quantity! - obj.confirmedQuantity! > 0) {
+            removedList.add(obj);
+          } else {
+            addedList.add(obj);
+          }
+        } else {
+          seenObject.add(obj);
+        }
+      }
     }
     setState(() {
       isLoading = false;
@@ -60,7 +82,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
   }
 
   void addTimer() {
-    if (shipment.startedDate == null) {
+    if (shipment.dispatchedDate == null) {
       final addSeconds = 1;
 
       setState(() {
@@ -86,9 +108,9 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
   }
 
   void startTimer() async {
-    if (shipment.startedDate == null) {
+    if (shipment.dispatchedDate == null) {
       try {
-        await OrderApi().deliveryNotestart(widget.data.id!);
+        await OrderApi().deliveryNoteProceed(widget.data.id!);
         timer = Timer.periodic(Duration(seconds: 1), (timer) => addTimer());
         shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
         setState(() {
@@ -115,7 +137,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
   }
 
   Widget buildTime() {
-    if (shipment.startedDate == null) {
+    if (shipment.dispatchedDate == null) {
       String twoDigits(int n) => n.toString().padLeft(2, "0");
       final hours = twoDigits(duration.inHours);
       final minutes = twoDigits(duration.inMinutes.remainder(60));
@@ -134,8 +156,8 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
     if (resets) {
       reset();
     }
-    shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
     await OrderApi().deliveryNotePause(widget.data.id!);
+    shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
     setState(() {
       startShipment = false;
       isStart = false;
@@ -145,9 +167,21 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
 
   end() async {
     try {
-      await OrderApi().deliveryNoteEnd(widget.data.id!);
-      Navigator.of(context).pop();
+      setState(() {
+        isLoading = true;
+      });
+      endResponse = await OrderApi().deliveryNoteEnd(widget.data.id!);
+      await Navigator.of(context).pushNamed(
+        ExpensesPage.routeName,
+        arguments: ExpensesPageArguments(data: endResponse),
+      );
+      setState(() {
+        isLoading = false;
+      });
     } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
       print('============endError==========');
       print(e.toString());
       print('============endError==========');
@@ -157,7 +191,6 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
-
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -203,12 +236,10 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  if (startShipment == false) {
+                                  if (startShipment == false &&
+                                      widget.data.endedDate == null) {
                                     startTimer();
                                   }
-                                  setState(() {
-                                    startShipment = true;
-                                  });
                                 },
                                 child: Container(
                                   height: 60,
@@ -228,7 +259,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                             ? white
                                             : buttonColor,
                                       ),
-                                      shipment.startedDate == null
+                                      shipment.dispatchedDate == null
                                           ? Text(
                                               'Эхлэх',
                                               style: TextStyle(
@@ -270,7 +301,8 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  if (shipment.isPaused == false) {
+                                  if (shipment.isPaused == false &&
+                                      widget.data.endedDate == null) {
                                     stopTimer(resets: false);
                                   }
                                 },
@@ -279,19 +311,26 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                   width: 70,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: lightGrey,
+                                    color: shipment.isPaused == true
+                                        ? orderColor
+                                        : lightGrey,
                                   ),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Icon(
                                         Icons.pause_circle,
-                                        color: buttonColor,
+                                        color: shipment.isPaused == true
+                                            ? white
+                                            : buttonColor,
                                       ),
                                       Text(
                                         'Зогсоох',
                                         style: TextStyle(
-                                          color: buttonColor,
+                                          fontSize: 13,
+                                          color: shipment.isPaused == true
+                                              ? white
+                                              : buttonColor,
                                         ),
                                       ),
                                     ],
@@ -307,24 +346,37 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                   width: 70,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: lightGrey,
+                                    color: widget.data.endedDate == null
+                                        ? lightGrey
+                                        : orderColor,
                                   ),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       SvgPicture.asset(
                                         'images/check_underline.svg',
-                                        color: buttonColor,
+                                        color: widget.data.endedDate != null
+                                            ? white
+                                            : buttonColor,
                                       ),
                                       SizedBox(
                                         height: 5,
                                       ),
-                                      Text(
-                                        'Дуусгах',
-                                        style: TextStyle(
-                                          color: buttonColor,
-                                        ),
-                                      ),
+                                      widget.data.endedDate == null
+                                          ? Text(
+                                              'Дуусгах',
+                                              style: TextStyle(
+                                                color: buttonColor,
+                                                fontSize: 13,
+                                              ),
+                                            )
+                                          : Text(
+                                              'Дууссан',
+                                              style: TextStyle(
+                                                color: white,
+                                                fontSize: 13,
+                                              ),
+                                            ),
                                     ],
                                   ),
                                 ),

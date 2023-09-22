@@ -1,3 +1,4 @@
+import 'package:dehub/models/qpay-urls.dart';
 import 'package:moment_dart/moment_dart.dart';
 part '../parts/invoice.dart';
 
@@ -140,6 +141,20 @@ class Invoice {
   List<Invoice>? optionValues;
   String? optionId;
 
+  String? invoiceRefCode;
+  String? creditAccountBank;
+  String? creditAccountName;
+  String? creditAccountNumber;
+  String? creditAccountCurrency;
+  String? debitAccountId;
+  String? debitAccountBank;
+  String? debitAccountName;
+  String? debitAccountNumber;
+  String? debitAccountCurrency;
+
+  String? qr_image;
+
+  List<Urls>? urls;
   String getPostDate() {
     return Moment.parse(createdAt!).format("YYYY-MM-DD");
   }
@@ -153,6 +168,18 @@ class Invoice {
   }
 
   Invoice({
+    this.urls,
+    this.qr_image,
+    this.invoiceRefCode,
+    this.creditAccountBank,
+    this.creditAccountName,
+    this.creditAccountNumber,
+    this.creditAccountCurrency,
+    this.debitAccountId,
+    this.debitAccountBank,
+    this.debitAccountName,
+    this.debitAccountNumber,
+    this.debitAccountCurrency,
     this.category,
     this.supplier,
     this.brand,

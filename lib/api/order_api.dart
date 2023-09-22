@@ -78,7 +78,10 @@ class OrderApi extends HttpRequest {
   }
 
   Future<Order> pullSheetPause(String id) async {
+    print('====================res=====================');
     var res = await put('/pull_sheet/$id/pause', "ORDER", true, handler: true);
+    print(res);
+    print('====================res=====================');
     return Order.fromJson(res as Map<String, dynamic>);
   }
 
@@ -163,6 +166,18 @@ class OrderApi extends HttpRequest {
     var res = await put(
         '/delivery_note/${data.lineId}/line_confirm', "ORDER", true,
         data: data.toJson(), handler: true);
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Order> getPhone(String id, String phone) async {
+    var res = await get('/receipt/$id/get_phone?phone=$phone', "ORDER", true,
+        handler: true);
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Order> pullSheetConfirm(String id) async {
+    var res =
+        await put('/pull_sheet/$id/confirm', "ORDER", true, handler: true);
     return Order.fromJson(res as Map<String, dynamic>);
   }
 }

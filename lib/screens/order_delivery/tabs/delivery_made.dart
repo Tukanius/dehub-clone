@@ -59,8 +59,9 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
                     ? Column(
                         children: pullSheet.rows!
                             .map(
-                              (e) => ShippingCard(
-                                data: e,
+                              (data) => ShippingCard(
+                                onClick: () {},
+                                data: data,
                               ),
                             )
                             .toList(),

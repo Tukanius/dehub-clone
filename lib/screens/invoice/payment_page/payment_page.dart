@@ -69,7 +69,27 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
               creditAccountId: selectedValue.toString(),
               amount: double.parse(textController.text),
             ))
-        : Navigator.of(context).pushNamed(QpayPage.routeName);
+        : Navigator.of(context).pushNamed(
+            QpayPage.routeName,
+            arguments: QpayPageArguments(
+              data: Invoice(
+                invoiceId: widget.data.id,
+                invoiceRefCode: widget.data.refCode,
+                receiverBusinessId: widget.data.receiverBusinessId,
+                description: widget.data.refCode,
+                creditAccountId: widget.data.receiverAcc?.id,
+                creditAccountBank: widget.data.receiverAcc?.bankName,
+                creditAccountName: widget.data.receiverAcc?.name,
+                creditAccountNumber: widget.data.receiverAcc?.number,
+                creditAccountCurrency: widget.data.receiverAcc?.currency,
+                debitAccountId: widget.data.senderAcc?.id,
+                debitAccountBank: widget.data.senderAcc?.bankName,
+                debitAccountName: widget.data.senderAcc?.name,
+                debitAccountNumber: widget.data.senderAcc?.number,
+                debitAccountCurrency: widget.data.senderAcc?.currency,
+              ),
+            ),
+          );
   }
 
   General general = General();
@@ -77,7 +97,6 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
   @override
   Widget build(BuildContext context) {
     general = Provider.of<GeneralProvider>(context, listen: true).general;
-
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(

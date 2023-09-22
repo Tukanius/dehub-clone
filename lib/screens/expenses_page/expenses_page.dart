@@ -54,7 +54,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
         ),
         centerTitle: false,
         title: user.currentBusiness?.type == "SUPPLIER"
-            ? Text(
+            ? const Text(
                 "ЗАРЛАГЫН ПАДААН",
                 style: TextStyle(
                   color: white,
@@ -62,7 +62,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
                   fontWeight: FontWeight.w500,
                 ),
               )
-            : Text(
+            : const Text(
                 "ОРЛОГЫН ПАДААН",
                 style: TextStyle(
                   color: white,
@@ -71,7 +71,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
                 ),
               ),
         actions: [
-          Center(
+          const Center(
             child: Text(
               "№97278",
               style: TextStyle(
@@ -80,7 +80,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 15,
           ),
         ],
@@ -153,7 +153,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD HH:mm")}',
+                                  '${Moment.parse(widget.data.deliveryDate.toString()).format("YYYY-MM-DD HH:mm")}',
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: orderColor,
@@ -163,7 +163,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
                                   height: 10,
                                 ),
                                 Text(
-                                  'Х.Баярбат',
+                                  '${widget.data.deliveryStaff?.firstName}',
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: orderColor,
@@ -191,131 +191,135 @@ class _ExpensesPageState extends State<ExpensesPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Нийлүүлэгч',
-                              style: TextStyle(
-                                color: coolGrey,
-                                fontSize: 12,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Нийлүүлэгч',
+                                style: TextStyle(
+                                  color: coolGrey,
+                                  fontSize: 12,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 7.5,
-                            ),
-                            Text(
-                              'Талын монгол',
-                              style: TextStyle(
-                                color: black,
-                                fontSize: 12,
+                              SizedBox(
+                                height: 7.5,
                               ),
-                            ),
-                            SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              'Трэйд Групп ХХК',
-                              style: TextStyle(
-                                color: black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
+                              Text(
+                                '${widget.data.supplierBusiness?.profileName}',
+                                style: TextStyle(
+                                  color: black,
+                                  fontSize: 12,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              'ТТД: 123123',
-                              style: TextStyle(
-                                color: black,
-                                fontSize: 12,
+                              SizedBox(
+                                height: 4,
                               ),
-                            ),
-                            SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              'mail@tradegroup.mn',
-                              style: TextStyle(
-                                color: black,
-                                fontSize: 12,
+                              Text(
+                                '${widget.data.supplierBusiness?.partnerName}',
+                                style: TextStyle(
+                                  color: black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              '9999 9999',
-                              style: TextStyle(
-                                color: black,
-                                fontSize: 12,
+                              SizedBox(
+                                height: 4,
                               ),
-                            ),
-                          ],
+                              Text(
+                                'ТТД: ${widget.data.supplierBusiness?.regNumber}',
+                                style: TextStyle(
+                                  color: black,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                '${widget.data.supplierBusiness?.partnerEmail}',
+                                style: TextStyle(
+                                  color: black,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                '${widget.data.supplierBusiness?.partnerPhone}',
+                                style: TextStyle(
+                                  color: black,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Худалдан авагч',
-                              style: TextStyle(
-                                color: coolGrey,
-                                fontSize: 12,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Худалдан авагч',
+                                style: TextStyle(
+                                  color: coolGrey,
+                                  fontSize: 12,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 7.5,
-                            ),
-                            Text(
-                              'Талын монгол',
-                              style: TextStyle(
-                                color: black,
-                                fontSize: 12,
+                              SizedBox(
+                                height: 7.5,
                               ),
-                            ),
-                            SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              'Трэйд Групп ХХК',
-                              style: TextStyle(
-                                color: black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
+                              Text(
+                                '${widget.data.buyerBusiness?.profileName}',
+                                style: TextStyle(
+                                  color: black,
+                                  fontSize: 12,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              'ТТД: 123123',
-                              style: TextStyle(
-                                color: black,
-                                fontSize: 12,
+                              SizedBox(
+                                height: 4,
                               ),
-                            ),
-                            SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              'mail@tradegroup.mn',
-                              style: TextStyle(
-                                color: black,
-                                fontSize: 12,
+                              Text(
+                                '${widget.data.buyerBusiness?.partnerName}',
+                                style: TextStyle(
+                                  color: black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              '9999 9999',
-                              style: TextStyle(
-                                color: black,
-                                fontSize: 12,
+                              SizedBox(
+                                height: 4,
                               ),
-                            ),
-                          ],
+                              Text(
+                                'ТТД: ${widget.data.buyerBusiness?.regNumber}',
+                                style: TextStyle(
+                                  color: black,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                '${widget.data.buyerBusiness?.partnerEmail}',
+                                style: TextStyle(
+                                  color: black,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                '${widget.data.buyerBusiness?.partnerPhone}',
+                                style: TextStyle(
+                                  color: black,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -410,14 +414,15 @@ class _ExpensesPageState extends State<ExpensesPage> {
                       ],
                     ),
                     Divider(),
-                    OrderGoodsInfo(
-                      index: 1,
-                      data: Order(
-                        nameMon: "Аарц",
-                        skuCode: "123123",
-                        quantity: 5,
-                        price: 10000000000,
-                      ),
+                    Column(
+                      children: widget.data.receiptLines!
+                          .map(
+                            (e) => OrderGoodsInfo(
+                              index: widget.data.receiptLines?.indexOf(e),
+                              data: e,
+                            ),
+                          )
+                          .toList(),
                     ),
                     Text(
                       'ПАДААНЫ ДҮН',
@@ -453,15 +458,15 @@ class _ExpensesPageState extends State<ExpensesPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Нэр төрлийн тоо',
                           style: TextStyle(
                             color: black,
                           ),
                         ),
                         Text(
-                          '13',
-                          style: TextStyle(
+                          '${widget.data.receiptLines?.length}',
+                          style: const TextStyle(
                             color: orderColor,
                           ),
                         ),
@@ -473,21 +478,21 @@ class _ExpensesPageState extends State<ExpensesPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Хүлээн авах барааны тоо',
                           style: TextStyle(
                             color: black,
                           ),
                         ),
                         Text(
-                          '90',
-                          style: TextStyle(
+                          '${widget.data.receiptLines?.fold(0, (previousValue, element) => previousValue + element.quantity!)}',
+                          style: const TextStyle(
                             color: orderColor,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 50,
                     ),
                   ],
@@ -497,7 +502,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
           ),
           user.currentBusiness?.type == "SUPPLIER"
               ? Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: white,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
@@ -521,7 +526,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
                               Navigator.of(context)
                                   .pushNamed(EnterPhonePage.routeName);
                             },
-                            gradient: LinearGradient(
+                            gradient: const LinearGradient(
                               colors: [white, white],
                             ),
                             container: Container(
@@ -533,23 +538,23 @@ class _ExpensesPageState extends State<ExpensesPage> {
                                     height: 16,
                                     width: 16,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 5,
                                   ),
-                                  Text(
+                                  const Text(
                                     'Код илгээх',
                                     style: TextStyle(
                                       color: orderColor,
                                       fontSize: 18,
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Expanded(
@@ -562,7 +567,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
                           child: CustomButton(
                             isGradient: true,
                             onClick: () {},
-                            gradient: LinearGradient(
+                            gradient: const LinearGradient(
                               colors: [orderColor, orderColor],
                             ),
                             container: Container(
@@ -574,10 +579,10 @@ class _ExpensesPageState extends State<ExpensesPage> {
                                     height: 16,
                                     width: 16,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 5,
                                   ),
-                                  Text(
+                                  const Text(
                                     'Батлуулах',
                                     style: TextStyle(
                                       color: white,
@@ -590,7 +595,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                     ],
@@ -599,7 +604,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
               : Container(
                   decoration: BoxDecoration(
                     color: white,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     ),

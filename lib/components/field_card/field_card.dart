@@ -51,15 +51,11 @@ class _FieldCardState extends State<FieldCard> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                Text(
-                  '${widget.labelText}',
-                  style: TextStyle(
-                    color: widget.labelTextColor,
-                  ),
-                ),
-              ],
+            Text(
+              '${widget.labelText}',
+              style: TextStyle(
+                color: widget.labelTextColor,
+              ),
             ),
             Row(
               children: [

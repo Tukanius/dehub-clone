@@ -198,7 +198,8 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                       ),
                                     ),
                                     Text(
-                                      '${widget.data!.getPaymentDate()}',
+                                      // '${widget.data!.getPaymentDate()}',
+                                      '',
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Color(0xff555555),

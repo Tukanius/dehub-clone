@@ -13,6 +13,8 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     refCode: json['refCode'] != null ? json['refCode'] as String : null,
     type: json['type'] != null ? json['type'] as String : null,
     isDefault: json['isDefault'] != null ? json['isDefault'] as bool : null,
+    isConfirmed:
+        json['isConfirmed'] != null ? json['isConfirmed'] as bool : null,
     businessStatus: json['businessStatus'] != null
         ? json['businessStatus'] as String
         : null,
@@ -175,6 +177,9 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         : null,
     optionValues: json['optionValues'] != null
         ? (json['optionValues'] as List).map((e) => Order.fromJson(e)).toList()
+        : null,
+    receiptLines: json['receiptLines'] != null
+        ? (json['receiptLines'] as List).map((e) => Order.fromJson(e)).toList()
         : null,
     packageType:
         json['packageType'] != null ? json['packageType'] as String : null,
@@ -382,12 +387,29 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     buyerStaff: json['buyerStaff'] != null
         ? Order.fromJson(json['buyerStaff'] as Map<String, dynamic>)
         : null,
+    supplierBusiness: json['supplierBusiness'] != null
+        ? Order.fromJson(json['supplierBusiness'] as Map<String, dynamic>)
+        : null,
+    buyerBusiness: json['buyerBusiness'] != null
+        ? Order.fromJson(json['buyerBusiness'] as Map<String, dynamic>)
+        : null,
+    deliveryStaff: json['deliveryStaff'] != null
+        ? Order.fromJson(json['deliveryStaff'] as Map<String, dynamic>)
+        : null,
   );
 }
 
 Map<String, dynamic> _$OrderToJson(Order instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.deliveryStaff != null)
+    json['deliveryStaff'] = instance.deliveryStaff;
+  if (instance.supplierBusiness != null)
+    json['supplierBusiness'] = instance.supplierBusiness;
+  if (instance.buyerBusiness != null)
+    json['buyerBusiness'] = instance.buyerBusiness;
+  if (instance.receiptLines != null)
+    json['receiptLines'] = instance.receiptLines;
   if (instance.supplierStaff != null)
     json['supplierStaff'] = instance.supplierStaff;
   if (instance.lineId != null) json['lineId'] = instance.lineId;
@@ -416,6 +438,7 @@ Map<String, dynamic> _$OrderToJson(Order instance) {
     json['unitConvertType'] = instance.unitConvertType;
   if (instance.condition != null) json['condition'] = instance.condition;
   if (instance.unitId != null) json['unitId'] = instance.unitId;
+  if (instance.isConfirmed != null) json['isConfirmed'] = instance.isConfirmed;
   if (instance.baseUnit != null) json['baseUnit'] = instance.baseUnit;
   if (instance.baseUnitId != null) json['baseUnitId'] = instance.baseUnitId;
   if (instance.text != null) json['text'] = instance.text;

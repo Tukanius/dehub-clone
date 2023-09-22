@@ -5,6 +5,7 @@ import 'package:dehub/components/shipment_product_card/shipment_product_card.dar
 // import 'package:dehub/components/order_product_card/order_product_card.dart';
 import 'package:dehub/components/shipping_card/shipping_card.dart';
 import 'package:dehub/models/order.dart';
+import 'package:dehub/screens/pull_sheet_expenses/pull_sheet_expenses.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,14 +33,10 @@ class OrderShipment extends StatefulWidget {
 class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
   bool isStart = false;
   Duration duration = Duration();
-  TextEditingController controller = TextEditingController();
-  bool isSubmit = false;
   bool isLoading = true;
   Order shipment = Order();
   Timer? timer;
-  bool isCountDown = true;
-  String? minutes;
-  String? seconds;
+  // bool isCountDown = true;
   bool startShipment = false;
   Duration resume = Duration();
   Duration difference = Duration();
@@ -76,17 +73,20 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
     }
   }
 
-  void reset() {
-    if (isCountDown) {
-      setState(() => duration = Duration());
-    } else {
-      setState(() => duration = Duration());
-    }
-  }
+  // void reset() {
+  //   if (isCountDown) {
+  //     setState(() => duration = Duration());
+  //   } else {
+  //     setState(() => duration = Duration());
+  //   }
+  // }
 
   void startTimer() async {
     if (shipment.startedDate == null) {
       try {
+        setState(() {
+          startShipment = true;
+        });
         await OrderApi().pullSheetStart(widget.data.id!);
         timer = Timer.periodic(Duration(seconds: 1), (timer) => addTimer());
         shipment = await OrderApi().pullSheetGet(widget.data.id!);
@@ -94,6 +94,9 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
           isStart = true;
         });
       } catch (e) {
+        setState(() {
+          startShipment = false;
+        });
         print('================start================');
         print(e);
       }
@@ -106,11 +109,13 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
           isStart = true;
         });
       } catch (e) {
+        setState(() {
+          startShipment = false;
+        });
         print('================proceed================');
         print(e);
       }
     }
-    shipment = await OrderApi().pullSheetGet(widget.data.id!);
   }
 
   Widget buildTime() {
@@ -119,20 +124,26 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
       final hours = twoDigits(duration.inHours);
       final minutes = twoDigits(duration.inMinutes.remainder(60));
       final seconds = twoDigits(duration.inSeconds.remainder(60));
-      return Text('$hours:$minutes:$seconds');
+      return Text(
+        '$hours:$minutes:$seconds',
+        style: TextStyle(fontSize: 13),
+      );
     } else {
       String twoDigits(int n) => n.toString().padLeft(2, "0");
       final hours = twoDigits(resume.inHours);
       final minutes = twoDigits(resume.inMinutes.remainder(60));
       final seconds = twoDigits(resume.inSeconds.remainder(60));
-      return Text('$hours:$minutes:$seconds');
+      return Text(
+        '$hours:$minutes:$seconds',
+        style: TextStyle(fontSize: 13),
+      );
     }
   }
 
   void stopTimer({bool resets = true}) async {
-    if (resets) {
-      reset();
-    }
+    // if (resets) {
+    //   reset();
+    // }
     await OrderApi().pullSheetPause(widget.data.id!);
     shipment = await OrderApi().pullSheetGet(widget.data.id!);
     setState(() {
@@ -144,8 +155,19 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
 
   end() async {
     try {
-      await OrderApi().pullSheetEnd(widget.data.id!);
-      Navigator.of(context).pop();
+      if (widget.data.endedDate == null)
+        await OrderApi().pullSheetEnd(widget.data.id!);
+      // showCustomDialog(
+      //   context,
+      //   "Амжилттай дууслаа",
+      //   onPressed: () {
+      //     Navigator.of(context).pop();
+      //   },
+      // );
+      await Navigator.of(context).pushNamed(
+        PullSheetExpenses.routeName,
+        arguments: PullSheetExpensesArguments(data: shipment),
+      );
     } catch (e) {
       print('============err==========');
       print(e.toString());
@@ -197,12 +219,10 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            if (startShipment == false) {
+                            if (startShipment == false &&
+                                widget.data.endedDate == null) {
                               startTimer();
                             }
-                            setState(() {
-                              startShipment = true;
-                            });
                           },
                           child: Container(
                             height: 60,
@@ -260,7 +280,8 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                         ),
                         GestureDetector(
                           onTap: () {
-                            if (shipment.isPaused == false) {
+                            if (shipment.isPaused == false &&
+                                widget.data.endedDate == null) {
                               stopTimer(resets: false);
                             }
                           },
@@ -285,6 +306,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                                 Text(
                                   'Зогсоох',
                                   style: TextStyle(
+                                    fontSize: 13,
                                     color: shipment.isPaused == true
                                         ? white
                                         : buttonColor,
@@ -303,24 +325,37 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                             width: 70,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: lightGrey,
+                              color: widget.data.endedDate == null
+                                  ? lightGrey
+                                  : orderColor,
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SvgPicture.asset(
                                   'images/check_underline.svg',
-                                  color: buttonColor,
+                                  color: widget.data.endedDate != null
+                                      ? white
+                                      : buttonColor,
                                 ),
                                 SizedBox(
                                   height: 5,
                                 ),
-                                Text(
-                                  'Дуусгах',
-                                  style: TextStyle(
-                                    color: buttonColor,
-                                  ),
-                                ),
+                                widget.data.endedDate == null
+                                    ? Text(
+                                        'Дуусгах',
+                                        style: TextStyle(
+                                          color: buttonColor,
+                                          fontSize: 13,
+                                        ),
+                                      )
+                                    : Text(
+                                        'Дууссан',
+                                        style: TextStyle(
+                                          color: white,
+                                          fontSize: 13,
+                                        ),
+                                      ),
                               ],
                             ),
                           ),
@@ -455,13 +490,19 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                                   children: [
                                     ShipmentProductCard(
                                       approveButtonClick: () async {
-                                        await OrderApi().lineConfirm(
-                                          Order(
-                                            pullSheetLineId: e.id,
-                                            confirmedQuantity: e.quantity,
-                                          ),
-                                          widget.data.id!,
-                                        );
+                                        try {
+                                          await OrderApi().lineConfirm(
+                                            Order(
+                                              pullSheetLineId: e.id,
+                                              confirmedQuantity: e.quantity,
+                                            ),
+                                            widget.data.id!,
+                                          );
+                                          shipment = await OrderApi()
+                                              .pullSheetGet(widget.data.id!);
+                                        } catch (e) {
+                                          print(e.toString());
+                                        }
                                       },
                                       data: e,
                                     ),

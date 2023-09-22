@@ -84,9 +84,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
         data[i].quantity = product[i].quantity;
       }
       createOrder.businessId = order.id;
-      createOrder.receiverBranchId = receiverBranch.id == null
-          ? order.receiverBranches?.first.id
-          : receiverBranch.id;
+      createOrder.receiverBranchId =
+          receiverBranch.id ?? order.receiverBranches?.first.id;
       createOrder.deliveryType = "DEFAULT_DATE";
       createOrder.receiverStaffId = order.receiverStaff?.id;
       createOrder.lines = data;
@@ -107,7 +106,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
       // } else {
       // ScaffoldMessenger.of(context).showSnackBar(
       // const SnackBar(
-      // backgroundColor: invoiceColor,
+      // backgroundColor: orderColor,
       // shape: StadiumBorder(),
       // content: Center(
       // child: Text('Бараа сонгоно уу'),
@@ -116,9 +115,9 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
       // );
       // }
     } catch (e) {
-      print('==========e========');
-      print(e.toString());
-      print('==========e========');
+      debugPrint('==========e========');
+      debugPrint(e.toString());
+      debugPrint('==========e========');
     }
   }
 
@@ -136,13 +135,14 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
             Navigator.of(context).pop();
           },
           child: Container(
-            child: Icon(
+            color: transparent,
+            child: const Icon(
               Icons.arrow_back_ios_new,
               color: orderColor,
             ),
           ),
         ),
-        title: Text(
+        title: const Text(
           'Шинэ захиалга',
           style: TextStyle(
             color: orderColor,
@@ -154,11 +154,11 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
             color: orderColor,
             height: 1,
           ),
-          preferredSize: Size.fromHeight(2),
+          preferredSize: const Size.fromHeight(2),
         ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: orderColor,
               ),
@@ -175,7 +175,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               'SO-290812',
                               style: TextStyle(
                                 color: transparent,
@@ -184,7 +184,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                             ),
                             Text(
                               '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD HH:mm")}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: buttonColor,
                               ),
                               textAlign: TextAlign.end,
@@ -204,7 +204,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                 color: lightGrey,
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Text(
+                              child: const Text(
                                 'Түр төлөв',
                                 style: TextStyle(
                                   color: buttonColor,
@@ -214,16 +214,16 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                             ),
                             Text(
                               '${partner.user?.firstName}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: orderColor,
                               ),
                             )
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
-                        Text(
+                        const Text(
                           'Харилцагчийн мэдээлэл',
                           style: TextStyle(
                             color: buttonColor,
@@ -251,18 +251,18 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                 color: grey,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             customer.partner?.businessName != null
                                 ? Text(
                                     '${customer.partner?.businessName}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: orderColor,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   )
-                                : Text(
+                                : const Text(
                                     'Харилцагч сонгох',
                                     style: TextStyle(
                                       color: orderColor,
@@ -283,7 +283,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                           },
                           child: Container(
                             color: transparent,
-                            child: Row(
+                            child: const Row(
                               children: [
                                 Text(
                                   'Солих',
@@ -314,19 +314,19 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Бизнес код',
                           style: TextStyle(color: buttonColor),
                         ),
                         customer.refCode != null
                             ? Text(
                                 '${customer.refCode}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: orderColor,
                                   fontWeight: FontWeight.w500,
                                 ),
                               )
-                            : Text(
+                            : const Text(
                                 '#BusRef',
                                 style: TextStyle(
                                   color: orderColor,
@@ -344,7 +344,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Партнер нэр',
                           style: TextStyle(color: buttonColor),
                         ),
@@ -356,14 +356,14 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                   ? Expanded(
                                       child: Text(
                                         '${customer.partnerName},',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: buttonColor,
                                           fontWeight: FontWeight.w500,
                                         ),
                                         textAlign: TextAlign.end,
                                       ),
                                     )
-                                  : Text(
+                                  : const Text(
                                       'Партнер нэр, ',
                                       style: TextStyle(
                                         color: buttonColor,
@@ -373,12 +373,12 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                               customer.partner?.refCode != null
                                   ? Text(
                                       ' ${customer.partner?.refCode}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: orderColor,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     )
-                                  : Text(
+                                  : const Text(
                                       '#PartnerRef',
                                       style: TextStyle(
                                         color: orderColor,
@@ -399,19 +399,19 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'ТТД',
                           style: TextStyle(color: buttonColor),
                         ),
                         customer.regNumber != null
                             ? Text(
                                 '${customer.regNumber}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: buttonColor,
                                   fontWeight: FontWeight.w500,
                                 ),
                               )
-                            : Text(
+                            : const Text(
                                 'ТТД',
                                 style: TextStyle(
                                   color: buttonColor,
@@ -429,7 +429,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Expanded(
+                        const Expanded(
                           child: Text(
                             'Төлбөрийн нөхцөл',
                             style: TextStyle(color: buttonColor),
@@ -438,7 +438,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                         Expanded(
                           child: Text(
                             '${order.paymentTerm?.description}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: buttonColor,
                               fontWeight: FontWeight.w500,
                             ),
@@ -456,19 +456,19 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'НӨАТ төлөгч эсэх',
                           style: TextStyle(color: buttonColor),
                         ),
                         order.isVatPayer == true
-                            ? Text(
+                            ? const Text(
                                 'Тийм',
                                 style: TextStyle(
                                   color: buttonColor,
                                   fontWeight: FontWeight.w500,
                                 ),
                               )
-                            : Text(
+                            : const Text(
                                 'Үгүй',
                                 style: TextStyle(
                                   color: buttonColor,
@@ -486,26 +486,26 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Менежер',
                           style: TextStyle(color: buttonColor),
                         ),
                         order.receiverStaff != null || order.receiverStaff != {}
                             ? Text(
                                 '${order.receiverStaff?.firstName}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: orderColor,
                                   fontWeight: FontWeight.w500,
                                 ),
                               )
-                            : Text(''),
+                            : const Text(''),
                       ],
                     ),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Хүлээн авах хаяг',
                       style: TextStyle(
                         color: buttonColor,
@@ -521,7 +521,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Хүлээн авах салбар',
                           style: TextStyle(
                             color: buttonColor,
@@ -544,7 +544,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                     },
                                     child: Container(
                                       color: transparent,
-                                      child: Row(
+                                      child: const Row(
                                         children: [
                                           Text(
                                             'Солих',
@@ -564,8 +564,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                       ),
                                     ),
                                   )
-                                : SizedBox()
-                            : SizedBox(),
+                                : const SizedBox()
+                            : const SizedBox(),
                       ],
                     ),
                   ),
@@ -577,18 +577,18 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: lightGrey,
                           ),
                           height: 42,
                           width: 42,
-                          child: Icon(
+                          child: const Icon(
                             Icons.location_on_outlined,
                             color: Colors.blue,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Expanded(
@@ -596,17 +596,17 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                               ? receiverBranch.branchAddress == null
                                   ? Text(
                                       '${order.receiverBranches?.first.branchAddress}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: buttonColor,
                                       ),
                                     )
                                   : Text(
                                       '${receiverBranch.branchAddress}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: buttonColor,
                                       ),
                                     )
-                              : Text(
+                              : const Text(
                                   'Салбар тохируулаагүй байна !',
                                   style: TextStyle(
                                     color: red,
@@ -624,7 +624,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Хүлээн авах ажилтан',
                           style: TextStyle(
                             color: buttonColor,
@@ -635,14 +635,14 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                           children: [
                             Text(
                               '${order.receiverStaff?.firstName}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: orderColor,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 8,
                             ),
-                            Icon(
+                            const Icon(
                               Icons.arrow_forward_ios,
                               color: orderColor,
                               size: 14,
@@ -660,7 +660,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Хүлээн авах өдөр',
                           style: TextStyle(
                             color: buttonColor,
@@ -673,27 +673,27 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                 ? order.deliveryDate != null
                                     ? Text(
                                         '${Moment.parse(order.deliveryDate.toString()).format("YYYY-MM-DD")}',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: orderColor,
                                         ),
                                       )
-                                    : Text('')
+                                    : const Text('')
                                 : Text(
                                     '${Moment.parse(selectedDate).format("YYYY-MM-DD")}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: orderColor,
                                     ),
                                   ),
-                            SizedBox(
+                            const SizedBox(
                               width: 8,
                             ),
-                            Icon(
+                            const Icon(
                               Icons.calendar_month,
                               color: orderColor,
                               size: 16,
                             )
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -705,18 +705,18 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Хамгийн ойрхон хүргэх боломжтой хуваарьт өдөр',
                           style: TextStyle(
                             color: grey,
                             fontSize: 12,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         GridView.count(
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             childAspectRatio: 1 / 0.6,
                             mainAxisSpacing: 15,
                             crossAxisSpacing: 10,
@@ -743,7 +743,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'ЗАХИАЛГЫН ЗҮЙЛ',
                       style: TextStyle(
                         color: buttonColor,
@@ -771,7 +771,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                 ),
                               );
                             },
-                            child: Text(
+                            child: const Text(
                               'Мөр нэмэх',
                               style: TextStyle(
                                 color: orderColor,
@@ -781,17 +781,29 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.of(context).pushNamed(
-                                ProductChoose.routeName,
-                                arguments: ProductChooseArguments(
-                                  isPackage: true,
-                                  businessId: customer.id!,
-                                  productListenController:
-                                      productListenController,
-                                ),
-                              );
+                              if (customer.id != null) {
+                                Navigator.of(context).pushNamed(
+                                  ProductChoose.routeName,
+                                  arguments: ProductChooseArguments(
+                                    isPackage: true,
+                                    businessId: customer.id!,
+                                    productListenController:
+                                        productListenController,
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    backgroundColor: orderColor,
+                                    shape: StadiumBorder(),
+                                    content: Center(
+                                      child: Text('Харилцагч сонгоно уу!'),
+                                    ),
+                                  ),
+                                );
+                              }
                             },
-                            child: Row(
+                            child: const Row(
                               children: [
                                 Text(
                                   'Багцаар нэмэх',
@@ -809,7 +821,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                 )
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -835,7 +847,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Нэмэлтээр',
                       style: TextStyle(
                         color: buttonColor,
@@ -858,7 +870,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       color: white,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -874,22 +886,24 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                   ),
                   Column(
                     children: additionalLines
-                        .map((e) => Column(
-                              children: [
-                                OrderAdditionalLine(
-                                  data: e,
-                                ),
-                                SizedBox(
-                                  height: 3,
-                                ),
-                              ],
-                            ))
+                        .map(
+                          (e) => Column(
+                            children: [
+                              OrderAdditionalLine(
+                                data: e,
+                              ),
+                              const SizedBox(
+                                height: 3,
+                              ),
+                            ],
+                          ),
+                        )
                         .toList(),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'НЭГТГЭЛ',
                       style: TextStyle(
                         color: buttonColor,
@@ -904,7 +918,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Захиалгад буй',
                           style: TextStyle(
                             color: buttonColor,
@@ -912,7 +926,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                         ),
                         Text(
                           '${product.length}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: orderColor,
                           ),
                         ),
@@ -926,7 +940,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Нийт тоо ширхэг',
                           style: TextStyle(
                             color: buttonColor,
@@ -935,11 +949,11 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                         product.isNotEmpty
                             ? Text(
                                 '${product.map((e) => e.quantity).reduce((value, element) => value! + element!).toString()}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: orderColor,
                                 ),
                               )
-                            : Text(
+                            : const Text(
                                 '0',
                                 style: TextStyle(
                                   color: orderColor,
@@ -952,7 +966,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -974,7 +988,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -996,7 +1010,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -1021,7 +1035,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Захиалгын нийт дүн',
                           style: TextStyle(
                             color: buttonColor,
@@ -1030,11 +1044,11 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                         product.isNotEmpty
                             ? Text(
                                 '${product.fold(0, (previousValue, element) => previousValue + (element.price!.toInt() * element.quantity!.toInt()))}₮',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: orderColor,
                                 ),
                               )
-                            : Text(
+                            : const Text(
                                 '0₮',
                                 style: TextStyle(
                                   color: orderColor,
@@ -1043,7 +1057,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       ],
                     ),
                   ),
-                  FormTextField(
+                  const FormTextField(
                     name: 'shippingAmount',
                     textAlign: TextAlign.end,
                     textColor: orderColor,
@@ -1051,7 +1065,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       prefixIcon: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           SizedBox(
                             width: 15,
                           ),
@@ -1075,7 +1089,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                           horizontal: 15, vertical: 10),
                     ),
                   ),
-                  FormTextField(
+                  const FormTextField(
                     name: 'discountAmount',
                     textAlign: TextAlign.end,
                     textColor: orderColor,
@@ -1083,7 +1097,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       prefixIcon: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           SizedBox(
                             width: 15,
                           ),
@@ -1103,8 +1117,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.zero,
                       ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                     ),
                   ),
                   Container(
@@ -1112,7 +1126,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -1135,7 +1149,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -1158,7 +1172,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -1179,7 +1193,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Харилцагчийн нэмэлт хүсэлт',
                       style: TextStyle(
                         color: buttonColor,
@@ -1190,7 +1204,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                   Container(
                     color: white,
                     padding: const EdgeInsets.all(15),
-                    child: FormTextField(
+                    child: const FormTextField(
                       textAlign: TextAlign.left,
                       name: 'additional',
                       maxLines: 5,
@@ -1209,7 +1223,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Нэмэлт тэмдэглэл',
                       style: TextStyle(
                         color: buttonColor,
@@ -1220,7 +1234,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                   Container(
                     color: white,
                     padding: const EdgeInsets.all(15),
-                    child: FormTextField(
+                    child: const FormTextField(
                       textAlign: TextAlign.left,
                       name: 'description',
                       maxLines: 5,
@@ -1239,7 +1253,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Хавсралт нэмэх',
                       style: TextStyle(
                         color: buttonColor,
@@ -1263,10 +1277,10 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       child: Row(
                         children: [
                           SvgPicture.asset('images/attachment_add.svg'),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
-                          Text(
+                          const Text(
                             'Нэмэх',
                             style: TextStyle(
                               color: orderColor,
@@ -1289,13 +1303,13 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                         )
                         .toList(),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   Container(
                     padding: const EdgeInsets.only(
                         bottom: 70, left: 15, right: 15, top: 15),
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: white,
                       border: Border(
                         top: BorderSide(
@@ -1307,7 +1321,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Нийт дүн: ',
                           style: TextStyle(color: orderColor),
                         ),
@@ -1315,9 +1329,21 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                onSubmit(false, false);
+                                if (data.isNotEmpty) {
+                                  onSubmit(false, false);
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      backgroundColor: orderColor,
+                                      shape: StadiumBorder(),
+                                      content: Center(
+                                        child: Text('Бараа сонгоно уу!'),
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
-                              child: Container(
+                              child: SizedBox(
                                 height: 32,
                                 child: Column(
                                   mainAxisAlignment:
@@ -1327,7 +1353,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                       'images/save.svg',
                                       color: orderColor,
                                     ),
-                                    Text(
+                                    const Text(
                                       'Хадгалах',
                                       style: TextStyle(
                                         color: orderColor,
@@ -1338,14 +1364,26 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             GestureDetector(
                               onTap: () {
                                 // Navigator.of(context)
                                 //     .pushNamed(OrderSendPage.routeName);
-                                onSubmit(true, false);
+                                if (data.isNotEmpty) {
+                                  onSubmit(true, false);
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      backgroundColor: orderColor,
+                                      shape: StadiumBorder(),
+                                      content: Center(
+                                        child: Text('Бараа сонгоно уу!'),
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Container(
                                 height: 32,
@@ -1357,7 +1395,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                       'images/control.svg',
                                       color: orderColor,
                                     ),
-                                    Text(
+                                    const Text(
                                       'Хянуулах',
                                       style: TextStyle(
                                         color: orderColor,
@@ -1368,14 +1406,24 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             GestureDetector(
                               onTap: () {
-                                // Navigator.of(context)
-                                //     .pushNamed(OrderSendCustomer.routeName);
-                                onSubmit(true, true);
+                                if (data.isNotEmpty) {
+                                  onSubmit(true, true);
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      backgroundColor: orderColor,
+                                      shape: StadiumBorder(),
+                                      content: Center(
+                                        child: Text('Бараа сонгоно уу!'),
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Container(
                                 color: transparent,
@@ -1388,7 +1436,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                       'images/message_sent.svg',
                                       color: orderColor,
                                     ),
-                                    Text(
+                                    const Text(
                                       'Илгээх',
                                       style: TextStyle(
                                         color: orderColor,
@@ -1453,11 +1501,11 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   }
 
   List<String> dates = [
-    "${DateTime.now().add(Duration(days: 1))}",
-    "${DateTime.now().add(Duration(days: 2))}",
-    "${DateTime.now().add(Duration(days: 3))}",
-    "${DateTime.now().add(Duration(days: 4))}",
-    "${DateTime.now().add(Duration(days: 5))}",
-    "${DateTime.now().add(Duration(days: 6))}",
+    "${DateTime.now().add(const Duration(days: 1))}",
+    "${DateTime.now().add(const Duration(days: 2))}",
+    "${DateTime.now().add(const Duration(days: 3))}",
+    "${DateTime.now().add(const Duration(days: 4))}",
+    "${DateTime.now().add(const Duration(days: 5))}",
+    "${DateTime.now().add(const Duration(days: 6))}",
   ];
 }

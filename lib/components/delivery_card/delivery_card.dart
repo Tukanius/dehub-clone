@@ -1,8 +1,11 @@
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/order.dart';
-import 'package:dehub/utils/utils.dart';
+import 'package:dehub/providers/general_provider.dart';
+// import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class DeliveryCard extends StatefulWidget {
   final bool? isDeliveried;
@@ -24,6 +27,7 @@ class DeliveryCard extends StatefulWidget {
 }
 
 class _DeliveryCardState extends State<DeliveryCard> {
+  General general = General();
   deliveryNoteStatus() {
     switch (widget.data?.deliveryNoteStatus) {
       case "DRAFT":
@@ -31,7 +35,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
       case "ASSIGNED":
         return "Хуваарилсан";
       case "LOADED":
-        return "Хүргэхэд бэлэх";
+        return "Хүргэхэд бэлэн";
       case "DELIVERING":
         return "Хүргэлт эхэлсэн";
       case "DELIVERED":
@@ -40,8 +44,15 @@ class _DeliveryCardState extends State<DeliveryCard> {
     }
   }
 
+  status(String? status) {
+    final result = general.deliveryNoteStatus?.firstWhere(
+        (element) => element.code == widget.data?.deliveryNoteStatus);
+    return result?.name;
+  }
+
   @override
   Widget build(BuildContext context) {
+    general = Provider.of<GeneralProvider>(context, listen: false).orderGeneral;
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
@@ -151,7 +162,8 @@ class _DeliveryCardState extends State<DeliveryCard> {
                       width: 5,
                     ),
                     Text(
-                      '${Utils().formatCurrency(widget.data?.totalAmount.toString())}₮',
+                      // '${Utils().formatCurrency(widget.data?.totalAmount.toString())}₮',
+                      '',
                       style: TextStyle(
                         color: orderColor,
                         fontSize: 12,
@@ -170,14 +182,15 @@ class _DeliveryCardState extends State<DeliveryCard> {
                 Row(
                   children: [
                     Text(
-                      'Статус:',
+                      'Хүргэлт: ',
                       style: TextStyle(
                         color: buttonColor,
                         fontSize: 12,
                       ),
                     ),
                     Text(
-                      ' ${deliveryNoteStatus()}',
+                      status(widget.data?.deliveryNoteStatus.toString())
+                          .toString(),
                       style: TextStyle(
                         color: darkGreen,
                         fontSize: 12,
@@ -228,7 +241,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                 Row(
                   children: [
                     Text(
-                      'Хүргэлт: ',
+                      'Ачилт: ',
                       style: TextStyle(
                         color: buttonColor,
                         fontSize: 12,
@@ -271,21 +284,21 @@ class _DeliveryCardState extends State<DeliveryCard> {
             SizedBox(
               height: 10,
             ),
-            widget.isDeliveried != null
+            widget.isDeliveried != true
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
                           Text(
-                            'Эхэлсэн: ',
+                            'Эхэлсэн:  ',
                             style: TextStyle(
                               color: buttonColor,
                               fontSize: 12,
                             ),
                           ),
                           Text(
-                            ' -',
+                            '-',
                             style: TextStyle(
                               color: buttonColor,
                               fontSize: 12,
@@ -294,16 +307,16 @@ class _DeliveryCardState extends State<DeliveryCard> {
                         ],
                       ),
                       GestureDetector(
-                        onTap: widget.data?.deliveryNoteStatus != "ASSIGNED"
+                        onTap: widget.data?.deliveryNoteStatus == "LOADED"
                             ? widget.startClick
-                            : null,
+                            : () {},
                         child: Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            color: widget.data?.deliveryNoteStatus == "ASSIGNED"
-                                ? orderColor.withOpacity(0.2)
-                                : orderColor,
+                            color: widget.data?.deliveryNoteStatus == "LOADED"
+                                ? orderColor
+                                : orderColor.withOpacity(0.2),
                           ),
                           child: Row(
                             children: [
