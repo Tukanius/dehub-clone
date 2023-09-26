@@ -98,13 +98,15 @@ class _OrderProductCardState extends State<OrderProductCard>
                           color: black,
                         ),
                       ),
-                Container(
-                  width: MediaQuery.of(context).size.width - 120,
+                SizedBox(
+                  width: 5,
+                ),
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${widget.data?.nameMon}',
+                        '${widget.data?.name}',
                         style: TextStyle(
                           color: dark,
                           fontWeight: FontWeight.bold,
@@ -116,7 +118,8 @@ class _OrderProductCardState extends State<OrderProductCard>
                       ),
                       RichText(
                         text: TextSpan(
-                          style: TextStyle(color: dark),
+                          style:
+                              TextStyle(color: dark, fontFamily: 'Montserrat'),
                           children: [
                             widget.data?.skuCode != null
                                 ? TextSpan(text: "${widget.data?.skuCode}, ")
@@ -127,14 +130,20 @@ class _OrderProductCardState extends State<OrderProductCard>
                             widget.data?.category != null
                                 ? TextSpan(text: "${widget.data?.category}, ")
                                 : TextSpan(),
-                            TextSpan(
-                                text:
-                                    "${widget.data?.optionValues?.map((e) => e.name).join(', ')}")
+                            widget.data?.optionValues != null
+                                ? TextSpan(
+                                    text:
+                                        "${widget.data?.optionValues?.map((e) => e.name).join(', ')}",
+                                  )
+                                : TextSpan(),
                           ],
                         ),
                       ),
                     ],
                   ),
+                ),
+                SizedBox(
+                  width: 5,
                 ),
                 GestureDetector(
                   onTap: widget.onCloseClick,
@@ -146,6 +155,9 @@ class _OrderProductCardState extends State<OrderProductCard>
                   ),
                 ),
               ],
+            ),
+            SizedBox(
+              height: 5,
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -197,7 +209,7 @@ class _OrderProductCardState extends State<OrderProductCard>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'Нэгж үнэ',
                       style: TextStyle(
                         color: coolGrey,
@@ -267,62 +279,62 @@ class _OrderProductCardState extends State<OrderProductCard>
                     ),
                   ],
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Үлдэгдэл',
-                      style: TextStyle(
-                        color: coolGrey,
-                        fontSize: 12,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 3,
-                    ),
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          'images/zahialga.svg',
-                          color: black,
-                          height: 9,
-                          width: 12,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '${widget.data?.onDeliveryQuantity}',
-                          style: TextStyle(
-                            color: orderColor,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          'images/ware-house.svg',
-                          color: black,
-                          height: 9,
-                          width: 12,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '${widget.data?.warehouseQuantity}',
-                          style: TextStyle(
-                            color: dark,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                // Column(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Text(
+                //       'Үлдэгдэл',
+                //       style: TextStyle(
+                //         color: coolGrey,
+                //         fontSize: 12,
+                //       ),
+                //     ),
+                //     SizedBox(
+                //       height: 3,
+                //     ),
+                //     Row(
+                //       children: [
+                //         SvgPicture.asset(
+                //           'images/zahialga.svg',
+                //           color: black,
+                //           height: 9,
+                //           width: 12,
+                //         ),
+                //         SizedBox(
+                //           width: 5,
+                //         ),
+                //         Text(
+                //           '${widget.data?.onDeliveryQuantity}',
+                //           style: TextStyle(
+                //             color: orderColor,
+                //             fontSize: 12,
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //     Row(
+                //       children: [
+                //         SvgPicture.asset(
+                //           'images/ware-house.svg',
+                //           color: black,
+                //           height: 9,
+                //           width: 12,
+                //         ),
+                //         SizedBox(
+                //           width: 5,
+                //         ),
+                //         Text(
+                //           '${widget.data?.warehouseQuantity}',
+                //           style: TextStyle(
+                //             color: dark,
+                //             fontSize: 12,
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ],
+                // ),
               ],
             ),
             Divider(),
@@ -380,55 +392,38 @@ class _OrderProductCardState extends State<OrderProductCard>
                     SizedBox(
                       width: 10,
                     ),
-                    widget.readOnly == true
-                        ? Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 6, horizontal: 5),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Color(0xffD9DCDE),
-                              ),
-                            ),
-                            width: 90,
-                            child: Text(
-                              '${widget.data?.quantity}',
-                              style: TextStyle(
-                                fontSize: 18,
-                              ),
-                              textAlign: TextAlign.end,
-                            ),
-                          )
-                        : SizedBox(
-                            width: 90,
-                            child: FormTextField(
-                              onChanged: (value) {
-                                setState(() {
-                                  widget.data!.quantity =
-                                      int.parse(quantityController.text);
-                                });
-                              },
-                              fontSize: 18,
-                              inputType: TextInputType.number,
-                              controller: quantityController,
-                              textAlign: TextAlign.end,
-                              decoration: InputDecoration(
-                                labelStyle: TextStyle(
-                                  fontSize: 15,
-                                ),
-                                hintText: '0',
-                                isDense: true,
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 6, horizontal: 5),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.zero,
-                                  borderSide: BorderSide(
-                                    color: Color(0xffD9DCDE),
-                                  ),
-                                ),
-                              ),
-                              name: 'quantity',
+                    SizedBox(
+                      width: 90,
+                      child: FormTextField(
+                        readOnly: widget.readOnly!,
+                        onChanged: (value) {
+                          setState(() {
+                            widget.data!.quantity =
+                                int.parse(quantityController.text);
+                          });
+                        },
+                        fontSize: 18,
+                        inputType: TextInputType.number,
+                        controller: quantityController,
+                        textAlign: TextAlign.end,
+                        decoration: InputDecoration(
+                          labelStyle: TextStyle(
+                            fontSize: 15,
+                          ),
+                          hintText: '0',
+                          isDense: true,
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 6, horizontal: 5),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.zero,
+                            borderSide: BorderSide(
+                              color: Color(0xffD9DCDE),
                             ),
                           ),
+                        ),
+                        name: 'quantity',
+                      ),
+                    ),
                     SizedBox(
                       width: 10,
                     ),

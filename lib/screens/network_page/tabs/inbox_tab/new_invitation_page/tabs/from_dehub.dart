@@ -1,5 +1,6 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/partner_cards/buyer_business_card.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/new_invitation_page/invitation_sent_page/invitation_sent_page.dart';
@@ -120,24 +121,29 @@ class _FromDehubTabState extends State<FromDehubTab> with AfterLayoutMixin {
                       ),
                     ),
                   ),
-                  Column(
-                    children: business.rows!
-                        .map(
-                          (item) => BuyerBusinessCard(
-                            data: item,
-                            onClick: () {
-                              Navigator.of(context).pushNamed(
-                                InvitationSentPage.routeName,
-                                arguments: InvitationSentPageArguments(
-                                    listenController: listenController,
-                                    data: item,
-                                    invitationType: "DeHUB Network"),
-                              );
-                            },
-                          ),
+                  business.rows?.length != 0
+                      ? Column(
+                          children: business.rows!
+                              .map(
+                                (item) => BuyerBusinessCard(
+                                  data: item,
+                                  onClick: () {
+                                    Navigator.of(context).pushNamed(
+                                      InvitationSentPage.routeName,
+                                      arguments: InvitationSentPageArguments(
+                                          listenController: listenController,
+                                          data: item,
+                                          invitationType: "DeHUB Network"),
+                                    );
+                                  },
+                                ),
+                              )
+                              .toList(),
                         )
-                        .toList(),
-                  )
+                      : NotFound(
+                          module: "NETWORK",
+                          labelText: "Хоосон байна",
+                        ),
                 ],
               ),
             ),

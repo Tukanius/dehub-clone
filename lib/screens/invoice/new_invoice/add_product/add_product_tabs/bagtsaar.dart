@@ -110,14 +110,27 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
                                   children: inventory.rows!
                                       .map(
                                         (data) => AddProductCard(
-                                          hasCount: false,
-                                          isCheck: false,
+                                          readOnly: false,
                                           onClick: () {
-                                            widget.goodsListenController
-                                                .goodsInvoiceChange(data);
-                                            Navigator.of(context).pop();
+                                            if (data.quantity != null &&
+                                                data.quantity > 0) {
+                                              widget.goodsListenController
+                                                  .goodsInvoiceChange(data);
+                                              Navigator.of(context).pop();
+                                            } else {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  backgroundColor: invoiceColor,
+                                                  shape: StadiumBorder(),
+                                                  content: Center(
+                                                    child: Text(
+                                                        'Тоо ширхэг нэмнэ үү'),
+                                                  ),
+                                                ),
+                                              );
+                                            }
                                           },
-                                          color: invoiceColor,
                                           data: data,
                                         ),
                                       )

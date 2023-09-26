@@ -259,47 +259,65 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Партнер нэр',
-                          style: TextStyle(color: buttonColor),
+                        Expanded(
+                          child: Text(
+                            'Партнер нэр',
+                            style: TextStyle(color: buttonColor),
+                          ),
                         ),
                         user.currentBusiness?.type == "SUPPLIER"
-                            ? Row(
-                                children: [
-                                  Text(
-                                    '${order.receiverBusiness?.partner?.businessName}, ',
-                                    style: TextStyle(
-                                      color: buttonColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                            ? Expanded(
+                                child: RichText(
+                                  textAlign: TextAlign.end,
+                                  text: TextSpan(
+                                    style: TextStyle(fontFamily: 'Montserrat'),
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            '${order.receiverBusiness?.partner?.businessName} ',
+                                        style: TextStyle(
+                                          color: buttonColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text:
+                                            '${order.receiverBusiness?.partner?.refCode}',
+                                        style: TextStyle(
+                                          color: orderColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    '${order.receiverBusiness?.partner?.refCode}',
-                                    style: TextStyle(
-                                      color: orderColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
+                                ),
                               )
-                            : Row(
-                                children: [
-                                  Text(
-                                    '${order.senderBusiness?.partner?.businessName}, ',
-                                    style: TextStyle(
-                                      color: buttonColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                            : Expanded(
+                                child: RichText(
+                                  textAlign: TextAlign.end,
+                                  text: TextSpan(
+                                    style: TextStyle(fontFamily: 'Montserrat'),
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            '${order.senderBusiness?.partner?.businessName} ',
+                                        style: TextStyle(
+                                          color: buttonColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text:
+                                            '${order.senderBusiness?.partner?.refCode}',
+                                        style: TextStyle(
+                                          color: orderColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    '${order.senderBusiness?.partner?.refCode}',
-                                    style: TextStyle(
-                                      color: orderColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              )
                       ],
                     ),
                   ),
@@ -546,6 +564,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                     children: order.lines!
                         .map(
                           (e) => OrderProductCard(
+                            readOnly: true,
                             data: e,
                           ),
                         )

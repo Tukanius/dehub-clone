@@ -1,11 +1,9 @@
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/add_button/add_button.dart';
-import 'package:dehub/components/invoice_card/invoice_card_sent.dart';
 import 'package:dehub/components/invoice_empty/invoice_empty.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
-import 'package:dehub/screens/invoice_detail_page/invoice_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -329,16 +327,6 @@ class _TakePageState extends State<TakePage>
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
-                                  ),
-                                  InvoiceCardSent(
-                                    data: item,
-                                    onClick: () {
-                                      Navigator.of(context).pushNamed(
-                                        InvoiceDetailPage.routeName,
-                                        arguments: InvoiceDetailPageArguments(
-                                            id: item.id),
-                                      );
-                                    },
                                   ),
                                 ],
                               ),

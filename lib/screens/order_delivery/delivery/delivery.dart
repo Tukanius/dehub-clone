@@ -92,6 +92,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
+    print(get.lines?.first.toJson());
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -126,6 +127,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
               children: [
                 Expanded(
                   child: SingleChildScrollView(
+                    reverse: true,
                     controller: scrollController,
                     physics: ScrollPhysics(),
                     child: Column(
@@ -329,7 +331,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(5),
-                                                  color: pink.withOpacity(0.1),
+                                                  color: Color(0xfffdf4f6),
                                                 ),
                                                 child: Text(
                                                   '${item.quantity} ${item.unit![0]}'
@@ -366,8 +368,14 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                           SizedBox(
                                             height: 5,
                                           ),
-                                          Text(
-                                            'Банш 5кг, ууттай - 3 ширхэг, Багц хоол - 3ш, Бууз 12ш, Бантангийн мах - 12 хайрцаг',
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  '${item.name}, ${item.optionValue} - ${item.quantity} ${item.baseUnit?.toLowerCase()}',
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                           SizedBox(
                                             height: 5,

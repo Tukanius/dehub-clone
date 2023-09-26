@@ -15,7 +15,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:moment_dart/moment_dart.dart';
 
 class NewInvoice extends StatefulWidget {
   static const routeName = '/newinvoice';
@@ -48,6 +47,7 @@ class _NewInvoiceState extends State<NewInvoice> {
   String dropdownValue = "Сонгох";
   List<Invoice> newList = [];
   bool? el;
+  double totalQuantity = 0;
 
   List<String> list = <String>[
     "Хувиар",
@@ -66,6 +66,11 @@ class _NewInvoiceState extends State<NewInvoice> {
       setState(() {
         inventory.add(goodsInvoice);
         data.add(goodsInvoice);
+        totalQuantity = inventory.fold(
+            0, (previousValue, element) => previousValue + element.quantity!);
+        print('=======vatAmount=========');
+        print(totalQuantity);
+        print('=======vatAmount=========');
       });
     });
     partnerListenController.addListener(() {
@@ -140,40 +145,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(left: 15, top: 15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              child: Text(
-                                '${user.partner?.refCode}',
-                                style: TextStyle(
-                                  color: black,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Container(
-                              child: Text(
-                                'Үүссэн: ${Moment.parse(DateTime.now().toString()).format('YYYY-MM-DD HH:mm')}',
-                                style: TextStyle(
-                                  color: black,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 15),
+                        margin: const EdgeInsets.only(left: 15, top: 10),
                         child: Text(
                           'ХАРИЛЦАГЧ',
                           style: TextStyle(
@@ -260,21 +232,27 @@ class _NewInvoiceState extends State<NewInvoice> {
                                             ),
                                           ],
                                         )
-                                      : Row(
-                                          children: [
-                                            Text(
-                                              '${partnerInvoice.name}',
-                                              style: TextStyle(
-                                                  color: invoiceColor),
-                                            ),
-                                            IconButton(
-                                              onPressed: () {},
-                                              icon: Icon(
-                                                Icons.arrow_forward_ios,
-                                                size: 12,
+                                      : Expanded(
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  '${partnerInvoice.name}',
+                                                  style: TextStyle(
+                                                    color: invoiceColor,
+                                                  ),
+                                                  textAlign: TextAlign.end,
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                              IconButton(
+                                                onPressed: () {},
+                                                icon: Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  size: 12,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         )
                                 ],
                               ),
@@ -287,24 +265,35 @@ class _NewInvoiceState extends State<NewInvoice> {
                                       'Нэхэмжлэх илгээх',
                                     ),
                                   ),
-                                  Row(
-                                    children: [
-                                      invoice.partnerName == null
-                                          ? Text('-')
-                                          : Text(
-                                              invoice.partnerName.toString(),
-                                              style: TextStyle(
-                                                color: invoiceColor,
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        invoice.partnerName == null
+                                            ? Expanded(
+                                                child: Text(
+                                                  '-',
+                                                  textAlign: TextAlign.end,
+                                                ),
+                                              )
+                                            : Expanded(
+                                                child: Text(
+                                                  invoice.partnerName
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    color: invoiceColor,
+                                                  ),
+                                                  textAlign: TextAlign.end,
+                                                ),
                                               ),
-                                            ),
-                                      IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(
-                                          Icons.arrow_forward_ios,
-                                          size: 12,
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(
+                                            Icons.arrow_forward_ios,
+                                            size: 12,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -454,133 +443,47 @@ class _NewInvoiceState extends State<NewInvoice> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                child: Text(
-                                  'Салбарын нэр',
+                              Expanded(
+                                child: Container(
+                                  child: Text(
+                                    'Салбарын нэр',
+                                  ),
                                 ),
                               ),
-                              Row(
-                                children: [
-                                  sectorInvoice.name == null
-                                      ? Text(
-                                          'Салбар сонгох',
-                                          style: TextStyle(color: invoiceColor),
-                                        )
-                                      : Text(
-                                          '${sectorInvoice.name}',
-                                          style: TextStyle(color: invoiceColor),
-                                        ),
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 12,
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    sectorInvoice.name == null
+                                        ? Expanded(
+                                            child: Text(
+                                              'Салбар сонгох',
+                                              style: TextStyle(
+                                                color: invoiceColor,
+                                              ),
+                                              textAlign: TextAlign.end,
+                                            ),
+                                          )
+                                        : Expanded(
+                                            child: Text(
+                                              '${sectorInvoice.name}',
+                                              style: TextStyle(
+                                                color: invoiceColor,
+                                              ),
+                                              textAlign: TextAlign.end,
+                                            ),
+                                          ),
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(
+                                        Icons.arrow_forward_ios,
+                                        size: 12,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 15),
-                        child: Text(
-                          'ЗАХИАЛГА',
-                          style: TextStyle(
-                            color: grey3,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 20),
-                        color: white,
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  child: Text(
-                                    'PO дугаар',
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      '-',
-                                      style: TextStyle(color: invoiceColor),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  child: Text(
-                                    'SO дугаар',
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      '-',
-                                      style: TextStyle(color: invoiceColor),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  child: Text(
-                                    'Борлуулагч',
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      '-',
-                                      style: TextStyle(color: buttonColor),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
                         ),
                       ),
                       SizedBox(
@@ -685,7 +588,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                         children: inventory
                             .map(
                               (item) => AddProductCard(
-                                hasCount: true,
+                                readOnly: true,
                                 closeClick: () {
                                   setState(() {
                                     inventory.removeWhere((element) =>
@@ -696,11 +599,9 @@ class _NewInvoiceState extends State<NewInvoice> {
                                 },
                                 index: inventory.indexOf(item),
                                 data: item,
-                                isCheck: false,
                                 onClick: () {
                                   print(item.quantity);
                                 },
-                                color: invoiceColor,
                               ),
                             )
                             .toList(),
@@ -867,13 +768,23 @@ class _NewInvoiceState extends State<NewInvoice> {
                                 ),
                                 Row(
                                   children: [
-                                    Container(
-                                      margin: EdgeInsets.only(right: 20),
-                                      child: Text(
-                                        '00.00₮',
-                                        style: TextStyle(color: invoiceColor),
-                                      ),
-                                    ),
+                                    inventory.isNotEmpty
+                                        ? Container(
+                                            margin: EdgeInsets.only(right: 20),
+                                            child: Text(
+                                              '${inventory.map((e) => e.quantity! * e.vatAmount!).join("")}₮',
+                                              style: TextStyle(
+                                                  color: invoiceColor),
+                                            ),
+                                          )
+                                        : Container(
+                                            margin: EdgeInsets.only(right: 20),
+                                            child: Text(
+                                              '0₮',
+                                              style: TextStyle(
+                                                  color: invoiceColor),
+                                            ),
+                                          ),
                                   ],
                                 ),
                               ],
@@ -889,17 +800,21 @@ class _NewInvoiceState extends State<NewInvoice> {
                                     'Тооцсон НХАТ',
                                   ),
                                 ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(right: 20),
-                                      child: Text(
-                                        '00.00₮',
-                                        style: TextStyle(color: invoiceColor),
+                                inventory.isNotEmpty
+                                    ? Container(
+                                        margin: EdgeInsets.only(right: 20),
+                                        child: Text(
+                                          '${inventory.map((e) => e.quantity! * e.taxAmount!).join("")}₮',
+                                          style: TextStyle(color: invoiceColor),
+                                        ),
+                                      )
+                                    : Container(
+                                        margin: EdgeInsets.only(right: 20),
+                                        child: Text(
+                                          '0₮',
+                                          style: TextStyle(color: invoiceColor),
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
                               ],
                             ),
                             SizedBox(
@@ -949,7 +864,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                                     Container(
                                       margin: EdgeInsets.only(right: 20),
                                       child: Text(
-                                        '00.00₮',
+                                        '0₮',
                                         style: TextStyle(
                                           color: invoiceColor,
                                           fontWeight: FontWeight.bold,
@@ -983,27 +898,30 @@ class _NewInvoiceState extends State<NewInvoice> {
                       SizedBox(
                         height: 10,
                       ),
-                      FormBuilder(
-                        key: fbKey,
-                        child: FormTextField(
-                          controller: textController,
-                          name: 'description',
-                          decoration: InputDecoration(
-                            fillColor: white,
-                            hintText: 'Тайлбар оруулна уу',
-                            hintStyle:
-                                TextStyle(color: invoiceColor, fontSize: 14),
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
+                      Container(
+                        color: white,
+                        padding: const EdgeInsets.all(15),
+                        child: FormBuilder(
+                          key: fbKey,
+                          child: FormTextField(
+                            textAlign: TextAlign.left,
+                            name: 'description',
+                            maxLines: 5,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.zero,
+                              ),
+                              fillColor: white,
+                              filled: true,
+                              hintStyle: TextStyle(
+                                color: orderColor,
+                              ),
                             ),
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 15),
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Тэмдэглэл оруулна уу')
+                            ]),
                           ),
-                          validators: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(
-                                errorText: "Заавал оруулна"),
-                          ]),
                         ),
                       ),
                       SizedBox(
@@ -1152,10 +1070,8 @@ class _NewInvoiceState extends State<NewInvoice> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  child: Text(
-                                    'Нэхэмжлэх төлөх',
-                                  ),
+                                Text(
+                                  'Нэхэмжлэх төлөх',
                                 ),
                                 Row(
                                   children: [
@@ -1317,6 +1233,9 @@ class _NewInvoiceState extends State<NewInvoice> {
                             ),
                           ],
                         ),
+                      ),
+                      const SizedBox(
+                        height: 50,
                       ),
                     ],
                   ),

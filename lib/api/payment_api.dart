@@ -1,5 +1,4 @@
 import 'package:dehub/models/invoice.dart';
-import 'package:dehub/models/qpay.dart';
 import 'package:dehub/utils/http_request.dart';
 
 class PaymentApi extends HttpRequest {

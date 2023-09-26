@@ -1,10 +1,14 @@
 import 'dart:async';
-
 import 'package:dehub/api/invoice_api.dart';
+import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/invoice_card/invoice_card.dart';
-import 'package:dehub/components/invoice_empty/invoice_empty.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
 import 'package:dehub/screens/invoice_detail_page/invoice_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/page_change_controller.dart';
@@ -13,6 +17,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class GivePage extends StatefulWidget {
   static const routeName = 'GivePage';
@@ -34,14 +39,17 @@ class _GivePageState extends State<GivePage>
   int page = 1;
   Result invoice = Result(rows: [], count: 0);
   int limit = 10;
+  Timer? timer;
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
+  User user = User();
+  ListenController listenController = ListenController();
 
   void _onLoading() async {
     setState(() {
       limit += 10;
     });
-    await list(page, limit);
+    await list(page, limit, '');
     _refreshController.refreshCompleted();
     setState(() {
       isLoading = false;
@@ -53,7 +61,7 @@ class _GivePageState extends State<GivePage>
     setState(() {
       isLoading = true;
     });
-    await list(page, limit);
+    await list(page, limit, '');
     _refreshController.refreshCompleted();
     setState(() {
       isLoading = false;
@@ -62,16 +70,20 @@ class _GivePageState extends State<GivePage>
 
   @override
   afterFirstLayout(BuildContext context) async {
-    await list(page, limit);
+    await list(page, limit, '');
   }
 
-  list(int page, int limit) async {
-    Filter filter = Filter(query: '');
+  list(int page, int limit, String query) async {
+    Filter filter = Filter(query: '${query}');
     Offset offset = Offset(limit: limit, page: page);
-    Result res = await InvoiceApi()
-        .listReceived(ResultArguments(filter: filter, offset: offset));
+    if (user.currentBusiness?.type == "BUYER") {
+      invoice = await InvoiceApi()
+          .listReceived(ResultArguments(filter: filter, offset: offset));
+    } else {
+      invoice = await InvoiceApi()
+          .list(ResultArguments(filter: filter, offset: offset));
+    }
     setState(() {
-      invoice = res;
       isLoading = false;
     });
   }
@@ -84,9 +96,13 @@ class _GivePageState extends State<GivePage>
   void initState() {
     if (widget.pageChangeController != null) {
       widget.pageChangeController?.addListener(() async {
-        await list(page, limit);
+        await list(page, limit, '');
       });
     }
+
+    listenController.addListener(() async {
+      await list(page, limit, '');
+    });
 
     setState(() {
       isLoading = true;
@@ -101,8 +117,23 @@ class _GivePageState extends State<GivePage>
     });
   }
 
+  onChange(String query) async {
+    if (timer != null) timer?.cancel();
+    timer = Timer(Duration(milliseconds: 400), () {
+      setState(() {
+        isLoading = true;
+      });
+      list(page, limit, query);
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: false).invoiceMe;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -125,6 +156,16 @@ class _GivePageState extends State<GivePage>
             color: invoiceColor,
           ),
         ),
+        actions: [
+          user.currentBusiness?.type == "SUPPLIER"
+              ? AddButton(
+                  color: invoiceColor,
+                  onClick: () {
+                    Navigator.of(context).pushNamed(NewInvoice.routeName);
+                  },
+                )
+              : SizedBox(),
+        ],
       ),
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -330,6 +371,9 @@ class _GivePageState extends State<GivePage>
             ),
             SliverToBoxAdapter(
               child: SearchButton(
+                onChange: (query) {
+                  onChange(query);
+                },
                 color: invoiceColor,
               ),
             ),
@@ -342,7 +386,10 @@ class _GivePageState extends State<GivePage>
                 ),
               )
             : invoice.rows!.length == 0
-                ? InvoiceEmpty()
+                ? NotFound(
+                    module: "INVOICE",
+                    labelText: "Нэхэмжлэл олдсонгүй",
+                  )
                 : SmartRefresher(
                     enablePullDown: true,
                     enablePullUp: true,
@@ -379,8 +426,9 @@ class _GivePageState extends State<GivePage>
                                 onClick: () {
                                   Navigator.of(context).pushNamed(
                                     InvoiceDetailPage.routeName,
-                                    arguments:
-                                        InvoiceDetailPageArguments(id: item.id),
+                                    arguments: InvoiceDetailPageArguments(
+                                      id: item.id,
+                                    ),
                                   );
                                 },
                               ),

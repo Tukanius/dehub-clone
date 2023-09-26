@@ -95,7 +95,7 @@ class Invoice {
   String? orderConfirmTerm;
   int? expireDayCount;
   String? month;
-  String? paymentDay;
+  int? paymentDay;
   bool? isMain;
   bool? isActive;
   bool? isOpen;
@@ -106,7 +106,7 @@ class Invoice {
   String? invoiceId;
   String? variantId;
   double? price;
-  double? quantity;
+  int? quantity;
   bool? hasVat;
   double? vatPercent;
   bool? hasTax;
@@ -155,6 +155,8 @@ class Invoice {
   String? qr_image;
 
   List<Urls>? urls;
+  bool? confirm;
+
   String getPostDate() {
     return Moment.parse(createdAt!).format("YYYY-MM-DD");
   }
@@ -168,6 +170,7 @@ class Invoice {
   }
 
   Invoice({
+    this.confirm,
     this.urls,
     this.qr_image,
     this.invoiceRefCode,

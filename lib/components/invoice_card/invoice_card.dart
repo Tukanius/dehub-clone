@@ -1,7 +1,11 @@
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/models/invoice.dart';
+import 'package:provider/provider.dart';
 
 class InvoiceCard extends StatefulWidget {
   static const routeName = '/invoicecard';
@@ -100,9 +104,12 @@ class _InvoiceCardState extends State<InvoiceCard> {
     }
   }
 
+  User user = User();
   bool value = false;
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: false).invoiceMe;
+
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,13 +165,21 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                 SizedBox(
                                   height: 13,
                                 ),
-                                Text(
-                                  '${widget.data!.senderBusiness!.partner!.businessNameEng}',
-                                  style: TextStyle(
-                                    color: black,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
+                                user.currentBusiness?.type == "SUPPLIER"
+                                    ? Text(
+                                        '${widget.data?.receiverBusiness?.partner?.businessName}',
+                                        style: TextStyle(
+                                          color: black,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      )
+                                    : Text(
+                                        '${widget.data?.senderBusiness?.partner?.businessName}',
+                                        style: TextStyle(
+                                          color: black,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -245,7 +260,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                               height: 10,
                             ),
                             Text(
-                              '${widget.data!.amountToPay}',
+                              '${Utils().formatCurrency(widget.data!.amountToPay.toString())}₮',
                               style: TextStyle(
                                 color: black,
                                 fontWeight: FontWeight.w500,
@@ -285,7 +300,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                   ),
                                 ),
                                 Text(
-                                  '${widget.data!.confirmedAmount}',
+                                  '${Utils().formatCurrency(widget.data!.confirmedAmount.toString())}₮',
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Color(0xff555555),
@@ -338,7 +353,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                   width: 5,
                                 ),
                                 Text(
-                                  '${widget.data!.paidAmount} ₮',
+                                  '${Utils().formatCurrency(widget.data!.paidAmount.toString())} ₮',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: grey2,

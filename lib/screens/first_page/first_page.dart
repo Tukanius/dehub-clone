@@ -201,6 +201,19 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
         child: Scaffold(
           backgroundColor: backgroundColor,
           appBar: AppBar(
+            backgroundColor: buttonColor,
+            elevation: 0,
+            automaticallyImplyLeading: false,
+            leading: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed(MenuPage.routeName);
+              },
+              child: Container(
+                color: buttonColor,
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: SvgPicture.asset('images/menu.svg'),
+              ),
+            ),
             actions: [
               SvgPicture.asset(
                 'images/notification.svg',
@@ -218,36 +231,29 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                     decoration: BoxDecoration(),
                     child: partnerUser.user?.avatar == null
                         ? CircleAvatar(
-                            radius: 13,
+                            radius: 14,
                             child: ClipOval(
                               child: Image(
-                                  image: NetworkImage(
-                                'https://i0.wp.com/a.slack-edge.com/df10d/img/avatars/ava_0024-192.png?ssl=1',
-                              )),
+                                image: NetworkImage(
+                                  'https://i0.wp.com/a.slack-edge.com/df10d/img/avatars/ava_0024-192.png?ssl=1',
+                                ),
+                              ),
                             ),
                           )
                         : CircleAvatar(
-                            radius: 13,
-                            backgroundImage:
-                                NetworkImage('${partnerUser.user?.avatar}'),
+                            radius: 14,
+                            child: ClipOval(
+                              child: Image(
+                                image: NetworkImage(
+                                  '${partnerUser.user?.avatar}',
+                                ),
+                              ),
+                            ),
                           ),
                   ),
                 ),
               ),
             ],
-            backgroundColor: buttonColor,
-            elevation: 0,
-            leading: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed(MenuPage.routeName);
-              },
-              child: Container(
-                color: buttonColor,
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: SvgPicture.asset('images/menu.svg'),
-              ),
-            ),
-            automaticallyImplyLeading: false,
           ),
           body: SingleChildScrollView(
             physics: ClampingScrollPhysics(),

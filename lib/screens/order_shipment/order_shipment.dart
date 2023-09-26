@@ -157,13 +157,6 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
     try {
       if (widget.data.endedDate == null)
         await OrderApi().pullSheetEnd(widget.data.id!);
-      // showCustomDialog(
-      //   context,
-      //   "Амжилттай дууслаа",
-      //   onPressed: () {
-      //     Navigator.of(context).pop();
-      //   },
-      // );
       await Navigator.of(context).pushNamed(
         PullSheetExpenses.routeName,
         arguments: PullSheetExpensesArguments(data: shipment),
@@ -185,6 +178,9 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
         leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
+            if (shipment.isPaused == false) {
+              stopTimer();
+            }
           },
           child: Icon(
             Icons.arrow_back_ios_new,

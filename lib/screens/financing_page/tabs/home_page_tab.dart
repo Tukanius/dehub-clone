@@ -43,7 +43,7 @@ class _HomePageTabState extends State<HomePageTab> {
                       borderRadius: BorderRadius.circular(10),
                       color: white,
                     ),
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(8),
                     width: 100,
                     height: 100,
                     child: Column(
@@ -82,7 +82,7 @@ class _HomePageTabState extends State<HomePageTab> {
                     borderRadius: BorderRadius.circular(10),
                     color: white,
                   ),
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(8),
                   width: 100,
                   height: 100,
                   child: Column(
@@ -120,7 +120,7 @@ class _HomePageTabState extends State<HomePageTab> {
                     borderRadius: BorderRadius.circular(10),
                     color: white,
                   ),
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(8),
                   width: 100,
                   height: 100,
                   child: Column(
@@ -160,7 +160,7 @@ class _HomePageTabState extends State<HomePageTab> {
                       borderRadius: BorderRadius.circular(10),
                       color: white,
                     ),
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(8),
                     width: 100,
                     height: 100,
                     child: Column(
@@ -204,7 +204,7 @@ class _HomePageTabState extends State<HomePageTab> {
                       borderRadius: BorderRadius.circular(10),
                       color: white,
                     ),
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(8),
                     width: 100,
                     height: 100,
                     child: Column(

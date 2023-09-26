@@ -669,71 +669,81 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                     SizedBox(
                       height: 20,
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 15),
-                      child: Text(
-                        'Төлөх төлбөрийн дүн',
-                        style: TextStyle(
-                          color: black,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 15),
-                      child: FormTextField(
-                        name: "amount",
-                        inputType: TextInputType.number,
-                        controller: textController,
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 15),
-                          border: OutlineInputBorder(),
-                          fillColor: Colors.white,
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: invoiceColor),
-                          ),
-                        ),
-                        validators: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(
-                              errorText: 'Төлбөрийн дүн оруулна уу')
-                        ]),
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Checkbox(
-                          checkColor: white,
-                          activeColor: invoiceColor,
-                          fillColor: MaterialStateProperty.resolveWith(
-                            (states) => invoiceColor,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          value: value,
-                          onChanged: (value1) {
-                            fillAmount();
-                            if (value == true) {
-                              textController.text = "";
-                            }
-                            setState(() {
-                              value = value1!;
-                            });
-                          },
-                        ),
-                        Text(
-                          'Төлбөл зохих дүнгээр',
-                          style: TextStyle(
-                            color: grey2,
-                            fontSize: 16,
-                          ),
-                        )
-                      ],
-                    ),
+                    selectedMethod == "B2B" || selectedMethod == null
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(left: 15),
+                                child: Text(
+                                  'Төлөх төлбөрийн дүн',
+                                  style: TextStyle(
+                                    color: black,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: FormTextField(
+                                  name: "amount",
+                                  inputType: TextInputType.number,
+                                  controller: textController,
+                                  decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 15),
+                                    border: OutlineInputBorder(),
+                                    fillColor: Colors.white,
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: invoiceColor),
+                                    ),
+                                  ),
+                                  validators: FormBuilderValidators.compose([
+                                    FormBuilderValidators.required(
+                                        errorText: 'Төлбөрийн дүн оруулна уу')
+                                  ]),
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Checkbox(
+                                    checkColor: white,
+                                    activeColor: invoiceColor,
+                                    fillColor:
+                                        MaterialStateProperty.resolveWith(
+                                      (states) => invoiceColor,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    value: value,
+                                    onChanged: (value1) {
+                                      fillAmount();
+                                      if (value == true) {
+                                        textController.text = "";
+                                      }
+                                      setState(() {
+                                        value = value1!;
+                                      });
+                                    },
+                                  ),
+                                  Text(
+                                    'Төлбөл зохих дүнгээр',
+                                    style: TextStyle(
+                                      color: grey2,
+                                      fontSize: 16,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          )
+                        : SizedBox(),
                     SizedBox(
                       height: 40,
                     ),

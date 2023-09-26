@@ -1,5 +1,6 @@
 import 'package:dehub/api/invoice_api.dart';
-import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
+import 'package:dehub/components/invoice_product_card/add_product_card.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/providers/general_provider.dart';
@@ -28,15 +29,36 @@ class _BasicInformationTabState extends State<BasicInformationTab>
     with AfterLayoutMixin {
   Invoice invoice = Invoice();
   General general = General();
+  Invoice approval = Invoice();
   bool isLoading = true;
 
   @override
   afterFirstLayout(BuildContext context) async {
     invoice = await InvoiceApi().getInvoice(widget.id);
-
     setState(() {
       isLoading = false;
     });
+  }
+
+  approve(bool confirm) async {
+    try {
+      approval = Invoice(
+        confirm: confirm,
+        respondText: '',
+      );
+      await InvoiceApi().respond(widget.id, approval);
+      showCustomDialog(
+        context,
+        "Амжилттай баталлаа",
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      );
+    } catch (e) {
+      debugPrint('=========err=========');
+      debugPrint(e.toString());
+      debugPrint('=========err=========');
+    }
   }
 
   @override
@@ -632,10 +654,9 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                   Column(
                     children: invoice.invoiceLines!
                         .map(
-                          (item) => InvoiceProductCard(
+                          (item) => AddProductCard(
+                            readOnly: true,
                             data: item,
-                            color: invoiceColor,
-                            general: general,
                           ),
                         )
                         .toList(),
@@ -685,10 +706,8 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          child: Text(
-                            'Хөнгөлөлт',
-                          ),
+                        Text(
+                          'Хөнгөлөлт',
                         ),
                         Row(
                           children: [
@@ -719,15 +738,9 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                             'Тооцсон НӨАТ',
                           ),
                         ),
-                        Row(
-                          children: [
-                            Container(
-                              child: Text(
-                                '${Utils().formatCurrency(invoice.vatAmount.toString())}₮',
-                                style: TextStyle(color: invoiceColor),
-                              ),
-                            ),
-                          ],
+                        Text(
+                          '${Utils().formatCurrency(invoice.vatAmount.toString())}₮',
+                          style: TextStyle(color: invoiceColor),
                         ),
                       ],
                     ),
@@ -890,38 +903,66 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                             ],
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(
-                              InvoicePaymentPage.routeName,
-                              arguments: InvoicePaymentPageArguments(
-                                data: invoice,
-                                id: '',
-                              ),
-                            );
-                          },
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 3,
-                              ),
-                              SvgPicture.asset(
-                                'images/tuloh.svg',
-                                height: 14,
-                              ),
-                              SizedBox(
-                                height: 3,
-                              ),
-                              Text(
-                                'Төлөх',
-                                style: TextStyle(
-                                  color: white,
-                                  fontSize: 10,
+                        invoice.invoiceStatus == "CONFIRMED"
+                            ? GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                    InvoicePaymentPage.routeName,
+                                    arguments: InvoicePaymentPageArguments(
+                                      data: invoice,
+                                      id: '',
+                                    ),
+                                  );
+                                },
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 3,
+                                    ),
+                                    SvgPicture.asset(
+                                      'images/tuloh.svg',
+                                      height: 14,
+                                    ),
+                                    SizedBox(
+                                      height: 3,
+                                    ),
+                                    Text(
+                                      'Төлөх',
+                                      style: TextStyle(
+                                        color: white,
+                                        fontSize: 10,
+                                      ),
+                                    )
+                                  ],
                                 ),
                               )
-                            ],
-                          ),
-                        ),
+                            : GestureDetector(
+                                onTap: () {
+                                  approve(true);
+                                },
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 3,
+                                    ),
+                                    Icon(
+                                      Icons.approval,
+                                      color: white,
+                                      size: 16,
+                                    ),
+                                    SizedBox(
+                                      height: 3,
+                                    ),
+                                    Text(
+                                      'Батлах',
+                                      style: TextStyle(
+                                        color: white,
+                                        fontSize: 10,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
                         GestureDetector(
                           onTap: () {},
                           child: Column(

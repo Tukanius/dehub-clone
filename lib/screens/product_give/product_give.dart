@@ -199,6 +199,9 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
         leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
+            if (shipment.isPaused == false) {
+              stopTimer();
+            }
           },
           child: Icon(
             Icons.arrow_back_ios_new,
@@ -491,6 +494,34 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                               ),
                             ],
                           ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Text(
+                            'Хасагдсан',
+                            style: TextStyle(
+                              color: buttonColor,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        Column(
+                          children: shipment.lines!
+                              .map(
+                                (e) => Column(
+                                  children: [
+                                    e.confirmedQuantity != null
+                                        ? e.quantity! - e.confirmedQuantity! > 0
+                                            ? Container(
+                                                child: Text('${e.quantity}'),
+                                              )
+                                            : SizedBox()
+                                        : SizedBox(),
+                                  ],
+                                ),
+                              )
+                              .toList(),
                         ),
                         SizedBox(
                           height: 100,

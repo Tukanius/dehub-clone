@@ -40,6 +40,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).user;
+    print(user.toJson());
     return SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),
       child: Container(
@@ -73,7 +74,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                   height: 5,
                 ),
                 Text(
-                  'Bolormaa.Ch, 9999-9999',
+                  '${user.firstName}, ${user.phone}',
                   style: TextStyle(
                     fontSize: 16,
                     color: grey3,

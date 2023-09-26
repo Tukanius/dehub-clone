@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class Shirhegeer extends StatefulWidget {
   static const routeName = '/Shirhegeer';
-  const Shirhegeer({super.key});
+  const Shirhegeer({Key? key}) : super(key: key);
 
   @override
   State<Shirhegeer> createState() => _ShirhegeerState();
@@ -18,10 +18,7 @@ class _ShirhegeerState extends State<Shirhegeer> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            for (var i = 0; i < 2; i++)
-              AddProductCard(
-                color: invoiceColor,
-              ),
+            for (var i = 0; i < 2; i++) AddProductCard(),
             SizedBox(
               height: 50,
             ),

@@ -44,7 +44,6 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
       setState(() {
         loading = false;
       });
-      print(qpay.urls?.first.toJson());
     } catch (e) {
       print('======err======');
       print(e.toString());

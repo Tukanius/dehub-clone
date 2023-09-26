@@ -42,11 +42,11 @@ class _DashboardTabState extends State<DashboardTab> {
                       borderRadius: BorderRadius.circular(10),
                       color: white,
                     ),
-                    padding: const EdgeInsets.only(
-                        left: 10, right: 10, top: 10, bottom: 5),
+                    padding: const EdgeInsets.all(8),
                     width: 100,
                     height: 100,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
@@ -81,11 +81,11 @@ class _DashboardTabState extends State<DashboardTab> {
                     borderRadius: BorderRadius.circular(10),
                     color: white,
                   ),
-                  padding: const EdgeInsets.only(
-                      left: 10, right: 10, top: 10, bottom: 5),
+                  padding: const EdgeInsets.all(8),
                   width: 100,
                   height: 100,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
@@ -119,11 +119,11 @@ class _DashboardTabState extends State<DashboardTab> {
                     borderRadius: BorderRadius.circular(10),
                     color: white,
                   ),
-                  padding: const EdgeInsets.only(
-                      left: 10, right: 10, top: 10, bottom: 5),
+                  padding: const EdgeInsets.all(8),
                   width: 100,
                   height: 100,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
@@ -157,11 +157,11 @@ class _DashboardTabState extends State<DashboardTab> {
                     borderRadius: BorderRadius.circular(10),
                     color: white,
                   ),
-                  padding: const EdgeInsets.only(
-                      left: 10, right: 10, top: 10, bottom: 5),
+                  padding: const EdgeInsets.all(8),
                   width: 100,
                   height: 100,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
@@ -200,11 +200,11 @@ class _DashboardTabState extends State<DashboardTab> {
                       borderRadius: BorderRadius.circular(10),
                       color: white,
                     ),
-                    padding: const EdgeInsets.only(
-                        left: 10, right: 10, top: 10, bottom: 5),
+                    padding: const EdgeInsets.all(8),
                     width: 100,
                     height: 100,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(

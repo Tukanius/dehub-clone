@@ -28,6 +28,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
         ? json['senderFinUserId'] as String
         : null,
     send: json['send'] != null ? json['send'] as bool : null,
+    confirm: json['confirm'] != null ? json['confirm'] as bool : null,
     senderBranchId: json['senderBranchId'] != null
         ? json['senderBranchId'] as String
         : null,
@@ -209,8 +210,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
         ? int.parse("${json['expireDayCount']}")
         : null,
     month: json['month'] != null ? json['month'] as String : null,
-    paymentDay:
-        json['paymentDay'] != null ? json['paymentDay'] as String : null,
+    paymentDay: json['paymentDay'] != null
+        ? int.parse(json['paymentDay'].toString())
+        : null,
     isMain: json['isMain'] != null ? json['isMain'] as bool : null,
     isActive: json['isActive'] != null ? json['isActive'] as bool : null,
     isOpen: json['isOpen'] != null ? json['isOpen'] as bool : null,
@@ -232,7 +234,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     variantId: json['variantId'] != null ? json['variantId'] as String : null,
     price: json['price'] != null ? double.parse("${json['price']}") : null,
     quantity:
-        json['quantity'] != null ? double.parse("${json['quantity']}") : null,
+        json['quantity'] != null ? int.parse("${json['quantity']}") : null,
     hasVat: json['hasVat'] != null ? json['hasVat'] as bool : null,
     vatPercent: json['vatPercent'] != null
         ? double.parse("${json['vatPercent']}")
@@ -357,6 +359,7 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
     json['businessAddress'] = instance.businessAddress;
   if (instance.staff != null) json['staff'] = instance.staff;
   if (instance.unitName != null) json['unitName'] = instance.unitName;
+  if (instance.confirm != null) json['confirm'] = instance.confirm;
   if (instance.send != null) json['send'] = instance.send;
   if (instance.items != null) json['items'] = instance.items;
   if (instance.method != null) json['method'] = instance.method;

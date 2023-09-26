@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dehub/components/invoice_card/invoice_card.dart';
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/invoice_empty/invoice_empty.dart';
@@ -25,9 +27,10 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
   bool isLoading = true;
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
+  Timer? timer;
 
-  list(page, limit) async {
-    Filter filter = Filter(query: '');
+  list(page, limit, String query) async {
+    Filter filter = Filter(query: '$query');
     Offset offset = Offset(page: page, limit: limit);
     Result res = await InvoiceApi().listClosed(
       ResultArguments(filter: filter, offset: offset),
@@ -42,7 +45,7 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
     setState(() {
       limit += 10;
     });
-    await list(page, limit);
+    await list(page, limit, '');
     refreshController.refreshCompleted();
     setState(() {
       isLoading = false;
@@ -54,14 +57,27 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
     setState(() {
       isLoading = true;
     });
-    await list(page, limit);
+    await list(page, limit, '');
     refreshController.refreshCompleted();
     isLoading = false;
   }
 
   @override
   afterFirstLayout(BuildContext context) {
-    list(page, limit);
+    list(page, limit, '');
+  }
+
+  onChange(String query) async {
+    if (timer != null) timer?.cancel();
+    timer = Timer(Duration(milliseconds: 400), () {
+      setState(() {
+        isLoading = true;
+      });
+      list(page, limit, query);
+      setState(() {
+        isLoading = false;
+      });
+    });
   }
 
   @override
@@ -121,6 +137,9 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 5),
                           child: SearchButton(
+                            onChange: (query) {
+                              onChange(query);
+                            },
                             borderColor: invoiceColor,
                             textColor: invoiceColor,
                             color: invoiceColor,

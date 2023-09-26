@@ -46,6 +46,7 @@ class _GoodsCardState extends State<GoodsCard> {
                 borderRadius: BorderRadius.circular(10),
                 child: Image(
                   image: NetworkImage('${widget.data!.image}'),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),

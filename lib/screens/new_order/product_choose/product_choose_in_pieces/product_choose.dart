@@ -195,6 +195,7 @@ class _ProductChooseState extends State<ProductChoose>
                                     (item) => Column(
                                       children: [
                                         OrderProductCard(
+                                          readOnly: false,
                                           onClick: () {
                                             print(item.quantity);
                                             if (item.quantity != null &&

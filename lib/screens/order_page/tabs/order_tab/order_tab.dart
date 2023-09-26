@@ -32,14 +32,20 @@ class _OrderTabState extends State<OrderTab> {
                       child: Container(
                         alignment: Alignment.center,
                         height: 45,
-                        child: Text('Борлуулалт'),
+                        child: Text(
+                          'Борлуулалт',
+                          style: TextStyle(fontFamily: 'Montserrat'),
+                        ),
                       ),
                     ),
                     Center(
                       child: Container(
                         alignment: Alignment.center,
                         height: 45,
-                        child: Text('Хүлээн авсан'),
+                        child: Text(
+                          'Хүлээн авсан',
+                          style: TextStyle(fontFamily: 'Montserrat'),
+                        ),
                       ),
                     ),
                   ],

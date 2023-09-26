@@ -26,7 +26,9 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
         decoration: BoxDecoration(
           color: white,
           border: Border(
-            bottom: BorderSide(color: buttonColor.withOpacity(0.1)),
+            bottom: BorderSide(
+              color: buttonColor.withOpacity(0.1),
+            ),
           ),
         ),
         child: Row(
@@ -34,7 +36,6 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 1,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -64,22 +65,27 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
                         SizedBox(
                           height: 3,
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              "${widget.data?.partnerName},",
-                              style: TextStyle(
-                                color: coolGrey,
-                                fontSize: 13,
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: '${widget.data?.partnerName} ',
+                                style: TextStyle(
+                                  color: coolGrey,
+                                  fontSize: 13,
+                                  fontFamily: 'Montserrat',
+                                ),
                               ),
-                            ),
-                            Text(
-                              ' РД${widget.data?.regNumber}',
-                              style: TextStyle(
-                                color: buttonColor,
+                              TextSpan(
+                                text: 'РД${widget.data?.regNumber}',
+                                style: TextStyle(
+                                  color: buttonColor,
+                                  fontSize: 13,
+                                  fontFamily: 'Montserrat',
+                                ),
                               ),
-                            )
-                          ],
+                            ],
+                          ),
                         ),
                         SizedBox(
                           height: 3,
@@ -96,50 +102,47 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
                 ],
               ),
             ),
-            Expanded(
-              flex: 0,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: orderColor,
-                    size: 14,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: orderColor,
+                  size: 14,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(45),
+                    border: Border.all(color: orderColor),
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(45),
-                      border: Border.all(color: orderColor),
-                    ),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                          'images/shopping-cart.svg',
-                          height: 15,
-                          width: 15,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        'images/shopping-cart.svg',
+                        height: 15,
+                        width: 15,
+                      ),
+                      SizedBox(
+                        width: 3,
+                      ),
+                      Text(
+                        'Шинэ',
+                        style: TextStyle(
+                          color: buttonColor,
+                          fontSize: 12,
                         ),
-                        SizedBox(
-                          width: 3,
-                        ),
-                        Text(
-                          'Шинэ',
-                          style: TextStyle(
-                            color: buttonColor,
-                            fontSize: 12,
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
-                ],
-              ),
-            )
+                ),
+              ],
+            ),
           ],
         ),
       ),
