@@ -121,7 +121,7 @@ class Invoice {
   String? nameApp;
   String? image;
   String? priceStartDate;
-  Invoice? unit;
+  String? unit;
   String? convertType;
   int? convertValue;
   List<Invoice>? attachments;
@@ -130,7 +130,7 @@ class Invoice {
   double? amount;
   String? unitName;
   bool? send;
-  List<Invoice>? items;
+  List<Invoice>? lines;
   String? phone;
   String? businessAddress;
   Invoice? staff;
@@ -157,6 +157,10 @@ class Invoice {
   List<Urls>? urls;
   bool? confirm;
 
+  String? salesCode;
+  String? purchaseCode;
+  List<Invoice>? additionalLines;
+
   String getPostDate() {
     return Moment.parse(createdAt!).format("YYYY-MM-DD");
   }
@@ -170,6 +174,9 @@ class Invoice {
   }
 
   Invoice({
+    this.additionalLines,
+    this.salesCode,
+    this.purchaseCode,
     this.confirm,
     this.urls,
     this.qr_image,
@@ -193,7 +200,7 @@ class Invoice {
     this.staff,
     this.unitName,
     this.send,
-    this.items,
+    this.lines,
     this.method,
     this.creditAccountId,
     this.amount,

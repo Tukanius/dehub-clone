@@ -68,6 +68,7 @@ class _OrderProductCardState extends State<OrderProductCard>
 
   @override
   Widget build(BuildContext context) {
+    print(widget.data?.toJson());
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
@@ -106,7 +107,7 @@ class _OrderProductCardState extends State<OrderProductCard>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${widget.data?.name}',
+                        '${widget.data?.nameMon}',
                         style: TextStyle(
                           color: dark,
                           fontWeight: FontWeight.bold,

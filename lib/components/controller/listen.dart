@@ -10,6 +10,7 @@ class ListenController extends ChangeNotifier {
   Invoice? partnerInvoice;
   Invoice? goodsInvoice;
   Invoice? sectorInvoice;
+  Invoice? invoiceAdditionalRow;
   Order? customerOrder;
   Order? productOrder;
   Order? additionalRows;
@@ -60,6 +61,11 @@ class ListenController extends ChangeNotifier {
 
   additionalRowsChange(Order value) {
     this.additionalRows = value;
+    notifyListeners();
+  }
+
+  invoiceAddRow(Invoice value) {
+    this.invoiceAdditionalRow = value;
     notifyListeners();
   }
 

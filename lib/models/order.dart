@@ -139,6 +139,7 @@ class Order {
   String? loadingDate;
   String? pullSheetStatus;
   String? startedDate;
+  String? startDate;
   bool? isPaused;
   String? pausedDate;
   String? proceededDate;
@@ -179,12 +180,17 @@ class Order {
   String? lineId;
   bool? isConfirmed;
   List<Order>? receiptLines;
-
   Order? supplierBusiness;
   Order? buyerBusiness;
   Order? deliveryStaff;
+  String? code;
+
+  String? configType;
 
   Order({
+    this.configType,
+    this.code,
+    this.startDate,
     this.deliveryStaff,
     this.supplierBusiness,
     this.buyerBusiness,

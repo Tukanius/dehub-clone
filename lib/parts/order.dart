@@ -7,6 +7,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         ? (json['rows'] as List).map((e) => Order.fromJson(e)).toList()
         : null,
     id: json['id'] != null ? json['id'] as String : null,
+    code: json['code'] != null ? json['code'] as String : null,
     createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
     updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
     deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
@@ -20,6 +21,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         : null,
     profileName:
         json['profileName'] != null ? json['profileName'] as String : null,
+    startDate: json['startDate'] != null ? json['startDate'] as String : null,
     profileNameEng: json['profileNameEng'] != null
         ? json['profileNameEng'] as String
         : null,
@@ -347,6 +349,8 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     baseUnit: json['baseUnit'] != null ? json['baseUnit'] as String : null,
     condition: json['condition'] != null ? json['condition'] as String : null,
     unitId: json['unitId'] != null ? json['unitId'] as String : null,
+    configType:
+        json['configType'] != null ? json['configType'] as String : null,
     unitConvertType: json['unitConvertType'] != null
         ? json['unitConvertType'] as String
         : null,
@@ -402,6 +406,9 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$OrderToJson(Order instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.configType != null) json['configType'] = instance.configType;
+  if (instance.code != null) json['code'] = instance.code;
+  if (instance.startDate != null) json['startDate'] = instance.startDate;
   if (instance.deliveryStaff != null)
     json['deliveryStaff'] = instance.deliveryStaff;
   if (instance.supplierBusiness != null)

@@ -4,6 +4,7 @@ import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/enter_phone_page/enter_phone_page.dart';
 import 'package:dehub/screens/receiver_otp_verify/receiver_otp_verify.dart';
+import 'package:dehub/utils/utils.dart';
 // import 'package:dehub/screens/product_give/product_give.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -37,7 +38,6 @@ class _ExpensesPageState extends State<ExpensesPage> {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
-
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -106,7 +106,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
                             color: orderColor,
                             margin: const EdgeInsets.only(top: 28, bottom: 10),
                             child: Text(
-                              'PO - 212323',
+                              '${widget.data.purchaseCode}',
                               style: TextStyle(
                                 color: white,
                                 fontSize: 16,
@@ -444,7 +444,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
                           ),
                         ),
                         Text(
-                          '351,670 ₮',
+                          '${Utils().formatCurrency(widget.data.totalAmount.toString())} ₮',
                           style: TextStyle(
                             color: orderColor,
                             fontWeight: FontWeight.bold,
@@ -523,8 +523,11 @@ class _ExpensesPageState extends State<ExpensesPage> {
                           child: CustomButton(
                             isGradient: true,
                             onClick: () {
-                              Navigator.of(context)
-                                  .pushNamed(EnterPhonePage.routeName);
+                              Navigator.of(context).pushNamed(
+                                EnterPhonePage.routeName,
+                                arguments:
+                                    EnterPhonePageArguments(data: widget.data),
+                              );
                             },
                             gradient: const LinearGradient(
                               colors: [white, white],

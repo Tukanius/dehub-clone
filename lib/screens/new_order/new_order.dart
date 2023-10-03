@@ -4,10 +4,10 @@ import 'package:dehub/components/order_additional_line/order_additional_line.dar
 import 'package:dehub/components/order_product_card/order_product_card.dart';
 import 'package:dehub/components/possible-schedule/possible-schedule-card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
-import 'package:dehub/models/partner.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/new_order/add_attachment.dart';
-import 'package:dehub/screens/new_order/add_row.dart';
+import 'package:dehub/screens/new_order/order_add_row.dart';
 import 'package:dehub/screens/new_order/change_branch_name.dart';
 import 'package:dehub/screens/new_order/product_choose/product_choose_in_pieces/product_choose.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -47,7 +47,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   Order productOrder = Order();
   Order additionalRows = Order();
   Order order = Order();
-  Partner partner = Partner();
+  User user = User();
   Order createOrder = Order();
   Order receiverBranch = Order();
   String selectedDate = '';
@@ -123,7 +123,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    partner = Provider.of<UserProvider>(context, listen: true).partnerUser;
+    user = Provider.of<UserProvider>(context, listen: true).orderMe;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -213,7 +213,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                               ),
                             ),
                             Text(
-                              '${partner.user?.firstName}',
+                              '${user.firstName}',
                               style: const TextStyle(
                                 color: orderColor,
                               ),
@@ -858,8 +858,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).pushNamed(
-                        AddRow.routeName,
-                        arguments: AddRowArguments(
+                        OrderAddRow.routeName,
+                        arguments: OrderAddRowArguments(
                           additionalRowsListenController:
                               additionalRowsListenController,
                         ),

@@ -40,7 +40,6 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).user;
-    print(user.toJson());
     return SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),
       child: Container(
@@ -475,7 +474,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                         logout();
                       },
                       labelText: 'Системээс гарах',
-                      labelColor: mainColor,
+                      labelColor: buttonColor,
                     ),
                     SizedBox(
                       height: 20,

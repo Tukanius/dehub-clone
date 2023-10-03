@@ -13,15 +13,19 @@ import 'package:url_launcher/url_launcher.dart';
 
 class QpayPageArguments {
   Invoice data;
+  Color color;
   QpayPageArguments({
+    required this.color,
     required this.data,
   });
 }
 
 class QpayPage extends StatefulWidget {
+  final Color color;
   final Invoice data;
   static const routeName = "QPayPage";
   const QpayPage({
+    required this.color,
     required this.data,
     Key? key,
   }) : super(key: key);
@@ -45,9 +49,9 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
         loading = false;
       });
     } catch (e) {
-      print('======err======');
-      print(e.toString());
-      print('======err======');
+      debugPrint('======err======');
+      debugPrint(e.toString());
+      debugPrint('======err======');
     }
   }
 
@@ -59,10 +63,6 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
       if (Platform.isIOS) {
         storeLink =
             "https://apps.apple.com/mn/app/${getDeepLink("${link.name}")}/id${getCode('${link.name}')}";
-        print('=========storelink========');
-        print(storeLink.toString());
-        print(link.name.toString());
-        print('=========storelink========');
       } else {
         storeLink =
             "https://play.google.com/store/search?q=${"${link.name}"}&c=apps";
@@ -71,57 +71,13 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
     }
   }
 
-  Widget card(BuildContext context, Urls link) {
-    return InkWell(
-      key: UniqueKey(),
-      onTap: () {
-        _launchInBrowser(link.link.toString(), link);
-        Navigator.of(context).pop();
-      },
-      child: Container(
-        height: 100,
-        width: 100,
-        padding: const EdgeInsets.symmetric(vertical: 15),
-        margin: const EdgeInsets.symmetric(horizontal: 2),
-        decoration: BoxDecoration(
-          color: white,
-          borderRadius: BorderRadius.circular(5),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              spreadRadius: 1,
-              offset: Offset(1, 1),
-              blurRadius: 1,
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Image.network(
-                '${link.logo}',
-                height: 50,
-                fit: BoxFit.cover,
-              ),
-            ),
-            Text(
-              '${link.description}',
-              textAlign: TextAlign.center,
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: white,
       appBar: AppBar(
         backgroundColor: white,
-        iconTheme: IconThemeData(color: invoiceColor),
+        iconTheme: IconThemeData(color: widget.color),
         elevation: 0,
         centerTitle: true,
         title: Text(
@@ -132,22 +88,25 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
       body: loading == true
           ? Center(
               child: CircularProgressIndicator(
-                color: invoiceColor,
+                color: widget.color,
               ),
             )
           : SingleChildScrollView(
               child: Container(
                 color: white,
-                margin: const EdgeInsets.only(top: 5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    Container(
+                      height: 5,
+                      color: backgroundColor,
+                    ),
                     Container(
                       margin: const EdgeInsets.only(top: 15, bottom: 20),
                       height: 40,
                       width: 40,
                       decoration: BoxDecoration(
-                        color: invoiceColor,
+                        color: widget.color,
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
@@ -181,7 +140,8 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
                       height: 200,
                       width: 200,
                       child: Image.memory(
-                          base64Decode('${qpay.qr_image?.substring(22)}')),
+                        base64Decode('${qpay.qr_image?.substring(22)}'),
+                      ),
                     ),
                     const SizedBox(
                       height: 20,
@@ -209,8 +169,8 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
                                   Navigator.of(context).pop();
                                 },
                                 child: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 5, vertical: 10),
+                                  margin: const EdgeInsets.only(
+                                      left: 10, top: 10, bottom: 10),
                                   height: 100,
                                   width: 100,
                                   decoration: BoxDecoration(
@@ -272,7 +232,7 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
                       height: 20,
                     ),
                     CustomButton(
-                      labelColor: invoiceColor,
+                      labelColor: widget.color,
                       labelText: "Төлбөр шалгах",
                       onClick: () {},
                     ),
@@ -282,55 +242,6 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
                   ],
                 ),
               ),
-              // child: Column(
-              //   crossAxisAlignment: CrossAxisAlignment.center,
-              //   children: [
-              //     const SizedBox(
-              //       height: 20,
-              //     ),
-              //     Center(
-              //       child: SizedBox(
-              //         height: 230,
-              //         width: MediaQuery.of(context).size.width * 0.7,
-              //         child: Image.memory(
-              //             base64Decode("${qpay.qr_image?.substring(22)}"),
-              //             width: 200),
-              //       ),
-              //     ),
-              //     const SizedBox(
-              //       height: 30,
-              //     ),
-              //     Text(
-              //       "QPay ашиглан төлбөрөө хийх",
-              //       style: TextStyle(
-              //           color: Theme.of(context).iconTheme.color,
-              //           fontSize: 20,
-              //           fontWeight: FontWeight.w700),
-              //     ),
-              //     const SizedBox(
-              //       height: 20,
-              //     ),
-              //     // SizedBox(
-              //     //   height: MediaQuery.of(context).size.height,
-              //     //   child: ListView(
-              //     //       scrollDirection: Axis.horizontal,
-              //     //       padding: const EdgeInsets.all(10),
-              //     //       children: qpay.urls!
-              //     //           .map((e) => card(context, e))
-              //     //           .toList()),
-              //     // ),
-              //     SingleChildScrollView(
-              //       scrollDirection: Axis.horizontal,
-              //       child: Row(
-              //         children: qpay.urls!
-              //             .map(
-              //               (e) => card(context, e),
-              //             )
-              //             .toList(),
-              //       ),
-              //     )
-              //   ],
-              // ),
             ),
     );
   }

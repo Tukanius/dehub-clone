@@ -1,14 +1,14 @@
 import 'package:dehub/components/sales_page_cards/payment_card.dart';
 import 'package:flutter/material.dart';
 
-class Payment extends StatefulWidget {
-  const Payment({super.key});
+class ShoppingPayment extends StatefulWidget {
+  const ShoppingPayment({super.key});
 
   @override
-  State<Payment> createState() => _PaymentState();
+  State<ShoppingPayment> createState() => _ShoppingPaymentState();
 }
 
-class _PaymentState extends State<Payment> {
+class _ShoppingPaymentState extends State<ShoppingPayment> {
   @override
   Widget build(BuildContext context) {
     return Container(

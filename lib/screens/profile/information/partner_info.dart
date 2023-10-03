@@ -67,6 +67,7 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                                     ),
                                     SvgPicture.asset(
                                       'images/arrow_back.svg',
+                                      color: buttonColor,
                                     ),
                                     SizedBox(
                                       width: 10,
@@ -74,7 +75,7 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                                     Text(
                                       'Өмнөх',
                                       style: TextStyle(
-                                        color: mainColor,
+                                        color: buttonColor,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -99,7 +100,7 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                                     Text(
                                       'Дараах',
                                       style: TextStyle(
-                                        color: mainColor,
+                                        color: buttonColor,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -109,6 +110,7 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                                     ),
                                     SvgPicture.asset(
                                       'images/arrow_forward.svg',
+                                      color: buttonColor,
                                     ),
                                     SizedBox(
                                       width: 16,
@@ -133,6 +135,7 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                                 children: [
                                   SvgPicture.asset(
                                     'images/arrow_back.svg',
+                                    color: buttonColor,
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -140,7 +143,7 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                                   Text(
                                     'Өмнөх',
                                     style: TextStyle(
-                                      color: mainColor,
+                                      color: buttonColor,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -168,7 +171,7 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                                   Text(
                                     'Дараах',
                                     style: TextStyle(
-                                      color: mainColor,
+                                      color: buttonColor,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -178,6 +181,7 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                                   ),
                                   SvgPicture.asset(
                                     'images/arrow_forward.svg',
+                                    color: buttonColor,
                                   ),
                                   SizedBox(
                                     width: 16,

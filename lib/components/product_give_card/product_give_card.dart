@@ -40,7 +40,6 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
         });
       }
     });
-    print(widget.data?.quantity);
   }
 
   increase() {
@@ -49,7 +48,6 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
       // fbKey.currentState?.fields['quantity']?.value = count.toString();
       widget.data?.quantity = fbKey.currentState?.fields['quantity']?.value;
     });
-    print(fbKey.currentState?.fields['quantity']!.value);
   }
 
   @override
@@ -313,7 +311,6 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
                               count = p0;
                               widget.data?.quantity =
                                   fbKey.currentState?.fields['quantity']?.value;
-                              print(widget.data?.quantity);
                             });
                           },
                           initialValue: widget.data!.quantity.toString(),

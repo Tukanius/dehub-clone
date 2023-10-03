@@ -11,8 +11,13 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => Invoice.fromJson(e)).toList()
         : null,
-    items: json['items'] != null
-        ? (json['items'] as List).map((e) => Invoice.fromJson(e)).toList()
+    additionalLines: json['additionalLines'] != null
+        ? (json['additionalLines'] as List)
+            .map((e) => Invoice.fromJson(e))
+            .toList()
+        : null,
+    lines: json['lines'] != null
+        ? (json['lines'] as List).map((e) => Invoice.fromJson(e)).toList()
         : null,
     id: json['id'] != null ? json['id'] as String : null,
     createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
@@ -109,6 +114,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
         : null,
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
     regNumber: json['regNumber'] != null ? json['regNumber'] as String : null,
+    salesCode: json['salesCode'] != null ? json['salesCode'] as String : null,
+    purchaseCode:
+        json['purchaseCode'] != null ? json['purchaseCode'] as String : null,
     stateRegNum:
         json['stateRegNum'] != null ? json['stateRegNum'] as String : null,
     partnerName:
@@ -257,9 +265,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     priceStartDate: json['priceStartDate'] != null
         ? json['priceStartDate'] as String
         : null,
-    // unit: json['unit'] != null
-    //     ? Invoice.fromJson(json['unit'] as Map<String, dynamic>)
-    //     : null,
+    unit: json['unit'] != null ? json['unit'] as String : null,
     convertType:
         json['convertType'] != null ? json['convertType'] as String : null,
     convertValue: json['convertValue'] != null
@@ -315,7 +321,6 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     debitAccountCurrency: json['debitAccountCurrency'] != null
         ? json['debitAccountCurrency'] as String
         : null,
-
     urls: json['urls'] != null
         ? (json['urls'] as List).map((e) => Urls.fromJson(e)).toList()
         : null,
@@ -326,6 +331,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.salesCode != null) json['salesCode'] = instance.salesCode;
+  if (instance.purchaseCode != null)
+    json['purchaseCode'] = instance.purchaseCode;
   if (instance.urls != null) json['urls'] = instance.urls;
   if (instance.qr_image != null) json['qr_image'] = instance.qr_image;
   if (instance.invoiceRefCode != null)
@@ -361,13 +369,14 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   if (instance.unitName != null) json['unitName'] = instance.unitName;
   if (instance.confirm != null) json['confirm'] = instance.confirm;
   if (instance.send != null) json['send'] = instance.send;
-  if (instance.items != null) json['items'] = instance.items;
+  if (instance.lines != null) json['lines'] = instance.lines;
   if (instance.method != null) json['method'] = instance.method;
   if (instance.creditAccountId != null)
     json['creditAccountId'] = instance.creditAccountId;
   if (instance.amount != null) json['amount'] = instance.amount;
   if (instance.count != null) json['count'] = instance.count;
-
+  if (instance.additionalLines != null)
+    json['additionalLines'] = instance.additionalLines;
   if (instance.rows != null) json['rows'] = instance.rows;
   if (instance.id != null) json['id'] = instance.id;
   if (instance.createdAt != null) json['createdAt'] = instance.createdAt;

@@ -1,6 +1,9 @@
+import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
+import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/screens/order_payment_page/cash_on_delivery.dart';
 import 'package:dehub/screens/order_payment_page/order_payment_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +11,20 @@ import 'package:pinput/pinput.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+class ReceiverOtpVerifyArguments {
+  Order data;
+  ReceiverOtpVerifyArguments({
+    required this.data,
+  });
+}
+
 class ReceiverOtpVerify extends StatefulWidget {
+  final Order data;
   static const routeName = '/ReceiverOtpVerify';
-  const ReceiverOtpVerify({Key? key}) : super(key: key);
+  const ReceiverOtpVerify({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
 
   @override
   State<ReceiverOtpVerify> createState() => _ReceiverOtpVerifyState();
@@ -18,6 +32,28 @@ class ReceiverOtpVerify extends StatefulWidget {
 
 class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
   User user = User();
+  Order order = Order();
+
+  onSubmit(Order code) async {
+    order = await OrderApi().deliveryNoteConfirm('${widget.data.id}', code);
+    showCustomDialog(
+      context,
+      "Таны хүргэлтийг хүлээж авснаа амжилттай баталгаажууллаа",
+      onPressed: () {
+        if (widget.data.paymentTerm?.condition == "INV_CONFIG" &&
+            widget.data.paymentTerm?.configType != "INV_COD") {
+          Navigator.of(context).pushNamed(OrderPaymentPage.routeName);
+        } else if (widget.data.paymentTerm?.condition == "INV_CONFIG" &&
+            widget.data.paymentTerm?.configType == "INV_COD") {
+          Navigator.of(context).pushNamed(CashOnDelivery.routeName);
+        } else if (widget.data.paymentTerm?.configType == "CIA") {
+          Navigator.of(context).pushNamed(OrderPaymentPage.routeName);
+        } else if (widget.data.paymentTerm?.configType == "CBD") {
+          Navigator.of(context).pushNamed(OrderPaymentPage.routeName);
+        }
+      },
+    );
+  }
 
   final defaultPinTheme = PinTheme(
     height: 50,
@@ -33,7 +69,7 @@ class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
-
+    print(widget.data.toJson());
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -119,14 +155,7 @@ class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
                   autofocus: true,
                   keyboardType: TextInputType.number,
                   obscureText: false,
-                  onCompleted: (value) => showCustomDialog(
-                    context,
-                    "Таны хүргэлтийг хүлээж авснаа амжилттай баталгаажууллаа",
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushNamed(OrderPaymentPage.routeName);
-                    },
-                  ),
+                  onCompleted: (value) => onSubmit(Order(code: value)),
                   length: 6,
                   hapticFeedbackType: HapticFeedbackType.lightImpact,
                   defaultPinTheme: defaultPinTheme,

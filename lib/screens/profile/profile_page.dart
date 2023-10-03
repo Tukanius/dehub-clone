@@ -53,7 +53,7 @@ class _ProfilePageState extends State<ProfilePage>
     return Scaffold(
       backgroundColor: Color(0xffF5F5F5),
       appBar: AppBar(
-        backgroundColor: mainColor,
+        backgroundColor: buttonColor,
         iconTheme: IconThemeData(color: white),
         leading: IconButton(
           onPressed: () {
@@ -120,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage>
                                 borderRadius: BorderRadius.circular(100),
                                 border: Border.all(color: grey3, width: 0.5),
                                 color: tabController.index == 0
-                                    ? mainColor
+                                    ? buttonColor
                                     : white,
                               ),
                               child: SvgPicture.asset(
@@ -143,7 +143,7 @@ class _ProfilePageState extends State<ProfilePage>
                                 borderRadius: BorderRadius.circular(100),
                                 border: Border.all(color: grey3, width: 0.5),
                                 color: tabController.index == 1
-                                    ? mainColor
+                                    ? buttonColor
                                     : white,
                               ),
                               child: SvgPicture.asset(
@@ -166,7 +166,7 @@ class _ProfilePageState extends State<ProfilePage>
                                 borderRadius: BorderRadius.circular(100),
                                 border: Border.all(color: grey3, width: 0.5),
                                 color: tabController.index == 2
-                                    ? mainColor
+                                    ? buttonColor
                                     : white,
                               ),
                               child: SvgPicture.asset(
@@ -189,7 +189,7 @@ class _ProfilePageState extends State<ProfilePage>
                                   borderRadius: BorderRadius.circular(100),
                                   border: Border.all(color: grey3, width: 0.5),
                                   color: tabController.index == 3
-                                      ? mainColor
+                                      ? buttonColor
                                       : white),
                               child: SvgPicture.asset(
                                 'images/settings.svg',

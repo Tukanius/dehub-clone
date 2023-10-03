@@ -11,11 +11,9 @@ class AddProductCard extends StatefulWidget {
   final Function()? onClick;
   final bool? readOnly;
   final Invoice? data;
-  final int? index;
   const AddProductCard({
     this.readOnly,
     this.closeClick,
-    this.index,
     this.onClick,
     Key? key,
     this.data,
@@ -247,14 +245,32 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
                               SizedBox(
                                 height: 5,
                               ),
-                              Text(
-                                '0%',
-                                style: TextStyle(
-                                  color: invoiceColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
+                              widget.data?.discountType == "PERCENTAGE"
+                                  ? Text(
+                                      '${widget.data?.discountValue?.toInt()}%',
+                                      style: TextStyle(
+                                        color: invoiceColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    )
+                                  : widget.data?.discountType == "AMOUNT"
+                                      ? Text(
+                                          '${widget.data?.discountValue?.toInt()}₮',
+                                          style: TextStyle(
+                                            color: invoiceColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                          ),
+                                        )
+                                      : Text(
+                                          '0₮',
+                                          style: TextStyle(
+                                            color: invoiceColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                          ),
+                                        ),
                               SizedBox(
                                 height: 5,
                               ),
@@ -268,14 +284,23 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
                                   borderRadius: BorderRadius.circular(5),
                                   color: Color(0xffEBFAFA),
                                 ),
-                                child: Text(
-                                  'хувиар',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: grey2,
-                                  ),
-                                ),
+                                child: widget.data?.discountType == "PERCENTAGE"
+                                    ? Text(
+                                        'хувиар',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: grey2,
+                                        ),
+                                      )
+                                    : Text(
+                                        'дүнгээр',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: grey2,
+                                        ),
+                                      ),
                               ),
                             ],
                           ),
@@ -386,7 +411,7 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
                       ),
                       widget.data?.quantity != null
                           ? Text(
-                              '${widget.data!.quantity! * widget.data!.price!} ₮',
+                              '${Utils().formatCurrency((widget.data!.quantity! * widget.data!.price!).toString())} ₮',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
@@ -394,7 +419,7 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
                               ),
                             )
                           : Text(
-                              '${double.parse(quantityController.text.toString()) * widget.data!.price!} ₮',
+                              '${Utils().formatCurrency((double.parse(quantityController.text.toString()) * widget.data!.price!).toString())} ₮',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,

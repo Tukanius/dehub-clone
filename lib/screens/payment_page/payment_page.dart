@@ -1,7 +1,7 @@
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/add_bank_account_page/add_bank_account_page.dart';
+import 'package:dehub/screens/payment_page/tabs/add_bank_account_page/add_bank_account_page.dart';
 import 'package:dehub/screens/link_account_page/link_account_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -100,7 +100,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                     color: selectedIndex != 3 ? paymentColor : white,
                   ),
                 )
-              : selectedIndex == 3 || selectedIndex == 1
+              : selectedIndex == 3
                   ? AddButton(
                       color: paymentColor,
                       addColor: white,

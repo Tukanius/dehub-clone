@@ -213,6 +213,7 @@ class _AddAttachmentState extends State<AddAttachment> {
             margin: const EdgeInsets.only(bottom: 70, right: 15, left: 15),
             child: CustomButton(
               isGradient: true,
+              gradient: gradient,
               onClick: () {
                 try {
                   if (result != null) {

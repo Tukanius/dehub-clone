@@ -1,18 +1,24 @@
 import 'package:dehub/api/invoice_api.dart';
+import 'package:dehub/components/field_card/field_card.dart';
+import 'package:dehub/components/invoice_additional_line/invoice_additional_line.dart';
 import 'package:dehub/components/invoice_product_card/add_product_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/harah.dart';
 // import 'package:dehub/screens/payment_page/payment_page.dart';
 import 'package:dehub/utils/utils.dart';
+import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dehub/screens/invoice/payment_page/payment_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:moment_dart/moment_dart.dart';
 
 class BasicInformationTab extends StatefulWidget {
   final String id;
@@ -31,6 +37,8 @@ class _BasicInformationTabState extends State<BasicInformationTab>
   General general = General();
   Invoice approval = Invoice();
   bool isLoading = true;
+  User user = User();
+  List<Invoice> fields = [];
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -38,6 +46,149 @@ class _BasicInformationTabState extends State<BasicInformationTab>
     setState(() {
       isLoading = false;
     });
+    fields = [
+      Invoice(
+        firstName: "Нэхэмжлэл №",
+        lastName: invoice.refCode,
+      ),
+      Invoice(
+        firstName: "Нэхэмжлэл статус",
+        lastName: invoiceStatus(),
+      ),
+      Invoice(
+        firstName: "Төлбөрийн төлөв",
+        lastName: invoicePaymentStatus(),
+      ),
+      Invoice(
+        firstName: "Нийт дүн",
+        lastName: Utils().formatCurrency(invoice.totalAmount.toString()),
+      ),
+      Invoice(
+        firstName: "Төлсөн дүн",
+        lastName: Utils().formatCurrency(invoice.paidAmount.toString()),
+      ),
+      Invoice(
+        firstName: "Төлбөрийн үлдэгдэл",
+        lastName: Utils().formatCurrency(invoice.amountToPay.toString()),
+      ),
+      Invoice(
+        firstName: "Төлөх огноо",
+        lastName: invoice.paymentDate == null ? "-" : invoice.getPaymentDate(),
+      ),
+      Invoice(
+        firstName: "Хугацаа хэтрэлт",
+        lastName: overdueStatus(),
+      ),
+      Invoice(
+        firstName: "Баталсан огноо",
+        lastName: invoice.confirmedDate == null
+            ? '-'
+            : Moment.parse(invoice.confirmedDate.toString())
+                .format("YYYY-MM-DD"),
+      ),
+      Invoice(
+        firstName: "Татвар төлөгч дугаар",
+        lastName: invoice.receiverBusiness?.regNumber,
+      ),
+      Invoice(
+        firstName: "Партнер нэр",
+        lastName: invoice.receiverBusiness?.partner?.businessName,
+      ),
+      Invoice(
+        firstName: "Партнер код",
+        lastName: invoice.receiverBusiness?.partner?.refCode,
+      ),
+      Invoice(
+        firstName: "Бизнес нэр",
+        lastName: invoice.receiverBusiness?.profileName,
+      ),
+      Invoice(
+        firstName: "Бизнес код",
+        lastName: invoice.receiverBusiness?.refCode,
+      ),
+      Invoice(
+        firstName: "Төлбөрийн нөхцөл",
+        lastName: invoice.paymentTerm?.description,
+      ),
+      Invoice(
+        firstName: "Бизнесийн хаяг",
+        lastName: invoice.receiverBranch?.branchAddress,
+      ),
+      Invoice(
+        firstName: "Санхүүгийн ажилтан",
+        lastName: invoice.receiverFinUser?.firstName,
+      ),
+      Invoice(
+        firstName: "Дансны мэдээлэл",
+        lastName:
+            '${invoice.receiverAcc?.number}, ${invoice.receiverAcc?.bankName}',
+      ),
+      Invoice(
+        firstName: "PO дугаар",
+        lastName: invoice.purchaseCode,
+      ),
+      Invoice(
+        firstName: "Татвар төлөгч дугаар",
+        lastName: invoice.senderBusiness?.regNumber,
+      ),
+      Invoice(
+        firstName: "Партнер нэр",
+        lastName: invoice.senderBusiness?.partner?.businessName,
+      ),
+      Invoice(
+        firstName: "Партнер код",
+        lastName: invoice.senderBusiness?.partner?.refCode,
+      ),
+      Invoice(
+        firstName: "Бизнес нэр",
+        lastName: invoice.senderBusiness?.profileName,
+      ),
+      Invoice(
+        firstName: "Бизнес код",
+        lastName: invoice.senderBusiness?.refCode,
+      ),
+      Invoice(
+        firstName: "Нэхэмжлэх бичсэн",
+        lastName: invoice.getsentDate(),
+      ),
+      Invoice(
+        firstName: "Бизнесийн хаяг",
+        lastName: invoice.senderBranch?.branchAddress,
+      ),
+      Invoice(
+        firstName: "Санхүүгийн ажилтан",
+        lastName: invoice.senderFinUser?.firstName,
+      ),
+      Invoice(
+        firstName: "Дансны мэдээлэл",
+        lastName:
+            '${invoice.senderAcc?.number}, ${invoice.senderAcc?.bankName}',
+      ),
+      Invoice(
+        firstName: "SO дугаар",
+        lastName: invoice.salesCode,
+      ),
+      Invoice(
+        firstName: "Хөнгөлөлт",
+        lastName: Utils().formatCurrency(invoice.discountAmount.toString()),
+      ),
+      Invoice(
+        firstName: "Тооцсон НӨАТ",
+        lastName: Utils().formatCurrency(invoice.vatAmount.toString()),
+      ),
+      Invoice(
+        firstName: "Тооцсон НХАТ",
+        lastName: Utils().formatCurrency(invoice.taxAmount.toString()),
+      ),
+      Invoice(
+        firstName: "Хүргэлт төлбөр",
+        lastName: Utils().formatCurrency(invoice.shippingAmount.toString()),
+      ),
+      Invoice(
+        firstName: "Нийт төлбөр",
+        lastName: Utils().formatCurrency(invoice.totalAmount.toString()),
+      ),
+    ];
   }
 
   approve(bool confirm) async {
@@ -64,6 +215,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
   @override
   Widget build(BuildContext context) {
     general = Provider.of<GeneralProvider>(context, listen: false).general;
+    user = Provider.of<UserProvider>(context, listen: false).invoiceMe;
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Container(
@@ -90,871 +242,241 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                       ),
                     ),
                   ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Нэхэмжлэх №',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invoice.refCode}',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
-                    color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Нэхэмжлэх статус',
-                          ),
-                        ),
-                        Text(
-                          invoiceStatus(),
-                          style: TextStyle(
-                            color: invoiceStatusColor(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Төлбөрийн төлөв',
-                          ),
-                        ),
-                        Text(
-                          invoicePaymentStatus(),
-                          style: TextStyle(
-                            color: textColor(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(15),
-                    color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Нийт дүн',
-                          ),
-                        ),
-                        Text(
-                          '${Utils().formatCurrency(invoice.itemsTotal.toString())}',
-                          // '',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Төлсөн дүн',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          "${Utils().formatCurrency(invoice.paidAmount.toString())}",
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Төлбөрийн үлдэгдэл',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          // '${Utils().formatCurrency(invoice.amountToPay.toString())}',
-                          '',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Төлөх огноо',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          // invoice.getPaymentDate(),
-                          '',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Хугацаа хэтрэлт',
-                          ),
-                        ),
-                        Text(
-                          '${overdueStatus()}',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Баталсан огноо',
-                          ),
-                        ),
-                        Text(
-                          '${invoice.getsentDate()}',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Text(
-                      'Худалдан авагч тал',
-                      style: TextStyle(
-                        color: grey3,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Татар төлөгч дугаар',
-                          ),
-                        ),
-                        Text(
-                          'Дугаар',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              child: Text(
-                                'Партнерийн нэр,',
-                              ),
-                            ),
-                            Text(
-                              'Партнер код',
-                              style: TextStyle(color: invoiceColor),
-                            ),
-                          ],
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: grey3,
-                          size: 14,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              child: Text(
-                                'Худалдан авагч бизнес,',
-                              ),
-                            ),
-                            Text(
-                              'Партнер код',
-                              style: TextStyle(color: invoiceColor),
-                            ),
-                          ],
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: grey3,
-                          size: 14,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Төлбөрийн нөхцөл',
-                          ),
-                        ),
-                        Text(
-                          'INV_NET_X',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Бизнесийн хаяг',
-                          ),
-                        ),
-                        Text(
-                          'Бизнесийн хаяг',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Санхүүгийн ажилтан',
-                          ),
-                        ),
-                        Text(
-                          'Санхүүгийн ажилтан',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Дансны мэдээлэл',
-                          ),
-                        ),
-                        Text(
-                          'Дансны дугаар, нэр',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Хүлээн авсан',
-                          ),
-                        ),
-                        Text(
-                          'Ажилтан',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'PO дугаар',
-                          ),
-                        ),
-                        Text(
-                          '${invoice.purchaseOrder!.refCode}',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Text(
-                      'Нийлүүлэгч тал',
-                      style: TextStyle(
-                        color: grey3,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Татвар төлөгч дугаар',
-                          ),
-                        ),
-                        Text(
-                          'Дугаар',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              child: Text(
-                                'Партнерийн нэр,',
-                              ),
-                            ),
-                            Text(
-                              'Партнер код',
-                              style: TextStyle(color: invoiceColor),
-                            ),
-                          ],
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: grey3,
-                          size: 14,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              child: Text(
-                                'Нийлүүлэгч бизнес,',
-                              ),
-                            ),
-                            Text(
-                              'Партнер код',
-                              style: TextStyle(color: invoiceColor),
-                            ),
-                          ],
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: grey3,
-                          size: 14,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Нэхэмжлэх бичсэн',
-                          ),
-                        ),
-                        Text(
-                          'Огноо, цаг',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Санхүүгийн ажилтан',
-                          ),
-                        ),
-                        Text(
-                          'Санхүүгийн ажилтан',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Бизнесийн хаяг',
-                          ),
-                        ),
-                        Text(
-                          'Бизнесийн хаяг',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Дансны мэдээлэл',
-                          ),
-                        ),
-                        Text(
-                          'Дансны дугаар, нэр',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Хүлээлгэн өгсөн',
-                          ),
-                        ),
-                        Text(
-                          'Ажилтан',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(15),
-                    color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'SO дугаар',
-                          ),
-                        ),
-                        Text(
-                          '${invoice.salesOrder!.refCode}',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Text(
-                      'БАРАА, ҮЙЛЧИЛГЭЭ',
-                      style: TextStyle(
-                        color: grey3,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
                   Column(
-                    children: invoice.invoiceLines!
+                    children: fields
                         .map(
-                          (item) => AddProductCard(
-                            readOnly: true,
-                            data: item,
+                          (e) => Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              FieldCard(
+                                color: white,
+                                marginHorizontal: 15,
+                                marginVertical: 15,
+                                labelText: e.firstName,
+                                secondText: e.lastName,
+                                secondTextColor: invoiceColor,
+                                fontWeight: e.firstName == "Нийт төлбөр"
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                                fontSize:
+                                    e.firstName == "Нийт төлбөр" ? 16 : 14,
+                              ),
+                              e.firstName == "Баталсан огноо"
+                                  ? Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 10),
+                                      child: Text(
+                                        'Худалдан авагч тал',
+                                        style: TextStyle(
+                                          color: grey3,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    )
+                                  : e.firstName == "PO дугаар"
+                                      ? Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 15, vertical: 10),
+                                          child: Text(
+                                            'Нийлүүлэгч тал',
+                                            style: TextStyle(
+                                              color: grey3,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        )
+                                      : e.firstName == "SO дугаар"
+                                          ? Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                invoice.lines!.isNotEmpty
+                                                    ? Container(
+                                                        margin: const EdgeInsets
+                                                                .symmetric(
+                                                            horizontal: 15,
+                                                            vertical: 10),
+                                                        child: Text(
+                                                          'БАРАА, ҮЙЛЧИЛГЭЭ',
+                                                          style: TextStyle(
+                                                            color: grey3,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : SizedBox(),
+                                                Column(
+                                                  children: invoice.lines!
+                                                      .map(
+                                                        (item) =>
+                                                            AddProductCard(
+                                                          readOnly: true,
+                                                          data: item,
+                                                        ),
+                                                      )
+                                                      .toList(),
+                                                ),
+                                                Container(
+                                                  margin: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 15,
+                                                      vertical: 10),
+                                                  child: Text(
+                                                    'Нэмэлт Тэмдэглэл',
+                                                    style: TextStyle(
+                                                      color: grey3,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 15,
+                                                      vertical: 8),
+                                                  height: 125,
+                                                  color: white,
+                                                  child: Container(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            10),
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color: grey3
+                                                            .withOpacity(0.3),
+                                                      ),
+                                                    ),
+                                                    child: Text(
+                                                        '${invoice.description}'),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          : e.firstName == "Хөнгөлөлт"
+                                              ? Container(
+                                                  margin: const EdgeInsets.only(
+                                                      left: 15,
+                                                      bottom: 10,
+                                                      top: 10),
+                                                  child: Text(
+                                                    'НИЙТ ТӨЛБӨР',
+                                                    style: TextStyle(
+                                                      color: grey3,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  ),
+                                                )
+                                              : SizedBox(),
+                            ],
                           ),
                         )
                         .toList(),
                   ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Text(
-                      'Нэмэлт Тэмдэглэл',
-                      style: TextStyle(
-                        color: grey3,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                    height: 125,
-                    color: white,
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: grey3.withOpacity(0.3),
-                        ),
-                      ),
-                      child: Text('${invoice.description}'),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 15),
-                    child: Text(
-                      'НИЙТ ТӨЛБӨР',
-                      style: TextStyle(
-                        color: grey3,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(15),
-                    color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Хөнгөлөлт',
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              '${Utils().formatCurrency(invoice.discountAmount.toString())}',
-                              style: TextStyle(color: invoiceColor),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              size: 12,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(15),
-                    color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
+                  invoice.additionalLines!.isNotEmpty
+                      ? Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
                           child: Text(
-                            'Тооцсон НӨАТ',
-                          ),
-                        ),
-                        Text(
-                          '${Utils().formatCurrency(invoice.vatAmount.toString())}₮',
-                          style: TextStyle(color: invoiceColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(15),
-                    color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Тооцсон НХАТ',
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              child: Text(
-                                '${Utils().formatCurrency(invoice.taxAmount.toString())}',
-                                style: TextStyle(color: invoiceColor),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(15),
-                    color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Хүргэлт төлбөр',
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              '${Utils().formatCurrency(invoice.shippingAmount.toString())}',
-                              style: TextStyle(color: invoiceColor),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              size: 12,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(15),
-                    color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text(
-                            'НИЙТ ТӨЛБӨР',
+                            'НЭМЭЛТЭЭР',
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                              color: grey3,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              child: Text(
-                                // '${Utils().formatCurrency(invoice.totalAmount.toString())}₮',
-                                '',
-                                style: TextStyle(
-                                  color: invoiceColor,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
+                        )
+                      : SizedBox(),
+                  Column(
+                    children: invoice.additionalLines!
+                        .map(
+                          (e) => InvoiceAdditionalLine(
+                            data: e,
+                          ),
+                        )
+                        .toList(),
+                  ),
+                  invoice.attachments!.isNotEmpty
+                      ? Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Text(
+                            'Хавсралт файл',
+                            style: TextStyle(
+                              color: grey3,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
+                  Column(
+                    children: invoice.attachments!
+                        .map(
+                          (e) => Container(
+                            color: white,
+                            padding: const EdgeInsets.all(15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Файлын нэр',
+                                  style: TextStyle(color: invoiceColor),
                                 ),
-                              ),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: grey3,
+                                  size: 14,
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Text(
-                      'Хавсралт файл',
-                      style: TextStyle(
-                        color: grey3,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  for (var i = 0; i < 3; i++)
-                    Container(
-                      color: white,
-                      padding: const EdgeInsets.all(15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Файлын нэр',
-                            style: TextStyle(color: invoiceColor),
                           ),
-                          Icon(
-                            Icons.arrow_forward_ios,
-                            color: grey3,
-                            size: 14,
-                          ),
-                        ],
-                      ),
-                    ),
+                        )
+                        .toList(),
+                  ),
                   SizedBox(
                     height: 70,
                   ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 37),
-                    height: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: black,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(
-                              Harah.routeName,
-                              arguments: HarahArguments(
-                                invoice: invoice,
-                                data: invoice.invoiceLines!,
-                              ),
-                            );
-                          },
-                          child: Column(
-                            children: [
-                              Icon(
-                                Icons.visibility_outlined,
-                                color: white,
-                                size: 20,
-                              ),
-                              Text(
-                                'Харах',
-                                style: TextStyle(
-                                  color: white,
-                                  fontSize: 10,
-                                ),
-                              )
-                            ],
+                  user.currentBusiness?.type == "BUYER"
+                      ? Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 37),
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: black,
                           ),
-                        ),
-                        invoice.invoiceStatus == "CONFIRMED"
-                            ? GestureDetector(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).pushNamed(
-                                    InvoicePaymentPage.routeName,
-                                    arguments: InvoicePaymentPageArguments(
-                                      data: invoice,
-                                      id: '',
+                                    Harah.routeName,
+                                    arguments: HarahArguments(
+                                      totalAmount: 1000,
+                                      invoice: invoice,
+                                      data: invoice.lines!,
                                     ),
                                   );
                                 },
                                 child: Column(
                                   children: [
-                                    SizedBox(
-                                      height: 3,
-                                    ),
-                                    SvgPicture.asset(
-                                      'images/tuloh.svg',
-                                      height: 14,
-                                    ),
-                                    SizedBox(
-                                      height: 3,
-                                    ),
-                                    Text(
-                                      'Төлөх',
-                                      style: TextStyle(
-                                        color: white,
-                                        fontSize: 10,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            : GestureDetector(
-                                onTap: () {
-                                  approve(true);
-                                },
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 3,
-                                    ),
                                     Icon(
-                                      Icons.approval,
+                                      Icons.visibility_outlined,
                                       color: white,
-                                      size: 16,
-                                    ),
-                                    SizedBox(
-                                      height: 3,
+                                      size: 20,
                                     ),
                                     Text(
-                                      'Батлах',
+                                      'Харах',
                                       style: TextStyle(
                                         color: white,
                                         fontSize: 10,
@@ -963,49 +485,124 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                                   ],
                                 ),
                               ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                'images/cancel.svg',
-                                height: 17,
-                                width: 17,
-                              ),
-                              Text(
-                                'Цуцлах',
-                                style: TextStyle(
-                                  color: white,
-                                  fontSize: 10,
+                              invoice.invoiceStatus == "CONFIRMED"
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).pushNamed(
+                                          InvoicePaymentPage.routeName,
+                                          arguments:
+                                              InvoicePaymentPageArguments(
+                                            data: invoice,
+                                            id: '',
+                                          ),
+                                        );
+                                      },
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 3,
+                                          ),
+                                          SvgPicture.asset(
+                                            'images/tuloh.svg',
+                                            height: 14,
+                                          ),
+                                          SizedBox(
+                                            height: 3,
+                                          ),
+                                          Text(
+                                            'Төлөх',
+                                            style: TextStyle(
+                                              color: white,
+                                              fontSize: 10,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  : GestureDetector(
+                                      onTap: () {
+                                        approve(true);
+                                      },
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 3,
+                                          ),
+                                          Icon(
+                                            Icons.approval,
+                                            color: white,
+                                            size: 16,
+                                          ),
+                                          SizedBox(
+                                            height: 3,
+                                          ),
+                                          Text(
+                                            'Батлах',
+                                            style: TextStyle(
+                                              color: white,
+                                              fontSize: 10,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                              GestureDetector(
+                                onTap: () {},
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'images/cancel.svg',
+                                      height: 17,
+                                      width: 17,
+                                    ),
+                                    Text(
+                                      'Цуцлах',
+                                      style: TextStyle(
+                                        color: white,
+                                        fontSize: 10,
+                                      ),
+                                    )
+                                  ],
                                 ),
-                              )
+                              ),
+                              GestureDetector(
+                                onTap: () {},
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'images/cancel.svg',
+                                      height: 17,
+                                      width: 17,
+                                    ),
+                                    Text(
+                                      'Цуцлах',
+                                      style: TextStyle(
+                                        color: white,
+                                        fontSize: 10,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                'images/cancel.svg',
-                                height: 17,
-                                width: 17,
+                        )
+                      : CustomButton(
+                          labelText: "Харах",
+                          labelColor: invoiceColor,
+                          onClick: () {
+                            Navigator.of(context).pushNamed(
+                              Harah.routeName,
+                              arguments: HarahArguments(
+                                totalAmount: 1000,
+                                invoice: invoice,
+                                data: invoice.lines!,
                               ),
-                              Text(
-                                'Цуцлах',
-                                style: TextStyle(
-                                  color: white,
-                                  fontSize: 10,
-                                ),
-                              )
-                            ],
-                          ),
+                            );
+                          },
                         ),
-                      ],
-                    ),
-                  ),
                   SizedBox(
                     height: 30,
                   ),

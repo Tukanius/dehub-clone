@@ -212,7 +212,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
               ),
               Invoice(),
               Order(),
-              Payment(),
+              ShoppingPayment(),
               Text('Зээл тооцоо'),
               Text('Нөхцөл'),
             ],

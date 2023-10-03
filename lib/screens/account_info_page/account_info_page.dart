@@ -5,9 +5,20 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+class AccountInfoPageArguments {
+  String id;
+  AccountInfoPageArguments({
+    required this.id,
+  });
+}
+
 class AccountInfoPage extends StatefulWidget {
+  final String id;
   static const routeName = '/accountinfopage';
-  const AccountInfoPage({Key? key}) : super(key: key);
+  const AccountInfoPage({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
   @override
   _AccountInfoPageState createState() => _AccountInfoPageState();
@@ -269,7 +280,9 @@ class _AccountInfoPageState extends State<AccountInfoPage>
             controller: tabController,
             physics: NeverScrollableScrollPhysics(),
             children: [
-              Index0(),
+              Index0(
+                id: widget.id,
+              ),
               Index1(),
               Text('3'),
               Text('4'),

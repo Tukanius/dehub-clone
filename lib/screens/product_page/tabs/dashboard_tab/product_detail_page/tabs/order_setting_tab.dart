@@ -39,8 +39,6 @@ class _OrderSettingTabState extends State<OrderSettingTab>
     itemUnits = inventory.itemUnits!.firstWhere(
       (element) => element.isBase == true,
     );
-    print('itemunits=====>');
-    print(itemUnits.toJson());
     setState(() {
       isLoading = false;
     });

@@ -19,23 +19,20 @@ class AddButton extends StatefulWidget {
 class _AddButtonState extends State<AddButton> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 20),
-      child: Ink(
+    return GestureDetector(
+      onTap: widget.onClick,
+      child: Container(
         height: 30,
         width: 30,
-        decoration: ShapeDecoration(
+        margin: const EdgeInsets.only(right: 20),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
           color: widget.color,
-          shape: CircleBorder(),
         ),
-        child: IconButton(
-          iconSize: 30,
-          icon: Icon(
-            Icons.add,
-            size: 15,
-            color: widget.addColor == null ? white : widget.addColor,
-          ),
-          onPressed: widget.onClick,
+        child: Icon(
+          Icons.add,
+          size: 15,
+          color: widget.addColor == null ? white : widget.addColor,
         ),
       ),
     );

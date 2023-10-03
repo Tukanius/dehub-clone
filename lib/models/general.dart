@@ -1,3 +1,4 @@
+import 'package:dehub/models/bank_names.dart';
 import 'package:dehub/models/branch_status.dart';
 import 'package:dehub/models/business_sectors.dart';
 import 'package:dehub/models/business_staff_roles.dart';
@@ -99,11 +100,13 @@ class General {
   List<ServiceCategoryTypes>? serviceCategoryTypes;
   List<DistributionAreas>? distributionAreas;
   List<ClientClassifications>? clientClassifications;
-
   List<DeliveryNoteStatus>? deliveryNoteStatus;
   List<PullSheetStatus>? pullSheetStatus;
 
+  List<BankNames>? bankNames;
+
   General({
+    this.bankNames,
     this.pullSheetStatus,
     this.deliveryNoteStatus,
     this.clientClassifications,

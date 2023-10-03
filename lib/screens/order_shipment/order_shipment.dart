@@ -39,7 +39,11 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
   // bool isCountDown = true;
   bool startShipment = false;
   Duration resume = Duration();
+  Duration difference1 = Duration();
+  Duration difference2 = Duration();
   Duration difference = Duration();
+  bool isSubmit = false;
+  String? lineId;
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -48,7 +52,17 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
       difference = DateTime.now()
           .difference(DateTime.parse(shipment.startedDate.toString()));
       int pausedDurationInSeconds = (shipment.pausedDuration!).round();
-      resume = difference - Duration(seconds: pausedDurationInSeconds);
+      if (shipment.isPaused == true) {
+        difference1 = DateTime.now()
+            .difference(DateTime.parse(shipment.pausedDate.toString()));
+      }
+      resume =
+          difference - Duration(seconds: pausedDurationInSeconds) - difference1;
+    }
+    if (shipment.startedDate != null &&
+        shipment.isPaused == false &&
+        shipment.endedDate == null) {
+      startTimer(false);
     }
     setState(() {
       isLoading = false;
@@ -81,7 +95,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
   //   }
   // }
 
-  void startTimer() async {
+  void startTimer(bool isProceed) async {
     if (shipment.startedDate == null) {
       try {
         setState(() {
@@ -102,7 +116,9 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
       }
     } else {
       try {
-        await OrderApi().pullSheetProceed(widget.data.id!);
+        if (isProceed == true) {
+          await OrderApi().pullSheetProceed(widget.data.id!);
+        }
         timer = Timer.periodic(Duration(seconds: 1), (timer) => addTimer());
         shipment = await OrderApi().pullSheetGet(widget.data.id!);
         setState(() {
@@ -141,9 +157,6 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
   }
 
   void stopTimer({bool resets = true}) async {
-    // if (resets) {
-    //   reset();
-    // }
     await OrderApi().pullSheetPause(widget.data.id!);
     shipment = await OrderApi().pullSheetGet(widget.data.id!);
     setState(() {
@@ -155,8 +168,10 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
 
   end() async {
     try {
-      if (widget.data.endedDate == null)
+      if (widget.data.endedDate == null) {
         await OrderApi().pullSheetEnd(widget.data.id!);
+      }
+      shipment = await OrderApi().pullSheetGet(widget.data.id!);
       await Navigator.of(context).pushNamed(
         PullSheetExpenses.routeName,
         arguments: PullSheetExpensesArguments(data: shipment),
@@ -178,9 +193,6 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
         leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
-            if (shipment.isPaused == false) {
-              stopTimer();
-            }
           },
           child: Icon(
             Icons.arrow_back_ios_new,
@@ -217,7 +229,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                           onTap: () {
                             if (startShipment == false &&
                                 widget.data.endedDate == null) {
-                              startTimer();
+                              startTimer(true);
                             }
                           },
                           child: Container(
@@ -487,7 +499,10 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                                     ShipmentProductCard(
                                       approveButtonClick: () async {
                                         try {
-                                          await OrderApi().lineConfirm(
+                                          setState(() {
+                                            isSubmit = true;
+                                          });
+                                          await OrderApi().pullSheetLineConfirm(
                                             Order(
                                               pullSheetLineId: e.id,
                                               confirmedQuantity: e.quantity,
@@ -496,7 +511,13 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                                           );
                                           shipment = await OrderApi()
                                               .pullSheetGet(widget.data.id!);
+                                          setState(() {
+                                            isSubmit = false;
+                                          });
                                         } catch (e) {
+                                          setState(() {
+                                            isSubmit = false;
+                                          });
                                           print(e.toString());
                                         }
                                       },

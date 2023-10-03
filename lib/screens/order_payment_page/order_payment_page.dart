@@ -266,7 +266,7 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
             SizedBox(
               height: 70,
             ),
-            user.currentBusiness?.type != "SUPPLIER"
+            user.currentBusiness?.type == "BUYER"
                 ? Row(
                     children: [
                       SizedBox(
@@ -311,7 +311,7 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
                           .pushNamed(OrderCashPayment.routeName);
                     },
                     labelColor: orderColor,
-                    labelText: "Ок. Төлбөр төлье.",
+                    labelText: "Ок, нэхэмжлэл гаргая.",
                   ),
             SizedBox(
               height: 50,

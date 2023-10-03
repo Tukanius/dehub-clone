@@ -72,6 +72,7 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
         : Navigator.of(context).pushNamed(
             QpayPage.routeName,
             arguments: QpayPageArguments(
+              color: invoiceColor,
               data: Invoice(
                 invoiceId: widget.data.id,
                 invoiceRefCode: widget.data.refCode,

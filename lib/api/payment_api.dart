@@ -1,4 +1,6 @@
 import 'package:dehub/models/invoice.dart';
+import 'package:dehub/models/payment.dart';
+import 'package:dehub/models/result.dart';
 import 'package:dehub/utils/http_request.dart';
 
 class PaymentApi extends HttpRequest {
@@ -6,5 +8,28 @@ class PaymentApi extends HttpRequest {
     var res = await post('/invoice', "PAYMENT", true,
         handler: true, data: data.toJson());
     return Invoice.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> bankAccountList(ResultArguments resultArguments) async {
+    var res = await get('/bank_account', "PAYMENT", true,
+        handler: true, data: resultArguments.toJson());
+    return Result.fromJson(res, Payment.fromJson);
+  }
+
+  Future<Payment> bankAccountCheck(Payment data) async {
+    var res = await post('/bank_account/check', "PAYMENT", true,
+        handler: true, data: data.toJson());
+    return Payment.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Payment> addBankAccount(Payment data) async {
+    var res = await post('/bank_account', "PAYMENT", true,
+        handler: true, data: data.toJson());
+    return Payment.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Payment> bankAccountGet(String id) async {
+    var res = await get('/bank_account/$id', "PAYMENT", true, handler: true);
+    return Payment.fromJson(res as Map<String, dynamic>);
   }
 }

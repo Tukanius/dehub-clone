@@ -500,8 +500,10 @@ class _IncomeGuaranteeState extends State<IncomeGuarantee> {
                     child: CustomButton(
                       isGradient: true,
                       onClick: () {
-                        Navigator.of(context)
-                            .pushNamed(EnterPhonePage.routeName);
+                        Navigator.of(context).pushNamed(
+                          EnterPhonePage.routeName,
+                          arguments: EnterPhonePageArguments(data: Order()),
+                        );
                       },
                       gradient: LinearGradient(
                         colors: [white, white],

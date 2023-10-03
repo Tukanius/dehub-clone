@@ -21,9 +21,7 @@ class ReferenceInformationCard extends StatefulWidget {
 class _ReferenceInformationCardState extends State<ReferenceInformationCard>
     with AfterLayoutMixin {
   @override
-  afterFirstLayout(BuildContext context) {
-    print(widget.data!.listType);
-  }
+  afterFirstLayout(BuildContext context) {}
 
   @override
   Widget build(BuildContext context) {

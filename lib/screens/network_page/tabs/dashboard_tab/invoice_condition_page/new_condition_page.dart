@@ -51,7 +51,6 @@ class _NewConditionPageState extends State<NewConditionPage> {
     business.expireDayCount = 10;
     business.month = 2;
     business.paymentDay = (index! + 1);
-    print(index);
     await BusinessApi().createPaymentTerm(business);
     widget.listenController.changeVariable('invoiceConditionCreate');
     Navigator.of(context).pop();
@@ -118,7 +117,6 @@ class _NewConditionPageState extends State<NewConditionPage> {
                         onChanged: (value) {
                           setSelectedRadioValue(value!);
                           currentOption = e.code.toString();
-                          print(currentOption);
                         },
                       ),
                     ),
@@ -264,7 +262,6 @@ class _NewConditionPageState extends State<NewConditionPage> {
                                             onSelectedItemChanged: (index) {
                                               setState(() {
                                                 this.indexMonth = index;
-                                                print(indexMonth);
                                               });
                                             },
                                             children: [
@@ -348,7 +345,6 @@ class _NewConditionPageState extends State<NewConditionPage> {
                                             onSelectedItemChanged: (index) {
                                               setState(() {
                                                 this.indexDay = index;
-                                                print(indexDay);
                                               });
                                             },
                                             children: [

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
@@ -19,13 +21,15 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
   int limit = 10;
   bool isLoading = true;
   Result pullSheet = Result(count: 0, rows: []);
+  Timer? timer;
+  bool isSubmit = false;
 
   @override
   afterFirstLayout(BuildContext context) async {
-    list(page, limit);
+    list(page, limit, '');
   }
 
-  list(page, limit) async {
+  list(page, limit, query) async {
     Offset offset = Offset(page: page, limit: limit);
     Filter filter = Filter(pullSheetStatus: "CONFIRMED");
     var res = await OrderApi()
@@ -33,6 +37,19 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
     setState(() {
       pullSheet = res;
       isLoading = false;
+    });
+  }
+
+  onChange(String query) async {
+    if (timer != null) timer?.cancel();
+    Timer(Duration(milliseconds: 300), () {
+      setState(() {
+        isSubmit = true;
+      });
+      list(page, limit, query);
+      setState(() {
+        isSubmit = false;
+      });
     });
   }
 
@@ -49,27 +66,34 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
                   height: 5,
                 ),
                 SearchButton(
+                  onChange: (query) {
+                    onChange(query);
+                  },
                   color: orderColor,
                   textColor: orderColor,
                 ),
                 SizedBox(
                   height: 5,
                 ),
-                pullSheet.rows?.length != 0
-                    ? Column(
-                        children: pullSheet.rows!
-                            .map(
-                              (data) => ShippingCard(
-                                onClick: () {},
-                                data: data,
-                              ),
-                            )
-                            .toList(),
+                isSubmit == true
+                    ? Center(
+                        child: CircularProgressIndicator(color: orderColor),
                       )
-                    : NotFound(
-                        module: "ORDER",
-                        labelText: "Хоосон байна",
-                      ),
+                    : pullSheet.rows?.length != 0
+                        ? Column(
+                            children: pullSheet.rows!
+                                .map(
+                                  (data) => ShippingCard(
+                                    onClick: () {},
+                                    data: data,
+                                  ),
+                                )
+                                .toList(),
+                          )
+                        : NotFound(
+                            module: "ORDER",
+                            labelText: "Хоосон байна",
+                          ),
               ],
             ),
           );

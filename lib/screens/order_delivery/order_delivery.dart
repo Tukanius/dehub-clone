@@ -1,7 +1,10 @@
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/order_delivery/tabs/delivery.dart';
 import 'package:dehub/screens/order_delivery/tabs/delivery_made.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class OrderDelivery extends StatefulWidget {
   static const routeName = '/OrderDelivery';
@@ -12,8 +15,12 @@ class OrderDelivery extends StatefulWidget {
 }
 
 class _OrderDeliveryState extends State<OrderDelivery> {
+  User user = User();
+
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: false).orderMe;
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -67,10 +74,14 @@ class _OrderDeliveryState extends State<OrderDelivery> {
                     tabs: [
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: Text('Хүргэлт хийх'),
+                        child: user.currentBusiness?.type == "SUPPLIER"
+                            ? Text('Хүргэлт хийх')
+                            : Text('Хүлээн авах'),
                       ),
                       Container(
-                        child: Text('Хүргэлт хийсэн'),
+                        child: user.currentBusiness?.type == "SUPPLIER"
+                            ? Text('Хүргэлт хийсэн')
+                            : Text('Хүлээн авсан'),
                       ),
                     ],
                   ),

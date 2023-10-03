@@ -29,6 +29,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
     with AfterLayoutMixin {
   int count = 0;
   String quantity = '0';
+  bool isLoading = false;
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   TextEditingController quantityController = TextEditingController();
 
@@ -58,6 +59,8 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
       quantityController.text = newValue.toString();
     });
   }
+
+  bool isSubmit = false;
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +114,8 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                       ),
                       RichText(
                         text: TextSpan(
-                          style: TextStyle(color: dark),
+                          style:
+                              TextStyle(color: dark, fontFamily: "Montserrat"),
                           children: [
                             widget.data?.skuCode != null
                                 ? TextSpan(text: "${widget.data?.skuCode}, ")
@@ -257,23 +261,6 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // widget.data?.quantity == null
-                //     ? Text(
-                //         '... ширхэг',
-                //         style: TextStyle(
-                //           color: grey2,
-                //           fontWeight: FontWeight.w600,
-                //           fontSize: 16,
-                //         ),
-                //       )
-                //     : Text(
-                //         '${fbKey.currentState?.fields['quantity']?.value} ширхэг',
-                //         style: TextStyle(
-                //           color: grey2,
-                //           fontWeight: FontWeight.w600,
-                //           fontSize: 16,
-                //         ),
-                //       ),
                 Text(
                   'Нийт дүн',
                   style: TextStyle(
@@ -379,7 +366,9 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                   ],
                 ),
                 GestureDetector(
-                  onTap: widget.approveButtonClick,
+                  onTap: widget.data?.isConfirmed == true
+                      ? () {}
+                      : widget.approveButtonClick,
                   child: Container(
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
@@ -402,25 +391,40 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                         SizedBox(
                           width: 5,
                         ),
-                        widget.lineConfirmText == null
-                            ? Text(
-                                'Зөв байна',
-                                style: TextStyle(
-                                  color: widget.data?.isConfirmed == true
-                                      ? orderColor.withOpacity(0.3)
-                                      : orderColor,
-                                  fontSize: 18,
+                        isLoading == true
+                            ? Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 30),
+                                child: Center(
+                                  child: SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 1,
+                                      color: orderColor,
+                                    ),
+                                  ),
                                 ),
                               )
-                            : Text(
-                                '${widget.lineConfirmText}',
-                                style: TextStyle(
-                                  color: widget.data?.isConfirmed == true
-                                      ? orderColor.withOpacity(0.3)
-                                      : orderColor,
-                                  fontSize: 18,
-                                ),
-                              ),
+                            : widget.lineConfirmText == null
+                                ? Text(
+                                    'Зөв байна',
+                                    style: TextStyle(
+                                      color: widget.data?.isConfirmed == true
+                                          ? orderColor.withOpacity(0.3)
+                                          : orderColor,
+                                      fontSize: 18,
+                                    ),
+                                  )
+                                : Text(
+                                    '${widget.lineConfirmText}',
+                                    style: TextStyle(
+                                      color: widget.data?.isConfirmed == true
+                                          ? orderColor.withOpacity(0.3)
+                                          : orderColor,
+                                      fontSize: 18,
+                                    ),
+                                  ),
                       ],
                     ),
                   ),

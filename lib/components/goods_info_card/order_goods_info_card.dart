@@ -75,8 +75,7 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                         margin: EdgeInsets.symmetric(horizontal: 20),
                         child: widget.data?.quantity == null
                             ? Text('0')
-                            : widget.isConfirmed == true ||
-                                    widget.isConfirmed == null
+                            : widget.data?.isConfirmed == true
                                 ? Text(
                                     '${widget.data?.confirmedQuantity?.toInt()}',
                                     style: TextStyle(

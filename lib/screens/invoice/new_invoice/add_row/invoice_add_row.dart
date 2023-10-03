@@ -1,5 +1,5 @@
 import 'package:dehub/components/controller/listen.dart';
-import 'package:dehub/models/order.dart';
+import 'package:dehub/models/invoice.dart';
 import 'package:dehub/utils/currency_formatter.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -9,30 +9,30 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-class AddRowArguments {
+class InvoiceAddRowArguments {
   ListenController additionalRowsListenController;
-  AddRowArguments({
+  InvoiceAddRowArguments({
     required this.additionalRowsListenController,
   });
 }
 
-class AddRow extends StatefulWidget {
+class InvoiceAddRow extends StatefulWidget {
   final ListenController additionalRowsListenController;
 
-  static const routeName = '/AddRow';
-  const AddRow({
+  static const routeName = '/InvoiceAddRow';
+  const InvoiceAddRow({
     Key? key,
     required this.additionalRowsListenController,
   }) : super(key: key);
 
   @override
-  State<AddRow> createState() => _AddRowState();
+  State<InvoiceAddRow> createState() => _AddRowState();
 }
 
-class _AddRowState extends State<AddRow> {
+class _AddRowState extends State<InvoiceAddRow> {
   String dropdownValue = "Сонгох";
   String dropdownValue1 = "Сонгох";
-  Order row = Order();
+  Invoice row = Invoice();
   TextEditingController quantityController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
@@ -60,14 +60,20 @@ class _AddRowState extends State<AddRow> {
 
   onSubmit() async {
     if (fbKey.currentState!.saveAndValidate()) {
-      row = Order.fromJson(fbKey.currentState!.value);
-      row.discountType = dropdownValue == "Хувиар"
-          ? "PERCENT"
-          : dropdownValue == "Дүнгээр"
-              ? "AMOUNT"
-              : null;
-      widget.additionalRowsListenController.additionalRowsChange(row);
-      Navigator.of(context).pop();
+      try {
+        row = Invoice.fromJson(fbKey.currentState!.value);
+        row.discountType = dropdownValue == "Хувиар"
+            ? "PERCENT"
+            : dropdownValue == "Дүнгээр"
+                ? "AMOUNT"
+                : null;
+        row.unit = dropdownValue1;
+        row.totalAmount = totalAmount;
+        widget.additionalRowsListenController.invoiceAddRow(row);
+        Navigator.of(context).pop();
+      } catch (e) {
+        print(e.toString());
+      }
     }
   }
 
@@ -104,7 +110,7 @@ class _AddRowState extends State<AddRow> {
           },
           child: Icon(
             Icons.arrow_back_ios_new,
-            color: orderColor,
+            color: invoiceColor,
           ),
         ),
         title: Text(
@@ -134,7 +140,7 @@ class _AddRowState extends State<AddRow> {
                   filled: true,
                   hintText: 'Энд оруулна уу',
                   hintStyle: TextStyle(
-                    color: orderColor,
+                    color: invoiceColor,
                   ),
                   prefixIcon: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -170,6 +176,7 @@ class _AddRowState extends State<AddRow> {
                   name: 'description',
                   maxLines: 5,
                   decoration: InputDecoration(
+                    hintText: "Энд тайлбар оруулна уу",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.zero,
                       borderSide: BorderSide(color: grey, width: 0.5),
@@ -177,7 +184,7 @@ class _AddRowState extends State<AddRow> {
                     fillColor: white,
                     filled: true,
                     hintStyle: TextStyle(
-                      color: orderColor,
+                      color: Color(0xff657786),
                     ),
                   ),
                 ),
@@ -218,7 +225,7 @@ class _AddRowState extends State<AddRow> {
                         icon: Icon(
                           Icons.arrow_forward_ios,
                           size: 12,
-                          color: orderColor,
+                          color: invoiceColor,
                         ),
                         decoration: InputDecoration(
                           contentPadding:
@@ -266,7 +273,7 @@ class _AddRowState extends State<AddRow> {
               FormTextField(
                 onChanged: (_) => getTotalAmount(),
                 controller: priceController,
-                textColor: orderColor,
+                textColor: invoiceColor,
                 inputFormatters: [
                   // CurrencyInputFormatter(),
                 ],
@@ -279,7 +286,7 @@ class _AddRowState extends State<AddRow> {
                   filled: true,
                   hintText: 'Энд оруулна уу',
                   hintStyle: TextStyle(
-                    color: orderColor,
+                    color: invoiceColor,
                   ),
                   prefixIcon: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -309,7 +316,7 @@ class _AddRowState extends State<AddRow> {
               ),
               FormTextField(
                 onChanged: (_) => getTotalAmount(),
-                textColor: orderColor,
+                textColor: invoiceColor,
                 controller: quantityController,
                 textAlign: TextAlign.end,
                 inputType: TextInputType.numberWithOptions(),
@@ -320,7 +327,7 @@ class _AddRowState extends State<AddRow> {
                   filled: true,
                   hintText: 'Энд оруулна уу',
                   hintStyle: TextStyle(
-                    color: orderColor,
+                    color: invoiceColor,
                   ),
                   prefixIcon: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -381,7 +388,7 @@ class _AddRowState extends State<AddRow> {
                         icon: Icon(
                           Icons.arrow_forward_ios,
                           size: 12,
-                          color: orderColor,
+                          color: invoiceColor,
                         ),
                         decoration: InputDecoration(
                           contentPadding:
@@ -436,7 +443,7 @@ class _AddRowState extends State<AddRow> {
                         ? 1
                         : null,
                 showCounter: false,
-                textColor: orderColor,
+                textColor: invoiceColor,
                 textAlign: TextAlign.end,
                 name: 'discountValue',
                 inputType: TextInputType.number,
@@ -503,11 +510,11 @@ class _AddRowState extends State<AddRow> {
                     totalAmount == null
                         ? Text(
                             'Үнийн дүн',
-                            style: TextStyle(color: orderColor),
+                            style: TextStyle(color: invoiceColor),
                           )
                         : Text(
                             '${Utils().formatCurrency(totalAmount.toString())}₮',
-                            style: TextStyle(color: orderColor),
+                            style: TextStyle(color: invoiceColor),
                           )
                   ],
                 ),
@@ -527,7 +534,7 @@ class _AddRowState extends State<AddRow> {
                     Text(
                       '... ширхэг',
                       style: TextStyle(
-                        color: orderColor,
+                        color: invoiceColor,
                       ),
                     ),
                   ],
@@ -539,7 +546,7 @@ class _AddRowState extends State<AddRow> {
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 15),
                 child: CustomButton(
-                  isGradient: true,
+                  labelColor: invoiceColor,
                   onClick: () {
                     onSubmit();
                   },

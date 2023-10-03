@@ -34,7 +34,6 @@ class InvoiceApi extends HttpRequest {
         "INVOICE",
         true,
         handler: true);
-    print(res);
     return Invoice.fromJson(res as Map<String, dynamic>);
   }
 

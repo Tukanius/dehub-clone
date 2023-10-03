@@ -238,12 +238,16 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => PullSheetStatus.fromJson(e))
             .toList()
         : null,
+    bankNames: json['bankNames'] != null
+        ? (json['bankNames'] as List).map((e) => BankNames.fromJson(e)).toList()
+        : null,
   );
 }
 
 Map<String, dynamic> _$GeneralToJson(General instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.bankNames != null) json['bankNames'] = instance.bankNames;
   if (instance.pullSheetStatus != null)
     json['pullSheetStatus'] = instance.pullSheetStatus;
   if (instance.deliveryNoteStatus != null)

@@ -2,7 +2,8 @@ import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/account_info_page/account_info_page.dart';
 import 'package:dehub/screens/account_info_page/tabs/tabs/transaction_detail_page.dart';
-import 'package:dehub/screens/add_bank_account_page/add_bank_account_page.dart';
+import 'package:dehub/screens/order_payment_page/cash_on_delivery.dart';
+import 'package:dehub/screens/payment_page/tabs/add_bank_account_page/add_bank_account_page.dart';
 import 'package:dehub/screens/auth/check-biometric.dart';
 import 'package:dehub/screens/auth/financing_login.dart';
 import 'package:dehub/screens/auth/login_page.dart';
@@ -19,6 +20,7 @@ import 'package:dehub/screens/home_page/home_page.dart';
 import 'package:dehub/screens/income_guarantee/income_Guarantee.dart';
 import 'package:dehub/screens/invoice/closed_invoice_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product.dart';
+import 'package:dehub/screens/invoice/new_invoice/add_row/invoice_add_row.dart';
 import 'package:dehub/screens/invoice/new_invoice/sector-choose/sector-choose.dart';
 import 'package:dehub/screens/invoice/payment_page/payment_page.dart';
 import 'package:dehub/screens/invoice/payment_page/qpay_page.dart';
@@ -54,7 +56,6 @@ import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choos
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet_bish.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/salbar_songoh.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/harah.dart';
-import 'package:dehub/screens/invoice/new_invoice/harah/index1.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/pdf_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/send_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
@@ -66,7 +67,7 @@ import 'package:dehub/screens/menu/menu_page.dart';
 import 'package:dehub/screens/network_page/network_page.dart';
 import 'package:dehub/screens/network_page/tabs/sent_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
 import 'package:dehub/screens/new_order/add_attachment.dart';
-import 'package:dehub/screens/new_order/add_row.dart';
+import 'package:dehub/screens/new_order/order_add_row.dart';
 import 'package:dehub/screens/new_order/change_branch_name.dart';
 import 'package:dehub/screens/new_order/new_order.dart';
 import 'package:dehub/screens/new_order/order_payment.dart';
@@ -214,8 +215,12 @@ class MyApp extends StatelessWidget {
                       return NewInvoice();
                     });
                   case AccountInfoPage.routeName:
+                    AccountInfoPageArguments arguments =
+                        settings.arguments as AccountInfoPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return AccountInfoPage();
+                      return AccountInfoPage(
+                        id: arguments.id,
+                      );
                     });
                   case InvoicePage.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -370,6 +375,7 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return Harah(
                         invoice: arguments.invoice,
+                        totalAmount: arguments.totalAmount,
                         data: arguments.data,
                       );
                     });
@@ -414,10 +420,6 @@ class MyApp extends StatelessWidget {
                   case PdfPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return PdfPage();
-                    });
-                  case Index1.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return Index1();
                     });
                   case SendPage.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -703,6 +705,7 @@ class MyApp extends StatelessWidget {
                         settings.arguments as QpayPageArguments;
                     return MaterialPageRoute(builder: (context) {
                       return QpayPage(
+                        color: arguments.color,
                         data: arguments.data,
                       );
                     });
@@ -749,11 +752,20 @@ class MyApp extends StatelessWidget {
                         pickedFile: arguments.pickedFile,
                       );
                     });
-                  case AddRow.routeName:
-                    AddRowArguments arguments =
-                        settings.arguments as AddRowArguments;
+                  case OrderAddRow.routeName:
+                    OrderAddRowArguments arguments =
+                        settings.arguments as OrderAddRowArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return AddRow(
+                      return OrderAddRow(
+                        additionalRowsListenController:
+                            arguments.additionalRowsListenController,
+                      );
+                    });
+                  case InvoiceAddRow.routeName:
+                    InvoiceAddRowArguments arguments =
+                        settings.arguments as InvoiceAddRowArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return InvoiceAddRow(
                         additionalRowsListenController:
                             arguments.additionalRowsListenController,
                       );
@@ -767,22 +779,20 @@ class MyApp extends StatelessWidget {
                       );
                     });
                   case ReceiverOtpVerify.routeName:
-                    // ReceiverOtpVerifyArguments arguments =
-                    // settings.arguments as ReceiverOtpVerifyArguments;
+                    ReceiverOtpVerifyArguments arguments =
+                        settings.arguments as ReceiverOtpVerifyArguments;
                     return MaterialPageRoute(builder: (context) {
                       return ReceiverOtpVerify(
-                          // additionalRowsListenController:
-                          // arguments.additionalRowsListenController,
-                          );
+                        data: arguments.data,
+                      );
                     });
                   case EnterPhonePage.routeName:
-                    // EnterPhonePageArguments arguments =
-                    // settings.arguments as EnterPhonePageArguments;
+                    EnterPhonePageArguments arguments =
+                        settings.arguments as EnterPhonePageArguments;
                     return MaterialPageRoute(builder: (context) {
                       return EnterPhonePage(
-                          // additionalRowsListenController:
-                          // arguments.additionalRowsListenController,
-                          );
+                        data: arguments.data,
+                      );
                     });
                   case ExpensesPage.routeName:
                     ExpensesPageArguments arguments =
@@ -791,6 +801,14 @@ class MyApp extends StatelessWidget {
                       return ExpensesPage(
                         data: arguments.data,
                       );
+                    });
+                  case CashOnDelivery.routeName:
+                    // CashOnDeliveryArguments arguments =
+                    // settings.arguments as CashOnDeliveryArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return CashOnDelivery(
+                          // data: arguments.data,
+                          );
                     });
                   case DeliveryPage.routeName:
                     DeliveryPageArguments arguments =

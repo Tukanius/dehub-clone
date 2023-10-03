@@ -11,13 +11,11 @@ class GeneralProvider extends ChangeNotifier {
 
   init(bool handler) async {
     general = await GeneralApi().init(handler);
-    print(general.toJson());
     notifyListeners();
   }
 
   businessInit(bool handler) async {
     businessGeneral = await GeneralApi().businessInit(handler);
-    print(businessGeneral.toJson());
     notifyListeners();
   }
 

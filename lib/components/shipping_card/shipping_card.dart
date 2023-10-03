@@ -46,7 +46,6 @@ class _DeliveryCardState extends State<ShippingCard> {
   @override
   Widget build(BuildContext context) {
     general = Provider.of<GeneralProvider>(context, listen: false).orderGeneral;
-
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
@@ -110,8 +109,7 @@ class _DeliveryCardState extends State<ShippingCard> {
                       ),
                     ),
                     Text(
-                      // ' ${Moment.parse(widget.data!.loadingDate.toString()).format("YYYY-MM-DD")}',
-                      "",
+                      '${Moment.parse(widget.data!.loadingDate.toString()).format("YYYY-MM-DD")}',
                       style: TextStyle(
                         color: buttonColor,
                         fontSize: 12,

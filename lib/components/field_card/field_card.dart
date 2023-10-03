@@ -51,36 +51,45 @@ class _FieldCardState extends State<FieldCard> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              '${widget.labelText}',
-              style: TextStyle(
-                color: widget.labelTextColor,
+            Expanded(
+              child: Text(
+                '${widget.labelText}',
+                style: TextStyle(
+                  color: widget.labelTextColor,
+                  fontSize: widget.fontSize,
+                  fontWeight: widget.fontWeight,
+                ),
               ),
             ),
-            Row(
-              children: [
-                Text(
-                  '${widget.secondText}',
-                  style: TextStyle(
-                    color: widget.secondTextColor,
-                    fontSize: widget.fontSize ?? widget.fontSize,
-                    fontWeight: widget.fontWeight ?? widget.fontWeight,
+            Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      '${widget.secondText}',
+                      style: TextStyle(
+                        color: widget.secondTextColor,
+                        fontSize: widget.fontSize ?? widget.fontSize,
+                        fontWeight: widget.fontWeight ?? widget.fontWeight,
+                      ),
+                      textAlign: TextAlign.end,
+                    ),
                   ),
-                ),
-                widget.hasThirdText == true
-                    ? Text(
-                        '${widget.thirdText}',
-                        style: TextStyle(color: widget.thirdTextColor),
-                      )
-                    : SizedBox(),
-                widget.onClick != null
-                    ? Icon(
-                        Icons.arrow_forward_ios,
-                        color: widget.arrowColor,
-                        size: 14,
-                      )
-                    : SizedBox(),
-              ],
+                  widget.hasThirdText == true
+                      ? Text(
+                          '${widget.thirdText}',
+                          style: TextStyle(color: widget.thirdTextColor),
+                        )
+                      : SizedBox(),
+                  widget.onClick != null
+                      ? Icon(
+                          Icons.arrow_forward_ios,
+                          color: widget.arrowColor,
+                          size: 14,
+                        )
+                      : SizedBox(),
+                ],
+              ),
             ),
           ],
         ),

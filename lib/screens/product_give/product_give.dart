@@ -42,12 +42,11 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
   Timer? timer;
   bool isCountDown = true;
   bool startShipment = false;
+  bool isSubmit = false;
   Order endResponse = Order();
   Duration resume = Duration();
   Duration difference = Duration();
-  List<Order> removedList = [];
-  List<Order> addedList = [];
-  Set<Order> seenObject = {};
+  Duration difference1 = Duration();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -56,25 +55,17 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
       difference = DateTime.now()
           .difference(DateTime.parse(shipment.dispatchedDate.toString()));
       int pausedDurationInSeconds = (shipment.pausedDuration!).round();
-      resume = difference - Duration(seconds: pausedDurationInSeconds);
-    }
-    for (Order obj in shipment.lines!) {
-      if (seenObject.contains(obj)) {
-        final existingObject = seenObject.firstWhere(
-          (element) => element == obj,
-        );
-        if (existingObject != {} &&
-            existingObject != obj.quantity &&
-            existingObject.confirmedQuantity != obj.confirmedQuantity) {
-          if (obj.quantity! - obj.confirmedQuantity! > 0) {
-            removedList.add(obj);
-          } else {
-            addedList.add(obj);
-          }
-        } else {
-          seenObject.add(obj);
-        }
+      if (shipment.isPaused == true) {
+        difference1 = DateTime.now()
+            .difference(DateTime.parse(shipment.pausedDate.toString()));
       }
+      resume =
+          difference - Duration(seconds: pausedDurationInSeconds) - difference1;
+    }
+    if (shipment.dispatchedDate != null &&
+        shipment.isPaused == false &&
+        shipment.endedDate == null) {
+      startTimer(false);
     }
     setState(() {
       isLoading = false;
@@ -91,7 +82,6 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
       });
     } else {
       final addSeconds = 1;
-
       setState(() {
         final seconds = resume.inSeconds + addSeconds;
         resume = Duration(seconds: seconds);
@@ -107,33 +97,43 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
     }
   }
 
-  void startTimer() async {
+  void startTimer(bool isProceed) async {
     if (shipment.dispatchedDate == null) {
       try {
-        await OrderApi().deliveryNoteProceed(widget.data.id!);
+        setState(() {
+          startShipment = true;
+        });
+        await OrderApi().deliveryNoteStart(widget.data.id!);
         timer = Timer.periodic(Duration(seconds: 1), (timer) => addTimer());
         shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
         setState(() {
           isStart = true;
         });
       } catch (e) {
+        setState(() {
+          startShipment = false;
+        });
         print('================start================');
         print(e);
       }
     } else {
       try {
-        await OrderApi().deliveryNoteProceed(widget.data.id!);
+        if (isProceed == true) {
+          await OrderApi().deliveryNoteProceed(widget.data.id!);
+        }
         timer = Timer.periodic(Duration(seconds: 1), (timer) => addTimer());
         shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
         setState(() {
           isStart = true;
         });
       } catch (e) {
+        setState(() {
+          startShipment = false;
+        });
         print('================proceed================');
         print(e);
       }
     }
-    shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
   }
 
   Widget buildTime() {
@@ -188,6 +188,30 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
     }
   }
 
+  lineConfirm(Order item) async {
+    try {
+      setState(() {
+        isSubmit = true;
+      });
+      await OrderApi().deliveryNoteLineConfirm(
+        Order(
+          lineId: item.id,
+          confirmedQuantity: item.quantity,
+        ),
+        '${shipment.id}',
+      );
+      shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
+      setState(() {
+        isSubmit = false;
+      });
+    } catch (e) {
+      setState(() {
+        isSubmit = false;
+      });
+      debugPrint(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
@@ -199,7 +223,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
         leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
-            if (shipment.isPaused == false) {
+            if (shipment.isPaused == false && shipment.isConfirmed == false) {
               stopTimer();
             }
           },
@@ -241,12 +265,12 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                 onTap: () {
                                   if (startShipment == false &&
                                       widget.data.endedDate == null) {
-                                    startTimer();
+                                    startTimer(true);
                                   }
                                 },
                                 child: Container(
                                   height: 60,
-                                  width: 70,
+                                  width: 75,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: isStart == true
@@ -286,7 +310,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                               ),
                               Container(
                                 height: 60,
-                                width: 70,
+                                width: 75,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: lightGrey,
@@ -311,7 +335,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                 },
                                 child: Container(
                                   height: 60,
-                                  width: 70,
+                                  width: 75,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: shipment.isPaused == true
@@ -346,7 +370,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                 },
                                 child: Container(
                                   height: 60,
-                                  width: 70,
+                                  width: 75,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: widget.data.endedDate == null
@@ -394,13 +418,9 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                   children: [
                                     ShipmentProductCard(
                                       approveButtonClick: () async {
-                                        await OrderApi()
-                                            .deliveryNoteLineConfirm(
-                                          Order(
-                                            lineId: item.id,
-                                            confirmedQuantity: item.quantity,
-                                          ),
-                                        );
+                                        if (isSubmit == false) {
+                                          lineConfirm(item);
+                                        }
                                       },
                                       lineConfirmText:
                                           user.currentBusiness?.type ==
@@ -514,8 +534,22 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                     e.confirmedQuantity != null
                                         ? e.quantity! - e.confirmedQuantity! > 0
                                             ? Container(
-                                                child: Text('${e.quantity}'),
-                                              )
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                padding:
+                                                    const EdgeInsets.all(15),
+                                                color: white,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text('${e.name}'),
+                                                    Text(
+                                                        '${e.quantity! - e.confirmedQuantity!}'),
+                                                  ],
+                                                ))
                                             : SizedBox()
                                         : SizedBox(),
                                   ],

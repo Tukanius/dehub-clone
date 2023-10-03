@@ -1,4 +1,6 @@
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -23,7 +25,7 @@ class InvoiceCard extends StatefulWidget {
 
 class _InvoiceCardState extends State<InvoiceCard> {
   invoiceStatus() {
-    switch (widget.data!.invoiceStatus) {
+    switch (widget.data?.invoiceStatus) {
       case "CONFIRMED":
         return "Баталсан";
       case "DRAFT":
@@ -40,8 +42,28 @@ class _InvoiceCardState extends State<InvoiceCard> {
     }
   }
 
+  invoiceStatusColor() {
+    switch (widget.data?.invoiceStatus) {
+      case "CONFIRMED":
+        return Color(0xff4098F7);
+      case "DRAFT":
+        return Color(0xff727576);
+      case "SENT":
+        return Color(0xff1642F4);
+      case "REJECTED":
+        return Color(0xffFF1919);
+      case "RETURNED":
+        return Color(0xffFF19A1);
+      case "CLOSED":
+        return Color(0xff01C129);
+      case "CANCELED":
+        return Color(0xffFF19A1);
+      default:
+    }
+  }
+
   paymentStatus() {
-    switch (widget.data!.paymentStatus) {
+    switch (widget.data?.paymentStatus) {
       case "PENDING":
         return "Хүлээгдэж буй";
       case "DIVIDED":
@@ -57,7 +79,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
   }
 
   fillColor() {
-    switch (widget.data!.paymentStatus) {
+    switch (widget.data?.paymentStatus) {
       case "PENDING":
         return invoiceColor.withOpacity(0.3);
       case "DIVIDED":
@@ -73,7 +95,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
   }
 
   borderColor() {
-    switch (widget.data!.paymentStatus) {
+    switch (widget.data?.paymentStatus) {
       case "PENDING":
         return grey3.withOpacity(0.4);
       case "DIVIDED":
@@ -89,7 +111,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
   }
 
   textColor() {
-    switch (widget.data!.paymentStatus) {
+    switch (widget.data?.paymentStatus) {
       case "PENDING":
         return invoiceColor;
       case "DIVIDED":
@@ -105,11 +127,13 @@ class _InvoiceCardState extends State<InvoiceCard> {
   }
 
   User user = User();
+  General general = General();
   bool value = false;
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).invoiceMe;
-
+    general =
+        Provider.of<GeneralProvider>(context, listen: false).inventoryGeneral;
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,17 +211,27 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                   '${widget.data!.getsentDate()}',
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: Color(0xff555555),
+                                    color: grey2,
                                   ),
                                 ),
                                 SizedBox(
                                   height: 7,
                                 ),
-                                Text(
-                                  invoiceStatus(),
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: invoiceColor,
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 2, horizontal: 5),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    border:
+                                        Border.all(color: invoiceStatusColor()),
+                                  ),
+                                  child: Text(
+                                    invoiceStatus(),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                      color: invoiceStatusColor(),
+                                    ),
                                   ),
                                 ),
                                 SizedBox(

@@ -92,7 +92,6 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
-    print(get.lines?.first.toJson());
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -127,9 +126,8 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
               children: [
                 Expanded(
                   child: SingleChildScrollView(
-                    reverse: true,
+                    reverse: false,
                     controller: scrollController,
-                    physics: ScrollPhysics(),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

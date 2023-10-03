@@ -2,24 +2,29 @@ import 'package:dehub/models/invoice.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/index1.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/pdf_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/harah/send_page.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 
 class HarahArguments {
+  double totalAmount;
   Invoice invoice;
   List<Invoice> data;
   HarahArguments({
+    required this.totalAmount,
     required this.invoice,
     required this.data,
   });
 }
 
 class Harah extends StatefulWidget {
+  final double totalAmount;
   final Invoice invoice;
   final List<Invoice> data;
   static const routeName = '/harah';
   const Harah({
+    required this.totalAmount,
     required this.invoice,
     required this.data,
     Key? key,
@@ -37,10 +42,7 @@ class _HarahState extends State<Harah>
   bool isTap = false;
 
   @override
-  afterFirstLayout(BuildContext context) {
-    print(widget.data.first.toJson());
-    print('=====data=====');
-  }
+  afterFirstLayout(BuildContext context) {}
 
   @override
   void initState() {
@@ -93,7 +95,7 @@ class _HarahState extends State<Harah>
               height: 30,
             ),
             Text(
-              '417,450 ₮',
+              '${Utils().formatCurrency(widget.totalAmount.toString())} ₮',
               style: TextStyle(
                 color: invoiceColor,
                 fontWeight: FontWeight.bold,
@@ -101,7 +103,7 @@ class _HarahState extends State<Harah>
               ),
             ),
             Text(
-              'Bolor Retail Store',
+              '${widget.invoice.partner?.businessName}',
               style: TextStyle(
                 fontSize: 16,
                 color: grey3,
@@ -232,6 +234,7 @@ class _HarahState extends State<Harah>
             ),
             currentIndex == 1
                 ? Index1(
+                    totalAmount: widget.totalAmount,
                     invoice: widget.invoice,
                     data: widget.data,
                   )

@@ -55,7 +55,6 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
       case "CLIENT_CLASSIFICATION":
         return clientClassificationList(page, limit);
     }
-    print(widget.data.listType.toString());
   }
 
   @override

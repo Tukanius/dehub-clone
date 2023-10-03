@@ -114,6 +114,8 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
                                           onClick: () {
                                             if (data.quantity != null &&
                                                 data.quantity > 0) {
+                                              data.totalAmount =
+                                                  data.quantity * data.price;
                                               widget.goodsListenController
                                                   .goodsInvoiceChange(data);
                                               Navigator.of(context).pop();
