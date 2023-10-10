@@ -11,9 +11,11 @@ class OrderProductCard extends StatefulWidget {
   final Function()? onCloseClick;
   final Order? data;
   final bool? readOnly;
+  final bool? isTap;
   const OrderProductCard({
     this.onCloseClick,
     this.readOnly,
+    this.isTap,
     Key? key,
     this.data,
     this.onClick,
@@ -68,12 +70,17 @@ class _OrderProductCardState extends State<OrderProductCard>
 
   @override
   Widget build(BuildContext context) {
-    print(widget.data?.toJson());
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
         padding: const EdgeInsets.all(15),
-        color: white,
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 2,
+            color: widget.isTap == true ? orderColor : transparent,
+          ),
+          color: white,
+        ),
         child: Column(
           children: [
             Row(
@@ -106,14 +113,23 @@ class _OrderProductCardState extends State<OrderProductCard>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '${widget.data?.nameMon}',
-                        style: TextStyle(
-                          color: dark,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
+                      widget.data?.nameMon != null
+                          ? Text(
+                              '${widget.data?.nameMon}',
+                              style: TextStyle(
+                                color: dark,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            )
+                          : Text(
+                              '${widget.data?.name}',
+                              style: TextStyle(
+                                color: dark,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
                       SizedBox(
                         height: 5,
                       ),
@@ -149,7 +165,7 @@ class _OrderProductCardState extends State<OrderProductCard>
                 GestureDetector(
                   onTap: widget.onCloseClick,
                   child: SvgPicture.asset(
-                    'images/close.svg',
+                    'assets/svg/close.svg',
                     color: grey3,
                     height: 16,
                     width: 16,
@@ -297,7 +313,7 @@ class _OrderProductCardState extends State<OrderProductCard>
                 //     Row(
                 //       children: [
                 //         SvgPicture.asset(
-                //           'images/zahialga.svg',
+                //           'assets/svg/zahialga.svg',
                 //           color: black,
                 //           height: 9,
                 //           width: 12,
@@ -317,7 +333,7 @@ class _OrderProductCardState extends State<OrderProductCard>
                 //     Row(
                 //       children: [
                 //         SvgPicture.asset(
-                //           'images/ware-house.svg',
+                //           'assets/svg/ware-house.svg',
                 //           color: black,
                 //           height: 9,
                 //           width: 12,
@@ -352,7 +368,7 @@ class _OrderProductCardState extends State<OrderProductCard>
                         color: whiteGrey,
                       ),
                       child: Center(
-                        child: SvgPicture.asset('images/add-comment.svg'),
+                        child: SvgPicture.asset('assets/svg/add-comment.svg'),
                       ),
                     ),
                     SizedBox(
@@ -366,7 +382,7 @@ class _OrderProductCardState extends State<OrderProductCard>
                         color: whiteGrey,
                       ),
                       child: Center(
-                        child: SvgPicture.asset('images/order-gift.svg'),
+                        child: SvgPicture.asset('assets/svg/order-gift.svg'),
                       ),
                     ),
                   ],
@@ -387,7 +403,7 @@ class _OrderProductCardState extends State<OrderProductCard>
                           border: Border.all(color: orderColor),
                           borderRadius: BorderRadius.circular(2),
                         ),
-                        child: SvgPicture.asset('images/minus.svg'),
+                        child: SvgPicture.asset('assets/svg/minus.svg'),
                       ),
                     ),
                     SizedBox(

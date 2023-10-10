@@ -49,8 +49,8 @@ class _RegisterPageState extends State<RegisterPage> {
               phone: user.phone!,
             ));
       } catch (e) {
-        print(e.toString());
-        print('======error======');
+        debugPrint(e.toString());
+        debugPrint('======error======');
       }
     }
   }

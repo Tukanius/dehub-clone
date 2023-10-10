@@ -70,9 +70,9 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
             isSubmit = false;
           });
         } catch (e) {
-          print('============err===========');
-          print(e.toString());
-          print('============err===========');
+          debugPrint('============err===========');
+          debugPrint(e.toString());
+          debugPrint('============err===========');
         }
       }
     });
@@ -185,7 +185,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                     ),
                                     child: Center(
                                       child: SvgPicture.asset(
-                                        'images/map.svg',
+                                        'assets/svg/map.svg',
                                         color: white,
                                       ),
                                     ),
@@ -202,7 +202,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                     ),
                                     child: Center(
                                       child: SvgPicture.asset(
-                                        'images/call.svg',
+                                        'assets/svg/call.svg',
                                         color: white,
                                       ),
                                     ),
@@ -263,7 +263,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                   Row(
                                     children: [
                                       SvgPicture.asset(
-                                        'images/inv.svg',
+                                        'assets/svg/inv.svg',
                                         color: darkGreen,
                                       ),
                                       SizedBox(
@@ -506,7 +506,8 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                 color: orderColor,
                               ),
                               child: Center(
-                                child: SvgPicture.asset('images/send_chat.svg'),
+                                child: SvgPicture.asset(
+                                    'assets/svg/send_chat.svg'),
                               ),
                             ),
                           ),
@@ -530,7 +531,8 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                 color: transparent,
                                 child: Column(
                                   children: [
-                                    SvgPicture.asset('images/list_detail.svg'),
+                                    SvgPicture.asset(
+                                        'assets/svg/list_detail.svg'),
                                     Text(
                                       'Дэлгэрэнгүй',
                                       style: TextStyle(

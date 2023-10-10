@@ -12,8 +12,12 @@ class SalesOrderCard extends StatefulWidget {
   final Function()? onClick;
   final bool isReceiver;
   final Order? data;
+  final int index;
+  final bool startAnimation;
   const SalesOrderCard({
     Key? key,
+    required this.startAnimation,
+    required this.index,
     required this.isReceiver,
     this.data,
     this.onClick,
@@ -74,7 +78,13 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
     return GestureDetector(
       onTap: widget.onClick,
-      child: Container(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 300 + (widget.index * 100)),
+        transform: Matrix4.translationValues(
+            widget.startAnimation ? 0 : MediaQuery.of(context).size.width,
+            0,
+            0),
+        curve: Curves.ease,
         margin: const EdgeInsets.only(bottom: 5),
         padding: const EdgeInsets.all(15),
         color: white,
@@ -85,14 +95,33 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
               children: [
                 Row(
                   children: [
-                    Container(
-                      height: 24,
-                      width: 24,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: grey,
-                      ),
-                    ),
+                    widget.data?.respondedUser?.avatar != null &&
+                            widget.data?.respondedUser?.avatar != ''
+                        ? Container(
+                            height: 24,
+                            width: 24,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: grey,
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  '${widget.data?.respondedUser?.avatar}',
+                                  scale: 1,
+                                ),
+                              ),
+                            ),
+                          )
+                        : Container(
+                            height: 24,
+                            width: 24,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: grey,
+                              image: DecorationImage(
+                                image: AssetImage('images/avatar.png'),
+                              ),
+                            ),
+                          ),
                     SizedBox(
                       width: 5,
                     ),
@@ -116,7 +145,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                 Row(
                   children: [
                     SvgPicture.asset(
-                      'images/inv.svg',
+                      'assets/svg/inv.svg',
                       color: orderColor,
                     ),
                     SizedBox(

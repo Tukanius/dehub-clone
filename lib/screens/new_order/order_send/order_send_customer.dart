@@ -72,7 +72,7 @@ class _OrderSendCustomerState extends State<OrderSendCustomer> {
                 height: 50,
               ),
               SvgPicture.asset(
-                'images/message_sent.svg',
+                'assets/svg/message_sent.svg',
                 height: 25,
                 width: 30,
                 color: orderColor,

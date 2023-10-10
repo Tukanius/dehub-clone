@@ -72,7 +72,7 @@ class _AddRowState extends State<InvoiceAddRow> {
         widget.additionalRowsListenController.invoiceAddRow(row);
         Navigator.of(context).pop();
       } catch (e) {
-        print(e.toString());
+        debugPrint(e.toString());
       }
     }
   }

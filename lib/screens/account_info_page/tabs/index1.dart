@@ -87,7 +87,7 @@ class _Index1State extends State<Index1> with SingleTickerProviderStateMixin {
                               '${end.year} - ${end.month} - ${end.day}',
                               style: TextStyle(color: grey2),
                             ),
-                            SvgPicture.asset('images/calendar.svg')
+                            SvgPicture.asset('assets/svg/calendar.svg')
                           ],
                         ),
                       ),

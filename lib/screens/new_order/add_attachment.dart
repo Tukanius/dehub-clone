@@ -50,13 +50,13 @@ class _AddAttachmentState extends State<AddAttachment> {
         setState(() {
           isFileEmpty = false;
         });
-        print("File name $fileName");
+        debugPrint("File name $fileName");
       }
       setState(() {
         isLoading = false;
       });
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
   }
 
@@ -225,7 +225,7 @@ class _AddAttachmentState extends State<AddAttachment> {
                     });
                   }
                 } catch (e) {
-                  print(e);
+                  debugPrint(e.toString());
                 }
               },
               labelText: "Болсон. Нэмье",

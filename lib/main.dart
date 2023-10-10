@@ -2,6 +2,7 @@ import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/account_info_page/account_info_page.dart';
 import 'package:dehub/screens/account_info_page/tabs/tabs/transaction_detail_page.dart';
+import 'package:dehub/screens/entry_point/entry_point.dart';
 import 'package:dehub/screens/order_payment_page/cash_on_delivery.dart';
 import 'package:dehub/screens/payment_page/tabs/add_bank_account_page/add_bank_account_page.dart';
 import 'package:dehub/screens/auth/check-biometric.dart';
@@ -102,8 +103,6 @@ import 'package:dehub/screens/receiver_otp_verify/receiver_otp_verify.dart';
 import 'package:dehub/screens/register-page/register-page.dart';
 import 'package:dehub/screens/shopping/shopping_page.dart';
 import 'package:dehub/screens/menu/suppliers/suppliers_page.dart';
-import 'package:dehub/screens/menu/tabs/purchase_page.dart';
-import 'package:dehub/screens/menu/tabs/sales_page.dart';
 import 'package:dehub/screens/profile/information/partner_info.dart';
 import 'package:dehub/screens/profile/profile_page.dart';
 import 'package:dehub/screens/splash/splash_page.dart';
@@ -680,14 +679,6 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return AddBankAccountPage();
                     });
-                  case SalesPage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return SalesPage();
-                    });
-                  case PurchasePage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return PurchasePage();
-                    });
                   case LinkAccountPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return LinkAccountPage();
@@ -917,6 +908,8 @@ class MyApp extends StatelessWidget {
                     return PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
                           ProductChoose(
+                        packageListenController:
+                            arguments.packageListenController,
                         isPackage: arguments.isPackage,
                         businessId: arguments.businessId,
                         productListenController:
@@ -1080,6 +1073,10 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return ProductListPage();
                     });
+                  case EntryPoint.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return EntryPoint();
+                    });
                   case ProductDetailPage.routeName:
                     ProductDetailPageArguments arguments =
                         settings.arguments as ProductDetailPageArguments;
@@ -1122,7 +1119,7 @@ class MyApp extends StatelessWidget {
                     );
                   default:
                     return MaterialPageRoute(
-                      builder: (_) => FirstPage(),
+                      builder: (_) => EntryPoint(),
                     );
                 }
               },

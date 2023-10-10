@@ -295,7 +295,7 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
                           border: Border.all(color: orderColor),
                           borderRadius: BorderRadius.circular(2),
                         ),
-                        child: SvgPicture.asset('images/minus.svg'),
+                        child: SvgPicture.asset('assets/svg/minus.svg'),
                       ),
                     ),
                     SizedBox(
@@ -370,7 +370,7 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
                     ),
                     child: Row(
                       children: [
-                        SvgPicture.asset('images/calculator.svg'),
+                        SvgPicture.asset('assets/svg/calculator.svg'),
                         SizedBox(
                           width: 15,
                         ),

@@ -95,10 +95,7 @@ class HttpRequest {
       switch (method) {
         case 'GET':
           {
-            response = await dio.get(
-              uri,
-              queryParameters: data,
-            );
+            response = await dio.get(uri, queryParameters: data);
             break;
           }
         case 'POST':
@@ -124,7 +121,7 @@ class HttpRequest {
       //   result = await _connectivity.checkConnectivity();
       //   if (result == ConnectivityResult.none) {
       //     MyApp.dialogService!
-      //         .showInternetErrorDialog("No internet connection");
+      //         .showInternetErrorDialog("No internet connection")
       //     return null;
       //   }
       // } on PlatformException catch (e) {

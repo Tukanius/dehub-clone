@@ -19,14 +19,17 @@ class ProductPage extends StatefulWidget {
   State<ProductPage> createState() => _ProductPageState();
 }
 
-int selectedIndex = 0;
-
 class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
+  int selectedIndex = 1;
+  bool isLoading = true;
   @override
   afterFirstLayout(BuildContext context) async {
     await Provider.of<GeneralProvider>(context, listen: false)
         .inventoryInit(true);
     await Provider.of<UserProvider>(context, listen: false).inventory(true);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   static const List<Widget> currentPages = [
@@ -99,7 +102,7 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: SvgPicture.asset(
-                    'images/grid.svg',
+                    'assets/svg/grid.svg',
                     color: selectedIndex != 3 ? productColor : white,
                   ),
                 )
@@ -111,9 +114,11 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                   : SizedBox(),
         ],
       ),
-      body: Container(
-        child: currentPages.elementAt(selectedIndex),
-      ),
+      body: isLoading == true
+          ? SizedBox()
+          : Container(
+              child: currentPages.elementAt(selectedIndex),
+            ),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: productColor,
         unselectedFontSize: 12,
@@ -136,7 +141,7 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/home.svg',
+                    'assets/svg/home.svg',
                     color: selectedIndex == 0 ? white : productColor,
                   ),
                 ),
@@ -160,7 +165,7 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/dashboard.svg',
+                    'assets/svg/dashboard.svg',
                     color: selectedIndex == 1 ? white : productColor,
                   ),
                 ),
@@ -184,7 +189,7 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/inbox.svg',
+                    'assets/svg/inbox.svg',
                     color: selectedIndex == 2 ? white : productColor,
                   ),
                 ),
@@ -208,7 +213,7 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/sent.svg',
+                    'assets/svg/sent.svg',
                     color: selectedIndex == 3 ? white : productColor,
                   ),
                 ),

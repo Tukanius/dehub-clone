@@ -41,6 +41,9 @@ class _ChatCardState extends State<ChatCard> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: grey,
+                            image: DecorationImage(
+                              image: AssetImage('images/avatar.png'),
+                            ),
                           ),
                         )
                       : Container(
@@ -90,6 +93,9 @@ class _ChatCardState extends State<ChatCard> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: grey,
+                            image: DecorationImage(
+                              image: AssetImage('images/avatar.png'),
+                            ),
                           ),
                         )
                       : Container(
@@ -99,8 +105,9 @@ class _ChatCardState extends State<ChatCard> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                              image:
-                                  NetworkImage('${widget.data?.user?.avatar}'),
+                              image: NetworkImage(
+                                  '${widget.data?.user?.avatar}',
+                                  scale: 1),
                               fit: BoxFit.cover,
                             ),
                           ),

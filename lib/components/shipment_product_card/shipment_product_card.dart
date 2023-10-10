@@ -303,7 +303,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                           border: Border.all(color: orderColor),
                           borderRadius: BorderRadius.circular(2),
                         ),
-                        child: SvgPicture.asset('images/minus.svg'),
+                        child: SvgPicture.asset('assets/svg/minus.svg'),
                       ),
                     ),
                     SizedBox(
@@ -383,7 +383,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                     child: Row(
                       children: [
                         SvgPicture.asset(
-                          'images/calculator.svg',
+                          'assets/svg/calculator.svg',
                           color: widget.data?.isConfirmed == true
                               ? orderColor.withOpacity(0.3)
                               : orderColor,

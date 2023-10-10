@@ -44,7 +44,7 @@ class _GiveFundingCardState extends State<GiveFundingCard> {
                         border: Border.all(color: financingColor),
                         color: financingColor.withOpacity(0.1),
                       ),
-                      child: SvgPicture.asset('images/note.svg'),
+                      child: SvgPicture.asset('assets/svg/note.svg'),
                     ),
                   ],
                 ),
@@ -115,7 +115,7 @@ class _GiveFundingCardState extends State<GiveFundingCard> {
                     Row(
                       children: [
                         SvgPicture.asset(
-                          'images/inv.svg',
+                          'assets/svg/inv.svg',
                           color: buttonColor,
                         ),
                         SizedBox(

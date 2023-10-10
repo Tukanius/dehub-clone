@@ -7,8 +7,10 @@ class PossibleScheduleCard extends StatefulWidget {
   final Function()? onClick;
   final String? formattedDate;
   final bool? isSelected;
+  final bool? validate;
   const PossibleScheduleCard({
     this.formattedDate,
+    this.validate,
     this.onClick,
     Key? key,
     this.isSelected,
@@ -47,7 +49,11 @@ class _PossibleScheduleCardState extends State<PossibleScheduleCard> {
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(
-            color: widget.isSelected == true ? orderColor : transparent,
+            color: widget.isSelected == true
+                ? orderColor
+                : widget.validate == true
+                    ? red
+                    : transparent,
             width: 2,
           ),
           color: lightGrey,
@@ -61,7 +67,9 @@ class _PossibleScheduleCardState extends State<PossibleScheduleCard> {
               style: TextStyle(
                 color: widget.isSelected == true
                     ? orderColor
-                    : buttonColor.withOpacity(0.6),
+                    : widget.validate == true
+                        ? red
+                        : buttonColor.withOpacity(0.6),
                 fontSize: 13,
               ),
             ),
@@ -73,7 +81,9 @@ class _PossibleScheduleCardState extends State<PossibleScheduleCard> {
               style: TextStyle(
                 color: widget.isSelected == true
                     ? orderColor
-                    : buttonColor.withOpacity(0.6),
+                    : widget.validate == true
+                        ? red
+                        : buttonColor.withOpacity(0.6),
                 fontSize: 13,
               ),
             ),

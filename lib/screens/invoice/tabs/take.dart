@@ -52,7 +52,7 @@ class _TakePageState extends State<TakePage>
       limit += 10;
     });
     await list(page, limit);
-    _refreshController.refreshCompleted();
+    _refreshController.loadComplete();
     setState(() {
       isLoading = false;
     });
@@ -287,6 +287,14 @@ class _TakePageState extends State<TakePage>
                     controller: _refreshController,
                     header: WaterDropHeader(
                       waterDropColor: invoiceColor,
+                      refresh: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: invoiceColor,
+                        ),
+                      ),
                     ),
                     onRefresh: _onRefresh,
                     onLoading: _onLoading,

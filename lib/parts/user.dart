@@ -108,6 +108,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
     employeeUnitId: json['employeeUnitId'] != null
         ? json['employeeUnitId'] as String
         : null,
+    url: json['url'] != null ? Uri.parse(json['url'].toString()) : null,
     roleEnableDate: json['roleEnableDate'] != null
         ? json['roleEnableDate'] as String
         : null,
@@ -198,6 +199,7 @@ Map<String, dynamic> _$UserToJson(User instance) {
 
   if (instance.businessName != null)
     json["businessName"] = instance.businessName;
+  if (instance.url != null) json["url"] = instance.url;
   if (instance.verifyId != null) json["verifyId"] = instance.verifyId;
   if (instance.otpCode != null) json["otpCode"] = instance.otpCode;
   if (instance.message != null) json["message"] = instance.message;

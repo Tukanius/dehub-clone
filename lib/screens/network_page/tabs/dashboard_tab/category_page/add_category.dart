@@ -40,7 +40,7 @@ class _AddCategoryState extends State<AddCategory> {
         widget.listenController.changeVariable('createCategory');
         Navigator.of(context).pop();
       } catch (e) {
-        print(e.toString());
+        debugPrint(e.toString());
       }
     }
   }
@@ -58,7 +58,7 @@ class _AddCategoryState extends State<AddCategory> {
           },
           child: Container(
             padding: const EdgeInsets.all(13),
-            child: SvgPicture.asset('images/close.svg'),
+            child: SvgPicture.asset('assets/svg/close.svg'),
           ),
         ),
         title: Text(

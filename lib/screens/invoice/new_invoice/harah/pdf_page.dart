@@ -49,7 +49,7 @@ class _PdfPageState extends State<PdfPage> {
               child: Row(
                 children: [
                   SvgPicture.asset(
-                    'images/close.svg',
+                    'assets/svg/close.svg',
                     color: grey2,
                     height: 20,
                   ),
@@ -97,7 +97,7 @@ class _PdfPageState extends State<PdfPage> {
                     border: Border.all(width: 0.5, color: grey3),
                   ),
                   child: SvgPicture.asset(
-                    'images/save1.svg',
+                    'assets/svg/save1.svg',
                     color: grey3,
                   ),
                 ),

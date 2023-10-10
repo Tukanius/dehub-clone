@@ -74,6 +74,14 @@ class _AddBankAccountPageState extends State<AddBankAccountPage>
               controller: refreshController,
               header: WaterDropHeader(
                 waterDropColor: paymentColor,
+                refresh: SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: paymentColor,
+                  ),
+                ),
               ),
               onRefresh: _onRefresh,
               // onLoading: _onLoading,

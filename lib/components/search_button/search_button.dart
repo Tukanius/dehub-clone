@@ -56,7 +56,7 @@ class _SearchButtonState extends State<SearchButton> {
                   ),
                   prefixIcon: Container(
                     padding: const EdgeInsets.symmetric(vertical: 7),
-                    child: SvgPicture.asset('images/search.svg'),
+                    child: SvgPicture.asset('assets/svg/search.svg'),
                   ),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -84,7 +84,7 @@ class _SearchButtonState extends State<SearchButton> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
               child: SvgPicture.asset(
-                'images/yuluur.svg',
+                'assets/svg/yuluur.svg',
                 color: widget.color,
               ),
             ),

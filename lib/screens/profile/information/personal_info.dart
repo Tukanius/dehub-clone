@@ -1,3 +1,4 @@
+import 'package:dehub/api/auth_api.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/splash/splash_page.dart';
@@ -6,6 +7,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PersonalInfo extends StatefulWidget {
   static const routeName = '/personalinfo';
@@ -23,6 +25,8 @@ class PersonalInfo extends StatefulWidget {
 class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
   User user = User();
   bool isLoading = false;
+  User dan = User();
+  bool isSubmit = false;
 
   afterFirstLayout(BuildContext context) async {}
 
@@ -34,6 +38,17 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
     Navigator.of(context).pushNamed(SplashPage.routeName);
     setState(() {
       isLoading = false;
+    });
+  }
+
+  danVerify() async {
+    setState(() {
+      isSubmit = true;
+    });
+    dan = await AuthApi().danVerify();
+    await launchUrl(dan.url!);
+    setState(() {
+      isSubmit = false;
     });
   }
 
@@ -51,10 +66,11 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                 Container(
                   margin: const EdgeInsets.only(top: 20),
                   child: CircleAvatar(
+                    backgroundColor: grey,
                     radius: 40,
-                    backgroundImage: widget.data!.avatar != null
+                    backgroundImage: widget.data?.avatar != null
                         ? NetworkImage(
-                            '${widget.data!.avatar}',
+                            '${widget.data?.avatar}',
                           )
                         : NetworkImage(
                             'https://i0.wp.com/a.slack-edge.com/df10d/img/avatars/ava_0024-192.png?ssl=1',
@@ -429,21 +445,26 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         user.isDanVerified == false
-                            ? Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 1),
-                                height: 20,
-                                width: 120,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(
-                                      color: Color(0xffADC6FF),
-                                    )),
-                                child: Text(
-                                  'Баталгаажуулъя',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: buttonColor,
+                            ? GestureDetector(
+                                onTap: () {
+                                  if (isSubmit == false) {
+                                    danVerify();
+                                  }
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 2),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      border: Border.all(
+                                        color: Color(0xffADC6FF),
+                                      )),
+                                  child: Text(
+                                    'Баталгаажуулъя',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: buttonColor,
+                                    ),
                                   ),
                                 ),
                               )

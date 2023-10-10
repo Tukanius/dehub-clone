@@ -197,7 +197,7 @@ class _DeliveryDetailState extends State<DeliveryDetail> with AfterLayoutMixin {
                               Row(
                                 children: [
                                   SvgPicture.asset(
-                                    'images/map.svg',
+                                    'assets/svg/map.svg',
                                     color: orderColor,
                                   ),
                                   SizedBox(
@@ -231,8 +231,8 @@ class _DeliveryDetailState extends State<DeliveryDetail> with AfterLayoutMixin {
                                         shape: BoxShape.circle,
                                         color: orderColor),
                                     child: Center(
-                                      child:
-                                          SvgPicture.asset('images/call.svg'),
+                                      child: SvgPicture.asset(
+                                          'assets/svg/call.svg'),
                                     ),
                                   ),
                                 ],

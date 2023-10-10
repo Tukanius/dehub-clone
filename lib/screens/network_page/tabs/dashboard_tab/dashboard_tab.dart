@@ -58,7 +58,7 @@ class _DashboardTabState extends State<DashboardTab> {
                             color: networkColor.withOpacity(0.1),
                           ),
                           child: SvgPicture.asset(
-                            'images/partners.svg',
+                            'assets/svg/partners.svg',
                             color: networkColor,
                           ),
                         ),
@@ -97,7 +97,7 @@ class _DashboardTabState extends State<DashboardTab> {
                           color: networkColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/push.svg',
+                          'assets/svg/push.svg',
                           color: networkColor,
                         ),
                       ),
@@ -135,7 +135,7 @@ class _DashboardTabState extends State<DashboardTab> {
                           color: networkColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/bag.svg',
+                          'assets/svg/bag.svg',
                           color: networkColor,
                         ),
                       ),
@@ -173,7 +173,7 @@ class _DashboardTabState extends State<DashboardTab> {
                           color: networkColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/map.svg',
+                          'assets/svg/map.svg',
                           color: networkColor,
                         ),
                       ),
@@ -216,7 +216,7 @@ class _DashboardTabState extends State<DashboardTab> {
                             color: networkColor.withOpacity(0.1),
                           ),
                           child: SvgPicture.asset(
-                            'images/bag.svg',
+                            'assets/svg/bag.svg',
                             color: networkColor,
                           ),
                         ),

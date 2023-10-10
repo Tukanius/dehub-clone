@@ -46,7 +46,7 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
       limit += 10;
     });
     await list(page, limit, '');
-    refreshController.refreshCompleted();
+    refreshController.loadComplete();
     setState(() {
       isLoading = false;
     });
@@ -110,6 +110,14 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
                   controller: refreshController,
                   header: WaterDropHeader(
                     waterDropColor: invoiceColor,
+                    refresh: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: invoiceColor,
+                      ),
+                    ),
                   ),
                   onRefresh: _onRefresh,
                   onLoading: _onLoading,

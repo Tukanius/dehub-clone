@@ -23,6 +23,7 @@ class _CustomerTabState extends State<CustomerTab> with AfterLayoutMixin {
   bool isLoading = true;
   Timer? timer;
   bool isSubmit = false;
+  bool startAnimation = false;
   @override
   afterFirstLayout(BuildContext context) async {
     list(page, limit, '');
@@ -36,6 +37,11 @@ class _CustomerTabState extends State<CustomerTab> with AfterLayoutMixin {
     setState(() {
       order = res;
       isLoading = false;
+      Future.delayed(Duration(milliseconds: 100), () {
+        setState(() {
+          startAnimation = true;
+        });
+      });
     });
   }
 
@@ -75,12 +81,15 @@ class _CustomerTabState extends State<CustomerTab> with AfterLayoutMixin {
                             children: order.rows!
                                 .map(
                                   (data) => OrderCustomerCard(
+                                    index: order.rows!.indexOf(data),
+                                    startAnimation: startAnimation,
                                     data: data,
                                     onClick: () {
                                       Navigator.of(context).pushNamed(
-                                          NewOrder.routeName,
-                                          arguments:
-                                              NewOrderArguments(id: data.id));
+                                        NewOrder.routeName,
+                                        arguments:
+                                            NewOrderArguments(id: data.id),
+                                      );
                                     },
                                   ),
                                 )

@@ -537,7 +537,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   SvgPicture.asset(
-                                    'images/lock.svg',
+                                    'assets/svg/lock.svg',
                                     height: 16,
                                     width: 16,
                                   ),
@@ -578,7 +578,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   SvgPicture.asset(
-                                    'images/mobile_message.svg',
+                                    'assets/svg/mobile_message.svg',
                                     height: 16,
                                     width: 16,
                                   ),

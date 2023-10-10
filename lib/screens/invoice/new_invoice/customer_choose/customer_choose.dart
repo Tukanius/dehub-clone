@@ -58,7 +58,7 @@ class _CustomerChooseState extends State<CustomerChoose> {
                 color: invoiceColor,
                 padding: const EdgeInsets.all(13),
                 child: SvgPicture.asset(
-                  'images/close.svg',
+                  'assets/svg/close.svg',
                   height: 30,
                 ),
               ),

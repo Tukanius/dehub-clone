@@ -49,7 +49,7 @@ class _HomePageTabState extends State<HomePageTab> {
                           color: paymentColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/grid1.svg',
+                          'assets/svg/grid1.svg',
                           color: paymentColor,
                         ),
                       ),
@@ -85,7 +85,7 @@ class _HomePageTabState extends State<HomePageTab> {
                           color: paymentColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/push.svg',
+                          'assets/svg/push.svg',
                           color: paymentColor,
                         ),
                       ),
@@ -121,7 +121,7 @@ class _HomePageTabState extends State<HomePageTab> {
                           color: paymentColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/bag.svg',
+                          'assets/svg/bag.svg',
                           color: paymentColor,
                         ),
                       ),
@@ -154,7 +154,7 @@ class _HomePageTabState extends State<HomePageTab> {
                           color: paymentColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/map.svg',
+                          'assets/svg/map.svg',
                           color: paymentColor,
                         ),
                       ),
@@ -190,7 +190,7 @@ class _HomePageTabState extends State<HomePageTab> {
                           color: paymentColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/map.svg',
+                          'assets/svg/map.svg',
                           color: paymentColor,
                         ),
                       ),

@@ -71,7 +71,7 @@ class _OrderSendPageState extends State<OrderSendPage> {
               SizedBox(
                 height: 50,
               ),
-              SvgPicture.asset('images/order_send.svg'),
+              SvgPicture.asset('assets/svg/order_send.svg'),
               SizedBox(
                 height: 15,
               ),

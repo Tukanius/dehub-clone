@@ -42,7 +42,6 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).invoiceMe;
-    print(widget.invoice.toJson());
     return isLoading == true
         ? Center(
             child: CircularProgressIndicator(

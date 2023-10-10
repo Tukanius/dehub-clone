@@ -28,6 +28,8 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     logo: json['logo'] != null ? json['logo'] as String : null,
     profileInfo:
         json['profileInfo'] != null ? json['profileInfo'] as String : null,
+    deliveredDate:
+        json['deliveredDate'] != null ? json['deliveredDate'] as String : null,
     isAnchorBusiness: json['isAnchorBusiness'] != null
         ? json['isAnchorBusiness'] as bool
         : null,
@@ -154,6 +156,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     description:
         json['description'] != null ? json['description'] as String : null,
     toReview: json['toReview'] != null ? json['toReview'] as bool : null,
+    isEnded: json['isEnded'] != null ? json['isEnded'] as bool : null,
     send: json['send'] != null ? json['send'] as bool : null,
     review: json['review'] != null ? json['review'] as bool : null,
     skuCode: json['skuCode'] != null ? json['skuCode'] as String : null,
@@ -261,6 +264,9 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         : null,
     reviewedUser: json['reviewedUser'] != null
         ? Order.fromJson(json['reviewedUser'] as Map<String, dynamic>)
+        : null,
+    respondedUser: json['respondedUser'] != null
+        ? Order.fromJson(json['respondedUser'] as Map<String, dynamic>)
         : null,
     onDeliveryQuantity: json['onDeliveryQuantity'] != null
         ? int.parse(json['onDeliveryQuantity'].toString())
@@ -406,6 +412,11 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$OrderToJson(Order instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.respondedUser != null)
+    json['respondedUser'] = instance.respondedUser;
+  if (instance.isEnded != null) json['isEnded'] = instance.isEnded;
+  if (instance.deliveredDate != null)
+    json['deliveredDate'] = instance.deliveredDate;
   if (instance.configType != null) json['configType'] = instance.configType;
   if (instance.code != null) json['code'] = instance.code;
   if (instance.startDate != null) json['startDate'] = instance.startDate;

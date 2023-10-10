@@ -73,7 +73,7 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
         widget.listenController.changeVariable('createRank');
         Navigator.of(context).pop();
       } catch (e) {
-        print(e.toString());
+        debugPrint(e.toString());
       }
     }
   }
@@ -94,7 +94,7 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
           },
           child: Container(
             padding: const EdgeInsets.all(13),
-            child: SvgPicture.asset('images/close.svg'),
+            child: SvgPicture.asset('assets/svg/close.svg'),
           ),
         ),
         title: Text(

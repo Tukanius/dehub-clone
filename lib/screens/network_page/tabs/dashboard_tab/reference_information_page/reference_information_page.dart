@@ -111,7 +111,7 @@ class _ReferenceInformationPageState extends State<ReferenceInformationPage>
                       color: networkColor,
                     ),
                     child: SvgPicture.asset(
-                      'images/bag.svg',
+                      'assets/svg/bag.svg',
                       color: white,
                     ),
                   ),

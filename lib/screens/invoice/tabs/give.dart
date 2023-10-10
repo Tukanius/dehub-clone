@@ -50,7 +50,7 @@ class _GivePageState extends State<GivePage>
       limit += 10;
     });
     await list(page, limit, '');
-    _refreshController.refreshCompleted();
+    _refreshController.loadComplete();
     setState(() {
       isLoading = false;
     });
@@ -230,7 +230,7 @@ class _GivePageState extends State<GivePage>
                           child: Row(
                             children: [
                               SvgPicture.asset(
-                                'images/clock.svg',
+                                'assets/svg/clock.svg',
                                 color: currentIndex == 1 ? white : grey2,
                               ),
                               SizedBox(
@@ -269,7 +269,7 @@ class _GivePageState extends State<GivePage>
                           child: Row(
                             children: [
                               SvgPicture.asset(
-                                'images/hesegchilsen.svg',
+                                'assets/svg/hesegchilsen.svg',
                                 color: currentIndex == 2 ? white : grey2,
                               ),
                               SizedBox(
@@ -309,7 +309,7 @@ class _GivePageState extends State<GivePage>
                             children: [
                               SvgPicture.asset(
                                 color: currentIndex == 3 ? white : grey2,
-                                'images/clock1.svg',
+                                'assets/svg/clock1.svg',
                               ),
                               SizedBox(
                                 width: 3,
@@ -348,7 +348,7 @@ class _GivePageState extends State<GivePage>
                             children: [
                               SvgPicture.asset(
                                 color: currentIndex == 4 ? white : grey2,
-                                'images/tulson.svg',
+                                'assets/svg/tulson.svg',
                               ),
                               SizedBox(
                                 width: 3,
@@ -396,6 +396,14 @@ class _GivePageState extends State<GivePage>
                     controller: _refreshController,
                     header: WaterDropHeader(
                       waterDropColor: invoiceColor,
+                      refresh: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: invoiceColor,
+                        ),
+                      ),
                     ),
                     onRefresh: _onRefresh,
                     onLoading: _onLoading,
@@ -421,16 +429,35 @@ class _GivePageState extends State<GivePage>
                       child: Column(
                         children: invoice.rows!
                             .map(
-                              (item) => InvoiceCard(
-                                data: item,
-                                onClick: () {
-                                  Navigator.of(context).pushNamed(
-                                    InvoiceDetailPage.routeName,
-                                    arguments: InvoiceDetailPageArguments(
-                                      id: item.id,
+                              (item) => Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                        left: 15, top: 10),
+                                    child: Text(
+                                      "${item.getPostDate()}",
+                                      style: TextStyle(
+                                        color: grey3,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
-                                  );
-                                },
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  InvoiceCard(
+                                    data: item,
+                                    onClick: () {
+                                      Navigator.of(context).pushNamed(
+                                        InvoiceDetailPage.routeName,
+                                        arguments: InvoiceDetailPageArguments(
+                                          id: item.id,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
                               ),
                             )
                             .toList(),

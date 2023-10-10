@@ -1,11 +1,13 @@
-import 'package:dehub/components/invoice_approve_card/invoice_approve_card.dart';
+import 'package:dehub/api/invoice_api.dart';
+import 'package:dehub/components/invoice_card/invoice_card.dart';
 import 'package:dehub/components/modules_card/modules_card.dart';
 import 'package:dehub/components/schedule_card/schedule_card.dart';
 import 'package:dehub/components/take_give_card/take_give_card.dart';
 import 'package:dehub/components/tutorial_card/tutorial_card.dart';
+import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/partner.dart';
+import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/menu/menu_page.dart';
 import 'package:dehub/screens/profile/profile_page.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -14,6 +16,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:moment_dart/moment_dart.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:skeletons/skeletons.dart';
 
 class FirstPage extends StatefulWidget {
   static const routeName = '/firstpage';
@@ -26,6 +29,11 @@ class FirstPage extends StatefulWidget {
 class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
   bool isNew = false;
   Partner partnerUser = Partner();
+  Result invoice = Result(count: 0, rows: []);
+  int page = 1;
+  int limit = 50;
+  bool isLoading = true;
+  List<Invoice> filtered = [];
 
   show(context) {
     showDialog(
@@ -125,7 +133,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                 ),
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: SvgPicture.asset('images/blue-star.svg'),
+                  child: SvgPicture.asset('assets/svg/blue-star.svg'),
                 ),
                 Text(
                   'Хэрэглэгчийн зөвлөх',
@@ -175,7 +183,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                   height: 25,
                 ),
                 SvgPicture.asset(
-                  'images/dollar-sign.svg',
+                  'assets/svg/dollar-sign.svg',
                   color: Color(0xff1B5EAA),
                 ),
               ],
@@ -186,9 +194,27 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
     );
   }
 
+  list(page, limit) async {
+    Offset offset = Offset(page: page, limit: limit);
+    Filter filter = Filter(query: '', status: "SENT");
+    var res = partnerUser.user?.currentBusiness?.type == "SUPPLIER"
+        ? await InvoiceApi()
+            .list(ResultArguments(filter: filter, offset: offset))
+        : await InvoiceApi()
+            .listReceived(ResultArguments(filter: filter, offset: offset));
+    setState(() {
+      invoice = res;
+      isLoading = false;
+    });
+  }
+
   @override
-  afterFirstLayout(BuildContext context) {
+  afterFirstLayout(BuildContext context) async {
     // show(context);
+    await list(page, limit);
+    invoice.rows!.map(
+      (e) => e.paymentDate == DateTime.now() ? filtered.add(e) : null,
+    );
   }
 
   @override
@@ -204,19 +230,9 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
             backgroundColor: buttonColor,
             elevation: 0,
             automaticallyImplyLeading: false,
-            leading: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed(MenuPage.routeName);
-              },
-              child: Container(
-                color: buttonColor,
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: SvgPicture.asset('images/menu.svg'),
-              ),
-            ),
             actions: [
               SvgPicture.asset(
-                'images/notification.svg',
+                'assets/svg/notification.svg',
               ),
               SizedBox(
                 width: 15,
@@ -318,59 +334,87 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            color: white,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 15),
-                                    child: partnerUser
-                                                .user?.currentBusiness?.type ==
-                                            "SUPPLIER"
-                                        ? Text(
-                                            "Өнөөдөр хүлээлгэн өгөх",
-                                            style: TextStyle(
-                                              color: buttonColor,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          )
-                                        : Text(
-                                            "Өнөөдөр хүлээн авах",
-                                            style: TextStyle(
-                                              color: buttonColor,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          )),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
+                          filtered.isEmpty
+                              ? SizedBox()
+                              : Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 15),
+                                  color: white,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
+                                      Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 15),
+                                          child: partnerUser.user
+                                                      ?.currentBusiness?.type ==
+                                                  "SUPPLIER"
+                                              ? Text(
+                                                  "Өнөөдөр хүлээлгэн өгөх",
+                                                  style: TextStyle(
+                                                    color: buttonColor,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                )
+                                              : Text(
+                                                  "Өнөөдөр хүлээн авах",
+                                                  style: TextStyle(
+                                                    color: buttonColor,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                )),
                                       SizedBox(
-                                        width: 10,
+                                        height: 15,
                                       ),
-                                      TakeGiveCard(),
-                                      TakeGiveCard(),
-                                      TakeGiveCard(),
-                                      TakeGiveCard(),
-                                      TakeGiveCard(),
-                                      TakeGiveCard(),
-                                      TakeGiveCard(),
-                                      TakeGiveCard(),
+                                      SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            isLoading == true
+                                                ? Row(
+                                                    children:
+                                                        [1, 2, 3, 4, 5, 6, 7]
+                                                            .map(
+                                                              (e) => Container(
+                                                                margin: const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        3),
+                                                                child:
+                                                                    SkeletonAvatar(
+                                                                  style:
+                                                                      SkeletonAvatarStyle(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            100),
+                                                                    height: 50,
+                                                                    width: 50,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                            .toList(),
+                                                  )
+                                                : Row(
+                                                    children: filtered
+                                                        .map(
+                                                          (e) => TakeGiveCard(),
+                                                        )
+                                                        .toList(),
+                                                  )
+                                          ],
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
                           SizedBox(
                             height: 10,
                           ),
@@ -385,7 +429,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                   child: Row(
                                     children: [
                                       SvgPicture.asset(
-                                          'images/dot-calendar.svg'),
+                                          'assets/svg/dot-calendar.svg'),
                                       SizedBox(
                                         width: 5,
                                       ),
@@ -440,7 +484,22 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                           SizedBox(
                             height: 15,
                           ),
-                          InvoiceApproveCard(),
+                          isLoading == true
+                              ? SkeletonAvatar(
+                                  style: SkeletonAvatarStyle(
+                                    height: 100,
+                                    width: MediaQuery.of(context).size.width,
+                                  ),
+                                )
+                              : Column(
+                                  children: invoice.rows!
+                                      .map(
+                                        (e) => InvoiceCard(
+                                          data: e,
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
                           SizedBox(
                             height: 50,
                           ),
@@ -461,7 +520,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                             SizedBox(
                               height: 10,
                             ),
-                            SvgPicture.asset('images/new-player.svg'),
+                            SvgPicture.asset('assets/svg/new-player.svg'),
                             SizedBox(
                               height: 10,
                             ),

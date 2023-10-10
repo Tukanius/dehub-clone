@@ -16,6 +16,7 @@ class ListenController extends ChangeNotifier {
   Order? additionalRows;
   Order? receiverBranch;
   FilePickerResult? result;
+  List<Order>? productInPackage;
 
   ListenController();
 
@@ -76,6 +77,11 @@ class ListenController extends ChangeNotifier {
 
   filPickerChange(FilePickerResult? value) {
     this.result = value;
+    notifyListeners();
+  }
+
+  orderPackageProduct(List<Order> value) {
+    this.productInPackage = value;
     notifyListeners();
   }
 }

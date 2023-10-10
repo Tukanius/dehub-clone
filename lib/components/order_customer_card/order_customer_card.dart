@@ -6,8 +6,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 class OrderCustomerCard extends StatefulWidget {
   final Function()? onClick;
   final Order? data;
+  final int index;
+  final bool startAnimation;
   const OrderCustomerCard({
     this.data,
+    required this.index,
+    required this.startAnimation,
     Key? key,
     this.onClick,
   }) : super(key: key);
@@ -21,7 +25,13 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: widget.onClick,
-      child: Container(
+      child: AnimatedContainer(
+        curve: Curves.ease,
+        duration: Duration(milliseconds: 300 + (widget.index * 100)),
+        transform: Matrix4.translationValues(
+            widget.startAnimation ? 0 : MediaQuery.of(context).size.width,
+            0,
+            0),
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: white,
@@ -43,12 +53,20 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
                     height: 48,
                     width: 48,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
+                      shape: BoxShape.circle,
                       color: grey,
                     ),
+                    child: widget.data?.logo != null && widget.data?.logo != ''
+                        ? CircleAvatar(
+                            backgroundImage:
+                                NetworkImage('${widget.data?.logo}', scale: 1),
+                          )
+                        : CircleAvatar(
+                            backgroundImage: AssetImage('images/avatar.png'),
+                          ),
                   ),
                   SizedBox(
-                    width: 5,
+                    width: 10,
                   ),
                   Expanded(
                     child: Column(
@@ -124,7 +142,7 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
                   child: Row(
                     children: [
                       SvgPicture.asset(
-                        'images/shopping-cart.svg',
+                        'assets/svg/shopping-cart.svg',
                         height: 15,
                         width: 15,
                       ),

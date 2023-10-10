@@ -26,6 +26,7 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
   int limit = 10;
   bool isLoading = true;
   User user = User();
+  bool startAnimation = false;
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
 
@@ -39,7 +40,7 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
       limit += 10;
     });
     await list(page, limit);
-    refreshController.refreshCompleted();
+    refreshController.loadComplete();
     setState(() {
       isLoading = false;
     });
@@ -64,6 +65,11 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
     setState(() {
       order = res;
       isLoading = false;
+      Future.delayed(Duration(milliseconds: 100), () {
+        setState(() {
+          startAnimation = true;
+        });
+      });
     });
   }
 
@@ -83,6 +89,14 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
             controller: refreshController,
             header: WaterDropHeader(
               waterDropColor: invoiceColor,
+              refresh: SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: invoiceColor,
+                ),
+              ),
             ),
             onRefresh: _onRefresh,
             onLoading: _onLoading,
@@ -120,6 +134,8 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
                           children: order.rows!
                               .map(
                                 (item) => SalesOrderCard(
+                                  index: order.rows!.indexOf(item),
+                                  startAnimation: startAnimation,
                                   isReceiver: false,
                                   data: item,
                                   onClick: () {

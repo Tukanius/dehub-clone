@@ -207,7 +207,7 @@ class _NewConditionPageState extends State<NewConditionPage> {
                                     width: 5,
                                   ),
                                   SvgPicture.asset(
-                                    'images/edit.svg',
+                                    'assets/svg/edit.svg',
                                     color: networkColor,
                                   ),
                                 ],
@@ -307,7 +307,7 @@ class _NewConditionPageState extends State<NewConditionPage> {
                                         width: 5,
                                       ),
                                       SvgPicture.asset(
-                                        'images/edit.svg',
+                                        'assets/svg/edit.svg',
                                         color: networkColor,
                                       ),
                                     ],
@@ -390,7 +390,7 @@ class _NewConditionPageState extends State<NewConditionPage> {
                                         width: 5,
                                       ),
                                       SvgPicture.asset(
-                                        'images/edit.svg',
+                                        'assets/svg/edit.svg',
                                         color: networkColor,
                                       ),
                                     ],

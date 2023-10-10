@@ -1,10 +1,11 @@
 import 'dart:async';
-
 import 'package:dehub/api/order_api.dart';
+import 'package:dehub/components/delivery_card/delivery_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
-import 'package:dehub/components/shipping_card/shipping_card.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/screens/order_delivery/delivery/delivery.dart';
+import 'package:dehub/screens/product_give/product_give.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -23,6 +24,7 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
   Result pullSheet = Result(count: 0, rows: []);
   Timer? timer;
   bool isSubmit = false;
+  bool startAnimation = false;
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -31,12 +33,17 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
 
   list(page, limit, query) async {
     Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(pullSheetStatus: "CONFIRMED");
+    Filter filter = Filter(deliveryNoteStatus: "DELIVERED");
     var res = await OrderApi()
-        .pullSheet(ResultArguments(filter: filter, offset: offset));
+        .deliveryNoteList(ResultArguments(filter: filter, offset: offset));
     setState(() {
       pullSheet = res;
       isLoading = false;
+      Timer(Duration(milliseconds: 100), () {
+        setState(() {
+          startAnimation = true;
+        });
+      });
     });
   }
 
@@ -82,12 +89,24 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
                     : pullSheet.rows?.length != 0
                         ? Column(
                             children: pullSheet.rows!
-                                .map(
-                                  (data) => ShippingCard(
-                                    onClick: () {},
-                                    data: data,
-                                  ),
-                                )
+                                .map((data) => DeliveryCard(
+                                      isDeliveried: true,
+                                      onClick: () {
+                                        Navigator.of(context).pushNamed(
+                                          DeliveryPage.routeName,
+                                          arguments:
+                                              DeliveryPageArguments(data: data),
+                                        );
+                                      },
+                                      refCodeClick: () {
+                                        Navigator.of(context).pushNamed(
+                                          ProductGive.routeName,
+                                          arguments:
+                                              ProductGiveArguments(data: data),
+                                        );
+                                      },
+                                      data: data,
+                                    ))
                                 .toList(),
                           )
                         : NotFound(

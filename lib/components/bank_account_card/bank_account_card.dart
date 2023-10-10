@@ -91,6 +91,7 @@ class _BankAccountCardState extends State<BankAccountCard> {
                           image: DecorationImage(
                             image: NetworkImage(
                               '${widget.data?.icon}',
+                              scale: 1,
                             ),
                           ),
                         ),
@@ -107,7 +108,7 @@ class _BankAccountCardState extends State<BankAccountCard> {
                       ),
                     ],
                   ),
-                  SvgPicture.asset('images/star.svg'),
+                  SvgPicture.asset('assets/svg/star.svg'),
                 ],
               ),
               Column(
@@ -150,11 +151,11 @@ class _BankAccountCardState extends State<BankAccountCard> {
                   ),
                   Row(
                     children: [
-                      SvgPicture.asset('images/income.svg'),
+                      SvgPicture.asset('assets/svg/income.svg'),
                       SizedBox(
                         width: 10,
                       ),
-                      SvgPicture.asset('images/outgoing.svg'),
+                      SvgPicture.asset('assets/svg/outgoing.svg'),
                     ],
                   ),
                 ],

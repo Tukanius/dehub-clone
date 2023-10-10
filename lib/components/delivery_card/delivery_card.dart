@@ -99,7 +99,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                     color: transparent,
                     child: Row(
                       children: [
-                        SvgPicture.asset('images/order_note.svg'),
+                        SvgPicture.asset('assets/svg/order_note.svg'),
                         SizedBox(
                           width: 5,
                         ),
@@ -142,7 +142,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                         ),
                       ),
                       SvgPicture.asset(
-                        'images/inv.svg',
+                        'assets/svg/inv.svg',
                         color: darkGreen,
                       ),
                       Text(
@@ -294,7 +294,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
             SizedBox(
               height: 10,
             ),
-            widget.isDeliveried != true
+            widget.isDeliveried == false
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -336,10 +336,10 @@ class _DeliveryCardState extends State<DeliveryCard> {
                             children: [
                               widget.data?.deliveryNoteStatus == "DELIVERING"
                                   ? SvgPicture.asset(
-                                      'images/check_underline.svg',
+                                      'assets/svg/check_underline.svg',
                                       color: white,
                                     )
-                                  : SvgPicture.asset('images/bx_timer.svg'),
+                                  : SvgPicture.asset('assets/svg/bx_timer.svg'),
                               SizedBox(
                                 width: 5,
                               ),
@@ -368,7 +368,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Эхэлсэн 2023-06-23',
+                        'Эхэлсэн: ${Moment.parse(widget.data!.startDate.toString()).format("YYYY-MM-DD")}',
                         style: TextStyle(
                           color: buttonColor,
                           fontSize: 12,

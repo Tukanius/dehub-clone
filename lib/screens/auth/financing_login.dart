@@ -82,7 +82,7 @@ class _FinancingLoginState extends State<FinancingLogin> with AfterLayoutMixin {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              Lottie.asset('images/financing-login.json', height: 250),
+              Lottie.asset('assets/lottie/financing-login.json', height: 250),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 padding: const EdgeInsets.symmetric(horizontal: 15),

@@ -23,7 +23,7 @@ class _CardState extends State<Card> {
         children: [
           Row(
             children: [
-              SvgPicture.asset('images/pie.svg'),
+              SvgPicture.asset('assets/svg/pie.svg'),
               Text(widget.labelText),
             ],
           ),

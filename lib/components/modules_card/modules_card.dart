@@ -57,7 +57,7 @@ class _ModulesCardState extends State<ModulesCard> {
                     color: invoiceColor.withOpacity(0.2),
                   ),
                   child: SvgPicture.asset(
-                    'images/nehemjleh.svg',
+                    'assets/svg/nehemjleh.svg',
                     color: buttonColor,
                   ),
                 ),
@@ -91,7 +91,7 @@ class _ModulesCardState extends State<ModulesCard> {
                     color: orderColor.withOpacity(0.2),
                   ),
                   child: SvgPicture.asset(
-                    'images/zahialga.svg',
+                    'assets/svg/zahialga.svg',
                     color: buttonColor,
                     height: 24,
                     width: 24,
@@ -131,7 +131,7 @@ class _ModulesCardState extends State<ModulesCard> {
                     color: paymentColor.withOpacity(0.2),
                   ),
                   child: SvgPicture.asset(
-                    'images/tolbor_tootsoo.svg',
+                    'assets/svg/tolbor_tootsoo.svg',
                     color: buttonColor,
                   ),
                 ),
@@ -168,7 +168,7 @@ class _ModulesCardState extends State<ModulesCard> {
                     color: financingColor.withOpacity(0.2),
                   ),
                   child: SvgPicture.asset(
-                    'images/sanhuujilt.svg',
+                    'assets/svg/sanhuujilt.svg',
                     color: buttonColor,
                   ),
                 ),
@@ -204,7 +204,7 @@ class _ModulesCardState extends State<ModulesCard> {
                     color: debtColor.withOpacity(0.2),
                   ),
                   child: SvgPicture.asset(
-                    'images/avlaga_uglug.svg',
+                    'assets/svg/avlaga_uglug.svg',
                     color: buttonColor,
                   ),
                 ),
@@ -240,7 +240,7 @@ class _ModulesCardState extends State<ModulesCard> {
                     color: productColor.withOpacity(0.2),
                   ),
                   child: SvgPicture.asset(
-                    'images/baraa.svg',
+                    'assets/svg/baraa.svg',
                     color: buttonColor,
                   ),
                 ),
@@ -276,7 +276,7 @@ class _ModulesCardState extends State<ModulesCard> {
                     color: networkColor.withOpacity(0.2),
                   ),
                   child: SvgPicture.asset(
-                    'images/network.svg',
+                    'assets/svg/network.svg',
                     color: buttonColor,
                   ),
                 ),
@@ -318,7 +318,7 @@ class _ModulesCardState extends State<ModulesCard> {
                         : partnerColor.withOpacity(0.2),
                   ),
                   child: SvgPicture.asset(
-                    'images/partner.svg',
+                    'assets/svg/partner.svg',
                     color: widget.partner?.user?.currentBusiness?.type ==
                                 'SUPPLIER' ||
                             widget.partner?.user?.currentBusiness?.type ==
@@ -365,7 +365,7 @@ class _ModulesCardState extends State<ModulesCard> {
                         : userColor.withOpacity(0.2),
                   ),
                   child: SvgPicture.asset(
-                    'images/hereglegch.svg',
+                    'assets/svg/hereglegch.svg',
                     color: widget.partner?.user?.currentBusiness?.type ==
                                 'SUPPLIER' ||
                             widget.partner?.user?.currentBusiness?.type ==

@@ -74,7 +74,7 @@ class _OrderPaymentState extends State<OrderPayment> with AfterLayoutMixin {
               Navigator.of(context).pop();
             },
             child: SvgPicture.asset(
-              'images/close.svg',
+              'assets/svg/close.svg',
             ),
           ),
         ),
@@ -351,7 +351,7 @@ class _OrderPaymentState extends State<OrderPayment> with AfterLayoutMixin {
                                                                           10),
                                                               child: SvgPicture
                                                                   .asset(
-                                                                'images/bank_card.svg',
+                                                                'assets/svg/bank_card.svg',
                                                                 color:
                                                                     invoiceColor,
                                                               ),

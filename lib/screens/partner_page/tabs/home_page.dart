@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
               color: partnerColor.withOpacity(0.1),
             ),
             child: SvgPicture.asset(
-              'images/grid1.svg',
+              'assets/svg/grid1.svg',
               color: partnerColor,
             ),
           ),
@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
               color: partnerColor.withOpacity(0.1),
             ),
             child: SvgPicture.asset(
-              'images/grid1.svg',
+              'assets/svg/grid1.svg',
               color: partnerColor,
             ),
           ),
@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                           color: partnerColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/partner.svg',
+                          'assets/svg/partner.svg',
                           color: partnerColor,
                         ),
                       ),
@@ -148,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                           color: partnerColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/push.svg',
+                          'assets/svg/push.svg',
                           color: partnerColor,
                         ),
                       ),
@@ -183,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                           color: partnerColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/bag.svg',
+                          'assets/svg/bag.svg',
                           color: partnerColor,
                         ),
                       ),
@@ -215,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                           color: partnerColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/map.svg',
+                          'assets/svg/map.svg',
                           color: partnerColor,
                         ),
                       ),
@@ -250,7 +250,7 @@ class _HomePageState extends State<HomePage> {
                           color: partnerColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/map.svg',
+                          'assets/svg/map.svg',
                           color: partnerColor,
                         ),
                       ),

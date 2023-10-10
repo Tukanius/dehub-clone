@@ -229,7 +229,7 @@ class _ActiveTabState extends State<ActiveTab> {
                       SizedBox(
                         width: 10,
                       ),
-                      SvgPicture.asset('images/calendar1.svg'),
+                      SvgPicture.asset('assets/svg/calendar1.svg'),
                     ],
                   ),
                 ],
@@ -290,7 +290,7 @@ class _ActiveTabState extends State<ActiveTab> {
                       SizedBox(
                         width: 10,
                       ),
-                      SvgPicture.asset('images/calendar1.svg'),
+                      SvgPicture.asset('assets/svg/calendar1.svg'),
                     ],
                   ),
                 ],

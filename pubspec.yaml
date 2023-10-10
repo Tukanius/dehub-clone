@@ -69,6 +69,9 @@ dev_dependencies:
   flutter_secure_storage: ^9.0.0
   local_auth: ^2.1.7
   url_launcher: ^6.1.14
+  flutter_animate: ^4.2.0+1
+  skeletons: ^0.0.3
+  hidden_drawer_menu: ^3.0.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -90,6 +93,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
+    - assets/lottie/
+    - assets/fonts/
+    - assets/icon/
+    - assets/svg/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

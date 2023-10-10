@@ -156,7 +156,7 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
                           ? GestureDetector(
                               onTap: widget.closeClick,
                               child: SvgPicture.asset(
-                                'images/close.svg',
+                                'assets/svg/close.svg',
                                 color: grey3,
                                 height: 20,
                                 width: 20,

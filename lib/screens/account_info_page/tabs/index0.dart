@@ -93,7 +93,7 @@ class _Index0State extends State<Index0> with AfterLayoutMixin {
                             SizedBox(
                               width: 10,
                             ),
-                            SvgPicture.asset('images/edit.svg'),
+                            SvgPicture.asset('assets/svg/edit.svg'),
                           ],
                         ),
                       ],

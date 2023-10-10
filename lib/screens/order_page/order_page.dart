@@ -1,8 +1,9 @@
-import 'package:dehub/components/add_button/add_button.dart';
+// import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/not_found/not_found.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/new_order/new_order.dart';
+// import 'package:dehub/screens/new_order/new_order.dart';
 import 'package:dehub/screens/order_page/tabs/order_tab/order_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -21,14 +22,20 @@ class OrderPage extends StatefulWidget {
   State<OrderPage> createState() => _OrderPageState();
 }
 
-int selectedIndex = 0;
-
 class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
+  User user = User();
+  bool isLoading = true;
+
   @override
   afterFirstLayout(BuildContext context) async {
     await Provider.of<GeneralProvider>(context, listen: false).orderInit(true);
     await Provider.of<UserProvider>(context, listen: false).order(true);
+    setState(() {
+      isLoading = false;
+    });
   }
+
+  int selectedIndex = 1;
 
   static const List<Widget> currentPages = [
     NotFound(
@@ -48,6 +55,7 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).orderMe;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -100,31 +108,48 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                     : SizedBox(),
         centerTitle: true,
         actions: [
-          selectedIndex == 2
-              ? AddButton(
-                  color: orderColor,
-                  onClick: () {
-                    Navigator.of(context).pushNamed(
-                      NewOrder.routeName,
-                      arguments: NewOrderArguments(id: null),
-                    );
-                  },
-                )
-              : selectedIndex == 0
-                  ? Container(
-                      padding: const EdgeInsets.all(10),
-                      margin:
-                          const EdgeInsets.only(right: 15, top: 9, bottom: 9),
-                      decoration: BoxDecoration(
-                        color: Color(0xff767680).withOpacity(0.12),
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: SvgPicture.asset(
-                        'images/grid.svg',
-                        color: selectedIndex != 3 ? orderColor : white,
-                      ),
-                    )
-                  : SizedBox(),
+          isLoading == true
+              ? SizedBox()
+              : Container(
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.only(right: 15, top: 9, bottom: 9),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: grey,
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${user.currentBusiness?.profileName?[0].toUpperCase()}${user.currentBusiness?.profileName?[1].toUpperCase()}',
+                      style:
+                          TextStyle(color: black, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+          // selectedIndex == 2
+          //     ? AddButton(
+          //         color: orderColor,
+          //         onClick: () {
+          //           Navigator.of(context).pushNamed(
+          //             NewOrder.routeName,
+          //             arguments: NewOrderArguments(id: null),
+          //           );
+          //         },
+          //       )
+          //     : selectedIndex == 0
+          //         ? Container(
+          //             padding: const EdgeInsets.all(10),
+          //             margin:
+          //                 const EdgeInsets.only(right: 15, top: 9, bottom: 9),
+          //             decoration: BoxDecoration(
+          //               color: Color(0xff767680).withOpacity(0.12),
+          //               borderRadius: BorderRadius.circular(100),
+          //             ),
+          //             child: SvgPicture.asset(
+          //               'images/grid.svg',
+          //               color: selectedIndex != 3 ? orderColor : white,
+          //             ),
+          //           )
+          //         : SizedBox(),
         ],
         bottom: PreferredSize(
           child: Container(
@@ -134,9 +159,11 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
           preferredSize: Size.fromHeight(2.0),
         ),
       ),
-      body: Container(
-        child: currentPages.elementAt(selectedIndex),
-      ),
+      body: isLoading == true
+          ? SizedBox()
+          : Container(
+              child: currentPages.elementAt(selectedIndex),
+            ),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: buttonColor,
         unselectedFontSize: 12,
@@ -159,7 +186,7 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/home.svg',
+                    'assets/svg/home.svg',
                     color: selectedIndex == 0 ? white : orderColor,
                   ),
                 ),
@@ -183,7 +210,7 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/dashboard.svg',
+                    'assets/svg/dashboard.svg',
                     color: selectedIndex == 1 ? white : orderColor,
                   ),
                 ),
@@ -207,7 +234,7 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/order.svg',
+                    'assets/svg/order.svg',
                     color: selectedIndex == 2 ? white : orderColor,
                   ),
                 ),
@@ -231,7 +258,7 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/order_customer.svg',
+                    'assets/svg/order_customer.svg',
                     color: selectedIndex == 3 ? white : orderColor,
                   ),
                 ),

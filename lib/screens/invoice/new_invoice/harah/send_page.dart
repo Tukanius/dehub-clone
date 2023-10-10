@@ -26,7 +26,7 @@ class _SendPageState extends State<SendPage> {
             color: invoiceColor,
             padding: const EdgeInsets.all(13),
             child: SvgPicture.asset(
-              'images/close.svg',
+              'assets/svg/close.svg',
             ),
           ),
         ),

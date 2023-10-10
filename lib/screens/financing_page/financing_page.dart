@@ -83,7 +83,7 @@ class _FinancingPageState extends State<FinancingPage> {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: SvgPicture.asset(
-                    'images/grid.svg',
+                    'assets/svg/grid.svg',
                     color: selectedIndex != 3 ? financingColor : white,
                   ),
                 )
@@ -120,7 +120,7 @@ class _FinancingPageState extends State<FinancingPage> {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/home.svg',
+                    'assets/svg/home.svg',
                     color: selectedIndex == 0 ? white : financingColor,
                   ),
                 ),
@@ -144,7 +144,7 @@ class _FinancingPageState extends State<FinancingPage> {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/dashboard.svg',
+                    'assets/svg/dashboard.svg',
                     color: selectedIndex == 1 ? white : financingColor,
                   ),
                 ),
@@ -168,7 +168,7 @@ class _FinancingPageState extends State<FinancingPage> {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/inbox.svg',
+                    'assets/svg/inbox.svg',
                     color: selectedIndex == 2 ? white : financingColor,
                   ),
                 ),
@@ -192,7 +192,7 @@ class _FinancingPageState extends State<FinancingPage> {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/sent.svg',
+                    'assets/svg/sent.svg',
                     color: selectedIndex == 3 ? white : financingColor,
                   ),
                 ),

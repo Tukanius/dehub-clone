@@ -54,7 +54,7 @@ class _DashboardTabState extends State<DashboardTab> {
                             color: productColor.withOpacity(0.1),
                           ),
                           child: SvgPicture.asset(
-                            'images/grid1.svg',
+                            'assets/svg/grid1.svg',
                             color: productColor,
                           ),
                         ),
@@ -91,7 +91,7 @@ class _DashboardTabState extends State<DashboardTab> {
                           color: productColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/push.svg',
+                          'assets/svg/push.svg',
                           color: productColor,
                         ),
                       ),
@@ -127,7 +127,7 @@ class _DashboardTabState extends State<DashboardTab> {
                           color: productColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/bag.svg',
+                          'assets/svg/bag.svg',
                           color: productColor,
                         ),
                       ),
@@ -160,7 +160,7 @@ class _DashboardTabState extends State<DashboardTab> {
                           color: productColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/map.svg',
+                          'assets/svg/map.svg',
                           color: productColor,
                         ),
                       ),
@@ -196,7 +196,7 @@ class _DashboardTabState extends State<DashboardTab> {
                           color: productColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/map.svg',
+                          'assets/svg/map.svg',
                           color: productColor,
                         ),
                       ),

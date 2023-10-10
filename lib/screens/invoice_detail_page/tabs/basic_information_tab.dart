@@ -503,7 +503,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                                             height: 3,
                                           ),
                                           SvgPicture.asset(
-                                            'images/tuloh.svg',
+                                            'assets/svg/tuloh.svg',
                                             height: 14,
                                           ),
                                           SizedBox(
@@ -552,7 +552,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SvgPicture.asset(
-                                      'images/cancel.svg',
+                                      'assets/svg/cancel.svg',
                                       height: 17,
                                       width: 17,
                                     ),
@@ -572,7 +572,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SvgPicture.asset(
-                                      'images/cancel.svg',
+                                      'assets/svg/cancel.svg',
                                       height: 17,
                                       width: 17,
                                     ),

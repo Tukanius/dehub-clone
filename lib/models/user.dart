@@ -102,12 +102,14 @@ class User {
   String? businessName;
 
   String? deliveryNoteId;
+  Uri? url;
 
   getAvatar() {
     return HttpRequest.s3host + avatar.toString();
   }
 
   User({
+    this.url,
     this.businessName,
     this.verifyId,
     this.otpCode,

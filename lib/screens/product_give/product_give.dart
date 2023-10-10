@@ -64,7 +64,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
     }
     if (shipment.dispatchedDate != null &&
         shipment.isPaused == false &&
-        shipment.endedDate == null) {
+        shipment.isEnded == false) {
       startTimer(false);
     }
     setState(() {
@@ -113,8 +113,8 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
         setState(() {
           startShipment = false;
         });
-        print('================start================');
-        print(e);
+        debugPrint('================start================');
+        debugPrint(e.toString());
       }
     } else {
       try {
@@ -130,8 +130,8 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
         setState(() {
           startShipment = false;
         });
-        print('================proceed================');
-        print(e);
+        debugPrint('================proceed================');
+        debugPrint(e.toString());
       }
     }
   }
@@ -182,9 +182,9 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
       setState(() {
         isLoading = false;
       });
-      print('============endError==========');
-      print(e.toString());
-      print('============endError==========');
+      debugPrint('============endError==========');
+      debugPrint(e.toString());
+      debugPrint('============endError==========');
     }
   }
 
@@ -264,7 +264,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                               GestureDetector(
                                 onTap: () {
                                   if (startShipment == false &&
-                                      widget.data.endedDate == null) {
+                                      widget.data.deliveredDate == null) {
                                     startTimer(true);
                                   }
                                 },
@@ -281,7 +281,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       SvgPicture.asset(
-                                        'images/bx_timer.svg',
+                                        'assets/svg/bx_timer.svg',
                                         color: isStart == true
                                             ? white
                                             : buttonColor,
@@ -319,7 +319,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SvgPicture.asset(
-                                      'images/timer.svg',
+                                      'assets/svg/timer.svg',
                                       color: buttonColor,
                                     ),
                                     buildTime()
@@ -329,7 +329,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                               GestureDetector(
                                 onTap: () {
                                   if (shipment.isPaused == false &&
-                                      widget.data.endedDate == null) {
+                                      widget.data.deliveredDate == null) {
                                     stopTimer(resets: false);
                                   }
                                 },
@@ -373,7 +373,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                   width: 75,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: widget.data.endedDate == null
+                                    color: widget.data.isEnded == false
                                         ? lightGrey
                                         : orderColor,
                                   ),
@@ -381,15 +381,15 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       SvgPicture.asset(
-                                        'images/check_underline.svg',
-                                        color: widget.data.endedDate != null
+                                        'assets/svg/check_underline.svg',
+                                        color: widget.data.isEnded != false
                                             ? white
                                             : buttonColor,
                                       ),
                                       SizedBox(
                                         height: 5,
                                       ),
-                                      widget.data.endedDate == null
+                                      widget.data.isEnded == false
                                           ? Text(
                                               'Дуусгах',
                                               style: TextStyle(

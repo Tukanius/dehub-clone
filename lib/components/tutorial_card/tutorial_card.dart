@@ -30,7 +30,7 @@ class _TutorialCardState extends State<TutorialCard> {
               color: blue.withOpacity(0.1),
             ),
             child: SvgPicture.asset(
-              'images/dollar-sign.svg',
+              'assets/svg/dollar-sign.svg',
             ),
           ),
           Column(

@@ -90,7 +90,7 @@ class _AccountInfoPageState extends State<AccountInfoPage>
                       borderRadius: BorderRadius.circular(100),
                     ),
                     child: SvgPicture.asset(
-                      'images/yuluur1.svg',
+                      'assets/svg/yuluur1.svg',
                     ),
                   ),
                 )
@@ -155,7 +155,7 @@ class _AccountInfoPageState extends State<AccountInfoPage>
                                     : white,
                               ),
                               child: SvgPicture.asset(
-                                'images/setting_eye.svg',
+                                'assets/svg/setting_eye.svg',
                                 color: tabController.index != 0 ? grey2 : white,
                               ),
                             ),
@@ -207,7 +207,7 @@ class _AccountInfoPageState extends State<AccountInfoPage>
                                     : white,
                               ),
                               child: SvgPicture.asset(
-                                'images/grey_income.svg',
+                                'assets/svg/grey_income.svg',
                                 color: tabController.index != 2 ? grey2 : white,
                               ),
                             ),
@@ -233,7 +233,7 @@ class _AccountInfoPageState extends State<AccountInfoPage>
                                     : white,
                               ),
                               child: SvgPicture.asset(
-                                'images/grey_outgoing.svg',
+                                'assets/svg/grey_outgoing.svg',
                                 color: tabController.index != 3 ? grey2 : white,
                               ),
                             ),
@@ -259,7 +259,7 @@ class _AccountInfoPageState extends State<AccountInfoPage>
                                     : white,
                               ),
                               child: SvgPicture.asset(
-                                'images/paper.svg',
+                                'assets/svg/paper.svg',
                                 color: tabController.index != 4 ? grey2 : white,
                               ),
                             ),

@@ -124,7 +124,7 @@ class _ProfilePageState extends State<ProfilePage>
                                     : white,
                               ),
                               child: SvgPicture.asset(
-                                'images/bx_user-circle.svg',
+                                'assets/svg/bx_user-circle.svg',
                                 color: tabController.index != 0 ? grey3 : white,
                               ),
                             ),
@@ -147,7 +147,7 @@ class _ProfilePageState extends State<ProfilePage>
                                     : white,
                               ),
                               child: SvgPicture.asset(
-                                'images/hospital.svg',
+                                'assets/svg/hospital.svg',
                                 color: tabController.index != 1 ? grey3 : white,
                               ),
                             ),
@@ -170,7 +170,7 @@ class _ProfilePageState extends State<ProfilePage>
                                     : white,
                               ),
                               child: SvgPicture.asset(
-                                'images/people.svg',
+                                'assets/svg/people.svg',
                                 color: tabController.index != 2 ? grey3 : white,
                               ),
                             ),
@@ -192,7 +192,7 @@ class _ProfilePageState extends State<ProfilePage>
                                       ? buttonColor
                                       : white),
                               child: SvgPicture.asset(
-                                'images/settings.svg',
+                                'assets/svg/settings.svg',
                                 color: tabController.index != 3 ? grey3 : white,
                               ),
                             ),

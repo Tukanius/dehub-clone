@@ -79,7 +79,7 @@ class _SalbarSongohState extends State<SalbarSongoh> with AfterLayoutMixin {
             color: invoiceColor,
             padding: const EdgeInsets.all(13),
             child: SvgPicture.asset(
-              'images/close.svg',
+              'assets/svg/close.svg',
               height: 30,
             ),
           ),

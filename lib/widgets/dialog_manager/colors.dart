@@ -28,6 +28,7 @@ const Color backgroundColor = Color(0xffF5F8FA);
 const Color blue = Color(0xff2E41FB);
 const Color textColor = Color(0xffABA5D1);
 const Color buttonColor = Color(0xff323752);
+const Color menuBack = Color.fromARGB(255, 64, 70, 102);
 Color fillColor = Color(0xff44566C).withOpacity(0.3);
 const Color lightYellow = Color(0xffF4BE5E);
 const Color lightRed = Color(0xffFF808B);

@@ -111,8 +111,8 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
         setState(() {
           startShipment = false;
         });
-        print('================start================');
-        print(e);
+        debugPrint('================start================');
+        debugPrint(e.toString());
       }
     } else {
       try {
@@ -128,8 +128,8 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
         setState(() {
           startShipment = false;
         });
-        print('================proceed================');
-        print(e);
+        debugPrint('================proceed================');
+        debugPrint(e.toString());
       }
     }
   }
@@ -177,9 +177,9 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
         arguments: PullSheetExpensesArguments(data: shipment),
       );
     } catch (e) {
-      print('============err==========');
-      print(e.toString());
-      print('============err==========');
+      debugPrint('============err==========');
+      debugPrint(e.toString());
+      debugPrint('============err==========');
     }
   }
 
@@ -243,7 +243,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SvgPicture.asset(
-                                  'images/bx_timer.svg',
+                                  'assets/svg/bx_timer.svg',
                                   color: isStart == true ? white : buttonColor,
                                 ),
                                 shipment.startedDate == null
@@ -279,7 +279,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               SvgPicture.asset(
-                                'images/timer.svg',
+                                'assets/svg/timer.svg',
                                 color: buttonColor,
                               ),
                               buildTime()
@@ -341,7 +341,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SvgPicture.asset(
-                                  'images/check_underline.svg',
+                                  'assets/svg/check_underline.svg',
                                   color: widget.data.endedDate != null
                                       ? white
                                       : buttonColor,
@@ -375,6 +375,8 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                       ? Column(
                           children: [
                             ShippingCard(
+                              index: 0,
+                              startAnimation: true,
                               data: widget.data,
                             ),
                             Container(
@@ -518,7 +520,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                                           setState(() {
                                             isSubmit = false;
                                           });
-                                          print(e.toString());
+                                          debugPrint(e.toString());
                                         }
                                       },
                                       data: e,
@@ -601,7 +603,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                           ),
                         ),
                         Text(
-                          "90",
+                          "${shipment.pullSheetLines?.fold(0, (previousValue, element) => previousValue + element.quantity!)}",
                           style: TextStyle(
                             color: orderColor,
                           ),

@@ -71,7 +71,7 @@ class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
         widget.listenController.changeVariable('createDirection');
         Navigator.of(context).pop();
       } catch (e) {
-        print(e.toString());
+        debugPrint(e.toString());
       }
     }
   }
@@ -90,7 +90,7 @@ class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
           },
           child: Container(
             padding: const EdgeInsets.all(13),
-            child: SvgPicture.asset('images/close.svg'),
+            child: SvgPicture.asset('assets/svg/close.svg'),
           ),
         ),
         title: Text(

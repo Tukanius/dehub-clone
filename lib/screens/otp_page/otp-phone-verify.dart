@@ -174,7 +174,7 @@ class _OtpPhoneVerifyState extends State<OtpPhoneVerify> with AfterLayoutMixin {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(top: 20, bottom: 20),
-                    child: SvgPicture.asset('images/otp-phone.svg'),
+                    child: SvgPicture.asset('assets/svg/otp-phone.svg'),
                   ),
                   SizedBox(
                     height: 10,

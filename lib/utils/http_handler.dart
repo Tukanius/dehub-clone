@@ -1,7 +1,9 @@
 // import 'package:tw_app/screens/forgot/forgot_page.dart';
 
-import 'package:dehub/main.dart';
-import 'package:dehub/services/dialog.dart';
+// import 'package:dehub/main.dart';
+// import 'package:dehub/services/dialog.dart';
+// import 'package:dehub/main.dart';
+// import 'package:dehub/services/dialog.dart';
 import 'package:flutter/cupertino.dart';
 
 class HttpHandler {
@@ -52,9 +54,9 @@ class HttpHandler {
         return data;
       // case 401:
       //   return;
-      case 401:
-        locator<DialogService>().showErrorDialogListener("Нэвтэрнэ үү");
-        break;
+      // case 401:
+      //   locator<DialogService>().showErrorDialogListener("Нэвтэрнэ үү");
+      //   break;
       default:
         HttpHandler error = HttpHandler(
             statusCode: statusCode,

@@ -543,7 +543,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           ),
                         ),
                         Text(
-                          '${Moment.parse(order.deliveryDate.toString()).format("YYYY-MM-DD HH:mm")}',
+                          '${Moment.parse(order.deliveryDate.toString()).format("YYYY-MM-DD")}',
                           style: TextStyle(color: orderColor),
                         ),
                       ],
@@ -954,7 +954,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   //         horizontal: 15, vertical: 10),
                   //     child: Row(
                   //       children: [
-                  //         SvgPicture.asset('images/attachment_add.svg'),
+                  //         SvgPicture.asset('assets/svg/attachment_add.svg'),
                   //         SizedBox(
                   //           width: 5,
                   //         ),
@@ -1075,7 +1075,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               SvgPicture.asset(
-                                                'images/alert-circle.svg',
+                                                'assets/svg/alert-circle.svg',
                                               ),
                                               Text(
                                                 'Татгалзах',
@@ -1107,7 +1107,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               SvgPicture.asset(
-                                                'images/create-so.svg',
+                                                'assets/svg/create-so.svg',
                                                 color: orderColor,
                                               ),
                                               Text(
@@ -1146,7 +1146,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               SvgPicture.asset(
-                                                'images/alert-circle.svg',
+                                                'assets/svg/alert-circle.svg',
                                               ),
                                               Text(
                                                 'Татгалзах',
@@ -1178,7 +1178,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               SvgPicture.asset(
-                                                'images/create-so.svg',
+                                                'assets/svg/create-so.svg',
                                                 color: orderColor,
                                               ),
                                               Text(

@@ -69,7 +69,6 @@ class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
-    print(widget.data.toJson());
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -116,7 +115,7 @@ class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
                 height: 50,
               ),
               SvgPicture.asset(
-                'images/lock.svg',
+                'assets/svg/lock.svg',
                 color: orderColor,
               ),
               SizedBox(

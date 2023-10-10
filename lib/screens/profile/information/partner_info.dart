@@ -66,7 +66,7 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                                       width: 16,
                                     ),
                                     SvgPicture.asset(
-                                      'images/arrow_back.svg',
+                                      'assets/svg/arrow_back.svg',
                                       color: buttonColor,
                                     ),
                                     SizedBox(
@@ -109,7 +109,7 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                                       width: 10,
                                     ),
                                     SvgPicture.asset(
-                                      'images/arrow_forward.svg',
+                                      'assets/svg/arrow_forward.svg',
                                       color: buttonColor,
                                     ),
                                     SizedBox(
@@ -134,7 +134,7 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                               child: Row(
                                 children: [
                                   SvgPicture.asset(
-                                    'images/arrow_back.svg',
+                                    'assets/svg/arrow_back.svg',
                                     color: buttonColor,
                                   ),
                                   SizedBox(
@@ -180,7 +180,7 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                                     width: 10,
                                   ),
                                   SvgPicture.asset(
-                                    'images/arrow_forward.svg',
+                                    'assets/svg/arrow_forward.svg',
                                     color: buttonColor,
                                   ),
                                   SizedBox(

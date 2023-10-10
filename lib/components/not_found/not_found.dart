@@ -20,17 +20,17 @@ class _NotFoundState extends State<NotFound> {
     return Column(
       children: [
         widget.module == "INVOICE"
-            ? Lottie.asset('images/invoice-not-found.json')
+            ? Lottie.asset('assets/lottie/invoice-not-found.json')
             : widget.module == "ORDER"
                 ? Lottie.asset(
-                    'images/order-not-found.json',
+                    'assets/lottie/order-not-found.json',
                   )
                 : widget.module == "NETWORK"
                     ? Lottie.asset(
-                        'images/network-not-found.json',
+                        'assets/lottie/network-not-found.json',
                       )
                     : widget.module == "INVENTORY"
-                        ? Lottie.asset('images/product-not-found.json')
+                        ? Lottie.asset('assets/lottie/product-not-found.json')
                         : SizedBox(),
         const SizedBox(
           height: 20,

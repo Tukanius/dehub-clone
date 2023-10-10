@@ -1,5 +1,5 @@
-import 'package:dehub/screens/order_delivery/tabs/delivery_made.dart';
 import 'package:dehub/screens/order_shipping/tabs/shipping.dart';
+import 'package:dehub/screens/order_shipping/tabs/shipping_made.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -81,7 +81,7 @@ class _OrderDeliveryState extends State<OrderShipping> {
           body: TabBarView(
             children: [
               Shipping(),
-              DeliveryMade(),
+              ShippingMade(),
             ],
           ),
         ),

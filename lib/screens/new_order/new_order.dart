@@ -10,8 +10,10 @@ import 'package:dehub/screens/new_order/add_attachment.dart';
 import 'package:dehub/screens/new_order/order_add_row.dart';
 import 'package:dehub/screens/new_order/change_branch_name.dart';
 import 'package:dehub/screens/new_order/product_choose/product_choose_in_pieces/product_choose.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moment_dart/moment_dart.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -44,6 +46,7 @@ class NewOrder extends StatefulWidget {
 class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   bool isLoading = true;
   Order customer = Order();
+  DateTime dateTime = DateTime.now();
   Order productOrder = Order();
   Order additionalRows = Order();
   Order order = Order();
@@ -60,7 +63,18 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   ListenController customerListenController = ListenController();
   ListenController additionalRowsListenController = ListenController();
   ListenController productListenController = ListenController();
+  TextEditingController shippingAmountController = TextEditingController();
+  ScrollController scrollController = ScrollController();
   ListenController pickedFile = ListenController();
+  ListenController productInPackageController = ListenController();
+  // List<Order> packageProduct = [];
+  double totalVatAmount = 0;
+  double totalTaxAmount = 0;
+  double totalAmount = 0;
+  double finalAmount = 0;
+  bool isCheck = false;
+  bool selectedDateValidate = false;
+  var dateKey = GlobalKey();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -75,6 +89,23 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
     });
   }
 
+  validateCheck(bool toReview, bool send) {
+    if (isCheck == false && selectedDate == '') {
+      // scrollController.animateTo(
+      //   scrollController.position.minScrollExtent + 300,
+      //   duration: Duration(milliseconds: 300),
+      //   curve: Curves.ease,
+      // );
+      Scrollable.ensureVisible(dateKey.currentContext!,
+          duration: Duration(milliseconds: 300), curve: Curves.ease);
+      setState(() {
+        selectedDateValidate = true;
+      });
+    } else {
+      onSubmit(toReview, send);
+    }
+  }
+
   onSubmit(bool toReview, bool send) async {
     try {
       // if (data.isNotEmpty) {
@@ -86,7 +117,10 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
       createOrder.businessId = order.id;
       createOrder.receiverBranchId =
           receiverBranch.id ?? order.receiverBranches?.first.id;
-      createOrder.deliveryType = "DEFAULT_DATE";
+      createOrder.deliveryDate =
+          isCheck == false ? selectedDate : dateTime.toString();
+      createOrder.deliveryType =
+          isCheck == false ? "DEFAULT_DATE" : "CUSTOM_DATE";
       createOrder.receiverStaffId = order.receiverStaff?.id;
       createOrder.lines = data;
       createOrder.discountType = "AMOUNT";
@@ -164,6 +198,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
               ),
             )
           : SingleChildScrollView(
+              controller: scrollController,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -247,9 +282,20 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                               height: 24,
                               width: 24,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
+                                shape: BoxShape.circle,
                                 color: grey,
                               ),
+                              child: customer.logo != null
+                                  ? CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                        '${customer.logo}',
+                                        scale: 1,
+                                      ),
+                                    )
+                                  : CircleAvatar(
+                                      backgroundImage:
+                                          AssetImage('images/avatar.png'),
+                                    ),
                             ),
                             const SizedBox(
                               width: 5,
@@ -436,14 +482,23 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                           ),
                         ),
                         Expanded(
-                          child: Text(
-                            '${order.paymentTerm?.description}',
-                            style: const TextStyle(
-                              color: buttonColor,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            textAlign: TextAlign.end,
-                          ),
+                          child: order.paymentTerm?.description != null
+                              ? Text(
+                                  '${order.paymentTerm?.description}',
+                                  style: const TextStyle(
+                                    color: buttonColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  textAlign: TextAlign.end,
+                                )
+                              : Text(
+                                  'Төлбөрийн нөхцөл',
+                                  style: const TextStyle(
+                                    color: buttonColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  textAlign: TextAlign.end,
+                                ),
                         ),
                       ],
                     ),
@@ -490,7 +545,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                           'Менежер',
                           style: TextStyle(color: buttonColor),
                         ),
-                        order.receiverStaff != null || order.receiverStaff != {}
+                        order.receiverStaff?.id != null
                             ? Text(
                                 '${order.receiverStaff?.firstName}',
                                 style: const TextStyle(
@@ -498,7 +553,13 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                   fontWeight: FontWeight.w500,
                                 ),
                               )
-                            : const Text(''),
+                            : const Text(
+                                'Менежер',
+                                style: const TextStyle(
+                                  color: orderColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
                       ],
                     ),
                   ),
@@ -594,10 +655,10 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                         Expanded(
                           child: order.receiverBranches != null
                               ? receiverBranch.branchAddress == null
-                                  ? Text(
-                                      '${order.receiverBranches?.first.branchAddress}',
-                                      style: const TextStyle(
-                                        color: buttonColor,
+                                  ? const Text(
+                                      'Салбар тохируулаагүй байна !',
+                                      style: TextStyle(
+                                        color: red,
                                       ),
                                     )
                                   : Text(
@@ -607,9 +668,9 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                       ),
                                     )
                               : const Text(
-                                  'Салбар тохируулаагүй байна !',
+                                  'Харилцагч сонгоно уу',
                                   style: TextStyle(
-                                    color: red,
+                                    color: orderColor,
                                   ),
                                 ),
                         ),
@@ -631,115 +692,215 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              '${order.receiverStaff?.firstName}',
-                              style: const TextStyle(
-                                color: orderColor,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            const Icon(
-                              Icons.arrow_forward_ios,
-                              color: orderColor,
-                              size: 14,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
-                    color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Хүлээн авах өдөр',
-                          style: TextStyle(
-                            color: buttonColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            selectedDate == ''
-                                ? order.deliveryDate != null
-                                    ? Text(
-                                        '${Moment.parse(order.deliveryDate.toString()).format("YYYY-MM-DD")}',
-                                        style: const TextStyle(
-                                          color: orderColor,
-                                        ),
-                                      )
-                                    : const Text('')
-                                : Text(
-                                    '${Moment.parse(selectedDate).format("YYYY-MM-DD")}',
+                        order.receiverStaff?.firstName != null
+                            ? Row(
+                                children: [
+                                  Text(
+                                    '${order.receiverStaff?.firstName}',
                                     style: const TextStyle(
                                       color: orderColor,
                                     ),
                                   ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            const Icon(
-                              Icons.calendar_month,
-                              color: orderColor,
-                              size: 16,
-                            )
-                          ],
-                        ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  const Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: orderColor,
+                                    size: 14,
+                                  )
+                                ],
+                              )
+                            : Text(
+                                'Хүлээн авах ажилтан',
+                                style: const TextStyle(
+                                  color: orderColor,
+                                ),
+                              ),
                       ],
                     ),
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.all(15),
-                    color: white,
-                    margin: const EdgeInsets.only(bottom: 3),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Хамгийн ойрхон хүргэх боломжтой хуваарьт өдөр',
-                          style: TextStyle(
-                            color: grey,
-                            fontSize: 12,
+                  // Container(
+                  //   margin: const EdgeInsets.only(bottom: 3),
+                  //   color: white,
+                  //   padding: const EdgeInsets.symmetric(
+                  //       horizontal: 15, vertical: 10),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       const Text(
+                  //         'Хүлээн авах өдөр',
+                  //         style: TextStyle(
+                  //           color: buttonColor,
+                  //           fontWeight: FontWeight.w500,
+                  //         ),
+                  //       ),
+                  //       Row(
+                  //         children: [
+                  //           selectedDate == ''
+                  //               ? order.deliveryDate != null
+                  //                   ? Text(
+                  //                       '${Moment.parse(order.deliveryDate.toString()).format("YYYY-MM-DD")}',
+                  //                       style: const TextStyle(
+                  //                         color: orderColor,
+                  //                       ),
+                  //                     )
+                  //                   : const Text('')
+                  //               : Text(
+                  //                   '${Moment.parse(selectedDate).format("YYYY-MM-DD")}',
+                  //                   style: const TextStyle(
+                  //                     color: orderColor,
+                  //                   ),
+                  //                 ),
+                  //           const SizedBox(
+                  //             width: 8,
+                  //           ),
+                  //           const Icon(
+                  //             Icons.calendar_month,
+                  //             color: orderColor,
+                  //             size: 16,
+                  //           )
+                  //         ],
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  Row(
+                    children: [
+                      Checkbox(
+                        side: MaterialStateBorderSide.resolveWith(
+                          (states) => BorderSide(
+                            color: orderColor,
+                            width: 2,
                           ),
                         ),
-                        const SizedBox(
-                          height: 10,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
                         ),
-                        GridView.count(
-                            physics: const NeverScrollableScrollPhysics(),
-                            childAspectRatio: 1 / 0.6,
-                            mainAxisSpacing: 15,
-                            crossAxisSpacing: 10,
-                            shrinkWrap: true,
-                            crossAxisCount: 3,
-                            children: dates
-                                .map(
-                                  (e) => PossibleScheduleCard(
-                                    formattedDate: DateFormat("EEEE")
-                                        .format(DateTime.parse(e)),
-                                    isSelected: selectedDate == e,
-                                    onClick: () {
-                                      setState(() {
-                                        selectedDate = e;
-                                      });
-                                    },
-                                    data: e,
-                                  ),
-                                )
-                                .toList()),
-                      ],
-                    ),
+                        activeColor: orderColor,
+                        value: isCheck,
+                        onChanged: (value) {
+                          setState(() {
+                            isCheck = value!;
+                          });
+                        },
+                      ),
+                      Text('Хуваарьт өдөрөөс бусад өдөр сонгох')
+                    ],
                   ),
+                  isCheck == false
+                      ? Container(
+                          key: dateKey,
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.all(15),
+                          color: white,
+                          margin: const EdgeInsets.only(bottom: 3),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Хамгийн ойрхон хүргэх боломжтой хуваарьт өдөр',
+                                style: TextStyle(
+                                  color: grey,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              GridView.count(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  childAspectRatio: 1 / 0.6,
+                                  mainAxisSpacing: 15,
+                                  crossAxisSpacing: 10,
+                                  shrinkWrap: true,
+                                  crossAxisCount: 3,
+                                  children: dates
+                                      .map(
+                                        (e) => PossibleScheduleCard(
+                                          validate: selectedDateValidate,
+                                          formattedDate: DateFormat("EEEE")
+                                              .format(DateTime.parse(e)),
+                                          isSelected: selectedDate == e,
+                                          onClick: () {
+                                            setState(() {
+                                              selectedDateValidate = false;
+                                              selectedDate = e;
+                                            });
+                                          },
+                                          data: e,
+                                        ),
+                                      )
+                                      .toList()),
+                            ],
+                          ),
+                        )
+                      : Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: white,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: grey,
+                              ),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 10),
+                            child: GestureDetector(
+                              onTap: () {
+                                showCupertinoModalPopup(
+                                  context: context,
+                                  builder: (context) {
+                                    return Container(
+                                      color: white,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.4,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text(
+                                              'Болсон',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: black,
+                                                fontFamily: "Montserrat",
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: CupertinoDatePicker(
+                                              minimumDate: DateTime.now()
+                                                  .subtract(
+                                                      const Duration(days: 1)),
+                                              initialDateTime: dateTime,
+                                              mode:
+                                                  CupertinoDatePickerMode.date,
+                                              use24hFormat: true,
+                                              showDayOfWeek: true,
+                                              onDateTimeChanged:
+                                                  (DateTime newDate) {
+                                                setState(
+                                                    () => dateTime = newDate);
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              child: Text(
+                                  '${dateTime.year} - ${dateTime.month} - ${dateTime.day}'),
+                            ),
+                          ),
+                        ),
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
@@ -765,7 +926,10 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                               Navigator.of(context).pushNamed(
                                 ProductChoose.routeName,
                                 arguments: ProductChooseArguments(
+                                  isPackage: false,
                                   businessId: customer.id!,
+                                  packageListenController:
+                                      productInPackageController,
                                   productListenController:
                                       productListenController,
                                 ),
@@ -787,6 +951,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                   arguments: ProductChooseArguments(
                                     isPackage: true,
                                     businessId: customer.id!,
+                                    packageListenController:
+                                        productInPackageController,
                                     productListenController:
                                         productListenController,
                                   ),
@@ -833,10 +999,10 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                             readOnly: true,
                             onCloseClick: () {
                               setState(() {
-                                product.removeWhere((element) =>
-                                    element.salesCode == item.salesCode);
-                                data.removeWhere((element) =>
-                                    element.salesCode == item.salesCode);
+                                product.removeWhere(
+                                    (element) => element.id == item.id);
+                                data.removeWhere(
+                                    (element) => element.id == item.id);
                               });
                             },
                             data: item,
@@ -966,7 +1132,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -976,7 +1142,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                           ),
                         ),
                         Text(
-                          '0₮',
+                          '${Utils().formatCurrency(totalVatAmount.toString())}₮',
                           style: TextStyle(
                             color: orderColor,
                           ),
@@ -988,7 +1154,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -998,7 +1164,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                           ),
                         ),
                         Text(
-                          '0₮',
+                          '${Utils().formatCurrency(totalTaxAmount.toString())}₮',
                           style: TextStyle(
                             color: orderColor,
                           ),
@@ -1043,7 +1209,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                         ),
                         product.isNotEmpty
                             ? Text(
-                                '${product.fold(0, (previousValue, element) => previousValue + (element.price!.toInt() * element.quantity!.toInt()))}₮',
+                                '${Utils().formatCurrency(totalAmount.toString())}₮',
                                 style: const TextStyle(
                                   color: orderColor,
                                 ),
@@ -1057,10 +1223,20 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       ],
                     ),
                   ),
-                  const FormTextField(
+                  FormTextField(
+                    inputType: TextInputType.number,
                     name: 'shippingAmount',
                     textAlign: TextAlign.end,
                     textColor: orderColor,
+                    onChanged: (p0) {
+                      setState(() {
+                        finalAmount = totalAmount;
+                        finalAmount = finalAmount +
+                            (double.tryParse(shippingAmountController.text) ??
+                                0);
+                      });
+                    },
+                    controller: shippingAmountController,
                     decoration: InputDecoration(
                       prefixIcon: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -1126,7 +1302,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -1136,7 +1312,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                           ),
                         ),
                         Text(
-                          'XXX,XXX,XXX.XX₮',
+                          '${finalAmount}₮',
                           style: TextStyle(
                             color: orderColor,
                           ),
@@ -1167,29 +1343,29 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       ],
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
-                    color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Төлөх сүүлийн огноо',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        Text(
-                          '-',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   margin: const EdgeInsets.only(bottom: 3),
+                  //   color: white,
+                  //   padding: const EdgeInsets.symmetric(
+                  //       horizontal: 15, vertical: 10),
+                  //   child: const Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Text(
+                  //         'Төлөх сүүлийн огноо',
+                  //         style: TextStyle(
+                  //           color: buttonColor,
+                  //         ),
+                  //       ),
+                  //       Text(
+                  //         '-',
+                  //         style: TextStyle(
+                  //           color: orderColor,
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
@@ -1276,7 +1452,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                           horizontal: 15, vertical: 10),
                       child: Row(
                         children: [
-                          SvgPicture.asset('images/attachment_add.svg'),
+                          SvgPicture.asset('assets/svg/attachment_add.svg'),
                           const SizedBox(
                             width: 5,
                           ),
@@ -1330,7 +1506,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                             GestureDetector(
                               onTap: () {
                                 if (data.isNotEmpty) {
-                                  onSubmit(false, false);
+                                  // onSubmit(false, false);
+                                  validateCheck(false, false);
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
@@ -1350,7 +1527,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     SvgPicture.asset(
-                                      'images/save.svg',
+                                      'assets/svg/save.svg',
                                       color: orderColor,
                                     ),
                                     const Text(
@@ -1372,7 +1549,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                 // Navigator.of(context)
                                 //     .pushNamed(OrderSendPage.routeName);
                                 if (data.isNotEmpty) {
-                                  onSubmit(true, false);
+                                  // onSubmit(true, false);
+                                  validateCheck(true, false);
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
@@ -1392,7 +1570,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     SvgPicture.asset(
-                                      'images/control.svg',
+                                      'assets/svg/control.svg',
                                       color: orderColor,
                                     ),
                                     const Text(
@@ -1412,7 +1590,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                             GestureDetector(
                               onTap: () {
                                 if (data.isNotEmpty) {
-                                  onSubmit(true, true);
+                                  // onSubmit(true, true);
+                                  validateCheck(true, true);
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
@@ -1433,7 +1612,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     SvgPicture.asset(
-                                      'images/message_sent.svg',
+                                      'assets/svg/message_sent.svg',
                                       color: orderColor,
                                     ),
                                     const Text(
@@ -1479,11 +1658,33 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
         files.add(result!);
       });
     });
+    productInPackageController.addListener(() {
+      setState(() {
+        product = productInPackageController.productInPackage!;
+        data = productInPackageController.productInPackage!;
+      });
+    });
     productListenController.addListener(() {
       productOrder = productListenController.productOrder!;
       setState(() {
         product.add(productOrder);
         data.add(productOrder);
+        double vat = product.fold(
+            0,
+            (previousValue, element) =>
+                previousValue + (element.quantity! * element.vatAmount!));
+        totalVatAmount = vat;
+        double tax = product.fold(
+            0,
+            (previousValue, element) =>
+                previousValue + (element.quantity! * element.taxAmount!));
+        totalTaxAmount = tax;
+        double total = product.fold(
+            0,
+            (previousValue, element) =>
+                previousValue + (element.quantity! * element.price!));
+        totalAmount = total + tax + vat;
+        finalAmount = totalAmount;
       });
     });
     additionalRowsListenController.addListener(() {

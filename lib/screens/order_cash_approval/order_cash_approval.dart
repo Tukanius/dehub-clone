@@ -158,7 +158,7 @@ class _OrderCashApprovalState extends State<OrderCashApproval> {
             SizedBox(
               height: 50,
             ),
-            SvgPicture.asset('images/sand_time.svg'),
+            SvgPicture.asset('assets/svg/sand_time.svg'),
             SizedBox(
               height: 35,
             ),

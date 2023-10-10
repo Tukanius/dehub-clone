@@ -19,14 +19,17 @@ class PaymentPage extends StatefulWidget {
   State<PaymentPage> createState() => _PaymentPageState();
 }
 
-int selectedIndex = 0;
-
 class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
+  int selectedIndex = 1;
+  bool isLoading = true;
   @override
   afterFirstLayout(BuildContext context) async {
     await Provider.of<UserProvider>(context, listen: false).payment(true);
     await Provider.of<GeneralProvider>(context, listen: false)
         .paymentInit(true);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   static const List<Widget> currentPages = [
@@ -96,7 +99,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: SvgPicture.asset(
-                    'images/grid.svg',
+                    'assets/svg/grid.svg',
                     color: selectedIndex != 3 ? paymentColor : white,
                   ),
                 )
@@ -112,9 +115,11 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                   : SizedBox(),
         ],
       ),
-      body: Container(
-        child: currentPages.elementAt(selectedIndex),
-      ),
+      body: isLoading == true
+          ? SizedBox()
+          : Container(
+              child: currentPages.elementAt(selectedIndex),
+            ),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: paymentColor,
         unselectedFontSize: 12,
@@ -137,7 +142,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/home.svg',
+                    'assets/svg/home.svg',
                     color: selectedIndex == 0 ? white : paymentColor,
                   ),
                 ),
@@ -161,7 +166,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/dashboard.svg',
+                    'assets/svg/dashboard.svg',
                     color: selectedIndex == 1 ? white : paymentColor,
                   ),
                 ),
@@ -185,7 +190,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/inbox.svg',
+                    'assets/svg/inbox.svg',
                     color: selectedIndex == 2 ? white : paymentColor,
                   ),
                 ),
@@ -209,7 +214,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/sent.svg',
+                    'assets/svg/sent.svg',
                     color: selectedIndex == 3 ? white : paymentColor,
                   ),
                 ),

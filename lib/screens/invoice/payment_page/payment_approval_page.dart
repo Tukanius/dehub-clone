@@ -80,7 +80,7 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
                       ),
                     ),
                     child: SvgPicture.asset(
-                      'images/check.svg',
+                      'assets/svg/check.svg',
                       color: invoiceColor,
                     ),
                   ),
@@ -165,9 +165,9 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
         await InvoiceApi().pay(widget.id, invoice);
         await show(context);
       } catch (e) {
-        print("=================ERROR======================");
-        print(e.toString());
-        print("=================ERROR======================");
+        debugPrint("=================ERROR======================");
+        debugPrint(e.toString());
+        debugPrint("=================ERROR======================");
       }
     }
   }
@@ -208,7 +208,7 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage>
                     borderRadius: BorderRadius.circular(3),
                   ),
                   child: SvgPicture.asset(
-                    'images/send.svg',
+                    'assets/svg/send.svg',
                   ),
                 ),
               ],

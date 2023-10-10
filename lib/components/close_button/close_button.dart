@@ -23,7 +23,7 @@ class _CustomCloseButtonState extends State<CustomCloseButton> {
         color: widget.color,
         padding: const EdgeInsets.all(13),
         child: SvgPicture.asset(
-          'images/close.svg',
+          'assets/svg/close.svg',
           height: 30,
         ),
       ),

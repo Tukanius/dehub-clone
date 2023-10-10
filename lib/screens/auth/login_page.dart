@@ -31,8 +31,8 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
   TextEditingController codeController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   final LocalAuthentication auth = LocalAuthentication();
-  String fingerPrintIcon = "images/finger-print.svg";
-  String faceIdIcon = "images/face-id.svg";
+  String fingerPrintIcon = "assets/svg/finger-print.svg";
+  String faceIdIcon = "assets/svg/face-id.svg";
   bool _isVisible = true;
   bool isCheck = false;
   bool saveCode = false;
@@ -553,7 +553,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
           isSubmit = false;
         });
       } catch (e) {
-        print(e.toString());
+        debugPrint(e.toString());
         setState(() {
           isSubmit = false;
         });

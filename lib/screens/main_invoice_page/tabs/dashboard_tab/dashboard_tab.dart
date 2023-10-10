@@ -65,7 +65,7 @@ class _DashBoardTabState extends State<DashBoardTab> {
                             color: invoiceColor.withOpacity(0.1),
                           ),
                           child: SvgPicture.asset(
-                            'images/take_invoice.svg',
+                            'assets/svg/take_invoice.svg',
                             color: invoiceColor,
                           ),
                         ),
@@ -114,7 +114,7 @@ class _DashBoardTabState extends State<DashBoardTab> {
                             color: invoiceColor.withOpacity(0.1),
                           ),
                           child: SvgPicture.asset(
-                            'images/closed_invoice.svg',
+                            'assets/svg/closed_invoice.svg',
                             color: invoiceColor,
                           ),
                         ),
@@ -151,7 +151,7 @@ class _DashBoardTabState extends State<DashBoardTab> {
                           color: invoiceColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/map.svg',
+                          'assets/svg/map.svg',
                           color: invoiceColor,
                         ),
                       ),

@@ -139,7 +139,7 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
                       children: [
                         selectedMethod == "Дансаар"
                             ? SvgPicture.asset(
-                                'images/bank_account.svg',
+                                'assets/svg/bank_account.svg',
                               )
                             : selectedMethod == 'QPay'
                                 ? Image(
@@ -152,19 +152,19 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
                                       )
                                     : selectedMethod == "Картаар"
                                         ? SvgPicture.asset(
-                                            'images/bank_card.svg',
+                                            'assets/svg/bank_card.svg',
                                             color: grey3,
                                           )
                                         : selectedMethod == "Бэлэн мөнгөөр"
                                             ? SvgPicture.asset(
-                                                'images/sanhuujilt.svg',
+                                                'assets/svg/sanhuujilt.svg',
                                                 height: 20,
                                                 color: grey3,
                                               )
                                             : selectedMethod ==
                                                     "Бизнес тооцооны дансаар"
                                                 ? SvgPicture.asset(
-                                                    'images/bank.svg',
+                                                    'assets/svg/bank.svg',
                                                     color: grey3,
                                                   )
                                                 : SizedBox(),
@@ -374,7 +374,7 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
                         width: 5,
                       ),
                       SvgPicture.asset(
-                        'images/bank.svg',
+                        'assets/svg/bank.svg',
                         color: grey3,
                       ),
                       SizedBox(
@@ -459,7 +459,7 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
                         width: 5,
                       ),
                       SvgPicture.asset(
-                        'images/bank_card.svg',
+                        'assets/svg/bank_card.svg',
                         color: grey3,
                       ),
                       SizedBox(
@@ -488,7 +488,7 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
                         width: 5,
                       ),
                       SvgPicture.asset(
-                        'images/sanhuujilt.svg',
+                        'assets/svg/sanhuujilt.svg',
                         color: grey3,
                         height: 20,
                       ),
@@ -518,7 +518,7 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
                         width: 5,
                       ),
                       SvgPicture.asset(
-                        'images/bank_account.svg',
+                        'assets/svg/bank_account.svg',
                         color: grey3,
                       ),
                       SizedBox(

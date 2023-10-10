@@ -32,6 +32,7 @@ class _OrderCustomerChooseState extends State<OrderCustomerChoose>
   int limit = 10;
   bool isLoading = true;
   Result customer = Result(count: 0, rows: []);
+  bool startAnimation = false;
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -46,6 +47,11 @@ class _OrderCustomerChooseState extends State<OrderCustomerChoose>
     setState(() {
       customer = res;
       isLoading = false;
+      Future.delayed(Duration(milliseconds: 100), () {
+        setState(() {
+          startAnimation = true;
+        });
+      });
     });
   }
 
@@ -91,6 +97,8 @@ class _OrderCustomerChooseState extends State<OrderCustomerChoose>
                     children: customer.rows!
                         .map(
                           (item) => OrderCustomerCard(
+                            index: customer.rows!.indexOf(item),
+                            startAnimation: startAnimation,
                             onClick: () {
                               widget.customerListenController
                                   .customerOrderChange(item);

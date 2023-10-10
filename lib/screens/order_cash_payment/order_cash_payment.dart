@@ -102,7 +102,7 @@ class _OrderCashPaymentState extends State<OrderCashPayment> {
               child: Row(
                 children: [
                   SvgPicture.asset(
-                    'images/sanhuujilt.svg',
+                    'assets/svg/sanhuujilt.svg',
                     color: orderColor,
                     height: 20,
                   ),

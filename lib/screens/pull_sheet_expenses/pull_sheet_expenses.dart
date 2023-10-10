@@ -69,6 +69,8 @@ class _PullSheetExpensesState extends State<PullSheetExpenses> {
                     height: 5,
                   ),
                   ShippingCard(
+                    startAnimation: true,
+                    index: 1,
                     data: widget.data,
                   ),
                   Container(

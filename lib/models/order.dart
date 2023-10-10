@@ -184,10 +184,16 @@ class Order {
   Order? buyerBusiness;
   Order? deliveryStaff;
   String? code;
-
   String? configType;
 
+  bool? isEnded;
+  String? deliveredDate;
+  Order? respondedUser;
+
   Order({
+    this.respondedUser,
+    this.deliveredDate,
+    this.isEnded,
     this.configType,
     this.code,
     this.startDate,

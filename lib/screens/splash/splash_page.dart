@@ -1,7 +1,8 @@
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/auth/login_page.dart';
-import 'package:dehub/screens/first_page/first_page.dart';
+import 'package:dehub/screens/entry_point/entry_point.dart';
+// import 'package:dehub/screens/first_page/first_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -24,11 +25,11 @@ class _SplashPageState extends State<SplashPage>
     try {
       await Provider.of<UserProvider>(context, listen: false).me(false);
       await Provider.of<UserProvider>(context, listen: false).partnerMe(false);
-      await Navigator.of(context).pushNamed(FirstPage.routeName);
+      await Navigator.of(context).pushNamed(EntryPoint.routeName);
     } catch (e) {
-      print('===================ERROR=================');
-      print(e.toString());
-      print('===================ERROR=================');
+      debugPrint('===================ERROR=================');
+      debugPrint(e.toString());
+      debugPrint('===================ERROR=================');
       await Navigator.of(context).pushNamed(LoginPage.routeName);
     }
   }
@@ -38,7 +39,7 @@ class _SplashPageState extends State<SplashPage>
     return Scaffold(
       body: Center(
         child: CircularProgressIndicator(
-          color: mainColor,
+          color: buttonColor,
         ),
       ),
     );

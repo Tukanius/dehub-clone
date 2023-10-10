@@ -58,6 +58,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
   double vatAmount = 0;
   double taxAmount = 0;
   double totalAmount = 0;
+  double finalAmount = 0;
   double additionalRowAmount = 0;
 
   List<String> list = <String>[
@@ -93,6 +94,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
             0, (previousValue, element) => previousValue + element.taxAmount!);
         taxAmount = tax.roundToDouble();
         totalAmount = amount + vatAmount + taxAmount + additionalRowAmount;
+        finalAmount = totalAmount;
       });
     });
     partnerListenController.addListener(() {
@@ -866,10 +868,12 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       FormTextField(
                         onChanged: (value) {
                           setState(() {
-                            totalAmount = totalAmount +
-                                double.parse(shippingAmountController.text);
+                            finalAmount = totalAmount;
+                            finalAmount = finalAmount +
+                                (double.tryParse(
+                                        shippingAmountController.text) ??
+                                    0);
                           });
-                          print(totalAmount);
                         },
                         textColor: orderColor,
                         name: "shippingAmount",
@@ -955,7 +959,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                               children: [
                                 inventory.isNotEmpty
                                     ? Text(
-                                        "${totalAmount}₮",
+                                        "${finalAmount}₮",
                                         style: TextStyle(
                                           color: invoiceColor,
                                           fontWeight: FontWeight.bold,
@@ -1282,7 +1286,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                     child: Column(
                                       children: [
                                         SvgPicture.asset(
-                                          'images/save.svg',
+                                          'assets/svg/save.svg',
                                           height: 20,
                                         ),
                                         Text(
@@ -1348,7 +1352,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                     child: Column(
                                       children: [
                                         SvgPicture.asset(
-                                          'images/cancel.svg',
+                                          'assets/svg/cancel.svg',
                                           height: 20,
                                         ),
                                         Text(

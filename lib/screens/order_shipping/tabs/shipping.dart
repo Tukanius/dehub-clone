@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
@@ -22,8 +24,10 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
   int limit = 10;
   Result pullSheet = Result(count: 0, rows: []);
   bool isLoading = true;
+  bool startAnimation = false;
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
+  double screenWidth = 0;
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -38,6 +42,11 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
     setState(() {
       pullSheet = res;
       isLoading = false;
+      Future.delayed(Duration(milliseconds: 100), () {
+        setState(() {
+          startAnimation = true;
+        });
+      });
     });
   }
 
@@ -56,7 +65,7 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
       limit += 10;
     });
     await list(page, limit);
-    refreshController.refreshCompleted();
+    refreshController.loadComplete();
     setState(() {
       isLoading = false;
     });
@@ -64,6 +73,7 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    screenWidth = MediaQuery.of(context).size.width;
     return isLoading == true
         ? Center(
             child: CircularProgressIndicator(
@@ -76,6 +86,14 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
             controller: refreshController,
             header: WaterDropHeader(
               waterDropColor: orderColor,
+              refresh: SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: orderColor,
+                ),
+              ),
             ),
             onRefresh: _onRefresh,
             onLoading: _onLoading,
@@ -115,6 +133,8 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
                           children: pullSheet.rows!
                               .map(
                                 (data) => ShippingCard(
+                                  startAnimation: startAnimation,
+                                  index: pullSheet.rows!.indexOf(data),
                                   data: data,
                                   onClick: () {
                                     Navigator.of(context).pushNamed(

@@ -1,5 +1,5 @@
 import 'package:dehub/models/general.dart';
-import 'package:dehub/models/user.dart';
+import 'package:dehub/models/partner.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/utils/utils.dart';
@@ -24,6 +24,10 @@ class InvoiceCard extends StatefulWidget {
 }
 
 class _InvoiceCardState extends State<InvoiceCard> {
+  Partner user = Partner();
+  General general = General();
+  bool value = false;
+
   invoiceStatus() {
     switch (widget.data?.invoiceStatus) {
       case "CONFIRMED":
@@ -126,288 +130,264 @@ class _InvoiceCardState extends State<InvoiceCard> {
     }
   }
 
-  User user = User();
-  General general = General();
-  bool value = false;
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserProvider>(context, listen: false).invoiceMe;
+    user = Provider.of<UserProvider>(context, listen: false).partnerUser;
     general =
         Provider.of<GeneralProvider>(context, listen: false).inventoryGeneral;
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(left: 15, top: 10),
-            child: Text(
-              "${widget.data!.getPostDate()}",
-              style: TextStyle(
-                color: grey3,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          GestureDetector(
-            onTap: widget.onClick,
-            child: Container(
-              color: white,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return GestureDetector(
+      onTap: widget.onClick,
+      child: Container(
+        color: white,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Checkbox(
-                              side: MaterialStateBorderSide.resolveWith(
-                                (states) => BorderSide(
-                                  color: invoiceColor,
-                                  width: 2,
-                                ),
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              activeColor: invoiceColor,
-                              value: value,
-                              onChanged: (value1) {
-                                setState(() {
-                                  value = value1!;
-                                });
-                              },
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 13,
-                                ),
-                                user.currentBusiness?.type == "SUPPLIER"
-                                    ? Text(
-                                        '${widget.data?.receiverBusiness?.partner?.businessName}',
-                                        style: TextStyle(
-                                          color: black,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      )
-                                    : Text(
-                                        '${widget.data?.senderBusiness?.partner?.businessName}',
-                                        style: TextStyle(
-                                          color: black,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  '${widget.data!.getsentDate()}',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: grey2,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 7,
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 2, horizontal: 5),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    border:
-                                        Border.all(color: invoiceStatusColor()),
-                                  ),
-                                  child: Text(
-                                    invoiceStatus(),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12,
-                                      color: invoiceStatusColor(),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'Төлөх: ',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Color(0xff555555),
-                                      ),
-                                    ),
-                                    Text(
-                                      // '${widget.data!.getPaymentDate()}',
-                                      '',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Color(0xff555555),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      'images/inv.svg',
-                                      color: invoiceColor,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      '${widget.data!.refCode}',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        color: black,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                              ],
-                            ),
-                          ],
+                      Checkbox(
+                        side: MaterialStateBorderSide.resolveWith(
+                          (states) => BorderSide(
+                            color: invoiceColor,
+                            width: 2,
+                          ),
                         ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        activeColor: invoiceColor,
+                        value: value,
+                        onChanged: (value1) {
+                          setState(() {
+                            value = value1!;
+                          });
+                        },
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(right: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              '${Utils().formatCurrency(widget.data!.amountToPay.toString())}₮',
-                              style: TextStyle(
-                                color: black,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 5, vertical: 3),
-                              decoration: BoxDecoration(
-                                color: fillColor(),
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(
-                                  color: borderColor(),
-                                ),
-                              ),
-                              child: Text(
-                                paymentStatus(),
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: textColor(),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Баталсан: ',
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 13,
+                          ),
+                          user.user?.currentBusiness?.type == "SUPPLIER"
+                              ? Text(
+                                  '${widget.data?.receiverBusiness?.partner?.businessName}',
                                   style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xff555555),
-                                  ),
-                                ),
-                                Text(
-                                  '${Utils().formatCurrency(widget.data!.confirmedAmount.toString())}₮',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xff555555),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Хугацаа: ',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xff555555),
-                                  ),
-                                ),
-                                widget.data!.overdueStatus == "NORMAL"
-                                    ? Text(
-                                        'Хэвийн',
-                                        style: TextStyle(
-                                          color: green,
-                                          fontSize: 12,
-                                        ),
-                                      )
-                                    : Text(
-                                        'Хугацаа хэтэрсэн',
-                                        style: TextStyle(
-                                          color: buttonColor,
-                                          fontSize: 12,
-                                        ),
-                                      )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Төлсөн:',
-                                  style: TextStyle(
-                                    color: Color(0xff555555),
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  '${Utils().formatCurrency(widget.data!.paidAmount.toString())} ₮',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: grey2,
+                                    color: black,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 )
-                              ],
+                              : Text(
+                                  '${widget.data?.senderBusiness?.partner?.businessName}',
+                                  style: TextStyle(
+                                    color: black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            '${widget.data?.getsentDate()}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: grey2,
                             ),
-                            SizedBox(
-                              height: 15,
+                          ),
+                          SizedBox(
+                            height: 7,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(color: invoiceStatusColor()),
                             ),
-                          ],
-                        ),
+                            child: Text(
+                              invoiceStatus(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                                color: invoiceStatusColor(),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                'Төлөх: ',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0xff555555),
+                                ),
+                              ),
+                              Text(
+                                // '${widget.data!.getPaymentDate()}',
+                                '',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0xff555555),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/svg/inv.svg',
+                                color: invoiceColor,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                '${widget.data!.refCode}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: black,
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(right: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        '${Utils().formatCurrency(widget.data!.amountToPay.toString())}₮',
+                        style: TextStyle(
+                          color: black,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 3),
+                        decoration: BoxDecoration(
+                          color: fillColor(),
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(
+                            color: borderColor(),
+                          ),
+                        ),
+                        child: Text(
+                          paymentStatus(),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: textColor(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'Баталсан: ',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xff555555),
+                            ),
+                          ),
+                          Text(
+                            '${Utils().formatCurrency(widget.data!.confirmedAmount.toString())}₮',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xff555555),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'Хугацаа: ',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xff555555),
+                            ),
+                          ),
+                          widget.data!.overdueStatus == "NORMAL"
+                              ? Text(
+                                  'Хэвийн',
+                                  style: TextStyle(
+                                    color: green,
+                                    fontSize: 12,
+                                  ),
+                                )
+                              : Text(
+                                  'Хугацаа хэтэрсэн',
+                                  style: TextStyle(
+                                    color: buttonColor,
+                                    fontSize: 12,
+                                  ),
+                                )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'Төлсөн:',
+                            style: TextStyle(
+                              color: Color(0xff555555),
+                              fontSize: 12,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            '${Utils().formatCurrency(widget.data!.paidAmount.toString())} ₮',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: grey2,
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

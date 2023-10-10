@@ -59,7 +59,7 @@ class _HomePageTabState extends State<HomePageTab> {
                             color: financingColor.withOpacity(0.1),
                           ),
                           child: SvgPicture.asset(
-                            'images/camera.svg',
+                            'assets/svg/camera.svg',
                             color: financingColor,
                           ),
                         ),
@@ -98,7 +98,7 @@ class _HomePageTabState extends State<HomePageTab> {
                           color: financingColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/push.svg',
+                          'assets/svg/push.svg',
                           color: financingColor,
                         ),
                       ),
@@ -136,7 +136,7 @@ class _HomePageTabState extends State<HomePageTab> {
                           color: financingColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
-                          'images/bag.svg',
+                          'assets/svg/bag.svg',
                           color: financingColor,
                         ),
                       ),
@@ -176,7 +176,7 @@ class _HomePageTabState extends State<HomePageTab> {
                             color: financingColor.withOpacity(0.1),
                           ),
                           child: SvgPicture.asset(
-                            'images/sanhuujiltS.svg',
+                            'assets/svg/sanhuujiltS.svg',
                             color: financingColor,
                           ),
                         ),
@@ -220,7 +220,7 @@ class _HomePageTabState extends State<HomePageTab> {
                             color: financingColor.withOpacity(0.1),
                           ),
                           child: SvgPicture.asset(
-                            'images/map.svg',
+                            'assets/svg/map.svg',
                             color: financingColor,
                           ),
                         ),

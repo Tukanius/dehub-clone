@@ -70,9 +70,9 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
       setState(() {
         isLoading = false;
       });
-      print('===============ERROR===============');
-      print(e.toString());
-      print('===============ERROR===============');
+      debugPrint('===============ERROR===============');
+      debugPrint(e.toString());
+      debugPrint('===============ERROR===============');
     }
   }
 

@@ -22,14 +22,18 @@ class NetworkPage extends StatefulWidget {
 }
 
 class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
+  bool isLoading = true;
   @override
   afterFirstLayout(BuildContext context) async {
     await Provider.of<UserProvider>(context, listen: false).businessMe(true);
     await Provider.of<GeneralProvider>(context, listen: false)
         .businessInit(true);
+    setState(() {
+      isLoading = false;
+    });
   }
 
-  int selectedIndex = 0;
+  int selectedIndex = 1;
   static const List<Widget> currentPages = [
     HomeTab(),
     DashboardTab(),
@@ -97,7 +101,7 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: SvgPicture.asset(
-                    'images/grid.svg',
+                    'assets/svg/grid.svg',
                     color: selectedIndex != 3 ? networkColor : white,
                   ),
                 )
@@ -115,9 +119,11 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
                   : SizedBox(),
         ],
       ),
-      body: Container(
-        child: currentPages.elementAt(selectedIndex),
-      ),
+      body: isLoading == true
+          ? SizedBox()
+          : Container(
+              child: currentPages.elementAt(selectedIndex),
+            ),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: networkColor,
         unselectedFontSize: 12,
@@ -140,7 +146,7 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/home.svg',
+                    'assets/svg/home.svg',
                     color: selectedIndex == 0 ? white : networkColor,
                   ),
                 ),
@@ -164,7 +170,7 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/dashboard.svg',
+                    'assets/svg/dashboard.svg',
                     color: selectedIndex == 1 ? white : networkColor,
                   ),
                 ),
@@ -188,7 +194,7 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/inbox.svg',
+                    'assets/svg/inbox.svg',
                     color: selectedIndex == 2 ? white : networkColor,
                   ),
                 ),
@@ -212,7 +218,7 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/sent.svg',
+                    'assets/svg/sent.svg',
                     color: selectedIndex == 3 ? white : networkColor,
                   ),
                 ),

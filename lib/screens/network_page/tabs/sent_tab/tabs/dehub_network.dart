@@ -41,7 +41,7 @@ class _DehubNetworkState extends State<DehubNetwork> with AfterLayoutMixin {
       limit += 10;
     });
     await list(page, limit);
-    refreshController.refreshCompleted();
+    refreshController.loadComplete();
     setState(() {
       isLoading = false;
     });
@@ -76,6 +76,14 @@ class _DehubNetworkState extends State<DehubNetwork> with AfterLayoutMixin {
             controller: refreshController,
             header: WaterDropHeader(
               waterDropColor: networkColor,
+              refresh: SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: networkColor,
+                ),
+              ),
             ),
             onRefresh: _onRefresh,
             onLoading: _onLoading,

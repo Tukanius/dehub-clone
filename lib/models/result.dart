@@ -18,8 +18,12 @@ class Filter {
   String? configType;
   String? partnerId;
   String? pullSheetStatus;
+  String? deliveryNoteStatus;
+  String? status;
 
   Filter({
+    this.status,
+    this.deliveryNoteStatus,
     this.pullSheetStatus,
     this.partnerId,
     this.condition,

@@ -72,7 +72,7 @@ class _OrderInvoiceState extends State<OrderInvoice> {
                     shape: BoxShape.circle,
                   ),
                   child: SvgPicture.asset(
-                    'images/save1.svg',
+                    'assets/svg/save1.svg',
                   ),
                 ),
               ],

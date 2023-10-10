@@ -147,9 +147,9 @@ class _InvitationSentPageState extends State<InvitationSentPage>
         isLoading = false;
       });
     } catch (e) {
-      print('================err=============');
-      print(e.toString());
-      print('================err=============');
+      debugPrint('================err=============');
+      debugPrint(e.toString());
+      debugPrint('================err=============');
     }
   }
 
@@ -167,7 +167,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
           },
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 15),
-            child: SvgPicture.asset('images/close.svg'),
+            child: SvgPicture.asset('assets/svg/close.svg'),
           ),
         ),
         title: Text(

@@ -102,8 +102,9 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                 Row(
                                   children: [
                                     SvgPicture.asset(
-                                      'images/inv.svg',
-                                      color: buttonColor,
+                                      'assets/svg/inv.svg',
+                                      theme:
+                                          SvgTheme(currentColor: buttonColor),
                                     ),
                                     SizedBox(
                                       width: 5,

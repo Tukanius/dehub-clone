@@ -81,7 +81,8 @@ class ErrorDialog {
                   ),
                 ],
               ),
-              Lottie.asset('images/error.json', height: 150, repeat: false)
+              Lottie.asset('assets/lottie/error.json',
+                  height: 150, repeat: false)
             ],
           ),
         );

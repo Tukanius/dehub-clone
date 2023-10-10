@@ -77,7 +77,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
               SliverToBoxAdapter(
                 child: Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: SvgPicture.asset('images/banner.svg'),
+                  child: SvgPicture.asset('assets/svg/banner.svg'),
                 ),
               ),
               SliverToBoxAdapter(
@@ -147,7 +147,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 5, vertical: 5),
                                 child: SvgPicture.asset(
-                                  'images/yuluur.svg',
+                                  'assets/svg/yuluur.svg',
                                   color: grey2,
                                 ),
                               ),
@@ -189,7 +189,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 5, vertical: 5),
                                   child: SvgPicture.asset(
-                                    'images/filter.svg',
+                                    'assets/svg/filter.svg',
                                     color: grey2,
                                   ),
                                 ),

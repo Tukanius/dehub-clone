@@ -12,6 +12,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/models/result.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class Delivery extends StatefulWidget {
   const Delivery({super.key});
@@ -39,7 +40,7 @@ class _DeliveryState extends State<Delivery> with AfterLayoutMixin {
       limit += 10;
     });
     await list(page, limit, '');
-    refreshController.refreshCompleted();
+    refreshController.loadComplete();
     setState(() {
       isLoading = false;
     });
@@ -80,6 +81,14 @@ class _DeliveryState extends State<Delivery> with AfterLayoutMixin {
             controller: refreshController,
             header: WaterDropHeader(
               waterDropColor: orderColor,
+              refresh: SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: orderColor,
+                ),
+              ),
             ),
             onRefresh: _onRefresh,
             onLoading: _onLoading,
@@ -92,6 +101,8 @@ class _DeliveryState extends State<Delivery> with AfterLayoutMixin {
                   body = const CupertinoActivityIndicator();
                 } else if (mode == LoadStatus.failed) {
                   body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
+                } else if (mode == LoadStatus.noMore) {
+                  body = const Text('Мэдээлэл алга байна');
                 } else {
                   body = const Text("Мэдээлэл алга байна");
                 }
@@ -117,7 +128,9 @@ class _DeliveryState extends State<Delivery> with AfterLayoutMixin {
                   delivery.rows?.length != 0
                       ? Column(
                           children: delivery.rows!
-                              .map((item) => DeliveryCard(
+                              .map(
+                                (item) => Animate(
+                                  child: DeliveryCard(
                                     onClick: () {
                                       Navigator.of(context).pushNamed(
                                         DeliveryPage.routeName,
@@ -141,9 +154,11 @@ class _DeliveryState extends State<Delivery> with AfterLayoutMixin {
                                         if (item.deliveryNoteStatus ==
                                             "DELIVERING") {
                                           Navigator.of(context).pushNamed(
-                                              ProductGive.routeName,
-                                              arguments: ProductGiveArguments(
-                                                  data: item));
+                                            ProductGive.routeName,
+                                            arguments: ProductGiveArguments(
+                                              data: item,
+                                            ),
+                                          );
                                         } else {
                                           await OrderApi()
                                               .deliveryNoteStart(item.id);
@@ -160,7 +175,9 @@ class _DeliveryState extends State<Delivery> with AfterLayoutMixin {
                                     },
                                     data: item,
                                     isDeliveried: false,
-                                  ))
+                                  ),
+                                ).animate().fadeIn(),
+                              )
                               .toList(),
                         )
                       : NotFound(

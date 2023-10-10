@@ -60,7 +60,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> with AfterLayoutMixin {
         arguments: OtpPhoneVerifyArguments(phone: widget.phone),
       );
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     }
   }
 
@@ -178,7 +178,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> with AfterLayoutMixin {
           children: [
             Container(
               margin: const EdgeInsets.only(top: 20, bottom: 20),
-              child: SvgPicture.asset('images/otp-verify.svg'),
+              child: SvgPicture.asset('assets/svg/otp-verify.svg'),
             ),
             SizedBox(
               height: 10,

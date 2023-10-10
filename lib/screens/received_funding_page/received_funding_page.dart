@@ -104,7 +104,7 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
                               color: financingColor.withOpacity(0.1),
                             ),
                             child: SvgPicture.asset(
-                              'images/camera.svg',
+                              'assets/svg/camera.svg',
                               color: financingColor,
                             ),
                           ),

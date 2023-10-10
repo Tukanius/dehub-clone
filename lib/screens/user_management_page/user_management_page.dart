@@ -12,7 +12,7 @@ class UserMangementPage extends StatefulWidget {
 }
 
 class _UserMangementPageState extends State<UserMangementPage> {
-  int selectedIndex = 0;
+  int selectedIndex = 1;
   static const List<Widget> currentPages = [
     HomePageTab(),
     Text('2'),
@@ -65,7 +65,7 @@ class _UserMangementPageState extends State<UserMangementPage> {
               color: Color(0xff767680).withOpacity(0.12),
               borderRadius: BorderRadius.circular(100),
             ),
-            child: SvgPicture.asset('images/grid.svg', color: userColor),
+            child: SvgPicture.asset('assets/svg/grid.svg', color: userColor),
           )
         ],
       ),
@@ -94,7 +94,7 @@ class _UserMangementPageState extends State<UserMangementPage> {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/home.svg',
+                    'assets/svg/home.svg',
                     color: selectedIndex == 0 ? white : userColor,
                   ),
                 ),
@@ -118,7 +118,7 @@ class _UserMangementPageState extends State<UserMangementPage> {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/dashboard.svg',
+                    'assets/svg/dashboard.svg',
                     color: selectedIndex == 1 ? white : userColor,
                   ),
                 ),
@@ -142,7 +142,7 @@ class _UserMangementPageState extends State<UserMangementPage> {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/inbox.svg',
+                    'assets/svg/inbox.svg',
                     color: selectedIndex == 2 ? white : userColor,
                   ),
                 ),
@@ -166,7 +166,7 @@ class _UserMangementPageState extends State<UserMangementPage> {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/sent.svg',
+                    'assets/svg/sent.svg',
                     color: selectedIndex == 3 ? white : userColor,
                   ),
                 ),

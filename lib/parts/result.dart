@@ -78,6 +78,9 @@ Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
     if (instance.filter!.regionId != null) {
       params['filter']['regionId'] = instance.filter!.regionId;
     }
+    if (instance.filter!.status != null) {
+      params['filter']['status'] = instance.filter!.status;
+    }
     if (instance.filter!.categoryId != null) {
       params['filter']['categoryId'] = instance.filter!.categoryId;
     }
@@ -86,6 +89,10 @@ Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
     }
     if (instance.filter!.paymentTermId != null) {
       params['filter']['paymentTermId'] = instance.filter!.paymentTermId;
+    }
+    if (instance.filter!.deliveryNoteStatus != null) {
+      params['filter']['deliveryNoteStatus'] =
+          instance.filter!.deliveryNoteStatus;
     }
 
     if (instance.offset!.page! > 0) {

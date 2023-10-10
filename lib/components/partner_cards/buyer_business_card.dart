@@ -189,7 +189,7 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                           color: networkColor,
                           borderRadius: BorderRadius.circular(100),
                         ),
-                        child: SvgPicture.asset('images/message_sent.svg'),
+                        child: SvgPicture.asset('assets/svg/message_sent.svg'),
                       ),
                     ],
                   ),

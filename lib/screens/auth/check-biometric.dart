@@ -26,8 +26,8 @@ class _CheckBiometricState extends State<CheckBiometric> with AfterLayoutMixin {
   final LocalAuthentication auth = LocalAuthentication();
   final SecureStorage secureStorage = SecureStorage();
   bool bioMetric = false;
-  String fingerPrintIcon = "images/finger-print.svg";
-  String faceIdIcon = "images/face-id.svg";
+  String fingerPrintIcon = "assets/svg/finger-print.svg";
+  String faceIdIcon = "assets/svg/face-id.svg";
   String bioType = "";
 
   Future<void> _authenticate() async {

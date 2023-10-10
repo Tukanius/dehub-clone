@@ -19,16 +19,19 @@ class MainInvoicePage extends StatefulWidget {
   State<MainInvoicePage> createState() => _MainInvoicePageState();
 }
 
-int selectedIndex = 0;
-
 class _MainInvoicePageState extends State<MainInvoicePage>
     with AfterLayoutMixin {
   General general = General();
+  int selectedIndex = 1;
+  bool isLoading = true;
 
   @override
   afterFirstLayout(BuildContext context) async {
     await Provider.of<GeneralProvider>(context, listen: false).init(true);
     await Provider.of<UserProvider>(context, listen: false).invoice(true);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   static const List<Widget> currentPages = [
@@ -101,7 +104,7 @@ class _MainInvoicePageState extends State<MainInvoicePage>
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: SvgPicture.asset(
-                    'images/grid.svg',
+                    'assets/svg/grid.svg',
                     color: selectedIndex != 3 ? invoiceColor : white,
                   ),
                 )
@@ -113,9 +116,11 @@ class _MainInvoicePageState extends State<MainInvoicePage>
                   : SizedBox(),
         ],
       ),
-      body: Container(
-        child: currentPages.elementAt(selectedIndex),
-      ),
+      body: isLoading == true
+          ? SizedBox()
+          : Container(
+              child: currentPages.elementAt(selectedIndex),
+            ),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: invoiceColor,
         unselectedFontSize: 12,
@@ -138,7 +143,7 @@ class _MainInvoicePageState extends State<MainInvoicePage>
                   ),
                   padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/home.svg',
+                    'assets/svg/home.svg',
                     color: selectedIndex == 0 ? white : invoiceColor,
                   ),
                 ),
@@ -162,7 +167,7 @@ class _MainInvoicePageState extends State<MainInvoicePage>
                   ),
                   padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/dashboard.svg',
+                    'assets/svg/dashboard.svg',
                     color: selectedIndex == 1 ? white : invoiceColor,
                   ),
                 ),
@@ -186,7 +191,7 @@ class _MainInvoicePageState extends State<MainInvoicePage>
                   ),
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/bill.svg',
+                    'assets/svg/bill.svg',
                     color: selectedIndex == 2 ? white : invoiceColor,
                   ),
                 ),
@@ -210,7 +215,7 @@ class _MainInvoicePageState extends State<MainInvoicePage>
                   ),
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'images/document.svg',
+                    'assets/svg/document.svg',
                     color: selectedIndex == 3 ? white : invoiceColor,
                   ),
                 ),

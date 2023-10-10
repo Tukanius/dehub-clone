@@ -10,9 +10,13 @@ import 'package:provider/provider.dart';
 class ShippingCard extends StatefulWidget {
   final Function()? onClick;
   final Order? data;
+  final int index;
+  final bool startAnimation;
   const ShippingCard({
     Key? key,
+    required this.startAnimation,
     this.onClick,
+    required this.index,
     this.data,
   }) : super(key: key);
 
@@ -48,7 +52,14 @@ class _DeliveryCardState extends State<ShippingCard> {
     general = Provider.of<GeneralProvider>(context, listen: false).orderGeneral;
     return GestureDetector(
       onTap: widget.onClick,
-      child: Container(
+      child: AnimatedContainer(
+        transform: Matrix4.translationValues(
+            widget.startAnimation ? 0 : -MediaQuery.of(context).size.width,
+            // widget.startAnimation ? 0 : 100,
+            0,
+            0),
+        curve: Curves.ease,
+        duration: Duration(milliseconds: 300 + (widget.index * 100)),
         margin: const EdgeInsets.only(bottom: 5),
         padding: const EdgeInsets.all(15),
         color: white,
@@ -67,7 +78,7 @@ class _DeliveryCardState extends State<ShippingCard> {
                 Row(
                   children: [
                     SvgPicture.asset(
-                      'images/inv.svg',
+                      'assets/svg/inv.svg',
                       color: darkGreen,
                     ),
                     SizedBox(
@@ -108,14 +119,23 @@ class _DeliveryCardState extends State<ShippingCard> {
                         fontSize: 12,
                       ),
                     ),
-                    Text(
-                      '${Moment.parse(widget.data!.loadingDate.toString()).format("YYYY-MM-DD")}',
-                      style: TextStyle(
-                        color: buttonColor,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
+                    widget.data?.loadingDate != null
+                        ? Text(
+                            '${Moment.parse(widget.data!.loadingDate.toString()).format("YYYY-MM-DD")}',
+                            style: TextStyle(
+                              color: buttonColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          )
+                        : Text(
+                            '-',
+                            style: TextStyle(
+                              color: buttonColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          )
                   ],
                 ),
                 Row(

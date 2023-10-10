@@ -42,7 +42,7 @@ class _AddZoningState extends State<AddZoning> {
         widget.listenController.changeVariable("createZoning");
         Navigator.of(context).pop();
       } catch (e) {
-        print(e.toString());
+        debugPrint(e.toString());
       }
     }
   }
@@ -60,7 +60,7 @@ class _AddZoningState extends State<AddZoning> {
           },
           child: Container(
             padding: const EdgeInsets.all(13),
-            child: SvgPicture.asset('images/close.svg'),
+            child: SvgPicture.asset('assets/svg/close.svg'),
           ),
         ),
         title: Text(

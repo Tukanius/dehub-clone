@@ -81,7 +81,8 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                     ],
                   ),
                 ),
-                Lottie.asset('images/success.json', height: 150, repeat: false),
+                Lottie.asset('assets/lottie/success.json',
+                    height: 150, repeat: false),
               ],
             ),
           );
@@ -141,7 +142,7 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
             Center(
               child: Container(
                 margin: const EdgeInsets.only(top: 20, bottom: 20),
-                child: SvgPicture.asset('images/create-password.svg'),
+                child: SvgPicture.asset('assets/svg/create-password.svg'),
               ),
             ),
             SizedBox(

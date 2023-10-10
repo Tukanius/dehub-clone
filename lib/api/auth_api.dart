@@ -56,4 +56,10 @@ class AuthApi extends HttpRequest {
     var res = await get('/auth/me', "INVENTORY", true, handler: handler);
     return User.fromJson(res as Map<String, dynamic>);
   }
+
+  Future<User> danVerify() async {
+    var res =
+        await get('/auth/profile/dan_verify', "AUTH", true, handler: true);
+    return User.fromJson(res as Map<String, dynamic>);
+  }
 }

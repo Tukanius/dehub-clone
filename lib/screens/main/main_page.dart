@@ -64,7 +64,7 @@ class _MainPageState extends State<MainPage> {
           child: Container(
             padding: const EdgeInsets.all(20),
             child: SvgPicture.asset(
-              'images/menu.svg',
+              'assets/svg/menu.svg',
             ),
           ),
         ),
@@ -123,12 +123,12 @@ class _MainPageState extends State<MainPage> {
             label: 'Нүүр',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset('images/binvoice.svg'),
+            icon: SvgPicture.asset('assets/svg/binvoice.svg'),
             backgroundColor: invoiceColor,
             label: 'Нэхэмжлэх',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset('images/tolbor.svg'),
+            icon: SvgPicture.asset('assets/svg/tolbor.svg'),
             backgroundColor: purpleButtonColor,
             label: 'Төлбөр',
           ),
