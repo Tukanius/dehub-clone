@@ -30,6 +30,7 @@ class _OrderPaymentState extends State<OrderPayment> with AfterLayoutMixin {
   bool isLoading = true;
   String? selectedValue;
   String? selectedMethod;
+  General general = General();
 
   afterFirstLayout(BuildContext context) {
     setState(() {
@@ -55,8 +56,6 @@ class _OrderPaymentState extends State<OrderPayment> with AfterLayoutMixin {
   //           ))
   //       : Navigator.of(context).pushNamed(QpayPage.routeName);
   // }
-
-  General general = General();
 
   @override
   Widget build(BuildContext context) {

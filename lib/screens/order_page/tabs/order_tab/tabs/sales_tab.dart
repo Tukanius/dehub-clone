@@ -134,6 +134,9 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
                           children: order.rows!
                               .map(
                                 (item) => SalesOrderCard(
+                                  type: user.currentBusiness?.type == "SUPPLIER"
+                                      ? "SALES"
+                                      : "PURCHASE",
                                   index: order.rows!.indexOf(item),
                                   startAnimation: startAnimation,
                                   isReceiver: true,

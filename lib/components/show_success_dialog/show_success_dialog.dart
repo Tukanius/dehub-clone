@@ -2,7 +2,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-void showCustomDialog(BuildContext context, String labelText,
+void showCustomDialog(BuildContext context, String labelText, bool? isSuccess,
     {VoidCallback? onPressed}) {
   showDialog(
     barrierDismissible: false,
@@ -61,8 +61,11 @@ void showCustomDialog(BuildContext context, String labelText,
                 ],
               ),
             ),
-            Lottie.asset('assets/lottie/success.json',
-                height: 150, repeat: false),
+            isSuccess == true
+                ? Lottie.asset('assets/lottie/success.json',
+                    height: 150, repeat: false)
+                : Lottie.asset('assets/lottie/error.json',
+                    height: 150, repeat: false),
           ],
         ),
       );

@@ -1,18 +1,25 @@
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/product_page/tabs/dashboard_tab/product_list_page/product_list_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class DashboardTab extends StatefulWidget {
-  const DashboardTab({super.key});
+  const DashboardTab({Key? key}) : super(key: key);
 
   @override
   State<DashboardTab> createState() => _DashboardTabState();
 }
 
 class _DashboardTabState extends State<DashboardTab> {
+  User user = User();
+
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: false).inventoryMe;
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,12 +68,19 @@ class _DashboardTabState extends State<DashboardTab> {
                         SizedBox(
                           height: 2,
                         ),
-                        Text(
-                          'Барааны жагсаалт',
-                          style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w500),
-                          softWrap: true,
-                        ),
+                        user.currentBusiness?.type == "SUPPLIER"
+                            ? Text(
+                                'Барааны жагсаалт',
+                                style: TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.w500),
+                                softWrap: true,
+                              )
+                            : Text(
+                                'Нийлүүлэгчдийн бараа',
+                                style: TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.w500),
+                                softWrap: true,
+                              ),
                       ],
                     ),
                   ),

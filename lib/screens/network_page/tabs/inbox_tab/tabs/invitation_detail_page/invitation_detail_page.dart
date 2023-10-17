@@ -1,12 +1,14 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/invitation_received.dart';
+import 'package:dehub/screens/pin_check/pin_check.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:moment_dart/moment_dart.dart';
+import 'package:intl/intl.dart';
 
 class InvitationDetailPageArguments {
   ListenController listenController;
@@ -33,32 +35,39 @@ class InvitationDetailPage extends StatefulWidget {
 
 class _InvitationDetailPageState extends State<InvitationDetailPage>
     with AfterLayoutMixin {
-  bool isLoading = false;
+  bool isLoading = true;
   InvitationReceived invitation = InvitationReceived();
   InvitationReceived respond = InvitationReceived();
+  List<InvitationReceived> list = [];
+
   @override
   afterFirstLayout(BuildContext context) async {
-    setState(() {
-      isLoading = true;
-    });
     invitation = await BusinessApi().getInfo(widget.id);
+    list = [
+      InvitationReceived(
+        firstName: 'Урилга №',
+        lastName: invitation.refCode,
+      ),
+    ];
     setState(() {
       isLoading = false;
     });
   }
 
-  onSubmit(bool accept) async {
+  onSubmit() async {
     try {
       setState(() {
         isLoading = true;
       });
-      respond.accept = accept;
+      respond.accept = true;
       respond.responseMessage = 'accept';
       await BusinessApi().respond(respond, widget.id);
       showCustomDialog(
         context,
-        accept == true ? "Амжилттай зөвшөөрлөө" : "Амжилттай татгалзлаа",
+        "Амжилттай зөвшөөрлөө",
+        true,
         onPressed: () {
+          Navigator.of(context).pop();
           Navigator.of(context).pop();
         },
       );
@@ -174,7 +183,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          '${Moment.parse(invitation.createdAt.toString()).format("YYYY-MM-DD HH:mm")}',
+                          '${DateFormat("yyyy-MM-dd hh:MM").format(invitation.createdAt!)}',
                           style: TextStyle(color: dark),
                         ),
                       ],
@@ -222,213 +231,95 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                       ),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    labelText: 'Партнерийн нэр',
+                    secondText: '${invitation.sender?.partnerName}',
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Партнерийн нэр',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.sender?.partnerName}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    labelText: 'Партнер код',
+                    secondText: '${invitation.sender?.partner?.refCode}',
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Партнер код',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.sender?.partner?.refCode}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    labelText: 'Бизнесийн нэр',
+                    secondText: '${invitation.sender?.partner?.businessName}',
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Бизнесийн нэр',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.sender?.partner?.businessName}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    labelText: 'Бизнес код',
+                    secondText: '${invitation.sender?.refCode}',
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Бизнес код',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.sender?.refCode}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    labelText: 'Урьсан ажилтан',
+                    secondText: '${invitation.senderUser?.firstName}',
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Урьсан ажилтан',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.senderUser?.firstName}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    labelText: 'И-мэйл хаяг',
+                    secondText: '${invitation.senderUser?.email}',
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'И-мэйл хаяг',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.senderUser?.email}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    labelText: 'Утас',
+                    secondText: '${invitation.senderUser?.phone}',
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Утас',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.senderUser?.phone}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    labelText: 'Buyer-с ирсэн',
+                    secondText:
+                        invitation.sender?.type == "BUYER" ? 'Тийм' : 'Үгүй',
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Buyer-с ирсэн',
-                          style: TextStyle(color: dark),
-                        ),
-                        invitation.sender?.type == "BUYER"
-                            ? Text(
-                                'Тийм',
-                                style: TextStyle(color: networkColor),
-                              )
-                            : Text(
-                                'Үгүй',
-                                style: TextStyle(color: networkColor),
-                              ),
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    labelText: 'Buyer-с ирсэн',
+                    secondText:
+                        invitation.sender?.type == "SUPPLIER" ? 'Тийм' : 'Үгүй',
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Supplier-с ирсэн',
-                          style: TextStyle(color: dark),
-                        ),
-                        invitation.sender?.type == "SUPPLIER"
-                            ? Text(
-                                'Тийм',
-                                style: TextStyle(color: networkColor),
-                              )
-                            : Text(
-                                'Үгүй',
-                                style: TextStyle(color: networkColor),
-                              ),
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    labelText: 'Санхүү ажилтан',
+                    secondText: "${invitation.senderFinStaff?.firstName}",
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Санхүү ажилтан',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.senderFinStaff?.firstName}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    labelText: 'Урилга төрөл',
+                    secondText: "${invitation.type}",
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Урилга төрөл',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.type}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
                   ),
                   SizedBox(
                     height: 10,
@@ -480,95 +371,45 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                   SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    labelText: 'Партнерийн нэр',
+                    secondText: "${invitation.receiver?.partnerName}",
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Партнерийн нэр',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.receiver?.partnerName}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    labelText: 'Партнер код',
+                    secondText: "${invitation.receiver?.partner?.refCode}",
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Партнер код',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.receiver?.partner?.refCode}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    labelText: 'Татвар төлөгч №',
+                    secondText: "${invitation.receiver?.regNumber}",
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Татвар төлөгч №',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.receiver?.regNumber}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    labelText: 'Бизнесийн нэр',
+                    secondText: "${invitation.receiver?.profileName}",
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Бизнесийн нэр',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.receiver?.profileName}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    labelText: 'Бизнес код',
+                    secondText: "${invitation.receiver?.refCode}",
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Бизнес код',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.receiver?.refCode}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
                   ),
                   SizedBox(
                     height: 25,
@@ -589,7 +430,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                                     labelColor: backgroundColor,
                                     labelText: "Татгалзах",
                                     onClick: () {
-                                      onSubmit(false);
+                                      // onSubmit(false);
                                     },
                                     textColor: networkColor,
                                   ),
@@ -605,7 +446,16 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                                     textColor: white,
                                     labelColor: networkColor,
                                     onClick: () {
-                                      onSubmit(true);
+                                      Navigator.of(context).pushNamed(
+                                        PinCheckScreen.routeName,
+                                        arguments: PinCheckScreenArguments(
+                                          onSubmit: () {
+                                            onSubmit();
+                                          },
+                                          color: networkColor,
+                                          labelText: 'Урилга баталгаажуулалт',
+                                        ),
+                                      );
                                     },
                                     labelText: "Зөвшөөрөх",
                                   ),

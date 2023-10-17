@@ -5,9 +5,9 @@ class Order {
   int? count;
   List<Order>? rows;
   String? id;
-  String? createdAt;
-  String? updatedAt;
-  String? deletedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  DateTime? deletedAt;
   String? refCode;
   String? type;
   bool? isDefault;
@@ -48,7 +48,7 @@ class Order {
   String? branchStatus;
   bool? isBuyer;
   bool? isSupplier;
-  String? deliveryDate;
+  DateTime? deliveryDate;
   String? province;
   String? district;
   String? khoroo;
@@ -87,7 +87,7 @@ class Order {
   String? image;
   String? supplier;
   String? brand;
-  String? priceStartDate;
+  DateTime? priceStartDate;
   bool? hasVat;
   bool? hasTax;
   double? vatAmount;
@@ -114,11 +114,11 @@ class Order {
   double? amountToPay;
   String? paymentStatus;
   String? reviewedUserId;
-  String? reviewedDate;
+  DateTime? reviewedDate;
   String? canceledUserId;
-  String? canceledDate;
+  DateTime? canceledDate;
   String? respondedUserId;
-  String? respondedDate;
+  DateTime? respondedDate;
   String? invoiceId;
   Order? receiverBusiness;
   Order? senderBusiness;
@@ -136,16 +136,16 @@ class Order {
   double? locationLng;
   String? warehouseId;
   String? staffId;
-  String? loadingDate;
+  DateTime? loadingDate;
   String? pullSheetStatus;
-  String? startedDate;
-  String? startDate;
+  DateTime? startedDate;
+  DateTime? startDate;
   bool? isPaused;
-  String? pausedDate;
-  String? proceededDate;
+  DateTime? pausedDate;
+  DateTime? proceededDate;
   double? pausedDuration;
-  String? endedDate;
-  String? dispatchedDate;
+  DateTime? endedDate;
+  DateTime? dispatchedDate;
   Order? warehouse;
   String? warehouseUserId;
   Order? warehouseUser;
@@ -187,10 +187,23 @@ class Order {
   String? configType;
 
   bool? isEnded;
-  String? deliveredDate;
+  DateTime? deliveredDate;
   Order? respondedUser;
+  bool? isBuyerConfirmed;
+  bool? isSupplierConfirmed;
+  Order? business;
+  Order? receipt;
+  Order? order;
+
+  Order? deliveryNote;
 
   Order({
+    this.deliveryNote,
+    this.order,
+    this.receipt,
+    this.business,
+    this.isSupplierConfirmed,
+    this.isBuyerConfirmed,
     this.respondedUser,
     this.deliveredDate,
     this.isEnded,

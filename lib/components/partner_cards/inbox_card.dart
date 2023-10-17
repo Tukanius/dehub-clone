@@ -61,35 +61,68 @@ class _InboxCardState extends State<InboxCard> {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${widget.data?.sender?.profileName}',
-                          style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          '${widget.data?.sender?.partnerName}',
-                          style: TextStyle(fontSize: 12, color: grey3),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          '${widget.data?.sender?.staff?.firstName}, ${widget.data?.sender?.staff?.phone}',
-                          style: TextStyle(fontSize: 12, color: grey3),
-                        ),
-                      ],
-                    ),
-                  ],
+                Expanded(
+                  child: Row(
+                    children: [
+                      widget.data?.type == "NETWORK"
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${widget.data?.sender?.profileName}',
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  '${widget.data?.sender?.partnerName}',
+                                  style: TextStyle(fontSize: 12, color: grey3),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  '${widget.data?.sender?.staff?.firstName}, ${widget.data?.sender?.staff?.phone}',
+                                  style: TextStyle(fontSize: 12, color: grey3),
+                                ),
+                              ],
+                            )
+                          : Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${widget.data?.bankName}',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    '${widget.data?.senderUserName}',
+                                    style:
+                                        TextStyle(fontSize: 12, color: grey3),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    '${widget.data?.toMessage}',
+                                    style:
+                                        TextStyle(fontSize: 12, color: grey3),
+                                  ),
+                                ],
+                              ),
+                            ),
+                    ],
+                  ),
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,

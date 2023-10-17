@@ -61,6 +61,7 @@ class _AddRowState extends State<OrderAddRow> {
   onSubmit() async {
     if (fbKey.currentState!.saveAndValidate()) {
       row = Order.fromJson(fbKey.currentState!.value);
+      row.unit = dropdownValue1;
       row.discountType = dropdownValue == "Хувиар"
           ? "PERCENT"
           : dropdownValue == "Дүнгээр"
@@ -159,30 +160,30 @@ class _AddRowState extends State<OrderAddRow> {
                   ),
                 ]),
               ),
-              SizedBox(
-                height: 3,
-              ),
-              Container(
-                color: white,
-                padding: const EdgeInsets.all(10),
-                child: FormTextField(
-                  textAlign: TextAlign.left,
-                  name: 'description',
-                  maxLines: 5,
-                  decoration: InputDecoration(
-                    hintText: "Энд тайлбар оруулна уу",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.zero,
-                      borderSide: BorderSide(color: grey, width: 0.5),
-                    ),
-                    fillColor: white,
-                    filled: true,
-                    hintStyle: TextStyle(
-                      color: Color(0xff657786),
-                    ),
-                  ),
-                ),
-              ),
+              // SizedBox(
+              //   height: 3,
+              // ),
+              // Container(
+              //   color: white,
+              //   padding: const EdgeInsets.all(10),
+              //   child: FormTextField(
+              //     textAlign: TextAlign.left,
+              //     name: 'description',
+              //     maxLines: 5,
+              //     decoration: InputDecoration(
+              //       hintText: "Энд тайлбар оруулна уу",
+              //       border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.zero,
+              //         borderSide: BorderSide(color: grey, width: 0.5),
+              //       ),
+              //       fillColor: white,
+              //       filled: true,
+              //       hintStyle: TextStyle(
+              //         color: Color(0xff657786),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: 3,
               ),

@@ -5,7 +5,6 @@ import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/expenses_page/expenses_page.dart';
-import 'package:dehub/screens/income_guarantee/income_Guarantee.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -173,7 +172,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
       endResponse = await OrderApi().deliveryNoteEnd(widget.data.id!);
       await Navigator.of(context).pushNamed(
         ExpensesPage.routeName,
-        arguments: ExpensesPageArguments(data: endResponse),
+        arguments: ExpensesPageArguments(id: shipment.receipt!.id!),
       );
       setState(() {
         isLoading = false;
@@ -189,27 +188,20 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
   }
 
   lineConfirm(Order item) async {
-    try {
-      setState(() {
-        isSubmit = true;
-      });
-      await OrderApi().deliveryNoteLineConfirm(
-        Order(
-          lineId: item.id,
-          confirmedQuantity: item.quantity,
-        ),
-        '${shipment.id}',
-      );
-      shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
-      setState(() {
-        isSubmit = false;
-      });
-    } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
-      debugPrint(e.toString());
-    }
+    setState(() {
+      isSubmit = true;
+    });
+    OrderApi().deliveryNoteLineConfirm(
+      Order(
+        lineId: item.id,
+        confirmedQuantity: item.quantity,
+      ),
+      '${shipment.id}',
+    );
+    shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
+    setState(() {
+      isSubmit = false;
+    });
   }
 
   @override
@@ -254,163 +246,173 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.all(15),
-                          color: white,
-                          margin: const EdgeInsets.symmetric(vertical: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  if (startShipment == false &&
-                                      widget.data.deliveredDate == null) {
-                                    startTimer(true);
-                                  }
-                                },
-                                child: Container(
-                                  height: 60,
-                                  width: 75,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: isStart == true
-                                        ? orderColor
-                                        : lightGrey,
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SvgPicture.asset(
-                                        'assets/svg/bx_timer.svg',
-                                        color: isStart == true
-                                            ? white
-                                            : buttonColor,
-                                      ),
-                                      shipment.dispatchedDate == null
-                                          ? Text(
-                                              'Эхлэх',
-                                              style: TextStyle(
-                                                color: isStart == true
-                                                    ? white
-                                                    : buttonColor,
-                                              ),
-                                            )
-                                          : Text(
-                                              'Үргэлжлүүлэх',
-                                              style: TextStyle(
-                                                fontSize: 9,
-                                                color: isStart == true
-                                                    ? white
-                                                    : buttonColor,
-                                              ),
-                                            ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                height: 60,
-                                width: 75,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: lightGrey,
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                        user.currentBusiness?.type == "SUPPLIER"
+                            ? Container(
+                                padding: const EdgeInsets.all(15),
+                                color: white,
+                                margin: const EdgeInsets.symmetric(vertical: 5),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    SvgPicture.asset(
-                                      'assets/svg/timer.svg',
-                                      color: buttonColor,
-                                    ),
-                                    buildTime()
-                                  ],
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  if (shipment.isPaused == false &&
-                                      widget.data.deliveredDate == null) {
-                                    stopTimer(resets: false);
-                                  }
-                                },
-                                child: Container(
-                                  height: 60,
-                                  width: 75,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: shipment.isPaused == true
-                                        ? orderColor
-                                        : lightGrey,
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.pause_circle,
-                                        color: shipment.isPaused == true
-                                            ? white
-                                            : buttonColor,
-                                      ),
-                                      Text(
-                                        'Зогсоох',
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          color: shipment.isPaused == true
-                                              ? white
-                                              : buttonColor,
+                                    GestureDetector(
+                                      onTap: () {
+                                        if (startShipment == false &&
+                                            shipment.deliveredDate == null) {
+                                          startTimer(true);
+                                        }
+                                      },
+                                      child: Container(
+                                        height: 60,
+                                        width: 75,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: isStart == true
+                                              ? orderColor
+                                              : lightGrey,
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                              'assets/svg/bx_timer.svg',
+                                              color: isStart == true
+                                                  ? white
+                                                  : buttonColor,
+                                            ),
+                                            shipment.dispatchedDate == null
+                                                ? Text(
+                                                    'Эхлэх',
+                                                    style: TextStyle(
+                                                      color: isStart == true
+                                                          ? white
+                                                          : buttonColor,
+                                                    ),
+                                                  )
+                                                : Text(
+                                                    'Үргэлжлүүлэх',
+                                                    style: TextStyle(
+                                                      fontSize: 9,
+                                                      color: isStart == true
+                                                          ? white
+                                                          : buttonColor,
+                                                    ),
+                                                  ),
+                                          ],
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  end();
-                                },
-                                child: Container(
-                                  height: 60,
-                                  width: 75,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: widget.data.isEnded == false
-                                        ? lightGrey
-                                        : orderColor,
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SvgPicture.asset(
-                                        'assets/svg/check_underline.svg',
-                                        color: widget.data.isEnded != false
-                                            ? white
-                                            : buttonColor,
+                                    ),
+                                    Container(
+                                      height: 60,
+                                      width: 75,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: lightGrey,
                                       ),
-                                      SizedBox(
-                                        height: 5,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/svg/timer.svg',
+                                            color: buttonColor,
+                                          ),
+                                          buildTime()
+                                        ],
                                       ),
-                                      widget.data.isEnded == false
-                                          ? Text(
-                                              'Дуусгах',
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        if (shipment.isPaused == false &&
+                                            shipment.deliveredDate == null) {
+                                          stopTimer(resets: false);
+                                        }
+                                      },
+                                      child: Container(
+                                        height: 60,
+                                        width: 75,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: shipment.isPaused == true
+                                              ? orderColor
+                                              : lightGrey,
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.pause_circle,
+                                              color: shipment.isPaused == true
+                                                  ? white
+                                                  : buttonColor,
+                                            ),
+                                            Text(
+                                              'Зогсоох',
                                               style: TextStyle(
-                                                color: buttonColor,
                                                 fontSize: 13,
-                                              ),
-                                            )
-                                          : Text(
-                                              'Дууссан',
-                                              style: TextStyle(
-                                                color: white,
-                                                fontSize: 13,
+                                                color: shipment.isPaused == true
+                                                    ? white
+                                                    : buttonColor,
                                               ),
                                             ),
-                                    ],
-                                  ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        end();
+                                      },
+                                      child: Container(
+                                        height: 60,
+                                        width: 75,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: shipment.isEnded == false
+                                              ? lightGrey
+                                              : orderColor,
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                              'assets/svg/check_underline.svg',
+                                              color: shipment.isEnded == true
+                                                  ? white
+                                                  : buttonColor,
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            shipment.isEnded == false
+                                                ? Text(
+                                                    'Дуусгах',
+                                                    style: TextStyle(
+                                                      color: buttonColor,
+                                                      fontSize: 13,
+                                                    ),
+                                                  )
+                                                : Text(
+                                                    'Дууссан',
+                                                    style: TextStyle(
+                                                      color: white,
+                                                      fontSize: 13,
+                                                    ),
+                                                  ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
+                              )
+                            : SizedBox(),
                         Column(
                           children: shipment.lines!
                               .map(
@@ -576,16 +578,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                         padding: const EdgeInsets.symmetric(vertical: 25),
                         child: CustomButton(
                           onClick: () {
-                            if (user.currentBusiness?.type == "SUPPLIER") {
-                              Navigator.of(context).pushNamed(
-                                ExpensesPage.routeName,
-                                arguments:
-                                    ExpensesPageArguments(data: widget.data),
-                              );
-                            } else {
-                              Navigator.of(context)
-                                  .pushNamed(IncomeGuarantee.routeName);
-                            }
+                            end();
                           },
                           labelText: "Шалгаж хүлээн авлаа",
                           labelColor: orderColor,

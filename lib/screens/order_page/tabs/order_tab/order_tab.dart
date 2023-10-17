@@ -1,8 +1,11 @@
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/new_order/new_order.dart';
 import 'package:dehub/screens/order_page/tabs/order_tab/tabs/received_tab.dart';
 import 'package:dehub/screens/order_page/tabs/order_tab/tabs/sales_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class OrderTab extends StatefulWidget {
   const OrderTab({super.key});
@@ -12,8 +15,12 @@ class OrderTab extends StatefulWidget {
 }
 
 class _OrderTabState extends State<OrderTab> {
+  User user = User();
+
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: false).orderMe;
+
     return DefaultTabController(
       length: 2,
       child: NestedScrollView(
@@ -33,10 +40,15 @@ class _OrderTabState extends State<OrderTab> {
                       child: Container(
                         alignment: Alignment.center,
                         height: 45,
-                        child: Text(
-                          'Борлуулалт',
-                          style: TextStyle(fontFamily: 'Montserrat'),
-                        ),
+                        child: user.currentBusiness?.type == "SUPPLIER"
+                            ? Text(
+                                'Борлуулалт',
+                                style: TextStyle(fontFamily: 'Montserrat'),
+                              )
+                            : Text(
+                                'Худалдан авалт',
+                                style: TextStyle(fontFamily: 'Montserrat'),
+                              ),
                       ),
                     ),
                     Center(

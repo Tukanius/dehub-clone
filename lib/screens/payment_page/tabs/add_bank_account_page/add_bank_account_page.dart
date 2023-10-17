@@ -160,6 +160,7 @@ class _AddBankAccountPageState extends State<AddBankAccountPage>
                               enlargeCenterPage: true,
                               autoPlay: true,
                               aspectRatio: 2.5,
+                              enableInfiniteScroll: false,
                             ),
                           ),
                           SizedBox(

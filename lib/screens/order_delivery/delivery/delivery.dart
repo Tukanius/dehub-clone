@@ -4,7 +4,6 @@ import 'package:dehub/models/order.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/product_give/product_give.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -513,69 +512,69 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: black,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                color: transparent,
-                                child: Column(
-                                  children: [
-                                    SvgPicture.asset(
-                                        'assets/svg/list_detail.svg'),
-                                    Text(
-                                      'Дэлгэрэнгүй',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushNamed(
-                                  ProductGive.routeName,
-                                  arguments: ProductGiveArguments(
-                                    data: widget.data,
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                color: transparent,
-                                child: Column(
-                                  children: [
-                                    Icon(
-                                      Icons.fire_truck_rounded,
-                                      color: white,
-                                      size: 24,
-                                    ),
-                                    Text(
-                                      'Бараа олгох',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Container(
+                      //   padding: const EdgeInsets.symmetric(vertical: 10),
+                      //   decoration: BoxDecoration(
+                      //     borderRadius: BorderRadius.circular(5),
+                      //     color: black,
+                      //   ),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      //     children: [
+                      //       GestureDetector(
+                      //         onTap: () {},
+                      //         child: Container(
+                      //           color: transparent,
+                      //           child: Column(
+                      //             children: [
+                      //               SvgPicture.asset(
+                      //                   'assets/svg/list_detail.svg'),
+                      //               Text(
+                      //                 'Дэлгэрэнгүй',
+                      //                 style: TextStyle(
+                      //                   fontSize: 12,
+                      //                   color: white,
+                      //                 ),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       GestureDetector(
+                      //         onTap: () {
+                      //           Navigator.of(context).pushNamed(
+                      //             ProductGive.routeName,
+                      //             arguments: ProductGiveArguments(
+                      //               data: widget.data,
+                      //             ),
+                      //           );
+                      //         },
+                      //         child: Container(
+                      //           color: transparent,
+                      //           child: Column(
+                      //             children: [
+                      //               Icon(
+                      //                 Icons.fire_truck_rounded,
+                      //                 color: white,
+                      //                 size: 24,
+                      //               ),
+                      //               Text(
+                      //                 'Бараа олгох',
+                      //                 style: TextStyle(
+                      //                   fontSize: 12,
+                      //                   color: white,
+                      //                 ),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

@@ -84,11 +84,6 @@ class _OrderInvoiceState extends State<OrderInvoice> {
               onClick: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
               },
               labelColor: orderColor,
               textColor: white,

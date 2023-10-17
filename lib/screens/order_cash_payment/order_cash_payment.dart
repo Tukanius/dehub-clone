@@ -1,3 +1,4 @@
+import 'package:dehub/components/close_button/close_button.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/screens/order_cash_approval/order_cash_approval.dart';
@@ -45,6 +46,7 @@ class _OrderCashPaymentState extends State<OrderCashPayment> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        leading: CustomCloseButton(),
         backgroundColor: orderColor,
         centerTitle: true,
         automaticallyImplyLeading: false,

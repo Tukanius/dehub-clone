@@ -1,10 +1,14 @@
 import 'package:dehub/api/partner_api.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/screens/otp_page/otp_page.dart';
+import 'package:dehub/utils/is_device_size.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
+import 'package:dehub/widgets/register-number/letter.dart';
+import 'package:dehub/widgets/register-number/letters.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -18,12 +22,26 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
+  TextEditingController regnumController = TextEditingController();
   bool isCheck = false;
   bool isCheck1 = false;
   String legalEntityType = '';
   bool validate = false;
   User user = User();
   User otpverify = User();
+  String registerNo = "";
+  List<String> letters = [
+    CYRILLIC_ALPHABETS_LIST[0],
+    CYRILLIC_ALPHABETS_LIST[0]
+  ];
+
+  void onChangeLetter(String item, index) {
+    Navigator.pop(context);
+
+    setState(() {
+      letters[index] = item;
+    });
+  }
 
   legalEntityTypeValidate() async {
     if (legalEntityType == "") {
@@ -41,6 +59,9 @@ class _RegisterPageState extends State<RegisterPage> {
       try {
         user = User.fromJson(fbKey.currentState!.value);
         user.type = legalEntityType;
+        user.regNumber = isCheck1 == true
+            ? "${letters.join()}${regnumController.text}"
+            : fbKey.currentState?.fields['regNumber']?.value;
         otpverify = await PartnerApi().register(user);
         await Navigator.of(context).pushNamed(OtpVerifyPage.routeName,
             arguments: OtpVerifyPageArguments(
@@ -180,7 +201,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         },
                       ),
                       Text(
-                        'Бизнес эрхлэгч',
+                        'Хувь хүн',
                         style: TextStyle(
                           color: buttonColor,
                           fontWeight: FontWeight.w500,
@@ -214,46 +235,177 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    FormTextField(
-                      textColor: buttonColor,
-                      name: "regNumber",
-                      decoration: InputDecoration(
-                        suffixIcon: Icon(
-                          Icons.search,
-                          color: buttonColor,
-                        ),
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 10),
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintText: "ТТД буюу регистрийн дугаар",
-                        hintStyle: TextStyle(
-                          color: grey2,
-                          fontSize: 14,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xff44566C30),
+                    isCheck1 == true
+                        ?
+                        // ? FormBuilderField(
+                        //     validator: FormBuilderValidators.compose([
+                        //       FormBuilderValidators.required(
+                        //           errorText: 'Заавал бөглөнө үү'),
+                        //       (dynamic value) => value.toString() != ""
+                        //           ? (validateStructure(
+                        //                   letters.join(), value.toString())
+                        //               ? null
+                        //               : "Регистерийн дугаараа оруулна уу!")
+                        //           : null,
+                        //     ]),
+                        //     autovalidateMode: AutovalidateMode.disabled,
+                        //     name: "regNumber",
+                        //     builder: (FormFieldState<dynamic> field) {
+                        //       return InputDecorator(
+                        //         decoration: InputDecoration(
+                        //           errorText: field.errorText,
+                        //           fillColor: backgroundColor,
+                        //           filled: true,
+                        //           contentPadding:
+                        //               EdgeInsets.symmetric(vertical: 0),
+                        //           border: OutlineInputBorder(
+                        //             borderSide: BorderSide.none,
+                        //           ),
+                        //         ),
+                        //         child: Container(
+                        //           decoration: BoxDecoration(
+                        //             borderRadius: BorderRadius.circular(3),
+                        //           ),
+                        //           child:
+                        Row(
+                            children: [
+                              RegisterLetters(
+                                width: DeviceSize.width(3, context),
+                                height: DeviceSize.height(90, context),
+                                oneTitle: "Регистер сонгох",
+                                hideOnPressed: false,
+                                title: letters[0],
+                                backgroundColor: white,
+                                textColor: black,
+                                length: CYRILLIC_ALPHABETS_LIST.length,
+                                itemBuilder: (ctx, i) => RegisterLetter(
+                                  radius: Radius.circular(3),
+                                  color: white,
+                                  text: CYRILLIC_ALPHABETS_LIST[i],
+                                  onPressed: () {
+                                    onChangeLetter(
+                                        CYRILLIC_ALPHABETS_LIST[i], 0);
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              RegisterLetters(
+                                width: DeviceSize.width(3, context),
+                                height: DeviceSize.height(90, context),
+                                title: letters[1],
+                                oneTitle: "Регистер сонгох",
+                                hideOnPressed: false,
+                                backgroundColor: white,
+                                textColor: black,
+                                length: CYRILLIC_ALPHABETS_LIST.length,
+                                itemBuilder: (ctx, i) => RegisterLetter(
+                                  radius: Radius.circular(3),
+                                  color: white,
+                                  text: CYRILLIC_ALPHABETS_LIST[i],
+                                  onPressed: () {
+                                    onChangeLetter(
+                                        CYRILLIC_ALPHABETS_LIST[i], 1);
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Expanded(
+                                child: FormTextField(
+                                  textColor: black,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      registerNo = value;
+                                    });
+                                  },
+                                  decoration: InputDecoration(
+                                    hintText: 'Регистер №',
+                                    fillColor: white,
+                                    filled: true,
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 0),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xff44566C30),
+                                      ),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: red),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                  ),
+                                  controller: regnumController,
+                                  inputType: TextInputType.number,
+                                  name: 'registerNumber',
+                                  hintText: 'Регистерийн дугаар',
+                                  color: transparent,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(
+                                      RegExp(r'[0-9]'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                            ],
+                          )
+                        // ),
+                        // );
+                        // },
+                        // )
+                        : FormTextField(
+                            textColor: buttonColor,
+                            name: "regNumber",
+                            decoration: InputDecoration(
+                              suffixIcon: Icon(
+                                Icons.search,
+                                color: buttonColor,
+                              ),
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              fillColor: Colors.white,
+                              filled: true,
+                              hintText: "ТТД буюу регистрийн дугаар",
+                              hintStyle: TextStyle(
+                                color: grey2,
+                                fontSize: 14,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xff44566C30),
+                                ),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: red),
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.blue),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ),
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                errorText: 'Татвар төлөгчийн дугаар оруулна уу',
+                              ),
+                            ]),
                           ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: red),
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.blue,
-                          ),
-                        ),
-                      ),
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(
-                          errorText: 'Татвар төлөгчийн дугаар оруулна уу',
-                        ),
-                      ]),
-                    ),
                     SizedBox(
                       height: 10,
                     ),
@@ -297,11 +449,13 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                       ),
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(
-                          errorText: 'Аж ахуйн нэгжийн нэр оруулна уу',
-                        ),
-                      ]),
+                      validator: FormBuilderValidators.compose(
+                        [
+                          (value) {
+                            return validateName(value.toString(), context);
+                          }
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 10,
@@ -347,9 +501,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(
-                          errorText: 'Нэр оруулна уу',
-                        ),
+                        (value) {
+                          return validateName(value.toString(), context);
+                        }
                       ]),
                     ),
                     SizedBox(
@@ -488,6 +642,19 @@ String? validateEmail(String value, context) {
   }
 }
 
+String? validateName(String name, BuildContext context) {
+  RegExp isValidName = RegExp(r'(^[а-яА-ЯӨөҮүЁёӨө -]+$)');
+  if (name.isEmpty) {
+    return "Нэр оруулна уу";
+  } else {
+    if (!isValidName.hasMatch(name)) {
+      return "Зөвхөн крилл үсэг ашиглана";
+    } else {
+      return null;
+    }
+  }
+}
+
 String? validatePhone(String value, context) {
   RegExp regex = RegExp(r'[(9|8]{1}[0-9]{7}$');
   if (value.isEmpty) {
@@ -499,4 +666,20 @@ String? validatePhone(String value, context) {
       return null;
     }
   }
+}
+
+bool validateStructure(String value, String number) {
+  if (number.length < 8) return false;
+  if (isNumeric(number)) {
+    return true;
+  }
+  return true;
+}
+
+bool isNumeric(String s) {
+  if (s.isEmpty) {
+    return false;
+  }
+
+  return !int.parse(s).isNaN;
 }

@@ -11,6 +11,7 @@ import 'package:moment_dart/moment_dart.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class ReceivedOrderDetailArguments {
   String id;
@@ -56,6 +57,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
     showCustomDialog(
       context,
       "Амжилттай зөвшөөрлөө",
+      true,
       onPressed: () {
         Navigator.of(context).pop();
       },
@@ -698,7 +700,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           ),
                         ),
                         Text(
-                          'XXX,XXX,XXX.XX₮',
+                          '${Utils().formatCurrency(order.lineVatAmount.toString())}₮',
                           style: TextStyle(
                             color: orderColor,
                           ),
@@ -720,7 +722,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           ),
                         ),
                         Text(
-                          'XXX,XXX,XXX.XX₮',
+                          '${Utils().formatCurrency(order.lineTaxAmount.toString())}₮',
                           style: TextStyle(
                             color: orderColor,
                           ),
@@ -742,7 +744,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           ),
                         ),
                         Text(
-                          'XXX,XXX,XXX.XX₮',
+                          '${Utils().formatCurrency(order.lineTotalDiscountAmount.toString())}₮',
                           style: TextStyle(
                             color: orderColor,
                           ),
@@ -764,7 +766,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           ),
                         ),
                         Text(
-                          'XXX,XXX,XXX.XX₮',
+                          '${Utils().formatCurrency(order.orderAmount.toString())}₮',
                           style: TextStyle(
                             color: orderColor,
                           ),
@@ -786,7 +788,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           ),
                         ),
                         Text(
-                          'XXX,XXX,XXX.XX₮',
+                          '${Utils().formatCurrency(order.shippingAmount.toString())}₮',
                           style: TextStyle(
                             color: orderColor,
                           ),
@@ -808,7 +810,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           ),
                         ),
                         Text(
-                          'XXX,XXX,XXX.XX₮',
+                          '${Utils().formatCurrency(order.lineTotalDiscountAmount.toString())}₮',
                           style: TextStyle(
                             color: orderColor,
                           ),
@@ -831,7 +833,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           ),
                         ),
                         Text(
-                          'XXX,XXX,XXX.XX₮',
+                          '${Utils().formatCurrency(order.totalAmount.toString())}₮',
                           style: TextStyle(
                             color: orderColor,
                           ),
@@ -839,29 +841,32 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                       ],
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
-                    color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Төлбөр баталгаажуулалт',
-                          style: TextStyle(
-                            color: buttonColor,
+                  order.paymentTerm?.configType == "CIA" &&
+                          order.paymentTerm?.configType == "CBD"
+                      ? Container(
+                          margin: const EdgeInsets.only(bottom: 3),
+                          color: white,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Төлбөр баталгаажуулалт',
+                                style: TextStyle(
+                                  color: buttonColor,
+                                ),
+                              ),
+                              Text(
+                                'XXX,XXX,XXX.XX₮',
+                                style: TextStyle(
+                                  color: orderColor,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        Text(
-                          'XXX,XXX,XXX.XX₮',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                        )
+                      : SizedBox(),
                   Container(
                     margin: const EdgeInsets.only(bottom: 3),
                     color: white,
@@ -877,11 +882,11 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           ),
                         ),
                         Text(
-                          '-',
+                          '${DateFormat("yyyy-MM-dd HH:mm").format(order.deliveryDate!)}',
                           style: TextStyle(
                             color: orderColor,
                           ),
-                        ),
+                        )
                       ],
                     ),
                   ),
@@ -943,31 +948,6 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                       ),
                     ),
                   ),
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     Navigator.of(context).pushNamed(AddAttachment.routeName);
-                  //   },
-                  //   child: Container(
-                  //     margin: const EdgeInsets.only(bottom: 3),
-                  //     color: white,
-                  //     padding: const EdgeInsets.symmetric(
-                  //         horizontal: 15, vertical: 10),
-                  //     child: Row(
-                  //       children: [
-                  //         SvgPicture.asset('assets/svg/attachment_add.svg'),
-                  //         SizedBox(
-                  //           width: 5,
-                  //         ),
-                  //         Text(
-                  //           'Нэмэх',
-                  //           style: TextStyle(
-                  //             color: orderColor,
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 3),
                     color: white,

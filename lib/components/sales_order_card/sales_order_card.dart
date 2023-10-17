@@ -14,8 +14,10 @@ class SalesOrderCard extends StatefulWidget {
   final Order? data;
   final int index;
   final bool startAnimation;
+  final String type;
   const SalesOrderCard({
     Key? key,
+    required this.type,
     required this.startAnimation,
     required this.index,
     required this.isReceiver,
@@ -151,13 +153,21 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                     SizedBox(
                       width: 5,
                     ),
-                    Text(
-                      '${widget.data?.salesCode}',
-                      style: TextStyle(
-                        color: grey2,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    )
+                    widget.type == "PURCHASE"
+                        ? Text(
+                            '${widget.data?.purchaseCode}',
+                            style: TextStyle(
+                              color: grey2,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          )
+                        : Text(
+                            '${widget.data?.salesCode}',
+                            style: TextStyle(
+                              color: grey2,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          )
                   ],
                 ),
               ],

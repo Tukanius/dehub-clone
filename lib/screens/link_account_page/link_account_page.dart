@@ -65,6 +65,7 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
         showCustomDialog(
           context,
           "Данс амжилттай нэмлээ",
+          true,
           onPressed: () {
             Navigator.of(context).pop();
           },

@@ -286,6 +286,7 @@ class _ProductChooseState extends State<ProductChoose>
                           onClick: () {
                             widget.packageListenController
                                 .orderPackageProduct(packageProduct);
+                            // print(packageProduct.first.toJson());
                             Navigator.of(context).pop();
                           },
                           labelText:

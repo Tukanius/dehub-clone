@@ -3,6 +3,7 @@ import 'package:dehub/models/invitation_received.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:intl/intl.dart';
 
 class SentInvitationDetailArguments {
   String id;
@@ -122,10 +123,15 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                           'Ирсэн огноо',
                           style: TextStyle(color: dark),
                         ),
-                        Text(
-                          '${invitation.getInvitedDate()}',
-                          style: TextStyle(color: dark),
-                        ),
+                        invitation.invitedDate != null
+                            ? Text(
+                                '${DateFormat("yyyy-MM-DD").format(invitation.invitedDate!)}',
+                                style: TextStyle(color: dark),
+                              )
+                            : Text(
+                                '-',
+                                style: TextStyle(color: dark),
+                              ),
                       ],
                     ),
                   ),

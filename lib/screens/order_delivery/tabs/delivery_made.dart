@@ -5,6 +5,8 @@ import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/screens/order_delivery/delivery/delivery.dart';
+import 'package:dehub/screens/order_payment_page/order_cbd_payment.dart';
+import 'package:dehub/screens/order_payment_page/order_cod_payment.dart';
 import 'package:dehub/screens/product_give/product_give.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -90,6 +92,8 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
                         ? Column(
                             children: pullSheet.rows!
                                 .map((data) => DeliveryCard(
+                                      startAnimation: startAnimation,
+                                      index: pullSheet.rows!.indexOf(data),
                                       isDeliveried: true,
                                       onClick: () {
                                         Navigator.of(context).pushNamed(
@@ -104,6 +108,19 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
                                           arguments:
                                               ProductGiveArguments(data: data),
                                         );
+                                      },
+                                      startClick: () {
+                                        if (data.paymentTerm?.configType ==
+                                            "CBD") {
+                                          Navigator.of(context).pushNamed(
+                                              OrderCbdPayment.routeName);
+                                        } else {
+                                          Navigator.of(context).pushNamed(
+                                            OrderCodPayment.routeName,
+                                            arguments: OrderCodPaymentArguments(
+                                                id: data.order.invoiceId),
+                                          );
+                                        }
                                       },
                                       data: data,
                                     ))

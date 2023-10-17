@@ -1,12 +1,11 @@
 import 'package:dehub/models/qpay-urls.dart';
-import 'package:moment_dart/moment_dart.dart';
 part '../parts/invoice.dart';
 
 class Invoice {
   int? count;
   List<Invoice>? rows;
   String? id;
-  String? createdAt;
+  DateTime? createdAt;
   String? updatedAt;
   String? deletedAt;
   String? refCode;
@@ -18,7 +17,7 @@ class Invoice {
   String? salesOrderId;
   String? purchaseOrderId;
   String? paymentTermId;
-  String? paymentDate;
+  DateTime? paymentDate;
   String? receiverBusinessId;
   String? receiverAccId;
   String? receiverAddress;
@@ -38,10 +37,10 @@ class Invoice {
   String? paymentStatus;
   String? invoiceStatus;
   String? overdueStatus;
-  String? sentDate;
+  DateTime? sentDate;
   String? description;
   String? confirmedUserId;
-  String? confirmedDate;
+  DateTime? confirmedDate;
   String? respondText;
   String? type;
   Invoice? receiverBusiness;
@@ -120,7 +119,7 @@ class Invoice {
   String? nameWeb;
   String? nameApp;
   String? image;
-  String? priceStartDate;
+  DateTime? priceStartDate;
   String? unit;
   String? convertType;
   int? convertValue;
@@ -160,20 +159,10 @@ class Invoice {
   String? salesCode;
   String? purchaseCode;
   List<Invoice>? additionalLines;
-
-  String getPostDate() {
-    return Moment.parse(createdAt!).format("YYYY-MM-DD");
-  }
-
-  String getsentDate() {
-    return Moment.parse(createdAt!).format("YYYY-MM-DD HH:mm");
-  }
-
-  String getPaymentDate() {
-    return Moment.parse(paymentDate!).format('YYYY-MM-DD');
-  }
+  String? configType;
 
   Invoice({
+    this.configType,
     this.additionalLines,
     this.salesCode,
     this.purchaseCode,

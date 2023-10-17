@@ -9,9 +9,12 @@ class ErrorDialog {
   final DialogService? dialogService;
   final Duration duration = const Duration(seconds: 30);
 
-  ErrorDialog({this.context, this.dialogService});
+  ErrorDialog({
+    this.context,
+    this.dialogService,
+  });
 
-  void show(String message) {
+  void show(String message, {VoidCallback? onPress}) {
     showDialog(
       context: context!,
       barrierDismissible: true,
@@ -72,6 +75,9 @@ class ErrorDialog {
                               ),
                               onPressed: () {
                                 Navigator.of(context).pop();
+                                if (onPress != null) {
+                                  onPress;
+                                }
                               },
                             ),
                           ],

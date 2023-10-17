@@ -63,10 +63,7 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
     selectedMethod == "B2B"
         ? Navigator.of(context).pushNamed(PaymentApprovalPage.routeName,
             arguments: PaymentApprovalPageArguments(
-              method: selectedMethod.toString(),
-              id: widget.id,
-              refCode: widget.data.refCode,
-              creditAccountId: selectedValue.toString(),
+              data: widget.data,
               amount: double.parse(textController.text),
             ))
         : Navigator.of(context).pushNamed(
@@ -619,53 +616,6 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                                             ),
                         ],
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(right: 25),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            'Үлдэгдэл: ',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: grey2,
-                            ),
-                          ),
-                          Row(
-                            children: general.bankAccounts!
-                                .map(
-                                  (item) => Text(
-                                    '${item.balance}',
-                                    style:
-                                        TextStyle(fontSize: 12, color: grey2),
-                                  ),
-                                )
-                                .toList(),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Үлдэгдэл хүрэлцэнэ',
-                          style: TextStyle(
-                            color: green,
-                            fontSize: 12,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 30,
-                        ),
-                      ],
                     ),
                     SizedBox(
                       height: 20,

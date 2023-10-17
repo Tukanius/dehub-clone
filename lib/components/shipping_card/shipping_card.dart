@@ -4,8 +4,8 @@ import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:moment_dart/moment_dart.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class ShippingCard extends StatefulWidget {
   final Function()? onClick;
@@ -121,7 +121,7 @@ class _DeliveryCardState extends State<ShippingCard> {
                     ),
                     widget.data?.loadingDate != null
                         ? Text(
-                            '${Moment.parse(widget.data!.loadingDate.toString()).format("YYYY-MM-DD")}',
+                            '${DateFormat('yyyy-MM-dd').format(widget.data!.loadingDate!)}',
                             style: TextStyle(
                               color: buttonColor,
                               fontSize: 12,
@@ -187,7 +187,7 @@ class _DeliveryCardState extends State<ShippingCard> {
                             ),
                           )
                         : Text(
-                            "${Moment.parse(widget.data!.startedDate!).format("YYYY-MM-DD")}",
+                            "${DateFormat('yyyy-MM-dd').format(widget.data!.startedDate!)}",
                             style: TextStyle(
                               color: buttonColor,
                               fontSize: 12,
@@ -262,13 +262,13 @@ class _DeliveryCardState extends State<ShippingCard> {
                             ),
                           )
                         : Text(
-                            "${Moment.parse(widget.data!.endedDate!).format("YYYY-MM-DD")}",
+                            "${DateFormat('yyyy-MM-dd').format(widget.data!.endedDate!)}",
                             style: TextStyle(
                               color: buttonColor,
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
                             ),
-                          )
+                          ),
                   ],
                 ),
                 // Row(

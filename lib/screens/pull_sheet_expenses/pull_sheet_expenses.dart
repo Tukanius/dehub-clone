@@ -34,6 +34,7 @@ class _PullSheetExpensesState extends State<PullSheetExpenses> {
     showCustomDialog(
       context,
       "Амжилттай хүлээн авлаа",
+      true,
       onPressed: () {
         Navigator.of(context).pop();
         Navigator.of(context).pop();

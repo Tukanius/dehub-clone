@@ -139,6 +139,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
       showCustomDialog(
         context,
         "Урилга амжилттай илгээгдлээ",
+        true,
         onPressed: () {
           Navigator.of(context).pop();
         },

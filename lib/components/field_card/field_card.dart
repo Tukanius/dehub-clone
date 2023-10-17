@@ -52,6 +52,7 @@ class _FieldCardState extends State<FieldCard> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
+              flex: 4,
               child: Text(
                 '${widget.labelText}',
                 style: TextStyle(
@@ -62,25 +63,40 @@ class _FieldCardState extends State<FieldCard> {
               ),
             ),
             Expanded(
+              flex: 5,
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(
-                      '${widget.secondText}',
-                      style: TextStyle(
-                        color: widget.secondTextColor,
-                        fontSize: widget.fontSize ?? widget.fontSize,
-                        fontWeight: widget.fontWeight ?? widget.fontWeight,
-                      ),
-                      textAlign: TextAlign.end,
-                    ),
-                  ),
+                      child: widget.secondText != null
+                          ? Text(
+                              '${widget.secondText}',
+                              style: TextStyle(
+                                color: widget.secondTextColor,
+                                fontSize: widget.fontSize ?? widget.fontSize,
+                                fontWeight:
+                                    widget.fontWeight ?? widget.fontWeight,
+                              ),
+                              textAlign: TextAlign.end,
+                            )
+                          : Text(
+                              '-',
+                              style: TextStyle(
+                                color: widget.secondTextColor,
+                                fontSize: widget.fontSize ?? widget.fontSize,
+                                fontWeight:
+                                    widget.fontWeight ?? widget.fontWeight,
+                              ),
+                              textAlign: TextAlign.end,
+                            )),
                   widget.hasThirdText == true
                       ? Text(
                           '${widget.thirdText}',
                           style: TextStyle(color: widget.thirdTextColor),
                         )
                       : SizedBox(),
+                  SizedBox(
+                    width: widget.onClick == null ? 0 : 10,
+                  ),
                   widget.onClick != null
                       ? Icon(
                           Icons.arrow_forward_ios,

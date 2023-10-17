@@ -62,4 +62,15 @@ class AuthApi extends HttpRequest {
         await get('/auth/profile/dan_verify', "AUTH", true, handler: true);
     return User.fromJson(res as Map<String, dynamic>);
   }
+
+  createPin(User data) async {
+    var res = await post('/auth/pin', "AUTH", true, data: data.toJson());
+    return res;
+  }
+
+  changePin(User data) async {
+    var res = await put('/auth/pin', "AUTH", true,
+        handler: true, data: data.toJson());
+    return res;
+  }
 }

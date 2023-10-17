@@ -9,9 +9,15 @@ InvitationReceived _$InvitationReceivedFromJson(Map<String, dynamic> json) {
             .toList()
         : null,
     id: json['id'] != null ? json['id'] as String : null,
-    createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
-    updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
-    deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
+    createdAt: json['createdAt'] != null
+        ? DateTime.parse(json['createdAt'].toString())
+        : null,
+    updatedAt: json['updatedAt'] != null
+        ? DateTime.parse(json['updatedAt'].toString())
+        : null,
+    deletedAt: json['deletedAt'] != null
+        ? DateTime.parse(json['deletedAt'].toString())
+        : null,
     refCode: json['refCode'] != null ? json['refCode'] as String : null,
     senderId: json['senderId'] != null ? json['senderId'] as String : null,
     receiverId:
@@ -21,13 +27,15 @@ InvitationReceived _$InvitationReceivedFromJson(Map<String, dynamic> json) {
         ? json['invitationStatus'] as String
         : null,
     toMessage: json['toMessage'] != null ? json['toMessage'] as String : null,
-    invitedDate:
-        json['invitedDate'] != null ? json['invitedDate'] as String : null,
+    invitedDate: json['invitedDate'] != null
+        ? DateTime.parse(json['invitedDate'].toString())
+        : null,
     responseMessage: json['responseMessage'] != null
         ? json['responseMessage'] as String
         : null,
-    respondedDate:
-        json['respondedDate'] != null ? json['respondedDate'] as String : null,
+    respondedDate: json['respondedDate'] != null
+        ? DateTime.parse(json['respondedDate'].toString())
+        : null,
     senderUserId:
         json['senderUserId'] != null ? json['senderUserId'] as String : null,
     bankName: json['bankName'] != null ? json['bankName'] as String : null,

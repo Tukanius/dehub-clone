@@ -1,22 +1,21 @@
-import 'package:moment_dart/moment_dart.dart';
 part '../parts/invitation_received.dart';
 
 class InvitationReceived {
   int? count;
   List<InvitationReceived>? rows;
   String? id;
-  String? createdAt;
-  String? updatedAt;
-  String? deletedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  DateTime? deletedAt;
   String? refCode;
   String? senderId;
   String? receiverId;
   String? type;
   String? invitationStatus;
   String? toMessage;
-  String? invitedDate;
+  DateTime? invitedDate;
   String? responseMessage;
-  String? respondedDate;
+  DateTime? respondedDate;
   String? senderUserId;
   String? bankName;
   String? senderUserName;
@@ -64,10 +63,6 @@ class InvitationReceived {
   InvitationReceived? senderFinStaff;
 
   bool? accept;
-
-  String getInvitedDate() {
-    return Moment.parse(invitedDate!).format('YYYY-MM-DD');
-  }
 
   InvitationReceived({
     this.accept,

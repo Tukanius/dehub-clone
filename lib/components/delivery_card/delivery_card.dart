@@ -1,21 +1,28 @@
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/order.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:moment_dart/moment_dart.dart';
+import 'package:intl/intl.dart';
 
 class DeliveryCard extends StatefulWidget {
   final bool? isDeliveried;
+  final int index;
   final Order? data;
+  final bool startAnimation;
   final Function()? refCodeClick;
   final Function()? startClick;
   final Function()? onClick;
   const DeliveryCard({
     Key? key,
+    required this.startAnimation,
+    required this.index,
     this.refCodeClick,
     this.onClick,
     this.startClick,
@@ -29,6 +36,7 @@ class DeliveryCard extends StatefulWidget {
 
 class _DeliveryCardState extends State<DeliveryCard> {
   General general = General();
+  User user = User();
   deliveryNoteStatus() {
     switch (widget.data?.deliveryNoteStatus) {
       case "DRAFT":
@@ -54,9 +62,16 @@ class _DeliveryCardState extends State<DeliveryCard> {
   @override
   Widget build(BuildContext context) {
     general = Provider.of<GeneralProvider>(context, listen: false).orderGeneral;
+    user = Provider.of<UserProvider>(context, listen: false).orderMe;
     return GestureDetector(
       onTap: widget.onClick,
-      child: Container(
+      child: AnimatedContainer(
+        curve: Curves.ease,
+        transform: Matrix4.translationValues(
+            widget.startAnimation ? 0 : MediaQuery.of(context).size.width,
+            0,
+            0),
+        duration: Duration(milliseconds: 300 + (widget.index * 200)),
         margin: const EdgeInsets.only(bottom: 5),
         padding: const EdgeInsets.all(15),
         color: white,
@@ -80,15 +95,25 @@ class _DeliveryCardState extends State<DeliveryCard> {
                       SizedBox(
                         width: 10,
                       ),
-                      Expanded(
-                        child: Text(
-                          '${widget.data?.receiverBusiness?.profileName}',
-                          style: TextStyle(
-                            color: buttonColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
+                      user.currentBusiness?.type == "SUPPLIER"
+                          ? Expanded(
+                              child: Text(
+                                '${widget.data?.receiverBusiness?.profileName}',
+                                style: TextStyle(
+                                  color: buttonColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
+                          : Expanded(
+                              child: Text(
+                                '${widget.data?.business?.profileName}',
+                                style: TextStyle(
+                                  color: buttonColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
                     ],
                   ),
                 ),
@@ -212,64 +237,6 @@ class _DeliveryCardState extends State<DeliveryCard> {
                 Row(
                   children: [
                     Text(
-                      'Төлбөр:',
-                      style: TextStyle(
-                        color: buttonColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        color: yellow.withOpacity(0.2),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 1),
-                      child: Text(
-                        'Хүлээж буй',
-                        style: TextStyle(
-                          color: yellow,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'Ачилт: ',
-                      style: TextStyle(
-                        color: buttonColor,
-                        fontSize: 12,
-                      ),
-                    ),
-                    Text(
-                      ' Хүргэхэд бэлэн',
-                      style: TextStyle(
-                        color: blue,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
                       'Хүргэх:',
                       style: TextStyle(
                         color: depBrown,
@@ -334,7 +301,8 @@ class _DeliveryCardState extends State<DeliveryCard> {
                           ),
                           child: Row(
                             children: [
-                              widget.data?.deliveryNoteStatus == "DELIVERING"
+                              widget.data?.deliveryNoteStatus == "DELIVERING" ||
+                                      user.currentBusiness?.type == "BUYER"
                                   ? SvgPicture.asset(
                                       'assets/svg/check_underline.svg',
                                       color: white,
@@ -343,16 +311,25 @@ class _DeliveryCardState extends State<DeliveryCard> {
                               SizedBox(
                                 width: 5,
                               ),
-                              widget.data?.deliveryNoteStatus == "DELIVERING"
-                                  ? Text(
-                                      'Хүрсэн',
-                                      style: TextStyle(
-                                        color: white,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    )
+                              user.currentBusiness?.type == "SUPPLIER"
+                                  ? widget.data?.deliveryNoteStatus ==
+                                          "DELIVERING"
+                                      ? Text(
+                                          'Хүрсэн',
+                                          style: TextStyle(
+                                            color: white,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        )
+                                      : Text(
+                                          'Эхлэх',
+                                          style: TextStyle(
+                                            color: white,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        )
                                   : Text(
-                                      'Эхлэх',
+                                      'Хүлээн авах',
                                       style: TextStyle(
                                         color: white,
                                         fontWeight: FontWeight.w500,
@@ -368,14 +345,14 @@ class _DeliveryCardState extends State<DeliveryCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Эхэлсэн: ${Moment.parse(widget.data!.startDate.toString()).format("YYYY-MM-DD")}',
+                        'Эхэлсэн: ${DateFormat("yyyy-MM-dd HH:mm").format(widget.data!.startDate!)}',
                         style: TextStyle(
                           color: buttonColor,
                           fontSize: 12,
                         ),
                       ),
                       Text(
-                        'Дууссан 2023-06-23',
+                        'Дууссан: ${DateFormat("yyyy-MM-dd HH:mm").format(widget.data!.deliveredDate!)}',
                         style: TextStyle(
                           color: buttonColor,
                           fontSize: 12,
@@ -383,6 +360,66 @@ class _DeliveryCardState extends State<DeliveryCard> {
                       )
                     ],
                   ),
+            SizedBox(
+              height: 10,
+            ),
+            widget.isDeliveried == true &&
+                    widget.data?.amountToPay != 0 &&
+                    user.currentBusiness?.type == "BUYER"
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            'Ачилт: ',
+                            style: TextStyle(
+                              color: buttonColor,
+                              fontSize: 12,
+                            ),
+                          ),
+                          Text(
+                            ' Хүргэхэд бэлэн',
+                            style: TextStyle(
+                              color: blue,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                      GestureDetector(
+                        onTap: widget.startClick,
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: orderColor,
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.payment_rounded,
+                                color: white,
+                                size: 18,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                'Төлбөр төлөх',
+                                style: TextStyle(
+                                  color: white,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : SizedBox(),
           ],
         ),
       ),

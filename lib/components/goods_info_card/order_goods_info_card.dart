@@ -1,4 +1,5 @@
 import 'package:dehub/models/order.dart';
+import 'package:dehub/utils/utils.dart';
 // import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -92,15 +93,23 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                                   ),
                       ),
                       Expanded(
-                        child: Text(
-                          // '${Utils().formatCurrency(widget.data?.price.toString())}₮',
-                          "",
-                          style: TextStyle(
-                            color: black,
-                            fontSize: 12,
-                          ),
-                          textAlign: TextAlign.end,
-                        ),
+                        child: widget.data?.price != null
+                            ? Text(
+                                '${Utils().formatCurrency(widget.data?.price.toString())}₮',
+                                style: TextStyle(
+                                  color: black,
+                                  fontSize: 12,
+                                ),
+                                textAlign: TextAlign.end,
+                              )
+                            : Text(
+                                '-',
+                                style: TextStyle(
+                                  color: black,
+                                  fontSize: 12,
+                                ),
+                                textAlign: TextAlign.end,
+                              ),
                       ),
                     ],
                   ),
@@ -115,25 +124,30 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                'Нийт',
+                'Нийт:  ',
                 style: TextStyle(
                   color: black,
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              SizedBox(
-                width: 20,
-              ),
-              Text(
-                // '${Utils().formatCurrency("${double.parse(widget.data!.price.toString()) * double.parse(widget.data!.quantity!.toString())}")}₮',
-                "",
-                style: TextStyle(
-                  color: black,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+              widget.data?.totalAmount != null
+                  ? Text(
+                      '${Utils().formatCurrency(widget.data?.totalAmount.toString())}₮',
+                      style: TextStyle(
+                        color: black,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )
+                  : Text(
+                      '-',
+                      style: TextStyle(
+                        color: black,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
               SizedBox(
                 width: 5,
               ),

@@ -3,8 +3,6 @@ import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/order_payment_page/cash_on_delivery.dart';
-import 'package:dehub/screens/order_payment_page/order_payment_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
@@ -39,18 +37,11 @@ class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
     showCustomDialog(
       context,
       "Таны хүргэлтийг хүлээж авснаа амжилттай баталгаажууллаа",
+      true,
       onPressed: () {
-        if (widget.data.paymentTerm?.condition == "INV_CONFIG" &&
-            widget.data.paymentTerm?.configType != "INV_COD") {
-          Navigator.of(context).pushNamed(OrderPaymentPage.routeName);
-        } else if (widget.data.paymentTerm?.condition == "INV_CONFIG" &&
-            widget.data.paymentTerm?.configType == "INV_COD") {
-          Navigator.of(context).pushNamed(CashOnDelivery.routeName);
-        } else if (widget.data.paymentTerm?.configType == "CIA") {
-          Navigator.of(context).pushNamed(OrderPaymentPage.routeName);
-        } else if (widget.data.paymentTerm?.configType == "CBD") {
-          Navigator.of(context).pushNamed(OrderPaymentPage.routeName);
-        }
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
       },
     );
   }

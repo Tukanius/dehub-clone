@@ -26,6 +26,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
     emailVerifiedDate: json['emailVerifiedDate'] != null
         ? json['emailVerifiedDate'] as String
         : null,
+    oldPin: json['oldPin'] != null ? json['oldPin'] as String : null,
     phone: json['phone'] != null ? json['phone'] as String : null,
     isPhoneVerified: json['isPhoneVerified'] != null
         ? json['isPhoneVerified'] as bool
@@ -199,6 +200,7 @@ Map<String, dynamic> _$UserToJson(User instance) {
 
   if (instance.businessName != null)
     json["businessName"] = instance.businessName;
+  if (instance.oldPin != null) json["oldPin"] = instance.oldPin;
   if (instance.url != null) json["url"] = instance.url;
   if (instance.verifyId != null) json["verifyId"] = instance.verifyId;
   if (instance.otpCode != null) json["otpCode"] = instance.otpCode;

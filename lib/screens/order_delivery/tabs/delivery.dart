@@ -2,6 +2,8 @@ import 'package:dehub/components/delivery_card/delivery_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/order.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/order_delivery/delivery_detail/delivery_detail.dart';
 import 'package:dehub/screens/order_delivery/delivery/delivery.dart';
 import 'package:dehub/screens/product_give/product_give.dart';
@@ -12,7 +14,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/models/result.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:flutter_animate/flutter_animate.dart';
+import 'package:provider/provider.dart';
 
 class Delivery extends StatefulWidget {
   const Delivery({super.key});
@@ -27,8 +29,10 @@ class _DeliveryState extends State<Delivery> with AfterLayoutMixin {
   Result delivery = Result(count: 0, rows: []);
   bool isLoading = true;
   Order endResponse = Order();
+  User user = User();
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
+  bool startAnimation = false;
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -52,7 +56,15 @@ class _DeliveryState extends State<Delivery> with AfterLayoutMixin {
       isLoading = true;
     });
     await list(page, limit, '');
+    setState(() {
+      startAnimation = false;
+    });
     refreshController.refreshCompleted();
+    Future.delayed(Duration(milliseconds: 100), () {
+      setState(() {
+        startAnimation = true;
+      });
+    });
     isLoading = false;
   }
 
@@ -64,11 +76,17 @@ class _DeliveryState extends State<Delivery> with AfterLayoutMixin {
     );
     setState(() {
       isLoading = false;
+      Future.delayed(Duration(milliseconds: 100), () {
+        setState(() {
+          startAnimation = true;
+        });
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: false).orderMe;
     return isLoading == true
         ? Center(
             child: CircularProgressIndicator(
@@ -129,54 +147,57 @@ class _DeliveryState extends State<Delivery> with AfterLayoutMixin {
                       ? Column(
                           children: delivery.rows!
                               .map(
-                                (item) => Animate(
-                                  child: DeliveryCard(
-                                    onClick: () {
-                                      Navigator.of(context).pushNamed(
-                                        DeliveryPage.routeName,
-                                        arguments: DeliveryPageArguments(
-                                          data: item,
-                                        ),
-                                      );
-                                    },
-                                    refCodeClick: () {
+                                (item) => DeliveryCard(
+                                  startAnimation: startAnimation,
+                                  index: delivery.rows!.indexOf(item),
+                                  onClick: () {
+                                    Navigator.of(context).pushNamed(
+                                      DeliveryPage.routeName,
+                                      arguments: DeliveryPageArguments(
+                                        data: item,
+                                      ),
+                                    );
+                                  },
+                                  refCodeClick: () {
+                                    if (user.currentBusiness?.type ==
+                                        "SUPPLIER") {
                                       Navigator.of(context).pushNamed(
                                         DeliveryDetail.routeName,
                                         arguments:
                                             DeliveryDetailArguments(data: item),
                                       );
-                                    },
-                                    startClick: () async {
-                                      try {
-                                        setState(() {
-                                          isLoading = true;
-                                        });
-                                        if (item.deliveryNoteStatus ==
-                                            "DELIVERING") {
-                                          Navigator.of(context).pushNamed(
-                                            ProductGive.routeName,
-                                            arguments: ProductGiveArguments(
-                                              data: item,
-                                            ),
-                                          );
-                                        } else {
-                                          await OrderApi()
-                                              .deliveryNoteStart(item.id);
-                                          list(page, limit, '');
-                                        }
-                                        setState(() {
-                                          isLoading = false;
-                                        });
-                                      } catch (e) {
-                                        setState(() {
-                                          isLoading = false;
-                                        });
+                                    }
+                                  },
+                                  startClick: () async {
+                                    try {
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+                                      if (item.deliveryNoteStatus ==
+                                          "DELIVERING") {
+                                        Navigator.of(context).pushNamed(
+                                          ProductGive.routeName,
+                                          arguments: ProductGiveArguments(
+                                            data: item,
+                                          ),
+                                        );
+                                      } else {
+                                        await OrderApi()
+                                            .deliveryNoteStart(item.id);
+                                        list(page, limit, '');
                                       }
-                                    },
-                                    data: item,
-                                    isDeliveried: false,
-                                  ),
-                                ).animate().fadeIn(),
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                    } catch (e) {
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                    }
+                                  },
+                                  data: item,
+                                  isDeliveried: false,
+                                ),
                               )
                               .toList(),
                         )

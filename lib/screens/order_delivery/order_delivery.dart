@@ -75,13 +75,25 @@ class _OrderDeliveryState extends State<OrderDelivery> {
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         child: user.currentBusiness?.type == "SUPPLIER"
-                            ? Text('Хүргэлт хийх')
-                            : Text('Хүлээн авах'),
+                            ? Text(
+                                'Хүргэлт хийх',
+                                style: TextStyle(fontFamily: "Montserrat"),
+                              )
+                            : Text(
+                                'Хүлээн авах',
+                                style: TextStyle(fontFamily: "Montserrat"),
+                              ),
                       ),
                       Container(
                         child: user.currentBusiness?.type == "SUPPLIER"
-                            ? Text('Хүргэлт хийсэн')
-                            : Text('Хүлээн авсан'),
+                            ? Text(
+                                'Хүргэлт хийсэн',
+                                style: TextStyle(fontFamily: "Montserrat"),
+                              )
+                            : Text(
+                                'Хүлээн авсан',
+                                style: TextStyle(fontFamily: "Montserrat"),
+                              ),
                       ),
                     ],
                   ),

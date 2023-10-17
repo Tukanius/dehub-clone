@@ -20,7 +20,11 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
         ? (json['lines'] as List).map((e) => Invoice.fromJson(e)).toList()
         : null,
     id: json['id'] != null ? json['id'] as String : null,
-    createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
+    createdAt: json['createdAt'] != null
+        ? DateTime.parse(json['createdAt'].toString())
+        : null,
+    configType:
+        json['configType'] != null ? json['configType'] as String : null,
     updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
     deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
     refCode: json['refCode'] != null ? json['refCode'] as String : null,
@@ -46,8 +50,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
         : null,
     paymentTermId:
         json['paymentTermId'] != null ? json['paymentTermId'] as String : null,
-    paymentDate:
-        json['paymentDate'] != null ? json['paymentDate'] as String : null,
+    paymentDate: json['paymentDate'] != null
+        ? DateTime.parse(json['paymentDate'].toString())
+        : null,
     receiverBusinessId: json['receiverBusinessId'] != null
         ? json['receiverBusinessId'] as String
         : null,
@@ -98,14 +103,17 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
         json['invoiceStatus'] != null ? json['invoiceStatus'] as String : null,
     overdueStatus:
         json['overdueStatus'] != null ? json['overdueStatus'] as String : null,
-    sentDate: json['sentDate'] != null ? json['sentDate'] as String : null,
+    sentDate: json['sentDate'] != null
+        ? DateTime.parse(json['sentDate'].toString())
+        : null,
     description:
         json['description'] != null ? json['description'] as String : null,
     confirmedUserId: json['confirmedUserId'] != null
         ? json['confirmedUserId'] as String
         : null,
-    confirmedDate:
-        json['confirmedDate'] != null ? json['confirmedDate'] as String : null,
+    confirmedDate: json['confirmedDate'] != null
+        ? DateTime.parse(json['confirmedDate'].toString())
+        : null,
     respondText:
         json['respondText'] != null ? json['respondText'] as String : null,
     type: json['type'] != null ? json['type'] as String : null,
@@ -263,7 +271,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     nameApp: json['nameApp'] != null ? json['nameApp'] as String : null,
     image: json['image'] != null ? json['image'] as String : null,
     priceStartDate: json['priceStartDate'] != null
-        ? json['priceStartDate'] as String
+        ? DateTime.parse(json['priceStartDate'].toString())
         : null,
     unit: json['unit'] != null ? json['unit'] as String : null,
     convertType:
@@ -331,6 +339,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.configType != null) json['configType'] = instance.configType;
   if (instance.salesCode != null) json['salesCode'] = instance.salesCode;
   if (instance.purchaseCode != null)
     json['purchaseCode'] = instance.purchaseCode;

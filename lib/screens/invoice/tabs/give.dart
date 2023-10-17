@@ -18,6 +18,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class GivePage extends StatefulWidget {
   static const routeName = 'GivePage';
@@ -88,10 +89,6 @@ class _GivePageState extends State<GivePage>
     });
   }
 
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   void initState() {
     if (widget.pageChangeController != null) {
@@ -99,15 +96,12 @@ class _GivePageState extends State<GivePage>
         await list(page, limit, '');
       });
     }
-
     listenController.addListener(() async {
       await list(page, limit, '');
     });
-
     setState(() {
       isLoading = true;
     });
-
     super.initState();
   }
 
@@ -436,7 +430,7 @@ class _GivePageState extends State<GivePage>
                                     margin: const EdgeInsets.only(
                                         left: 15, top: 10),
                                     child: Text(
-                                      "${item.getPostDate()}",
+                                      '${DateFormat('yyyy-MM-dd').format(item.createdAt)}',
                                       style: TextStyle(
                                         color: grey3,
                                         fontWeight: FontWeight.w600,

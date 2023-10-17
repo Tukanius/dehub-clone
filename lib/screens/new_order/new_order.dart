@@ -108,20 +108,29 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
 
   onSubmit(bool toReview, bool send) async {
     try {
-      // if (data.isNotEmpty) {
       for (var i = 0; i < product.length; i++) {
         data[i] = Order();
         data[i].variantId = product[i].id;
         data[i].quantity = product[i].quantity;
+        print(product[i].toJson());
       }
       createOrder.businessId = order.id;
       createOrder.receiverBranchId =
           receiverBranch.id ?? order.receiverBranches?.first.id;
-      createOrder.deliveryDate =
-          isCheck == false ? selectedDate : dateTime.toString();
+      createOrder.deliveryDate = isCheck == false
+          ? DateTime.parse(selectedDate.toString())
+          : DateTime.parse(dateTime.toString());
       createOrder.deliveryType =
           isCheck == false ? "DEFAULT_DATE" : "CUSTOM_DATE";
       createOrder.receiverStaffId = order.receiverStaff?.id;
+      // for (var i = 0; i < data.length; i++) {
+      //   createOrder.lines?[i].variantId = data[i].id;
+      //   createOrder.lines?[i].quantity = data[i].quantity;
+      //   print(createOrder.lines?.first.toJson());
+      //   print('==1');
+      // }
+      // print(createOrder.lines?.first.toJson());
+      // print('==1');
       createOrder.lines = data;
       createOrder.discountType = "AMOUNT";
       createOrder.attachments = files;
@@ -129,10 +138,14 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
       createOrder.toReview = toReview;
       createOrder.send = send;
       createOrder.additionalLines = additionalLines;
+      print(createOrder.additionalLines?.first.toJson());
+      print(createOrder.lines?.first.toJson());
+      print('================asdf============');
       await OrderApi().createOrder(createOrder);
       showCustomDialog(
         context,
         "Захиалга амжилттай илгээгдлээ",
+        true,
         onPressed: () {
           Navigator.of(context).pop();
         },
@@ -158,6 +171,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).orderMe;
+    print(order.paymentTerm?.toJson());
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -654,19 +668,26 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                         ),
                         Expanded(
                           child: order.receiverBranches != null
-                              ? receiverBranch.branchAddress == null
+                              ? order.receiverBranches?.length == 0
                                   ? const Text(
-                                      'Салбар тохируулаагүй байна !',
+                                      'Салбар тохируулаагүй байна',
                                       style: TextStyle(
                                         color: red,
                                       ),
                                     )
-                                  : Text(
-                                      '${receiverBranch.branchAddress}',
-                                      style: const TextStyle(
-                                        color: buttonColor,
-                                      ),
-                                    )
+                                  : receiverBranch.branchAddress == null
+                                      ? Text(
+                                          '${order.receiverBranches?.first.branchAddress}',
+                                          style: const TextStyle(
+                                            color: buttonColor,
+                                          ),
+                                        )
+                                      : Text(
+                                          '${receiverBranch.branchAddress}',
+                                          style: const TextStyle(
+                                            color: buttonColor,
+                                          ),
+                                        )
                               : const Text(
                                   'Харилцагч сонгоно уу',
                                   style: TextStyle(
@@ -1320,29 +1341,32 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       ],
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
-                    color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Төлбөр баталгаажуулалт',
-                          style: TextStyle(
-                            color: buttonColor,
+                  order.paymentTerm?.configType == "CIA" ||
+                          order.paymentTerm?.configType == 'CBD'
+                      ? Container(
+                          margin: const EdgeInsets.only(bottom: 3),
+                          color: white,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Төлбөр баталгаажуулалт',
+                                style: TextStyle(
+                                  color: buttonColor,
+                                ),
+                              ),
+                              Text(
+                                'XXX,XXX,XXX.XX₮',
+                                style: TextStyle(
+                                  color: orderColor,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        Text(
-                          'XXX,XXX,XXX.XX₮',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                        )
+                      : SizedBox(),
                   // Container(
                   //   margin: const EdgeInsets.only(bottom: 3),
                   //   color: white,
@@ -1662,6 +1686,9 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
       setState(() {
         product = productInPackageController.productInPackage!;
         data = productInPackageController.productInPackage!;
+        print(product.first.toJson());
+        print('============1');
+        print(data.first.toJson());
       });
     });
     productListenController.addListener(() {

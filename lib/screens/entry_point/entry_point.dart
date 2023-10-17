@@ -28,10 +28,10 @@ class _EntryPointState extends State<EntryPoint>
     )..addListener(() {
         setState(() {});
       });
-    animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
-        parent: animationController, curve: Curves.fastOutSlowIn));
-    scaleAnimation = Tween<double>(begin: 1, end: 0.8).animate(CurvedAnimation(
-        parent: animationController, curve: Curves.fastOutSlowIn));
+    animation = Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(parent: animationController, curve: Curves.easeIn));
+    scaleAnimation = Tween<double>(begin: 1, end: 0.75).animate(
+        CurvedAnimation(parent: animationController, curve: Curves.easeIn));
     super.initState();
   }
 
@@ -50,8 +50,8 @@ class _EntryPointState extends State<EntryPoint>
       body: Stack(
         children: [
           AnimatedPositioned(
-            duration: Duration(milliseconds: 500),
-            curve: Curves.fastOutSlowIn,
+            duration: Duration(milliseconds: 200),
+            curve: Curves.easeIn,
             height: MediaQuery.of(context).size.height,
             left: isSideMenuClosed ? -288 : 0,
             width: MediaQuery.of(context).size.width * 0.75,
@@ -64,12 +64,14 @@ class _EntryPointState extends State<EntryPoint>
               ..rotateY(animation.value - 30 * animation.value * pi / 180),
             child: Transform.translate(
               offset: Offset(
-                  animation.value * MediaQuery.of(context).size.width * 0.75,
-                  0),
+                animation.value * MediaQuery.of(context).size.width * 0.75,
+                0,
+              ),
               child: Transform.scale(
                 scale: scaleAnimation.value,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(24),
+                  borderRadius:
+                      BorderRadius.circular(isSideMenuClosed ? 0 : 24),
                   child: FirstPage(),
                 ),
               ),
@@ -77,9 +79,11 @@ class _EntryPointState extends State<EntryPoint>
           ),
           AnimatedPositioned(
             duration: Duration(milliseconds: 200),
-            top: 16,
             left: isSideMenuClosed ? 0 : 220,
-            curve: Curves.fastOutSlowIn,
+            top: MediaQuery.of(context).size.height /
+                    MediaQuery.of(context).size.width +
+                10,
+            curve: Curves.easeIn,
             child: GestureDetector(
               onTap: () {
                 setState(() {

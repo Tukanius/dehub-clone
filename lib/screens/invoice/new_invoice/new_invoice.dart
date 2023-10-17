@@ -144,6 +144,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
           value == true
               ? 'Нэхэмжлэл амжилттай илгээгдлээ'
               : "Нэхэмжэл амжилттай хадгалагдлаа",
+          true,
           onPressed: () {
             Navigator.of(context).pop();
           },

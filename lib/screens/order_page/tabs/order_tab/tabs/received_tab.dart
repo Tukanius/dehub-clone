@@ -134,6 +134,9 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
                           children: order.rows!
                               .map(
                                 (item) => SalesOrderCard(
+                                  type: user.currentBusiness?.type == "SUPPLIER"
+                                      ? "PURCHASE"
+                                      : "SALES",
                                   index: order.rows!.indexOf(item),
                                   startAnimation: startAnimation,
                                   isReceiver: false,

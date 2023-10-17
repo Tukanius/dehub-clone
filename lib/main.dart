@@ -2,8 +2,10 @@ import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/account_info_page/account_info_page.dart';
 import 'package:dehub/screens/account_info_page/tabs/tabs/transaction_detail_page.dart';
+import 'package:dehub/screens/change_password/change_password.dart';
 import 'package:dehub/screens/entry_point/entry_point.dart';
-import 'package:dehub/screens/order_payment_page/cash_on_delivery.dart';
+import 'package:dehub/screens/order_payment_page/order_cbd_payment.dart';
+import 'package:dehub/screens/pin_check/pin_check.dart';
 import 'package:dehub/screens/payment_page/tabs/add_bank_account_page/add_bank_account_page.dart';
 import 'package:dehub/screens/auth/check-biometric.dart';
 import 'package:dehub/screens/auth/financing_login.dart';
@@ -82,7 +84,7 @@ import 'package:dehub/screens/order_delivery/delivery/delivery.dart';
 import 'package:dehub/screens/order_invoice/order_invoice.dart';
 import 'package:dehub/screens/order_page/order_page.dart';
 import 'package:dehub/screens/order_cash_payment/order_cash_payment.dart';
-import 'package:dehub/screens/order_payment_page/order_payment_page.dart';
+import 'package:dehub/screens/order_payment_page/order_cod_payment.dart';
 import 'package:dehub/screens/order_shipment/order_shipment.dart';
 import 'package:dehub/screens/order_shipping/order_shipping.dart';
 import 'package:dehub/screens/otp_page/create_password.dart';
@@ -90,6 +92,9 @@ import 'package:dehub/screens/otp_page/otp-phone-verify.dart';
 import 'package:dehub/screens/otp_page/otp_page.dart';
 import 'package:dehub/screens/partner_page/partner_page.dart';
 import 'package:dehub/screens/payment_page/payment_page.dart';
+import 'package:dehub/screens/pin_code/new_pin.dart';
+import 'package:dehub/screens/pin_code/pin_code.dart';
+import 'package:dehub/screens/pin_code/pin_confirmation.dart';
 import 'package:dehub/screens/product_give/product_give.dart';
 import 'package:dehub/screens/product_page/product_page.dart';
 import 'package:dehub/screens/product_page/tabs/dashboard_tab/product_detail_page/product_detail_page.dart';
@@ -212,6 +217,27 @@ class MyApp extends StatelessWidget {
                   case NewInvoice.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return NewInvoice();
+                    });
+                  case PinCode.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return PinCode();
+                    });
+                  case NewPin.routeName:
+                    NewPinArguments arguments =
+                        settings.arguments as NewPinArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return NewPin(
+                        oldPin: arguments.oldPin,
+                      );
+                    });
+                  case PinConfirmation.routeName:
+                    PinConfirmationArguments arguments =
+                        settings.arguments as PinConfirmationArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return PinConfirmation(
+                        oldPin: arguments.oldPin,
+                        value: arguments.value,
+                      );
                     });
                   case AccountInfoPage.routeName:
                     AccountInfoPageArguments arguments =
@@ -445,11 +471,8 @@ class MyApp extends StatelessWidget {
                         settings.arguments as PaymentApprovalPageArguments;
                     return MaterialPageRoute(builder: (context) {
                       return PaymentApprovalPage(
-                        method: arguments.method,
-                        refCode: arguments.refCode,
+                        data: arguments.data,
                         amount: arguments.amount,
-                        id: arguments.id,
-                        creditAccountId: arguments.creditAccountId,
                       );
                     });
 
@@ -579,6 +602,10 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return DebtPage();
                     });
+                  case OrderCbdPayment.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return OrderCbdPayment();
+                    });
                   case NewOrder.routeName:
                     NewOrderArguments arguments =
                         settings.arguments as NewOrderArguments;
@@ -603,6 +630,14 @@ class MyApp extends StatelessWidget {
                           // id: arguments.id,
                           );
                     });
+                  case ChangePassword.routeName:
+                    // ChangePasswordArguments arguments =
+                    // settings.arguments as ChangePasswordArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return ChangePassword(
+                          // id: arguments.id,
+                          );
+                    });
                   case OrderCashApproval.routeName:
                     // OrderCashApprovalArguments arguments =
                     // settings.arguments as OrderCashApprovalArguments;
@@ -611,13 +646,13 @@ class MyApp extends StatelessWidget {
                           // id: arguments.id,
                           );
                     });
-                  case OrderPaymentPage.routeName:
-                    // OrderPaymentPageArguments arguments =
-                    // settings.arguments as OrderPaymentPageArguments;
+                  case OrderCodPayment.routeName:
+                    OrderCodPaymentArguments arguments =
+                        settings.arguments as OrderCodPaymentArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return OrderPaymentPage(
-                          // id: arguments.id,
-                          );
+                      return OrderCodPayment(
+                        id: arguments.id,
+                      );
                     });
                   case FinancingPage.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -790,16 +825,8 @@ class MyApp extends StatelessWidget {
                         settings.arguments as ExpensesPageArguments;
                     return MaterialPageRoute(builder: (context) {
                       return ExpensesPage(
-                        data: arguments.data,
+                        id: arguments.id,
                       );
-                    });
-                  case CashOnDelivery.routeName:
-                    // CashOnDeliveryArguments arguments =
-                    // settings.arguments as CashOnDeliveryArguments;
-                    return MaterialPageRoute(builder: (context) {
-                      return CashOnDelivery(
-                          // data: arguments.data,
-                          );
                     });
                   case DeliveryPage.routeName:
                     DeliveryPageArguments arguments =
@@ -815,6 +842,16 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return DeliveryDetail(
                         data: arguments.data,
+                      );
+                    });
+                  case PinCheckScreen.routeName:
+                    PinCheckScreenArguments arguments =
+                        settings.arguments as PinCheckScreenArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return PinCheckScreen(
+                        onSubmit: arguments.onSubmit,
+                        color: arguments.color,
+                        labelText: arguments.labelText,
                       );
                     });
                   case ReceivedOrderDetail.routeName:

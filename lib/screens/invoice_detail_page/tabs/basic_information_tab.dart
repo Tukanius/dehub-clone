@@ -19,6 +19,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:moment_dart/moment_dart.dart';
+import 'package:intl/intl.dart';
 
 class BasicInformationTab extends StatefulWidget {
   final String id;
@@ -73,7 +74,9 @@ class _BasicInformationTabState extends State<BasicInformationTab>
       ),
       Invoice(
         firstName: "Төлөх огноо",
-        lastName: invoice.paymentDate == null ? "-" : invoice.getPaymentDate(),
+        lastName: invoice.paymentDate == null
+            ? "-"
+            : DateFormat('yyyy-MM-dd').format(invoice.paymentDate!),
       ),
       Invoice(
         firstName: "Хугацаа хэтрэлт",
@@ -149,7 +152,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
       ),
       Invoice(
         firstName: "Нэхэмжлэх бичсэн",
-        lastName: invoice.getsentDate(),
+        lastName: invoice.createdAt.toString(),
       ),
       Invoice(
         firstName: "Бизнесийн хаяг",
@@ -201,6 +204,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
       showCustomDialog(
         context,
         "Амжилттай баталлаа",
+        true,
         onPressed: () {
           Navigator.of(context).pop();
         },
@@ -253,7 +257,8 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                                 marginHorizontal: 15,
                                 marginVertical: 15,
                                 labelText: e.firstName,
-                                secondText: e.lastName,
+                                secondText:
+                                    e.lastName != null ? e.lastName : '-',
                                 secondTextColor: invoiceColor,
                                 fontWeight: e.firstName == "Нийт төлбөр"
                                     ? FontWeight.bold
@@ -493,7 +498,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                                           arguments:
                                               InvoicePaymentPageArguments(
                                             data: invoice,
-                                            id: '',
+                                            id: invoice.id.toString(),
                                           ),
                                         );
                                       },

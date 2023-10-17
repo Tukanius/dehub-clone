@@ -1,8 +1,11 @@
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/order_delivery/order_delivery.dart';
 import 'package:dehub/screens/order_shipping/order_shipping.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class DashboardTab extends StatefulWidget {
   const DashboardTab({Key? key}) : super(key: key);
@@ -12,8 +15,11 @@ class DashboardTab extends StatefulWidget {
 }
 
 class _DashboardTabState extends State<DashboardTab> {
+  User user = User();
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: false).orderMe;
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,49 +83,52 @@ class _DashboardTabState extends State<DashboardTab> {
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed(OrderShipping.routeName);
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: white,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    width: 100,
-                    height: 100,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          padding: const EdgeInsets.all(10),
+                user.currentBusiness?.type == "SUPPLIER"
+                    ? GestureDetector(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(OrderShipping.routeName);
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: orderColor.withOpacity(0.2),
+                            color: white,
                           ),
-                          child: SvgPicture.asset(
-                            'assets/svg/push.svg',
-                            color: buttonColor,
+                          padding: const EdgeInsets.all(8),
+                          width: 100,
+                          height: 100,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 40,
+                                width: 40,
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: orderColor.withOpacity(0.2),
+                                ),
+                                child: SvgPicture.asset(
+                                  'assets/svg/push.svg',
+                                  color: buttonColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 2,
+                              ),
+                              Text(
+                                'Ачилт удирдлага',
+                                style: TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.w500),
+                                softWrap: true,
+                              ),
+                            ],
                           ),
                         ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                        Text(
-                          'Ачилт удирдлага',
-                          style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w500),
-                          softWrap: true,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                      )
+                    : SizedBox(),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 5),
                   decoration: BoxDecoration(

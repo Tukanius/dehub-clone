@@ -8,9 +8,15 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         : null,
     id: json['id'] != null ? json['id'] as String : null,
     code: json['code'] != null ? json['code'] as String : null,
-    createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
-    updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
-    deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
+    createdAt: json['createdAt'] != null
+        ? DateTime.parse(json['createdAt'].toString())
+        : null,
+    updatedAt: json['updatedAt'] != null
+        ? DateTime.parse(json['updatedAt'].toString())
+        : null,
+    deletedAt: json['deletedAt'] != null
+        ? DateTime.parse(json['deletedAt'].toString())
+        : null,
     refCode: json['refCode'] != null ? json['refCode'] as String : null,
     type: json['type'] != null ? json['type'] as String : null,
     isDefault: json['isDefault'] != null ? json['isDefault'] as bool : null,
@@ -21,15 +27,18 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         : null,
     profileName:
         json['profileName'] != null ? json['profileName'] as String : null,
-    startDate: json['startDate'] != null ? json['startDate'] as String : null,
+    startDate: json['startDate'] != null
+        ? DateTime.parse(json['startDate'].toString())
+        : null,
     profileNameEng: json['profileNameEng'] != null
         ? json['profileNameEng'] as String
         : null,
     logo: json['logo'] != null ? json['logo'] as String : null,
     profileInfo:
         json['profileInfo'] != null ? json['profileInfo'] as String : null,
-    deliveredDate:
-        json['deliveredDate'] != null ? json['deliveredDate'] as String : null,
+    deliveredDate: json['deliveredDate'] != null
+        ? DateTime.parse(json['deliveredDate'].toString())
+        : null,
     isAnchorBusiness: json['isAnchorBusiness'] != null
         ? json['isAnchorBusiness'] as bool
         : null,
@@ -54,6 +63,9 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     partner: json['partner'] != null
         ? Order.fromJson(json['partner'] as Map<String, dynamic>)
         : null,
+    deliveryNote: json['deliveryNote'] != null
+        ? Order.fromJson(json['deliveryNote'] as Map<String, dynamic>)
+        : null,
     businessName:
         json['businessName'] != null ? json['businessName'] as String : null,
     receiverBrach: json['receiverBrach'] != null
@@ -61,6 +73,12 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         : null,
     receiverBranch: json['receiverBranch'] != null
         ? Order.fromJson(json['receiverBranch'] as Map<String, dynamic>)
+        : null,
+    receipt: json['receipt'] != null
+        ? Order.fromJson(json['receipt'] as Map<String, dynamic>)
+        : null,
+    order: json['order'] != null
+        ? Order.fromJson(json['order'] as Map<String, dynamic>)
         : null,
     name: json['name'] != null ? json['name'] as String : null,
     nameEng: json['nameEng'] != null ? json['nameEng'] as String : null,
@@ -93,10 +111,17 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     branchStatus:
         json['branchStatus'] != null ? json['branchStatus'] as String : null,
     isBuyer: json['isBuyer'] != null ? json['isBuyer'] as bool : null,
+    isBuyerConfirmed: json['isBuyerConfirmed'] != null
+        ? json['isBuyerConfirmed'] as bool
+        : null,
+    isSupplierConfirmed: json['isSupplierConfirmed'] != null
+        ? json['isSupplierConfirmed'] as bool
+        : null,
     approve: json['approve'] != null ? json['approve'] as bool : null,
     isSupplier: json['isSupplier'] != null ? json['isSupplier'] as bool : null,
-    deliveryDate:
-        json['deliveryDate'] != null ? json['deliveryDate'] as String : null,
+    deliveryDate: json['deliveryDate'] != null
+        ? DateTime.parse(json['deliveryDate'].toString())
+        : null,
     province: json['province'] != null ? json['province'] as String : null,
     district: json['district'] != null ? json['district'] as String : null,
     khoroo: json['khoroo'] != null ? json['khoroo'] as String : null,
@@ -170,7 +195,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     supplier: json['supplier'] != null ? json['supplier'] as String : null,
     brand: json['brand'] != null ? json['brand'] as String : null,
     priceStartDate: json['priceStartDate'] != null
-        ? json['priceStartDate'] as String
+        ? DateTime.parse(json['priceStartDate'].toString())
         : null,
     hasVat: json['hasVat'] != null ? json['hasVat'] as bool : null,
     hasTax: json['hasTax'] != null ? json['hasTax'] as bool : null,
@@ -240,18 +265,21 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     reviewedUserId: json['reviewedUserId'] != null
         ? json['reviewedUserId'] as String
         : null,
-    reviewedDate:
-        json['reviewedDate'] != null ? json['reviewedDate'] as String : null,
+    reviewedDate: json['reviewedDate'] != null
+        ? DateTime.parse(json['reviewedDate'].toString())
+        : null,
     canceledUserId: json['canceledUserId'] != null
         ? json['canceledUserId'] as String
         : null,
-    canceledDate:
-        json['canceledDate'] != null ? json['canceledDate'] as String : null,
+    canceledDate: json['canceledDate'] != null
+        ? DateTime.parse(json['canceledDate'].toString())
+        : null,
     respondedUserId: json['respondedUserId'] != null
         ? json['respondedUserId'] as String
         : null,
-    respondedDate:
-        json['respondedDate'] != null ? json['respondedDate'] as String : null,
+    respondedDate: json['respondedDate'] != null
+        ? DateTime.parse(json['respondedDate'].toString())
+        : null,
     invoiceId: json['invoiceId'] != null ? json['invoiceId'] as String : null,
     receiverBusiness: json['receiverBusiness'] != null
         ? Order.fromJson(json['receiverBusiness'] as Map<String, dynamic>)
@@ -267,6 +295,9 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         : null,
     respondedUser: json['respondedUser'] != null
         ? Order.fromJson(json['respondedUser'] as Map<String, dynamic>)
+        : null,
+    business: json['business'] != null
+        ? Order.fromJson(json['business'] as Map<String, dynamic>)
         : null,
     onDeliveryQuantity: json['onDeliveryQuantity'] != null
         ? int.parse(json['onDeliveryQuantity'].toString())
@@ -293,25 +324,31 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     warehouseId:
         json['warehouseId'] != null ? json['warehouseId'] as String : null,
     staffId: json['staffId'] != null ? json['staffId'] as String : null,
-    loadingDate:
-        json['loadingDate'] != null ? json['loadingDate'] as String : null,
+    loadingDate: json['loadingDate'] != null
+        ? DateTime.parse(json['loadingDate'].toString())
+        : null,
     pullSheetStatus: json['pullSheetStatus'] != null
         ? json['pullSheetStatus'] as String
         : null,
-    startedDate:
-        json['startedDate'] != null ? json['startedDate'] as String : null,
+    startedDate: json['startedDate'] != null
+        ? DateTime.parse(json['startedDate'].toString())
+        : null,
     isPaused: json['isPaused'] != null ? json['isPaused'] as bool : null,
-    pausedDate:
-        json['pausedDate'] != null ? json['pausedDate'] as String : null,
-    proceededDate:
-        json['proceededDate'] != null ? json['proceededDate'] as String : null,
+    pausedDate: json['pausedDate'] != null
+        ? DateTime.parse(json['pausedDate'].toString())
+        : null,
+    proceededDate: json['proceededDate'] != null
+        ? DateTime.parse(json['proceededDate'].toString())
+        : null,
     pausedDuration: json['pausedDuration'] != null
         ? double.parse(json['pausedDuration'].toString())
         : null,
-    endedDate: json['endedDate'] != null ? json['endedDate'] as String : null,
+    endedDate: json['endedDate'] != null
+        ? DateTime.parse(json['endedDate'].toString())
+        : null,
     lineId: json['lineId'] != null ? json['lineId'] as String : null,
     dispatchedDate: json['dispatchedDate'] != null
-        ? json['dispatchedDate'] as String
+        ? DateTime.parse(json['dispatchedDate'].toString())
         : null,
     warehouse: json['warehouse'] != null
         ? Order.fromJson(json['warehouse'] as Map<String, dynamic>)
@@ -412,6 +449,15 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$OrderToJson(Order instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.receipt != null) json['receipt'] = instance.receipt;
+  if (instance.deliveryNote != null)
+    json['deliveryNote'] = instance.deliveryNote;
+  if (instance.order != null) json['order'] = instance.order;
+  if (instance.business != null) json['business'] = instance.business;
+  if (instance.isBuyerConfirmed != null)
+    json['isBuyerConfirmed'] = instance.isBuyerConfirmed;
+  if (instance.isSupplierConfirmed != null)
+    json['isSupplierConfirmed'] = instance.isSupplierConfirmed;
   if (instance.respondedUser != null)
     json['respondedUser'] = instance.respondedUser;
   if (instance.isEnded != null) json['isEnded'] = instance.isEnded;

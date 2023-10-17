@@ -25,13 +25,14 @@ class _ModulesCardState extends State<ModulesCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.only(top: 150, left: 20, right: 20, bottom: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: white,
       ),
-      margin: const EdgeInsets.only(top: 70, left: 20, right: 20, bottom: 20),
-      padding: const EdgeInsets.all(10),
       child: GridView.count(
+        padding: const EdgeInsets.all(0),
         childAspectRatio: 1 / .75,
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class InvoiceCard extends StatefulWidget {
   static const routeName = '/invoicecard';
@@ -192,7 +193,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                             height: 10,
                           ),
                           Text(
-                            '${widget.data?.getsentDate()}',
+                            '${DateFormat("yyyy-MM-dd").format(widget.data!.createdAt!)}',
                             style: TextStyle(
                               fontSize: 12,
                               color: grey2,
@@ -229,14 +230,21 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                   color: Color(0xff555555),
                                 ),
                               ),
-                              Text(
-                                // '${widget.data!.getPaymentDate()}',
-                                '',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xff555555),
-                                ),
-                              ),
+                              widget.data?.paymentDate != null
+                                  ? Text(
+                                      '${DateFormat('yyyy-MM-dd').format(widget.data!.paymentDate!)}',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff555555),
+                                      ),
+                                    )
+                                  : Text(
+                                      '-',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff555555),
+                                      ),
+                                    ),
                             ],
                           ),
                           SizedBox(

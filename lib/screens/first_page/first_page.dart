@@ -20,7 +20,9 @@ import 'package:skeletons/skeletons.dart';
 
 class FirstPage extends StatefulWidget {
   static const routeName = '/firstpage';
-  const FirstPage({Key? key}) : super(key: key);
+  const FirstPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _FirstPageState createState() => _FirstPageState();
@@ -221,341 +223,341 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
   Widget build(BuildContext context) {
     partnerUser = Provider.of<UserProvider>(context, listen: true).partnerUser;
     return WillPopScope(
-      child: SafeArea(
-        top: false,
-        bottom: false,
-        child: Scaffold(
-          backgroundColor: backgroundColor,
-          appBar: AppBar(
-            backgroundColor: buttonColor,
-            elevation: 0,
-            automaticallyImplyLeading: false,
-            actions: [
-              SvgPicture.asset(
-                'assets/svg/notification.svg',
-              ),
-              SizedBox(
-                width: 15,
-              ),
-              Container(
-                margin: const EdgeInsets.only(right: 20),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed(ProfilePage.routeName);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(),
-                    child: partnerUser.user?.avatar == null
-                        ? CircleAvatar(
-                            radius: 14,
-                            child: ClipOval(
-                              child: Image(
-                                image: NetworkImage(
-                                  'https://i0.wp.com/a.slack-edge.com/df10d/img/avatars/ava_0024-192.png?ssl=1',
-                                ),
-                              ),
-                            ),
-                          )
-                        : CircleAvatar(
-                            radius: 14,
-                            child: ClipOval(
-                              child: Image(
-                                image: NetworkImage(
-                                  '${partnerUser.user?.avatar}',
-                                ),
-                              ),
-                            ),
-                          ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          body: SingleChildScrollView(
-            physics: ClampingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(bottom: 50),
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(15),
-                          bottomRight: Radius.circular(15),
-                        ),
-                        color: buttonColor,
+      child: Scaffold(
+        backgroundColor: backgroundColor,
+        body: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 50, top: 20),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(15),
+                        bottomRight: Radius.circular(15),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            '${partnerUser.user?.currentBusiness?.partnerName}',
-                            style: TextStyle(
-                              color: white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                      color: buttonColor,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(top: 15),
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text(
-                                "${partnerUser.user?.currentBusiness?.type}: ",
-                                style: TextStyle(
-                                  color: Color(0xffFEBC11),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Text(
-                                "${partnerUser.user?.currentBusiness?.partnerName}",
-                                style: TextStyle(
-                                  color: white,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/svg/notification.svg',
+                                  ),
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(right: 20),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context)
+                                            .pushNamed(ProfilePage.routeName);
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(),
+                                        child: partnerUser.user?.avatar == null
+                                            ? CircleAvatar(
+                                                radius: 14,
+                                                backgroundImage: AssetImage(
+                                                    'images/avatar.png'),
+                                              )
+                                            : CircleAvatar(
+                                                radius: 14,
+                                                backgroundImage: NetworkImage(
+                                                    '${partnerUser.user?.avatar}'),
+                                              ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
                             ],
-                          )
-                        ],
-                      ),
-                    ),
-                    ModulesCard(
-                      partner: partnerUser,
-                    ),
-                  ],
-                ),
-                partnerUser.user?.currentBusiness?.type == "BUYER" ||
-                        partnerUser.user?.currentBusiness?.type == "SUPPLIER"
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          filtered.isEmpty
-                              ? SizedBox()
-                              : Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 15),
-                                  color: white,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              horizontal: 15),
-                                          child: partnerUser.user
-                                                      ?.currentBusiness?.type ==
-                                                  "SUPPLIER"
-                                              ? Text(
-                                                  "Өнөөдөр хүлээлгэн өгөх",
-                                                  style: TextStyle(
-                                                    color: buttonColor,
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                )
-                                              : Text(
-                                                  "Өнөөдөр хүлээн авах",
-                                                  style: TextStyle(
-                                                    color: buttonColor,
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                )),
-                                      SizedBox(
-                                        height: 15,
-                                      ),
-                                      SingleChildScrollView(
-                                        scrollDirection: Axis.horizontal,
-                                        child: Row(
-                                          children: [
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            isLoading == true
-                                                ? Row(
-                                                    children:
-                                                        [1, 2, 3, 4, 5, 6, 7]
-                                                            .map(
-                                                              (e) => Container(
-                                                                margin: const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        3),
-                                                                child:
-                                                                    SkeletonAvatar(
-                                                                  style:
-                                                                      SkeletonAvatarStyle(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            100),
-                                                                    height: 50,
-                                                                    width: 50,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            )
-                                                            .toList(),
-                                                  )
-                                                : Row(
-                                                    children: filtered
-                                                        .map(
-                                                          (e) => TakeGiveCard(),
-                                                        )
-                                                        .toList(),
-                                                  )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                          SizedBox(
-                            height: 10,
                           ),
-                          Container(
+                        ),
+                        Text(
+                          '${partnerUser.user?.currentBusiness?.partnerName}',
+                          style: TextStyle(
                             color: white,
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            child: Column(
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 15),
-                                  child: Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                          'assets/svg/dot-calendar.svg'),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        '2023-03-23',
-                                        style: TextStyle(
-                                          color: buttonColor,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 12,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    ScheduleCard(),
-                                    ScheduleCard(),
-                                    ScheduleCard(),
-                                  ],
-                                ),
-                              ],
-                            ),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
                           ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 15),
-                            child: Text(
-                              'Батлах хүлээж буй',
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "${partnerUser.user?.currentBusiness?.type}: ",
                               style: TextStyle(
-                                color: buttonColor,
-                                fontSize: 16,
+                                color: Color(0xffFEBC11),
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 15),
-                            child: Text(
-                              '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD")}',
+                            Text(
+                              "${partnerUser.user?.currentBusiness?.partnerName}",
                               style: TextStyle(
-                                color: blue,
-                                fontWeight: FontWeight.w600,
+                                color: white,
+                                fontWeight: FontWeight.w500,
                               ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  ModulesCard(
+                    partner: partnerUser,
+                  ),
+                ],
+              ),
+              partnerUser.user?.currentBusiness?.type == "BUYER" ||
+                      partnerUser.user?.currentBusiness?.type == "SUPPLIER"
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        filtered.isEmpty
+                            ? SizedBox()
+                            : Container(
+                                width: MediaQuery.of(context).size.width,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 15),
+                                color: white,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 15),
+                                        child: partnerUser.user?.currentBusiness
+                                                    ?.type ==
+                                                "SUPPLIER"
+                                            ? Text(
+                                                "Өнөөдөр хүлээлгэн өгөх",
+                                                style: TextStyle(
+                                                  color: buttonColor,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              )
+                                            : Text(
+                                                "Өнөөдөр хүлээн авах",
+                                                style: TextStyle(
+                                                  color: buttonColor,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              )),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          isLoading == true
+                                              ? Row(
+                                                  children: [
+                                                    1,
+                                                    2,
+                                                    3,
+                                                    4,
+                                                    5,
+                                                    6,
+                                                    7
+                                                  ]
+                                                      .map(
+                                                        (e) => Container(
+                                                          margin:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      3),
+                                                          child: SkeletonAvatar(
+                                                            style:
+                                                                SkeletonAvatarStyle(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          100),
+                                                              height: 50,
+                                                              width: 50,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                      .toList(),
+                                                )
+                                              : Row(
+                                                  children: filtered
+                                                      .map(
+                                                        (e) => TakeGiveCard(),
+                                                      )
+                                                      .toList(),
+                                                )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          color: white,
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          child: Column(
+                            children: [
+                              Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/svg/dot-calendar.svg'),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      '2023-03-23',
+                                      style: TextStyle(
+                                        color: buttonColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 12,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  ScheduleCard(),
+                                  ScheduleCard(),
+                                  ScheduleCard(),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 15),
+                          child: Text(
+                            'Батлах хүлээж буй',
+                            style: TextStyle(
+                              color: buttonColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Text(
+                            '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD")}',
+                            style: TextStyle(
+                              color: blue,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        isLoading == true
+                            ? SkeletonAvatar(
+                                style: SkeletonAvatarStyle(
+                                  height: 100,
+                                  width: MediaQuery.of(context).size.width,
+                                ),
+                              )
+                            : Column(
+                                children: invoice.rows!
+                                    .map(
+                                      (e) => InvoiceCard(
+                                        data: e,
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                        SizedBox(
+                          height: 50,
+                        ),
+                      ],
+                    )
+                  : Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Column(
+                        children: [
+                          Text(
+                            'DeHUB платформд тавтай морил!',
+                            style: TextStyle(
+                              color: buttonColor,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           SizedBox(
-                            height: 15,
+                            height: 10,
                           ),
-                          isLoading == true
-                              ? SkeletonAvatar(
-                                  style: SkeletonAvatarStyle(
-                                    height: 100,
-                                    width: MediaQuery.of(context).size.width,
-                                  ),
-                                )
-                              : Column(
-                                  children: invoice.rows!
-                                      .map(
-                                        (e) => InvoiceCard(
-                                          data: e,
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
+                          SvgPicture.asset('assets/svg/new-player.svg'),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Та партнерийн тохиргоогоо бүрэн гүйцэт хийнэ үү',
+                            style: TextStyle(color: buttonColor),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Text(
+                              'Заавартай танилцах',
+                              style: TextStyle(
+                                color: buttonColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          TutorialCard(),
                           SizedBox(
                             height: 50,
                           ),
                         ],
-                      )
-                    : Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Column(
-                          children: [
-                            Text(
-                              'DeHUB платформд тавтай морил!',
-                              style: TextStyle(
-                                color: buttonColor,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            SvgPicture.asset('assets/svg/new-player.svg'),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'Та партнерийн тохиргоогоо бүрэн гүйцэт хийнэ үү',
-                              style: TextStyle(color: buttonColor),
-                              textAlign: TextAlign.center,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: Text(
-                                'Заавартай танилцах',
-                                style: TextStyle(
-                                  color: buttonColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            TutorialCard(),
-                            SizedBox(
-                              height: 50,
-                            ),
-                          ],
-                        ),
-                      )
-              ],
-            ),
+                      ),
+                    )
+            ],
           ),
         ),
       ),
@@ -594,4 +596,9 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
           ],
         ),
       );
+  var textStyle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: buttonColor,
+  );
 }
