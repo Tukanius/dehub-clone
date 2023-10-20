@@ -1095,8 +1095,12 @@ class MyApp extends StatelessWidget {
                       return DirectionPage();
                     });
                   case RankDetailPage.routeName:
+                    RankDetailPageArguments arguments =
+                        settings.arguments as RankDetailPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return RankDetailPage();
+                      return RankDetailPage(
+                        id: arguments.id,
+                      );
                     });
                   case CheckBiometric.routeName:
                     return MaterialPageRoute(builder: (context) {

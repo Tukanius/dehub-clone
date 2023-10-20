@@ -74,7 +74,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
     if (receiverIds.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          backgroundColor: invoiceColor,
+          backgroundColor: networkColor,
           shape: StadiumBorder(),
           content: Center(
             child: Text('Харилцагч сонгоно уу!'),

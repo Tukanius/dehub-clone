@@ -1,9 +1,12 @@
+import 'package:dehub/models/partner.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/profile/information/screens/page1.dart';
 import 'package:dehub/screens/profile/information/screens/page2.dart';
 import 'package:dehub/screens/profile/information/screens/page3.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class PartnerInfo1 extends StatefulWidget {
   static const routeName = '/PartnerInfo1';
@@ -15,6 +18,7 @@ class PartnerInfo1 extends StatefulWidget {
 
 class _PartnerInfo1State extends State<PartnerInfo1> {
   int currentIndex = 1;
+  Partner partner = Partner();
 
   pageChange() {
     switch (currentIndex) {
@@ -30,6 +34,7 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
 
   @override
   Widget build(BuildContext context) {
+    partner = Provider.of<UserProvider>(context, listen: true).partnerUser;
     return SafeArea(
       top: false,
       child: SingleChildScrollView(
@@ -37,6 +42,32 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
           children: [
             Column(
               children: [
+                Container(
+                  margin: const EdgeInsets.only(right: 15, top: 35),
+                  alignment: Alignment.centerRight,
+                  child: Column(
+                    children: [
+                      Text(
+                        '${partner.partner?.businessName}',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: grey3,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        '${partner.user?.currentBusiness?.profileNameEng}',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: grey3,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 pageChange(),
                 SizedBox(
                   height: 40,

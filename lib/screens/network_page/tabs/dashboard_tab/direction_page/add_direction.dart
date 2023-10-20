@@ -162,14 +162,14 @@ class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
                         contentPadding: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 15),
                         hintStyle: TextStyle(color: networkColor),
-                        hintText: 'Бүсийн нэр',
+                        hintText: 'Чиглэлийн нэр',
                         border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                         ),
                       ),
                       validators: FormBuilderValidators.compose([
                         FormBuilderValidators.required(
-                            errorText: 'Бүсийн нэр оруулна уу'),
+                            errorText: 'Чиглэлийн нэр оруулна уу'),
                       ]),
                     ),
                     distributionArea.rows!.isEmpty
@@ -409,16 +409,4 @@ class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
       ),
     );
   }
-
-  DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
-        value: item,
-        child: Text(
-          item,
-          style: TextStyle(
-            color: networkColor,
-            fontSize: 14,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      );
 }

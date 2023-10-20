@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class InboxCard extends StatefulWidget {
   final Function()? onClick;
-  final InvitationReceived? data;
+  final Invitation? data;
   InboxCard({
     this.data,
     this.onClick,

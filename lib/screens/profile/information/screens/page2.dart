@@ -38,36 +38,6 @@ class _Page2State extends State<Page2> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(right: 18, top: 35),
-                      child: Text(
-                        'Дэлгэрэх хүнс ХХК',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: grey3,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(right: 24, top: 10),
-                      child: Text(
-                        'Bolor Delguur',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: grey3,
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
             SizedBox(
               height: 45,
             ),

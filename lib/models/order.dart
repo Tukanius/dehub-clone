@@ -48,7 +48,7 @@ class Order {
   String? branchStatus;
   bool? isBuyer;
   bool? isSupplier;
-  DateTime? deliveryDate;
+  String? deliveryDate;
   String? province;
   String? district;
   String? khoroo;

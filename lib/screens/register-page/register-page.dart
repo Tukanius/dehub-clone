@@ -23,10 +23,8 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   TextEditingController regnumController = TextEditingController();
-  bool isCheck = false;
+  bool isCheck = true;
   bool isCheck1 = false;
-  String legalEntityType = '';
-  bool validate = false;
   User user = User();
   User otpverify = User();
   String registerNo = "";
@@ -43,22 +41,11 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
-  legalEntityTypeValidate() async {
-    if (legalEntityType == "") {
-      setState(() {
-        validate = true;
-      });
-    }
-    if (validate == false) {
-      onSubmit();
-    }
-  }
-
   onSubmit() async {
     if (fbKey.currentState!.saveAndValidate()) {
       try {
         user = User.fromJson(fbKey.currentState!.value);
-        user.type = legalEntityType;
+        user.type = isCheck == true ? "COMPANY" : "CITIZEN";
         user.regNumber = isCheck1 == true
             ? "${letters.join()}${regnumController.text}"
             : fbKey.currentState?.fields['regNumber']?.value;
@@ -158,11 +145,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         onChanged: (bool? newValue) {
                           setState(() {
                             isCheck = newValue!;
-                            legalEntityType = 'COMPANY';
-                            isCheck1 = false;
-                            setState(() {
-                              validate = false;
-                            });
+                            isCheck1 = isCheck == true ? false : true;
                           });
                         },
                       ),
@@ -192,11 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         onChanged: (bool? newValue) {
                           setState(() {
                             isCheck1 = newValue!;
-                            legalEntityType = 'CITIZEN';
-                            isCheck = false;
-                            setState(() {
-                              validate = false;
-                            });
+                            isCheck = isCheck1 == true ? false : true;
                           });
                         },
                       ),
@@ -211,22 +190,24 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ],
               ),
-              validate == true
-                  ? Text(
-                      'Төрөл сонгоно уу',
-                      style: TextStyle(color: red),
-                    )
-                  : SizedBox(),
               SizedBox(
                 height: 10,
               ),
-              Text(
-                'Татвар төлөгчийн дугаар',
-                style: TextStyle(
-                  color: buttonColor,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+              isCheck == true
+                  ? Text(
+                      'Татвар төлөгчийн дугаар',
+                      style: TextStyle(
+                        color: buttonColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )
+                  : Text(
+                      'Регистерийн дугаар',
+                      style: TextStyle(
+                        color: buttonColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
               SizedBox(
                 height: 5,
               ),
@@ -236,38 +217,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     isCheck1 == true
-                        ?
-                        // ? FormBuilderField(
-                        //     validator: FormBuilderValidators.compose([
-                        //       FormBuilderValidators.required(
-                        //           errorText: 'Заавал бөглөнө үү'),
-                        //       (dynamic value) => value.toString() != ""
-                        //           ? (validateStructure(
-                        //                   letters.join(), value.toString())
-                        //               ? null
-                        //               : "Регистерийн дугаараа оруулна уу!")
-                        //           : null,
-                        //     ]),
-                        //     autovalidateMode: AutovalidateMode.disabled,
-                        //     name: "regNumber",
-                        //     builder: (FormFieldState<dynamic> field) {
-                        //       return InputDecorator(
-                        //         decoration: InputDecoration(
-                        //           errorText: field.errorText,
-                        //           fillColor: backgroundColor,
-                        //           filled: true,
-                        //           contentPadding:
-                        //               EdgeInsets.symmetric(vertical: 0),
-                        //           border: OutlineInputBorder(
-                        //             borderSide: BorderSide.none,
-                        //           ),
-                        //         ),
-                        //         child: Container(
-                        //           decoration: BoxDecoration(
-                        //             borderRadius: BorderRadius.circular(3),
-                        //           ),
-                        //           child:
-                        Row(
+                        ? Row(
                             children: [
                               RegisterLetters(
                                 width: DeviceSize.width(3, context),
@@ -362,10 +312,6 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ],
                           )
-                        // ),
-                        // );
-                        // },
-                        // )
                         : FormTextField(
                             textColor: buttonColor,
                             name: "regNumber",
@@ -612,7 +558,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               CustomButton(
                 onClick: () {
-                  legalEntityTypeValidate();
+                  onSubmit();
                 },
                 labelColor: buttonColor,
                 labelText: "Бүртгүүлэх",

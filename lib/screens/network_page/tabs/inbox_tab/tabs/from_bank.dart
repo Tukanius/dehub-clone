@@ -1,5 +1,6 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/partner_cards/inbox_card.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
@@ -54,23 +55,28 @@ class _FromBankState extends State<FromBank> with AfterLayoutMixin {
             ),
           )
         : SingleChildScrollView(
-            child: Column(
-              children: invitation.rows!
-                  .map(
-                    (item) => InboxCard(
-                      onClick: () {
-                        Navigator.of(context)
-                            .pushNamed(InvitationDetailPage.routeName,
-                                arguments: InvitationDetailPageArguments(
-                                  listenController: listenController,
-                                  id: item.id,
-                                ));
-                      },
-                      data: item,
-                    ),
+            child: invitation.rows?.length != 0
+                ? Column(
+                    children: invitation.rows!
+                        .map(
+                          (item) => InboxCard(
+                            onClick: () {
+                              Navigator.of(context)
+                                  .pushNamed(InvitationDetailPage.routeName,
+                                      arguments: InvitationDetailPageArguments(
+                                        listenController: listenController,
+                                        id: item.id,
+                                      ));
+                            },
+                            data: item,
+                          ),
+                        )
+                        .toList(),
                   )
-                  .toList(),
-            ),
+                : NotFound(
+                    module: "NETWORK",
+                    labelText: 'Хоосон байна',
+                  ),
           );
   }
 }

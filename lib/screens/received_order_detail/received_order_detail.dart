@@ -882,7 +882,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           ),
                         ),
                         Text(
-                          '${DateFormat("yyyy-MM-dd HH:mm").format(order.deliveryDate!)}',
+                          '${DateFormat("yyyy-MM-dd").format(DateTime.parse(order.deliveryDate.toString()))}',
                           style: TextStyle(
                             color: orderColor,
                           ),

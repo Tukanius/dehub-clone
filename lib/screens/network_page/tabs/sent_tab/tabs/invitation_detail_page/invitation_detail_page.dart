@@ -26,14 +26,11 @@ class SentInvitationDetail extends StatefulWidget {
 
 class _SentInvitationDetailState extends State<SentInvitationDetail>
     with AfterLayoutMixin {
-  InvitationReceived invitation = InvitationReceived();
-  bool isLoading = false;
+  Invitation invitation = Invitation();
+  bool isLoading = true;
 
   @override
   afterFirstLayout(BuildContext context) async {
-    setState(() {
-      isLoading = true;
-    });
     invitation = await BusinessApi().getInfo(widget.id);
     setState(() {
       isLoading = false;
@@ -95,11 +92,9 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          child: Text(
-                            'Урилга №: ',
-                            style: TextStyle(color: dark),
-                          ),
+                        Text(
+                          'Урилга №: ',
+                          style: TextStyle(color: dark),
                         ),
                         Text(
                           '${invitation.refCode}',
@@ -125,7 +120,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                         ),
                         invitation.invitedDate != null
                             ? Text(
-                                '${DateFormat("yyyy-MM-DD").format(invitation.invitedDate!)}',
+                                '${DateFormat("yyyy-MM-dd").format(invitation.invitedDate!)}',
                                 style: TextStyle(color: dark),
                               )
                             : Text(
@@ -189,7 +184,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          '${invitation.sender!.partnerName}',
+                          '${invitation.sender?.partnerName}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -207,7 +202,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          '${invitation.sender!.refCode}',
+                          '${invitation.sender?.refCode}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -225,7 +220,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          '${invitation.sender!.partner!.businessName}',
+                          '${invitation.sender?.partner?.businessName}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -243,7 +238,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          '${invitation.sender!.partner!.refCode}',
+                          '${invitation.sender?.partner?.refCode}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -297,7 +292,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          '${invitation.senderUser!.firstName}',
+                          '${invitation.senderUser?.firstName}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -315,7 +310,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          '${invitation.senderUser!.email}',
+                          '${invitation.senderUser?.email}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -333,7 +328,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          '${invitation.senderUser!.phone}',
+                          '${invitation.senderUser?.phone}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -351,7 +346,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          '${invitation.senderFinStaff!.firstName}',
+                          '${invitation.senderFinStaff?.firstName}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -387,7 +382,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                           color: grey3.withOpacity(0.3),
                         ),
                       ),
-                      child: Text(''),
+                      child: Text('${invitation.toMessage}'),
                     ),
                   ),
                   SizedBox(
@@ -419,7 +414,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          'PartnerName',
+                          '${invitation.receiver?.partnerName}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -437,7 +432,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          '${invitation.receiver!.refCode}',
+                          '${invitation.receiver?.refCode}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -455,7 +450,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          '${invitation.receiver!.regNumber}',
+                          '${invitation.receiver?.regNumber}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -473,7 +468,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          'BusinessName',
+                          '${invitation.receiver?.partner?.businessName}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],
@@ -491,7 +486,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          'BusRef#',
+                          '${invitation.receiver?.partner?.refCode}',
                           style: TextStyle(color: networkColor),
                         ),
                       ],

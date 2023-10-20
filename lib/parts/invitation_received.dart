@@ -1,12 +1,10 @@
 part of '../models/invitation_received.dart';
 
-InvitationReceived _$InvitationReceivedFromJson(Map<String, dynamic> json) {
-  return InvitationReceived(
+Invitation _$InvitationFromJson(Map<String, dynamic> json) {
+  return Invitation(
     count: json['count'] != null ? int.parse(json['count'].toString()) : null,
     rows: json['rows'] != null
-        ? (json['rows'] as List)
-            .map((e) => InvitationReceived.fromJson(e))
-            .toList()
+        ? (json['rows'] as List).map((e) => Invitation.fromJson(e)).toList()
         : null,
     id: json['id'] != null ? json['id'] as String : null,
     createdAt: json['createdAt'] != null
@@ -52,7 +50,7 @@ InvitationReceived _$InvitationReceivedFromJson(Map<String, dynamic> json) {
     isBuyer: json['isBuyer'] != null ? json['isBuyer'] as bool : null,
     isSupplier: json['isSupplier'] != null ? json['isSupplier'] as bool : null,
     sender: json['sender'] != null
-        ? InvitationReceived.fromJson(json['sender'] as Map<String, dynamic>)
+        ? Invitation.fromJson(json['sender'] as Map<String, dynamic>)
         : null,
     regNumber: json['regNumber'] != null ? json['regNumber'] as String : null,
     stateRegNum:
@@ -104,7 +102,7 @@ InvitationReceived _$InvitationReceivedFromJson(Map<String, dynamic> json) {
         ? json['isAnchorBusiness'] as bool
         : null,
     staff: json['staff'] != null
-        ? InvitationReceived.fromJson(json['staff'] as Map<String, dynamic>)
+        ? Invitation.fromJson(json['staff'] as Map<String, dynamic>)
         : null,
     firstName: json['firstName'] != null ? json['firstName'] as String : null,
     lastName: json['lastName'] != null ? json['lastName'] as String : null,
@@ -112,10 +110,10 @@ InvitationReceived _$InvitationReceivedFromJson(Map<String, dynamic> json) {
     phone: json['phone'] != null ? json['phone'] as String : null,
     avatar: json['avatar'] != null ? json['avatar'] as String : null,
     receiver: json['receiver'] != null
-        ? InvitationReceived.fromJson(json['receiver'] as Map<String, dynamic>)
+        ? Invitation.fromJson(json['receiver'] as Map<String, dynamic>)
         : null,
     partner: json['partner'] != null
-        ? InvitationReceived.fromJson(json['partner'] as Map<String, dynamic>)
+        ? Invitation.fromJson(json['partner'] as Map<String, dynamic>)
         : null,
     businessName:
         json['businessName'] != null ? json['businessName'] as String : null,
@@ -123,18 +121,16 @@ InvitationReceived _$InvitationReceivedFromJson(Map<String, dynamic> json) {
         ? json['businessNameEng'] as String
         : null,
     senderUser: json['senderUser'] != null
-        ? InvitationReceived.fromJson(
-            json['senderUser'] as Map<String, dynamic>)
+        ? Invitation.fromJson(json['senderUser'] as Map<String, dynamic>)
         : null,
     senderFinStaff: json['senderFinStaff'] != null
-        ? InvitationReceived.fromJson(
-            json['senderFinStaff'] as Map<String, dynamic>)
+        ? Invitation.fromJson(json['senderFinStaff'] as Map<String, dynamic>)
         : null,
     accept: json['accept'] != null ? json['accept'] as bool : null,
   );
 }
 
-Map<String, dynamic> _$InvitationReceivedToJson(InvitationReceived instance) {
+Map<String, dynamic> _$InvitationToJson(Invitation instance) {
   Map<String, dynamic> json = {};
 
   if (instance.businessSubSectorId != null)

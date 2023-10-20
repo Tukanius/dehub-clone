@@ -82,7 +82,7 @@ class _EntryPointState extends State<EntryPoint>
             left: isSideMenuClosed ? 0 : 220,
             top: MediaQuery.of(context).size.height /
                     MediaQuery.of(context).size.width +
-                10,
+                15,
             curve: Curves.easeIn,
             child: GestureDetector(
               onTap: () {

@@ -588,7 +588,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                         children: inventory
                             .map(
                               (item) => AddProductCard(
-                                readOnly: true,
+                                readOnly: false,
                                 closeClick: () {
                                   setState(() {
                                     inventory.removeWhere((element) =>

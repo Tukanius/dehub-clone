@@ -36,15 +36,15 @@ class InvitationDetailPage extends StatefulWidget {
 class _InvitationDetailPageState extends State<InvitationDetailPage>
     with AfterLayoutMixin {
   bool isLoading = true;
-  InvitationReceived invitation = InvitationReceived();
-  InvitationReceived respond = InvitationReceived();
-  List<InvitationReceived> list = [];
+  Invitation invitation = Invitation();
+  Invitation respond = Invitation();
+  List<Invitation> list = [];
 
   @override
   afterFirstLayout(BuildContext context) async {
     invitation = await BusinessApi().getInfo(widget.id);
     list = [
-      InvitationReceived(
+      Invitation(
         firstName: 'Урилга №',
         lastName: invitation.refCode,
       ),

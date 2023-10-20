@@ -125,31 +125,6 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                     ),
                   ),
                 ),
-          // selectedIndex == 2
-          //     ? AddButton(
-          //         color: orderColor,
-          //         onClick: () {
-          //           Navigator.of(context).pushNamed(
-          //             NewOrder.routeName,
-          //             arguments: NewOrderArguments(id: null),
-          //           );
-          //         },
-          //       )
-          //     : selectedIndex == 0
-          //         ? Container(
-          //             padding: const EdgeInsets.all(10),
-          //             margin:
-          //                 const EdgeInsets.only(right: 15, top: 9, bottom: 9),
-          //             decoration: BoxDecoration(
-          //               color: Color(0xff767680).withOpacity(0.12),
-          //               borderRadius: BorderRadius.circular(100),
-          //             ),
-          //             child: SvgPicture.asset(
-          //               'images/grid.svg',
-          //               color: selectedIndex != 3 ? orderColor : white,
-          //             ),
-          //           )
-          //         : SizedBox(),
         ],
         bottom: PreferredSize(
           child: Container(

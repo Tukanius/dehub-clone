@@ -32,36 +32,6 @@ class _Page1State extends State<Page1> with AfterLayoutMixin {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 35),
-                      child: Text(
-                        'Дэлгэрэх хүнс ХХК',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: grey3,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(right: 6, top: 10),
-                      child: Text(
-                        '${partnerUser.user!.currentBusiness!.profileNameEng}',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: grey3,
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
             SizedBox(
               height: 30,
             ),

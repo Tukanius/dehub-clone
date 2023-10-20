@@ -233,7 +233,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
               Stack(
                 children: [
                   Container(
-                    padding: const EdgeInsets.only(bottom: 50, top: 20),
+                    padding: const EdgeInsets.only(bottom: 50, top: 30),
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
@@ -247,7 +247,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                       children: [
                         Container(
                           margin: const EdgeInsets.only(top: 15),
-                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          padding: const EdgeInsets.only(top: 15, bottom: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -374,15 +374,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                           ),
                                           isLoading == true
                                               ? Row(
-                                                  children: [
-                                                    1,
-                                                    2,
-                                                    3,
-                                                    4,
-                                                    5,
-                                                    6,
-                                                    7
-                                                  ]
+                                                  children: [1, 2, 3, 4, 5, 6]
                                                       .map(
                                                         (e) => Container(
                                                           margin:
@@ -462,28 +454,35 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                             ],
                           ),
                         ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 15),
-                          child: Text(
-                            'Батлах хүлээж буй',
-                            style: TextStyle(
-                              color: buttonColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Text(
-                            '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD")}',
-                            style: TextStyle(
-                              color: blue,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
+                        invoice.rows?.length != 0
+                            ? Column(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 15, horizontal: 15),
+                                    child: Text(
+                                      'Батлах хүлээж буй',
+                                      style: TextStyle(
+                                        color: buttonColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Text(
+                                      '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD")}',
+                                      style: TextStyle(
+                                        color: blue,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : SizedBox(),
                         SizedBox(
                           height: 15,
                         ),

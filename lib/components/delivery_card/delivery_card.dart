@@ -59,6 +59,22 @@ class _DeliveryCardState extends State<DeliveryCard> {
     return result?.name;
   }
 
+  statusColor() {
+    switch (widget.data?.deliveryNoteStatus) {
+      case "DRAFT":
+        return Color(0xff727576);
+      case "ASSIGNED":
+        return Color(0xff1642F4);
+      case "LOADED":
+        return Color(0xffFED804);
+      case "DELIVERING":
+        return Color(0xffFD8E31);
+      case "DELIVERED":
+        return Color(0xff01C129);
+      default:
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     general = Provider.of<GeneralProvider>(context, listen: false).orderGeneral;
@@ -227,7 +243,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                       status(widget.data?.deliveryNoteStatus.toString())
                           .toString(),
                       style: TextStyle(
-                        color: darkGreen,
+                        color: statusColor(),
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
                       ),
@@ -293,7 +309,9 @@ class _DeliveryCardState extends State<DeliveryCard> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             color:
-                                widget.data?.deliveryNoteStatus == "LOADED" ||
+                                widget.data?.deliveryNoteStatus == "LOADED" &&
+                                            user.currentBusiness?.type ==
+                                                "SUPPLIER" ||
                                         widget.data?.deliveryNoteStatus ==
                                             "DELIVERING"
                                     ? orderColor

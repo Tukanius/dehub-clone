@@ -1,8 +1,8 @@
 part '../parts/invitation_received.dart';
 
-class InvitationReceived {
+class Invitation {
   int? count;
-  List<InvitationReceived>? rows;
+  List<Invitation>? rows;
   String? id;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -25,7 +25,7 @@ class InvitationReceived {
   bool? isOnboarding;
   bool? isBuyer;
   bool? isSupplier;
-  InvitationReceived? sender;
+  Invitation? sender;
   String? regNumber;
   String? stateRegNum;
   String? legalEntityType;
@@ -48,23 +48,23 @@ class InvitationReceived {
   String? logo;
   String? profileInfo;
   bool? isAnchorBusiness;
-  InvitationReceived? staff;
+  Invitation? staff;
   String? firstName;
   String? lastName;
   String? email;
   String? phone;
   String? avatar;
-  InvitationReceived? receiver;
+  Invitation? receiver;
 
-  InvitationReceived? partner;
+  Invitation? partner;
   String? businessName;
   String? businessNameEng;
-  InvitationReceived? senderUser;
-  InvitationReceived? senderFinStaff;
+  Invitation? senderUser;
+  Invitation? senderFinStaff;
 
   bool? accept;
 
-  InvitationReceived({
+  Invitation({
     this.accept,
     this.partner,
     this.businessName,
@@ -127,11 +127,10 @@ class InvitationReceived {
     this.receiver,
   });
 
-  static $fromJson(Map<String, dynamic> json) =>
-      _$InvitationReceivedFromJson(json);
+  static $fromJson(Map<String, dynamic> json) => _$InvitationFromJson(json);
 
-  factory InvitationReceived.fromJson(Map<String, dynamic> json) =>
-      _$InvitationReceivedFromJson(json);
+  factory Invitation.fromJson(Map<String, dynamic> json) =>
+      _$InvitationFromJson(json);
 
-  Map<String, dynamic> toJson() => _$InvitationReceivedToJson(this);
+  Map<String, dynamic> toJson() => _$InvitationToJson(this);
 }

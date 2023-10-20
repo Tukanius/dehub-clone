@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class SentCard extends StatefulWidget {
   final Function()? onClick;
-  final InvitationReceived? data;
+  final Invitation? data;
   const SentCard({
     this.data,
     Key? key,

@@ -1,4 +1,5 @@
 import 'package:dehub/api/auth_api.dart';
+import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/splash/splash_page.dart';
@@ -27,6 +28,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
   bool isLoading = false;
   User dan = User();
   bool isSubmit = false;
+  Partner partner = Partner();
 
   afterFirstLayout(BuildContext context) async {}
 
@@ -55,6 +57,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).user;
+    partner = Provider.of<UserProvider>(context, listen: true).partnerUser;
     return SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),
       child: Container(
@@ -81,7 +84,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                   height: 15,
                 ),
                 Text(
-                  'Дэлгэрэх хүнс ХХК',
+                  '${partner.user?.currentBusiness?.profileNameEng}',
                   style: TextStyle(
                       fontSize: 16, fontWeight: FontWeight.w600, color: grey3),
                 ),

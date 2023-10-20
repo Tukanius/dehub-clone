@@ -1,4 +1,5 @@
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/close_button/close_button.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/business-staffs.dart';
 import 'package:dehub/models/general.dart';
@@ -10,7 +11,6 @@ import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
@@ -88,15 +88,7 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
       appBar: AppBar(
         backgroundColor: networkColor,
         elevation: 0,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            padding: const EdgeInsets.all(13),
-            child: SvgPicture.asset('assets/svg/close.svg'),
-          ),
-        ),
+        leading: CustomCloseButton(),
         title: Text(
           'Харилцагчийн зэрэглэл',
           style: TextStyle(
@@ -167,8 +159,10 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
                         .map(
                           (item) => DropdownMenuItem(
                             onTap: () {
-                              parentId = item.id;
-                              refcode = item.refCode;
+                              setState(() {
+                                parentId = item.id;
+                                refcode = item.refCode;
+                              });
                             },
                             value: item,
                             child: Text(

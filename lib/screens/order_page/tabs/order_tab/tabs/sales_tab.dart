@@ -14,7 +14,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:provider/provider.dart';
 
 class SalesTab extends StatefulWidget {
-  const SalesTab({super.key});
+  const SalesTab({Key? key}) : super(key: key);
 
   @override
   State<SalesTab> createState() => _SalesTabState();

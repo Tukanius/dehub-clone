@@ -11,37 +11,37 @@ class BusinessApi extends HttpRequest {
   Future<Result> list(ResultArguments resultArguments) async {
     var res = await get('/invitation/received', "BUSINESS", true,
         handler: true, data: resultArguments.toJson());
-    return Result.fromJson(res, InvitationReceived.fromJson);
+    return Result.fromJson(res, Invitation.fromJson);
   }
 
   Future<Result> funder(ResultArguments resultArguments) async {
     var res = await get('/invitation/funder', "BUSINESS", true,
         handler: true, data: resultArguments.toJson());
-    return Result.fromJson(res, InvitationReceived.fromJson);
+    return Result.fromJson(res, Invitation.fromJson);
   }
 
   Future<Result> listSent(ResultArguments resultArguments) async {
     var res = await get('/invitation/sent', "BUSINESS", true,
         data: resultArguments.toJson());
-    return Result.fromJson(res, InvitationReceived.$fromJson);
+    return Result.fromJson(res, Invitation.$fromJson);
   }
 
-  Future<InvitationReceived> getInfo(String id) async {
+  Future<Invitation> getInfo(String id) async {
     var res = await get(
       "/invitation/$id",
       "BUSINESS",
       true,
     );
-    return InvitationReceived.fromJson(res as Map<String, dynamic>);
+    return Invitation.fromJson(res as Map<String, dynamic>);
   }
 
-  // respond(String id, InvitationReceived data) async {
+  // respond(String id, Invitation data) async {
   //   var res = await put("/invitation/$id/respond", "BUSINESS",
   //       handler: true, data: data.toJson());
-  //   return InvitationReceived.fromJson(res as Map<String, dynamic>);
+  //   return Invitation.fromJson(res as Map<String, dynamic>);
   // }
 
-  respond(InvitationReceived data, String id) async {
+  respond(Invitation data, String id) async {
     var res = await put("/invitation/$id/respond", "BUSINESS", true,
         data: data.toJson());
     return res;

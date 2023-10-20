@@ -12,6 +12,7 @@ import 'package:dehub/screens/invoice/payment_page/qpay_page.dart';
 // import 'package:dehub/screens/order_invoice/order_invoice.dart';
 import 'package:dehub/screens/order_cash_payment/order_cash_payment.dart';
 import 'package:dehub/screens/order_invoice/order_invoice.dart';
+import 'package:dehub/screens/pin_check/pin_check.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -61,12 +62,18 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
     });
     list = [
       Order(firstName: "Нэхэмжлэх №", lastName: "${invoice.refCode}"),
-      Order(firstName: "Захиалгын дүн", lastName: "161,000 ₮"),
-      Order(firstName: "Хүлээн авсан дүн", lastName: "141,000 ₮"),
+      Order(
+          firstName: "Захиалгын дүн",
+          lastName:
+              "${Utils().formatCurrency(invoice.totalAmount.toString())} ₮"),
+      Order(
+          firstName: "Хүлээн авсан дүн",
+          lastName:
+              "${Utils().formatCurrency(invoice.totalAmount.toString())} ₮"),
       Order(
           firstName: "Төлсөн дүн",
           lastName:
-              "${Utils().formatCurrency(invoice.amountToPay.toString())} ₮"),
+              "${Utils().formatCurrency(invoice.paidAmount.toString())} ₮"),
       Order(
           firstName: "Нэхэмжлэлийн дүн",
           lastName:
@@ -122,6 +129,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
   Widget build(BuildContext context) {
     general = Provider.of<GeneralProvider>(context, listen: false).orderGeneral;
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
+    print(invoice.paymentTerm?.configType);
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -348,7 +356,8 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                   SizedBox(
                     height: 70,
                   ),
-                  invoice.paymentTerm?.configType == "INV_COD"
+                  invoice.paymentTerm?.configType == "INV_COD" ||
+                          invoice.paymentTerm?.configType == "CIA"
                       ? CustomButton(
                           onClick: () {
                             if (selectedMethod == "QPay") {
@@ -385,7 +394,12 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                               );
                             } else {
                               if (selectedMethod == "Бизнес тооцооны дансаар") {
-                                payment();
+                                Navigator.of(context).pushNamed(
+                                    PinCheckScreen.routeName,
+                                    arguments: PinCheckScreenArguments(
+                                        onSubmit: payment,
+                                        color: orderColor,
+                                        labelText: "Захиалгын төлбөр төлөх"));
                               } else if (selectedMethod == "Бэлэн мөнгөөр") {
                                 Navigator.of(context)
                                     .pushNamed(OrderCashPayment.routeName);
@@ -407,7 +421,59 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                                   border: Border.all(color: orderColor),
                                 ),
                                 child: CustomButton(
-                                  onClick: () {},
+                                  onClick: () {
+                                    if (selectedMethod == "QPay") {
+                                      Navigator.of(context).pushNamed(
+                                        QpayPage.routeName,
+                                        arguments: QpayPageArguments(
+                                          color: orderColor,
+                                          data: Invoice(
+                                            method: "QPAY",
+                                            invoiceId: invoice.id,
+                                            invoiceRefCode: invoice.refCode,
+                                            receiverBusinessId:
+                                                invoice.receiverBusinessId,
+                                            description: invoice.refCode,
+                                            creditAccountId:
+                                                invoice.receiverAcc?.id,
+                                            creditAccountBank:
+                                                invoice.receiverAcc?.bankName,
+                                            creditAccountName:
+                                                invoice.receiverAcc?.name,
+                                            creditAccountNumber:
+                                                invoice.receiverAcc?.number,
+                                            creditAccountCurrency:
+                                                invoice.receiverAcc?.currency,
+                                            debitAccountId:
+                                                invoice.senderAcc?.id,
+                                            debitAccountBank:
+                                                invoice.senderAcc?.bankName,
+                                            debitAccountName:
+                                                invoice.senderAcc?.name,
+                                            debitAccountNumber:
+                                                invoice.senderAcc?.number,
+                                            debitAccountCurrency:
+                                                invoice.senderAcc?.currency,
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      if (selectedMethod ==
+                                          "Бизнес тооцооны дансаар") {
+                                        Navigator.of(context).pushNamed(
+                                            PinCheckScreen.routeName,
+                                            arguments: PinCheckScreenArguments(
+                                                onSubmit: payment,
+                                                color: orderColor,
+                                                labelText:
+                                                    "Захиалгын төлбөр төлөх"));
+                                      } else if (selectedMethod ==
+                                          "Бэлэн мөнгөөр") {
+                                        Navigator.of(context).pushNamed(
+                                            OrderCashPayment.routeName);
+                                      }
+                                    }
+                                  },
                                   labelColor: white,
                                   labelText: "Төлөх",
                                   textColor: orderColor,

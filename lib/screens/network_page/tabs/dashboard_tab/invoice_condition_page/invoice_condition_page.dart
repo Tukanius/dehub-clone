@@ -233,8 +233,12 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
                                     );
                                   } else if (widget.data.listType ==
                                       "CLIENT_PRIORITY") {
-                                    Navigator.of(context)
-                                        .pushNamed(RankDetailPage.routeName);
+                                    Navigator.of(context).pushNamed(
+                                      RankDetailPage.routeName,
+                                      arguments: RankDetailPageArguments(
+                                        id: e.id,
+                                      ),
+                                    );
                                   } else if (widget.data.listType ==
                                       "DIRECTION") {
                                     Navigator.of(context).pushNamed(

@@ -56,6 +56,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   String selectedDate = '';
   FilePickerResult? result;
   List<Order> product = [];
+  List<Order> packageProduct = [];
   List<Order> data = [];
   List<Order> additionalLines = [];
   List<FilePickerResult> files = [];
@@ -107,71 +108,60 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   }
 
   onSubmit(bool toReview, bool send) async {
-    try {
-      for (var i = 0; i < product.length; i++) {
-        data[i] = Order();
-        data[i].variantId = product[i].id;
-        data[i].quantity = product[i].quantity;
-        print(product[i].toJson());
-      }
-      createOrder.businessId = order.id;
-      createOrder.receiverBranchId =
-          receiverBranch.id ?? order.receiverBranches?.first.id;
-      createOrder.deliveryDate = isCheck == false
-          ? DateTime.parse(selectedDate.toString())
-          : DateTime.parse(dateTime.toString());
-      createOrder.deliveryType =
-          isCheck == false ? "DEFAULT_DATE" : "CUSTOM_DATE";
-      createOrder.receiverStaffId = order.receiverStaff?.id;
-      // for (var i = 0; i < data.length; i++) {
-      //   createOrder.lines?[i].variantId = data[i].id;
-      //   createOrder.lines?[i].quantity = data[i].quantity;
-      //   print(createOrder.lines?.first.toJson());
-      //   print('==1');
-      // }
-      // print(createOrder.lines?.first.toJson());
-      // print('==1');
-      createOrder.lines = data;
-      createOrder.discountType = "AMOUNT";
-      createOrder.attachments = files;
-      createOrder.discountValue = 0;
-      createOrder.toReview = toReview;
-      createOrder.send = send;
-      createOrder.additionalLines = additionalLines;
-      print(createOrder.additionalLines?.first.toJson());
-      print(createOrder.lines?.first.toJson());
-      print('================asdf============');
-      await OrderApi().createOrder(createOrder);
-      showCustomDialog(
-        context,
-        "Захиалга амжилттай илгээгдлээ",
-        true,
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-      );
-      // } else {
-      // ScaffoldMessenger.of(context).showSnackBar(
-      // const SnackBar(
-      // backgroundColor: orderColor,
-      // shape: StadiumBorder(),
-      // content: Center(
-      // child: Text('Бараа сонгоно уу'),
-      // ),
-      // ),
-      // );
-      // }
-    } catch (e) {
-      debugPrint('==========e========');
-      debugPrint(e.toString());
-      debugPrint('==========e========');
+    // try {
+    for (var i = 0; i < product.length; i++) {
+      data[i] = Order();
+      data[i].variantId = product[i].id;
+      data[i].quantity = product[i].quantity;
+      print(product[i].toJson());
     }
+    // createOrder.businessId = order.id;
+    // createOrder.receiverBranchId =
+    //     receiverBranch.id ?? order.receiverBranches?.first.id;
+    // createOrder.deliveryDate = isCheck == false
+    //     ? DateTime.parse(selectedDate.toString())
+    //     : DateTime.parse(dateTime.toString());
+    // createOrder.deliveryType =
+    //     isCheck == false ? "DEFAULT_DATE" : "CUSTOM_DATE";
+    // createOrder.receiverStaffId = order.receiverStaff?.id;
+    // createOrder.lines = data;
+    // createOrder.discountType = "AMOUNT";
+    // createOrder.attachments = files;
+    // createOrder.discountValue = 0;
+    // createOrder.toReview = toReview;
+    // createOrder.send = send;
+    await OrderApi().createOrder(Order(
+      businessId: order.id,
+      receiverBranchId: receiverBranch.id ?? order.receiverBranches?.first.id,
+      deliveryDate:
+          isCheck == false ? selectedDate.toString() : dateTime.toString(),
+      deliveryType: isCheck == false ? "DEFAULT_DATE" : "CUSTOM_DATE",
+      receiverStaffId: order.receiverStaff?.id,
+      lines: data,
+      discountType: "AMOUNT",
+      attachments: files,
+      discountValue: 0,
+      toReview: toReview,
+      send: send,
+    ));
+    showCustomDialog(
+      context,
+      "Захиалга амжилттай илгээгдлээ",
+      true,
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    // } catch (e) {
+    // debugPrint('==========e========');
+    // debugPrint(e.toString());
+    // debugPrint('==========e========');
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).orderMe;
-    print(order.paymentTerm?.toJson());
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -741,51 +731,6 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       ],
                     ),
                   ),
-                  // Container(
-                  //   margin: const EdgeInsets.only(bottom: 3),
-                  //   color: white,
-                  //   padding: const EdgeInsets.symmetric(
-                  //       horizontal: 15, vertical: 10),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //     children: [
-                  //       const Text(
-                  //         'Хүлээн авах өдөр',
-                  //         style: TextStyle(
-                  //           color: buttonColor,
-                  //           fontWeight: FontWeight.w500,
-                  //         ),
-                  //       ),
-                  //       Row(
-                  //         children: [
-                  //           selectedDate == ''
-                  //               ? order.deliveryDate != null
-                  //                   ? Text(
-                  //                       '${Moment.parse(order.deliveryDate.toString()).format("YYYY-MM-DD")}',
-                  //                       style: const TextStyle(
-                  //                         color: orderColor,
-                  //                       ),
-                  //                     )
-                  //                   : const Text('')
-                  //               : Text(
-                  //                   '${Moment.parse(selectedDate).format("YYYY-MM-DD")}',
-                  //                   style: const TextStyle(
-                  //                     color: orderColor,
-                  //                   ),
-                  //                 ),
-                  //           const SizedBox(
-                  //             width: 8,
-                  //           ),
-                  //           const Icon(
-                  //             Icons.calendar_month,
-                  //             color: orderColor,
-                  //             size: 16,
-                  //           )
-                  //         ],
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
                   Row(
                     children: [
                       Checkbox(
@@ -1017,7 +962,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     children: product
                         .map(
                           (item) => OrderProductCard(
-                            readOnly: true,
+                            readOnly: false,
+                            onClick: () {},
                             onCloseClick: () {
                               setState(() {
                                 product.removeWhere(
@@ -1367,29 +1313,6 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                           ),
                         )
                       : SizedBox(),
-                  // Container(
-                  //   margin: const EdgeInsets.only(bottom: 3),
-                  //   color: white,
-                  //   padding: const EdgeInsets.symmetric(
-                  //       horizontal: 15, vertical: 10),
-                  //   child: const Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //     children: [
-                  //       Text(
-                  //         'Төлөх сүүлийн огноо',
-                  //         style: TextStyle(
-                  //           color: buttonColor,
-                  //         ),
-                  //       ),
-                  //       Text(
-                  //         '-',
-                  //         style: TextStyle(
-                  //           color: orderColor,
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
@@ -1682,37 +1605,18 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
         files.add(result!);
       });
     });
-    productInPackageController.addListener(() {
-      setState(() {
-        product = productInPackageController.productInPackage!;
-        data = productInPackageController.productInPackage!;
-        print(product.first.toJson());
-        print('============1');
-        print(data.first.toJson());
-      });
+    productInPackageController.addListener(() async {
+      packageProduct = productInPackageController.productInPackage!;
+      for (var element = 0; element < packageProduct.length; element++) {
+        setState(() {
+          product.add(packageProduct.elementAt(element));
+          data.add(packageProduct.elementAt(element));
+        });
+      }
     });
     productListenController.addListener(() {
       productOrder = productListenController.productOrder!;
-      setState(() {
-        product.add(productOrder);
-        data.add(productOrder);
-        double vat = product.fold(
-            0,
-            (previousValue, element) =>
-                previousValue + (element.quantity! * element.vatAmount!));
-        totalVatAmount = vat;
-        double tax = product.fold(
-            0,
-            (previousValue, element) =>
-                previousValue + (element.quantity! * element.taxAmount!));
-        totalTaxAmount = tax;
-        double total = product.fold(
-            0,
-            (previousValue, element) =>
-                previousValue + (element.quantity! * element.price!));
-        totalAmount = total + tax + vat;
-        finalAmount = totalAmount;
-      });
+      getTotalAmount();
     });
     additionalRowsListenController.addListener(() {
       additionalRows = additionalRowsListenController.additionalRows!;
@@ -1736,4 +1640,27 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
     "${DateTime.now().add(const Duration(days: 5))}",
     "${DateTime.now().add(const Duration(days: 6))}",
   ];
+
+  getTotalAmount() {
+    setState(() {
+      product.add(productOrder);
+      data.add(productOrder);
+      double vat = product.fold(
+          0,
+          (previousValue, element) =>
+              previousValue + (element.quantity! * element.vatAmount!));
+      totalVatAmount = vat;
+      double tax = product.fold(
+          0,
+          (previousValue, element) =>
+              previousValue + (element.quantity! * element.taxAmount!));
+      totalTaxAmount = tax;
+      double total = product.fold(
+          0,
+          (previousValue, element) =>
+              previousValue + (element.quantity! * element.price!));
+      totalAmount = total + tax + vat;
+      finalAmount = totalAmount;
+    });
+  }
 }
