@@ -19,6 +19,7 @@ class ChangePassword extends StatefulWidget {
 class _ChangePasswordState extends State<ChangePassword> {
   bool isVisible = true;
   bool isVisible1 = true;
+  bool isVisible2 = true;
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   User user = User();
 
@@ -159,15 +160,15 @@ class _ChangePasswordState extends State<ChangePassword> {
                         },
                         name: "password",
                         inputType: TextInputType.text,
-                        obscureText: isVisible,
+                        obscureText: isVisible1,
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
                             onPressed: () {
                               setState(() {
-                                isVisible = !isVisible;
+                                isVisible1 = !isVisible1;
                               });
                             },
-                            icon: isVisible == true
+                            icon: isVisible1 == true
                                 ? Icon(
                                     Icons.visibility_off,
                                     color: buttonColor,
@@ -226,17 +227,17 @@ class _ChangePasswordState extends State<ChangePassword> {
                         onComplete: () {
                           onSubmit();
                         },
-                        obscureText: isVisible1,
+                        obscureText: isVisible2,
                         name: "passwordVerify",
                         inputType: TextInputType.text,
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
                             onPressed: () {
                               setState(() {
-                                isVisible1 = !isVisible1;
+                                isVisible2 = !isVisible2;
                               });
                             },
-                            icon: isVisible1 == true
+                            icon: isVisible2 == true
                                 ? Icon(
                                     Icons.visibility_off,
                                     color: buttonColor,

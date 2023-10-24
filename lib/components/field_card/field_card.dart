@@ -1,3 +1,4 @@
+import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class FieldCard extends StatefulWidget {
@@ -10,19 +11,23 @@ class FieldCard extends StatefulWidget {
   final Color? labelTextColor;
   final String? thirdText;
   final Color? secondTextColor;
-  final bool? hasThirdText;
   final Color? thirdTextColor;
   final Color? arrowColor;
   final double? fontSize;
   final FontWeight? fontWeight;
+  final bool? validate;
+  final GlobalKey? fbKey;
+  final FontWeight? secondTextFontWeight;
   const FieldCard({
     Key? key,
+    this.secondTextFontWeight,
+    this.fbKey,
+    this.validate,
     this.fontWeight,
     this.fontSize,
     this.arrowColor,
     this.thirdTextColor,
     this.thirdText,
-    this.hasThirdText,
     this.secondTextColor,
     this.labelTextColor,
     this.secondText,
@@ -43,7 +48,12 @@ class _FieldCardState extends State<FieldCard> {
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
-        color: widget.color,
+        key: widget.fbKey,
+        decoration: BoxDecoration(
+          color: widget.color,
+          border:
+              Border.all(color: widget.validate == true ? red : transparent),
+        ),
         padding: EdgeInsets.symmetric(
           horizontal: widget.marginHorizontal,
           vertical: widget.marginVertical,
@@ -56,7 +66,7 @@ class _FieldCardState extends State<FieldCard> {
               child: Text(
                 '${widget.labelText}',
                 style: TextStyle(
-                  color: widget.labelTextColor,
+                  color: widget.validate == true ? red : widget.labelTextColor,
                   fontSize: widget.fontSize,
                   fontWeight: widget.fontWeight,
                 ),
@@ -71,10 +81,15 @@ class _FieldCardState extends State<FieldCard> {
                           ? Text(
                               '${widget.secondText}',
                               style: TextStyle(
-                                color: widget.secondTextColor,
+                                color: widget.validate == true
+                                    ? red
+                                    : widget.secondTextColor,
                                 fontSize: widget.fontSize ?? widget.fontSize,
-                                fontWeight:
-                                    widget.fontWeight ?? widget.fontWeight,
+                                fontWeight: widget.fontWeight != null
+                                    ? widget.fontWeight
+                                    : widget.secondTextFontWeight != null
+                                        ? widget.secondTextFontWeight
+                                        : FontWeight.normal,
                               ),
                               textAlign: TextAlign.end,
                             )
@@ -83,15 +98,21 @@ class _FieldCardState extends State<FieldCard> {
                               style: TextStyle(
                                 color: widget.secondTextColor,
                                 fontSize: widget.fontSize ?? widget.fontSize,
-                                fontWeight:
-                                    widget.fontWeight ?? widget.fontWeight,
+                                fontWeight: widget.fontWeight != null
+                                    ? widget.fontWeight
+                                    : widget.secondTextFontWeight != null
+                                        ? widget.secondTextFontWeight
+                                        : FontWeight.normal,
                               ),
                               textAlign: TextAlign.end,
                             )),
-                  widget.hasThirdText == true
+                  widget.thirdText != null
                       ? Text(
                           '${widget.thirdText}',
-                          style: TextStyle(color: widget.thirdTextColor),
+                          style: TextStyle(
+                              color: widget.thirdTextColor,
+                              fontWeight: widget.secondTextFontWeight ??
+                                  widget.secondTextFontWeight),
                         )
                       : SizedBox(),
                   SizedBox(
@@ -100,7 +121,8 @@ class _FieldCardState extends State<FieldCard> {
                   widget.onClick != null
                       ? Icon(
                           Icons.arrow_forward_ios,
-                          color: widget.arrowColor,
+                          color:
+                              widget.validate == true ? red : widget.arrowColor,
                           size: 14,
                         )
                       : SizedBox(),

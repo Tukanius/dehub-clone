@@ -35,135 +35,65 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
   @override
   Widget build(BuildContext context) {
     partner = Provider.of<UserProvider>(context, listen: true).partnerUser;
-    return SafeArea(
-      top: false,
-      child: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(right: 15, top: 35),
-                  alignment: Alignment.centerRight,
-                  child: Column(
-                    children: [
-                      Text(
-                        '${partner.partner?.businessName}',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: grey3,
-                        ),
+    return SingleChildScrollView(
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(right: 15, top: 35),
+                alignment: Alignment.centerRight,
+                child: Column(
+                  children: [
+                    Text(
+                      '${partner.partner?.businessName}',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: grey3,
                       ),
-                      SizedBox(
-                        height: 10,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      '${partner.user?.currentBusiness?.profileNameEng}',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: grey3,
                       ),
-                      Text(
-                        '${partner.user?.currentBusiness?.profileNameEng}',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: grey3,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                pageChange(),
-                SizedBox(
-                  height: 40,
-                ),
-              ],
-            ),
-            Positioned(
-              bottom: 0,
-              child: Container(
-                child: currentIndex == 2
-                    ? Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: const EdgeInsets.only(bottom: 50),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    currentIndex = 1;
-                                  });
-                                },
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 16,
-                                    ),
-                                    SvgPicture.asset(
-                                      'assets/svg/arrow_back.svg',
-                                      color: buttonColor,
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      'Өмнөх',
-                                      style: TextStyle(
-                                        color: buttonColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 16,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Container(
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    currentIndex = 3;
-                                  });
-                                },
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Дараах',
-                                      style: TextStyle(
-                                        color: buttonColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    SvgPicture.asset(
-                                      'assets/svg/arrow_forward.svg',
-                                      color: buttonColor,
-                                    ),
-                                    SizedBox(
-                                      width: 16,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : currentIndex == 3
-                        ? Container(
-                            margin: const EdgeInsets.only(bottom: 50, left: 16),
+              ),
+              pageChange(),
+              SizedBox(
+                height: 40,
+              ),
+            ],
+          ),
+          Positioned(
+            bottom: 0,
+            child: Container(
+              child: currentIndex == 2
+                  ? Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.only(bottom: 50),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  currentIndex = 2;
+                                  currentIndex = 1;
                                 });
                               },
                               child: Row(
                                 children: [
+                                  SizedBox(
+                                    width: 16,
+                                  ),
                                   SvgPicture.asset(
                                     'assets/svg/arrow_back.svg',
                                     color: buttonColor,
@@ -185,19 +115,16 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                                 ],
                               ),
                             ),
-                          )
-                        : Container(
-                            margin: const EdgeInsets.only(bottom: 50),
-                            width: MediaQuery.of(context).size.width,
+                          ),
+                          Container(
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  currentIndex = 2;
+                                  currentIndex = 3;
                                 });
                               },
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
                                     'Дараах',
@@ -221,10 +148,80 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                               ),
                             ),
                           ),
-              ),
+                        ],
+                      ),
+                    )
+                  : currentIndex == 3
+                      ? Container(
+                          margin: const EdgeInsets.only(bottom: 50, left: 16),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                currentIndex = 2;
+                              });
+                            },
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/svg/arrow_back.svg',
+                                  color: buttonColor,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'Өмнөх',
+                                  style: TextStyle(
+                                    color: buttonColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 16,
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      : Container(
+                          margin: const EdgeInsets.only(bottom: 50),
+                          width: MediaQuery.of(context).size.width,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                currentIndex = 2;
+                              });
+                            },
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  'Дараах',
+                                  style: TextStyle(
+                                    color: buttonColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                SvgPicture.asset(
+                                  'assets/svg/arrow_forward.svg',
+                                  color: buttonColor,
+                                ),
+                                SizedBox(
+                                  width: 16,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

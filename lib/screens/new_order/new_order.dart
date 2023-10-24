@@ -1,5 +1,6 @@
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/order_additional_line/order_additional_line.dart';
 import 'package:dehub/components/order_product_card/order_product_card.dart';
 import 'package:dehub/components/possible-schedule/possible-schedule-card.dart';
@@ -57,6 +58,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   FilePickerResult? result;
   List<Order> product = [];
   List<Order> packageProduct = [];
+  final duplicates = Set();
   List<Order> data = [];
   List<Order> additionalLines = [];
   List<FilePickerResult> files = [];
@@ -68,14 +70,19 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   ScrollController scrollController = ScrollController();
   ListenController pickedFile = ListenController();
   ListenController productInPackageController = ListenController();
-  // List<Order> packageProduct = [];
   double totalVatAmount = 0;
   double totalTaxAmount = 0;
   double totalAmount = 0;
   double finalAmount = 0;
+  double discountAmount = 0;
+  double shippingAmount = 0;
   bool isCheck = false;
-  bool selectedDateValidate = false;
   var dateKey = GlobalKey();
+  var customerKey = GlobalKey();
+  var productKey = GlobalKey();
+  bool selectedDateValidate = false;
+  bool customerValidate = false;
+  bool productValidate = false;
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -91,72 +98,77 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   }
 
   validateCheck(bool toReview, bool send) {
+    if (data.isEmpty) {
+      Scrollable.ensureVisible(productKey.currentContext!,
+          duration: Duration(milliseconds: 300), curve: Curves.ease);
+      setState(() {
+        productValidate = true;
+      });
+    }
     if (isCheck == false && selectedDate == '') {
-      // scrollController.animateTo(
-      //   scrollController.position.minScrollExtent + 300,
-      //   duration: Duration(milliseconds: 300),
-      //   curve: Curves.ease,
-      // );
       Scrollable.ensureVisible(dateKey.currentContext!,
           duration: Duration(milliseconds: 300), curve: Curves.ease);
       setState(() {
         selectedDateValidate = true;
       });
-    } else {
+    }
+    if (customer.id == null) {
+      Scrollable.ensureVisible(customerKey.currentContext!,
+          duration: Duration(milliseconds: 300), curve: Curves.ease);
+      setState(() {
+        customerValidate = true;
+      });
+    }
+    if (selectedDateValidate == false &&
+        productValidate == false &&
+        customerValidate == false) {
       onSubmit(toReview, send);
     }
   }
 
   onSubmit(bool toReview, bool send) async {
-    // try {
-    for (var i = 0; i < product.length; i++) {
-      data[i] = Order();
-      data[i].variantId = product[i].id;
-      data[i].quantity = product[i].quantity;
-      print(product[i].toJson());
+    try {
+      for (var i = 0; i < product.length; i++) {
+        data[i] = Order();
+        data[i].variantId = product[i].id;
+        data[i].quantity = product[i].quantity;
+        print(product[i].toJson());
+      }
+      await OrderApi().createOrder(Order(
+        businessId: order.id,
+        receiverBranchId: receiverBranch.id ?? order.receiverBranches?.first.id,
+        deliveryDate:
+            isCheck == false ? selectedDate.toString() : dateTime.toString(),
+        deliveryType: isCheck == false ? "DEFAULT_DATE" : "CUSTOM_DATE",
+        receiverStaffId: order.receiverStaff?.id,
+        lines: data,
+        discountType: "AMOUNT",
+        attachments: files,
+        discountValue: 0,
+        toReview: toReview,
+        send: send,
+      ));
+      showCustomDialog(
+        context,
+        "Захиалга амжилттай илгээгдлээ",
+        true,
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      );
+    } catch (e) {
+      debugPrint('==========e========');
+      debugPrint(e.toString());
+      debugPrint('==========e========');
     }
-    // createOrder.businessId = order.id;
-    // createOrder.receiverBranchId =
-    //     receiverBranch.id ?? order.receiverBranches?.first.id;
-    // createOrder.deliveryDate = isCheck == false
-    //     ? DateTime.parse(selectedDate.toString())
-    //     : DateTime.parse(dateTime.toString());
-    // createOrder.deliveryType =
-    //     isCheck == false ? "DEFAULT_DATE" : "CUSTOM_DATE";
-    // createOrder.receiverStaffId = order.receiverStaff?.id;
-    // createOrder.lines = data;
-    // createOrder.discountType = "AMOUNT";
-    // createOrder.attachments = files;
-    // createOrder.discountValue = 0;
-    // createOrder.toReview = toReview;
-    // createOrder.send = send;
-    await OrderApi().createOrder(Order(
-      businessId: order.id,
-      receiverBranchId: receiverBranch.id ?? order.receiverBranches?.first.id,
-      deliveryDate:
-          isCheck == false ? selectedDate.toString() : dateTime.toString(),
-      deliveryType: isCheck == false ? "DEFAULT_DATE" : "CUSTOM_DATE",
-      receiverStaffId: order.receiverStaff?.id,
-      lines: data,
-      discountType: "AMOUNT",
-      attachments: files,
-      discountValue: 0,
-      toReview: toReview,
-      send: send,
-    ));
-    showCustomDialog(
-      context,
-      "Захиалга амжилттай илгээгдлээ",
-      true,
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-    // } catch (e) {
-    // debugPrint('==========e========');
-    // debugPrint(e.toString());
-    // debugPrint('==========e========');
-    // }
+  }
+
+  updateTotalAmount() {
+    setState(() {
+      finalAmount = totalAmount;
+      finalAmount = finalAmount + (shippingAmount - discountAmount);
+      print(totalAmount);
+    });
   }
 
   @override
@@ -273,8 +285,14 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     ),
                   ),
                   Container(
+                    key: customerKey,
                     margin: const EdgeInsets.only(bottom: 3),
-                    color: white,
+                    decoration: BoxDecoration(
+                      color: white,
+                      border: Border.all(
+                          color: customerValidate == true ? red : transparent,
+                          width: customerValidate == true ? 1 : 0),
+                    ),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
                     child: Row(
@@ -312,10 +330,12 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                       fontWeight: FontWeight.w500,
                                     ),
                                   )
-                                : const Text(
+                                : Text(
                                     'Харилцагч сонгох',
                                     style: TextStyle(
-                                      color: orderColor,
+                                      color: customerValidate == true
+                                          ? red
+                                          : orderColor,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   )
@@ -333,12 +353,14 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                           },
                           child: Container(
                             color: transparent,
-                            child: const Row(
+                            child: Row(
                               children: [
                                 Text(
                                   'Солих',
                                   style: TextStyle(
-                                    color: orderColor,
+                                    color: customerValidate == true
+                                        ? red
+                                        : orderColor,
                                   ),
                                 ),
                                 SizedBox(
@@ -346,7 +368,9 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                 ),
                                 Icon(
                                   Icons.arrow_forward_ios,
-                                  color: orderColor,
+                                  color: customerValidate == true
+                                      ? red
+                                      : orderColor,
                                   size: 14,
                                 )
                               ],
@@ -356,216 +380,78 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       ],
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 10,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Бизнес код',
-                          style: TextStyle(color: buttonColor),
-                        ),
-                        customer.refCode != null
-                            ? Text(
-                                '${customer.refCode}',
-                                style: const TextStyle(
-                                  color: orderColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )
-                            : const Text(
-                                '#BusRef',
-                                style: TextStyle(
-                                  color: orderColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                      ],
-                    ),
+                    labelText: "Бизнес код",
+                    secondText: customer.refCode != null
+                        ? "${customer.refCode}"
+                        : "#BusRef",
+                    secondTextColor: orderColor,
+                    secondTextFontWeight: FontWeight.w500,
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
+                  const SizedBox(height: 3),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 10,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Партнер нэр',
-                          style: TextStyle(color: buttonColor),
-                        ),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              customer.partnerName != null
-                                  ? Expanded(
-                                      child: Text(
-                                        '${customer.partnerName},',
-                                        style: const TextStyle(
-                                          color: buttonColor,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                        textAlign: TextAlign.end,
-                                      ),
-                                    )
-                                  : const Text(
-                                      'Партнер нэр, ',
-                                      style: TextStyle(
-                                        color: buttonColor,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                              customer.partner?.refCode != null
-                                  ? Text(
-                                      ' ${customer.partner?.refCode}',
-                                      style: const TextStyle(
-                                        color: orderColor,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    )
-                                  : const Text(
-                                      '#PartnerRef',
-                                      style: TextStyle(
-                                        color: orderColor,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                    labelText: "Партнер нэр",
+                    secondText: customer.partnerName != null
+                        ? "${customer.partnerName},"
+                        : "Партнер нэр,",
+                    secondTextColor: buttonColor,
+                    thirdText: customer.partner?.refCode != null
+                        ? ' ${customer.partner?.refCode}'
+                        : " #PartnerRef",
+                    thirdTextColor: orderColor,
+                    secondTextFontWeight: FontWeight.w500,
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
+                  const SizedBox(height: 3),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 10,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'ТТД',
-                          style: TextStyle(color: buttonColor),
-                        ),
-                        customer.regNumber != null
-                            ? Text(
-                                '${customer.regNumber}',
-                                style: const TextStyle(
-                                  color: buttonColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )
-                            : const Text(
-                                'ТТД',
-                                style: TextStyle(
-                                  color: buttonColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                      ],
-                    ),
+                    labelText: "ТТД",
+                    secondText: customer.regNumber != null
+                        ? "${customer.regNumber}"
+                        : "ТТД",
+                    secondTextColor: buttonColor,
+                    secondTextFontWeight: FontWeight.w500,
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
+                  const SizedBox(height: 3),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 10,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Expanded(
-                          child: Text(
-                            'Төлбөрийн нөхцөл',
-                            style: TextStyle(color: buttonColor),
-                          ),
-                        ),
-                        Expanded(
-                          child: order.paymentTerm?.description != null
-                              ? Text(
-                                  '${order.paymentTerm?.description}',
-                                  style: const TextStyle(
-                                    color: buttonColor,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  textAlign: TextAlign.end,
-                                )
-                              : Text(
-                                  'Төлбөрийн нөхцөл',
-                                  style: const TextStyle(
-                                    color: buttonColor,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  textAlign: TextAlign.end,
-                                ),
-                        ),
-                      ],
-                    ),
+                    labelText: "Төлбөрийн нөхцөл",
+                    secondText: order.paymentTerm?.description != null
+                        ? "${order.paymentTerm?.description}"
+                        : "Төлбөрийн нөхцөл",
+                    secondTextColor: buttonColor,
+                    secondTextFontWeight: FontWeight.w500,
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
+                  const SizedBox(height: 3),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 10,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'НӨАТ төлөгч эсэх',
-                          style: TextStyle(color: buttonColor),
-                        ),
-                        order.isVatPayer == true
-                            ? const Text(
-                                'Тийм',
-                                style: TextStyle(
-                                  color: buttonColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )
-                            : const Text(
-                                'Үгүй',
-                                style: TextStyle(
-                                  color: buttonColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                      ],
-                    ),
+                    labelText: "НӨАТ төлөгч эсэх",
+                    secondText: order.isVatPayer == true ? "Тийм" : "Үгүй",
+                    secondTextColor: buttonColor,
+                    secondTextFontWeight: FontWeight.w500,
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
+                  const SizedBox(height: 3),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 10,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Менежер',
-                          style: TextStyle(color: buttonColor),
-                        ),
-                        order.receiverStaff?.id != null
-                            ? Text(
-                                '${order.receiverStaff?.firstName}',
-                                style: const TextStyle(
-                                  color: orderColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )
-                            : const Text(
-                                'Менежер',
-                                style: const TextStyle(
-                                  color: orderColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                      ],
-                    ),
+                    labelText: "Менежер",
+                    secondText: order.receiverStaff != null
+                        ? "${order.receiverStaff?.firstName}"
+                        : "Менежер",
+                    secondTextColor: orderColor,
+                    secondTextFontWeight: FontWeight.w500,
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(
@@ -578,62 +464,91 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       ),
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 10,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Хүлээн авах салбар',
-                          style: TextStyle(
-                            color: buttonColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        order.receiverBranches != null
-                            ? order.receiverBranches!.length > 1
-                                ? GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).pushNamed(
-                                        ChangeBranchNamePage.routeName,
-                                        arguments:
-                                            ChangeBranchNamePageArguments(
-                                          data: order.receiverBranches!,
-                                          receiverBranchController:
-                                              receiverBranchController,
-                                        ),
-                                      );
-                                    },
-                                    child: Container(
-                                      color: transparent,
-                                      child: const Row(
-                                        children: [
-                                          Text(
-                                            'Солих',
-                                            style: TextStyle(
-                                              color: orderColor,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 8,
-                                          ),
-                                          Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: orderColor,
-                                            size: 14,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                : const SizedBox()
-                            : const SizedBox(),
-                      ],
-                    ),
+                    labelText: "Хүлээн авах салбар",
+                    secondText: order.receiverBranches != null
+                        ? order.receiverBranches!.length > 1
+                            ? "Солих"
+                            : ''
+                        : '',
+                    secondTextColor: orderColor,
+                    onClick: order.receiverBranches != null
+                        ? order.receiverBranches!.length > 1
+                            ? () {
+                                Navigator.of(context).pushNamed(
+                                  ChangeBranchNamePage.routeName,
+                                  arguments: ChangeBranchNamePageArguments(
+                                    data: order.receiverBranches!,
+                                    receiverBranchController:
+                                        receiverBranchController,
+                                  ),
+                                );
+                              }
+                            : null
+                        : null,
+                    fontWeight: FontWeight.w500,
+                    labelTextColor: buttonColor,
                   ),
+                  const SizedBox(height: 3),
+                  // Container(
+                  //   margin: const EdgeInsets.only(bottom: 3),
+                  //   color: white,
+                  //   padding: const EdgeInsets.symmetric(
+                  //       horizontal: 15, vertical: 10),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       const Text(
+                  //         'Хүлээн авах салбар',
+                  //         style: TextStyle(
+                  //           color: buttonColor,
+                  //           fontWeight: FontWeight.w500,
+                  //         ),
+                  //       ),
+                  //       order.receiverBranches != null
+                  //           ? order.receiverBranches!.length > 1
+                  //               ? GestureDetector(
+                  //                   onTap: () {
+                  //                     Navigator.of(context).pushNamed(
+                  //                       ChangeBranchNamePage.routeName,
+                  //                       arguments:
+                  //                           ChangeBranchNamePageArguments(
+                  //                         data: order.receiverBranches!,
+                  //                         receiverBranchController:
+                  //                             receiverBranchController,
+                  //                       ),
+                  //                     );
+                  //                   },
+                  //                   child: Container(
+                  //                     color: transparent,
+                  //                     child: const Row(
+                  //                       children: [
+                  //                         Text(
+                  //                           'Солих',
+                  //                           style: TextStyle(
+                  //                             color: orderColor,
+                  //                           ),
+                  //                         ),
+                  //                         SizedBox(
+                  //                           width: 8,
+                  //                         ),
+                  //                         Icon(
+                  //                           Icons.arrow_forward_ios,
+                  //                           color: orderColor,
+                  //                           size: 14,
+                  //                         )
+                  //                       ],
+                  //                     ),
+                  //                   ),
+                  //                 )
+                  //               : const SizedBox()
+                  //           : const SizedBox(),
+                  //     ],
+                  //   ),
+                  // ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 3),
                     color: white,
@@ -688,49 +603,20 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       ],
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 10,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Хүлээн авах ажилтан',
-                          style: TextStyle(
-                            color: buttonColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        order.receiverStaff?.firstName != null
-                            ? Row(
-                                children: [
-                                  Text(
-                                    '${order.receiverStaff?.firstName}',
-                                    style: const TextStyle(
-                                      color: orderColor,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  const Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: orderColor,
-                                    size: 14,
-                                  )
-                                ],
-                              )
-                            : Text(
-                                'Хүлээн авах ажилтан',
-                                style: const TextStyle(
-                                  color: orderColor,
-                                ),
-                              ),
-                      ],
-                    ),
+                    labelText: "Хүлээн авах ажилтан",
+                    secondText: order.receiverStaff?.firstName != null
+                        ? "${order.receiverStaff?.firstName}"
+                        : "Хүлээн авах ажилтан",
+                    secondTextColor: orderColor,
+                    onClick: () {},
+                    arrowColor: orderColor,
+                    fontWeight: FontWeight.w500,
                   ),
+                  const SizedBox(height: 3),
                   Row(
                     children: [
                       Checkbox(
@@ -880,8 +766,14 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                   ),
                   GestureDetector(
                     child: Container(
+                      key: productKey,
                       margin: const EdgeInsets.only(bottom: 3),
-                      color: white,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: productValidate == true ? red : transparent,
+                            width: productValidate == true ? 1 : 0),
+                        color: white,
+                      ),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
                       child: Row(
@@ -889,22 +781,35 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.of(context).pushNamed(
-                                ProductChoose.routeName,
-                                arguments: ProductChooseArguments(
-                                  isPackage: false,
-                                  businessId: customer.id!,
-                                  packageListenController:
-                                      productInPackageController,
-                                  productListenController:
-                                      productListenController,
-                                ),
-                              );
+                              if (customer.id != null) {
+                                Navigator.of(context).pushNamed(
+                                  ProductChoose.routeName,
+                                  arguments: ProductChooseArguments(
+                                    isPackage: false,
+                                    businessId: customer.id!,
+                                    packageListenController:
+                                        productInPackageController,
+                                    productListenController:
+                                        productListenController,
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    backgroundColor: orderColor,
+                                    shape: StadiumBorder(),
+                                    content: Center(
+                                      child: Text('Харилцагч сонгоно уу!'),
+                                    ),
+                                  ),
+                                );
+                              }
                             },
-                            child: const Text(
-                              'Мөр нэмэх',
+                            child: Text(
+                              'Ширхэгээр нэмэх',
                               style: TextStyle(
-                                color: orderColor,
+                                color:
+                                    productValidate == true ? red : orderColor,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -935,12 +840,14 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                 );
                               }
                             },
-                            child: const Row(
+                            child: Row(
                               children: [
                                 Text(
                                   'Багцаар нэмэх',
                                   style: TextStyle(
-                                    color: orderColor,
+                                    color: productValidate == true
+                                        ? red
+                                        : orderColor,
                                   ),
                                 ),
                                 SizedBox(
@@ -948,7 +855,9 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                 ),
                                 Icon(
                                   Icons.download_for_offline_outlined,
-                                  color: orderColor,
+                                  color: productValidate == true
+                                      ? red
+                                      : orderColor,
                                   size: 16,
                                 )
                               ],
@@ -971,6 +880,11 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                 data.removeWhere(
                                     (element) => element.id == item.id);
                               });
+                              if (data.isEmpty) {
+                                setState(() {
+                                  productValidate = true;
+                                });
+                              }
                             },
                             data: item,
                           ),
@@ -1044,163 +958,65 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       ),
                     ),
                   ),
-                  Container(
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 10,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Захиалгад буй',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        Text(
-                          '${product.length}',
-                          style: const TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
+                    labelText: "Захиалгад буй",
+                    secondText: "${product.length}",
+                    secondTextColor: orderColor,
+                    arrowColor: orderColor,
                   ),
-                  Container(
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 10,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Нийт тоо ширхэг',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        product.isNotEmpty
-                            ? Text(
-                                '${product.map((e) => e.quantity).reduce((value, element) => value! + element!).toString()}',
-                                style: const TextStyle(
-                                  color: orderColor,
-                                ),
-                              )
-                            : const Text(
-                                '0',
-                                style: TextStyle(
-                                  color: orderColor,
-                                ),
-                              )
-                      ],
-                    ),
+                    labelText: "Нийт тоо ширхэг",
+                    secondText: product.isNotEmpty
+                        ? '${product.map((e) => e.quantity).reduce((value, element) => value! + element!).toString()}'
+                        : '0',
+                    secondTextColor: orderColor,
+                    arrowColor: orderColor,
                   ),
-                  Container(
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 10,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Тооцсон НӨАТ',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        Text(
-                          '${Utils().formatCurrency(totalVatAmount.toString())}₮',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
+                    labelText: "Тооцсон НӨАТ",
+                    secondText:
+                        "${Utils().formatCurrency(totalVatAmount.toString())}₮",
+                    secondTextColor: orderColor,
+                    arrowColor: orderColor,
                   ),
-                  Container(
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 10,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Тооцсон НХАТ',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        Text(
-                          '${Utils().formatCurrency(totalTaxAmount.toString())}₮',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
+                    labelText: "Тооцсон НХАТ",
+                    secondText:
+                        "${Utils().formatCurrency(totalTaxAmount.toString())}₮",
+                    secondTextColor: orderColor,
+                    arrowColor: orderColor,
                   ),
-                  Container(
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 10,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Тооцсон хөнгөлөлт',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        Text(
-                          '0₮',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Захиалгын нийт дүн',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        product.isNotEmpty
-                            ? Text(
-                                '${Utils().formatCurrency(totalAmount.toString())}₮',
-                                style: const TextStyle(
-                                  color: orderColor,
-                                ),
-                              )
-                            : const Text(
-                                '0₮',
-                                style: TextStyle(
-                                  color: orderColor,
-                                ),
-                              )
-                      ],
-                    ),
+                    labelText: "Захиалгын нийт дүн",
+                    secondText:
+                        '${Utils().formatCurrency(totalAmount.toString())}₮',
+                    secondTextColor: orderColor,
+                    arrowColor: orderColor,
                   ),
                   FormTextField(
                     inputType: TextInputType.number,
                     name: 'shippingAmount',
                     textAlign: TextAlign.end,
                     textColor: orderColor,
-                    onChanged: (p0) {
+                    onChanged: (value) {
                       setState(() {
-                        finalAmount = totalAmount;
-                        finalAmount = finalAmount +
-                            (double.tryParse(shippingAmountController.text) ??
-                                0);
+                        shippingAmount = double.tryParse(value) ?? 0;
+                        updateTotalAmount();
                       });
                     },
                     controller: shippingAmountController,
@@ -1232,7 +1048,13 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                           horizontal: 15, vertical: 10),
                     ),
                   ),
-                  const FormTextField(
+                  FormTextField(
+                    onChanged: (value) {
+                      setState(() {
+                        discountAmount = double.tryParse(value) ?? 0;
+                        updateTotalAmount();
+                      });
+                    },
                     name: 'discountAmount',
                     textAlign: TextAlign.end,
                     textColor: orderColor,
@@ -1264,28 +1086,15 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                           EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 10,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'НИЙТ ТӨЛБӨР',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        Text(
-                          '${finalAmount}₮',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
+                    labelText: "НИЙТ ТӨЛБӨР",
+                    secondText:
+                        '${Utils().formatCurrency(finalAmount.toString())}₮',
+                    secondTextColor: orderColor,
+                    arrowColor: orderColor,
                   ),
                   order.paymentTerm?.configType == "CIA" ||
                           order.paymentTerm?.configType == 'CBD'
@@ -1444,28 +1253,27 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'Нийт дүн: ',
-                          style: TextStyle(color: orderColor),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Нийт дүн: ',
+                              style: TextStyle(color: orderColor),
+                            ),
+                            Text(
+                              '${Utils().formatCurrency(finalAmount.toString())}₮',
+                              style: TextStyle(
+                                color: orderColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
                         ),
                         Row(
                           children: [
                             GestureDetector(
                               onTap: () {
-                                if (data.isNotEmpty) {
-                                  // onSubmit(false, false);
-                                  validateCheck(false, false);
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      backgroundColor: orderColor,
-                                      shape: StadiumBorder(),
-                                      content: Center(
-                                        child: Text('Бараа сонгоно уу!'),
-                                      ),
-                                    ),
-                                  );
-                                }
+                                validateCheck(false, false);
                               },
                               child: SizedBox(
                                 height: 32,
@@ -1493,22 +1301,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                             ),
                             GestureDetector(
                               onTap: () {
-                                // Navigator.of(context)
-                                //     .pushNamed(OrderSendPage.routeName);
-                                if (data.isNotEmpty) {
-                                  // onSubmit(true, false);
-                                  validateCheck(true, false);
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      backgroundColor: orderColor,
-                                      shape: StadiumBorder(),
-                                      content: Center(
-                                        child: Text('Бараа сонгоно уу!'),
-                                      ),
-                                    ),
-                                  );
-                                }
+                                validateCheck(true, false);
                               },
                               child: Container(
                                 height: 32,
@@ -1536,20 +1329,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                             ),
                             GestureDetector(
                               onTap: () {
-                                if (data.isNotEmpty) {
-                                  // onSubmit(true, true);
-                                  validateCheck(true, true);
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      backgroundColor: orderColor,
-                                      shape: StadiumBorder(),
-                                      content: Center(
-                                        child: Text('Бараа сонгоно уу!'),
-                                      ),
-                                    ),
-                                  );
-                                }
+                                validateCheck(true, true);
                               },
                               child: Container(
                                 color: transparent,
@@ -1597,6 +1377,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
       setState(() {
         order = res;
         isLoading = false;
+        customerValidate = false;
       });
     });
     pickedFile.addListener(() {
@@ -1613,10 +1394,47 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
           data.add(packageProduct.elementAt(element));
         });
       }
+      double vat = product.fold(
+          0,
+          (previousValue, element) =>
+              previousValue + (element.quantity! * element.vatAmount!));
+      totalVatAmount = vat;
+      double tax = product.fold(
+          0,
+          (previousValue, element) =>
+              previousValue + (element.quantity! * element.taxAmount!));
+      totalTaxAmount = tax;
+      double total = product.fold(
+          0,
+          (previousValue, element) =>
+              previousValue + (element.quantity! * element.price!));
+      totalAmount = total + tax + vat;
+      finalAmount = totalAmount;
+      productValidate = false;
     });
     productListenController.addListener(() {
       productOrder = productListenController.productOrder!;
-      getTotalAmount();
+      setState(() {
+        product.add(productOrder);
+        data.add(productOrder);
+        double vat = product.fold(
+            0,
+            (previousValue, element) =>
+                previousValue + (element.quantity! * element.vatAmount!));
+        totalVatAmount = vat;
+        double tax = product.fold(
+            0,
+            (previousValue, element) =>
+                previousValue + (element.quantity! * element.taxAmount!));
+        totalTaxAmount = tax;
+        double total = product.fold(
+            0,
+            (previousValue, element) =>
+                previousValue + (element.quantity! * element.price!));
+        totalAmount = total + tax + vat;
+        finalAmount = totalAmount;
+        productValidate = false;
+      });
     });
     additionalRowsListenController.addListener(() {
       additionalRows = additionalRowsListenController.additionalRows!;
@@ -1640,27 +1458,4 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
     "${DateTime.now().add(const Duration(days: 5))}",
     "${DateTime.now().add(const Duration(days: 6))}",
   ];
-
-  getTotalAmount() {
-    setState(() {
-      product.add(productOrder);
-      data.add(productOrder);
-      double vat = product.fold(
-          0,
-          (previousValue, element) =>
-              previousValue + (element.quantity! * element.vatAmount!));
-      totalVatAmount = vat;
-      double tax = product.fold(
-          0,
-          (previousValue, element) =>
-              previousValue + (element.quantity! * element.taxAmount!));
-      totalTaxAmount = tax;
-      double total = product.fold(
-          0,
-          (previousValue, element) =>
-              previousValue + (element.quantity! * element.price!));
-      totalAmount = total + tax + vat;
-      finalAmount = totalAmount;
-    });
-  }
 }

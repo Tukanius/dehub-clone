@@ -1,5 +1,6 @@
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/api/invoice_api.dart';
+import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/invoice_additional_line/invoice_additional_line.dart';
 import 'package:dehub/components/invoice_product_card/add_product_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
@@ -38,8 +39,6 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
   ListenController goodsListenController = ListenController();
   ListenController sectorListenController = ListenController();
   TextEditingController textController = TextEditingController();
-  TextEditingController shippingAmountController = TextEditingController();
-  TextEditingController discountAmountController = TextEditingController();
   ListenController addRowController = ListenController();
   List<Invoice> additionalRowList = [];
   Invoice additionalRow = Invoice();
@@ -60,6 +59,14 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
   double totalAmount = 0;
   double finalAmount = 0;
   double additionalRowAmount = 0;
+  double shippingAmount = 0;
+  double discountAmount = 0;
+  var productKey = GlobalKey();
+  var sectorKey = GlobalKey();
+  var invoiceKey = GlobalKey();
+  bool invoiceValidate = false;
+  bool sectorValidate = false;
+  bool productValidate = false;
 
   List<String> list = <String>[
     "Хувиар",
@@ -67,15 +74,14 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
   ];
 
   @override
-  afterFirstLayout(BuildContext context) {
-    shippingAmountController.text = "0";
-  }
+  afterFirstLayout(BuildContext context) {}
 
   @override
   void initState() {
     listenController.addListener(() {
       setState(() {
         invoice = listenController.invoice!;
+        invoiceValidate = false;
       });
     });
     goodsListenController.addListener(() {
@@ -95,6 +101,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
         taxAmount = tax.roundToDouble();
         totalAmount = amount + vatAmount + taxAmount + additionalRowAmount;
         finalAmount = totalAmount;
+        productValidate = false;
       });
     });
     partnerListenController.addListener(() {
@@ -105,6 +112,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
     sectorListenController.addListener(() {
       setState(() {
         sectorInvoice = sectorListenController.sectorInvoice!;
+        sectorValidate = false;
       });
     });
     addRowController.addListener(() {
@@ -114,10 +122,39 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
         double addrow = additionalRowList.fold(0,
             (previousValue, element) => previousValue + element.totalAmount!);
         additionalRowAmount = addrow.roundToDouble();
-        totalAmount = amount + vatAmount + taxAmount + additionalRowAmount;
+        finalAmount = amount + vatAmount + taxAmount + additionalRowAmount;
       });
     });
     super.initState();
+  }
+
+  validateCheck(bool value) {
+    if (data.isEmpty) {
+      Scrollable.ensureVisible(productKey.currentContext!,
+          duration: Duration(milliseconds: 300), curve: Curves.ease);
+      setState(() {
+        productValidate = true;
+      });
+    }
+    if (sectorInvoice.name == null) {
+      Scrollable.ensureVisible(sectorKey.currentContext!,
+          duration: Duration(milliseconds: 300), curve: Curves.ease);
+      setState(() {
+        sectorValidate = true;
+      });
+    }
+    if (invoice.partner == null) {
+      Scrollable.ensureVisible(invoiceKey.currentContext!,
+          duration: Duration(milliseconds: 300), curve: Curves.ease);
+      setState(() {
+        invoiceValidate = true;
+      });
+    }
+    if (productValidate == false &&
+        sectorValidate == false &&
+        invoiceValidate == false) {
+      onSubmit(value);
+    }
   }
 
   onSubmit(bool value) async {
@@ -160,28 +197,13 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
     }
   }
 
-  // amount(String? amount) {
-  //   print(amount);
-  //   // totalAmount = Utils().formatCurrency((inventory
-  //   //     .map((e) => e.totalAmount)
-  //   //     .reduce((value, element) => value! + element!)
-  //   //     .toString()));
-  //   asdf = inventory.reduce(
-  //     (value, element) => Invoice(
-  //         totalAmount: (value.totalAmount! + element.vatAmount!) +
-  //             (value.taxAmount! + element.taxAmount!) +
-  //             (value.vatAmount! + element.vatAmount!)),
-  //   );
-  //   print(asdf.totalAmount);
-
-  //   if (amount != '') {
-  //     d1 = asdf.totalAmount! + double.parse(amount!);
-  //   } else {
-  //     d1 = asdf.totalAmount! + 0;
-  //   }
-
-  //   return d1 == null ? asdf.totalAmount : d1;
-  // }
+  updateTotalAmount() {
+    setState(() {
+      finalAmount = totalAmount;
+      finalAmount =
+          finalAmount + (shippingAmount - discountAmount) + additionalRowAmount;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -242,8 +264,15 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                           );
                         },
                         child: Container(
+                          key: invoiceKey,
                           padding: const EdgeInsets.all(15),
-                          color: white,
+                          decoration: BoxDecoration(
+                            color: white,
+                            border: Border.all(
+                                color:
+                                    invoiceValidate == true ? red : transparent,
+                                width: invoiceValidate == true ? 1 : 0),
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -252,7 +281,9 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                   Container(
                                     child: Icon(
                                       Icons.perm_contact_cal_outlined,
-                                      color: invoiceColor,
+                                      color: invoiceValidate == true
+                                          ? red
+                                          : invoiceColor,
                                     ),
                                   ),
                                   SizedBox(
@@ -261,7 +292,10 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                   invoice.partner?.businessName == null
                                       ? Text(
                                           'Харилцагч сонгох',
-                                          style: TextStyle(color: invoiceColor),
+                                          style: TextStyle(
+                                              color: invoiceValidate == true
+                                                  ? red
+                                                  : invoiceColor),
                                         )
                                       : Text(
                                           '${invoice.partner?.businessName}',
@@ -271,109 +305,40 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                               ),
                               Icon(
                                 Icons.arrow_forward_ios,
-                                size: 12,
+                                size: 14,
+                                color: invoiceValidate == true ? red : black,
                               ),
                             ],
                           ),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(15),
+                      FieldCard(
+                        marginHorizontal: 15,
+                        marginVertical: 15,
+                        arrowColor: black,
+                        onClick: () {},
+                        labelText: 'Хүргэлтийн хаяг',
+                        secondText: partnerInvoice.name != null
+                            ? "${partnerInvoice.name}"
+                            : '-',
+                        secondTextColor: invoiceColor,
                         color: white,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: Text(
-                                'Хүргэлтийн хаяг',
-                              ),
-                            ),
-                            partnerInvoice.name == null
-                                ? Row(
-                                    children: [
-                                      Text('-'),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 12,
-                                      ),
-                                    ],
-                                  )
-                                : Expanded(
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            '${partnerInvoice.name}',
-                                            style: TextStyle(
-                                              color: invoiceColor,
-                                            ),
-                                            textAlign: TextAlign.end,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Icon(
-                                          Icons.arrow_forward_ios,
-                                          size: 12,
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                          ],
-                        ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(15),
+                      FieldCard(
+                        marginHorizontal: 15,
+                        marginVertical: 15,
+                        arrowColor: black,
+                        onClick: () {},
+                        labelText: 'Нэхэмжлэх илгээх',
+                        secondText: invoice.partnerName != null
+                            ? "${invoice.partnerName}"
+                            : '-',
+                        secondTextColor: invoiceColor,
                         color: white,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: Text(
-                                'Нэхэмжлэх илгээх',
-                              ),
-                            ),
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  invoice.partnerName == null
-                                      ? Expanded(
-                                          child: Text(
-                                            '-',
-                                            textAlign: TextAlign.end,
-                                          ),
-                                        )
-                                      : Expanded(
-                                          child: Text(
-                                            invoice.partnerName.toString(),
-                                            style: TextStyle(
-                                              color: invoiceColor,
-                                            ),
-                                            textAlign: TextAlign.end,
-                                          ),
-                                        ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    size: 12,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 15),
+                        margin: const EdgeInsets.only(
+                            left: 15, top: 10, bottom: 10),
                         child: Text(
                           'НЭХЭМЖЛЭГЧ',
                           style: TextStyle(
@@ -382,9 +347,6 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
                       ),
                       Container(
                         padding: const EdgeInsets.all(15),
@@ -414,98 +376,44 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                             ),
                             Icon(
                               Icons.arrow_forward_ios,
-                              size: 12,
+                              size: 14,
                             ),
                           ],
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(15),
+                      FieldCard(
+                        marginHorizontal: 15,
+                        marginVertical: 15,
+                        arrowColor: black,
+                        onClick: () {},
+                        labelText: 'Партнерийн нэр',
+                        secondText: user.user?.currentBusiness?.partnerName,
+                        secondTextColor: invoiceColor,
                         color: white,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Партнерийн нэр',
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  '${user.user?.currentBusiness?.partnerName}',
-                                  style: TextStyle(color: invoiceColor),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 12,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
                       ),
-                      GestureDetector(
-                        onTap: () {
+                      FieldCard(
+                        key: sectorKey,
+                        validate: sectorValidate,
+                        marginHorizontal: 15,
+                        marginVertical: 15,
+                        arrowColor: black,
+                        onClick: () {
                           Navigator.of(context).pushNamed(
                             SectorChoose.routeName,
                             arguments: SectorChooseArguments(
                                 sectorListenController: sectorListenController),
                           );
                         },
-                        child: Container(
-                          padding: const EdgeInsets.all(15),
-                          color: white,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'Салбарын нэр',
-                                ),
-                              ),
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    sectorInvoice.name == null
-                                        ? Expanded(
-                                            child: Text(
-                                              'Салбар сонгох',
-                                              style: TextStyle(
-                                                color: invoiceColor,
-                                              ),
-                                              textAlign: TextAlign.end,
-                                            ),
-                                          )
-                                        : Expanded(
-                                            child: Text(
-                                              '${sectorInvoice.name}',
-                                              style: TextStyle(
-                                                color: invoiceColor,
-                                              ),
-                                              textAlign: TextAlign.end,
-                                            ),
-                                          ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 12,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
+                        labelText: 'Салбарын нэр',
+                        secondText: sectorInvoice.name != null
+                            ? "${sectorInvoice.name}"
+                            : "Салбар сонгох",
+                        secondTextColor: invoiceColor,
+                        color: white,
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 15),
+                        margin: const EdgeInsets.only(
+                            left: 15, top: 10, bottom: 10),
                         child: Text(
                           'БАРАА, ҮЙЛЧИЛГЭЭ',
                           style: TextStyle(
@@ -514,9 +422,6 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -540,21 +445,18 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                   ),
                                 ),
                               );
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  backgroundColor: invoiceColor,
-                                  shape: StadiumBorder(),
-                                  content: Center(
-                                    child: Text('Салбар сонгоно уу!'),
-                                  ),
-                                ),
-                              );
                             }
                           }
                         },
                         child: Container(
-                          color: white,
+                          key: productKey,
+                          decoration: BoxDecoration(
+                            color: white,
+                            border: Border.all(
+                                color:
+                                    productValidate == true ? red : transparent,
+                                width: productValidate == true ? 1 : 0),
+                          ),
                           padding: const EdgeInsets.all(15),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -564,7 +466,9 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                   Container(
                                     child: Icon(
                                       Icons.download_for_offline_outlined,
-                                      color: invoiceColor,
+                                      color: productValidate == true
+                                          ? red
+                                          : invoiceColor,
                                     ),
                                   ),
                                   SizedBox(
@@ -572,13 +476,17 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                   ),
                                   Text(
                                     'Бараа нэмэх',
-                                    style: TextStyle(color: invoiceColor),
+                                    style: TextStyle(
+                                        color: productValidate == true
+                                            ? red
+                                            : invoiceColor),
                                   ),
                                 ],
                               ),
                               Icon(
                                 Icons.arrow_forward_ios,
-                                size: 12,
+                                size: 14,
+                                color: productValidate == true ? red : black,
                               ),
                             ],
                           ),
@@ -591,11 +499,16 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                 readOnly: false,
                                 closeClick: () {
                                   setState(() {
-                                    inventory.removeWhere((element) =>
-                                        element.variantId == item.variantId);
-                                    data.removeWhere((element) =>
-                                        element.variantId == item.variantId);
+                                    inventory.removeWhere(
+                                        (element) => element.id == item.id);
+                                    data.removeWhere(
+                                        (element) => element.id == item.id);
                                   });
+                                  if (data.isEmpty) {
+                                    setState(() {
+                                      productValidate = true;
+                                    });
+                                  }
                                 },
                                 data: item,
                                 onClick: () {
@@ -638,7 +551,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                               ),
                               Icon(
                                 Icons.arrow_forward_ios,
-                                size: 12,
+                                size: 14,
                               ),
                             ],
                           ),
@@ -698,7 +611,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                 ),
                                 icon: Icon(
                                   Icons.arrow_forward_ios,
-                                  size: 12,
+                                  size: 14,
                                   color: black,
                                 ),
                                 decoration: InputDecoration(
@@ -742,37 +655,25 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                         ),
                       ),
                       FormTextField(
-                        // maxLenght: dropdownValue == 'Хувиар' ? 2 : null,
-                        // showCounter: false,
-                        textColor: networkColor,
+                        textColor: invoiceColor,
                         textAlign: TextAlign.end,
                         readOnly: dropdownValue == "Сонгох",
                         onChanged: (value) {
                           if (dropdownValue == "Хувиар") {
-                            if (discountAmountController.text == '')
-                              setState(() {
-                                discountAmountController.text = '0';
-                              });
                             setState(() {
-                              totalAmount = totalAmount -
-                                  (totalAmount *
-                                      double.parse(discountAmountController.text
-                                          .toString()) /
-                                      100);
+                              discountAmount = totalAmount /
+                                  100 *
+                                  (double.tryParse(value.toString()) ?? 0);
+                              print(discountAmount);
                             });
                           } else {
-                            if (discountAmountController.text == "")
-                              setState(() {
-                                discountAmountController.text = "0";
-                              });
                             setState(() {
-                              totalAmount = totalAmount -
-                                  double.parse(
-                                      discountAmountController.text.toString());
+                              discountAmount =
+                                  double.tryParse(value.toString()) ?? 0;
                             });
                           }
+                          updateTotalAmount();
                         },
-                        controller: discountAmountController,
                         name: 'discountAmount',
                         inputType: TextInputType.number,
                         decoration: InputDecoration(
@@ -816,69 +717,38 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(15),
+                      FieldCard(
+                        marginHorizontal: 15,
+                        marginVertical: 15,
+                        arrowColor: black,
+                        labelText: 'Тооцсон НӨАТ',
+                        secondText: inventory.isNotEmpty
+                            ? "${Utils().formatCurrency(vatAmount.toString())}₮"
+                            : "0₮",
+                        secondTextColor: invoiceColor,
                         color: white,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: Text(
-                                'Тооцсон НӨАТ',
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                inventory.isNotEmpty
-                                    ? Text(
-                                        '${Utils().formatCurrency(vatAmount.toString())}₮',
-                                        style: TextStyle(color: invoiceColor),
-                                      )
-                                    : Text(
-                                        '0₮',
-                                        style: TextStyle(color: invoiceColor),
-                                      ),
-                              ],
-                            ),
-                          ],
-                        ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(15),
+                      FieldCard(
+                        marginHorizontal: 15,
+                        marginVertical: 15,
+                        arrowColor: black,
+                        labelText: 'Тооцсон НХАТ',
+                        secondText: inventory.isNotEmpty
+                            ? "${Utils().formatCurrency(taxAmount.toString())}₮"
+                            : "0₮",
+                        secondTextColor: invoiceColor,
                         color: white,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: Text(
-                                'Тооцсон НХАТ',
-                              ),
-                            ),
-                            inventory.isNotEmpty
-                                ? Text(
-                                    '${inventory.map((e) => e.quantity! * e.taxAmount!).join("")}₮',
-                                    style: TextStyle(color: invoiceColor),
-                                  )
-                                : Text(
-                                    '0₮',
-                                    style: TextStyle(color: invoiceColor),
-                                  ),
-                          ],
-                        ),
                       ),
                       FormTextField(
                         onChanged: (value) {
                           setState(() {
-                            finalAmount = totalAmount;
-                            finalAmount = finalAmount +
-                                (double.tryParse(
-                                        shippingAmountController.text) ??
-                                    0);
+                            shippingAmount =
+                                double.tryParse(value.toString()) ?? 0;
                           });
+                          updateTotalAmount();
                         },
                         textColor: orderColor,
                         name: "shippingAmount",
-                        controller: shippingAmountController,
                         textAlign: TextAlign.end,
                         inputType: TextInputType.number,
                         decoration: InputDecoration(
@@ -911,72 +781,27 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(15),
+                      FieldCard(
+                        marginHorizontal: 15,
+                        marginVertical: 15,
+                        arrowColor: black,
+                        labelText: 'Тооцсон НХАТ',
+                        secondText: inventory.isNotEmpty
+                            ? "${Utils().formatCurrency(additionalRowAmount.toString())}₮"
+                            : "0₮",
+                        secondTextColor: invoiceColor,
                         color: white,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Нэмэлтээр',
-                            ),
-                            Row(
-                              children: [
-                                inventory.isNotEmpty
-                                    ? Text(
-                                        "${Utils().formatCurrency(additionalRowAmount.toString())}₮",
-                                        style: TextStyle(
-                                          color: invoiceColor,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      )
-                                    : Text(
-                                        '0 ₮',
-                                        style: TextStyle(
-                                          color: invoiceColor,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                              ],
-                            ),
-                          ],
-                        ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(15),
+                      FieldCard(
+                        marginHorizontal: 15,
+                        marginVertical: 15,
+                        arrowColor: black,
+                        labelText: 'Нийт Төлбөр',
+                        secondText:
+                            inventory.isNotEmpty ? "${finalAmount}" : "0₮",
+                        secondTextColor: invoiceColor,
                         color: white,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: Text(
-                                'Нийт Төлбөр',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                inventory.isNotEmpty
-                                    ? Text(
-                                        "${finalAmount}₮",
-                                        style: TextStyle(
-                                          color: invoiceColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      )
-                                    : Text(
-                                        '0 ₮',
-                                        style: TextStyle(
-                                          color: invoiceColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                              ],
-                            ),
-                          ],
-                        ),
+                        fontWeight: FontWeight.w600,
                       ),
                       Container(
                         margin: const EdgeInsets.only(
@@ -1017,212 +842,6 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      // Container(
-                      //   margin: const EdgeInsets.only(left: 15),
-                      //   child: Text(
-                      //     'ТӨЛБӨРИЙН МЭДЭЭЛЭЛ',
-                      //     style: TextStyle(
-                      //       color: grey3,
-                      //       fontSize: 14,
-                      //       fontWeight: FontWeight.w600,
-                      //     ),
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: 10,
-                      // ),
-                      // Container(
-                      //   padding: const EdgeInsets.all(15),
-                      //   color: white,
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       Container(
-                      //         child: Text(
-                      //           'Нэхэмжлэх үлдэгдэл',
-                      //         ),
-                      //       ),
-                      //       Row(
-                      //         children: [
-                      //           Text(
-                      //             '00.00 ₮',
-                      //             style: TextStyle(color: invoiceColor),
-                      //           ),
-                      //           SizedBox(
-                      //             width: 10,
-                      //           ),
-                      //           Icon(
-                      //             Icons.arrow_forward_ios,
-                      //             size: 12,
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // Container(
-                      //   padding: const EdgeInsets.all(15),
-                      //   color: white,
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       Container(
-                      //         child: Text(
-                      //           'Төлбөл зохих',
-                      //         ),
-                      //       ),
-                      //       Row(
-                      //         children: [
-                      //           Text(
-                      //             '00.00 ₮',
-                      //             style: TextStyle(color: invoiceColor),
-                      //           ),
-                      //           SizedBox(
-                      //             width: 10,
-                      //           ),
-                      //           Icon(
-                      //             Icons.arrow_forward_ios,
-                      //             size: 12,
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // Container(
-                      //   padding: const EdgeInsets.all(15),
-                      //   color: white,
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       Container(
-                      //         child: Text(
-                      //           'Төлөх хугацаа',
-                      //         ),
-                      //       ),
-                      //       Row(
-                      //         children: [
-                      //           Text(
-                      //             '2021-12-02',
-                      //           ),
-                      //           SizedBox(
-                      //             width: 10,
-                      //           ),
-                      //           Icon(
-                      //             Icons.arrow_forward_ios,
-                      //             size: 12,
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // Container(
-                      //   padding: const EdgeInsets.all(15),
-                      //   color: white,
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       Text(
-                      //         'Төлбөрийн төлөв',
-                      //       ),
-                      //       Row(
-                      //         children: [
-                      //           Text('Төлөлт хүлээж буй'),
-                      //           SizedBox(
-                      //             width: 10,
-                      //           ),
-                      //           Icon(
-                      //             Icons.arrow_forward_ios,
-                      //             size: 12,
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // Container(
-                      //   padding: const EdgeInsets.all(15),
-                      //   color: white,
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       Text(
-                      //         'Нэхэмжлэх дүн',
-                      //       ),
-                      //       Row(
-                      //         children: [
-                      //           Text(
-                      //             '00.00 ₮',
-                      //             style: TextStyle(color: invoiceColor),
-                      //           ),
-                      //           SizedBox(
-                      //             width: 10,
-                      //           ),
-                      //           Icon(
-                      //             Icons.arrow_forward_ios,
-                      //             size: 12,
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // Container(
-                      //   padding: const EdgeInsets.all(15),
-                      //   color: white,
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       Text(
-                      //         'Нэхэмжлэх төлөх',
-                      //       ),
-                      //       Row(
-                      //         children: [
-                      //           Text(
-                      //             '2021-12-02',
-                      //           ),
-                      //           SizedBox(
-                      //             width: 10,
-                      //           ),
-                      //           Icon(
-                      //             Icons.arrow_forward_ios,
-                      //             size: 12,
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // Container(
-                      //   padding: const EdgeInsets.all(15),
-                      //   color: white,
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       Text(
-                      //         'Хугацаа хэтрэлт',
-                      //       ),
-                      //       Row(
-                      //         children: [
-                      //           Text(
-                      //             'Хэвийн',
-                      //           ),
-                      //           SizedBox(
-                      //             width: 10,
-                      //           ),
-                      //           Icon(
-                      //             Icons.arrow_forward_ios,
-                      //             size: 12,
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
                       SizedBox(
                         height: 70,
                       ),
@@ -1281,8 +900,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                   GestureDetector(
                                     onTap: () {
                                       if (isSubmit == false) {
-                                        onSubmit(false);
-                                      } else {}
+                                        validateCheck(false);
+                                      }
                                     },
                                     child: Column(
                                       children: [
@@ -1302,33 +921,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      if (data.isEmpty) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            backgroundColor: invoiceColor,
-                                            shape: StadiumBorder(),
-                                            content: Center(
-                                              child: Text('Бараа нэмнэ үү'),
-                                            ),
-                                          ),
-                                        );
-                                      } else if (sectorInvoice.name == null) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            backgroundColor: invoiceColor,
-                                            shape: StadiumBorder(),
-                                            content: Center(
-                                              child: Text(
-                                                  'Нэхэмжлэгч салбар сонгоно уу'),
-                                            ),
-                                          ),
-                                        );
-                                      } else {
-                                        if (isSubmit == false) {
-                                          onSubmit(true);
-                                        }
+                                      if (isSubmit == false) {
+                                        validateCheck(true);
                                       }
                                     },
                                     child: Column(

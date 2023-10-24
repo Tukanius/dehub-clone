@@ -73,4 +73,9 @@ class AuthApi extends HttpRequest {
         handler: true, data: data.toJson());
     return res;
   }
+
+  logout() async {
+    var res = await get('/auth/logout', "AUTH", true, handler: false);
+    return User.fromJson(res as Map<String, dynamic>);
+  }
 }

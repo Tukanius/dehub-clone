@@ -2,9 +2,8 @@ import 'package:dehub/api/auth_api.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/splash/splash_page.dart';
-import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
@@ -12,11 +11,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 class PersonalInfo extends StatefulWidget {
   static const routeName = '/personalinfo';
-  final User? data;
 
   PersonalInfo({
     Key? key,
-    this.data,
   }) : super(key: key);
 
   @override
@@ -31,17 +28,6 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
   Partner partner = Partner();
 
   afterFirstLayout(BuildContext context) async {}
-
-  logout() async {
-    setState(() {
-      isLoading = true;
-    });
-    await Provider.of<UserProvider>(context, listen: false).logout();
-    Navigator.of(context).pushNamed(SplashPage.routeName);
-    setState(() {
-      isLoading = false;
-    });
-  }
 
   danVerify() async {
     setState(() {
@@ -59,29 +45,70 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
     user = Provider.of<UserProvider>(context, listen: true).user;
     partner = Provider.of<UserProvider>(context, listen: true).partnerUser;
     return SingleChildScrollView(
-      physics: NeverScrollableScrollPhysics(),
       child: Container(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
               children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 20),
-                  child: CircleAvatar(
-                    backgroundColor: grey,
-                    radius: 40,
-                    backgroundImage: widget.data?.avatar != null
-                        ? NetworkImage(
-                            '${widget.data?.avatar}',
-                          )
-                        : NetworkImage(
-                            'https://i0.wp.com/a.slack-edge.com/df10d/img/avatars/ava_0024-192.png?ssl=1',
+                Stack(
+                  alignment: Alignment.center,
+                  clipBehavior: Clip.none,
+                  children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      height: 55,
+                      width: 55,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: black,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 5,
+                            color: Colors.grey,
+                            offset: Offset(0, 5),
                           ),
-                  ),
+                          BoxShadow(
+                            blurRadius: 5,
+                            color: Colors.grey,
+                            offset: Offset(5, 0),
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: user.avatar == null
+                            ? Image.network(
+                                '${user.avatar}',
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset('images/avatar.png'),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: -23,
+                      right: -15,
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          height: 32,
+                          width: 32,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xffC4C4C4),
+                          ),
+                          child: Icon(
+                            CupertinoIcons.photo_camera,
+                            color: white,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 25,
                 ),
                 Text(
                   '${partner.user?.currentBusiness?.profileNameEng}',
@@ -104,12 +131,15 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                 ),
               ],
             ),
-            Text(
-              'Хувийн мэдээлэл',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-                color: grey3,
+            Container(
+              margin: const EdgeInsets.only(left: 15),
+              child: Text(
+                'Хувийн мэдээлэл',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  color: grey3,
+                ),
               ),
             ),
             SizedBox(
@@ -156,7 +186,47 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                       height: 15,
                     ),
                     Text(
-                      'Бизнесийн код',
+                      'Регист №',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: grey3,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8,
+                          horizontal: 12,
+                        ),
+                        height: 40,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: grey3),
+                        ),
+                        child: user.registerNo != null
+                            ? Text(
+                                '${user.registerNo}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: grey3,
+                                ),
+                              )
+                            : Text(
+                                '-',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: grey3,
+                                ),
+                              )),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Ургын овог',
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
@@ -178,7 +248,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                         border: Border.all(color: grey3),
                       ),
                       child: Text(
-                        user.businessId.toString(),
+                        "Боржигон",
                         style: TextStyle(
                           fontSize: 14,
                           color: grey3,
@@ -210,13 +280,21 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(color: grey3),
                       ),
-                      child: Text(
-                        '${user.lastName}',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: grey3,
-                        ),
-                      ),
+                      child: user.lastName != null
+                          ? Text(
+                              '${user.lastName}',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: grey3,
+                              ),
+                            )
+                          : Text(
+                              '-',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: grey3,
+                              ),
+                            ),
                     ),
                     SizedBox(
                       height: 15,
@@ -255,7 +333,86 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                       height: 15,
                     ),
                     Text(
-                      'Утасны дугаар',
+                      'Харъяалах нэгж',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: grey3,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 12,
+                      ),
+                      height: 40,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: grey3),
+                      ),
+                      child: Text(
+                        'Борлуулалтын алба',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: grey3,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      'Албан тушаал',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: grey3,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 12,
+                      ),
+                      height: 40,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: grey3),
+                      ),
+                      child: Text(
+                        'Худалдааны төлөөлөгч',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: grey3,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      child: Text(
+                        'Холбоо барих',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          color: grey3,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      'Утасны дугаар №1',
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
@@ -286,31 +443,31 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                             ),
                           ),
                         ),
-                        user.isPhoneVerified == false
-                            ? Container(
-                                margin:
-                                    const EdgeInsets.only(top: 5, right: 10),
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  'Баталгаажаагүй',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                margin:
-                                    const EdgeInsets.only(top: 5, right: 10),
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  'Баталгаажсан',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: green,
-                                  ),
-                                ),
-                              ),
+                        // user.isPhoneVerified == false
+                        //     ? Container(
+                        //         margin:
+                        //             const EdgeInsets.only(top: 5, right: 10),
+                        //         alignment: Alignment.centerRight,
+                        //         child: Text(
+                        //           'Баталгаажаагүй',
+                        //           style: TextStyle(
+                        //             fontSize: 12,
+                        //             color: Colors.red,
+                        //           ),
+                        //         ),
+                        //       )
+                        //     : Container(
+                        //         margin:
+                        //             const EdgeInsets.only(top: 5, right: 10),
+                        //         alignment: Alignment.centerRight,
+                        //         child: Text(
+                        //           'Баталгаажсан',
+                        //           style: TextStyle(
+                        //             fontSize: 12,
+                        //             color: green,
+                        //           ),
+                        //         ),
+                        //       ),
                       ],
                     ),
                     SizedBox(
@@ -348,38 +505,38 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                             ),
                           ),
                         ),
-                        user.isEmailVerified == true
-                            ? Container(
-                                alignment: Alignment.centerRight,
-                                margin:
-                                    const EdgeInsets.only(top: 5, right: 10),
-                                child: Text(
-                                  'Баталгаажсан',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: green,
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                alignment: Alignment.centerRight,
-                                margin:
-                                    const EdgeInsets.only(top: 5, right: 10),
-                                child: Text(
-                                  'Баталгаажаагүй',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                              )
+                        // user.isEmailVerified == true
+                        //     ? Container(
+                        //         alignment: Alignment.centerRight,
+                        //         margin:
+                        //             const EdgeInsets.only(top: 5, right: 10),
+                        //         child: Text(
+                        //           'Баталгаажсан',
+                        //           style: TextStyle(
+                        //             fontSize: 12,
+                        //             color: green,
+                        //           ),
+                        //         ),
+                        //       )
+                        //     : Container(
+                        //         alignment: Alignment.centerRight,
+                        //         margin:
+                        //             const EdgeInsets.only(top: 5, right: 10),
+                        //         child: Text(
+                        //           'Баталгаажаагүй',
+                        //           style: TextStyle(
+                        //             fontSize: 12,
+                        //             color: Colors.red,
+                        //           ),
+                        //         ),
+                        //       )
                       ],
                     ),
                     SizedBox(
                       height: 15,
                     ),
                     Text(
-                      'Албан тушаал',
+                      'Утасны дугаар №2',
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
@@ -389,30 +546,34 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                     SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8,
-                        horizontal: 12,
-                      ),
-                      height: 40,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: grey3),
-                      ),
-                      child: Text(
-                        'Гүйцэтгэх захирал',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: grey3,
+                    Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 8,
+                            horizontal: 12,
+                          ),
+                          height: 40,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: grey3),
+                          ),
+                          child: Text(
+                            '-',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: grey3,
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                     SizedBox(
                       height: 15,
                     ),
                     Text(
-                      'Регист №',
+                      'Утасны дугаар №3',
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
@@ -422,27 +583,31 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                     SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8,
-                        horizontal: 12,
-                      ),
-                      height: 40,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: grey3),
-                      ),
-                      child: Text(
-                        '${user.registerNo}',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: grey3,
+                    Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 8,
+                            horizontal: 12,
+                          ),
+                          height: 40,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: grey3),
+                          ),
+                          child: Text(
+                            '-',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: grey3,
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -490,18 +655,7 @@ class _PersonalInfoState extends State<PersonalInfo> with AfterLayoutMixin {
                       ],
                     ),
                     SizedBox(
-                      height: 42,
-                    ),
-                    CustomButton(
-                      isLoading: isLoading,
-                      onClick: () {
-                        logout();
-                      },
-                      labelText: 'Системээс гарах',
-                      labelColor: buttonColor,
-                    ),
-                    SizedBox(
-                      height: 20,
+                      height: 40,
                     ),
                   ],
                 ),

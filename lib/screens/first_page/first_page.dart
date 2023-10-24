@@ -268,13 +268,17 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(),
-                                        child: partnerUser.user?.avatar == null
+                                        child: partnerUser.user?.avatar ==
+                                                    null ||
+                                                partnerUser.user?.avatar == ''
                                             ? CircleAvatar(
+                                                backgroundColor: grey,
                                                 radius: 14,
                                                 backgroundImage: AssetImage(
                                                     'images/avatar.png'),
                                               )
                                             : CircleAvatar(
+                                                backgroundColor: grey,
                                                 radius: 14,
                                                 backgroundImage: NetworkImage(
                                                     '${partnerUser.user?.avatar}'),

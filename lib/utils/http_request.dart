@@ -5,9 +5,11 @@ import 'package:dehub/services/dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'http_handler.dart';
 import '../main.dart';
+// import 'package:connectivity/connectivity.dart';
 
 class HttpRequest {
   static const host = 'http://dev-de-dehub.zto.mn/2fa';
@@ -90,6 +92,8 @@ class HttpRequest {
     if (method != 'GET') {
       debugPrint('body: $data');
     }
+    // final Connectivity _connectivity = Connectivity();
+    // ConnectivityResult result = ConnectivityResult.none;
 
     try {
       switch (method) {
@@ -117,16 +121,16 @@ class HttpRequest {
 
       return HttpHandler(statusCode: response?.statusCode).handle(response);
     } on DioError catch (ex) {
-      // try {
-      //   result = await _connectivity.checkConnectivity();
-      //   if (result == ConnectivityResult.none) {
-      //     MyApp.dialogService!
-      //         .showInternetErrorDialog("No internet connection")
-      //     return null;
-      //   }
-      // } on PlatformException catch (e) {
-      //   debugPrint(e.toString());
-      // }
+      try {
+        // result = await _connectivity.checkConnectivity();
+        // if (result == ConnectivityResult.none) {
+        // MyApp.dialogService!
+        // .showInternetErrorDialog("No internet connection");
+        // return null;
+        // }
+      } on PlatformException catch (e) {
+        debugPrint(e.toString());
+      }
 
       HttpHandler? error =
           HttpHandler(statusCode: ex.response?.statusCode).handle(ex.response);

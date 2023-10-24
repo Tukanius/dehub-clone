@@ -210,7 +210,6 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                                 color: white,
                                 labelTextColor: grey2,
                                 secondTextColor: orderColor,
-                                hasThirdText: false,
                               ),
                             ],
                           ),
@@ -328,7 +327,6 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                               },
                               arrowColor: orderColor,
                               secondTextColor: orderColor,
-                              hasThirdText: false,
                             ),
                             FieldCard(
                               marginHorizontal: 15,
@@ -338,7 +336,6 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                               color: white,
                               labelTextColor: grey2,
                               secondTextColor: orderColor,
-                              hasThirdText: false,
                             ),
                             FieldCard(
                               marginHorizontal: 15,
@@ -348,7 +345,6 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                               color: white,
                               labelTextColor: grey2,
                               secondTextColor: orderColor,
-                              hasThirdText: false,
                             ),
                           ],
                         )

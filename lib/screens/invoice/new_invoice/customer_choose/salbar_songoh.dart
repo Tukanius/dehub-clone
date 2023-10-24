@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/controller/listen.dart';
@@ -9,7 +8,6 @@ import 'package:dehub/components/sector_card/sector_card.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
 
 class SalbarSongohArguments {
@@ -71,19 +69,7 @@ class _SalbarSongohState extends State<SalbarSongoh> with AfterLayoutMixin {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            color: invoiceColor,
-            padding: const EdgeInsets.all(13),
-            child: SvgPicture.asset(
-              'assets/svg/close.svg',
-              height: 30,
-            ),
-          ),
-        ),
+        automaticallyImplyLeading: false,
         backgroundColor: invoiceColor,
         elevation: 0.0,
         centerTitle: true,

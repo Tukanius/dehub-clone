@@ -1,9 +1,6 @@
-// import 'package:tw_app/screens/forgot/forgot_page.dart';
-
-// import 'package:dehub/main.dart';
-// import 'package:dehub/services/dialog.dart';
-// import 'package:dehub/main.dart';
-// import 'package:dehub/services/dialog.dart';
+import 'package:dehub/main.dart';
+import 'package:dehub/screens/auth/login_page.dart';
+import 'package:dehub/services/navigation.dart';
 import 'package:flutter/cupertino.dart';
 
 class HttpHandler {
@@ -52,11 +49,9 @@ class HttpHandler {
       case 200:
       case 304:
         return data;
-      // case 401:
-      //   return;
-      // case 401:
-      //   locator<DialogService>().showErrorDialogListener("Нэвтэрнэ үү");
-      //   break;
+      case 401:
+        locator<NavigationService>().pushNamed(routeName: LoginPage.routeName);
+        break;
       default:
         HttpHandler error = HttpHandler(
             statusCode: statusCode,

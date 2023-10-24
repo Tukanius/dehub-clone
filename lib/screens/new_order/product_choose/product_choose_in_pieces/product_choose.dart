@@ -74,6 +74,9 @@ class _ProductChooseState extends State<ProductChoose>
         user.currentBusiness?.type == "SUPPLIER" ? "SALES" : "PURCHASE",
         "${widget.businessId}");
     setState(() {
+      category.rows?.add(
+        Order(id: '', name: 'Бүгд'),
+      );
       isLoading = false;
     });
   }
@@ -141,7 +144,7 @@ class _ProductChooseState extends State<ProductChoose>
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
-                              children: category.rows!
+                              children: category.rows!.reversed
                                   .map(
                                     (e) => GestureDetector(
                                       onTap: () async {
@@ -286,11 +289,10 @@ class _ProductChooseState extends State<ProductChoose>
                           onClick: () {
                             widget.packageListenController
                                 .orderPackageProduct(packageProduct);
-                            // print(packageProduct.first.toJson());
                             Navigator.of(context).pop();
                           },
                           labelText:
-                              "${packageProduct.length} бараа = ${packageProduct.fold(0.0, (previousValue, element) => previousValue + (element.quantity!.toDouble() * element.price!))} ₮",
+                              "${packageProduct.fold(0, (previousValue, element) => previousValue + element.quantity!)} бараа = ${packageProduct.fold(0.0, (previousValue, element) => previousValue + (element.quantity!.toDouble() * element.price!))} ₮",
                           labelColor: orderColor,
                         ),
                       )
