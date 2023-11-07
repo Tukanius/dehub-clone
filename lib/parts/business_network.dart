@@ -9,11 +9,24 @@ BusinessNetwork _$BusinessNetworkFromJson(Map<String, dynamic> json) {
             .toList()
         : null,
     id: json['id'] != null ? json['id'] as String : null,
+    country: json['country'] != null ? json['country'] as String : null,
     createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
     updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
     deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
     regNumber: json['regNumber'] != null ? json['regNumber'] as String : null,
+    province: json['province'] != null ? json['province'] as String : null,
+    district: json['district'] != null ? json['district'] as String : null,
+    khoroo: json['khoroo'] != null ? json['khoroo'] as String : null,
+    businessNameEng: json['businessNameEng'] != null
+        ? json['businessNameEng'] as String
+        : null,
+    areaRegionId:
+        json['areaRegionId'] != null ? json['areaRegionId'] as String : null,
+    areaDirectionId: json['areaDirectionId'] != null
+        ? json['areaDirectionId'] as String
+        : null,
+    areaDesc: json['areaDesc'] != null ? json['areaDesc'] as String : null,
     stateRegNum:
         json['stateRegNum'] != null ? json['stateRegNum'] as String : null,
     legalEntityType: json['legalEntityType'] != null
@@ -25,9 +38,12 @@ BusinessNetwork _$BusinessNetworkFromJson(Map<String, dynamic> json) {
         ? json['partnerNameEng'] as String
         : null,
     refCode: json['refCode'] != null ? json['refCode'] as String : null,
+    configType:
+        json['configType'] != null ? json['configType'] as String : null,
     businessSectorId: json['businessSectorId'] != null
         ? json['businessSectorId'] as String
         : null,
+    condition: json['condition'] != null ? json['condition'] as String : null,
     businessSubSectorId: json['businessSubSectorId'] != null
         ? json['businessSubSectorId'] as String
         : null,
@@ -64,8 +80,12 @@ BusinessNetwork _$BusinessNetworkFromJson(Map<String, dynamic> json) {
     isAnchorBusiness: json['isAnchorBusiness'] != null
         ? json['isAnchorBusiness'] as bool
         : null,
-    partner: json['partner'] != null
-        ? BusinessNetwork.fromJson(json['partner'] as Map<String, dynamic>)
+    areaDirection: json['areaDirection'] != null
+        ? BusinessNetwork.fromJson(
+            json['areaDirection'] as Map<String, dynamic>)
+        : null,
+    areaRegion: json['areaRegion'] != null
+        ? BusinessNetwork.fromJson(json['areaRegion'] as Map<String, dynamic>)
         : null,
     businessSector: json['businessSector'] != null
         ? BusinessNetwork.fromJson(
@@ -81,6 +101,9 @@ BusinessNetwork _$BusinessNetworkFromJson(Map<String, dynamic> json) {
         : null,
     businessId:
         json['businessId'] != null ? json['businessId'] as String : null,
+    businessIds: json['businessIds'] != null
+        ? (json['businessIds'] as List).map((e) => e as String).toList()
+        : null,
     regUserId: json['regUserId'] != null ? json['regUserId'] as String : null,
     businessName:
         json['businessName'] != null ? json['businessName'] as String : null,
@@ -165,6 +188,9 @@ BusinessNetwork _$BusinessNetworkFromJson(Map<String, dynamic> json) {
         ? BusinessNetwork.fromJson(
             json['coBusinessStaff2'] as Map<String, dynamic>)
         : null,
+    partner: json['partner'] != null
+        ? BusinessNetwork.fromJson(json['partner'] as Map<String, dynamic>)
+        : null,
     coBusinessStaffDesc: json['coBusinessStaffDesc'] != null
         ? json['coBusinessStaffDesc'] as String
         : null,
@@ -199,6 +225,14 @@ BusinessNetwork _$BusinessNetworkFromJson(Map<String, dynamic> json) {
         ? BusinessNetwork.fromJson(
             json['businessOutAcc'] as Map<String, dynamic>)
         : null,
+    businessStaff: json['businessStaff'] != null
+        ? BusinessNetwork.fromJson(
+            json['businessStaff'] as Map<String, dynamic>)
+        : null,
+    businessStaff2: json['businessStaff2'] != null
+        ? BusinessNetwork.fromJson(
+            json['businessStaff2'] as Map<String, dynamic>)
+        : null,
     branches: json['branches'] != null
         ? (json['branches'] as List)
             .map((e) => BusinessNetwork.fromJson(e))
@@ -230,21 +264,82 @@ BusinessNetwork _$BusinessNetworkFromJson(Map<String, dynamic> json) {
     locationLng: json['locationLng'] != null
         ? double.parse(json['locationLng'].toString())
         : null,
+    businessStaffId: json['businessStaffId'] != null
+        ? json['businessStaffId'] as String
+        : null,
+    businessStaff2Id: json['businessStaff2Id'] != null
+        ? json['businessStaff2Id'] as String
+        : null,
+    businessStaffDesc: json['businessStaffDesc'] != null
+        ? json['businessStaffDesc'] as String
+        : null,
+    coBusinessStaffId: json['coBusinessStaffId'] != null
+        ? json['coBusinessStaffId'] as String
+        : null,
+    paymentTermId:
+        json['paymentTermId'] != null ? json['paymentTermId'] as String : null,
+    paymentTermStartDate: json['paymentTermStartDate'] != null
+        ? json['paymentTermStartDate'] as String
+        : null,
+    paymentTermEndDate: json['paymentTermEndDate'] != null
+        ? json['paymentTermEndDate'] as String
+        : null,
+    equityType:
+        json['equityType'] != null ? json['equityType'] as String : null,
+    userPhone: json['userPhone'] != null ? json['userPhone'] as String : null,
+    userEmail: json['userEmail'] != null ? json['userEmail'] as String : null,
+    toMessage: json['toMessage'] != null ? json['toMessage'] as String : null,
   );
 }
 
 Map<String, dynamic> _$BusinessNetworkToJson(BusinessNetwork instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.province != null) json['province'] = instance.province;
+  if (instance.district != null) json['district'] = instance.district;
+  if (instance.khoroo != null) json['khoroo'] = instance.khoroo;
+  if (instance.equityType != null) json['equityType'] = instance.equityType;
+  if (instance.userPhone != null) json['userPhone'] = instance.userPhone;
+  if (instance.toMessage != null) json['toMessage'] = instance.toMessage;
+  if (instance.userEmail != null) json['userEmail'] = instance.userEmail;
+  if (instance.areaRegionId != null)
+    json['areaRegionId'] = instance.areaRegionId;
+  if (instance.areaDirectionId != null)
+    json['areaDirectionId'] = instance.areaDirectionId;
+  if (instance.country != null) json['country'] = instance.country;
+  if (instance.areaDesc != null) json['areaDesc'] = instance.areaDesc;
   if (instance.financeStaff != null)
     json['financeStaff'] = instance.financeStaff;
+  if (instance.paymentTermId != null)
+    json['paymentTermId'] = instance.paymentTermId;
+  if (instance.paymentTermStartDate != null)
+    json['paymentTermStartDate'] = instance.paymentTermStartDate;
+  if (instance.paymentTermEndDate != null)
+    json['paymentTermEndDate'] = instance.paymentTermEndDate;
+  if (instance.configType != null) json['configType'] = instance.configType;
+  if (instance.condition != null) json['condition'] = instance.condition;
   if (instance.phone != null) json['phone'] = instance.phone;
+  if (instance.businessStaff != null)
+    json['businessStaff'] = instance.businessStaff;
+  if (instance.coBusinessStaffId != null)
+    json['coBusinessStaffId'] = instance.coBusinessStaffId;
+  if (instance.businessStaff2 != null)
+    json['businessStaff2'] = instance.businessStaff2;
+  if (instance.businessStaffId != null)
+    json['businessStaffId'] = instance.businessStaffId;
+  if (instance.businessStaff2Id != null)
+    json['businessStaff2Id'] = instance.businessStaff2Id;
+  if (instance.businessStaffDesc != null)
+    json['businessStaffDesc'] = instance.businessStaffDesc;
   if (instance.email != null) json['email'] = instance.email;
   if (instance.staffs != null) json['staffs'] = instance.staffs;
   if (instance.businessInAcc != null)
     json['businessInAcc'] = instance.businessInAcc;
   if (instance.businessOutAcc != null)
     json['businessOutAcc'] = instance.businessOutAcc;
+  if (instance.areaDirection != null)
+    json['areaDirection'] = instance.areaDirection;
+  if (instance.areaRegion != null) json['areaRegion'] = instance.areaRegion;
   if (instance.branches != null) json['branches'] = instance.branches;
   if (instance.nameEng != null) json['nameEng'] = instance.nameEng;
   if (instance.branchStatus != null)
@@ -275,6 +370,8 @@ Map<String, dynamic> _$BusinessNetworkToJson(BusinessNetwork instance) {
   if (instance.deletedAt != null) json['deletedAt'] = instance.deletedAt;
   if (instance.partnerId != null) json['partnerId'] = instance.partnerId;
   if (instance.regNumber != null) json['regNumber'] = instance.regNumber;
+  if (instance.businessNameEng != null)
+    json['businessNameEng'] = instance.businessNameEng;
   if (instance.stateRegNum != null) json['stateRegNum'] = instance.stateRegNum;
   if (instance.legalEntityType != null)
     json['legalEntityType'] = instance.legalEntityType;
@@ -320,6 +417,7 @@ Map<String, dynamic> _$BusinessNetworkToJson(BusinessNetwork instance) {
   if (instance.name != null) json['name'] = instance.name;
   if (instance.inAcc != null) json['inAcc'] = instance.inAcc;
   if (instance.businessId != null) json['businessId'] = instance.businessId;
+  if (instance.businessIds != null) json['businessIds'] = instance.businessIds;
   if (instance.regUserId != null) json['regUserId'] = instance.regUserId;
   if (instance.bankName != null) json['bankName'] = instance.bankName;
   if (instance.number != null) json['number'] = instance.number;

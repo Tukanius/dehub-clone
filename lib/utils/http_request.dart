@@ -26,7 +26,9 @@ class HttpRequest {
 
   static const paymentHost = 'http://dev-de-payment.zto.mn/pay';
 
-  static const s3host = 'https://dev-de-dehub.zto.mn/s3';
+  static const s3host = 'http://dev-de-dehub.zto.mn/s3';
+
+  static const media = 'http://dev-de-dehub.zto.mn/mdi';
 
   static const version = '/app';
 
@@ -55,6 +57,8 @@ class HttpRequest {
       uri = "$orderHost$version$api";
     } else if (type == "PAYMENT") {
       uri = "$paymentHost$version$api";
+    } else if (type == "MEDIA") {
+      uri = "$media$api";
     } else {
       uri = '$host$version$api';
     }

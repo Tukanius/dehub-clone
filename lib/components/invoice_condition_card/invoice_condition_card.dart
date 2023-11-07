@@ -43,65 +43,71 @@ class _InvoiceConditionCardState extends State<InvoiceConditionCard>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${widget.index! + 1}',
-                  style: TextStyle(
-                    color: grey3,
-                    fontSize: 12,
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${widget.index! + 1}',
+                    style: TextStyle(
+                      color: grey3,
+                      fontSize: 12,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    widget.data!.termRule == null
-                        ? Text(
-                            '${widget.data!.name}',
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        widget.data?.termRule != null
+                            ? Text(
+                                '${widget.data?.termRule}',
+                                style: TextStyle(
+                                  color: networkColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            : widget.data?.name != null
+                                ? Text(
+                                    '${widget.data?.name}',
+                                    style: TextStyle(
+                                      color: networkColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                : Text('${widget.data?.description}'),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          'Нэхэмжлэх нөхцөл',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          width: 250,
+                          child: Text(
+                            '${widget.data?.description}',
                             style: TextStyle(
-                              color: networkColor,
                               fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        : Text(
-                            '${widget.data!.termRule}',
-                            style: TextStyle(
-                              color: networkColor,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
+                              color: grey3,
                             ),
                           ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      'Нэхэмжлэх нөхцөл',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      width: 250,
-                      child: Text(
-                        '${widget.data!.description}',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: grey3,
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                )
-              ],
+                  )
+                ],
+              ),
             ),
             Icon(
               Icons.arrow_forward_ios,

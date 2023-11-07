@@ -1,5 +1,7 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/utils/http_request.dart';
+import 'package:dio/dio.dart';
 import '../models/user.dart';
 
 class AuthApi extends HttpRequest {
@@ -64,18 +66,39 @@ class AuthApi extends HttpRequest {
   }
 
   createPin(User data) async {
-    var res = await post('/auth/pin', "AUTH", true, data: data.toJson());
-    return res;
+    Map<String, dynamic> json = {};
+    json['pin'] = data.pin;
+    var res = await post('/auth/pin', "AUTH", true, data: json);
+    return res['success'] == true;
   }
 
   changePin(User data) async {
-    var res = await put('/auth/pin', "AUTH", true,
-        handler: true, data: data.toJson());
-    return res;
+    Map<String, dynamic> json = {};
+    json['oldPin'] = data.oldPin;
+    json['pin'] = data.pin;
+    var res = await put('/auth/pin', "AUTH", true, handler: true, data: json);
+    return res['success'] == true;
   }
 
   logout() async {
     var res = await get('/auth/logout', "AUTH", true, handler: false);
     return User.fromJson(res as Map<String, dynamic>);
+  }
+
+  avatar(User data) async {
+    var res =
+        await put('/auth/profile/avatar', "AUTH", true, data: data.toJson());
+    return User.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Uri?> upload(XFile file) async {
+    String fileName = file.path.split('/').last;
+    FormData formData = FormData.fromMap({
+      'file': await MultipartFile.fromFile(file.path, filename: fileName),
+    });
+    var res =
+        await post('/media/file/auth/upload', "MEDIA", true, data: formData);
+
+    return User.fromJson(res as Map<String, dynamic>).url;
   }
 }

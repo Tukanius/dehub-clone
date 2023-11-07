@@ -7,6 +7,8 @@ import 'package:dehub/models/client_classification.dart';
 import 'package:dehub/models/delivery_note_status.dart';
 import 'package:dehub/models/distribution_areas.dart';
 import 'package:dehub/models/equity_types.dart';
+import 'package:dehub/models/payment_term_conditions.dart';
+import 'package:dehub/models/payment_term_config_types.dart';
 import 'package:dehub/models/permissions.dart';
 import 'package:dehub/models/price_change_types.dart';
 import 'package:dehub/models/price_end_types.dart';
@@ -49,6 +51,7 @@ import 'package:dehub/models/partner_types.dart';
 import 'package:dehub/models/product_category_types.dart';
 import 'package:dehub/models/reference_list_types.dart';
 import 'package:dehub/models/reference_types.dart';
+import 'package:dehub/models/zip_codes.dart';
 part '../parts/general.dart';
 
 class General {
@@ -104,8 +107,14 @@ class General {
   List<PullSheetStatus>? pullSheetStatus;
 
   List<BankNames>? bankNames;
+  List<PaymentTermConfigTypes>? paymentTermConfigTypes;
+  List<PaymentTermConditions>? paymentTermConditions;
+  List<ZipCodes>? zipCodes;
 
   General({
+    this.zipCodes,
+    this.paymentTermConditions,
+    this.paymentTermConfigTypes,
     this.bankNames,
     this.pullSheetStatus,
     this.deliveryNoteStatus,

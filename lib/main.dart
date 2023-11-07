@@ -1,7 +1,10 @@
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/account_info_page/account_info_page.dart';
-import 'package:dehub/screens/account_info_page/tabs/tabs/transaction_detail_page.dart';
+import 'package:dehub/screens/transaction_detail_page/transaction_detail_page.dart';
+import 'package:dehub/screens/bank_account_detail/bank_account_detail.dart';
+import 'package:dehub/screens/distribution_area_detail/distribution_area_detail.dart';
+import 'package:dehub/screens/distribution_areas/distribution_areas.dart';
+import 'package:dehub/screens/set_client_staff/set_client_staff.dart';
 import 'package:dehub/screens/change_password/change_password.dart';
 import 'package:dehub/screens/entry_point/entry_point.dart';
 import 'package:dehub/screens/order_payment_page/order_cbd_payment.dart';
@@ -48,8 +51,8 @@ import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partn
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/zoning_page/add_zoning.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/zoning_page/zoning_detail_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/zoning_page/zoning_page.dart';
-import 'package:dehub/screens/network_page/tabs/inbox_tab/new_invitation_page/invitation_sent_page/invitation_sent_page.dart';
-import 'package:dehub/screens/network_page/tabs/inbox_tab/new_invitation_page/new_invitation_page.dart';
+import 'package:dehub/screens/network_page/tabs/sent_tab/new_invitation_page/invitation_sent_page/invitation_sent_page.dart';
+import 'package:dehub/screens/network_page/tabs/sent_tab/new_invitation_page/new_invitation_page.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
 import 'package:dehub/screens/invoice/invoice_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product_tabs/shirhegeer.dart';
@@ -106,11 +109,18 @@ import 'package:dehub/screens/received_funding_page/received_funding_page.dart';
 import 'package:dehub/screens/received_order_detail/received_order_detail.dart';
 import 'package:dehub/screens/receiver_otp_verify/receiver_otp_verify.dart';
 import 'package:dehub/screens/register-page/register-page.dart';
+import 'package:dehub/screens/client_staffs/client_staffs.dart';
+import 'package:dehub/screens/client_staff_detail/client_staff_detail.dart';
+import 'package:dehub/screens/set_distribution_area/set_distribution_area.dart';
+import 'package:dehub/screens/set_payment_term/set_payment_term.dart';
+import 'package:dehub/screens/set_payment_term_detail/set_payment_term_detail.dart';
+import 'package:dehub/screens/payment_terms/payment_terms.dart';
 import 'package:dehub/screens/shopping/shopping_page.dart';
 import 'package:dehub/screens/menu/suppliers/suppliers_page.dart';
 import 'package:dehub/screens/profile/information/partner_info.dart';
 import 'package:dehub/screens/profile/profile_page.dart';
 import 'package:dehub/screens/splash/splash_page.dart';
+import 'package:dehub/screens/transaction_history/transaction_history.dart';
 import 'package:dehub/screens/user_management_page/user_management_page.dart';
 import 'package:dehub/services/dialog.dart';
 import 'package:dehub/services/navigation.dart';
@@ -211,10 +221,6 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return NetworkPage();
                     });
-                  case TransactionDetailPage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return TransactionDetailPage();
-                    });
                   case NewInvoice.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return NewInvoice();
@@ -240,11 +246,35 @@ class MyApp extends StatelessWidget {
                         value: arguments.value,
                       );
                     });
-                  case AccountInfoPage.routeName:
-                    AccountInfoPageArguments arguments =
-                        settings.arguments as AccountInfoPageArguments;
+                  case PaymentTerms.routeName:
+                    // PaymentTermsArguments arguments =
+                    // settings.arguments as PaymentTermsArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return AccountInfoPage(
+                      return PaymentTerms(
+                          // id: arguments.id,
+                          );
+                    });
+                  case ClientStaffDetail.routeName:
+                    ClientStaffDetailArguments arguments =
+                        settings.arguments as ClientStaffDetailArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return ClientStaffDetail(
+                        id: arguments.id,
+                      );
+                    });
+                  case ClientStaffs.routeName:
+                    // ResponsibleStaffArguments arguments =
+                    // settings.arguments as ResponsibleStaffArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return ClientStaffs(
+                          // id: arguments.id,
+                          );
+                    });
+                  case SetPaymentTermDetail.routeName:
+                    SetPaymentTermDetailArguments arguments =
+                        settings.arguments as SetPaymentTermDetailArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return SetPaymentTermDetail(
                         id: arguments.id,
                       );
                     });
@@ -459,6 +489,22 @@ class MyApp extends StatelessWidget {
                         id: arguments.id,
                       );
                     });
+                  case DistributionAreaDetail.routeName:
+                    DistributionAreaDetailArguments arguments =
+                        settings.arguments as DistributionAreaDetailArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return DistributionAreaDetail(
+                        id: arguments.id,
+                      );
+                    });
+                  case DistributionAreas.routeName:
+                    // DistributionAreasArguments arguments =
+                    // settings.arguments as DistributionAreasArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return DistributionAreas(
+                          // id: arguments.id,
+                          );
+                    });
                   case InvoiceDetailPage.routeName:
                     InvoiceDetailPageArguments arguments =
                         settings.arguments as InvoiceDetailPageArguments;
@@ -476,7 +522,30 @@ class MyApp extends StatelessWidget {
                         amount: arguments.amount,
                       );
                     });
-
+                  case BankAccountDetail.routeName:
+                    BankAccountDetailArguments arguments =
+                        settings.arguments as BankAccountDetailArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return BankAccountDetail(
+                        id: arguments.id,
+                      );
+                    });
+                  case TransactionHistory.routeName:
+                    TransactionHistoryArguments arguments =
+                        settings.arguments as TransactionHistoryArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return TransactionHistory(
+                        id: arguments.id,
+                      );
+                    });
+                  case TransactionDetailPage.routeName:
+                    // TransactionDetailPageArguments arguments =
+                    // settings.arguments as TransactionDetailPageArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return TransactionDetailPage(
+                          // id: arguments.id,
+                          );
+                    });
                   case MenuPage.routeName:
                     // MenuPageArguments arguments =
                     //     settings.arguments as MenuPageArguments;
@@ -511,6 +580,78 @@ class MyApp extends StatelessWidget {
                           InvoicePaymentPage(
                         id: arguments.id,
                         data: arguments.data,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
+                  case SetDistributionArea.routeName:
+                    SetDistributionAreaArguments arguments =
+                        settings.arguments as SetDistributionAreaArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          SetDistributionArea(
+                        id: arguments.id,
+                        listenController: arguments.listenController,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
+                  case SetClientStaff.routeName:
+                    SetClientStaffArguments arguments =
+                        settings.arguments as SetClientStaffArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          SetClientStaff(
+                        listenController: arguments.listenController,
+                        id: arguments.id,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
+                  case SetPaymentTerm.routeName:
+                    SetPaymentTermArguments arguments =
+                        settings.arguments as SetPaymentTermArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          SetPaymentTerm(
+                        listenController: arguments.listenController,
+                        id: arguments.id,
                       ),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {

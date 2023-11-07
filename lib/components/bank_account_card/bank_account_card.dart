@@ -1,17 +1,20 @@
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/payment.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gradient_borders/gradient_borders.dart';
 import 'package:provider/provider.dart';
 
 class BankAccountCard extends StatefulWidget {
   final Function()? onClick;
+  final Function()? transactionClick;
   final Payment? data;
   const BankAccountCard({
     Key? key,
+    this.transactionClick,
     this.data,
     this.onClick,
   }) : super(key: key);
@@ -22,6 +25,7 @@ class BankAccountCard extends StatefulWidget {
 
 class _BankAccountCardState extends State<BankAccountCard> {
   General general = General();
+  User user = User();
 
   bankName() {
     var result = general.bankNames!
@@ -34,134 +38,177 @@ class _BankAccountCardState extends State<BankAccountCard> {
   Widget build(BuildContext context) {
     general =
         Provider.of<GeneralProvider>(context, listen: false).paymentGeneral;
+    user = Provider.of<UserProvider>(context, listen: true).paymentMe;
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: white,
-            borderRadius: BorderRadius.circular(10),
-            border: GradientBoxBorder(
-              gradient: LinearGradient(
-                colors: widget.data?.bankName == "KHAN"
-                    ? [
-                        Color(0xff084438),
-                        Color(0xff285c49),
-                        Color(0xffe18849),
-                      ]
-                    : widget.data?.bankName == "GOLOMT"
-                        ? [
-                            Color(0xffFF4B9A),
-                            Color(0xffAD61FF),
-                            Color(0xff5CDFCB),
-                          ]
-                        : widget.data?.bankName == "ARIG"
-                            ? [
-                                Color(0xff6c2f84),
-                                Color(0xffec247c),
-                                Color(0xffea282b),
-                                Color(0xfffbaf42),
-                                Color(0xff8bc541),
-                                Color(0xff3f9e3e),
-                                Color(0xff74cdf4),
-                              ]
-                            : [
-                                Color(0xff084438),
-                                Color(0xff084438),
-                              ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        height: 30,
-                        width: 30,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              '${widget.data?.icon}',
-                              scale: 1,
-                            ),
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: networkColor),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      height: 36,
+                      width: 36,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            '${widget.data?.icon}',
+                            scale: 1,
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        bankName().toString(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${widget.data?.number}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12,
+                            color: grey2,
+                          ),
                         ),
+                        Text(
+                          '${user.currentBusiness?.profileName}',
+                          style: TextStyle(color: grey2, fontSize: 10),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Text(
+                      'Үндсэн',
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: grey2,
                       ),
-                    ],
-                  ),
-                  SvgPicture.asset('assets/svg/star.svg'),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${widget.data?.name}',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                  ),
-                  SizedBox(
-                    height: 3,
-                  ),
-                  Text(
-                    '${widget.data?.number}',
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        'Үндсэн эсэх :',
-                        style: TextStyle(fontSize: 10),
-                      ),
-                      widget.data?.isDefault == true
-                          ? Text(
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    widget.data?.isDefault == true
+                        ? Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 3),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: networkColor),
+                            child: Text(
                               'Тийм',
                               style: TextStyle(
-                                  fontSize: 10, fontWeight: FontWeight.w600),
-                            )
-                          : Text(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: white,
+                              ),
+                            ),
+                          )
+                        : Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 3),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: grey),
+                            child: Text(
                               'Үгүй',
                               style: TextStyle(
-                                  fontSize: 10, fontWeight: FontWeight.w600),
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: white,
+                              ),
                             ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SvgPicture.asset('assets/svg/income.svg'),
-                      SizedBox(
-                        width: 10,
+                          )
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 36,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Оноосон нэр',
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: grey2,
                       ),
-                      SvgPicture.asset('assets/svg/outgoing.svg'),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          )),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      '${widget.data?.name}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: grey2,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: widget.transactionClick,
+                      child: Container(
+                        height: 36,
+                        width: 36,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: networkColor.withOpacity(0.1),
+                        ),
+                        child: Center(
+                          child: SvgPicture.asset(
+                              'assets/svg/transaction-history.svg'),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: widget.data?.bankName == "GOLOMT" ? 10 : 0,
+                    ),
+                    widget.data?.bankName == "GOLOMT"
+                        ? Container(
+                            height: 36,
+                            width: 36,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4),
+                              color: networkColor.withOpacity(0.1),
+                            ),
+                            child: Center(
+                              child: SvgPicture.asset(
+                                  'assets/svg/dansnii-huulga.svg'),
+                            ),
+                          )
+                        : SizedBox(),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

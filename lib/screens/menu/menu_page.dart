@@ -27,6 +27,17 @@ class _MenuPageState extends State<MenuPage> {
   User user = User();
   bool isLoading = false;
 
+  logout() async {
+    setState(() {
+      isLoading = true;
+    });
+    await Provider.of<UserProvider>(context, listen: false).logout();
+    Navigator.of(context).pushNamed(SplashPage.routeName);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     partner = Provider.of<UserProvider>(context, listen: true).partnerUser;
@@ -55,12 +66,11 @@ class _MenuPageState extends State<MenuPage> {
                             margin: const EdgeInsets.only(left: 15, top: 20),
                             child: Row(
                               children: [
-                                partner.user?.avatar != null ||
-                                        partner.user?.avatar != ''
+                                user.avatar != null || user.avatar != ''
                                     ? CircleAvatar(
                                         radius: 17,
-                                        backgroundImage: NetworkImage(
-                                            '${partner.user?.avatar}'),
+                                        backgroundImage:
+                                            NetworkImage('${user.avatar}'),
                                         backgroundColor: grey,
                                       )
                                     : CircleAvatar(
@@ -329,7 +339,7 @@ class _MenuPageState extends State<MenuPage> {
                             },
                             child: Container(
                               margin:
-                                  const EdgeInsets.only(left: 15, bottom: 10),
+                                  const EdgeInsets.only(left: 15, bottom: 25),
                               child: Row(
                                 children: [
                                   Icon(
@@ -358,16 +368,5 @@ class _MenuPageState extends State<MenuPage> {
         ),
       ),
     );
-  }
-
-  logout() async {
-    setState(() {
-      isLoading = true;
-    });
-    await Provider.of<UserProvider>(context, listen: false).logout();
-    Navigator.of(context).pushNamed(SplashPage.routeName);
-    setState(() {
-      isLoading = false;
-    });
   }
 }

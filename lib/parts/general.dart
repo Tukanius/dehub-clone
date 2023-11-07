@@ -27,6 +27,16 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => Currencies.fromJson(e))
             .toList()
         : null,
+    paymentTermConfigTypes: json['paymentTermConfigTypes'] != null
+        ? (json['paymentTermConfigTypes'] as List)
+            .map((e) => PaymentTermConfigTypes.fromJson(e))
+            .toList()
+        : null,
+    paymentTermConditions: json['paymentTermConditions'] != null
+        ? (json['paymentTermConditions'] as List)
+            .map((e) => PaymentTermConditions.fromJson(e))
+            .toList()
+        : null,
     discountTypes: json['discountTypes'] != null
         ? (json['discountTypes'] as List)
             .map((e) => DiscountTypes.fromJson(e))
@@ -241,12 +251,20 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
     bankNames: json['bankNames'] != null
         ? (json['bankNames'] as List).map((e) => BankNames.fromJson(e)).toList()
         : null,
+    zipCodes: json['zipCodes'] != null
+        ? (json['zipCodes'] as List).map((e) => ZipCodes.fromJson(e)).toList()
+        : null,
   );
 }
 
 Map<String, dynamic> _$GeneralToJson(General instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.zipCodes != null) json['zipCodes'] = instance.zipCodes;
+  if (instance.paymentTermConditions != null)
+    json['paymentTermConditions'] = instance.paymentTermConditions;
+  if (instance.paymentTermConfigTypes != null)
+    json['paymentTermConfigTypes'] = instance.paymentTermConfigTypes;
   if (instance.bankNames != null) json['bankNames'] = instance.bankNames;
   if (instance.pullSheetStatus != null)
     json['pullSheetStatus'] = instance.pullSheetStatus;

@@ -21,10 +21,11 @@ class _NetworkPartnerPageState extends State<NetworkPartnerPage>
   int limit = 10;
   Result businessNetwork = Result(count: 0, rows: []);
   bool isLoading = true;
+  bool startAnimation = false;
 
   @override
   afterFirstLayout(BuildContext context) async {
-    list(page, limit);
+    await list(page, limit);
   }
 
   list(page, limit) async {
@@ -36,6 +37,11 @@ class _NetworkPartnerPageState extends State<NetworkPartnerPage>
     setState(() {
       businessNetwork = res;
       isLoading = false;
+    });
+    Future.delayed(Duration(milliseconds: 100), () {
+      setState(() {
+        startAnimation = true;
+      });
     });
   }
 
@@ -99,6 +105,8 @@ class _NetworkPartnerPageState extends State<NetworkPartnerPage>
                             children: businessNetwork.rows!
                                 .map(
                                   (e) => PartnerCard(
+                                    index: businessNetwork.rows!.indexOf(e),
+                                    startAnimation: startAnimation,
                                     data: e,
                                     onClick: () {
                                       Navigator.of(context).pushNamed(

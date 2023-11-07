@@ -1,5 +1,5 @@
-import 'package:dehub/screens/network_page/tabs/inbox_tab/new_invitation_page/tabs/from_dehub.dart';
-import 'package:dehub/screens/network_page/tabs/inbox_tab/new_invitation_page/tabs/onboard_tab.dart';
+import 'package:dehub/screens/network_page/tabs/sent_tab/new_invitation_page/tabs/from_dehub.dart';
+import 'package:dehub/screens/network_page/tabs/sent_tab/new_invitation_page/tabs/onboard_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 

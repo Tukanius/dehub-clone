@@ -13,8 +13,6 @@ class FinancingPage extends StatefulWidget {
   State<FinancingPage> createState() => _FinancingPageState();
 }
 
-int selectedIndex = 0;
-
 class _FinancingPageState extends State<FinancingPage> {
   static const List<Widget> currentPages = [
     HomePageTab(),
@@ -22,6 +20,7 @@ class _FinancingPageState extends State<FinancingPage> {
     Text('1'),
     Text('1'),
   ];
+  int selectedIndex = 1;
 
   void ontappedItem(int index) {
     setState(() {
@@ -111,26 +110,32 @@ class _FinancingPageState extends State<FinancingPage> {
         currentIndex: selectedIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: selectedIndex == 0 ? financingColor : white,
+            icon: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: selectedIndex == 0 ? financingColor : white,
+                    ),
+                    padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
+                    child: SvgPicture.asset(
+                      'assets/svg/home.svg',
+                      color: selectedIndex == 0 ? white : financingColor,
+                    ),
                   ),
-                  padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
-                  child: SvgPicture.asset(
-                    'assets/svg/home.svg',
-                    color: selectedIndex == 0 ? white : financingColor,
-                  ),
-                ),
-                selectedIndex != 0
-                    ? Text(
-                        'Нүүр',
-                        style: TextStyle(color: financingColor, fontSize: 12),
-                      )
-                    : SizedBox(),
-              ],
+                  selectedIndex != 0
+                      ? Text(
+                          'Нүүр',
+                          style: TextStyle(color: financingColor, fontSize: 12),
+                        )
+                      : SizedBox(),
+                ],
+              ),
             ),
             label: '',
           ),

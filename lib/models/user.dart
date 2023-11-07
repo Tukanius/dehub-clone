@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:dehub/models/business-staffs.dart';
 import 'package:dehub/utils/http_request.dart';
 part '../parts/user.dart';
@@ -104,12 +105,14 @@ class User {
   String? deliveryNoteId;
   Uri? url;
   String? oldPin;
+  File? file;
 
   getAvatar() {
     return HttpRequest.s3host + avatar.toString();
   }
 
   User({
+    this.file,
     this.oldPin,
     this.url,
     this.businessName,

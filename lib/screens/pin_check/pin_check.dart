@@ -112,7 +112,6 @@ class _PinCheckScreenState extends State<PinCheckScreen> {
 
                 if (res == true) {
                   await widget.onSubmit();
-                  print(widget.onSubmit.toString());
                 }
               },
               length: 6,

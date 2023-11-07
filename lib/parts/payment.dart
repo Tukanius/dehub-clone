@@ -7,9 +7,15 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
         ? (json['rows'] as List).map((e) => Payment.fromJson(e)).toList()
         : null,
     id: json['id'] != null ? json['id'] as String : null,
-    createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
-    updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
-    deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
+    createdAt: json['createdAt'] != null
+        ? DateTime.parse(json['createdAt'].toString())
+        : null,
+    updatedAt: json['updatedAt'] != null
+        ? DateTime.parse(json['updatedAt'].toString())
+        : null,
+    deletedAt: json['deletedAt'] != null
+        ? DateTime.parse(json['deletedAt'].toString())
+        : null,
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
     businessId:
         json['businessId'] != null ? json['businessId'] as String : null,
@@ -41,12 +47,146 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
     avatar: json['avatar'] != null ? json['avatar'] as String : null,
     firstName: json['firstName'] != null ? json['firstName'] as String : null,
     lastName: json['lastName'] != null ? json['lastName'] as String : null,
+    type: json['type'] != null ? json['type'] as String : null,
+    transactionStatus: json['transactionStatus'] != null
+        ? json['transactionStatus'] as String
+        : null,
+    paymentId: json['paymentId'] != null ? json['paymentId'] as String : null,
+    paymentRefCode: json['paymentRefCode'] != null
+        ? json['paymentRefCode'] as String
+        : null,
+    paymentMethod:
+        json['paymentMethod'] != null ? json['paymentMethod'] as String : null,
+    objectType:
+        json['objectType'] != null ? json['objectType'] as String : null,
+    objectId: json['objectId'] != null ? json['objectId'] as String : null,
+    invoiceRefCode: json['e'] != null ? json['e'] as String : null,
+    payerUserId:
+        json['payerUserId'] != null ? json['payerUserId'] as String : null,
+    payerBusinessId: json['payerBusinessId'] != null
+        ? json['payerBusinessId'] as String
+        : null,
+    typayerBusinessRegNumbere: json['typayerBusinessRegNumbere'] != null
+        ? json['typayerBusinessRegNumbere'] as String
+        : null,
+    creditAccountId: json['creditAccountId'] != null
+        ? json['creditAccountId'] as String
+        : null,
+    creditAccountBank: json['creditAccountBank'] != null
+        ? json['creditAccountBank'] as String
+        : null,
+    creditAccountName: json['creditAccountName'] != null
+        ? json['creditAccountName'] as String
+        : null,
+    creditAccountNumber: json['creditAccountNumber'] != null
+        ? json['creditAccountNumber'] as String
+        : null,
+    creditAccountCurrency: json['creditAccountCurrency'] != null
+        ? json['creditAccountCurrency'] as String
+        : null,
+    receiverBusinessId: json['receiverBusinessId'] != null
+        ? json['receiverBusinessId'] as String
+        : null,
+    debitAccountId: json['debitAccountId'] != null
+        ? json['debitAccountId'] as String
+        : null,
+    debitAccountBank: json['debitAccountBank'] != null
+        ? json['debitAccountBank'] as String
+        : null,
+    debitAccountName: json['debitAccountName'] != null
+        ? json['debitAccountName'] as String
+        : null,
+    debitAccountNumber: json['debitAccountNumber'] != null
+        ? json['debitAccountNumber'] as String
+        : null,
+    debitAccountCurrency: json['debitAccountCurrency'] != null
+        ? json['debitAccountCurrency'] as String
+        : null,
+    description:
+        json['description'] != null ? json['description'] as String : null,
+    addInfo: json['addInfo'] != null ? json['addInfo'] as String : null,
+    amount:
+        json['amount'] != null ? double.parse(json['amount'].toString()) : null,
+    hasTrxFee: json['hasTrxFee'] != null ? json['hasTrxFee'] as bool : null,
+    trxFee:
+        json['trxFee'] != null ? double.parse(json['trxFee'].toString()) : null,
+    hasPaymentFee:
+        json['hasPaymentFee'] != null ? json['hasPaymentFee'] as bool : null,
+    paymentFee: json['paymentFee'] != null
+        ? double.parse(json['paymentFee'].toString())
+        : null,
+    hasBankTrxFee:
+        json['hasBankTrxFee'] != null ? json['hasBankTrxFee'] as bool : null,
+    bankTrxFee: json['bankTrxFee'] != null
+        ? double.parse(json['bankTrxFee'].toString())
+        : null,
+    totalAmount: json['totalAmount'] != null
+        ? double.parse(json['totalAmount'].toString())
+        : null,
+    tranId: json['tranId'] != null ? json['tranId'] as String : null,
+    tranDate: json['tranDate'] != null ? json['tranDate'] as String : null,
+    tranStatus:
+        json['tranStatus'] != null ? json['tranStatus'] as String : null,
   );
 }
 
 Map<String, dynamic> _$PaymentToJson(Payment instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.type != null) json['type'] = instance.type;
+  if (instance.transactionStatus != null)
+    json['transactionStatus'] = instance.transactionStatus;
+  if (instance.paymentId != null) json['paymentId'] = instance.paymentId;
+  if (instance.paymentRefCode != null)
+    json['paymentRefCode'] = instance.paymentRefCode;
+  if (instance.paymentMethod != null)
+    json['paymentMethod'] = instance.paymentMethod;
+  if (instance.objectType != null) json['objectType'] = instance.objectType;
+  if (instance.objectId != null) json['objectId'] = instance.objectId;
+  if (instance.invoiceRefCode != null)
+    json['invoiceRefCode'] = instance.invoiceRefCode;
+  if (instance.payerUserId != null) json['payerUserId'] = instance.payerUserId;
+  if (instance.payerBusinessId != null)
+    json['payerBusinessId'] = instance.payerBusinessId;
+  if (instance.typayerBusinessRegNumbere != null)
+    json['typayerBusinessRegNumbere'] = instance.typayerBusinessRegNumbere;
+  if (instance.creditAccountId != null)
+    json['creditAccountId'] = instance.creditAccountId;
+  if (instance.creditAccountBank != null)
+    json['creditAccountBank'] = instance.creditAccountBank;
+  if (instance.creditAccountName != null)
+    json['creditAccountName'] = instance.creditAccountName;
+  if (instance.creditAccountNumber != null)
+    json['creditAccountNumber'] = instance.creditAccountNumber;
+  if (instance.creditAccountCurrency != null)
+    json['creditAccountCurrency'] = instance.creditAccountCurrency;
+  if (instance.debitAccountId != null)
+    json['debitAccountId'] = instance.debitAccountId;
+  if (instance.receiverBusinessId != null)
+    json['receiverBusinessId'] = instance.receiverBusinessId;
+  if (instance.debitAccountBank != null)
+    json['debitAccountBank'] = instance.debitAccountBank;
+  if (instance.debitAccountName != null)
+    json['debitAccountName'] = instance.debitAccountName;
+  if (instance.debitAccountNumber != null)
+    json['debitAccountNumber'] = instance.debitAccountNumber;
+  if (instance.debitAccountCurrency != null)
+    json['debitAccountCurrency'] = instance.debitAccountCurrency;
+  if (instance.description != null) json['description'] = instance.description;
+  if (instance.addInfo != null) json['addInfo'] = instance.addInfo;
+  if (instance.amount != null) json['amount'] = instance.amount;
+  if (instance.hasTrxFee != null) json['hasTrxFee'] = instance.hasTrxFee;
+  if (instance.trxFee != null) json['trxFee'] = instance.trxFee;
+  if (instance.hasPaymentFee != null)
+    json['hasPaymentFee'] = instance.hasPaymentFee;
+  if (instance.paymentFee != null) json['paymentFee'] = instance.paymentFee;
+  if (instance.hasBankTrxFee != null)
+    json['hasBankTrxFee'] = instance.hasBankTrxFee;
+  if (instance.bankTrxFee != null) json['bankTrxFee'] = instance.bankTrxFee;
+  if (instance.totalAmount != null) json['totalAmount'] = instance.totalAmount;
+  if (instance.tranId != null) json['tranId'] = instance.tranId;
+  if (instance.tranDate != null) json['tranDate'] = instance.tranDate;
+  if (instance.tranStatus != null) json['tranStatus'] = instance.tranStatus;
   if (instance.count != null) json['count'] = instance.count;
   if (instance.rows != null) json['rows'] = instance.rows;
   if (instance.id != null) json['id'] = instance.id;

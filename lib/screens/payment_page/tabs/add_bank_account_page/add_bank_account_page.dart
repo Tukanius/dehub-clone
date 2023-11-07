@@ -1,15 +1,15 @@
 import 'package:dehub/api/payment_api.dart';
-import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/bank_account_card/bank_account_card.dart';
+import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/account_info_page/account_info_page.dart';
-import 'package:dehub/screens/link_account_page/link_account_page.dart';
+import 'package:dehub/screens/bank_account_detail/bank_account_detail.dart';
+import 'package:dehub/screens/transaction_history/transaction_history.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -32,6 +32,7 @@ class _AddBankAccountPageState extends State<AddBankAccountPage>
   Result payment = Result(rows: [], count: 0);
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
+  ListenController listenController = ListenController();
 
   list(page, limit) async {
     Filter filter = Filter(query: '');
@@ -60,6 +61,23 @@ class _AddBankAccountPageState extends State<AddBankAccountPage>
   }
 
   @override
+  void initState() {
+    listenController.addListener(() {
+      list(page, limit);
+    });
+    super.initState();
+  }
+
+  void _onLoading() async {
+    await Future.delayed(Duration(milliseconds: 1000));
+    setState(() {
+      limit += 10;
+    });
+    await list(page, limit);
+    refreshController.loadComplete();
+  }
+
+  @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).user;
     return Scaffold(
@@ -84,7 +102,7 @@ class _AddBankAccountPageState extends State<AddBankAccountPage>
                 ),
               ),
               onRefresh: _onRefresh,
-              // onLoading: _onLoading,
+              onLoading: _onLoading,
               footer: CustomFooter(
                 builder: (context, mode) {
                   Widget body;
@@ -103,75 +121,74 @@ class _AddBankAccountPageState extends State<AddBankAccountPage>
                   );
                 },
               ),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      margin:
-                          const EdgeInsets.only(left: 10, right: 10, top: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: white,
-                      ),
+              child: payment.rows?.length != 0
+                  ? SingleChildScrollView(
                       child: Column(
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.all(15),
-                                child: Text(
-                                  'Холбосон данснууд',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ),
-                              AddButton(
-                                color: paymentColor,
-                                addColor: white,
-                                onClick: () {
-                                  Navigator.of(context)
-                                      .pushNamed(LinkAccountPage.routeName);
-                                },
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 25,
-                          ),
-                          CarouselSlider(
-                            items: payment.rows!
-                                .map(
-                                  (data) => BankAccountCard(
-                                    data: data,
-                                    onClick: () {
-                                      Navigator.of(context).pushNamed(
-                                        AccountInfoPage.routeName,
-                                        arguments: AccountInfoPageArguments(
-                                          id: data.id,
-                                        ),
-                                      );
-                                    },
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 25),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 15),
+                                  child: Text(
+                                    'Холбосон данснууд',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500),
                                   ),
+                                ),
+                                Column(
+                                  children: payment.rows!
+                                      .map(
+                                        (data) => Column(
+                                          children: [
+                                            BankAccountCard(
+                                              transactionClick: () {
+                                                Navigator.of(context).pushNamed(
+                                                  TransactionHistory.routeName,
+                                                  arguments:
+                                                      TransactionHistoryArguments(
+                                                    id: data.id,
+                                                  ),
+                                                );
+                                              },
+                                              data: data,
+                                              onClick: () {
+                                                Navigator.of(context).pushNamed(
+                                                  BankAccountDetail.routeName,
+                                                  arguments:
+                                                      BankAccountDetailArguments(
+                                                    id: data.id,
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                                SizedBox(
+                                  height: 15,
                                 )
-                                .toList(),
-                            options: CarouselOptions(
-                              enlargeCenterPage: true,
-                              autoPlay: true,
-                              aspectRatio: 2.5,
-                              enableInfiniteScroll: false,
+                              ],
                             ),
                           ),
-                          SizedBox(
-                            height: 15,
-                          )
                         ],
                       ),
+                    )
+                  : NotFound(
+                      module: "PAYMENT",
+                      labelText:
+                          'Та данс холбоогүй байна. "+" сонгож дансаа холбоно уу',
+                      textColor: grey2,
                     ),
-                  ],
-                ),
-              ),
             ),
     );
   }

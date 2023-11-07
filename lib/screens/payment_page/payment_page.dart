@@ -34,8 +34,8 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
 
   static const List<Widget> currentPages = [
     HomePageTab(),
-    AddBankAccountPage(),
     Text('1'),
+    AddBankAccountPage(),
     Text('1'),
   ];
 
@@ -103,7 +103,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                     color: selectedIndex != 3 ? paymentColor : white,
                   ),
                 )
-              : selectedIndex == 3
+              : selectedIndex == 2
                   ? AddButton(
                       color: paymentColor,
                       addColor: white,
@@ -112,7 +112,16 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                             .pushNamed(LinkAccountPage.routeName);
                       },
                     )
-                  : SizedBox(),
+                  : selectedIndex == 3
+                      ? AddButton(
+                          color: paymentColor,
+                          addColor: white,
+                          onClick: () {
+                            Navigator.of(context)
+                                .pushNamed(LinkAccountPage.routeName);
+                          },
+                        )
+                      : SizedBox(),
         ],
       ),
       body: isLoading == true
@@ -133,26 +142,31 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
         currentIndex: selectedIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: selectedIndex == 0 ? paymentColor : white,
+            icon: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: selectedIndex == 0 ? paymentColor : white,
+                    ),
+                    padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
+                    child: SvgPicture.asset(
+                      'assets/svg/home.svg',
+                      color: selectedIndex == 0 ? white : paymentColor,
+                    ),
                   ),
-                  padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
-                  child: SvgPicture.asset(
-                    'assets/svg/home.svg',
-                    color: selectedIndex == 0 ? white : paymentColor,
-                  ),
-                ),
-                selectedIndex != 0
-                    ? Text(
-                        'Нүүр',
-                        style: TextStyle(color: paymentColor, fontSize: 12),
-                      )
-                    : SizedBox(),
-              ],
+                  selectedIndex != 0
+                      ? Text(
+                          'Нүүр',
+                          style: TextStyle(color: paymentColor, fontSize: 12),
+                        )
+                      : SizedBox(),
+                ],
+              ),
             ),
             label: '',
           ),
@@ -190,13 +204,13 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'assets/svg/inbox.svg',
+                    'assets/svg/wallet.svg',
                     color: selectedIndex == 2 ? white : paymentColor,
                   ),
                 ),
                 selectedIndex != 2
                     ? Text(
-                        'Ирсэн',
+                        'Данс',
                         style: TextStyle(color: paymentColor, fontSize: 12),
                       )
                     : SizedBox(),
@@ -214,13 +228,13 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'assets/svg/sent.svg',
+                    'assets/svg/grid2.svg',
                     color: selectedIndex == 3 ? white : paymentColor,
                   ),
                 ),
                 selectedIndex != 3
                     ? Text(
-                        'Илгээсэн',
+                        'Тооцоо',
                         style: TextStyle(color: paymentColor, fontSize: 12),
                       )
                     : SizedBox(),

@@ -4,9 +4,9 @@ class Payment {
   int? count;
   List<Payment>? rows;
   String? id;
-  String? createdAt;
-  String? updatedAt;
-  String? deletedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  DateTime? deletedAt;
   String? partnerId;
   String? businessId;
   String? regUserId;
@@ -30,7 +30,78 @@ class Payment {
   String? firstName;
   String? lastName;
 
+  String? type;
+  String? transactionStatus;
+  String? paymentId;
+  String? paymentRefCode;
+  String? paymentMethod;
+  String? objectType;
+  String? objectId;
+  String? invoiceRefCode;
+  String? payerUserId;
+  String? payerBusinessId;
+  String? typayerBusinessRegNumbere;
+  String? creditAccountId;
+  String? creditAccountBank;
+  String? creditAccountName;
+  String? creditAccountNumber;
+  String? creditAccountCurrency;
+  String? receiverBusinessId;
+  String? debitAccountId;
+  String? debitAccountBank;
+  String? debitAccountName;
+  String? debitAccountNumber;
+  String? debitAccountCurrency;
+  String? description;
+  String? addInfo;
+  double? amount;
+  bool? hasTrxFee;
+  double? trxFee;
+  bool? hasPaymentFee;
+  double? paymentFee;
+  bool? hasBankTrxFee;
+  double? bankTrxFee;
+  double? totalAmount;
+  String? tranId;
+  String? tranDate;
+  String? tranStatus;
+
   Payment({
+    this.type,
+    this.transactionStatus,
+    this.paymentId,
+    this.paymentRefCode,
+    this.paymentMethod,
+    this.objectType,
+    this.objectId,
+    this.invoiceRefCode,
+    this.payerUserId,
+    this.payerBusinessId,
+    this.typayerBusinessRegNumbere,
+    this.creditAccountId,
+    this.creditAccountBank,
+    this.creditAccountName,
+    this.creditAccountNumber,
+    this.creditAccountCurrency,
+    this.receiverBusinessId,
+    this.debitAccountId,
+    this.debitAccountBank,
+    this.debitAccountName,
+    this.debitAccountNumber,
+    this.debitAccountCurrency,
+    this.description,
+    this.addInfo,
+    this.amount,
+    this.hasTrxFee,
+    this.trxFee,
+    this.hasPaymentFee,
+    this.paymentFee,
+    this.hasBankTrxFee,
+    this.bankTrxFee,
+    this.totalAmount,
+    this.tranId,
+    this.tranDate,
+    this.tranStatus,
     this.count,
     this.rows,
     this.id,

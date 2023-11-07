@@ -14,15 +14,24 @@ class PinCode extends StatefulWidget {
 }
 
 class _PinCodeState extends State<PinCode> {
+  TextEditingController controller = TextEditingController();
+
   onSubmit(String value) async {
-    var res = await AuthApi().checkPin(
-      User(pin: value),
-    );
-    if (res == true) {
-      Navigator.of(context).pushNamed(
-        NewPin.routeName,
-        arguments: NewPinArguments(oldPin: value),
+    try {
+      var res = await AuthApi().checkPin(
+        User(pin: value),
       );
+      if (res == true) {
+        Navigator.of(context).pushNamed(
+          NewPin.routeName,
+          arguments: NewPinArguments(oldPin: value),
+        );
+      }
+    } catch (e) {
+      setState(() {
+        controller.text = "";
+      });
+      FocusScope.of(context).previousFocus();
     }
   }
 
@@ -64,6 +73,7 @@ class _PinCodeState extends State<PinCode> {
             Pinput(
               autofocus: true,
               obscureText: true,
+              controller: controller,
               keyboardType: TextInputType.number,
               length: 6,
               onCompleted: (value) => onSubmit(value),

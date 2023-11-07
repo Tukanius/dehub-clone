@@ -1,11 +1,20 @@
-import 'package:dehub/screens/account_info_page/tabs/tabs/transaction_detail_page.dart';
+import 'package:dehub/models/general.dart';
+import 'package:dehub/models/payment.dart';
+import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class TransactionInformationCard extends StatefulWidget {
   final Color? color;
+  final Function()? onClick;
+  final Payment? data;
   const TransactionInformationCard({
     Key? key,
+    this.onClick,
+    this.data,
     this.color,
   }) : super(key: key);
 
@@ -16,75 +25,71 @@ class TransactionInformationCard extends StatefulWidget {
 
 class _TransactionInformationCardState
     extends State<TransactionInformationCard> {
+  General general = General();
+
+  getCurrency() {
+    var res = general.currencies!
+        .firstWhere(
+            (element) => element.code == widget.data?.creditAccountCurrency)
+        .symbol;
+    return res;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 15,
-        ),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 15),
-          child: Text(
-            '2023-03-12',
-            style: TextStyle(
-                color: grey3, fontSize: 14, fontWeight: FontWeight.w600),
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          color: white,
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Гүйлгээний утга',
+    general =
+        Provider.of<GeneralProvider>(context, listen: true).paymentGeneral;
+    return GestureDetector(
+      onTap: widget.onClick,
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        color: white,
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    '${widget.data?.description}',
                     style: TextStyle(color: grey2, fontWeight: FontWeight.w600),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(TransactionDetailPage.routeName);
-                    },
-                    child: Icon(
-                      Icons.arrow_forward_ios,
-                      size: 14,
-                      color: Color(0xff545454),
-                    ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 14,
+                  color: Color(0xff545454),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data!.createdAt!)}',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Color(0xff555555),
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '2021-12-01 15:05 PM',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color(0xff555555),
-                    ),
-                  ),
-                  Text(
-                    '250,000.00 ₮',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500, color: widget.color),
-                  )
-                ],
-              )
-            ],
-          ),
+                ),
+                Text(
+                  '${Utils().formatCurrency(widget.data?.amount.toString())} ${getCurrency()}',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500, color: widget.color),
+                )
+              ],
+            )
+          ],
         ),
-      ],
+      ),
     );
   }
 }

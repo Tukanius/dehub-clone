@@ -35,12 +35,6 @@ class BusinessApi extends HttpRequest {
     return Invitation.fromJson(res as Map<String, dynamic>);
   }
 
-  // respond(String id, Invitation data) async {
-  //   var res = await put("/invitation/$id/respond", "BUSINESS",
-  //       handler: true, data: data.toJson());
-  //   return Invitation.fromJson(res as Map<String, dynamic>);
-  // }
-
   respond(Invitation data, String id) async {
     var res = await put("/invitation/$id/respond", "BUSINESS", true,
         data: data.toJson());
@@ -53,12 +47,8 @@ class BusinessApi extends HttpRequest {
     return Result.fromJson(res, BusinessNetwork.$fromJson);
   }
 
-  Future<BusinessNetwork> partnerDetail(String id) async {
-    var res = await get(
-      "/network/$id",
-      "BUSINESS",
-      true,
-    );
+  Future<BusinessNetwork> networkGet(String id) async {
+    var res = await get("/network/$id", "BUSINESS", true);
     return BusinessNetwork.fromJson(res as Map<String, dynamic>);
   }
 
@@ -148,5 +138,53 @@ class BusinessApi extends HttpRequest {
     var res = await post('/invitation', "BUSINESS", true,
         handler: true, data: data.toJson());
     return Business.fromJson(res as Map<String, dynamic>);
+  }
+
+  pieChart() async {
+    var res = await get(
+        '/dashboard/client_classification/stats', 'BUSINESS', true,
+        handler: true);
+    return res as Map<String, dynamic>;
+  }
+
+  Future<Business> dashboardSent() async {
+    var res = await get('/dashboard/invitation/sent', 'BUSINESS', true,
+        handler: true);
+    return Business.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Business> dashboardReceived() async {
+    var res = await get('/dashboard/invitation/received', 'BUSINESS', true,
+        handler: true);
+    return Business.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<BusinessNetwork> setClientStaff(BusinessNetwork data) async {
+    var res = await put('/network/set/client_staff', "BUSINESS", true,
+        handler: true, data: data.toJson());
+    return BusinessNetwork.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<BusinessNetwork> setPaymentTerm(BusinessNetwork data) async {
+    var res = await put('/network/set/payment_term', "BUSINESS", true,
+        data: data.toJson());
+    return BusinessNetwork.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<BusinessNetwork> setDistributionArea(BusinessNetwork data) async {
+    var res = await put('/network/set/distribution_area', "BUSINESS", true);
+    return BusinessNetwork.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> paymentTermSelect(String condition) async {
+    var res = await get(
+        '/payment_term/select?condition=$condition', "BUSINESS", true);
+    return Result.fromJson(res, Business.fromJson);
+  }
+
+  Future<BusinessNetwork> createOnboard(BusinessNetwork data) async {
+    var res = await post('/invitation/onboarding', "BUSINESS", true,
+        data: data.toJson());
+    return BusinessNetwork.fromJson(res as Map<String, dynamic>);
   }
 }

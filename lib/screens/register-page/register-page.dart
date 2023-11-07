@@ -613,19 +613,3 @@ String? validatePhone(String value, context) {
     }
   }
 }
-
-bool validateStructure(String value, String number) {
-  if (number.length < 8) return false;
-  if (isNumeric(number)) {
-    return true;
-  }
-  return true;
-}
-
-bool isNumeric(String s) {
-  if (s.isEmpty) {
-    return false;
-  }
-
-  return !int.parse(s).isNaN;
-}

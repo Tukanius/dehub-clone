@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class CustomButton extends StatefulWidget {
   final String labelText;
-  final Function()? onClick;
+  final Function() onClick;
   final Color? labelColor;
   final Color? textColor;
   final bool? isGradient;
@@ -17,7 +17,7 @@ class CustomButton extends StatefulWidget {
     this.isGradient,
     this.textColor,
     this.labelColor,
-    this.onClick,
+    required this.onClick,
     this.labelText = '',
     Key? key,
   }) : super(key: key);
@@ -27,59 +27,76 @@ class CustomButton extends StatefulWidget {
 }
 
 class _CustomButtonState extends State<CustomButton> {
+  bool isVisible = true;
+
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: GestureDetector(
-        onTap: widget.onClick,
-        child: Container(
-          height: 48,
-          width: 360,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            color: widget.isGradient == false || widget.isGradient == null
-                ? widget.labelColor
-                : null,
-            gradient: widget.isGradient == true ? widget.gradient : null,
-          ),
-          child: widget.isLoading == true
-              ? Center(
-                  child: SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 1.5,
-                      color: white,
-                    ),
-                  ),
-                )
-              : widget.isGradient != true
-                  ? Center(
-                      child: Text(
-                        '${widget.labelText}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: widget.textColor == null
-                              ? white
-                              : widget.textColor,
-                        ),
+      child: AnimatedOpacity(
+        opacity: isVisible ? 1 : 0.7,
+        duration: Duration(milliseconds: 50),
+        curve: Curves.ease,
+        child: GestureDetector(
+          onTap: () {
+            setState(() {
+              isVisible = false;
+            });
+            widget.onClick();
+            Future.delayed(Duration(milliseconds: 50), () {
+              setState(() {
+                isVisible = true;
+              });
+            });
+          },
+          child: Container(
+            height: 48,
+            width: 360,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: widget.isGradient == false || widget.isGradient == null
+                  ? widget.labelColor
+                  : null,
+              gradient: widget.isGradient == true ? widget.gradient : null,
+            ),
+            child: widget.isLoading == true
+                ? Center(
+                    child: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 1.5,
+                        color: white,
                       ),
-                    )
-                  : widget.container != null
-                      ? widget.container
-                      : Center(
-                          child: Text(
-                            '${widget.labelText}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: widget.textColor == null
-                                  ? white
-                                  : widget.textColor,
-                            ),
+                    ),
+                  )
+                : widget.isGradient != true
+                    ? Center(
+                        child: Text(
+                          '${widget.labelText}',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: widget.textColor == null
+                                ? white
+                                : widget.textColor,
                           ),
                         ),
+                      )
+                    : widget.container != null
+                        ? widget.container
+                        : Center(
+                            child: Text(
+                              '${widget.labelText}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                color: widget.textColor == null
+                                    ? white
+                                    : widget.textColor,
+                              ),
+                            ),
+                          ),
+          ),
         ),
       ),
     );

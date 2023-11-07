@@ -38,7 +38,7 @@ const Color partnerColor = Color(0xff7C7A83);
 const Color financingColor = Color(0xff68199D);
 const Color invoiceColor = Color(0xff00B3D3);
 const Color orderColor = Color(0xff00B8BA);
-const Color paymentColor = Color(0xffD60B9D);
+const Color paymentColor = Color(0xff1C5FAA);
 const Color productColor = Color(0xff6883BC);
 const Color userColor = Color(0xff000000);
 const Color debtColor = Color(0xffD60B9D);
@@ -52,6 +52,11 @@ const Color saaral = Color(0xff8181A5);
 const Color pink = Color(0xffFF808B);
 const Color chatGrey = Color(0xffE1E8ED);
 const Color cool = Color(0xff2C3D7A);
+Color networkDashboard1 = Color(0xff1B5EAA).withOpacity(0.8);
+const Color networkDashboard2 = Color(0xff41C6F9);
+const Color networkDashboard3 = Color(0xff617EF8);
+Color networkDashboard4 = Color(0xff1B5EAA).withOpacity(0.3);
+const Color neonGreen = Color(0xff53D66B);
 
 const gradient2 = LinearGradient(colors: [
   Color(0xff5D7128),

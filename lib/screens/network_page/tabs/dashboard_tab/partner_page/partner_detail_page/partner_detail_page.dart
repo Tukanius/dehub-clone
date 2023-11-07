@@ -32,7 +32,7 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
 
   @override
   afterFirstLayout(BuildContext context) async {
-    businessNetwork = await BusinessApi().partnerDetail(widget.id);
+    businessNetwork = await BusinessApi().networkGet(widget.id);
     setState(() {
       isLoading = false;
     });

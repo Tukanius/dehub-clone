@@ -146,7 +146,7 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
             addColor: white,
             color: networkColor,
             onClick: () {
-              if (widget.data.listType == "INV_NET2") {
+              if (widget.data.listType == "INV_CONFIG") {
                 Navigator.of(context).pushNamed(NewConditionPage.routeName,
                     arguments: NewConditionPageArguments(
                         listenController: listenController));

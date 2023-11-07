@@ -2,7 +2,9 @@ import 'package:dehub/api/payment_api.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/payment.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -13,7 +15,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class LinkAccountPage extends StatefulWidget {
-  static const routeName = "/linkaccountpage";
+  static const routeName = "/LinkAccountPage";
   const LinkAccountPage({Key? key}) : super(key: key);
 
   @override
@@ -33,6 +35,7 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
   bool shortnameValidate = false;
   String? accountName = "Дансны нэр авто гарна";
   General general = General();
+  User user = User();
 
   checkValidate() {
     if (bankName == "Банк сонгох") {
@@ -80,79 +83,9 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
     }
   }
 
-  bankModal() {
-    showModalBottomSheet(
-      backgroundColor: white,
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(30),
-        ),
-      ),
-      builder: (BuildContext context) {
-        return SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: const EdgeInsets.all(15),
-                child: Text(
-                  "БАНК СОНГОХ",
-                  style: TextStyle(
-                    color: grey2,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              Column(
-                children: general.bankNames!
-                    .map(
-                      (data) => GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            bankName = data.name!;
-                            bankCode = data.code!;
-                            bankValidate = false;
-                          });
-                          Navigator.of(context).pop();
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(15),
-                          color: white,
-                          child: Row(
-                            children: [
-                              Container(
-                                height: 20,
-                                width: 20,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      '${data.icon}',
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text('${data.name}'),
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).businessUser;
     general =
         Provider.of<GeneralProvider>(context, listen: false).paymentGeneral;
     return Scaffold(
@@ -304,7 +237,7 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
                             ),
                           ),
                           Text(
-                            '${accountName}',
+                            '${user.currentBusiness?.profileName}',
                             style: TextStyle(
                               color: grey2,
                             ),
@@ -408,6 +341,80 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
           ),
         ),
       ),
+    );
+  }
+
+  bankModal() {
+    showModalBottomSheet(
+      backgroundColor: white,
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(30),
+        ),
+      ),
+      builder: (BuildContext context) {
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.all(15),
+                child: Text(
+                  "БАНК СОНГОХ",
+                  style: TextStyle(
+                    color: grey2,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              Column(
+                children: general.bankNames!
+                    .map(
+                      (data) => GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            bankName = data.name!;
+                            bankCode = data.code!;
+                            bankValidate = false;
+                          });
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(15),
+                          color: white,
+                          child: Row(
+                            children: [
+                              Container(
+                                height: 20,
+                                width: 20,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                      '${data.icon}',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text('${data.name}'),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

@@ -23,7 +23,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:after_layout/after_layout.dart';
 
 class NewInvoice extends StatefulWidget {
-  static const routeName = '/newinvoice';
+  static const routeName = '/NewInvoice';
   const NewInvoice({
     Key? key,
   }) : super(key: key);
@@ -67,6 +67,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
   bool invoiceValidate = false;
   bool sectorValidate = false;
   bool productValidate = false;
+  Map<String, List<Invoice>> duplicatedItems = {};
 
   List<String> list = <String>[
     "Хувиар",

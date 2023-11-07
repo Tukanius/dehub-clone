@@ -33,17 +33,6 @@ class _ReferenceInformationCardState extends State<ReferenceInformationCard>
             data: widget.data!,
           ),
         );
-        //  else if (widget.data!.name == 'Харилцагчийн ангилал' ||
-        //     widget.data!.name == 'Нийлүүлэгчийн ангилал') {
-        //   Navigator.of(context).pushNamed(CategoryPage.routeName);
-        // } else if (widget.data!.name == 'Борлуулалтын бүс') {
-        //   Navigator.of(context).pushNamed(ZoningPage.routeName);
-        // } else if (widget.data!.name == 'Борлуулалтын чиглэл') {
-        //   Navigator.of(context).pushNamed(DirectionPage.routeName);
-        // } else if (widget.data!.name == 'Харилцагчийн зэрэглэл' ||
-        //     widget.data!.name == 'Нийлүүлэгчийн зэрэглэл') {
-        //   Navigator.of(context).pushNamed(RankPage.routeName);
-        // }
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),

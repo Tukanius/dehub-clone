@@ -21,7 +21,18 @@ class Filter {
   String? deliveryNoteStatus;
   String? status;
 
+  String? startDate;
+  String? endDate;
+  String? paymentMethod;
+  String? inOutType;
+  String? accountId;
+
   Filter({
+    this.accountId,
+    this.startDate,
+    this.endDate,
+    this.paymentMethod,
+    this.inOutType,
     this.status,
     this.deliveryNoteStatus,
     this.pullSheetStatus,

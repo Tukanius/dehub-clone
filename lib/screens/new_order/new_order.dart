@@ -61,6 +61,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   final duplicates = Set();
   List<Order> data = [];
   List<Order> additionalLines = [];
+  List<Order> asdf = [];
   List<FilePickerResult> files = [];
   ListenController receiverBranchController = ListenController();
   ListenController customerListenController = ListenController();
@@ -300,25 +301,19 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       children: [
                         Row(
                           children: [
-                            Container(
-                              height: 24,
-                              width: 24,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: grey,
-                              ),
-                              child: customer.logo != null
-                                  ? CircleAvatar(
-                                      backgroundImage: NetworkImage(
-                                        '${customer.logo}',
-                                        scale: 1,
-                                      ),
-                                    )
-                                  : CircleAvatar(
-                                      backgroundImage:
-                                          AssetImage('images/avatar.png'),
+                            customer.logo != null
+                                ? CircleAvatar(
+                                    radius: 12,
+                                    backgroundImage: NetworkImage(
+                                      '${customer.logo}',
+                                      scale: 1,
                                     ),
-                            ),
+                                  )
+                                : CircleAvatar(
+                                    radius: 12,
+                                    backgroundImage:
+                                        AssetImage('images/avatar.png'),
+                                  ),
                             const SizedBox(
                               width: 5,
                             ),
@@ -392,20 +387,51 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     secondTextFontWeight: FontWeight.w500,
                   ),
                   const SizedBox(height: 3),
-                  FieldCard(
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
                     color: white,
-                    labelText: "Партнер нэр",
-                    secondText: customer.partnerName != null
-                        ? "${customer.partnerName},"
-                        : "Партнер нэр,",
-                    secondTextColor: buttonColor,
-                    thirdText: customer.partner?.refCode != null
-                        ? ' ${customer.partner?.refCode}'
-                        : " #PartnerRef",
-                    thirdTextColor: orderColor,
-                    secondTextFontWeight: FontWeight.w500,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: Text('Партнер нэр'),
+                        ),
+                        Expanded(
+                          flex: 5,
+                          child: RichText(
+                            textAlign: TextAlign.end,
+                            text: TextSpan(
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w500,
+                              ),
+                              children: [
+                                customer.partnerName != null
+                                    ? TextSpan(
+                                        text: '${customer.partnerName},',
+                                        style: TextStyle(color: buttonColor),
+                                      )
+                                    : TextSpan(
+                                        text: 'Партнер нэр,',
+                                        style: TextStyle(color: buttonColor),
+                                      ),
+                                customer.partner?.refCode != null
+                                    ? TextSpan(
+                                        text: ' ${customer.partner?.refCode}',
+                                        style: TextStyle(color: orderColor),
+                                      )
+                                    : TextSpan(
+                                        text: ' #PartnerRef',
+                                        style: TextStyle(color: orderColor),
+                                      ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 3),
                   FieldCard(
@@ -469,86 +495,28 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     marginVertical: 10,
                     color: white,
                     labelText: "Хүлээн авах салбар",
-                    secondText: order.receiverBranches != null
-                        ? order.receiverBranches!.length > 1
-                            ? "Солих"
-                            : ''
+                    secondText: order.receiverBranches != null &&
+                            order.receiverBranches!.length > 1
+                        ? "Солих"
                         : '',
                     secondTextColor: orderColor,
-                    onClick: order.receiverBranches != null
-                        ? order.receiverBranches!.length > 1
-                            ? () {
-                                Navigator.of(context).pushNamed(
-                                  ChangeBranchNamePage.routeName,
-                                  arguments: ChangeBranchNamePageArguments(
-                                    data: order.receiverBranches!,
-                                    receiverBranchController:
-                                        receiverBranchController,
-                                  ),
-                                );
-                              }
-                            : null
+                    onClick: order.receiverBranches != null &&
+                            order.receiverBranches!.length > 1
+                        ? () {
+                            Navigator.of(context).pushNamed(
+                              ChangeBranchNamePage.routeName,
+                              arguments: ChangeBranchNamePageArguments(
+                                data: order.receiverBranches!,
+                                receiverBranchController:
+                                    receiverBranchController,
+                              ),
+                            );
+                          }
                         : null,
                     fontWeight: FontWeight.w500,
                     labelTextColor: buttonColor,
                   ),
                   const SizedBox(height: 3),
-                  // Container(
-                  //   margin: const EdgeInsets.only(bottom: 3),
-                  //   color: white,
-                  //   padding: const EdgeInsets.symmetric(
-                  //       horizontal: 15, vertical: 10),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //     children: [
-                  //       const Text(
-                  //         'Хүлээн авах салбар',
-                  //         style: TextStyle(
-                  //           color: buttonColor,
-                  //           fontWeight: FontWeight.w500,
-                  //         ),
-                  //       ),
-                  //       order.receiverBranches != null
-                  //           ? order.receiverBranches!.length > 1
-                  //               ? GestureDetector(
-                  //                   onTap: () {
-                  //                     Navigator.of(context).pushNamed(
-                  //                       ChangeBranchNamePage.routeName,
-                  //                       arguments:
-                  //                           ChangeBranchNamePageArguments(
-                  //                         data: order.receiverBranches!,
-                  //                         receiverBranchController:
-                  //                             receiverBranchController,
-                  //                       ),
-                  //                     );
-                  //                   },
-                  //                   child: Container(
-                  //                     color: transparent,
-                  //                     child: const Row(
-                  //                       children: [
-                  //                         Text(
-                  //                           'Солих',
-                  //                           style: TextStyle(
-                  //                             color: orderColor,
-                  //                           ),
-                  //                         ),
-                  //                         SizedBox(
-                  //                           width: 8,
-                  //                         ),
-                  //                         Icon(
-                  //                           Icons.arrow_forward_ios,
-                  //                           color: orderColor,
-                  //                           size: 14,
-                  //                         )
-                  //                       ],
-                  //                     ),
-                  //                   ),
-                  //                 )
-                  //               : const SizedBox()
-                  //           : const SizedBox(),
-                  //     ],
-                  //   ),
-                  // ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 3),
                     color: white,
@@ -875,10 +843,14 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                             onClick: () {},
                             onCloseClick: () {
                               setState(() {
-                                product.removeWhere(
-                                    (element) => element.id == item.id);
-                                data.removeWhere(
-                                    (element) => element.id == item.id);
+                                product.removeWhere((element) =>
+                                    element.nameMon == item.nameMon);
+                                print(product);
+                                print('=========product========');
+                                data.removeWhere((element) =>
+                                    element.nameMon == item.nameMon);
+                                print(data);
+                                print('=========data========');
                               });
                               if (data.isEmpty) {
                                 setState(() {

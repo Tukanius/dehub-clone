@@ -2,7 +2,7 @@ import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/inbox_tab.dart';
-import 'package:dehub/screens/network_page/tabs/inbox_tab/new_invitation_page/new_invitation_page.dart';
+import 'package:dehub/screens/network_page/tabs/sent_tab/new_invitation_page/new_invitation_page.dart';
 import 'package:dehub/screens/network_page/tabs/sent_tab/sent_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -14,7 +14,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
 
 class NetworkPage extends StatefulWidget {
-  static const routeName = 'networkpage';
+  static const routeName = '/NetworkPage';
   const NetworkPage({Key? key}) : super(key: key);
 
   @override
@@ -23,6 +23,8 @@ class NetworkPage extends StatefulWidget {
 
 class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
   bool isLoading = true;
+  int selectedIndex = 1;
+
   @override
   afterFirstLayout(BuildContext context) async {
     await Provider.of<UserProvider>(context, listen: false).businessMe(true);
@@ -33,7 +35,6 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
     });
   }
 
-  int selectedIndex = 1;
   static const List<Widget> currentPages = [
     HomeTab(),
     DashboardTab(),
@@ -137,26 +138,31 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
         currentIndex: selectedIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: selectedIndex == 0 ? networkColor : white,
+            icon: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: selectedIndex == 0 ? networkColor : white,
+                    ),
+                    padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
+                    child: SvgPicture.asset(
+                      'assets/svg/home.svg',
+                      color: selectedIndex == 0 ? white : networkColor,
+                    ),
                   ),
-                  padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
-                  child: SvgPicture.asset(
-                    'assets/svg/home.svg',
-                    color: selectedIndex == 0 ? white : networkColor,
-                  ),
-                ),
-                selectedIndex != 0
-                    ? Text(
-                        'Нүүр',
-                        style: TextStyle(color: networkColor, fontSize: 12),
-                      )
-                    : SizedBox(),
-              ],
+                  selectedIndex != 0
+                      ? Text(
+                          'Нүүр',
+                          style: TextStyle(color: networkColor, fontSize: 12),
+                        )
+                      : SizedBox(),
+                ],
+              ),
             ),
             label: '',
           ),

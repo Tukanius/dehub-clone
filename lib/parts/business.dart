@@ -95,6 +95,7 @@ Business _$BusinessFromJson(Map<String, dynamic> json) {
     district: json['district'] != null ? json['district'] as String : null,
     khoroo: json['khoroo'] != null ? json['khoroo'] as String : null,
     khoroolol: json['khoroolol'] != null ? json['khoroolol'] as String : null,
+    name: json['name'] != null ? json['name'] as String : null,
     khotkhonBair:
         json['khotkhonBair'] != null ? json['khotkhonBair'] as String : null,
     khashaaDavkhar: json['khashaaDavkhar'] != null
@@ -107,6 +108,9 @@ Business _$BusinessFromJson(Map<String, dynamic> json) {
         : null,
     locationLat: json['locationLat'] != null
         ? double.parse(json['locationLat'].toString())
+        : null,
+    percent: json['percent'] != null
+        ? double.parse(json['percent'].toString())
         : null,
     locationLng: json['locationLng'] != null
         ? double.parse(json['locationLng'].toString())
@@ -122,13 +126,62 @@ Business _$BusinessFromJson(Map<String, dynamic> json) {
     receiverIds: json['receiverIds'] != null
         ? (json['receiverIds'] as List).map((e) => e as String).toList()
         : null,
+    start:
+        json['start'] != null ? DateTime.parse(json['start'].toString()) : null,
+    end: json['end'] != null ? DateTime.parse(json['end'].toString()) : null,
+    stats: json['stats'] != null
+        ? (json['stats'] as List).map((e) => Business.fromJson(e)).toList()
+        : null,
+    description:
+        json['description'] != null ? json['description'] as String : null,
+    businessId:
+        json['businessId'] != null ? json['businessId'] as String : null,
+    modifiedUserId: json['modifiedUserId'] != null
+        ? json['modifiedUserId'] as String
+        : null,
+    expireDayCount: json['expireDayCount'] != null
+        ? int.parse(json['expireDayCount'].toString())
+        : null,
+    paymentDay:
+        json['paymentDay'] != null ? json['paymentDay'] as String : null,
+    condition: json['condition'] != null ? json['condition'] as String : null,
+    configType:
+        json['configType'] != null ? json['configType'] as String : null,
+    advancePercent: json['advancePercent'] != null
+        ? int.parse(json['advancePercent'].toString())
+        : null,
+    confirmationDay: json['confirmationDay'] != null
+        ? int.parse(json['confirmationDay'].toString())
+        : null,
+    isMain: json['isMain'] != null ? json['isMain'] as bool : null,
+    isOpen: json['isOpen'] != null ? json['isOpen'] as bool : null,
+    isActive: json['isActive'] != null ? json['isActive'] as bool : null,
   );
 }
 
 Map<String, dynamic> _$BusinessToJson(Business instance) {
   Map<String, dynamic> json = {};
 
-  if (instance.toMessage != null) json['toMessage'] = instance.toMessage;
+  if (instance.description != null) json['description'] = instance.description;
+  if (instance.businessId != null) json['businessId'] = instance.businessId;
+  if (instance.modifiedUserId != null)
+    json['modifiedUserId'] = instance.modifiedUserId;
+  if (instance.expireDayCount != null)
+    json['expireDayCount'] = instance.expireDayCount;
+  if (instance.paymentDay != null) json['paymentDay'] = instance.paymentDay;
+  if (instance.condition != null) json['condition'] = instance.condition;
+  if (instance.configType != null) json['configType'] = instance.configType;
+  if (instance.advancePercent != null)
+    json['advancePercent'] = instance.advancePercent;
+  if (instance.confirmationDay != null)
+    json['confirmationDay'] = instance.confirmationDay;
+  if (instance.isMain != null) json['isMain'] = instance.isMain;
+  if (instance.isOpen != null) json['isOpen'] = instance.isOpen;
+  if (instance.isActive != null) json['isActive'] = instance.isActive;
+  if (instance.name != null) json['name'] = instance.name;
+  if (instance.start != null) json['start'] = instance.start;
+  if (instance.end != null) json['end'] = instance.end;
+  if (instance.stats != null) json['stats'] = instance.stats;
   if (instance.send != null) json['send'] = instance.send;
   if (instance.receiverIds != null) json['receiverIds'] = instance.receiverIds;
   if (instance.count != null) json['count'] = instance.count;
@@ -214,6 +267,7 @@ Map<String, dynamic> _$BusinessToJson(Business instance) {
   if (instance.firstName != null) json['firstName'] = instance.firstName;
   if (instance.lastName != null) json['lastName'] = instance.lastName;
   if (instance.avatar != null) json['avatar'] = instance.avatar;
+  if (instance.percent != null) json['percent'] = instance.percent;
 
   return json;
 }

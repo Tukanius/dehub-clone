@@ -54,8 +54,8 @@ class _DeliveryCardState extends State<DeliveryCard> {
   }
 
   status(String? status) {
-    final result = general.deliveryNoteStatus?.firstWhere(
-        (element) => element.code == widget.data?.deliveryNoteStatus);
+    final result = general.deliveryNoteStatus
+        ?.firstWhere((element) => element.code == status);
     return result?.name;
   }
 

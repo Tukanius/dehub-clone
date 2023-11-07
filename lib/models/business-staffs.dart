@@ -19,8 +19,12 @@ class BusinessStaffs {
   String? name;
   String? parentId;
   String? description;
+  String? condition;
+  String? configType;
 
   BusinessStaffs({
+    this.configType,
+    this.condition,
     this.name,
     this.parentId,
     this.description,

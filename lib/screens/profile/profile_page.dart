@@ -3,7 +3,6 @@ import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/profile/information/partner_info.dart';
 import 'package:dehub/screens/profile/information/personal_info.dart';
 import 'package:dehub/screens/profile/information/settings_page.dart';
-// import 'package:dehub/screens/profile/information/system_users.dart';
 import 'package:dehub/screens/splash/splash_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -119,15 +118,10 @@ class _ProfilePageState extends State<ProfilePage>
                     'Партнер мэдээлэл',
                     style: TextStyle(fontSize: 15),
                   )
-                : tabController.index == 2
-                    ? Text(
-                        'Систем хэрэглэгчид',
-                        style: TextStyle(fontSize: 15),
-                      )
-                    : Text(
-                        'Систем тохиргоо',
-                        style: TextStyle(fontSize: 15),
-                      ),
+                : Text(
+                    'Систем тохиргоо',
+                    style: TextStyle(fontSize: 15),
+                  ),
       ),
       body: isLoading == true
           ? Center(
@@ -204,32 +198,6 @@ class _ProfilePageState extends State<ProfilePage>
                                     ),
                                   ),
                                 ),
-                                // GestureDetector(
-                                //   onTap: () {
-                                //     changePage(2);
-                                //   },
-                                //   child: Container(
-                                //     margin: const EdgeInsets.symmetric(
-                                //         horizontal: 15),
-                                //     padding: const EdgeInsets.all(8),
-                                //     height: 40,
-                                //     width: 40,
-                                //     decoration: BoxDecoration(
-                                //       borderRadius: BorderRadius.circular(100),
-                                //       border:
-                                //           Border.all(color: grey3, width: 0.5),
-                                //       color: tabController.index == 2
-                                //           ? grey2
-                                //           : white,
-                                //     ),
-                                //     child: SvgPicture.asset(
-                                //       'assets/svg/people.svg',
-                                //       color: tabController.index != 2
-                                //           ? grey3
-                                //           : white,
-                                //     ),
-                                //   ),
-                                // ),
                                 GestureDetector(
                                   onTap: () {
                                     changePage(2);
@@ -274,7 +242,6 @@ class _ProfilePageState extends State<ProfilePage>
                   children: [
                     PersonalInfo(),
                     PartnerInfo1(),
-                    // SystemUsersPage(),
                     SettingsPage(),
                   ],
                 ),

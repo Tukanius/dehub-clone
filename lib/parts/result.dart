@@ -35,6 +35,21 @@ Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
     params['offset'] = {};
     params['filter'] = {};
 
+    if (instance.filter!.accountId != null) {
+      params['filter']['accountId'] = instance.filter!.accountId;
+    }
+    if (instance.filter!.startDate != null) {
+      params['filter']['startDate'] = instance.filter!.startDate;
+    }
+    if (instance.filter!.endDate != null) {
+      params['filter']['endDate'] = instance.filter!.endDate;
+    }
+    if (instance.filter!.paymentMethod != null) {
+      params['filter']['paymentMethod'] = instance.filter!.paymentMethod;
+    }
+    if (instance.filter!.inOutType != null) {
+      params['filter']['inOutType'] = instance.filter!.inOutType;
+    }
     if (instance.filter!.businessId != null) {
       params['filter']['businessId'] = instance.filter!.businessId;
     }

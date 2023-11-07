@@ -129,7 +129,6 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
   Widget build(BuildContext context) {
     general = Provider.of<GeneralProvider>(context, listen: false).orderGeneral;
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
-    print(invoice.paymentTerm?.configType);
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(

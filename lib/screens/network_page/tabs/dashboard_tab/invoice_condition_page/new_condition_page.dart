@@ -1,5 +1,6 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/business-staffs.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
@@ -37,7 +38,7 @@ List<String> options = [
 ];
 
 class _NewConditionPageState extends State<NewConditionPage> {
-  String currentOption = "";
+  String currentOption = "INV_NET_X";
   int? selectedRadioValue;
   int? index;
   int? indexMonth;
@@ -46,20 +47,24 @@ class _NewConditionPageState extends State<NewConditionPage> {
   BusinessStaffs business = BusinessStaffs();
 
   onSubmit() async {
-    business.termRule = currentOption;
-    business.orderConfirmTerm = "INV_NET2";
+    business.configType = currentOption;
     business.expireDayCount = 10;
-    business.month = 2;
-    business.paymentDay = (index! + 1);
+    business.condition = 'INV_CONFIG';
+    // business.month = 2;
+    business.paymentDay =
+        currentOption == "INV_NET_X" || currentOption == "INV_SOM"
+            ? (index! + 1)
+            : null;
     await BusinessApi().createPaymentTerm(business);
     widget.listenController.changeVariable('invoiceConditionCreate');
+    showCustomDialog(context, "Төлбөрийн нөхцөл амжилттай нэмлээ", true);
     Navigator.of(context).pop();
   }
 
   @override
   void initState() {
     super.initState();
-    selectedRadioValue = 1;
+    selectedRadioValue = 0;
   }
 
   setSelectedRadioValue(int value) {
@@ -70,7 +75,8 @@ class _NewConditionPageState extends State<NewConditionPage> {
 
   @override
   Widget build(BuildContext context) {
-    general = Provider.of<GeneralProvider>(context, listen: false).general;
+    general =
+        Provider.of<GeneralProvider>(context, listen: false).businessGeneral;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -101,7 +107,7 @@ class _NewConditionPageState extends State<NewConditionPage> {
               ),
             ),
             Column(
-              children: general.paymentTermRules!
+              children: general.paymentTermConfigTypes!
                   .map(
                     (e) => Container(
                       color: white,
@@ -112,7 +118,7 @@ class _NewConditionPageState extends State<NewConditionPage> {
                         ),
                         fillColor: MaterialStateColor.resolveWith(
                             (states) => networkColor),
-                        value: general.paymentTermRules?.indexOf(e),
+                        value: general.paymentTermConfigTypes?.indexOf(e),
                         groupValue: selectedRadioValue,
                         onChanged: (value) {
                           setSelectedRadioValue(value!);

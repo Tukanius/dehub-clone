@@ -7,6 +7,7 @@ import 'package:dehub/components/tutorial_card/tutorial_card.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/profile/profile_page.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -36,6 +37,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
   int limit = 50;
   bool isLoading = true;
   List<Invoice> filtered = [];
+  User user = User();
 
   show(context) {
     showDialog(
@@ -222,6 +224,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     partnerUser = Provider.of<UserProvider>(context, listen: true).partnerUser;
+    user = Provider.of<UserProvider>(context, listen: true).user;
     return WillPopScope(
       child: Scaffold(
         backgroundColor: backgroundColor,
@@ -268,9 +271,8 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(),
-                                        child: partnerUser.user?.avatar ==
-                                                    null ||
-                                                partnerUser.user?.avatar == ''
+                                        child: user.avatar == null ||
+                                                user.avatar == ''
                                             ? CircleAvatar(
                                                 backgroundColor: grey,
                                                 radius: 14,
@@ -281,7 +283,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                                 backgroundColor: grey,
                                                 radius: 14,
                                                 backgroundImage: NetworkImage(
-                                                    '${partnerUser.user?.avatar}'),
+                                                    '${user.avatar}'),
                                               ),
                                       ),
                                     ),

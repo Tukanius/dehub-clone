@@ -4,8 +4,10 @@ import 'package:lottie/lottie.dart';
 class NotFound extends StatefulWidget {
   final String module;
   final String? labelText;
+  final Color? textColor;
   const NotFound({
     Key? key,
+    this.textColor,
     this.labelText,
     required this.module,
   }) : super(key: key);
@@ -25,7 +27,7 @@ class _NotFoundState extends State<NotFound> {
                 ? Lottie.asset(
                     'assets/lottie/order-not-found.json',
                   )
-                : widget.module == "NETWORK"
+                : widget.module == "NETWORK" || widget.module == "PAYMENT"
                     ? Lottie.asset(
                         'assets/lottie/network-not-found.json',
                       )
@@ -35,10 +37,15 @@ class _NotFoundState extends State<NotFound> {
         const SizedBox(
           height: 20,
         ),
-        Text(
-          '${widget.labelText}',
-          style: TextStyle(
-            fontSize: 16,
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 50),
+          child: Text(
+            '${widget.labelText}',
+            style: TextStyle(
+              fontSize: 16,
+              color: widget.textColor ?? widget.textColor,
+            ),
+            textAlign: TextAlign.center,
           ),
         ),
       ],

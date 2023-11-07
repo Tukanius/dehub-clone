@@ -5,6 +5,7 @@ import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/invoice_card/invoice_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
+import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
@@ -45,6 +46,7 @@ class _GivePageState extends State<GivePage>
       RefreshController(initialRefresh: false);
   User user = User();
   ListenController listenController = ListenController();
+  Map<DateTime, List<Invoice>> groupedItems = {};
 
   void _onLoading() async {
     setState(() {
@@ -72,6 +74,24 @@ class _GivePageState extends State<GivePage>
   @override
   afterFirstLayout(BuildContext context) async {
     await list(page, limit, '');
+    for (var item in invoice.rows!) {
+      var date = DateFormat("yyyy-MM-dd").format(item.createdAt);
+      if (groupedItems.containsKey(date)) {
+        groupedItems[date]!.add(item);
+        // print(groupedItems);
+      } else {
+        groupedItems[DateTime.parse(date)] = [item];
+      }
+    }
+    groupedItems.forEach((date, items) {
+      // print("Date: $date");
+      // for (var item in items) {
+      //   print('Item: ${item.receiverBusiness?.partner?.businessName}');
+      // }
+      for (var i = 0; i < items.length; i++) {
+        // print('ITEM: ${items[i].toJson()}');
+      }
+    });
   }
 
   list(int page, int limit, String query) async {
@@ -127,7 +147,6 @@ class _GivePageState extends State<GivePage>
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).invoiceMe;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(

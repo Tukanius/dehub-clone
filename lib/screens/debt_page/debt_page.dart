@@ -85,26 +85,31 @@ class _DebtPageState extends State<DebtPage> {
         currentIndex: selectedIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: selectedIndex == 0 ? debtColor : white,
+            icon: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: selectedIndex == 0 ? debtColor : white,
+                    ),
+                    padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
+                    child: SvgPicture.asset(
+                      'assets/svg/home.svg',
+                      color: selectedIndex == 0 ? white : debtColor,
+                    ),
                   ),
-                  padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
-                  child: SvgPicture.asset(
-                    'assets/svg/home.svg',
-                    color: selectedIndex == 0 ? white : debtColor,
-                  ),
-                ),
-                selectedIndex != 0
-                    ? Text(
-                        'Нүүр',
-                        style: TextStyle(color: debtColor, fontSize: 12),
-                      )
-                    : SizedBox(),
-              ],
+                  selectedIndex != 0
+                      ? Text(
+                          'Нүүр',
+                          style: TextStyle(color: debtColor, fontSize: 12),
+                        )
+                      : SizedBox(),
+                ],
+              ),
             ),
             label: '',
           ),

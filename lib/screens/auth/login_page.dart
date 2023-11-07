@@ -74,7 +74,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
       }
       if (isBioMetric == false) {
         String? code = await UserProvider().getCode();
-        String? email = await UserProvider().getEmail();
+        String? username = await UserProvider().getEmail();
         if (code == null || code == "") {
           setState(() {
             saveCode = false;
@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
         }
         setState(() {
           codeController.text = code!;
-          emailController.text = email!;
+          emailController.text = username!;
         });
       }
     }
@@ -257,7 +257,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                                 // ),
                                 controller: emailController,
                                 textColor: buttonColor,
-                                name: "email",
+                                name: "username",
                                 inputType: TextInputType.text,
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.symmetric(
@@ -415,7 +415,6 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                             if (isSubmit == false) {
                               _performLogin(context);
                             }
-
                             // show(context);
                           },
                           labelText: "Нэвтрэх",
@@ -527,23 +526,23 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
       );
   void _performLogin(BuildContext context) async {
     final String code;
-    final String email;
+    final String username;
     final String password;
     final List<BiometricType> availableBiometrics =
         await auth.getAvailableBiometrics();
     if (fbKey.currentState!.saveAndValidate()) {
       code = fbKey.currentState?.fields['code']?.value;
-      email = fbKey.currentState?.fields['email']?.value;
+      username = fbKey.currentState?.fields['username']?.value;
       password = fbKey.currentState?.fields['password']?.value;
       try {
         setState(() {
           isSubmit = true;
         });
         User save = User.fromJson(fbKey.currentState!.value);
-        UserProvider().setEmail(save.email.toString());
+        UserProvider().setEmail(save.username.toString());
         UserProvider().setCode(save.code.toString());
         await Provider.of<UserProvider>(context, listen: false).login(save);
-        await _storeCredentials(code, email, password);
+        await _storeCredentials(code, username, password);
         if (activeBio == true && availableBiometrics.isNotEmpty) {
           Navigator.of(context).pushNamed(CheckBiometric.routeName);
         } else {
@@ -577,13 +576,13 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
       );
       if (authenticated == true) {
         Future<String?> code = secureStorage.getCode();
-        Future<String?> email = secureStorage.getEmail();
+        Future<String?> username = secureStorage.getEmail();
         Future<String?> password = secureStorage.getPassWord();
         String resultCode = await code ?? "";
-        String resultEmail = await email ?? "";
+        String resultEmail = await username ?? "";
         String resultPassword = await password ?? "";
         save.code = resultCode;
-        save.email = resultEmail;
+        save.username = resultEmail;
         save.password = resultPassword;
         await Provider.of<UserProvider>(context, listen: false).login(save);
         Navigator.of(context).pushNamed(SplashPage.routeName);
@@ -603,9 +602,9 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
     }
   }
 
-  _storeCredentials(String code, String email, String password) async {
+  _storeCredentials(String code, String username, String password) async {
     await secureStorage.setCode(code);
-    await secureStorage.setEmail(email);
+    await secureStorage.setEmail(username);
     await secureStorage.setPassWord(password);
   }
 }

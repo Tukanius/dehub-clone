@@ -132,26 +132,31 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
         currentIndex: selectedIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: selectedIndex == 0 ? productColor : white,
+            icon: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: selectedIndex == 0 ? productColor : white,
+                    ),
+                    padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
+                    child: SvgPicture.asset(
+                      'assets/svg/home.svg',
+                      color: selectedIndex == 0 ? white : productColor,
+                    ),
                   ),
-                  padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
-                  child: SvgPicture.asset(
-                    'assets/svg/home.svg',
-                    color: selectedIndex == 0 ? white : productColor,
-                  ),
-                ),
-                selectedIndex != 0
-                    ? Text(
-                        'Нүүр',
-                        style: TextStyle(color: productColor, fontSize: 12),
-                      )
-                    : SizedBox(),
-              ],
+                  selectedIndex != 0
+                      ? Text(
+                          'Нүүр',
+                          style: TextStyle(color: productColor, fontSize: 12),
+                        )
+                      : SizedBox(),
+                ],
+              ),
             ),
             label: '',
           ),

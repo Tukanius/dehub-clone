@@ -25,11 +25,16 @@ BusinessStaffs _$BusinessStaffsFromJson(Map<String, dynamic> json) {
     parentId: json['parentId'] != null ? json['parentId'] as String : null,
     description:
         json['description'] != null ? json['description'] as String : null,
+    condition: json['condition'] != null ? json['condition'] as String : null,
+    configType:
+        json['configType'] != null ? json['configType'] as String : null,
   );
 }
 
 Map<String, dynamic> _$BusinessStaffsToJson(BusinessStaffs instance) {
   Map<String, dynamic> json = {};
+  if (instance.configType != null) json['configType'] = instance.configType;
+  if (instance.condition != null) json['condition'] = instance.condition;
   if (instance.name != null) json['name'] = instance.name;
   if (instance.parentId != null) json['parentId'] = instance.parentId;
   if (instance.description != null) json['description'] = instance.description;

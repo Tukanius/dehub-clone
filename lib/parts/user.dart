@@ -192,6 +192,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
         json['oldPassword'] != null ? json['oldPassword'] as String : null,
     businessName:
         json['businessName'] != null ? json['businessName'] as String : null,
+    file: json['file'] != null ? json['file'] as File : null,
   );
 }
 
@@ -200,6 +201,7 @@ Map<String, dynamic> _$UserToJson(User instance) {
 
   if (instance.businessName != null)
     json["businessName"] = instance.businessName;
+  if (instance.file != null) json["file"] = instance.file;
   if (instance.oldPin != null) json["oldPin"] = instance.oldPin;
   if (instance.url != null) json["url"] = instance.url;
   if (instance.verifyId != null) json["verifyId"] = instance.verifyId;

@@ -1,5 +1,4 @@
 import 'package:dehub/components/add_button/add_button.dart';
-import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
@@ -35,10 +34,7 @@ class _MainInvoicePageState extends State<MainInvoicePage>
   }
 
   static const List<Widget> currentPages = [
-    NotFound(
-      module: "INVOICE",
-      labelText: 'Хоосон байна',
-    ),
+    Text(''),
     DashBoardTab(),
     Text('1'),
     Text('1'),
@@ -57,7 +53,7 @@ class _MainInvoicePageState extends State<MainInvoicePage>
       appBar: AppBar(
         leadingWidth: 100,
         elevation: 0,
-        backgroundColor: selectedIndex != 3 ? backgroundColor : invoiceColor,
+        backgroundColor: selectedIndex != 2 ? backgroundColor : invoiceColor,
         leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
@@ -68,7 +64,7 @@ class _MainInvoicePageState extends State<MainInvoicePage>
               children: [
                 Icon(
                   Icons.arrow_back_ios_new,
-                  color: selectedIndex != 3 ? invoiceColor : white,
+                  color: selectedIndex != 2 ? invoiceColor : white,
                 ),
                 SizedBox(
                   width: 5,
@@ -76,7 +72,7 @@ class _MainInvoicePageState extends State<MainInvoicePage>
                 Text(
                   'Буцах',
                   style: TextStyle(
-                      color: selectedIndex != 3 ? invoiceColor : white,
+                      color: selectedIndex != 2 ? invoiceColor : white,
                       fontSize: 17),
                 ),
               ],
@@ -134,26 +130,31 @@ class _MainInvoicePageState extends State<MainInvoicePage>
         currentIndex: selectedIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: selectedIndex == 0 ? invoiceColor : white,
+            icon: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: selectedIndex == 0 ? invoiceColor : white,
+                    ),
+                    padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
+                    child: SvgPicture.asset(
+                      'assets/svg/home.svg',
+                      color: selectedIndex == 0 ? white : invoiceColor,
+                    ),
                   ),
-                  padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
-                  child: SvgPicture.asset(
-                    'assets/svg/home.svg',
-                    color: selectedIndex == 0 ? white : invoiceColor,
-                  ),
-                ),
-                selectedIndex != 0
-                    ? Text(
-                        'Нүүр',
-                        style: TextStyle(color: invoiceColor, fontSize: 12),
-                      )
-                    : SizedBox(),
-              ],
+                  selectedIndex != 0
+                      ? Text(
+                          'Нүүр',
+                          style: TextStyle(color: invoiceColor, fontSize: 12),
+                        )
+                      : SizedBox(),
+                ],
+              ),
             ),
             label: '',
           ),

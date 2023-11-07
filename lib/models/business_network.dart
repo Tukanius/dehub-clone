@@ -38,6 +38,7 @@ class BusinessNetwork {
   String? name;
   BusinessNetwork? inAcc;
   String? businessId;
+  List<String>? businessIds;
   String? regUserId;
   String? bankName;
   String? number;
@@ -79,6 +80,7 @@ class BusinessNetwork {
   BusinessNetwork? staff;
   BusinessNetwork? branch;
 
+  String? businessNameEng;
   String? businessName;
   BusinessNetwork? financeStaff;
   String? phone;
@@ -101,8 +103,61 @@ class BusinessNetwork {
   String? branchAddress;
   double? locationLat;
   double? locationLng;
+  BusinessNetwork? businessStaff;
+  BusinessNetwork? businessStaff2;
+  BusinessNetwork? areaRegion;
+  BusinessNetwork? areaDirection;
+
+  String? businessStaffId;
+  String? businessStaff2Id;
+  String? coBusinessStaffId;
+  String? businessStaffDesc;
+  String? condition;
+  String? configType;
+
+  String? paymentTermId;
+  String? paymentTermStartDate;
+  String? paymentTermEndDate;
+
+  String? areaRegionId;
+  String? areaDirectionId;
+  String? areaDesc;
+  String? country;
+  String? equityType;
+  String? userPhone;
+  String? userEmail;
+  String? toMessage;
+
+  String? province;
+  String? district;
+  String? khoroo;
 
   BusinessNetwork({
+    this.province,
+    this.district,
+    this.khoroo,
+    this.businessNameEng,
+    this.equityType,
+    this.userPhone,
+    this.userEmail,
+    this.toMessage,
+    this.country,
+    this.areaRegionId,
+    this.areaDirectionId,
+    this.areaDesc,
+    this.paymentTermId,
+    this.paymentTermStartDate,
+    this.paymentTermEndDate,
+    this.configType,
+    this.condition,
+    this.businessStaffId,
+    this.businessStaff2Id,
+    this.coBusinessStaffId,
+    this.businessStaffDesc,
+    this.areaRegion,
+    this.areaDirection,
+    this.businessStaff,
+    this.businessStaff2,
     this.financeStaff,
     this.phone,
     this.email,
@@ -162,6 +217,7 @@ class BusinessNetwork {
     this.name,
     this.inAcc,
     this.businessId,
+    this.businessIds,
     this.regUserId,
     this.bankName,
     this.number,

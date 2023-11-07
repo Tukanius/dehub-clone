@@ -61,12 +61,46 @@ class Business {
   String? firstName;
   String? lastName;
   String? avatar;
-
   String? toMessage;
   bool? send;
   List<String>? receiverIds;
+  DateTime? start;
+  DateTime? end;
+  List<Business>? stats;
+  String? name;
+  double? percent;
+
+  String? description;
+  String? businessId;
+  String? modifiedUserId;
+  int? expireDayCount;
+  String? paymentDay;
+  String? condition;
+  String? configType;
+  int? advancePercent;
+  int? confirmationDay;
+  bool? isMain;
+  bool? isOpen;
+  bool? isActive;
 
   Business({
+    this.description,
+    this.businessId,
+    this.modifiedUserId,
+    this.expireDayCount,
+    this.paymentDay,
+    this.condition,
+    this.configType,
+    this.advancePercent,
+    this.confirmationDay,
+    this.isMain,
+    this.isOpen,
+    this.isActive,
+    this.percent,
+    this.name,
+    this.start,
+    this.end,
+    this.stats,
     this.toMessage,
     this.send,
     this.receiverIds,
