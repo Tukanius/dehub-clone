@@ -4,7 +4,7 @@ import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/set_distribution_area/set_distribution_area.dart';
+import 'package:dehub/screens/client_staffs/set_client_staff/set_client_staff.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,26 +13,26 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
 
-class DistributionAreaDetailArguments {
+class ClientStaffDetailArguments {
   String id;
-  DistributionAreaDetailArguments({
+  ClientStaffDetailArguments({
     required this.id,
   });
 }
 
-class DistributionAreaDetail extends StatefulWidget {
+class ClientStaffDetail extends StatefulWidget {
   final String id;
-  static const routeName = '/DistributionAreaDetail';
-  const DistributionAreaDetail({
+  static const routeName = '/ClientStaffDetail';
+  const ClientStaffDetail({
     Key? key,
     required this.id,
   }) : super(key: key);
 
   @override
-  State<DistributionAreaDetail> createState() => _DistributionAreaDetailState();
+  State<ClientStaffDetail> createState() => _ResponsibleStaffDetailState();
 }
 
-class _DistributionAreaDetailState extends State<DistributionAreaDetail>
+class _ResponsibleStaffDetailState extends State<ClientStaffDetail>
     with AfterLayoutMixin {
   TextEditingController textController = TextEditingController();
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
@@ -189,49 +189,40 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
                   ),
                   Container(
                     margin:
-                        const EdgeInsets.only(left: 15, top: 10, bottom: 10),
+                        const EdgeInsets.only(left: 15, top: 15, bottom: 20),
                     child: Text(
-                      'Бүс, чиглэл тохируулах',
+                      'Харилцааг хариуцан ажилтан',
                       style: TextStyle(
                         color: grey3,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
-                  user.currentBusiness?.type == "SUPPLIER"
-                      ? Column(
-                          children: [
-                            FieldCard(
-                              color: white,
-                              marginHorizontal: 15,
-                              marginVertical: 10,
-                              labelText: "Бүсийн нэр",
-                              secondText: business.areaRegion?.name,
-                              secondTextColor: networkColor,
-                              onClick: () {},
-                              arrowColor: networkColor,
-                            ),
-                            FieldCard(
-                              color: white,
-                              marginHorizontal: 15,
-                              marginVertical: 10,
-                              labelText: "Чиглэл",
-                              secondText: business.areaDirection?.name,
-                              secondTextColor: networkColor,
-                              onClick: () {},
-                              arrowColor: networkColor,
-                            ),
-                          ],
-                        )
-                      : SizedBox(),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: "Хариуцсан",
+                    secondText:
+                        '${business.businessStaff?.lastName != null ? business.businessStaff?.lastName : ''} ${business.businessStaff?.firstName != null ? business.businessStaff?.firstName : '-'}',
+                    secondTextColor: networkColor,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: "Орлох ажилтан",
+                    secondText:
+                        '${business.businessStaff2?.lastName != null ? business.businessStaff2?.lastName : ''} ${business.businessStaff2?.firstName != null ? business.businessStaff2?.firstName : '-'}',
+                    secondTextColor: networkColor,
+                  ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(SetDistributionArea.routeName,
-                              arguments: SetDistributionAreaArguments(
-                                listenController: listenController,
-                                id: widget.id,
-                              ));
+                      Navigator.of(context).pushNamed(SetClientStaff.routeName,
+                          arguments: SetClientStaffArguments(
+                            listenController: listenController,
+                            id: widget.id,
+                          ));
                     },
                     child: Container(
                       margin: EdgeInsets.only(
@@ -290,9 +281,50 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
                             color: grey2,
                           ),
                         ),
+                        // validator: FormBuilderValidators.compose([
+                        //   FormBuilderValidators.required(
+                        //       errorText: 'Тэмдэглэл оруулна уу')
+                        // ]),
                       ),
                     ),
                   ),
+                  Container(
+                    margin:
+                        const EdgeInsets.only(left: 15, top: 10, bottom: 10),
+                    child: Text(
+                      'Бүс, чиглэл тохируулах',
+                      style: TextStyle(
+                        color: grey3,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  user.currentBusiness?.type == "SUPPLIER"
+                      ? Column(
+                          children: [
+                            FieldCard(
+                              color: white,
+                              marginHorizontal: 15,
+                              marginVertical: 10,
+                              labelText: "Бүсийн нэр",
+                              secondText: business.areaRegion?.name,
+                              secondTextColor: networkColor,
+                              onClick: () {},
+                              arrowColor: networkColor,
+                            ),
+                            FieldCard(
+                              color: white,
+                              marginHorizontal: 15,
+                              marginVertical: 10,
+                              labelText: "Чиглэл",
+                              secondText: business.areaDirection?.name,
+                              secondTextColor: networkColor,
+                              onClick: () {},
+                              arrowColor: networkColor,
+                            ),
+                          ],
+                        )
+                      : SizedBox(),
                   SizedBox(
                     height: 60,
                   ),

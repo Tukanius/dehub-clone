@@ -109,7 +109,6 @@ class _PinCheckScreenState extends State<PinCheckScreen> {
               obscureText: true,
               onCompleted: (value) async {
                 var res = await AuthApi().checkPin(User(pin: value));
-
                 if (res == true) {
                   await widget.onSubmit();
                 }

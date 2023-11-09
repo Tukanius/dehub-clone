@@ -8,14 +8,12 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class TransactionInformationCard extends StatefulWidget {
-  final Color? color;
   final Function()? onClick;
   final Payment? data;
   const TransactionInformationCard({
     Key? key,
     this.onClick,
     this.data,
-    this.color,
   }) : super(key: key);
 
   @override
@@ -83,7 +81,9 @@ class _TransactionInformationCardState
                 Text(
                   '${Utils().formatCurrency(widget.data?.amount.toString())} ${getCurrency()}',
                   style: TextStyle(
-                      fontWeight: FontWeight.w500, color: widget.color),
+                      fontWeight: FontWeight.w500,
+                      color:
+                          widget.data?.inOutType == "DEBIT" ? neonGreen : red),
                 )
               ],
             )

@@ -72,6 +72,7 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
           : DefaultTabController(
               length: 3,
               child: NestedScrollView(
+                physics: NeverScrollableScrollPhysics(),
                 headerSliverBuilder:
                     (BuildContext context, innerBoxIsScrolled) {
                   return <Widget>[
@@ -86,9 +87,6 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
                               fit: BoxFit.cover,
                             ),
                           ),
-                          // PartnerCard(
-                          //   type: false,
-                          // ),
                           Container(
                             color: white,
                             child: TabBar(

@@ -5,7 +5,7 @@ import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/responsible_staff_card/responsible_staff_card.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/screens/client_staff_detail/client_staff_detail.dart';
+import 'package:dehub/screens/client_staffs/client_staff_detail/client_staff_detail.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';

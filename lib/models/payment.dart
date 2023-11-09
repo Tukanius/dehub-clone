@@ -66,7 +66,10 @@ class Payment {
   String? tranDate;
   String? tranStatus;
 
+  String? inOutType;
+
   Payment({
+    this.inOutType,
     this.type,
     this.transactionStatus,
     this.paymentId,

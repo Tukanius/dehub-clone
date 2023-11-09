@@ -1,7 +1,4 @@
-// ignore_for_file: deprecated_member_use
-
 import 'dart:async';
-
 import 'package:dehub/screens/splash/splash_page.dart';
 import 'package:dehub/utils/secure_storage.dart';
 import 'package:dehub/widgets/custom_button.dart';

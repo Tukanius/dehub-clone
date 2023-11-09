@@ -21,9 +21,13 @@ class _UserMangementPageState extends State<UserMangementPage> {
   ];
 
   void ontappedItem(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
+    if (index == 0) {
+      Navigator.of(context).pop();
+    } else {
+      setState(() {
+        selectedIndex = index;
+      });
+    }
   }
 
   @override

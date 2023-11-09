@@ -1,4 +1,5 @@
 import 'package:dehub/components/transaction_filter_card/transaction_filter_card.dart';
+import 'package:dehub/models/payment.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,18 +12,18 @@ import 'package:after_layout/after_layout.dart';
 import 'package:intl/intl.dart';
 
 class TransactionHistoryArguments {
-  String id;
+  Payment data;
   TransactionHistoryArguments({
-    required this.id,
+    required this.data,
   });
 }
 
 class TransactionHistory extends StatefulWidget {
-  final String id;
+  final Payment data;
   static const routeName = '/TransactionHistory';
   const TransactionHistory({
     Key? key,
-    required this.id,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -32,36 +33,12 @@ class TransactionHistory extends StatefulWidget {
 class _TransactionHistoryState extends State<TransactionHistory>
     with SingleTickerProviderStateMixin, AfterLayoutMixin {
   DateTimeRange dateTimeRange = DateTimeRange(
-    start: DateTime.now(),
+    start: DateTime.now().subtract(Duration(days: 1)),
     end: DateTime.now(),
   );
   int currentIndex = 0;
-  List<String> filter = ['Бүгд', 'Орлого', "Зарлага"];
-  String? filterText = 'Бүгд';
-
-  late TabController tabController;
-  ScrollController scrollController = ScrollController();
-
-  @override
-  void initState() {
-    tabController =
-        TabController(length: 3, vsync: this, animationDuration: Duration.zero);
-    tabController.index = currentIndex;
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    tabController.dispose();
-    super.dispose();
-  }
-
-  changePage(index) {
-    setState(() {
-      tabController.index = index;
-    });
-  }
-
+  List<String> filter = ['ALL', 'DEBIT', "CREDIT"];
+  String? filterText = 'ALL';
   Result transaction = Result();
   int page = 1;
   int limit = 10;
@@ -69,12 +46,18 @@ class _TransactionHistoryState extends State<TransactionHistory>
 
   @override
   afterFirstLayout(BuildContext context) {
-    list(page, limit, "ALL");
+    list(page, limit, "ALL", dateTimeRange.start.toString(),
+        dateTimeRange.end.toString());
   }
 
-  list(page, limit, String inOutType) async {
+  list(page, limit, String inOutType, String startDate, String endDate) async {
     Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(inOutType: "${inOutType}", accountId: widget.id);
+    Filter filter = Filter(
+      inOutType: "${inOutType}",
+      accountId: widget.data.id,
+      startDate: startDate,
+      endDate: endDate,
+    );
     var res = await PaymentApi()
         .transactionList(ResultArguments(filter: filter, offset: offset));
     setState(() {
@@ -115,7 +98,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
           ),
           Center(
             child: Text(
-              '123123123',
+              '${widget.data.number}',
               style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -127,7 +110,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
           ),
           Center(
             child: Text(
-              '123123123',
+              '${widget.data.bankName}',
               style: TextStyle(fontSize: 15, color: grey2),
             ),
           ),
@@ -152,6 +135,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
                     '${start.year} - ${start.month} - ${start.day}',
                     style: TextStyle(color: grey2),
                   ),
+                  SvgPicture.asset('assets/svg/calendar.svg'),
                   Icon(
                     Icons.arrow_forward,
                     size: 15,
@@ -179,14 +163,15 @@ class _TransactionHistoryState extends State<TransactionHistory>
                         filterText = item;
                         isLoading = true;
                       });
-                      list(
-                        page,
-                        limit,
-                        "${filterText == "Бүгд" ? "ALL" : filterText == "Орлого" ? "DEBIT" : "CREDIT"}",
-                      );
+                      list(page, limit, "${filterText}", start.toString(),
+                          end.toString());
                     },
                     isTap: item == filterText,
-                    text: item,
+                    text: item == "ALL"
+                        ? 'Бүгд'
+                        : item == "DEBIT"
+                            ? "Орлого"
+                            : "Зарлага",
                   ),
                 )
                 .toList(),
@@ -217,10 +202,14 @@ class _TransactionHistoryState extends State<TransactionHistory>
                                   TransactionInformationCard(
                                     onClick: () {
                                       Navigator.of(context).pushNamed(
-                                          TransactionDetailPage.routeName);
+                                        TransactionDetailPage.routeName,
+                                        arguments:
+                                            TransactionDetailPageArguments(
+                                          data: data,
+                                        ),
+                                      );
                                     },
                                     data: data,
-                                    color: red,
                                   ),
                                 ],
                               ),
@@ -262,6 +251,9 @@ class _TransactionHistoryState extends State<TransactionHistory>
     if (newDateRange == null) return;
     setState(() {
       dateTimeRange = newDateRange;
+      isLoading = true;
     });
+    list(page, limit, '${filterText}', dateTimeRange.start.toString(),
+        dateTimeRange.end.toString());
   }
 }

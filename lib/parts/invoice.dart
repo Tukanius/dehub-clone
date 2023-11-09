@@ -19,6 +19,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     lines: json['lines'] != null
         ? (json['lines'] as List).map((e) => Invoice.fromJson(e)).toList()
         : null,
+    stats: json['stats'] != null
+        ? (json['stats'] as List).map((e) => Invoice.fromJson(e)).toList()
+        : null,
     id: json['id'] != null ? json['id'] as String : null,
     createdAt: json['createdAt'] != null
         ? DateTime.parse(json['createdAt'].toString())
@@ -339,6 +342,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.stats != null) json['stats'] = instance.stats;
   if (instance.configType != null) json['configType'] = instance.configType;
   if (instance.salesCode != null) json['salesCode'] = instance.salesCode;
   if (instance.purchaseCode != null)

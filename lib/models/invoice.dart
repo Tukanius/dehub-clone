@@ -161,7 +161,10 @@ class Invoice {
   List<Invoice>? additionalLines;
   String? configType;
 
+  List<Invoice>? stats;
+
   Invoice({
+    this.stats,
     this.configType,
     this.additionalLines,
     this.salesCode,

@@ -36,9 +36,13 @@ class _MainPageState extends State<MainPage> {
   ];
 
   void _onTappedItem(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index == 0) {
+      Navigator.of(context).pop();
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   User user = User();

@@ -11,9 +11,11 @@ import 'package:provider/provider.dart';
 class BankAccountCard extends StatefulWidget {
   final Function()? onClick;
   final Function()? transactionClick;
+  final Function()? statementClick;
   final Payment? data;
   const BankAccountCard({
     Key? key,
+    this.statementClick,
     this.transactionClick,
     this.data,
     this.onClick,
@@ -189,16 +191,19 @@ class _BankAccountCardState extends State<BankAccountCard> {
                       width: widget.data?.bankName == "GOLOMT" ? 10 : 0,
                     ),
                     widget.data?.bankName == "GOLOMT"
-                        ? Container(
-                            height: 36,
-                            width: 36,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4),
-                              color: networkColor.withOpacity(0.1),
-                            ),
-                            child: Center(
-                              child: SvgPicture.asset(
-                                  'assets/svg/dansnii-huulga.svg'),
+                        ? GestureDetector(
+                            onTap: widget.statementClick,
+                            child: Container(
+                              height: 36,
+                              width: 36,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4),
+                                color: networkColor.withOpacity(0.1),
+                              ),
+                              child: Center(
+                                child: SvgPicture.asset(
+                                    'assets/svg/dansnii-huulga.svg'),
+                              ),
                             ),
                           )
                         : SizedBox(),

@@ -4,6 +4,7 @@ import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/business_network.dart';
+import 'package:dehub/models/distribution_areas.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -44,6 +45,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
   String? areaRegionId;
   String? coClientStaffId;
   General general = General();
+  List<DistributionAreas> parentList = [];
   bool isSubmit = false;
 
   onSubmit() async {
@@ -55,7 +57,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
         BusinessNetwork(
           businessIds: [widget.id],
           areaRegionId: areaRegionId,
-          areaDirectionId: '',
+          areaDirectionId: coClientStaffId,
           areaDesc: textController.text,
         ),
       );
@@ -78,6 +80,18 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
     }
   }
 
+  dArea(bool isParent) {
+    if (isParent == true) {
+      parentList = general.distributionAreas!
+          .where((element) => element.isParent == true)
+          .toList();
+    } else {
+      parentList = general.distributionAreas!
+          .where((element) => element.isParent == false)
+          .toList();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     general =
@@ -88,7 +102,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
         automaticallyImplyLeading: false,
         backgroundColor: networkColor,
         title: Text(
-          'Ажилтан хариуцуулах',
+          'Чиглэл, бүслэл тохируулах',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -113,6 +127,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
               marginVertical: 10,
               labelText: "Бүсийн нэр",
               onClick: () {
+                dArea(true);
                 show();
               },
               arrowColor: networkColor,
@@ -126,7 +141,8 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
               marginVertical: 10,
               labelText: "Чиглэлийн нэр",
               onClick: () {
-                coStaff();
+                dArea(false);
+                area();
               },
               arrowColor: networkColor,
               secondText: "${coClientStaff == null ? '-' : coClientStaff}",
@@ -215,7 +231,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: general.distributionAreas!
+                  children: parentList
                       .map(
                         (e) => GestureDetector(
                           onTap: () {
@@ -249,7 +265,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
     );
   }
 
-  coStaff() {
+  area() {
     showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
@@ -269,7 +285,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
                 Container(
                   margin: const EdgeInsets.only(top: 25, bottom: 20),
                   child: Text(
-                    'Орлох ажилтан сонгох',
+                    'Хариуцсан ажилтан сонгох',
                     style: TextStyle(
                       color: grey2,
                       fontWeight: FontWeight.w500,
@@ -277,45 +293,26 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
                   ),
                 ),
                 Column(
-                  children: general.staffs!
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: parentList
                       .map(
                         (e) => GestureDetector(
                           onTap: () {
                             setState(() {
-                              coClientStaff = "${e.lastName} ${e.firstName}";
+                              coClientStaff = "${e.name}";
                               coClientStaffId = e.id.toString();
                             });
                             Navigator.of(context).pop();
                           },
                           child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            color: transparent,
-                            child: Row(
-                              children: [
-                                e.avatar == null
-                                    ? CircleAvatar(
-                                        radius: 12,
-                                        backgroundImage:
-                                            AssetImage('images/map.jpg'),
-                                      )
-                                    : CircleAvatar(
-                                        backgroundColor: grey2,
-                                        radius: 12,
-                                        backgroundImage:
-                                            NetworkImage('${e.avatar}'),
-                                      ),
-                                SizedBox(
-                                  width: 10,
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              color: transparent,
+                              child: Text(
+                                '${e.name}',
+                                style: TextStyle(
+                                  color: black.withOpacity(0.7),
                                 ),
-                                Text(
-                                  '${e.lastName} ${e.firstName}',
-                                  style: TextStyle(
-                                    color: black.withOpacity(0.7),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
+                              )),
                         ),
                       )
                       .toList(),

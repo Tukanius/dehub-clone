@@ -17,7 +17,7 @@ class ListenController extends ChangeNotifier {
   Order? receiverBranch;
   FilePickerResult? result;
   List<Order>? productInPackage;
-
+  int? index;
   ListenController();
 
   changeVariable(String value) {
@@ -82,6 +82,11 @@ class ListenController extends ChangeNotifier {
 
   orderPackageProduct(List<Order> value) {
     this.productInPackage = value;
+    notifyListeners();
+  }
+
+  changeIndex(int index) {
+    this.index = index;
     notifyListeners();
   }
 }

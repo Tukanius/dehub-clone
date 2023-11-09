@@ -4,7 +4,7 @@ import 'package:dehub/components/distribution_area_card/distribution_area_card.d
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/screens/distribution_area_detail/distribution_area_detail.dart';
+import 'package:dehub/screens/distribution_areas/distribution_area_detail/distribution_area_detail.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';

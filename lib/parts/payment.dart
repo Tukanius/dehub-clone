@@ -19,6 +19,7 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
     businessId:
         json['businessId'] != null ? json['businessId'] as String : null,
+    inOutType: json['inOutType'] != null ? json['inOutType'] as String : null,
     regUserId: json['regUserId'] != null ? json['regUserId'] as String : null,
     bankName: json['bankName'] != null ? json['bankName'] as String : null,
     number: json['number'] != null ? json['number'] as String : null,
@@ -133,6 +134,7 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$PaymentToJson(Payment instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.inOutType != null) json['inOutType'] = instance.inOutType;
   if (instance.type != null) json['type'] = instance.type;
   if (instance.transactionStatus != null)
     json['transactionStatus'] = instance.transactionStatus;

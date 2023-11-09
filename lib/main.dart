@@ -1,10 +1,15 @@
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/screens/account_statement/account_statement.dart';
+import 'package:dehub/screens/client_classifications/client_classification_detail/client_classification_detail.dart';
+import 'package:dehub/screens/client_classifications/client_classifications.dart';
+import 'package:dehub/screens/client_classifications/set_client_classification/set_client_classification.dart';
 import 'package:dehub/screens/transaction_detail_page/transaction_detail_page.dart';
 import 'package:dehub/screens/bank_account_detail/bank_account_detail.dart';
-import 'package:dehub/screens/distribution_area_detail/distribution_area_detail.dart';
+import 'package:dehub/screens/distribution_areas/distribution_area_detail/distribution_area_detail.dart';
 import 'package:dehub/screens/distribution_areas/distribution_areas.dart';
-import 'package:dehub/screens/set_client_staff/set_client_staff.dart';
+import 'package:dehub/screens/client_staffs/set_client_staff/set_client_staff.dart';
 import 'package:dehub/screens/change_password/change_password.dart';
 import 'package:dehub/screens/entry_point/entry_point.dart';
 import 'package:dehub/screens/order_payment_page/order_cbd_payment.dart';
@@ -46,7 +51,6 @@ import 'package:dehub/screens/network_page/tabs/dashboard_tab/rank_page/rank_det
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/rank_page/rank_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/reference_information_page/reference_information_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_detail_page/partner_detail_page.dart';
-import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_detail_page/payment_condition_page/payment_condition_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_page.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/zoning_page/add_zoning.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/zoning_page/zoning_detail_page.dart';
@@ -57,7 +61,6 @@ import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/invitation_detail
 import 'package:dehub/screens/invoice/invoice_page.dart';
 import 'package:dehub/screens/invoice/new_invoice/add_product/add_product_tabs/shirhegeer.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose.dart';
-// import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/bugd.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet_bish.dart';
 import 'package:dehub/screens/invoice/new_invoice/customer_choose/salbar_songoh.dart';
@@ -110,10 +113,10 @@ import 'package:dehub/screens/received_order_detail/received_order_detail.dart';
 import 'package:dehub/screens/receiver_otp_verify/receiver_otp_verify.dart';
 import 'package:dehub/screens/register-page/register-page.dart';
 import 'package:dehub/screens/client_staffs/client_staffs.dart';
-import 'package:dehub/screens/client_staff_detail/client_staff_detail.dart';
-import 'package:dehub/screens/set_distribution_area/set_distribution_area.dart';
-import 'package:dehub/screens/set_payment_term/set_payment_term.dart';
-import 'package:dehub/screens/set_payment_term_detail/set_payment_term_detail.dart';
+import 'package:dehub/screens/client_staffs/client_staff_detail/client_staff_detail.dart';
+import 'package:dehub/screens/distribution_areas/set_distribution_area/set_distribution_area.dart';
+import 'package:dehub/screens/payment_terms/set_payment_term/set_payment_term.dart';
+import 'package:dehub/screens/payment_terms/set_payment_term_detail/set_payment_term_detail.dart';
 import 'package:dehub/screens/payment_terms/payment_terms.dart';
 import 'package:dehub/screens/shopping/shopping_page.dart';
 import 'package:dehub/screens/menu/suppliers/suppliers_page.dart';
@@ -155,6 +158,7 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (_) => UserProvider()),
           ChangeNotifierProvider(create: (_) => GeneralProvider()),
+          ChangeNotifierProvider(create: (_) => IndexProvider()),
         ],
         child: Stack(
           children: [
@@ -443,9 +447,21 @@ class MyApp extends StatelessWidget {
                         id: arguments.id,
                       );
                     });
+                  case ClientClassificationDetail.routeName:
+                    ClientClassificationDetailArguments arguments = settings
+                        .arguments as ClientClassificationDetailArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return ClientClassificationDetail(
+                        id: arguments.id,
+                      );
+                    });
                   case ZoningPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return ZoningPage();
+                    });
+                  case ClientClassifications.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return ClientClassifications();
                     });
                   case FinancingLogin.routeName:
                     // FinancingLoginArguments arguments =
@@ -535,16 +551,24 @@ class MyApp extends StatelessWidget {
                         settings.arguments as TransactionHistoryArguments;
                     return MaterialPageRoute(builder: (context) {
                       return TransactionHistory(
-                        id: arguments.id,
+                        data: arguments.data,
+                      );
+                    });
+                  case AccountStatement.routeName:
+                    AccountStatementArguments arguments =
+                        settings.arguments as AccountStatementArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return AccountStatement(
+                        data: arguments.data,
                       );
                     });
                   case TransactionDetailPage.routeName:
-                    // TransactionDetailPageArguments arguments =
-                    // settings.arguments as TransactionDetailPageArguments;
+                    TransactionDetailPageArguments arguments =
+                        settings.arguments as TransactionDetailPageArguments;
                     return MaterialPageRoute(builder: (context) {
                       return TransactionDetailPage(
-                          // id: arguments.id,
-                          );
+                        data: arguments.data,
+                      );
                     });
                   case MenuPage.routeName:
                     // MenuPageArguments arguments =
@@ -580,6 +604,30 @@ class MyApp extends StatelessWidget {
                           InvoicePaymentPage(
                         id: arguments.id,
                         data: arguments.data,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
+                  case SetClientClassification.routeName:
+                    SetClientClassificationArguments arguments =
+                        settings.arguments as SetClientClassificationArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          SetClientClassification(
+                        listenController: arguments.listenController,
+                        id: arguments.id,
                       ),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
@@ -907,10 +955,6 @@ class MyApp extends StatelessWidget {
                         receiverBranchController:
                             arguments.receiverBranchController,
                       );
-                    });
-                  case PaymentConditionPage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return PaymentConditionPage();
                     });
                   case AddAttachment.routeName:
                     AddAttachmentArguments arguments =

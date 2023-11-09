@@ -3,7 +3,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dehub/screens/financing_page/tabs/home_page_tab.dart';
+import 'package:dehub/screens/financing_page/tabs/dashboard_tab.dart';
 
 class FinancingPage extends StatefulWidget {
   static const routeName = '/FinancingPage';
@@ -15,17 +15,21 @@ class FinancingPage extends StatefulWidget {
 
 class _FinancingPageState extends State<FinancingPage> {
   static const List<Widget> currentPages = [
-    HomePageTab(),
     Text('1'),
+    DashBoardTab(),
     Text('1'),
     Text('1'),
   ];
   int selectedIndex = 1;
 
   void ontappedItem(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
+    if (index == 0) {
+      Navigator.of(context).pop();
+    } else {
+      setState(() {
+        selectedIndex = index;
+      });
+    }
   }
 
   @override

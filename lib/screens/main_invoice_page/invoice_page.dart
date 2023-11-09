@@ -41,9 +41,13 @@ class _MainInvoicePageState extends State<MainInvoicePage>
   ];
 
   void ontappedItem(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
+    if (index == 0) {
+      Navigator.of(context).pop();
+    } else {
+      setState(() {
+        selectedIndex = index;
+      });
+    }
   }
 
   @override

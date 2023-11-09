@@ -54,8 +54,7 @@ class _DeliveryCardState extends State<ShippingCard> {
       onTap: widget.onClick,
       child: AnimatedContainer(
         transform: Matrix4.translationValues(
-            widget.startAnimation ? 0 : -MediaQuery.of(context).size.width,
-            // widget.startAnimation ? 0 : 100,
+            widget.startAnimation ? 0 : MediaQuery.of(context).size.width,
             0,
             0),
         curve: Curves.ease,

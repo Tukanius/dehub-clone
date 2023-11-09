@@ -172,7 +172,8 @@ class BusinessApi extends HttpRequest {
   }
 
   Future<BusinessNetwork> setDistributionArea(BusinessNetwork data) async {
-    var res = await put('/network/set/distribution_area', "BUSINESS", true);
+    var res = await put('/network/set/distribution_area', "BUSINESS", true,
+        data: data.toJson());
     return BusinessNetwork.fromJson(res as Map<String, dynamic>);
   }
 
@@ -184,6 +185,12 @@ class BusinessApi extends HttpRequest {
 
   Future<BusinessNetwork> createOnboard(BusinessNetwork data) async {
     var res = await post('/invitation/onboarding', "BUSINESS", true,
+        data: data.toJson());
+    return BusinessNetwork.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<BusinessNetwork> setClientClassification(BusinessNetwork data) async {
+    var res = await put('/network/set/client_classification', "BUSINESS", true,
         data: data.toJson());
     return BusinessNetwork.fromJson(res as Map<String, dynamic>);
   }

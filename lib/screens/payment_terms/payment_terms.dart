@@ -5,7 +5,7 @@ import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/components/set_payment_term_card/set_payment_term_card.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/screens/set_payment_term_detail/set_payment_term_detail.dart';
+import 'package:dehub/screens/payment_terms/set_payment_term_detail/set_payment_term_detail.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';

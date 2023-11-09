@@ -4,7 +4,7 @@ import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
-import 'package:dehub/screens/set_payment_term/set_payment_term.dart';
+import 'package:dehub/screens/payment_terms/set_payment_term/set_payment_term.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';

@@ -40,9 +40,13 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
   ];
 
   void ontappedItem(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
+    if (index == 0) {
+      Navigator.of(context).pop();
+    } else {
+      setState(() {
+        selectedIndex = index;
+      });
+    }
   }
 
   @override

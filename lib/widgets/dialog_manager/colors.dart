@@ -57,6 +57,9 @@ const Color networkDashboard2 = Color(0xff41C6F9);
 const Color networkDashboard3 = Color(0xff617EF8);
 Color networkDashboard4 = Color(0xff1B5EAA).withOpacity(0.3);
 const Color neonGreen = Color(0xff53D66B);
+const Color brown = Color(0xffBA502E);
+const Color eggPlant = Color(0xff74052C);
+const Color pieYellow = Color(0xffFBC600);
 
 const gradient2 = LinearGradient(colors: [
   Color(0xff5D7128),

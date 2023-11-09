@@ -84,6 +84,14 @@ BusinessNetwork _$BusinessNetworkFromJson(Map<String, dynamic> json) {
         ? BusinessNetwork.fromJson(
             json['areaDirection'] as Map<String, dynamic>)
         : null,
+    classificationCategory: json['classificationCategory'] != null
+        ? BusinessNetwork.fromJson(
+            json['classificationCategory'] as Map<String, dynamic>)
+        : null,
+    classificationPriority: json['classificationPriority'] != null
+        ? BusinessNetwork.fromJson(
+            json['classificationPriority'] as Map<String, dynamic>)
+        : null,
     areaRegion: json['areaRegion'] != null
         ? BusinessNetwork.fromJson(json['areaRegion'] as Map<String, dynamic>)
         : null,
@@ -289,12 +297,31 @@ BusinessNetwork _$BusinessNetworkFromJson(Map<String, dynamic> json) {
     userPhone: json['userPhone'] != null ? json['userPhone'] as String : null,
     userEmail: json['userEmail'] != null ? json['userEmail'] as String : null,
     toMessage: json['toMessage'] != null ? json['toMessage'] as String : null,
+    classificationCategoryId: json['classificationCategoryId'] != null
+        ? json['classificationCategoryId'] as String
+        : null,
+    classificationPriorityId: json['classificationPriorityId'] != null
+        ? json['classificationPriorityId'] as String
+        : null,
+    classificationDesc: json['classificationDesc'] != null
+        ? json['classificationDesc'] as String
+        : null,
   );
 }
 
 Map<String, dynamic> _$BusinessNetworkToJson(BusinessNetwork instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.classificationCategory != null)
+    json['classificationCategory'] = instance.classificationCategory;
+  if (instance.classificationPriority != null)
+    json['classificationPriority'] = instance.classificationPriority;
+  if (instance.classificationCategoryId != null)
+    json['classificationCategoryId'] = instance.classificationCategoryId;
+  if (instance.classificationPriorityId != null)
+    json['classificationPriorityId'] = instance.classificationPriorityId;
+  if (instance.classificationDesc != null)
+    json['classificationDesc'] = instance.classificationDesc;
   if (instance.province != null) json['province'] = instance.province;
   if (instance.district != null) json['district'] = instance.district;
   if (instance.khoroo != null) json['khoroo'] = instance.khoroo;

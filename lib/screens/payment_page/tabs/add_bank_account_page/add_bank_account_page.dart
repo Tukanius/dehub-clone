@@ -5,6 +5,7 @@ import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/screens/account_statement/account_statement.dart';
 import 'package:dehub/screens/bank_account_detail/bank_account_detail.dart';
 import 'package:dehub/screens/transaction_history/transaction_history.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -151,7 +152,7 @@ class _AddBankAccountPageState extends State<AddBankAccountPage>
                                                   TransactionHistory.routeName,
                                                   arguments:
                                                       TransactionHistoryArguments(
-                                                    id: data.id,
+                                                    data: data,
                                                   ),
                                                 );
                                               },
@@ -162,6 +163,15 @@ class _AddBankAccountPageState extends State<AddBankAccountPage>
                                                   arguments:
                                                       BankAccountDetailArguments(
                                                     id: data.id,
+                                                  ),
+                                                );
+                                              },
+                                              statementClick: () {
+                                                Navigator.of(context).pushNamed(
+                                                  AccountStatement.routeName,
+                                                  arguments:
+                                                      AccountStatementArguments(
+                                                    data: data,
                                                   ),
                                                 );
                                               },

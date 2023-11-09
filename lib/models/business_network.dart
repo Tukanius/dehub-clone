@@ -79,7 +79,6 @@ class BusinessNetwork {
   String? coBusinessStaffSetDate;
   BusinessNetwork? staff;
   BusinessNetwork? branch;
-
   String? businessNameEng;
   String? businessName;
   BusinessNetwork? financeStaff;
@@ -107,18 +106,15 @@ class BusinessNetwork {
   BusinessNetwork? businessStaff2;
   BusinessNetwork? areaRegion;
   BusinessNetwork? areaDirection;
-
   String? businessStaffId;
   String? businessStaff2Id;
   String? coBusinessStaffId;
   String? businessStaffDesc;
   String? condition;
   String? configType;
-
   String? paymentTermId;
   String? paymentTermStartDate;
   String? paymentTermEndDate;
-
   String? areaRegionId;
   String? areaDirectionId;
   String? areaDesc;
@@ -127,12 +123,22 @@ class BusinessNetwork {
   String? userPhone;
   String? userEmail;
   String? toMessage;
-
   String? province;
   String? district;
   String? khoroo;
+  BusinessNetwork? classificationCategory;
+  BusinessNetwork? classificationPriority;
+
+  String? classificationCategoryId;
+  String? classificationPriorityId;
+  String? classificationDesc;
 
   BusinessNetwork({
+    this.classificationCategoryId,
+    this.classificationPriorityId,
+    this.classificationDesc,
+    this.classificationCategory,
+    this.classificationPriority,
     this.province,
     this.district,
     this.khoroo,
