@@ -891,7 +891,7 @@ class _OnboardTabState extends State<OnboardTab> {
                       ),
                       child: CustomButton(
                         onClick: () {
-                          // Navigator.of(context).pop();
+                          Navigator.of(context).pop();
                         },
                         labelColor: backgroundColor,
                         labelText: 'Буцах',

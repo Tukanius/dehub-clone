@@ -1,4 +1,5 @@
 import 'package:dehub/components/avaible_funding_card/requested_funding_card.dart';
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/screens/funding_request_page/funding_request_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -20,32 +21,7 @@ class _FundingRequestPageState extends State<FundingRequestPage> {
         leadingWidth: 100,
         elevation: 0,
         backgroundColor: backgroundColor,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            margin: const EdgeInsets.only(left: 15),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.arrow_back_ios_new,
-                  color: financingColor,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  'Буцах',
-                  style: TextStyle(
-                    color: financingColor,
-                    fontSize: 17,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        leading: CustomBackButton(color: financingColor),
         actions: [
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

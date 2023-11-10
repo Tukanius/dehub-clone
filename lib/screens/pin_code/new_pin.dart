@@ -1,3 +1,4 @@
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/pin_code/pin_confirmation.dart';
@@ -52,35 +53,7 @@ class _NewPinState extends State<NewPin> {
         backgroundColor: backgroundColor,
         elevation: 0,
         leadingWidth: 150,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            color: transparent,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 15,
-                ),
-                Icon(
-                  Icons.arrow_back_ios_new,
-                  color: buttonColor,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'Буцах',
-                  style: TextStyle(
-                    color: buttonColor,
-                    fontSize: 17,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        leading: CustomBackButton(color: buttonColor),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,

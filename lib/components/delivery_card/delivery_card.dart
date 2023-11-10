@@ -8,7 +8,6 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:moment_dart/moment_dart.dart';
 import 'package:intl/intl.dart';
 
 class DeliveryCard extends StatefulWidget {
@@ -264,7 +263,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                       width: 5,
                     ),
                     Text(
-                      '${Moment.parse(widget.data!.deliveryDate.toString()).format("YYYY-MM-DD")}',
+                      '${DateFormat("yyyy-MM-dd").format(widget.data!.deliveryDate!)}',
                       style: TextStyle(
                         color: buttonColor,
                         fontSize: 12,

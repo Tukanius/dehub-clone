@@ -1,4 +1,5 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
@@ -40,30 +41,8 @@ class _FinancingPageState extends State<FinancingPage> {
         leadingWidth: 100,
         elevation: 0,
         backgroundColor: selectedIndex != 3 ? backgroundColor : financingColor,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            margin: const EdgeInsets.only(left: 15),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.arrow_back_ios_new,
-                  color: selectedIndex != 3 ? financingColor : white,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  'Буцах',
-                  style: TextStyle(
-                      color: selectedIndex != 3 ? financingColor : white,
-                      fontSize: 17),
-                ),
-              ],
-            ),
-          ),
+        leading: CustomBackButton(
+          color: selectedIndex != 3 ? financingColor : white,
         ),
         title: selectedIndex == 0
             ? Container(

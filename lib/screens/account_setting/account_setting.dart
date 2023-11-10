@@ -1,24 +1,23 @@
 import 'dart:async';
-
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/account_setting_card/account_setting_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
-import 'package:dehub/components/client_staff_card/client_staff_card.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/screens/client_staffs/client_staff_detail/client_staff_detail.dart';
+import 'package:dehub/screens/account_setting/account_setting_detail/account_setting_detail.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 
-class ClientStaffs extends StatefulWidget {
-  static const routeName = '/ClientStaffs';
-  const ClientStaffs({Key? key}) : super(key: key);
+class AccountSetting extends StatefulWidget {
+  static const routeName = '/AccountSetting';
+  const AccountSetting({Key? key}) : super(key: key);
 
   @override
-  State<ClientStaffs> createState() => _ClientStaffsState();
+  State<AccountSetting> createState() => _AccountSettingState();
 }
 
-class _ClientStaffsState extends State<ClientStaffs> with AfterLayoutMixin {
+class _AccountSettingState extends State<AccountSetting> with AfterLayoutMixin {
   bool startAnimation = false;
   int page = 1;
   int limit = 10;
@@ -70,7 +69,7 @@ class _ClientStaffsState extends State<ClientStaffs> with AfterLayoutMixin {
         iconTheme: IconThemeData(color: white),
         centerTitle: true,
         title: Text(
-          "Хариуцсан ажилтнууд",
+          "Данс тохиргоо",
           style: TextStyle(
             color: white,
             fontWeight: FontWeight.w500,
@@ -101,11 +100,12 @@ class _ClientStaffsState extends State<ClientStaffs> with AfterLayoutMixin {
                             .map(
                               (data) => Column(
                                 children: [
-                                  ClientStaffCard(
+                                  AccountSettingCard(
                                     onClick: () {
                                       Navigator.of(context).pushNamed(
-                                        ClientStaffDetail.routeName,
-                                        arguments: ClientStaffDetailArguments(
+                                        AccountSettingDetail.routeName,
+                                        arguments:
+                                            AccountSettingDetailArguments(
                                           id: data.id,
                                         ),
                                       );

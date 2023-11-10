@@ -1,4 +1,5 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/direction_card/direction_card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -20,32 +21,7 @@ class _DirectionPageState extends State<DirectionPage> {
         backgroundColor: backgroundColor,
         elevation: 0,
         leadingWidth: 100,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Row(
-            children: [
-              SizedBox(
-                width: 5,
-              ),
-              Icon(
-                Icons.arrow_back_ios_new,
-                color: networkColor,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                'Буцах',
-                style: TextStyle(
-                  color: networkColor,
-                  fontSize: 17,
-                ),
-              ),
-            ],
-          ),
-        ),
+        leading: CustomBackButton(color: networkColor),
         actions: [
           AddButton(
             addColor: white,

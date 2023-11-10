@@ -1,4 +1,5 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
@@ -58,30 +59,8 @@ class _MainInvoicePageState extends State<MainInvoicePage>
         leadingWidth: 100,
         elevation: 0,
         backgroundColor: selectedIndex != 2 ? backgroundColor : invoiceColor,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            margin: const EdgeInsets.only(left: 15),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.arrow_back_ios_new,
-                  color: selectedIndex != 2 ? invoiceColor : white,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  'Буцах',
-                  style: TextStyle(
-                      color: selectedIndex != 2 ? invoiceColor : white,
-                      fontSize: 17),
-                ),
-              ],
-            ),
-          ),
+        leading: CustomBackButton(
+          color: selectedIndex != 2 ? invoiceColor : white,
         ),
         title: selectedIndex == 0
             ? Container(

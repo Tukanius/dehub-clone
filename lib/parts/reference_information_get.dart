@@ -4,9 +4,15 @@ ReferenceInformationGet _$ReferenceInformationGetFromJson(
     Map<String, dynamic> json) {
   return ReferenceInformationGet(
     id: json['id'] != null ? json['id'] as String : null,
-    createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
-    updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
-    deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
+    createdAt: json['createdAt'] != null
+        ? DateTime.parse(json['createdAt'].toString())
+        : null,
+    updatedAt: json['updatedAt'] != null
+        ? DateTime.parse(json['updatedAt'].toString())
+        : null,
+    deletedAt: json['deletedAt'] != null
+        ? DateTime.parse(json['deletedAt'].toString())
+        : null,
     refCode: json['refCode'] != null ? json['refCode'] as String : null,
     modifiedUserId: json['modifiedUserId'] != null
         ? json['modifiedUserId'] as String

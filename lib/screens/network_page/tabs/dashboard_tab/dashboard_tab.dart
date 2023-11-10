@@ -2,6 +2,7 @@ import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/pie_chart/pie_chart.dart';
 import 'package:dehub/models/business.dart';
 import 'package:dehub/providers/index_provider.dart';
+import 'package:dehub/screens/account_setting/account_setting.dart';
 import 'package:dehub/screens/client_classifications/client_classifications.dart';
 import 'package:dehub/screens/distribution_areas/distribution_areas.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/reference_information_page/reference_information_page.dart';
@@ -259,7 +260,9 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushNamed(AccountSetting.routeName);
+                  },
                   child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 5),
                     decoration: BoxDecoration(

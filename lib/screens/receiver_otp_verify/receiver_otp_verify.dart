@@ -1,4 +1,5 @@
 import 'package:dehub/api/order_api.dart';
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
@@ -66,35 +67,7 @@ class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
         backgroundColor: white,
         elevation: 0,
         leadingWidth: 150,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            color: transparent,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 10,
-                ),
-                Icon(
-                  Icons.arrow_back_ios_new,
-                  color: orderColor,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  'Буцах',
-                  style: TextStyle(
-                    color: orderColor,
-                    fontSize: 16,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
+        leading: CustomBackButton(color: orderColor),
       ),
       body: SingleChildScrollView(
         child: Container(

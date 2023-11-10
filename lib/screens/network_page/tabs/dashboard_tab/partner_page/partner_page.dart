@@ -1,4 +1,5 @@
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/partner_cards/partner_card.dart';
 import 'package:dehub/models/result.dart';
@@ -53,29 +54,7 @@ class _NetworkPartnerPageState extends State<NetworkPartnerPage>
         elevation: 0,
         backgroundColor: backgroundColor,
         leadingWidth: 100,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            margin: const EdgeInsets.only(left: 10),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.arrow_back_ios_new,
-                  color: networkColor,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  'Буцах',
-                  style: TextStyle(color: networkColor, fontSize: 17),
-                )
-              ],
-            ),
-          ),
-        ),
+        leading: CustomBackButton(color: networkColor),
       ),
       body: isLoading == true
           ? Center(

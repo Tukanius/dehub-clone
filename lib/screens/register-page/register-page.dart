@@ -1,4 +1,5 @@
 import 'package:dehub/api/partner_api.dart';
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/screens/otp_page/otp_page.dart';
 import 'package:dehub/utils/is_device_size.dart';
@@ -71,33 +72,7 @@ class _RegisterPageState extends State<RegisterPage> {
         backgroundColor: backgroundColor,
         elevation: 0,
         leadingWidth: 150,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Row(
-            children: [
-              SizedBox(
-                width: 10,
-              ),
-              Icon(
-                Icons.arrow_back_ios_new,
-                color: buttonColor,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                'Буцах',
-                style: TextStyle(
-                  color: buttonColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
-              )
-            ],
-          ),
-        ),
+        leading: CustomBackButton(color: buttonColor),
       ),
       body: SingleChildScrollView(
         child: Container(

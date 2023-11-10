@@ -1,4 +1,5 @@
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/reference_information_card/reference_information_card.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -48,32 +49,7 @@ class _ReferenceInformationPageState extends State<ReferenceInformationPage>
         elevation: 0,
         backgroundColor: backgroundColor,
         leadingWidth: 100,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Row(
-            children: [
-              SizedBox(
-                width: 5,
-              ),
-              Icon(
-                Icons.arrow_back_ios_new,
-                color: networkColor,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                'Буцах',
-                style: TextStyle(
-                  color: networkColor,
-                  fontSize: 17,
-                ),
-              )
-            ],
-          ),
-        ),
+        leading: CustomBackButton(color: networkColor),
       ),
       body: SingleChildScrollView(
         child: Column(

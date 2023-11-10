@@ -1,6 +1,9 @@
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/screens/account_setting/account_setting.dart';
+import 'package:dehub/screens/account_setting/account_setting_detail/account_setting_detail.dart';
+import 'package:dehub/screens/account_setting/set_account/set_account.dart';
 import 'package:dehub/screens/account_statement/account_statement.dart';
 import 'package:dehub/screens/client_classifications/client_classification_detail/client_classification_detail.dart';
 import 'package:dehub/screens/client_classifications/client_classifications.dart';
@@ -229,6 +232,10 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return NewInvoice();
                     });
+                  case AccountSetting.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return AccountSetting();
+                    });
                   case PinCode.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return PinCode();
@@ -239,6 +246,14 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return NewPin(
                         oldPin: arguments.oldPin,
+                      );
+                    });
+                  case AccountSettingDetail.routeName:
+                    AccountSettingDetailArguments arguments =
+                        settings.arguments as AccountSettingDetailArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return AccountSettingDetail(
+                        id: arguments.id,
                       );
                     });
                   case PinConfirmation.routeName:
@@ -295,6 +310,30 @@ class MyApp extends StatelessWidget {
                         listenController: arguments.listenController,
                         partnerListenController:
                             arguments.partnerListenController,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
+                  case SetAccount.routeName:
+                    SetAccountArguments arguments =
+                        settings.arguments as SetAccountArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          SetAccount(
+                        listenController: arguments.listenController,
+                        id: arguments.id,
                       ),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {

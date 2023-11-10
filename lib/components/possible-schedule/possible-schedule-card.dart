@@ -1,9 +1,9 @@
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:moment_dart/moment_dart.dart';
+import 'package:intl/intl.dart';
 
 class PossibleScheduleCard extends StatefulWidget {
-  final String? data;
+  final DateTime? data;
   final Function()? onClick;
   final String? formattedDate;
   final bool? isSelected;
@@ -63,7 +63,7 @@ class _PossibleScheduleCardState extends State<PossibleScheduleCard> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              '${Moment.parse(widget.data.toString()).format("YYYY-MM-DD")}',
+              '${DateFormat("yyyy-MM-dd").format(widget.data!)}',
               style: TextStyle(
                 color: widget.isSelected == true
                     ? orderColor

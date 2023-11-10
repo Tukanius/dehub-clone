@@ -128,12 +128,18 @@ class BusinessNetwork {
   String? khoroo;
   BusinessNetwork? classificationCategory;
   BusinessNetwork? classificationPriority;
-
   String? classificationCategoryId;
   String? classificationPriorityId;
   String? classificationDesc;
+  String? icon;
+
+  String? inAccId;
+  String? outAccId;
 
   BusinessNetwork({
+    this.inAccId,
+    this.outAccId,
+    this.icon,
     this.classificationCategoryId,
     this.classificationPriorityId,
     this.classificationDesc,

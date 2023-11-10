@@ -1,3 +1,4 @@
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/screens/received_funding_page/tabs1/b_decision_tab.dart';
 import 'package:dehub/screens/received_funding_page/tabs1/main_info_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -20,32 +21,7 @@ class _GiveFundingDetailPageState extends State<GiveFundingDetailPage> {
         backgroundColor: backgroundColor,
         elevation: 0,
         leadingWidth: 200,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Row(
-            children: [
-              SizedBox(
-                width: 15,
-              ),
-              Icon(
-                Icons.arrow_back_ios_new,
-                color: financingColor,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                'Буцах',
-                style: TextStyle(
-                  color: financingColor,
-                  fontSize: 17,
-                ),
-              )
-            ],
-          ),
-        ),
+        leading: CustomBackButton(color: financingColor),
       ),
       body: DefaultTabController(
         length: 2,

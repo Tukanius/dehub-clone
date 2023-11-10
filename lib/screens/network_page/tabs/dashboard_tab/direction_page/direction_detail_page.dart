@@ -3,7 +3,7 @@ import 'package:dehub/models/reference_information_get.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:moment_dart/moment_dart.dart';
+import 'package:intl/intl.dart';
 
 class DirectionDetailPageArguments {
   String id;
@@ -251,7 +251,7 @@ class _DirectionDetailPageState extends State<DirectionDetailPage>
                     style: TextStyle(color: dark),
                   ),
                   Text(
-                    '${Moment.parse(referenceGet.createdAt.toString()).format("YYYY-MM-DD HH-mm")}',
+                    '${DateFormat("yyyy-MM-dd").format(referenceGet.createdAt!)}',
                     style: TextStyle(
                       color: networkColor,
                     ),

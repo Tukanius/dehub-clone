@@ -1,4 +1,5 @@
 import 'package:dehub/api/auth_api.dart';
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -105,33 +106,7 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
         elevation: 0,
         backgroundColor: backgroundColor,
         leadingWidth: 150,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Row(
-            children: [
-              SizedBox(
-                width: 10,
-              ),
-              Icon(
-                Icons.arrow_back_ios_new,
-                color: buttonColor,
-              ),
-              SizedBox(
-                width: 15,
-              ),
-              Text(
-                'Буцах',
-                style: TextStyle(
-                  color: buttonColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ),
+        leading: CustomBackButton(color: buttonColor),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,

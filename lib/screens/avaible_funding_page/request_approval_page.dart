@@ -1,3 +1,4 @@
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
@@ -16,33 +17,12 @@ class _RequestApprovalPageState extends State<RequestApprovalPage> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: backgroundColor,
-        elevation: 0,
-        leadingWidth: 100,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Row(
-            children: [
-              SizedBox(
-                width: 10,
-              ),
-              Icon(
-                Icons.arrow_back_ios_new,
-                color: financingColor,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                'Буцах',
-                style: TextStyle(fontSize: 17, color: financingColor),
-              ),
-            ],
-          ),
-        ),
-      ),
+          backgroundColor: backgroundColor,
+          elevation: 0,
+          leadingWidth: 100,
+          leading: CustomBackButton(
+            color: financingColor,
+          )),
       body: SingleChildScrollView(
         child: Column(
           children: [

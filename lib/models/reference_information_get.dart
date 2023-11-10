@@ -2,9 +2,9 @@ part '../parts/reference_information_get.dart';
 
 class ReferenceInformationGet {
   String? id;
-  String? createdAt;
-  String? updatedAt;
-  String? deletedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  DateTime? deletedAt;
   String? refCode;
   String? modifiedUserId;
   String? termRule;

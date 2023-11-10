@@ -1,4 +1,5 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/category_card/category_card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -27,29 +28,7 @@ class _CategoryPageState extends State<CategoryPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: backgroundColor,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Row(
-            children: [
-              SizedBox(
-                width: 5,
-              ),
-              Icon(
-                Icons.arrow_back_ios_new,
-                color: networkColor,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                'Буцах',
-                style: TextStyle(color: networkColor, fontSize: 17),
-              ),
-            ],
-          ),
-        ),
+        leading: CustomBackButton(color: networkColor),
         leadingWidth: 100,
         actions: [
           AddButton(

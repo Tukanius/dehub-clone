@@ -1,5 +1,6 @@
 import 'package:dehub/components/avaible_funding_card/give_funding_card.dart';
 import 'package:dehub/components/avaible_funding_card/received_funding_card.dart';
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -45,32 +46,7 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
         backgroundColor: backgroundColor,
         elevation: 0,
         leadingWidth: 100,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Row(
-            children: [
-              SizedBox(
-                width: 15,
-              ),
-              Icon(
-                Icons.arrow_back_ios_new,
-                color: financingColor,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                'Буцах',
-                style: TextStyle(
-                  color: financingColor,
-                  fontSize: 17,
-                ),
-              ),
-            ],
-          ),
-        ),
+        leading: CustomBackButton(color: financingColor),
       ),
       body: DefaultTabController(
         length: 2,

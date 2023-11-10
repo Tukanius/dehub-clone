@@ -5,12 +5,12 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ResponsibleStaffCard extends StatefulWidget {
+class ClientStaffCard extends StatefulWidget {
   final bool startAnimation;
   final int index;
   final Function()? onClick;
   final BusinessNetwork? data;
-  const ResponsibleStaffCard({
+  const ClientStaffCard({
     Key? key,
     this.onClick,
     this.data,
@@ -19,16 +19,15 @@ class ResponsibleStaffCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ResponsibleStaffCard> createState() => _ResponsibleStaffCardState();
+  State<ClientStaffCard> createState() => _ClientStaffCardState();
 }
 
-class _ResponsibleStaffCardState extends State<ResponsibleStaffCard> {
+class _ClientStaffCardState extends State<ClientStaffCard> {
   User user = User();
 
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).businessUser;
-
     return GestureDetector(
       onTap: widget.onClick,
       child: AnimatedContainer(
@@ -170,7 +169,7 @@ class _ResponsibleStaffCardState extends State<ResponsibleStaffCard> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Бүсийн нэр:',
+                        'Орлох ажилтан:',
                         style: TextStyle(
                           color: grey2.withOpacity(0.7),
                           fontSize: 10,
@@ -179,38 +178,54 @@ class _ResponsibleStaffCardState extends State<ResponsibleStaffCard> {
                       SizedBox(
                         height: 5,
                       ),
-                      Text(
-                        '-',
-                        style: TextStyle(
-                          color: grey2,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Чиглэл нэр',
-                        style: TextStyle(
-                          color: grey2.withOpacity(0.7),
-                          fontSize: 10,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        '-',
-                        style: TextStyle(
-                          color: grey2,
-                          fontSize: 12,
-                        ),
-                      ),
+                      Row(
+                        children: [
+                          Container(
+                            height: 24,
+                            width: 24,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: widget.data?.businessStaff2?.avatar == null
+                                  ? Image.asset(
+                                      'images/avatar.png',
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.network(
+                                      '${widget.data?.businessStaff2?.avatar}',
+                                      fit: BoxFit.cover,
+                                    ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Expanded(
+                            child: RichText(
+                              text: TextSpan(
+                                style: TextStyle(
+                                    color: grey2,
+                                    fontSize: 12,
+                                    fontFamily: 'Montserrat'),
+                                children: [
+                                  widget.data?.businessStaff2?.lastName != null
+                                      ? TextSpan(
+                                          text:
+                                              '${widget.data?.businessStaff2?.lastName}')
+                                      : TextSpan(text: '-'),
+                                  widget.data?.businessStaff2?.firstName != null
+                                      ? TextSpan(
+                                          text:
+                                              '${widget.data?.businessStaff2?.firstName}')
+                                      : TextSpan(text: '-'),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),

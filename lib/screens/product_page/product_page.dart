@@ -1,4 +1,5 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
@@ -60,30 +61,8 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
         leadingWidth: 100,
         elevation: 0,
         backgroundColor: selectedIndex != 3 ? backgroundColor : productColor,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            margin: const EdgeInsets.only(left: 15),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.arrow_back_ios_new,
-                  color: selectedIndex != 3 ? productColor : white,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  'Буцах',
-                  style: TextStyle(
-                      color: selectedIndex != 3 ? productColor : white,
-                      fontSize: 17),
-                ),
-              ],
-            ),
-          ),
+        leading: CustomBackButton(
+          color: selectedIndex != 3 ? productColor : white,
         ),
         title: selectedIndex == 1
             ? Container(

@@ -5,7 +5,7 @@ import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:moment_dart/moment_dart.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SalesOrderCard extends StatefulWidget {
@@ -201,7 +201,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                 Row(
                   children: [
                     Text(
-                      '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD HH:mm")}',
+                      '${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now())}',
                       style: TextStyle(
                         color: grey2,
                         fontSize: 12,
@@ -370,7 +370,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                       width: 5,
                     ),
                     Text(
-                      '${Moment.parse(widget.data!.deliveryDate.toString()).format("YYYY-MM-DD")}',
+                      '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data!.deliveryDate!)}',
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: grey2,

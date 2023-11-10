@@ -15,8 +15,11 @@ BusinessNetwork _$BusinessNetworkFromJson(Map<String, dynamic> json) {
     deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
     regNumber: json['regNumber'] != null ? json['regNumber'] as String : null,
+    inAccId: json['inAccId'] != null ? json['inAccId'] as String : null,
+    outAccId: json['outAccId'] != null ? json['outAccId'] as String : null,
     province: json['province'] != null ? json['province'] as String : null,
     district: json['district'] != null ? json['district'] as String : null,
+    icon: json['icon'] != null ? json['icon'] as String : null,
     khoroo: json['khoroo'] != null ? json['khoroo'] as String : null,
     businessNameEng: json['businessNameEng'] != null
         ? json['businessNameEng'] as String
@@ -322,10 +325,13 @@ Map<String, dynamic> _$BusinessNetworkToJson(BusinessNetwork instance) {
     json['classificationPriorityId'] = instance.classificationPriorityId;
   if (instance.classificationDesc != null)
     json['classificationDesc'] = instance.classificationDesc;
+  if (instance.icon != null) json['icon'] = instance.icon;
   if (instance.province != null) json['province'] = instance.province;
   if (instance.district != null) json['district'] = instance.district;
   if (instance.khoroo != null) json['khoroo'] = instance.khoroo;
   if (instance.equityType != null) json['equityType'] = instance.equityType;
+  if (instance.inAccId != null) json['inAccId'] = instance.inAccId;
+  if (instance.outAccId != null) json['outAccId'] = instance.outAccId;
   if (instance.userPhone != null) json['userPhone'] = instance.userPhone;
   if (instance.toMessage != null) json['toMessage'] = instance.toMessage;
   if (instance.userEmail != null) json['userEmail'] = instance.userEmail;

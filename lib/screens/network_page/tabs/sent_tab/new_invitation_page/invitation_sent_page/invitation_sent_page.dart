@@ -11,7 +11,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:moment_dart/moment_dart.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
 
@@ -230,7 +230,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD HH:mm")}',
+                          '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
                           style: TextStyle(
                             color: dark,
                           ),

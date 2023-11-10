@@ -5,7 +5,7 @@ import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/distribution_areas/set_distribution_area/set_distribution_area.dart';
+import 'package:dehub/screens/account_setting/set_account/set_account.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,26 +14,26 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
 
-class DistributionAreaDetailArguments {
+class AccountSettingDetailArguments {
   String id;
-  DistributionAreaDetailArguments({
+  AccountSettingDetailArguments({
     required this.id,
   });
 }
 
-class DistributionAreaDetail extends StatefulWidget {
+class AccountSettingDetail extends StatefulWidget {
   final String id;
-  static const routeName = '/DistributionAreaDetail';
-  const DistributionAreaDetail({
+  static const routeName = '/AccountSettingDetail';
+  const AccountSettingDetail({
     Key? key,
     required this.id,
   }) : super(key: key);
 
   @override
-  State<DistributionAreaDetail> createState() => _DistributionAreaDetailState();
+  State<AccountSettingDetail> createState() => _ResponsibleStaffDetailState();
 }
 
-class _DistributionAreaDetailState extends State<DistributionAreaDetail>
+class _ResponsibleStaffDetailState extends State<AccountSettingDetail>
     with AfterLayoutMixin {
   TextEditingController textController = TextEditingController();
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
@@ -73,7 +73,9 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
         elevation: 0,
         backgroundColor: backgroundColor,
         leadingWidth: 150,
-        leading: CustomBackButton(color: networkColor),
+        leading: CustomBackButton(
+          color: networkColor,
+        ),
       ),
       body: isLoading == true
           ? Center(
@@ -162,49 +164,42 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
                   ),
                   Container(
                     margin:
-                        const EdgeInsets.only(left: 15, top: 10, bottom: 10),
+                        const EdgeInsets.only(left: 15, top: 15, bottom: 20),
                     child: Text(
-                      'Бүс, чиглэл тохируулах',
+                      'Харилцааг хариуцан ажилтан',
                       style: TextStyle(
                         color: grey3,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
-                  user.currentBusiness?.type == "SUPPLIER"
-                      ? Column(
-                          children: [
-                            FieldCard(
-                              color: white,
-                              marginHorizontal: 15,
-                              marginVertical: 10,
-                              labelText: "Бүсийн нэр",
-                              secondText: business.areaRegion?.name,
-                              secondTextColor: networkColor,
-                              onClick: () {},
-                              arrowColor: networkColor,
-                            ),
-                            FieldCard(
-                              color: white,
-                              marginHorizontal: 15,
-                              marginVertical: 10,
-                              labelText: "Чиглэл",
-                              secondText: business.areaDirection?.name,
-                              secondTextColor: networkColor,
-                              onClick: () {},
-                              arrowColor: networkColor,
-                            ),
-                          ],
-                        )
-                      : SizedBox(),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: "Зарлагын данс",
+                    secondText:
+                        '${business.businessInAcc?.bankName} ${business.businessInAcc?.number}',
+                    secondTextColor: networkColor,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: "Орлогын данс",
+                    secondText:
+                        '${business.businessOutAcc?.bankName} ${business.businessOutAcc?.number}',
+                    secondTextColor: networkColor,
+                  ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(SetDistributionArea.routeName,
-                              arguments: SetDistributionAreaArguments(
-                                listenController: listenController,
-                                id: widget.id,
-                              ));
+                      Navigator.of(context).pushNamed(
+                        SetAccount.routeName,
+                        arguments: SetAccountArguments(
+                          listenController: listenController,
+                          id: widget.id,
+                        ),
+                      );
                     },
                     child: Container(
                       margin: EdgeInsets.only(
@@ -265,9 +260,6 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 60,
                   ),
                 ],
               ),

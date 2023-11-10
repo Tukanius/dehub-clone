@@ -1,4 +1,5 @@
 import 'package:dehub/api/order_api.dart';
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/screens/receiver_otp_verify/receiver_otp_verify.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -56,35 +57,7 @@ class _EnterPhonePageState extends State<EnterPhonePage> {
         backgroundColor: orderColor,
         elevation: 0,
         leadingWidth: 150,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            color: transparent,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 10,
-                ),
-                Icon(
-                  Icons.arrow_back_ios_new,
-                  color: white,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  'Буцах',
-                  style: TextStyle(
-                    color: white,
-                    fontSize: 16,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
+        leading: CustomBackButton(color: white),
       ),
       body: SingleChildScrollView(
         child: Container(

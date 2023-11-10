@@ -2,6 +2,7 @@ import 'package:dehub/api/business_api.dart';
 import 'package:dehub/models/business_network.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_detail_page/tabs/information_tab.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_detail_page/tabs/sector_tab.dart';
+import 'package:dehub/screens/network_page/tabs/dashboard_tab/partner_page/partner_detail_page/tabs/staffs_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -126,8 +127,12 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
                     InformationTab(
                       data: businessNetwork,
                     ),
-                    Text('1'),
-                    SectorTab(),
+                    StaffsTab(
+                      staffs: businessNetwork.staffs,
+                    ),
+                    SectorTab(
+                      data: businessNetwork.branches,
+                    ),
                   ],
                 ),
               ),

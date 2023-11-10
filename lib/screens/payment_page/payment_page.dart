@@ -1,4 +1,5 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/payment_page/tabs/add_bank_account_page/add_bank_account_page.dart';
@@ -57,30 +58,8 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
         leadingWidth: 100,
         elevation: 0,
         backgroundColor: selectedIndex != 3 ? white : paymentColor,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            margin: const EdgeInsets.only(left: 15),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.arrow_back_ios_new,
-                  color: selectedIndex != 3 ? paymentColor : white,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  'Буцах',
-                  style: TextStyle(
-                      color: selectedIndex != 3 ? paymentColor : white,
-                      fontSize: 17),
-                ),
-              ],
-            ),
-          ),
+        leading: CustomBackButton(
+          color: selectedIndex != 3 ? paymentColor : white,
         ),
         title: selectedIndex == 0
             ? Container(

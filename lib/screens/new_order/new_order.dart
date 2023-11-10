@@ -16,13 +16,12 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:moment_dart/moment_dart.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/screens/new_order/customer_choose.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/models/order.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 import 'package:file_picker/file_picker.dart';
 
 class NewOrderArguments {
@@ -54,7 +53,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   User user = User();
   Order createOrder = Order();
   Order receiverBranch = Order();
-  String selectedDate = '';
+  DateTime? selectedDate;
   FilePickerResult? result;
   List<Order> product = [];
   List<Order> packageProduct = [];
@@ -138,8 +137,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
       await OrderApi().createOrder(Order(
         businessId: order.id,
         receiverBranchId: receiverBranch.id ?? order.receiverBranches?.first.id,
-        deliveryDate:
-            isCheck == false ? selectedDate.toString() : dateTime.toString(),
+        deliveryDate: isCheck == false ? selectedDate : dateTime,
         deliveryType: isCheck == false ? "DEFAULT_DATE" : "CUSTOM_DATE",
         receiverStaffId: order.receiverStaff?.id,
         lines: data,
@@ -235,7 +233,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                               ),
                             ),
                             Text(
-                              '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD HH:mm")}',
+                              '${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now())}',
                               style: const TextStyle(
                                 color: buttonColor,
                               ),
@@ -639,8 +637,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                       .map(
                                         (e) => PossibleScheduleCard(
                                           validate: selectedDateValidate,
-                                          formattedDate: DateFormat("EEEE")
-                                              .format(DateTime.parse(e)),
+                                          formattedDate:
+                                              DateFormat("EEEE").format(e),
                                           isSelected: selectedDate == e,
                                           onClick: () {
                                             setState(() {
@@ -1422,12 +1420,12 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
     super.initState();
   }
 
-  List<String> dates = [
-    "${DateTime.now().add(const Duration(days: 1))}",
-    "${DateTime.now().add(const Duration(days: 2))}",
-    "${DateTime.now().add(const Duration(days: 3))}",
-    "${DateTime.now().add(const Duration(days: 4))}",
-    "${DateTime.now().add(const Duration(days: 5))}",
-    "${DateTime.now().add(const Duration(days: 6))}",
+  List<DateTime> dates = [
+    DateTime.now().add(const Duration(days: 1)),
+    DateTime.now().add(const Duration(days: 2)),
+    DateTime.now().add(const Duration(days: 3)),
+    DateTime.now().add(const Duration(days: 4)),
+    DateTime.now().add(const Duration(days: 5)),
+    DateTime.now().add(const Duration(days: 6)),
   ];
 }

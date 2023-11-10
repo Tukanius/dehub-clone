@@ -1,4 +1,5 @@
 import 'package:dehub/components/avaible_funding_card/avaible_funding_card.dart';
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/screens/avaible_funding_page/avaible_funding_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -20,31 +21,8 @@ class _AvaibleFundingPageState extends State<AvaibleFundingPage> {
         leadingWidth: 100,
         elevation: 0,
         backgroundColor: backgroundColor,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            margin: const EdgeInsets.only(left: 15),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.arrow_back_ios_new,
-                  color: financingColor,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  'Буцах',
-                  style: TextStyle(
-                    color: financingColor,
-                    fontSize: 17,
-                  ),
-                ),
-              ],
-            ),
-          ),
+        leading: CustomBackButton(
+          color: financingColor,
         ),
         actions: [
           Container(

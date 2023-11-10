@@ -12,7 +12,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:moment_dart/moment_dart.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class AddDirectionArguments {
@@ -304,7 +304,7 @@ class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
                                   style: TextStyle(color: dark),
                                 ),
                                 Text(
-                                  '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD HH:mm")}',
+                                  '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
                                   style: TextStyle(
                                     color: dark,
                                   ),

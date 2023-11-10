@@ -7,11 +7,10 @@ import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:moment_dart/moment_dart.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 
 class ReceivedOrderDetailArguments {
   String id;
@@ -133,7 +132,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                     ),
                                   ),
                             Text(
-                              '${Moment.parse(order.createdAt.toString()).format("YYYY-MM-DD HH:mm")}',
+                              '${DateFormat("yyyy-MM-dd").format(order.createdAt!)}',
                               style: TextStyle(
                                 color: buttonColor,
                               ),
@@ -545,7 +544,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           ),
                         ),
                         Text(
-                          '${Moment.parse(order.deliveryDate.toString()).format("YYYY-MM-DD")}',
+                          '${DateFormat("yyyy-MM-dd").format(order.deliveryDate!)}',
                           style: TextStyle(color: orderColor),
                         ),
                       ],

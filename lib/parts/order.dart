@@ -119,8 +119,9 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         : null,
     approve: json['approve'] != null ? json['approve'] as bool : null,
     isSupplier: json['isSupplier'] != null ? json['isSupplier'] as bool : null,
-    deliveryDate:
-        json['deliveryDate'] != null ? json['deliveryDate'] as String : null,
+    deliveryDate: json['deliveryDate'] != null
+        ? DateTime.parse(json['deliveryDate'].toString())
+        : null,
     province: json['province'] != null ? json['province'] as String : null,
     district: json['district'] != null ? json['district'] as String : null,
     khoroo: json['khoroo'] != null ? json['khoroo'] as String : null,

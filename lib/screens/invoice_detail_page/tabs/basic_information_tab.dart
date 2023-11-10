@@ -18,7 +18,6 @@ import 'package:dehub/screens/invoice/payment_page/payment_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:moment_dart/moment_dart.dart';
 import 'package:intl/intl.dart';
 
 class BasicInformationTab extends StatefulWidget {
@@ -86,8 +85,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
         firstName: "Баталсан огноо",
         lastName: invoice.confirmedDate == null
             ? '-'
-            : Moment.parse(invoice.confirmedDate.toString())
-                .format("YYYY-MM-DD"),
+            : DateFormat('yyyy-MM-dd').format(invoice.confirmedDate!),
       ),
       Invoice(
         firstName: "Татвар төлөгч дугаар",

@@ -194,4 +194,10 @@ class BusinessApi extends HttpRequest {
         data: data.toJson());
     return BusinessNetwork.fromJson(res as Map<String, dynamic>);
   }
+
+  Future<BusinessNetwork> setAccount(BusinessNetwork data) async {
+    var res = await put('/network/set/account', "BUSINESS", true,
+        data: data.toJson());
+    return BusinessNetwork.fromJson(res as Map<String, dynamic>);
+  }
 }

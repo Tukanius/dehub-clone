@@ -6,7 +6,7 @@ import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:moment_dart/moment_dart.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
 
@@ -58,7 +58,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                     child: Row(
                       children: [
                         Text(
-                          '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD HH:mm")}',
+                          '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
                           style: TextStyle(),
                         ),
                         SizedBox(
@@ -207,7 +207,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                 Container(
                                   height: 20,
                                   child: Text(
-                                    '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD HH:mm")}',
+                                    '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
                                     style: TextStyle(
                                       color: black,
                                       fontSize: 12,
@@ -249,7 +249,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                 Container(
                                   height: 20,
                                   child: Text(
-                                    '${Moment.parse(invoice.paymentDate.toString()).format("YYYY-MM-DD")}',
+                                    '${DateFormat("yyyy-MM-dd").format(invoice.paymentDate!)}',
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: black,

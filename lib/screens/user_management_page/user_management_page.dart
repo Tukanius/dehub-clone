@@ -1,3 +1,4 @@
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/screens/user_management_page/tabs/home_page_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -38,29 +39,7 @@ class _UserMangementPageState extends State<UserMangementPage> {
         leadingWidth: 100,
         elevation: 0,
         backgroundColor: backgroundColor,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            margin: const EdgeInsets.only(left: 15),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.arrow_back_ios_new,
-                  color: userColor,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  'Буцах',
-                  style: TextStyle(color: userColor, fontSize: 17),
-                ),
-              ],
-            ),
-          ),
-        ),
+        leading: CustomBackButton(color: userColor),
         actions: [
           Container(
             padding: const EdgeInsets.all(10),

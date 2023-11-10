@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/otp_page/otp-phone-verify.dart';
@@ -139,36 +140,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> with AfterLayoutMixin {
         elevation: 0,
         backgroundColor: backgroundColor,
         leadingWidth: 150,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            color: transparent,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 10,
-                ),
-                Icon(
-                  Icons.arrow_back_ios_new,
-                  color: buttonColor,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'Буцах',
-                  style: TextStyle(
-                    color: buttonColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        leading: CustomBackButton(color: buttonColor),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,

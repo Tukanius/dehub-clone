@@ -1,3 +1,4 @@
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -32,35 +33,7 @@ class _OrderSendPageState extends State<OrderSendPage> {
         backgroundColor: white,
         elevation: 0,
         leadingWidth: 150,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            color: transparent,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 10,
-                ),
-                Icon(
-                  Icons.arrow_back_ios_new,
-                  color: orderColor,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  'Буцах',
-                  style: TextStyle(
-                    color: orderColor,
-                    fontSize: 16,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
+        leading: CustomBackButton(color: orderColor),
       ),
       body: SingleChildScrollView(
         child: Container(

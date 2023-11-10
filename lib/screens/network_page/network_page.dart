@@ -1,4 +1,5 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
@@ -27,8 +28,6 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
-    // await Provider.of<IndexProvider>(context, listen: false)
-    //     .networkIndexChange(1);
     await Provider.of<UserProvider>(context, listen: false).businessMe(true);
     await Provider.of<GeneralProvider>(context, listen: false)
         .businessInit(true);
@@ -54,30 +53,8 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
         elevation: 0,
         backgroundColor:
             index.selectedIndex != 3 ? backgroundColor : networkColor,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            margin: const EdgeInsets.only(left: 15),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.arrow_back_ios_new,
-                  color: index.selectedIndex != 3 ? networkColor : white,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  'Буцах',
-                  style: TextStyle(
-                      color: index.selectedIndex != 3 ? networkColor : white,
-                      fontSize: 17),
-                ),
-              ],
-            ),
-          ),
+        leading: CustomBackButton(
+          color: index.selectedIndex != 3 ? networkColor : white,
         ),
         title: index.selectedIndex == 0
             ? Container(

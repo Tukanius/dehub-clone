@@ -15,7 +15,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:moment_dart/moment_dart.dart';
+import 'package:intl/intl.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -320,7 +320,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                     margin: const EdgeInsets.symmetric(
                                         horizontal: 15),
                                     child: Text(
-                                      '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD")}',
+                                      '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
                                       style: TextStyle(
                                         color: blue,
                                         fontWeight: FontWeight.w600,

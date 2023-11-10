@@ -1,4 +1,5 @@
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/business_network.dart';
@@ -86,35 +87,7 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
         backgroundColor: backgroundColor,
         elevation: 0,
         leadingWidth: 150,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            color: transparent,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 15,
-                ),
-                Icon(
-                  Icons.arrow_back_ios_new,
-                  color: networkColor,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  'Буцах',
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: networkColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        leading: CustomBackButton(color: networkColor),
       ),
       body: SingleChildScrollView(
         child: Column(

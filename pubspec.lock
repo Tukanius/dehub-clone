@@ -49,14 +49,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
-  carousel_slider:
-    dependency: "direct dev"
-    description:
-      name: carousel_slider
-      sha256: "9c695cc963bf1d04a47bd6021f68befce8970bcd61d24938e1fb0918cf5d9c42"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2.1"
   characters:
     dependency: transitive
     description:
@@ -89,14 +81,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
-  convex_bottom_bar:
-    dependency: "direct dev"
-    description:
-      name: convex_bottom_bar
-      sha256: ebf0f3deb1e8e99374d844fee7485d2980ec502dedfaad395c12118477933aef
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.2.0"
   cookie_jar:
     dependency: "direct dev"
     description:
@@ -153,14 +137,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
-  equatable:
-    dependency: transitive
-    description:
-      name: equatable
-      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.5"
   fake_async:
     dependency: transitive
     description:
@@ -225,27 +201,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.3+1"
-  fl_chart:
-    dependency: "direct dev"
-    description:
-      name: fl_chart
-      sha256: "6b9eb2b3017241d05c482c01f668dd05cc909ec9a0114fdd49acd958ff2432fa"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.64.0"
   flutter:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_animate:
-    dependency: "direct dev"
-    description:
-      name: flutter_animate
-      sha256: "62f346340a96192070e31e3f2a1bd30a28530f1fe8be978821e06cd56b74d6d2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2.0+1"
   flutter_cache_manager:
     dependency: "direct dev"
     description:
@@ -397,22 +357,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.6.4"
-  gradient_borders:
-    dependency: "direct dev"
-    description:
-      name: gradient_borders
-      sha256: "69eeaff519d145a4c6c213ada1abae386bcc8981a4970d923e478ce7ba19e309"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
-  hidden_drawer_menu:
-    dependency: "direct dev"
-    description:
-      name: hidden_drawer_menu
-      sha256: "74ca9c4ffc45c05dec3fd4e12cd6bd0851029d909ee5531bf31244b7160f96b9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
   http:
     dependency: transitive
     description:
@@ -494,7 +438,7 @@ packages:
     source: hosted
     version: "0.2.1+1"
   intl:
-    dependency: "direct dev"
+    dependency: transitive
     description:
       name: intl
       sha256: a3715e3bc90294e971cb7dc063fbf3cd9ee0ebf8604ffeafabd9e6f16abbdbe6
@@ -597,14 +541,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  moment_dart:
-    dependency: "direct dev"
-    description:
-      name: moment_dart
-      sha256: "94761f860c818d2fa2577ec4233f613db7bf74452fe3065d395353e03297ecec"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.17.5"
   nested:
     dependency: transitive
     description:
@@ -630,7 +566,7 @@ packages:
     source: hosted
     version: "1.0.1"
   path_provider:
-    dependency: "direct dev"
+    dependency: transitive
     description:
       name: path_provider
       sha256: a1aa8aaa2542a6bc57e381f132af822420216c80d4781f7aa085ca3229208aaa

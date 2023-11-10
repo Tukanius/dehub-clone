@@ -5,7 +5,7 @@ import 'package:dehub/screens/product_give/product_give.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:moment_dart/moment_dart.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 // class IncomeGuaranteeArguments {
@@ -136,7 +136,7 @@ class _IncomeGuaranteeState extends State<IncomeGuarantee> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD HH:mm")}',
+                                  '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: orderColor,

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:moment_dart/moment_dart.dart';
+import 'package:intl/intl.dart';
 
 class AddZoningArguments {
   ListenController listenController;
@@ -184,7 +184,7 @@ class _AddZoningState extends State<AddZoning> {
                     style: TextStyle(color: dark),
                   ),
                   Text(
-                    '${Moment.parse(DateTime.now().toString()).format("YYYY-MM-DD HH:mm")}',
+                    '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
                     style: TextStyle(
                       color: dark,
                     ),
