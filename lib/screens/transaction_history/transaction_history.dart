@@ -58,10 +58,9 @@ class _TransactionHistoryState extends State<TransactionHistory>
       startDate: startDate,
       endDate: endDate,
     );
-    var res = await PaymentApi()
+    transaction = await PaymentApi()
         .transactionList(ResultArguments(filter: filter, offset: offset));
     setState(() {
-      transaction = res;
       isLoading = false;
     });
   }

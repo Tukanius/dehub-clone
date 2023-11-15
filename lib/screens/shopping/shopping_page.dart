@@ -148,7 +148,8 @@ class _ShoppingPageState extends State<ShoppingPage> {
                                     horizontal: 5, vertical: 5),
                                 child: SvgPicture.asset(
                                   'assets/svg/yuluur.svg',
-                                  color: grey2,
+                                  colorFilter:
+                                      ColorFilter.mode(grey2, BlendMode.srcIn),
                                 ),
                               ),
                             ),
@@ -190,7 +191,8 @@ class _ShoppingPageState extends State<ShoppingPage> {
                                       horizontal: 5, vertical: 5),
                                   child: SvgPicture.asset(
                                     'assets/svg/filter.svg',
-                                    color: grey2,
+                                    colorFilter: ColorFilter.mode(
+                                        grey2, BlendMode.srcIn),
                                   ),
                                 ),
                               ),

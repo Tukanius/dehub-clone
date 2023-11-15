@@ -74,7 +74,7 @@ class Business {
   String? businessId;
   String? modifiedUserId;
   int? expireDayCount;
-  String? paymentDay;
+  int? paymentDay;
   String? condition;
   String? configType;
   int? advancePercent;

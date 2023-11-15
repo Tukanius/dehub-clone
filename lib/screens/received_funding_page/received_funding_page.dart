@@ -81,7 +81,8 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
                             ),
                             child: SvgPicture.asset(
                               'assets/svg/camera.svg',
-                              color: financingColor,
+                              colorFilter: ColorFilter.mode(
+                                  financingColor, BlendMode.srcIn),
                             ),
                           ),
                           SizedBox(

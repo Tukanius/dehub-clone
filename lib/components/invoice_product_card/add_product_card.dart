@@ -157,7 +157,8 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
                               onTap: widget.closeClick,
                               child: SvgPicture.asset(
                                 'assets/svg/close.svg',
-                                color: grey3,
+                                colorFilter:
+                                    ColorFilter.mode(grey3, BlendMode.srcIn),
                                 height: 20,
                                 width: 20,
                               ),

@@ -28,6 +28,8 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
+    await Provider.of<IndexProvider>(context, listen: false)
+        .networkIndexChange(1);
     await Provider.of<UserProvider>(context, listen: false).businessMe(true);
     await Provider.of<GeneralProvider>(context, listen: false)
         .businessInit(true);
@@ -78,7 +80,9 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/grid.svg',
-                    color: index.selectedIndex != 3 ? networkColor : white,
+                    colorFilter: ColorFilter.mode(
+                        index.selectedIndex != 3 ? networkColor : white,
+                        BlendMode.srcIn),
                   ),
                 )
               : index.selectedIndex == 3 || index.selectedIndex == 2
@@ -133,7 +137,9 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
                     padding: EdgeInsets.all(index.selectedIndex == 0 ? 7 : 0),
                     child: SvgPicture.asset(
                       'assets/svg/home.svg',
-                      color: index.selectedIndex == 0 ? white : networkColor,
+                      colorFilter: ColorFilter.mode(
+                          index.selectedIndex == 0 ? white : networkColor,
+                          BlendMode.srcIn),
                     ),
                   ),
                   index.selectedIndex != 0
@@ -158,7 +164,9 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
                   padding: EdgeInsets.all(index.selectedIndex == 1 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/dashboard.svg',
-                    color: index.selectedIndex == 1 ? white : networkColor,
+                    colorFilter: ColorFilter.mode(
+                        index.selectedIndex == 1 ? white : networkColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 index.selectedIndex != 1
@@ -182,7 +190,9 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
                   padding: EdgeInsets.all(index.selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/inbox.svg',
-                    color: index.selectedIndex == 2 ? white : networkColor,
+                    colorFilter: ColorFilter.mode(
+                        index.selectedIndex == 2 ? white : networkColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 index.selectedIndex != 2
@@ -206,7 +216,9 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
                   padding: EdgeInsets.all(index.selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/sent.svg',
-                    color: index.selectedIndex == 3 ? white : networkColor,
+                    colorFilter: ColorFilter.mode(
+                        index.selectedIndex == 3 ? white : networkColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 index.selectedIndex != 3

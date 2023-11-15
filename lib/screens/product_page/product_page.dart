@@ -86,7 +86,9 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/grid.svg',
-                    color: selectedIndex != 3 ? productColor : white,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex != 3 ? productColor : white,
+                        BlendMode.srcIn),
                   ),
                 )
               : selectedIndex == 3
@@ -129,7 +131,9 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                     padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
                     child: SvgPicture.asset(
                       'assets/svg/home.svg',
-                      color: selectedIndex == 0 ? white : productColor,
+                      colorFilter: ColorFilter.mode(
+                          selectedIndex == 0 ? white : productColor,
+                          BlendMode.srcIn),
                     ),
                   ),
                   selectedIndex != 0
@@ -154,7 +158,9 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                   padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/dashboard.svg',
-                    color: selectedIndex == 1 ? white : productColor,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 1 ? white : productColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 selectedIndex != 1
@@ -178,7 +184,9 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/inbox.svg',
-                    color: selectedIndex == 2 ? white : productColor,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 2 ? white : productColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 selectedIndex != 2
@@ -202,7 +210,9 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/sent.svg',
-                    color: selectedIndex == 3 ? white : productColor,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 3 ? white : productColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 selectedIndex != 3

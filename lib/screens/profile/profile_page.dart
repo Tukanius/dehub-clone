@@ -156,7 +156,9 @@ class _ProfilePageState extends State<ProfilePage>
                             ),
                             child: SvgPicture.asset(
                               'assets/svg/bx_user-circle.svg',
-                              color: tabController.index != 0 ? grey3 : white,
+                              colorFilter: ColorFilter.mode(
+                                  tabController.index != 0 ? grey3 : white,
+                                  BlendMode.srcIn),
                             ),
                           ),
                         ),
@@ -175,7 +177,9 @@ class _ProfilePageState extends State<ProfilePage>
                             ),
                             child: SvgPicture.asset(
                               'assets/svg/hospital.svg',
-                              color: tabController.index != 1 ? grey3 : white,
+                              colorFilter: ColorFilter.mode(
+                                  tabController.index != 1 ? grey3 : white,
+                                  BlendMode.srcIn),
                             ),
                           ),
                         ),
@@ -194,7 +198,9 @@ class _ProfilePageState extends State<ProfilePage>
                                     tabController.index == 2 ? grey2 : white),
                             child: SvgPicture.asset(
                               'assets/svg/settings.svg',
-                              color: tabController.index != 2 ? grey3 : white,
+                              colorFilter: ColorFilter.mode(
+                                  tabController.index != 2 ? grey3 : white,
+                                  BlendMode.srcIn),
                             ),
                           ),
                         ),

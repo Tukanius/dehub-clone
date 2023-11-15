@@ -109,6 +109,9 @@ Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
       params['filter']['deliveryNoteStatus'] =
           instance.filter!.deliveryNoteStatus;
     }
+    if (instance.filter!.itemStatus != null) {
+      params['filter']['itemStatus'] = instance.filter!.itemStatus;
+    }
 
     if (instance.offset!.page! > 0) {
       params['offset']['page'] = instance.offset!.page;

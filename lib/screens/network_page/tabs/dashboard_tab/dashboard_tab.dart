@@ -1,7 +1,7 @@
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/network_horizontal_chart/network_horizontal_chart.dart';
 import 'package:dehub/components/pie_chart/pie_chart.dart';
 import 'package:dehub/models/business.dart';
-import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/screens/account_setting/account_setting.dart';
 import 'package:dehub/screens/client_classifications/client_classifications.dart';
 import 'package:dehub/screens/distribution_areas/distribution_areas.dart';
@@ -12,10 +12,7 @@ import 'package:dehub/screens/payment_terms/payment_terms.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class DashboardTab extends StatefulWidget {
   const DashboardTab({
@@ -67,7 +64,6 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    final selectedIndex = Provider.of<IndexProvider>(context, listen: true);
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +109,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           ),
                           child: SvgPicture.asset(
                             'assets/svg/partners.svg',
-                            color: networkColor,
+                            colorFilter:
+                                ColorFilter.mode(networkColor, BlendMode.srcIn),
                           ),
                         ),
                         SizedBox(
@@ -156,7 +153,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           ),
                           child: SvgPicture.asset(
                             'assets/svg/double-person.svg',
-                            color: networkColor,
+                            colorFilter:
+                                ColorFilter.mode(networkColor, BlendMode.srcIn),
                           ),
                         ),
                         SizedBox(
@@ -200,7 +198,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           ),
                           child: SvgPicture.asset(
                             'assets/svg/double-person.svg',
-                            color: networkColor,
+                            colorFilter:
+                                ColorFilter.mode(networkColor, BlendMode.srcIn),
                           ),
                         ),
                         SizedBox(
@@ -243,7 +242,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           ),
                           child: SvgPicture.asset(
                             'assets/svg/payment-term.svg',
-                            color: networkColor,
+                            colorFilter:
+                                ColorFilter.mode(networkColor, BlendMode.srcIn),
                           ),
                         ),
                         SizedBox(
@@ -286,7 +286,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           ),
                           child: SvgPicture.asset(
                             'assets/svg/wallet.svg',
-                            color: networkColor,
+                            colorFilter:
+                                ColorFilter.mode(networkColor, BlendMode.srcIn),
                           ),
                         ),
                         SizedBox(
@@ -330,7 +331,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           ),
                           child: SvgPicture.asset(
                             'assets/svg/map.svg',
-                            color: networkColor,
+                            colorFilter:
+                                ColorFilter.mode(networkColor, BlendMode.srcIn),
                           ),
                         ),
                         SizedBox(
@@ -374,7 +376,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           ),
                           child: SvgPicture.asset(
                             'assets/svg/bag.svg',
-                            color: networkColor,
+                            colorFilter:
+                                ColorFilter.mode(networkColor, BlendMode.srcIn),
                           ),
                         ),
                         SizedBox(
@@ -405,301 +408,91 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(left: 15),
-                          child: Text(
-                            'Харилцагч бизнесүүд',
-                            style: TextStyle(
-                              color: black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(NetworkPartnerPage.routeName);
-                          },
-                          child: Container(
-                            color: transparent,
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Бүгдийг",
-                                  style: TextStyle(
-                                    color: networkColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
+                    data.isNotEmpty
+                        ? Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 15),
+                                    child: Text(
+                                      'Харилцагч бизнесүүд',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: networkColor,
-                                  size: 16,
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    PieChart(
-                      legend: legend,
-                      colorList: colorList,
-                      data: data,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(left: 15),
-                          child: Text(
-                            'Танайд ирсэн',
-                            style: TextStyle(
-                              color: black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            selectedIndex.networkIndexChange(2);
-                          },
-                          child: Container(
-                            color: transparent,
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Бүгдийг",
-                                  style: TextStyle(
-                                    color: networkColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                          NetworkPartnerPage.routeName);
+                                    },
+                                    child: Container(
+                                      color: transparent,
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Бүгдийг",
+                                            style: TextStyle(
+                                              color: networkColor,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: networkColor,
+                                            size: 16,
+                                          ),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: networkColor,
-                                  size: 16,
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Icon(
-                          Icons.calendar_today,
-                          color: grey,
-                          size: 18,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '${DateFormat("yyyy-MM-dd").format(received.start!)} - ',
-                          style: TextStyle(
-                            color: grey,
-                            fontSize: 12,
-                          ),
-                        ),
-                        Icon(
-                          Icons.calendar_today,
-                          color: grey,
-                          size: 18,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '${DateFormat("yyyy-MM-dd").format(received.end!)}',
-                          style: TextStyle(
-                            color: grey,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      height: 180,
-                      padding: const EdgeInsets.all(10),
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: white,
-                      ),
-                      child: SfCartesianChart(
-                        series: <ChartSeries>[
-                          BarSeries<Business, String>(
-                            borderRadius: BorderRadius.circular(5),
-                            pointColorMapper: (datum, index) =>
-                                datum.name == "Зөвшөөрсөн"
-                                    ? networkDashboard2
-                                    : datum.name == "Илгээсэн"
-                                        ? networkColor
-                                        : grey2,
-                            dataSource: received.stats!,
-                            xValueMapper: (gdp, _) => gdp.name,
-                            yValueMapper: (gdp, _) => gdp.count,
-                          ),
-                        ],
-                        primaryXAxis: CategoryAxis(),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(left: 15),
-                          child: Text(
-                            'Танай илгээсэн',
-                            style: TextStyle(
-                              color: black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            selectedIndex.networkIndexChange(3);
-                          },
-                          child: Container(
-                            color: transparent,
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Бүгдийг",
-                                  style: TextStyle(
-                                    color: networkColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: networkColor,
-                                  size: 16,
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Icon(
-                          Icons.calendar_today,
-                          color: grey,
-                          size: 18,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '${DateFormat("yyyy-MM-dd").format(sent.start!)} - ',
-                          style: TextStyle(
-                            color: grey,
-                            fontSize: 12,
-                          ),
-                        ),
-                        Icon(
-                          Icons.calendar_today,
-                          color: grey,
-                          size: 18,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '${DateFormat("yyyy-MM-dd").format(sent.end!)}',
-                          style: TextStyle(
-                            color: grey,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      height: 180,
-                      padding: const EdgeInsets.all(10),
-                      margin: const EdgeInsets.symmetric(horizontal: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: white,
-                      ),
-                      child: SfCartesianChart(
-                        series: <ChartSeries>[
-                          BarSeries<Business, String>(
-                            borderRadius: BorderRadius.circular(5),
-                            pointColorMapper: (datum, index) =>
-                                datum.name == "Зөвшөөрсөн"
-                                    ? networkDashboard2
-                                    : datum.name == "Илгээсэн"
-                                        ? networkColor
-                                        : grey2,
-                            dataSource: sent.stats!,
-                            xValueMapper: (gdp, _) => gdp.name,
-                            yValueMapper: (gdp, _) => gdp.count,
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              PieChart(
+                                legend: legend,
+                                colorList: colorList,
+                                data: data,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                            ],
                           )
-                        ],
-                        primaryXAxis: CategoryAxis(),
-                      ),
+                        : SizedBox(),
+                    received.stats != null
+                        ? NetworkHorizontalChart(
+                            index: 2,
+                            data: received,
+                            labelText: 'Танайд ирсэн',
+                          )
+                        : SizedBox(),
+                    SizedBox(
+                      height: 10,
                     ),
+                    sent.stats != null
+                        ? NetworkHorizontalChart(
+                            index: 3,
+                            labelText: 'Танай илгээсэн',
+                            data: sent,
+                          )
+                        : SizedBox(),
                   ],
                 ),
         ],

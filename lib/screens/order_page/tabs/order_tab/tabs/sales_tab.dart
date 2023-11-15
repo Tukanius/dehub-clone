@@ -1,10 +1,13 @@
 import 'package:dehub/api/order_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/sales_order_card/sales_order_card.dart';
 import 'package:dehub/components/search_button/search_button.dart';
+import 'package:dehub/models/order.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/screens/new_order/new_order.dart';
 import 'package:dehub/screens/received_order_detail/received_order_detail.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class SalesTab extends StatefulWidget {
   const SalesTab({Key? key}) : super(key: key);
@@ -21,6 +25,8 @@ class SalesTab extends StatefulWidget {
 }
 
 class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
+  Map<DateTime, List<Order>> groupedItems = {};
+  List<Order> groupedList = [];
   Result order = Result(count: 0, rows: []);
   int page = 1;
   int limit = 10;
@@ -29,6 +35,7 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
   bool startAnimation = false;
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
+  ListenController listenController = ListenController();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -44,12 +51,41 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
     setState(() {
       order = res;
       isLoading = false;
-      Future.delayed(Duration(milliseconds: 100), () {
-        setState(() {
-          startAnimation = true;
-        });
+    });
+    makeGroup();
+    Future.delayed(Duration(milliseconds: 100), () {
+      setState(() {
+        startAnimation = true;
       });
     });
+  }
+
+  makeGroup() {
+    for (var data in order.rows!) {
+      DateTime date =
+          DateTime.parse(DateFormat("yyyy-MM-dd").format(data.createdAt));
+      if (groupedItems.containsKey(date)) {
+        groupedItems[date]!.add(data);
+      } else {
+        groupedItems[date] = [data];
+      }
+    }
+    groupedItems.forEach((key, value) {
+      groupedList.add(
+        Order(
+          header: key,
+          values: value,
+        ),
+      );
+    });
+  }
+
+  @override
+  void initState() {
+    listenController.addListener(() {
+      list(page, limit);
+    });
+    super.initState();
   }
 
   void _onLoading() async {
@@ -119,42 +155,107 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
               },
             ),
             child: order.rows?.length != 0
-                ? SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 5,
+                ? Stack(
+                    children: [
+                      SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 5,
+                            ),
+                            SearchButton(
+                              color: orderColor,
+                              textColor: orderColor,
+                            ),
+                            Column(
+                              children: groupedList
+                                  .map(
+                                    (data) => Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        AnimatedContainer(
+                                          curve: Curves.ease,
+                                          transform: Matrix4.translationValues(
+                                              startAnimation
+                                                  ? 0
+                                                  : MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                              0,
+                                              0),
+                                          duration: Duration(
+                                            milliseconds: 300 +
+                                                (groupedList.indexOf(data) *
+                                                    200),
+                                          ),
+                                          margin: const EdgeInsets.only(
+                                              left: 15, bottom: 10, top: 10),
+                                          child: Text(
+                                            '${DateFormat("yyyy-MM-dd").format(data.header!)}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                color: grey2),
+                                          ),
+                                        ),
+                                        Column(
+                                          children: data.values!
+                                              .map(
+                                                (item) => SalesOrderCard(
+                                                  type: user.currentBusiness
+                                                              ?.type ==
+                                                          "SUPPLIER"
+                                                      ? "SALES"
+                                                      : "PURCHASE",
+                                                  index:
+                                                      order.rows!.indexOf(item),
+                                                  startAnimation:
+                                                      startAnimation,
+                                                  isReceiver: true,
+                                                  onClick: () {
+                                                    Navigator.of(context)
+                                                        .pushNamed(
+                                                      ReceivedOrderDetail
+                                                          .routeName,
+                                                      arguments:
+                                                          ReceivedOrderDetailArguments(
+                                                        id: item.id!,
+                                                      ),
+                                                    );
+                                                  },
+                                                  data: item,
+                                                ),
+                                              )
+                                              .toList(),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                  .toList(),
+                            )
+                          ],
                         ),
-                        SearchButton(
-                          color: orderColor,
-                          textColor: orderColor,
+                      ),
+                      Positioned(
+                        bottom: 20,
+                        right: 20,
+                        child: FloatingActionButton(
+                          backgroundColor: orderColor,
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(
+                              NewOrder.routeName,
+                              arguments: NewOrderArguments(
+                                id: null,
+                                listenController: listenController,
+                              ),
+                            );
+                          },
+                          child: Icon(Icons.add),
                         ),
-                        Column(
-                          children: order.rows!
-                              .map(
-                                (item) => SalesOrderCard(
-                                  type: user.currentBusiness?.type == "SUPPLIER"
-                                      ? "SALES"
-                                      : "PURCHASE",
-                                  index: order.rows!.indexOf(item),
-                                  startAnimation: startAnimation,
-                                  isReceiver: true,
-                                  onClick: () {
-                                    Navigator.of(context).pushNamed(
-                                      ReceivedOrderDetail.routeName,
-                                      arguments: ReceivedOrderDetailArguments(
-                                        id: item.id,
-                                      ),
-                                    );
-                                  },
-                                  data: item,
-                                ),
-                              )
-                              .toList(),
-                        )
-                      ],
-                    ),
+                      ),
+                      Container(),
+                    ],
                   )
                 : NotFound(
                     module: "ORDER",

@@ -6,10 +6,16 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => Order.fromJson(e)).toList()
         : null,
+    values: json['values'] != null
+        ? (json['values'] as List).map((e) => Order.fromJson(e)).toList()
+        : null,
     id: json['id'] != null ? json['id'] as String : null,
     code: json['code'] != null ? json['code'] as String : null,
     createdAt: json['createdAt'] != null
         ? DateTime.parse(json['createdAt'].toString())
+        : null,
+    header: json['header'] != null
+        ? DateTime.parse(json['header'].toString())
         : null,
     updatedAt: json['updatedAt'] != null
         ? DateTime.parse(json['updatedAt'].toString())
@@ -119,9 +125,8 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         : null,
     approve: json['approve'] != null ? json['approve'] as bool : null,
     isSupplier: json['isSupplier'] != null ? json['isSupplier'] as bool : null,
-    deliveryDate: json['deliveryDate'] != null
-        ? DateTime.parse(json['deliveryDate'].toString())
-        : null,
+    deliveryDate:
+        json['deliveryDate'] != null ? json['deliveryDate'] as String : null,
     province: json['province'] != null ? json['province'] as String : null,
     district: json['district'] != null ? json['district'] as String : null,
     khoroo: json['khoroo'] != null ? json['khoroo'] as String : null,
@@ -161,6 +166,9 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         json['discountType'] != null ? json['discountType'] as String : null,
     discountValue: json['discountValue'] != null
         ? double.parse(json['discountValue'].toString())
+        : null,
+    advancePercent: json['advancePercent'] != null
+        ? double.parse(json['advancePercent'].toString())
         : null,
     quantity: json['quantity'] != null
         ? int.parse(json['quantity'].toString())
@@ -449,10 +457,14 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$OrderToJson(Order instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.values != null) json['values'] = instance.values;
+  if (instance.header != null) json['header'] = instance.header;
   if (instance.receipt != null) json['receipt'] = instance.receipt;
   if (instance.deliveryNote != null)
     json['deliveryNote'] = instance.deliveryNote;
   if (instance.order != null) json['order'] = instance.order;
+  if (instance.advancePercent != null)
+    json['advancePercent'] = instance.advancePercent;
   if (instance.business != null) json['business'] = instance.business;
   if (instance.isBuyerConfirmed != null)
     json['isBuyerConfirmed'] = instance.isBuyerConfirmed;

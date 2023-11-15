@@ -48,7 +48,10 @@ class _UserMangementPageState extends State<UserMangementPage> {
               color: Color(0xff767680).withOpacity(0.12),
               borderRadius: BorderRadius.circular(100),
             ),
-            child: SvgPicture.asset('assets/svg/grid.svg', color: userColor),
+            child: SvgPicture.asset(
+              'assets/svg/grid.svg',
+              colorFilter: ColorFilter.mode(userColor, BlendMode.srcIn),
+            ),
           )
         ],
       ),
@@ -82,7 +85,9 @@ class _UserMangementPageState extends State<UserMangementPage> {
                     padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
                     child: SvgPicture.asset(
                       'assets/svg/home.svg',
-                      color: selectedIndex == 0 ? white : userColor,
+                      colorFilter: ColorFilter.mode(
+                          selectedIndex == 0 ? white : userColor,
+                          BlendMode.srcIn),
                     ),
                   ),
                   selectedIndex != 0
@@ -107,7 +112,9 @@ class _UserMangementPageState extends State<UserMangementPage> {
                   padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/dashboard.svg',
-                    color: selectedIndex == 1 ? white : userColor,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 1 ? white : userColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 selectedIndex != 1
@@ -131,7 +138,9 @@ class _UserMangementPageState extends State<UserMangementPage> {
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/inbox.svg',
-                    color: selectedIndex == 2 ? white : userColor,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 2 ? white : userColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 selectedIndex != 2
@@ -155,7 +164,9 @@ class _UserMangementPageState extends State<UserMangementPage> {
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/sent.svg',
-                    color: selectedIndex == 3 ? white : userColor,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 3 ? white : userColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 selectedIndex != 3

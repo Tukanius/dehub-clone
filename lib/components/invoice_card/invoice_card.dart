@@ -14,8 +14,12 @@ class InvoiceCard extends StatefulWidget {
   static const routeName = '/invoicecard';
   final Function()? onClick;
   final Invoice? data;
+  final int index;
+  final bool startAnimation;
   const InvoiceCard({
     Key? key,
+    required this.startAnimation,
+    required this.index,
     this.onClick,
     this.data,
   }) : super(key: key);
@@ -138,7 +142,14 @@ class _InvoiceCardState extends State<InvoiceCard> {
         Provider.of<GeneralProvider>(context, listen: false).inventoryGeneral;
     return GestureDetector(
       onTap: widget.onClick,
-      child: Container(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 300 + (widget.index * 200)),
+        curve: Curves.ease,
+        transform: Matrix4.translationValues(
+          widget.startAnimation ? 0 : MediaQuery.of(context).size.width,
+          0,
+          0,
+        ),
         color: white,
         child: Column(
           children: [
@@ -254,7 +265,8 @@ class _InvoiceCardState extends State<InvoiceCard> {
                             children: [
                               SvgPicture.asset(
                                 'assets/svg/inv.svg',
-                                color: invoiceColor,
+                                colorFilter: ColorFilter.mode(
+                                    invoiceColor, BlendMode.srcIn),
                               ),
                               SizedBox(
                                 width: 5,

@@ -384,9 +384,11 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                       children: [
                         SvgPicture.asset(
                           'assets/svg/calculator.svg',
-                          color: widget.data?.isConfirmed == true
-                              ? orderColor.withOpacity(0.3)
-                              : orderColor,
+                          colorFilter: ColorFilter.mode(
+                              widget.data?.isConfirmed == true
+                                  ? orderColor.withOpacity(0.3)
+                                  : orderColor,
+                              BlendMode.srcIn),
                         ),
                         SizedBox(
                           width: 5,

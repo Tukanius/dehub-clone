@@ -89,7 +89,8 @@ class _AvaibleFundingCardState extends State<AvaibleFundingCard> {
                   children: [
                     SvgPicture.asset(
                       'assets/svg/inv.svg',
-                      color: buttonColor,
+                      colorFilter:
+                          ColorFilter.mode(buttonColor, BlendMode.srcIn),
                     ),
                     SizedBox(
                       width: 3,

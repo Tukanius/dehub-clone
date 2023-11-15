@@ -8,6 +8,10 @@ import 'package:dehub/screens/account_statement/account_statement.dart';
 import 'package:dehub/screens/client_classifications/client_classification_detail/client_classification_detail.dart';
 import 'package:dehub/screens/client_classifications/client_classifications.dart';
 import 'package:dehub/screens/client_classifications/set_client_classification/set_client_classification.dart';
+import 'package:dehub/screens/invoice_payment/payment_approval_page.dart';
+import 'package:dehub/screens/invoice_payment/payment_page.dart';
+import 'package:dehub/screens/invoice_payment/qpay_page.dart';
+import 'package:dehub/screens/no_internet/no_internet_screen.dart';
 import 'package:dehub/screens/transaction_detail_page/transaction_detail_page.dart';
 import 'package:dehub/screens/bank_account_detail/bank_account_detail.dart';
 import 'package:dehub/screens/distribution_areas/distribution_area_detail/distribution_area_detail.dart';
@@ -32,14 +36,11 @@ import 'package:dehub/screens/first_page/first_page.dart';
 import 'package:dehub/screens/funding_request_page/funding_request_detail_page.dart';
 import 'package:dehub/screens/home_page/home_page.dart';
 import 'package:dehub/screens/income_guarantee/income_Guarantee.dart';
-import 'package:dehub/screens/invoice/closed_invoice_page.dart';
-import 'package:dehub/screens/invoice/new_invoice/add_product/add_product.dart';
-import 'package:dehub/screens/invoice/new_invoice/add_row/invoice_add_row.dart';
-import 'package:dehub/screens/invoice/new_invoice/sector-choose/sector-choose.dart';
-import 'package:dehub/screens/invoice/payment_page/payment_page.dart';
-import 'package:dehub/screens/invoice/payment_page/qpay_page.dart';
-import 'package:dehub/screens/invoice/tabs/give.dart';
-import 'package:dehub/screens/invoice/tabs/take.dart';
+import 'package:dehub/screens/invoice/tabs/dashboard_tab/closed_invoice/closed_invoice_page.dart';
+import 'package:dehub/screens/new_invoice/add_product/add_product.dart';
+import 'package:dehub/screens/new_invoice/add_row/invoice_add_row.dart';
+import 'package:dehub/screens/new_invoice/sector-choose/sector-choose.dart';
+import 'package:dehub/screens/invoice/tabs/dashboard_tab/invoice_list/give.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/category_page/add_category.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/add_direction.dart';
 import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/direction_detail_page.dart';
@@ -62,30 +63,28 @@ import 'package:dehub/screens/network_page/tabs/sent_tab/new_invitation_page/inv
 import 'package:dehub/screens/network_page/tabs/sent_tab/new_invitation_page/new_invitation_page.dart';
 import 'package:dehub/screens/network_page/tabs/inbox_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
 import 'package:dehub/screens/invoice/invoice_page.dart';
-import 'package:dehub/screens/invoice/new_invoice/add_product/add_product_tabs/shirhegeer.dart';
-import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose.dart';
-import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet.dart';
-import 'package:dehub/screens/invoice/new_invoice/customer_choose/customer_choose_tabs/gereet_bish.dart';
-import 'package:dehub/screens/invoice/new_invoice/customer_choose/salbar_songoh.dart';
-import 'package:dehub/screens/invoice/new_invoice/harah/harah.dart';
-import 'package:dehub/screens/invoice/new_invoice/harah/pdf_page.dart';
-import 'package:dehub/screens/invoice/new_invoice/harah/send_page.dart';
-import 'package:dehub/screens/invoice/new_invoice/new_invoice.dart';
-import 'package:dehub/screens/invoice/payment_page/payment_approval_page.dart';
+import 'package:dehub/screens/new_invoice/add_product/add_product_tabs/shirhegeer.dart';
+import 'package:dehub/screens/new_invoice/customer_choose/customer_choose.dart';
+import 'package:dehub/screens/new_invoice/customer_choose/customer_choose_tabs/gereet.dart';
+import 'package:dehub/screens/new_invoice/customer_choose/customer_choose_tabs/gereet_bish.dart';
+import 'package:dehub/screens/new_invoice/customer_choose/salbar_songoh.dart';
+import 'package:dehub/screens/new_invoice/harah/harah.dart';
+import 'package:dehub/screens/new_invoice/harah/pdf_page.dart';
+import 'package:dehub/screens/new_invoice/harah/send_page.dart';
+import 'package:dehub/screens/new_invoice/new_invoice.dart';
 import 'package:dehub/screens/invoice_detail_page/invoice_detail_page.dart';
 import 'package:dehub/screens/link_account_page/link_account_page.dart';
-import 'package:dehub/screens/main/main_page.dart';
 import 'package:dehub/screens/menu/menu_page.dart';
 import 'package:dehub/screens/network_page/network_page.dart';
 import 'package:dehub/screens/network_page/tabs/sent_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
-import 'package:dehub/screens/new_order/add_attachment.dart';
-import 'package:dehub/screens/new_order/order_add_row.dart';
-import 'package:dehub/screens/new_order/change_branch_name.dart';
+import 'package:dehub/screens/new_order/add_attachment/add_attachment.dart';
+import 'package:dehub/screens/new_order/add_row/order_add_row.dart';
+import 'package:dehub/screens/new_order/change_branch/change_branch_name.dart';
 import 'package:dehub/screens/new_order/new_order.dart';
-import 'package:dehub/screens/new_order/order_payment.dart';
+import 'package:dehub/screens/order_payment/order_payment.dart';
 import 'package:dehub/screens/new_order/order_send/order_send_customer.dart';
 import 'package:dehub/screens/new_order/order_send/order_send_page.dart';
-import 'package:dehub/screens/new_order/product_choose/product_choose_in_pieces/product_choose.dart';
+import 'package:dehub/screens/new_order/product_choose/product_choose.dart';
 import 'package:dehub/screens/order_cash_approval/order_cash_approval.dart';
 import 'package:dehub/screens/order_delivery/delivery_detail/delivery_detail.dart';
 import 'package:dehub/screens/order_delivery/order_delivery.dart';
@@ -134,9 +133,8 @@ import 'package:dehub/widgets/dialog_manager/dialog_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
-import 'package:dehub/screens/main_invoice_page/invoice_page.dart';
 import 'package:dehub/screens/funding_request_page/funding_request_page.dart';
-import 'package:dehub/screens/new_order/customer_choose.dart';
+import 'package:dehub/screens/new_order/customer_choose/customer_choose.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -182,6 +180,10 @@ class MyApp extends StatelessWidget {
                   case SplashPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return const SplashPage();
+                    });
+                  case NoInternetScreen.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return const NoInternetScreen();
                     });
                   case InvitationDetailPage.routeName:
                     InvitationDetailPageArguments arguments =
@@ -296,10 +298,6 @@ class MyApp extends StatelessWidget {
                       return SetPaymentTermDetail(
                         id: arguments.id,
                       );
-                    });
-                  case InvoicePage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return InvoicePage();
                     });
                   case CustomerChoose.routeName:
                     CustomerChooseArguments arguments =
@@ -841,6 +839,7 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return NewOrder(
                         id: arguments.id,
+                        listenController: arguments.listenController,
                       );
                     });
                   case PullSheetExpenses.routeName:
@@ -899,9 +898,9 @@ class MyApp extends StatelessWidget {
                         data: arguments.data,
                       );
                     });
-                  case MainInvoicePage.routeName:
+                  case Invoicepage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return MainInvoicePage();
+                      return Invoicepage();
                     });
                   case OrderDelivery.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -967,10 +966,6 @@ class MyApp extends StatelessWidget {
                   case GiveFundingDetailPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return GiveFundingDetailPage();
-                    });
-                  case MainPage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return MainPage();
                     });
                   case ReferenceInformationPage.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -1354,10 +1349,6 @@ class MyApp extends StatelessWidget {
                   case GivePage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return GivePage();
-                    });
-                  case TakePage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return TakePage();
                     });
                   case SectorChoose.routeName:
                     SectorChooseArguments arguments =

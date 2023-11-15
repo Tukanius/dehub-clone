@@ -87,7 +87,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
             0,
             0),
         curve: Curves.ease,
-        margin: const EdgeInsets.only(bottom: 5),
+        margin: const EdgeInsets.only(bottom: 1),
         padding: const EdgeInsets.all(15),
         color: white,
         child: Column(
@@ -148,7 +148,8 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                   children: [
                     SvgPicture.asset(
                       'assets/svg/inv.svg',
-                      color: orderColor,
+                      colorFilter:
+                          ColorFilter.mode(orderColor, BlendMode.srcIn),
                     ),
                     SizedBox(
                       width: 5,
@@ -370,7 +371,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                       width: 5,
                     ),
                     Text(
-                      '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data!.deliveryDate!)}',
+                      '${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.parse(widget.data!.deliveryDate.toString()))}',
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: grey2,

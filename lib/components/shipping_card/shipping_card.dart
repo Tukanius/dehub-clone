@@ -78,7 +78,7 @@ class _DeliveryCardState extends State<ShippingCard> {
                   children: [
                     SvgPicture.asset(
                       'assets/svg/inv.svg',
-                      color: darkGreen,
+                      colorFilter: ColorFilter.mode(darkGreen, BlendMode.srcIn),
                     ),
                     SizedBox(
                       width: 5,

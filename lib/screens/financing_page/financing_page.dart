@@ -66,7 +66,9 @@ class _FinancingPageState extends State<FinancingPage> {
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/grid.svg',
-                    color: selectedIndex != 3 ? financingColor : white,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex != 3 ? financingColor : white,
+                        BlendMode.srcIn),
                   ),
                 )
               : selectedIndex == 3
@@ -108,7 +110,9 @@ class _FinancingPageState extends State<FinancingPage> {
                     padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
                     child: SvgPicture.asset(
                       'assets/svg/home.svg',
-                      color: selectedIndex == 0 ? white : financingColor,
+                      colorFilter: ColorFilter.mode(
+                          selectedIndex == 0 ? white : financingColor,
+                          BlendMode.srcIn),
                     ),
                   ),
                   selectedIndex != 0
@@ -133,7 +137,9 @@ class _FinancingPageState extends State<FinancingPage> {
                   padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/dashboard.svg',
-                    color: selectedIndex == 1 ? white : financingColor,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 1 ? white : financingColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 selectedIndex != 1
@@ -157,7 +163,9 @@ class _FinancingPageState extends State<FinancingPage> {
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/inbox.svg',
-                    color: selectedIndex == 2 ? white : financingColor,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 2 ? white : financingColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 selectedIndex != 2
@@ -181,7 +189,9 @@ class _FinancingPageState extends State<FinancingPage> {
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/sent.svg',
-                    color: selectedIndex == 3 ? white : financingColor,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 3 ? white : financingColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 selectedIndex != 3

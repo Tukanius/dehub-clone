@@ -162,8 +162,12 @@ class Invoice {
   String? configType;
 
   List<Invoice>? stats;
+  List<Invoice>? values;
+  DateTime? header;
 
   Invoice({
+    this.values,
+    this.header,
     this.stats,
     this.configType,
     this.additionalLines,

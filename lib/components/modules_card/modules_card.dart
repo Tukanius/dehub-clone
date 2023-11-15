@@ -4,7 +4,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dehub/screens/debt_page/debt_page.dart';
 // import 'package:dehub/screens/financing_page/financing_page.dart';
-import 'package:dehub/screens/main_invoice_page/invoice_page.dart';
+import 'package:dehub/screens/invoice/invoice_page.dart';
 import 'package:dehub/screens/network_page/network_page.dart';
 import 'package:dehub/screens/order_page/order_page.dart';
 import 'package:dehub/screens/partner_page/partner_page.dart';
@@ -42,7 +42,7 @@ class _ModulesCardState extends State<ModulesCard> {
             onTap: () {
               if (widget.partner?.user?.currentBusiness?.type == 'SUPPLIER' ||
                   widget.partner?.user?.currentBusiness?.type == "BUYER") {
-                Navigator.of(context).pushNamed(MainInvoicePage.routeName);
+                Navigator.of(context).pushNamed(Invoicepage.routeName);
               }
             },
             child: Column(
@@ -59,7 +59,7 @@ class _ModulesCardState extends State<ModulesCard> {
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/nehemjleh.svg',
-                    color: buttonColor,
+                    colorFilter: ColorFilter.mode(buttonColor, BlendMode.srcIn),
                   ),
                 ),
                 SizedBox(
@@ -93,7 +93,7 @@ class _ModulesCardState extends State<ModulesCard> {
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/zahialga.svg',
-                    color: buttonColor,
+                    colorFilter: ColorFilter.mode(buttonColor, BlendMode.srcIn),
                     height: 24,
                     width: 24,
                   ),
@@ -133,7 +133,7 @@ class _ModulesCardState extends State<ModulesCard> {
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/tolbor_tootsoo.svg',
-                    color: buttonColor,
+                    colorFilter: ColorFilter.mode(buttonColor, BlendMode.srcIn),
                   ),
                 ),
                 SizedBox(
@@ -170,7 +170,7 @@ class _ModulesCardState extends State<ModulesCard> {
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/sanhuujilt.svg',
-                    color: buttonColor,
+                    colorFilter: ColorFilter.mode(buttonColor, BlendMode.srcIn),
                   ),
                 ),
                 SizedBox(
@@ -206,7 +206,7 @@ class _ModulesCardState extends State<ModulesCard> {
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/avlaga_uglug.svg',
-                    color: buttonColor,
+                    colorFilter: ColorFilter.mode(buttonColor, BlendMode.srcIn),
                   ),
                 ),
                 SizedBox(
@@ -242,7 +242,7 @@ class _ModulesCardState extends State<ModulesCard> {
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/baraa.svg',
-                    color: buttonColor,
+                    colorFilter: ColorFilter.mode(buttonColor, BlendMode.srcIn),
                   ),
                 ),
                 SizedBox(
@@ -278,7 +278,7 @@ class _ModulesCardState extends State<ModulesCard> {
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/network.svg',
-                    color: buttonColor,
+                    colorFilter: ColorFilter.mode(buttonColor, BlendMode.srcIn),
                   ),
                 ),
                 SizedBox(
@@ -320,12 +320,14 @@ class _ModulesCardState extends State<ModulesCard> {
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/partner.svg',
-                    color: widget.partner?.user?.currentBusiness?.type ==
-                                'SUPPLIER' ||
-                            widget.partner?.user?.currentBusiness?.type ==
-                                "BUYER"
-                        ? partnerColor.withOpacity(0.3)
-                        : buttonColor,
+                    colorFilter: ColorFilter.mode(
+                        widget.partner?.user?.currentBusiness?.type ==
+                                    'SUPPLIER' ||
+                                widget.partner?.user?.currentBusiness?.type ==
+                                    "BUYER"
+                            ? partnerColor.withOpacity(0.3)
+                            : buttonColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 SizedBox(
@@ -367,12 +369,14 @@ class _ModulesCardState extends State<ModulesCard> {
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/hereglegch.svg',
-                    color: widget.partner?.user?.currentBusiness?.type ==
-                                'SUPPLIER' ||
-                            widget.partner?.user?.currentBusiness?.type ==
-                                "BUYER"
-                        ? userColor.withOpacity(0.3)
-                        : buttonColor,
+                    colorFilter: ColorFilter.mode(
+                        widget.partner?.user?.currentBusiness?.type ==
+                                    'SUPPLIER' ||
+                                widget.partner?.user?.currentBusiness?.type ==
+                                    "BUYER"
+                            ? userColor.withOpacity(0.3)
+                            : buttonColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 SizedBox(

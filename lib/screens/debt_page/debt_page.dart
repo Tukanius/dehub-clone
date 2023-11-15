@@ -1,8 +1,8 @@
 import 'package:dehub/components/back_button/back_button.dart';
-import 'package:dehub/screens/debt_page/tabs/home_page_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import './tabs/dashboard_tab/dashboard_tab.dart';
 
 class DebtPage extends StatefulWidget {
   static const routeName = '/DebtPage';
@@ -15,8 +15,8 @@ class DebtPage extends StatefulWidget {
 class _DebtPageState extends State<DebtPage> {
   int selectedIndex = 1;
   static const List<Widget> currentPages = [
-    HomePageTab(),
-    Text('2'),
+    SizedBox(),
+    DashBoardTab(),
     Text('3'),
     Text('4'),
   ];
@@ -48,7 +48,10 @@ class _DebtPageState extends State<DebtPage> {
               color: Color(0xff767680).withOpacity(0.12),
               borderRadius: BorderRadius.circular(100),
             ),
-            child: SvgPicture.asset('assets/svg/grid.svg', color: debtColor),
+            child: SvgPicture.asset(
+              'assets/svg/grid.svg',
+              colorFilter: ColorFilter.mode(debtColor, BlendMode.srcIn),
+            ),
           )
         ],
       ),
@@ -82,7 +85,9 @@ class _DebtPageState extends State<DebtPage> {
                     padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
                     child: SvgPicture.asset(
                       'assets/svg/home.svg',
-                      color: selectedIndex == 0 ? white : debtColor,
+                      colorFilter: ColorFilter.mode(
+                          selectedIndex == 0 ? white : debtColor,
+                          BlendMode.srcIn),
                     ),
                   ),
                   selectedIndex != 0
@@ -107,7 +112,9 @@ class _DebtPageState extends State<DebtPage> {
                   padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/dashboard.svg',
-                    color: selectedIndex == 1 ? white : debtColor,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 1 ? white : debtColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 selectedIndex != 1
@@ -131,7 +138,9 @@ class _DebtPageState extends State<DebtPage> {
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/inbox.svg',
-                    color: selectedIndex == 2 ? white : debtColor,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 2 ? white : debtColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 selectedIndex != 2
@@ -155,7 +164,9 @@ class _DebtPageState extends State<DebtPage> {
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/sent.svg',
-                    color: selectedIndex == 3 ? white : debtColor,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 3 ? white : debtColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 selectedIndex != 3

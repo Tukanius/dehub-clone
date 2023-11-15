@@ -99,7 +99,8 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                               ),
                               SvgPicture.asset(
                                 'assets/svg/arrow_forward.svg',
-                                color: buttonColor,
+                                colorFilter: ColorFilter.mode(
+                                    buttonColor, BlendMode.srcIn),
                               ),
                               SizedBox(
                                 width: 16,
@@ -120,7 +121,8 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                             children: [
                               SvgPicture.asset(
                                 'assets/svg/arrow_back.svg',
-                                color: buttonColor,
+                                colorFilter: ColorFilter.mode(
+                                    buttonColor, BlendMode.srcIn),
                               ),
                               SizedBox(
                                 width: 10,

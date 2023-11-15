@@ -544,7 +544,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           ),
                         ),
                         Text(
-                          '${DateFormat("yyyy-MM-dd").format(order.deliveryDate!)}',
+                          '${DateFormat("yyyy-MM-dd").format(DateTime.parse(order.deliveryDate.toString()))}',
                           style: TextStyle(color: orderColor),
                         ),
                       ],
@@ -1087,7 +1087,9 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                             children: [
                                               SvgPicture.asset(
                                                 'assets/svg/create-so.svg',
-                                                color: orderColor,
+                                                colorFilter: ColorFilter.mode(
+                                                    orderColor,
+                                                    BlendMode.srcIn),
                                               ),
                                               Text(
                                                 'SO болгох',
@@ -1158,7 +1160,9 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                             children: [
                                               SvgPicture.asset(
                                                 'assets/svg/create-so.svg',
-                                                color: orderColor,
+                                                colorFilter: ColorFilter.mode(
+                                                    orderColor,
+                                                    BlendMode.srcIn),
                                               ),
                                               Text(
                                                 'Зөвшөөрөх',

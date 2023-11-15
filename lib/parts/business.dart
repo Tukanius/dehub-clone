@@ -142,8 +142,9 @@ Business _$BusinessFromJson(Map<String, dynamic> json) {
     expireDayCount: json['expireDayCount'] != null
         ? int.parse(json['expireDayCount'].toString())
         : null,
-    paymentDay:
-        json['paymentDay'] != null ? json['paymentDay'] as String : null,
+    paymentDay: json['paymentDay'] != null
+        ? int.parse(json['paymentDay'].toString())
+        : null,
     condition: json['condition'] != null ? json['condition'] as String : null,
     configType:
         json['configType'] != null ? json['configType'] as String : null,

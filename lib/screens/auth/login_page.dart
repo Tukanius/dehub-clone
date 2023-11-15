@@ -445,7 +445,8 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                                 bioType == "FACE"
                                     ? faceIdIcon
                                     : fingerPrintIcon,
-                                color: white,
+                                colorFilter:
+                                    ColorFilter.mode(white, BlendMode.srcIn),
                               ),
                             ),
                           ),

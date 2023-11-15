@@ -1,6 +1,5 @@
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/new_order/new_order.dart';
 import 'package:dehub/screens/order_page/tabs/order_tab/tabs/received_tab.dart';
 import 'package:dehub/screens/order_page/tabs/order_tab/tabs/sales_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -69,25 +68,7 @@ class _OrderTabState extends State<OrderTab> {
         },
         body: TabBarView(
           children: [
-            Stack(
-              children: [
-                SalesTab(),
-                Positioned(
-                  bottom: 20,
-                  right: 20,
-                  child: FloatingActionButton(
-                    backgroundColor: orderColor,
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(
-                        NewOrder.routeName,
-                        arguments: NewOrderArguments(id: null),
-                      );
-                    },
-                    child: Icon(Icons.add),
-                  ),
-                ),
-              ],
-            ),
+            SalesTab(),
             ReceivedTab(),
           ],
         ),

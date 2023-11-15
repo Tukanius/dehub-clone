@@ -278,9 +278,11 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                           children: [
                                             SvgPicture.asset(
                                               'assets/svg/bx_timer.svg',
-                                              color: isStart == true
-                                                  ? white
-                                                  : buttonColor,
+                                              colorFilter: ColorFilter.mode(
+                                                  isStart == true
+                                                      ? white
+                                                      : buttonColor,
+                                                  BlendMode.srcIn),
                                             ),
                                             shipment.dispatchedDate == null
                                                 ? Text(
@@ -317,7 +319,8 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                         children: [
                                           SvgPicture.asset(
                                             'assets/svg/timer.svg',
-                                            color: buttonColor,
+                                            colorFilter: ColorFilter.mode(
+                                                buttonColor, BlendMode.srcIn),
                                           ),
                                           buildTime()
                                         ],
@@ -383,9 +386,11 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                           children: [
                                             SvgPicture.asset(
                                               'assets/svg/check_underline.svg',
-                                              color: shipment.isEnded == true
-                                                  ? white
-                                                  : buttonColor,
+                                              colorFilter: ColorFilter.mode(
+                                                  shipment.isEnded == true
+                                                      ? white
+                                                      : buttonColor,
+                                                  BlendMode.srcIn),
                                             ),
                                             SizedBox(
                                               height: 5,

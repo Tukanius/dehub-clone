@@ -84,7 +84,7 @@ class _PinCheckScreenState extends State<PinCheckScreen> {
             ),
             SvgPicture.asset(
               'assets/svg/lock.svg',
-              color: widget.color,
+              colorFilter: ColorFilter.mode(widget.color, BlendMode.srcIn),
             ),
             SizedBox(
               height: 20,

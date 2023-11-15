@@ -107,7 +107,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           ),
                           child: SvgPicture.asset(
                             'assets/svg/zahialga.svg',
-                            color: buttonColor,
+                            colorFilter:
+                                ColorFilter.mode(buttonColor, BlendMode.srcIn),
                           ),
                         ),
                         SizedBox(
@@ -152,7 +153,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                                 ),
                                 child: SvgPicture.asset(
                                   'assets/svg/push.svg',
-                                  color: buttonColor,
+                                  colorFilter: ColorFilter.mode(
+                                      buttonColor, BlendMode.srcIn),
                                 ),
                               ),
                               SizedBox(
@@ -192,7 +194,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/push.svg',
-                          color: buttonColor,
+                          colorFilter:
+                              ColorFilter.mode(buttonColor, BlendMode.srcIn),
                         ),
                       ),
                       SizedBox(
@@ -230,7 +233,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/push.svg',
-                          color: buttonColor,
+                          colorFilter:
+                              ColorFilter.mode(buttonColor, BlendMode.srcIn),
                         ),
                       ),
                       Text(
@@ -265,7 +269,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/map.svg',
-                          color: buttonColor,
+                          colorFilter:
+                              ColorFilter.mode(buttonColor, BlendMode.srcIn),
                         ),
                       ),
                       SizedBox(

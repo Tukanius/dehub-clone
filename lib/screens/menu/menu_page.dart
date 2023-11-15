@@ -133,7 +133,8 @@ class _MenuPageState extends State<MenuPage> {
                                   children: [
                                     SvgPicture.asset(
                                       'assets/svg/pie.svg',
-                                      color: white,
+                                      colorFilter: ColorFilter.mode(
+                                          white, BlendMode.srcIn),
                                     ),
                                     SizedBox(
                                       width: 10,
@@ -168,8 +169,10 @@ class _MenuPageState extends State<MenuPage> {
                                   Row(
                                     children: [
                                       SvgPicture.asset(
-                                          'assets/svg/apartment.svg',
-                                          color: white),
+                                        'assets/svg/apartment.svg',
+                                        colorFilter: ColorFilter.mode(
+                                            white, BlendMode.srcIn),
+                                      ),
                                       SizedBox(
                                         width: 10,
                                       ),
@@ -239,8 +242,10 @@ class _MenuPageState extends State<MenuPage> {
                                 Row(
                                   children: [
                                     SvgPicture.asset(
-                                        'assets/svg/huleen_avsan.svg',
-                                        color: white),
+                                      'assets/svg/huleen_avsan.svg',
+                                      colorFilter: ColorFilter.mode(
+                                          white, BlendMode.srcIn),
+                                    ),
                                     SizedBox(
                                       width: 10,
                                     ),

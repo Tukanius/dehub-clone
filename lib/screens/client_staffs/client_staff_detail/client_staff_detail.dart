@@ -256,52 +256,8 @@ class _ResponsibleStaffDetailState extends State<ClientStaffDetail>
                             color: grey2,
                           ),
                         ),
-                        // validator: FormBuilderValidators.compose([
-                        //   FormBuilderValidators.required(
-                        //       errorText: 'Тэмдэглэл оруулна уу')
-                        // ]),
                       ),
                     ),
-                  ),
-                  Container(
-                    margin:
-                        const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-                    child: Text(
-                      'Бүс, чиглэл тохируулах',
-                      style: TextStyle(
-                        color: grey3,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  user.currentBusiness?.type == "SUPPLIER"
-                      ? Column(
-                          children: [
-                            FieldCard(
-                              color: white,
-                              marginHorizontal: 15,
-                              marginVertical: 10,
-                              labelText: "Бүсийн нэр",
-                              secondText: business.areaRegion?.name,
-                              secondTextColor: networkColor,
-                              onClick: () {},
-                              arrowColor: networkColor,
-                            ),
-                            FieldCard(
-                              color: white,
-                              marginHorizontal: 15,
-                              marginVertical: 10,
-                              labelText: "Чиглэл",
-                              secondText: business.areaDirection?.name,
-                              secondTextColor: networkColor,
-                              onClick: () {},
-                              arrowColor: networkColor,
-                            ),
-                          ],
-                        )
-                      : SizedBox(),
-                  SizedBox(
-                    height: 60,
                   ),
                 ],
               ),

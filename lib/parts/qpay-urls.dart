@@ -6,7 +6,7 @@ Urls _$UrlsFromJson(Map<String, dynamic> json) {
     description:
         json['description'] != null ? json['description'] as String : null,
     logo: json['logo'] != null ? json['logo'] as String : null,
-    link: json['link'] != null ? json['link'] as String : null,
+    link: json['link'] != null ? Uri.parse(json['link'].toString()) : null,
   );
 }
 

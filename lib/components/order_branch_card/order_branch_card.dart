@@ -106,7 +106,7 @@ class _OrderBranchCardState extends State<OrderBranchCard> {
             ),
             SvgPicture.asset(
               'assets/svg/map.svg',
-              color: orderColor,
+              colorFilter: ColorFilter.mode(orderColor, BlendMode.srcIn),
             ),
           ],
         ),

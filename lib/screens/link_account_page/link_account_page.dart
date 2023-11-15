@@ -85,7 +85,7 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserProvider>(context, listen: true).businessUser;
+    user = Provider.of<UserProvider>(context, listen: true).paymentMe;
     general =
         Provider.of<GeneralProvider>(context, listen: false).paymentGeneral;
     return Scaffold(
@@ -368,46 +368,80 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
                   ),
                 ),
               ),
-              Column(
-                children: general.bankNames!
-                    .map(
-                      (data) => GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            bankName = data.name!;
-                            bankCode = data.code!;
-                            bankValidate = false;
-                          });
-                          Navigator.of(context).pop();
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(15),
-                          color: white,
-                          child: Row(
-                            children: [
-                              Container(
-                                height: 20,
-                                width: 20,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      '${data.icon}',
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text('${data.name}'),
-                            ],
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    bankName = 'Голомт банк';
+                    bankCode = 'GOLOMT';
+                    bankValidate = false;
+                  });
+                  Navigator.of(context).pop();
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(15),
+                  color: white,
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 20,
+                        width: 20,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              'https://play-lh.googleusercontent.com/9tUBesUsI4UIkpgO1MPIMLFvhDa_4vZE75TrVAUHFA7a0bJ7IIgeyh2r1QXs9VlmXmkX',
+                            ),
                           ),
                         ),
                       ),
-                    )
-                    .toList(),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text('Голомт банк'),
+                    ],
+                  ),
+                ),
               ),
+              // Column(
+              //   children: general.bankNames!
+              //       .map(
+              //         (data) => GestureDetector(
+              //           onTap: () {
+              //             setState(() {
+              //               bankName = data.name!;
+              //               bankCode = data.code!;
+              //               bankValidate = false;
+              //             });
+              //             Navigator.of(context).pop();
+              //           },
+              //           child: Container(
+              //             padding: const EdgeInsets.all(15),
+              //             color: white,
+              //             child: Row(
+              //               children: [
+              //                 Container(
+              //                   height: 20,
+              //                   width: 20,
+              //                   decoration: BoxDecoration(
+              //                     borderRadius: BorderRadius.circular(10),
+              //                     image: DecorationImage(
+              //                       image: NetworkImage(
+              //                         '${data.icon}',
+              //                       ),
+              //                     ),
+              //                   ),
+              //                 ),
+              //                 SizedBox(
+              //                   width: 10,
+              //                 ),
+              //                 Text('${data.name}'),
+              //               ],
+              //             ),
+              //           ),
+              //         ),
+              //       )
+              //       .toList(),
+              // ),
               SizedBox(
                 height: 30,
               ),

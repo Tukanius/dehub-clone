@@ -48,7 +48,7 @@ class _OrderSendCustomerState extends State<OrderSendCustomer> {
                 'assets/svg/message_sent.svg',
                 height: 25,
                 width: 30,
-                color: orderColor,
+                colorFilter: ColorFilter.mode(orderColor, BlendMode.srcIn),
               ),
               SizedBox(
                 height: 15,

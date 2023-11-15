@@ -48,7 +48,7 @@ class Order {
   String? branchStatus;
   bool? isBuyer;
   bool? isSupplier;
-  DateTime? deliveryDate;
+  String? deliveryDate; // Must be String
   String? province;
   String? district;
   String? khoroo;
@@ -196,8 +196,15 @@ class Order {
   Order? order;
 
   Order? deliveryNote;
+  double? advancePercent;
+
+  List<Order>? values;
+  DateTime? header;
 
   Order({
+    this.values,
+    this.header,
+    this.advancePercent,
     this.deliveryNote,
     this.order,
     this.receipt,

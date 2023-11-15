@@ -29,14 +29,6 @@ class NewConditionPage extends StatefulWidget {
   State<NewConditionPage> createState() => _NewConditionPageState();
 }
 
-List<String> options = [
-  'Баталснаас хойш 10 хоногт төлөх',
-  "Баталсан дариу төлөх",
-  "Баталсан сарын сүүлийн өдөр төлөх",
-  "Баталсны дараа Х-ны өдөр төлөх",
-  "Тайлбар мэдээлэл",
-];
-
 class _NewConditionPageState extends State<NewConditionPage> {
   String currentOption = "INV_NET_X";
   int? selectedRadioValue;
@@ -48,17 +40,18 @@ class _NewConditionPageState extends State<NewConditionPage> {
 
   onSubmit() async {
     business.configType = currentOption;
-    business.expireDayCount = 10;
     business.condition = 'INV_CONFIG';
-    // business.month = 2;
-    business.paymentDay =
-        currentOption == "INV_NET_X" || currentOption == "INV_SOM"
-            ? (index! + 1)
-            : null;
+    business.expireDayCount = currentOption == "INV_NET_X" ? (index) : null;
     await BusinessApi().createPaymentTerm(business);
     widget.listenController.changeVariable('invoiceConditionCreate');
-    showCustomDialog(context, "Төлбөрийн нөхцөл амжилттай нэмлээ", true);
-    Navigator.of(context).pop();
+    showCustomDialog(
+      context,
+      "Төлбөрийн нөхцөл амжилттай нэмлээ",
+      true,
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
   }
 
   @override
@@ -174,7 +167,7 @@ class _NewConditionPageState extends State<NewConditionPage> {
                                           });
                                         },
                                         children: [
-                                          for (var i = 1; i < 31; i++)
+                                          for (var i = 0; i < 31; i++)
                                             Center(
                                               child: Text('${i}'),
                                             ),
@@ -206,7 +199,7 @@ class _NewConditionPageState extends State<NewConditionPage> {
                                           style: TextStyle(color: networkColor),
                                         )
                                       : Text(
-                                          '${this.index! + 1}',
+                                          '${this.index}',
                                           style: TextStyle(color: networkColor),
                                         ),
                                   SizedBox(
@@ -214,7 +207,8 @@ class _NewConditionPageState extends State<NewConditionPage> {
                                   ),
                                   SvgPicture.asset(
                                     'assets/svg/edit.svg',
-                                    color: networkColor,
+                                    colorFilter: ColorFilter.mode(
+                                        networkColor, BlendMode.srcIn),
                                   ),
                                 ],
                               ),
@@ -224,190 +218,190 @@ class _NewConditionPageState extends State<NewConditionPage> {
                       ),
                     ],
                   )
-                : currentOption == "INV_SOM"
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 10),
-                            child: Text(
-                              'Нэмэлт тохиргоо',
-                              style: TextStyle(
-                                color: grey3,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              showCupertinoModalPopup(
-                                context: context,
-                                builder: (context) {
-                                  return Container(
-                                    color: white,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.4,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text(
-                                            'Болсон',
-                                            style:
-                                                TextStyle(color: networkColor),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: CupertinoPicker(
-                                            itemExtent: 30,
-                                            onSelectedItemChanged: (index) {
-                                              setState(() {
-                                                this.indexMonth = index;
-                                              });
-                                            },
-                                            children: [
-                                              for (var i = 1; i < 13; i++)
-                                                Center(
-                                                  child: Text('${i}'),
-                                                ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                            child: Container(
-                              color: white,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Сар',
-                                    style: TextStyle(color: dark),
-                                  ),
-                                  Row(
-                                    children: [
-                                      this.indexMonth == null
-                                          ? Text(
-                                              '0',
-                                              style: TextStyle(
-                                                  color: networkColor),
-                                            )
-                                          : Text(
-                                              '${this.indexMonth! + 1}',
-                                              style: TextStyle(
-                                                  color: networkColor),
-                                            ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      SvgPicture.asset(
-                                        'assets/svg/edit.svg',
-                                        color: networkColor,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              showCupertinoModalPopup(
-                                context: context,
-                                builder: (context) {
-                                  return Container(
-                                    color: white,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.4,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text(
-                                            'Болсон',
-                                            style:
-                                                TextStyle(color: networkColor),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: CupertinoPicker(
-                                            itemExtent: 30,
-                                            onSelectedItemChanged: (index) {
-                                              setState(() {
-                                                this.indexDay = index;
-                                              });
-                                            },
-                                            children: [
-                                              for (var i = 1; i < 31; i++)
-                                                Center(
-                                                  child: Text('${i}'),
-                                                ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                            child: Container(
-                              color: white,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Хоногийн тоо',
-                                    style: TextStyle(color: dark),
-                                  ),
-                                  Row(
-                                    children: [
-                                      this.indexDay == null
-                                          ? Text(
-                                              '0',
-                                              style: TextStyle(
-                                                  color: networkColor),
-                                            )
-                                          : Text(
-                                              '${this.indexDay! + 1}',
-                                              style: TextStyle(
-                                                  color: networkColor),
-                                            ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      SvgPicture.asset(
-                                        'assets/svg/edit.svg',
-                                        color: networkColor,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    : SizedBox(),
+                // : currentOption == "INV_SOM"
+                //     ? Column(
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         children: [
+                //           Container(
+                //             margin: const EdgeInsets.symmetric(
+                //                 horizontal: 15, vertical: 10),
+                //             child: Text(
+                //               'Нэмэлт тохиргоо',
+                //               style: TextStyle(
+                //                 color: grey3,
+                //                 fontWeight: FontWeight.w600,
+                //               ),
+                //             ),
+                //           ),
+                //           GestureDetector(
+                //             onTap: () {
+                //               showCupertinoModalPopup(
+                //                 context: context,
+                //                 builder: (context) {
+                //                   return Container(
+                //                     color: white,
+                //                     height: MediaQuery.of(context).size.height *
+                //                         0.4,
+                //                     child: Column(
+                //                       crossAxisAlignment:
+                //                           CrossAxisAlignment.end,
+                //                       children: [
+                //                         TextButton(
+                //                           onPressed: () {
+                //                             Navigator.of(context).pop();
+                //                           },
+                //                           child: Text(
+                //                             'Болсон',
+                //                             style:
+                //                                 TextStyle(color: networkColor),
+                //                           ),
+                //                         ),
+                //                         Expanded(
+                //                           child: CupertinoPicker(
+                //                             itemExtent: 30,
+                //                             onSelectedItemChanged: (index) {
+                //                               setState(() {
+                //                                 this.indexMonth = index;
+                //                               });
+                //                             },
+                //                             children: [
+                //                               for (var i = 1; i < 13; i++)
+                //                                 Center(
+                //                                   child: Text('${i}'),
+                //                                 ),
+                //                             ],
+                //                           ),
+                //                         ),
+                //                       ],
+                //                     ),
+                //                   );
+                //                 },
+                //               );
+                //             },
+                //             child: Container(
+                //               color: white,
+                //               padding: const EdgeInsets.symmetric(
+                //                   horizontal: 15, vertical: 10),
+                //               child: Row(
+                //                 mainAxisAlignment:
+                //                     MainAxisAlignment.spaceBetween,
+                //                 children: [
+                //                   Text(
+                //                     'Сар',
+                //                     style: TextStyle(color: dark),
+                //                   ),
+                //                   Row(
+                //                     children: [
+                //                       this.indexMonth == null
+                //                           ? Text(
+                //                               '0',
+                //                               style: TextStyle(
+                //                                   color: networkColor),
+                //                             )
+                //                           : Text(
+                //                               '${this.indexMonth! + 1}',
+                //                               style: TextStyle(
+                //                                   color: networkColor),
+                //                             ),
+                //                       SizedBox(
+                //                         width: 5,
+                //                       ),
+                //                       SvgPicture.asset(
+                //                         'assets/svg/edit.svg',
+                //                         color: networkColor,
+                //                       ),
+                //                     ],
+                //                   ),
+                //                 ],
+                //               ),
+                //             ),
+                //           ),
+                //           GestureDetector(
+                //             onTap: () {
+                //               showCupertinoModalPopup(
+                //                 context: context,
+                //                 builder: (context) {
+                //                   return Container(
+                //                     color: white,
+                //                     height: MediaQuery.of(context).size.height *
+                //                         0.4,
+                //                     child: Column(
+                //                       crossAxisAlignment:
+                //                           CrossAxisAlignment.end,
+                //                       children: [
+                //                         TextButton(
+                //                           onPressed: () {
+                //                             Navigator.of(context).pop();
+                //                           },
+                //                           child: Text(
+                //                             'Болсон',
+                //                             style:
+                //                                 TextStyle(color: networkColor),
+                //                           ),
+                //                         ),
+                //                         Expanded(
+                //                           child: CupertinoPicker(
+                //                             itemExtent: 30,
+                //                             onSelectedItemChanged: (index) {
+                //                               setState(() {
+                //                                 this.indexDay = index;
+                //                               });
+                //                             },
+                //                             children: [
+                //                               for (var i = 1; i < 31; i++)
+                //                                 Center(
+                //                                   child: Text('${i}'),
+                //                                 ),
+                //                             ],
+                //                           ),
+                //                         ),
+                //                       ],
+                //                     ),
+                //                   );
+                //                 },
+                //               );
+                //             },
+                //             child: Container(
+                //               color: white,
+                //               padding: const EdgeInsets.symmetric(
+                //                   horizontal: 15, vertical: 10),
+                //               child: Row(
+                //                 mainAxisAlignment:
+                //                     MainAxisAlignment.spaceBetween,
+                //                 children: [
+                //                   Text(
+                //                     'Хоногийн тоо',
+                //                     style: TextStyle(color: dark),
+                //                   ),
+                //                   Row(
+                //                     children: [
+                //                       this.indexDay == null
+                //                           ? Text(
+                //                               '0',
+                //                               style: TextStyle(
+                //                                   color: networkColor),
+                //                             )
+                //                           : Text(
+                //                               '${this.indexDay!}',
+                //                               style: TextStyle(
+                //                                   color: networkColor),
+                //                             ),
+                //                       SizedBox(
+                //                         width: 5,
+                //                       ),
+                //                       SvgPicture.asset(
+                //                         'assets/svg/edit.svg',
+                //                         color: networkColor,
+                //                       ),
+                //                     ],
+                //                   ),
+                //                 ],
+                //               ),
+                //             ),
+                //           ),
+                //         ],
+                //       )
+                : SizedBox(),
             SizedBox(
               height: 50,
             ),

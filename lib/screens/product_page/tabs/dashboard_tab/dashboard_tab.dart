@@ -100,7 +100,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           ),
                           child: SvgPicture.asset(
                             'assets/svg/grid1.svg',
-                            color: productColor,
+                            colorFilter:
+                                ColorFilter.mode(productColor, BlendMode.srcIn),
                           ),
                         ),
                         SizedBox(
@@ -144,7 +145,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/push.svg',
-                          color: productColor,
+                          colorFilter:
+                              ColorFilter.mode(productColor, BlendMode.srcIn),
                         ),
                       ),
                       SizedBox(
@@ -180,7 +182,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/bag.svg',
-                          color: productColor,
+                          colorFilter:
+                              ColorFilter.mode(productColor, BlendMode.srcIn),
                         ),
                       ),
                       Text(
@@ -213,7 +216,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/map.svg',
-                          color: productColor,
+                          colorFilter:
+                              ColorFilter.mode(productColor, BlendMode.srcIn),
                         ),
                       ),
                       SizedBox(
@@ -249,7 +253,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/map.svg',
-                          color: productColor,
+                          colorFilter:
+                              ColorFilter.mode(productColor, BlendMode.srcIn),
                         ),
                       ),
                       SizedBox(

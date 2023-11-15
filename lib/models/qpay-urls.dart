@@ -4,7 +4,7 @@ class Urls {
   String? name;
   String? description;
   String? logo;
-  String? link;
+  Uri? link;
 
   Urls({
     this.name,

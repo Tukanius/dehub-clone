@@ -198,7 +198,8 @@ class _DeliveryDetailState extends State<DeliveryDetail> with AfterLayoutMixin {
                                 children: [
                                   SvgPicture.asset(
                                     'assets/svg/map.svg',
-                                    color: orderColor,
+                                    colorFilter: ColorFilter.mode(
+                                        orderColor, BlendMode.srcIn),
                                   ),
                                   SizedBox(
                                     width: 10,

@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/screens/no_internet/no_internet_screen.dart';
 import 'package:dehub/services/dialog.dart';
+import 'package:dehub/services/navigation.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,7 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'http_handler.dart';
 import '../main.dart';
-// import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class HttpRequest {
   static const host = 'http://dev-de-dehub.zto.mn/2fa';
@@ -96,8 +98,8 @@ class HttpRequest {
     if (method != 'GET') {
       debugPrint('body: $data');
     }
-    // final Connectivity _connectivity = Connectivity();
-    // ConnectivityResult result = ConnectivityResult.none;
+    final Connectivity _connectivity = Connectivity();
+    ConnectivityResult result = ConnectivityResult.none;
 
     try {
       switch (method) {
@@ -124,14 +126,14 @@ class HttpRequest {
       }
 
       return HttpHandler(statusCode: response?.statusCode).handle(response);
-    } on DioError catch (ex) {
+    } on DioException catch (ex) {
       try {
-        // result = await _connectivity.checkConnectivity();
-        // if (result == ConnectivityResult.none) {
-        // MyApp.dialogService!
-        // .showInternetErrorDialog("No internet connection");
-        // return null;
-        // }
+        result = await _connectivity.checkConnectivity();
+        if (result == ConnectivityResult.none) {
+          locator<NavigationService>()
+              .pushNamed(routeName: NoInternetScreen.routeName);
+          return null;
+        }
       } on PlatformException catch (e) {
         debugPrint(e.toString());
       }

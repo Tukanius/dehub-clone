@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
             ),
             child: SvgPicture.asset(
               'assets/svg/grid1.svg',
-              color: partnerColor,
+              colorFilter: ColorFilter.mode(partnerColor, BlendMode.srcIn),
             ),
           ),
           Text(
@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
             ),
             child: SvgPicture.asset(
               'assets/svg/grid1.svg',
-              color: partnerColor,
+              colorFilter: ColorFilter.mode(partnerColor, BlendMode.srcIn),
             ),
           ),
           Text(
@@ -114,7 +114,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/partner.svg',
-                          color: partnerColor,
+                          colorFilter:
+                              ColorFilter.mode(partnerColor, BlendMode.srcIn),
                         ),
                       ),
                       SizedBox(
@@ -149,7 +150,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/push.svg',
-                          color: partnerColor,
+                          colorFilter:
+                              ColorFilter.mode(partnerColor, BlendMode.srcIn),
                         ),
                       ),
                       SizedBox(
@@ -184,7 +186,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/bag.svg',
-                          color: partnerColor,
+                          colorFilter:
+                              ColorFilter.mode(partnerColor, BlendMode.srcIn),
                         ),
                       ),
                       Text(
@@ -216,7 +219,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/map.svg',
-                          color: partnerColor,
+                          colorFilter:
+                              ColorFilter.mode(partnerColor, BlendMode.srcIn),
                         ),
                       ),
                       SizedBox(
@@ -251,7 +255,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/map.svg',
-                          color: partnerColor,
+                          colorFilter:
+                              ColorFilter.mode(partnerColor, BlendMode.srcIn),
                         ),
                       ),
                       SizedBox(

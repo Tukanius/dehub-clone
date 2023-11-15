@@ -1,3 +1,4 @@
+import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomBackButton extends StatefulWidget {
@@ -19,7 +20,8 @@ class _CustomBackButtonState extends State<CustomBackButton> {
         Navigator.of(context).pop();
       },
       child: Container(
-        margin: const EdgeInsets.only(left: 15),
+        color: transparent,
+        padding: const EdgeInsets.only(left: 15),
         child: Row(
           children: [
             Icon(

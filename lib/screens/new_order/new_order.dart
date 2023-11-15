@@ -7,10 +7,10 @@ import 'package:dehub/components/possible-schedule/possible-schedule-card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/new_order/add_attachment.dart';
-import 'package:dehub/screens/new_order/order_add_row.dart';
-import 'package:dehub/screens/new_order/change_branch_name.dart';
-import 'package:dehub/screens/new_order/product_choose/product_choose_in_pieces/product_choose.dart';
+import 'package:dehub/screens/new_order/add_attachment/add_attachment.dart';
+import 'package:dehub/screens/new_order/add_row/order_add_row.dart';
+import 'package:dehub/screens/new_order/change_branch/change_branch_name.dart';
+import 'package:dehub/screens/new_order/product_choose/product_choose.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -18,7 +18,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dehub/screens/new_order/customer_choose.dart';
+import 'package:dehub/screens/new_order/customer_choose/customer_choose.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/models/order.dart';
 import 'package:provider/provider.dart';
@@ -26,15 +26,19 @@ import 'package:file_picker/file_picker.dart';
 
 class NewOrderArguments {
   String? id;
+  ListenController? listenController;
   NewOrderArguments({
     this.id,
+    this.listenController,
   });
 }
 
 class NewOrder extends StatefulWidget {
   final String? id;
+  final ListenController? listenController;
   static const routeName = '/NewOrder';
   const NewOrder({
+    this.listenController,
     this.id,
     Key? key,
   }) : super(key: key);
@@ -55,31 +59,35 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   Order receiverBranch = Order();
   DateTime? selectedDate;
   FilePickerResult? result;
+  // Lists
   List<Order> product = [];
   List<Order> packageProduct = [];
-  final duplicates = Set();
   List<Order> data = [];
   List<Order> additionalLines = [];
   List<Order> asdf = [];
   List<FilePickerResult> files = [];
+  // Controllers
   ListenController receiverBranchController = ListenController();
   ListenController customerListenController = ListenController();
   ListenController additionalRowsListenController = ListenController();
   ListenController productListenController = ListenController();
-  TextEditingController shippingAmountController = TextEditingController();
-  ScrollController scrollController = ScrollController();
   ListenController pickedFile = ListenController();
   ListenController productInPackageController = ListenController();
+  ScrollController scrollController = ScrollController();
+  TextEditingController shippingAmountController = TextEditingController();
+  // Amounts
   double totalVatAmount = 0;
   double totalTaxAmount = 0;
   double totalAmount = 0;
   double finalAmount = 0;
   double discountAmount = 0;
   double shippingAmount = 0;
-  bool isCheck = false;
+  //
   var dateKey = GlobalKey();
   var customerKey = GlobalKey();
   var productKey = GlobalKey();
+  bool isCheck = false;
+  // Validates
   bool selectedDateValidate = false;
   bool customerValidate = false;
   bool productValidate = false;
@@ -105,7 +113,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
         productValidate = true;
       });
     }
-    if (isCheck == false && selectedDate == '') {
+    if (isCheck == false && selectedDate == null) {
       Scrollable.ensureVisible(dateKey.currentContext!,
           duration: Duration(milliseconds: 300), curve: Curves.ease);
       setState(() {
@@ -137,7 +145,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
       await OrderApi().createOrder(Order(
         businessId: order.id,
         receiverBranchId: receiverBranch.id ?? order.receiverBranches?.first.id,
-        deliveryDate: isCheck == false ? selectedDate : dateTime,
+        deliveryDate:
+            isCheck == false ? selectedDate.toString() : dateTime.toString(),
         deliveryType: isCheck == false ? "DEFAULT_DATE" : "CUSTOM_DATE",
         receiverStaffId: order.receiverStaff?.id,
         lines: data,
@@ -152,6 +161,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
         "Захиалга амжилттай илгээгдлээ",
         true,
         onPressed: () {
+          widget.listenController?.changeVariable('NewOrder');
           Navigator.of(context).pop();
         },
       );
@@ -369,7 +379,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                               ],
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -1073,7 +1083,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                           color: white,
                           padding: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
@@ -1082,12 +1092,19 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                   color: buttonColor,
                                 ),
                               ),
-                              Text(
-                                'XXX,XXX,XXX.XX₮',
-                                style: TextStyle(
-                                  color: orderColor,
-                                ),
-                              ),
+                              order.paymentTerm?.advancePercent != null
+                                  ? Text(
+                                      '${Utils().formatCurrency((finalAmount * (order.paymentTerm!.advancePercent! / 100)).toString())}₮',
+                                      style: TextStyle(
+                                        color: orderColor,
+                                      ),
+                                    )
+                                  : Text(
+                                      "${Utils().formatCurrency(finalAmount.toString())}",
+                                      style: TextStyle(
+                                        color: orderColor,
+                                      ),
+                                    ),
                             ],
                           ),
                         )
@@ -1253,7 +1270,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                   children: [
                                     SvgPicture.asset(
                                       'assets/svg/save.svg',
-                                      color: orderColor,
+                                      colorFilter: ColorFilter.mode(
+                                          orderColor, BlendMode.srcIn),
                                     ),
                                     const Text(
                                       'Хадгалах',
@@ -1281,7 +1299,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                   children: [
                                     SvgPicture.asset(
                                       'assets/svg/control.svg',
-                                      color: orderColor,
+                                      colorFilter: ColorFilter.mode(
+                                          orderColor, BlendMode.srcIn),
                                     ),
                                     const Text(
                                       'Хянуулах',
@@ -1310,7 +1329,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                   children: [
                                     SvgPicture.asset(
                                       'assets/svg/message_sent.svg',
-                                      color: orderColor,
+                                      colorFilter: ColorFilter.mode(
+                                          orderColor, BlendMode.srcIn),
                                     ),
                                     const Text(
                                       'Илгээх',

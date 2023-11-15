@@ -29,7 +29,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
 
   List<Color> colorList = [
     financingColor,
-    networkColor,
+    financingColor,
     userColor,
     partnerColor,
   ];
@@ -99,7 +99,8 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                           ),
                           child: SvgPicture.asset(
                             'assets/svg/camera.svg',
-                            color: financingColor,
+                            colorFilter: ColorFilter.mode(
+                                financingColor, BlendMode.srcIn),
                           ),
                         ),
                         SizedBox(
@@ -138,7 +139,8 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/push.svg',
-                          color: financingColor,
+                          colorFilter:
+                              ColorFilter.mode(financingColor, BlendMode.srcIn),
                         ),
                       ),
                       SizedBox(
@@ -176,7 +178,8 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/bag.svg',
-                          color: financingColor,
+                          colorFilter:
+                              ColorFilter.mode(financingColor, BlendMode.srcIn),
                         ),
                       ),
                       Text(
@@ -216,7 +219,8 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                           ),
                           child: SvgPicture.asset(
                             'assets/svg/sanhuujiltS.svg',
-                            color: financingColor,
+                            colorFilter: ColorFilter.mode(
+                                financingColor, BlendMode.srcIn),
                           ),
                         ),
                         SizedBox(
@@ -260,7 +264,8 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                           ),
                           child: SvgPicture.asset(
                             'assets/svg/map.svg',
-                            color: financingColor,
+                            colorFilter: ColorFilter.mode(
+                                financingColor, BlendMode.srcIn),
                           ),
                         ),
                         SizedBox(
@@ -315,7 +320,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                                 Text(
                                   "Бүгдийг",
                                   style: TextStyle(
-                                    color: networkColor,
+                                    color: financingColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -325,7 +330,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                                 ),
                                 Icon(
                                   Icons.arrow_forward_ios,
-                                  color: networkColor,
+                                  color: financingColor,
                                   size: 16,
                                 ),
                                 SizedBox(
@@ -474,7 +479,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                                 Text(
                                   "Бүгдийг",
                                   style: TextStyle(
-                                    color: networkColor,
+                                    color: financingColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -484,7 +489,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                                 ),
                                 Icon(
                                   Icons.arrow_forward_ios,
-                                  color: networkColor,
+                                  color: financingColor,
                                   size: 16,
                                 ),
                                 SizedBox(
@@ -555,7 +560,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                                 datum.name == "Зөвшөөрсөн"
                                     ? networkDashboard2
                                     : datum.name == "Илгээсэн"
-                                        ? networkColor
+                                        ? financingColor
                                         : grey2,
                             dataSource: legend,
                             xValueMapper: (gdp, _) => gdp.name,
@@ -592,7 +597,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                     //             Text(
                     //               "Бүгдийг",
                     //               style: TextStyle(
-                    //                 color: networkColor,
+                    //                 color: financingColor,
                     //                 fontSize: 12,
                     //                 fontWeight: FontWeight.w500,
                     //               ),
@@ -602,7 +607,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                     //             ),
                     //             Icon(
                     //               Icons.arrow_forward_ios,
-                    //               color: networkColor,
+                    //               color: financingColor,
                     //               size: 16,
                     //             ),
                     //             SizedBox(
@@ -671,7 +676,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                     //             datum.name == "Зөвшөөрсөн"
                     //                 ? networkDashboard2
                     //                 : datum.name == "Илгээсэн"
-                    //                     ? networkColor
+                    //                     ? financingColor
                     //                     : grey2,
                     //         dataSource: received.stats!,
                     //         xValueMapper: (gdp, _) => gdp.name,

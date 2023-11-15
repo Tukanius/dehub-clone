@@ -78,14 +78,16 @@ class _CheckBiometricState extends State<CheckBiometric> with AfterLayoutMixin {
                 child: bioType == "FACE"
                     ? SvgPicture.asset(
                         faceIdIcon,
-                        color: buttonColor,
+                        colorFilter:
+                            ColorFilter.mode(buttonColor, BlendMode.srcIn),
                         height: 50,
                         width: 50,
                         fit: BoxFit.cover,
                       )
                     : SvgPicture.asset(
                         fingerPrintIcon,
-                        color: buttonColor,
+                        colorFilter:
+                            ColorFilter.mode(buttonColor, BlendMode.srcIn),
                         height: 50,
                         width: 50,
                         fit: BoxFit.cover,

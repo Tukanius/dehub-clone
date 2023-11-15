@@ -152,7 +152,8 @@ void showStartDialog(BuildContext context) {
               ),
               SvgPicture.asset(
                 'assets/svg/dollar-sign.svg',
-                color: Color(0xff1B5EAA),
+                colorFilter:
+                    ColorFilter.mode(Color(0xff1B5EAA), BlendMode.srcIn),
               ),
             ],
           ),

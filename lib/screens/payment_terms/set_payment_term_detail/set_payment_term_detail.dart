@@ -4,6 +4,7 @@ import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/general.dart';
+import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/screens/payment_terms/set_payment_term/set_payment_term.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -37,6 +38,7 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
   ListenController listenController = ListenController();
   bool isLoading = true;
   General general = General();
+  Result configType = Result(count: 0, rows: []);
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -252,7 +254,8 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                     ),
                     SvgPicture.asset(
                       'assets/svg/edit.svg',
-                      color: networkColor,
+                      colorFilter:
+                          ColorFilter.mode(networkColor, BlendMode.srcIn),
                     ),
                   ],
                 ),

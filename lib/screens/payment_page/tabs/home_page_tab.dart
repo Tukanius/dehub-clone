@@ -50,7 +50,8 @@ class _HomePageTabState extends State<HomePageTab> {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/grid1.svg',
-                          color: paymentColor,
+                          colorFilter:
+                              ColorFilter.mode(paymentColor, BlendMode.srcIn),
                         ),
                       ),
                       SizedBox(
@@ -86,7 +87,8 @@ class _HomePageTabState extends State<HomePageTab> {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/push.svg',
-                          color: paymentColor,
+                          colorFilter:
+                              ColorFilter.mode(paymentColor, BlendMode.srcIn),
                         ),
                       ),
                       SizedBox(
@@ -122,7 +124,8 @@ class _HomePageTabState extends State<HomePageTab> {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/bag.svg',
-                          color: paymentColor,
+                          colorFilter:
+                              ColorFilter.mode(paymentColor, BlendMode.srcIn),
                         ),
                       ),
                       Text(
@@ -155,7 +158,8 @@ class _HomePageTabState extends State<HomePageTab> {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/map.svg',
-                          color: paymentColor,
+                          colorFilter:
+                              ColorFilter.mode(paymentColor, BlendMode.srcIn),
                         ),
                       ),
                       SizedBox(
@@ -191,7 +195,8 @@ class _HomePageTabState extends State<HomePageTab> {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/map.svg',
-                          color: paymentColor,
+                          colorFilter:
+                              ColorFilter.mode(paymentColor, BlendMode.srcIn),
                         ),
                       ),
                       SizedBox(

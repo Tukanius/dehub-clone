@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SearchButton extends StatefulWidget {
-  final Color? color;
+  final Color color;
   final Function(String query)? onChange;
   final Color? textColor;
   final Color? borderColor;
@@ -12,7 +12,7 @@ class SearchButton extends StatefulWidget {
     Key? key,
     this.borderColor,
     this.textColor,
-    this.color,
+    required this.color,
     this.onChange,
   }) : super(key: key);
 
@@ -85,7 +85,7 @@ class _SearchButtonState extends State<SearchButton> {
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
               child: SvgPicture.asset(
                 'assets/svg/yuluur.svg',
-                color: widget.color,
+                colorFilter: ColorFilter.mode(widget.color, BlendMode.srcIn),
               ),
             ),
           ),

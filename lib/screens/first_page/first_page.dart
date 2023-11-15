@@ -38,6 +38,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
   bool isLoading = true;
   List<Invoice> filtered = [];
   User user = User();
+  bool startAnimation = false;
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
@@ -50,6 +51,11 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
     setState(() {
       invoice = res;
       isLoading = false;
+    });
+    Future.delayed(Duration(milliseconds: 100), () {
+      setState(() {
+        startAnimation = true;
+      });
     });
   }
 
@@ -344,6 +350,8 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                 children: invoice.rows!
                                     .map(
                                       (e) => InvoiceCard(
+                                        startAnimation: startAnimation,
+                                        index: invoice.rows!.indexOf(e),
                                         data: e,
                                       ),
                                     )
@@ -402,7 +410,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                           ),
                         ],
                       ),
-                    )
+                    ),
             ],
           ),
         ),

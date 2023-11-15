@@ -3,6 +3,7 @@ import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/screens/payment_page/tabs/add_bank_account_page/add_bank_account_page.dart';
+import './tabs/dashboard_tab/dashboard_tab.dart';
 import 'package:dehub/screens/link_account_page/link_account_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -35,7 +36,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
 
   static const List<Widget> currentPages = [
     HomePageTab(),
-    Text('1'),
+    DashboardTab(),
     AddBankAccountPage(),
     Text('1'),
   ];
@@ -83,7 +84,9 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/grid.svg',
-                    color: selectedIndex != 3 ? paymentColor : white,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex != 3 ? paymentColor : white,
+                        BlendMode.srcIn),
                   ),
                 )
               : selectedIndex == 2
@@ -139,7 +142,9 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                     padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
                     child: SvgPicture.asset(
                       'assets/svg/home.svg',
-                      color: selectedIndex == 0 ? white : paymentColor,
+                      colorFilter: ColorFilter.mode(
+                          selectedIndex == 0 ? white : paymentColor,
+                          BlendMode.srcIn),
                     ),
                   ),
                   selectedIndex != 0
@@ -164,7 +169,9 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                   padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/dashboard.svg',
-                    color: selectedIndex == 1 ? white : paymentColor,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 1 ? white : paymentColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 selectedIndex != 1
@@ -188,7 +195,9 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/wallet.svg',
-                    color: selectedIndex == 2 ? white : paymentColor,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 2 ? white : paymentColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 selectedIndex != 2
@@ -212,7 +221,9 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/grid2.svg',
-                    color: selectedIndex == 3 ? white : paymentColor,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 3 ? white : paymentColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 selectedIndex != 3

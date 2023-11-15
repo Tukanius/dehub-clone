@@ -183,7 +183,8 @@ class _DeliveryCardState extends State<DeliveryCard> {
                       ),
                       SvgPicture.asset(
                         'assets/svg/inv.svg',
-                        color: darkGreen,
+                        colorFilter:
+                            ColorFilter.mode(darkGreen, BlendMode.srcIn),
                       ),
                       Text(
                         ' ${widget.data?.salesCode}',
@@ -263,7 +264,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                       width: 5,
                     ),
                     Text(
-                      '${DateFormat("yyyy-MM-dd").format(widget.data!.deliveryDate!)}',
+                      '${DateFormat("yyyy-MM-dd").format(DateTime.parse(widget.data!.deliveryDate.toString()))}',
                       style: TextStyle(
                         color: buttonColor,
                         fontSize: 12,
@@ -322,7 +323,8 @@ class _DeliveryCardState extends State<DeliveryCard> {
                                       user.currentBusiness?.type == "BUYER"
                                   ? SvgPicture.asset(
                                       'assets/svg/check_underline.svg',
-                                      color: white,
+                                      colorFilter: ColorFilter.mode(
+                                          white, BlendMode.srcIn),
                                     )
                                   : SvgPicture.asset('assets/svg/bx_timer.svg'),
                               SizedBox(

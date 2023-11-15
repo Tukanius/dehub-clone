@@ -2,6 +2,7 @@ import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/close_button/close_button.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
@@ -66,10 +67,19 @@ class _SetClientClassificationState extends State<SetClientClassification> {
       await BusinessApi().setClientClassification(
         BusinessNetwork(
           businessIds: [widget.id],
-          classificationCategoryId: className,
+          classificationCategoryId: classId,
           classificationPriorityId: rankId,
           classificationDesc: controller.text,
         ),
+      );
+      showCustomDialog(
+        context,
+        "Амжилттай хадгаллааа",
+        true,
+        onPressed: () {
+          Navigator.of(context).pop();
+          widget.listenController.changeVariable('SetClassification');
+        },
       );
       setState(() {
         isSubmit = false;
@@ -151,7 +161,6 @@ class _SetClientClassificationState extends State<SetClientClassification> {
               color: white,
               padding: const EdgeInsets.all(15),
               child: FormTextField(
-                readOnly: true,
                 controller: controller,
                 textAlign: TextAlign.left,
                 name: 'description',

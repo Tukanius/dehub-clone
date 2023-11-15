@@ -116,7 +116,8 @@ class _GiveFundingCardState extends State<GiveFundingCard> {
                       children: [
                         SvgPicture.asset(
                           'assets/svg/inv.svg',
-                          color: buttonColor,
+                          colorFilter:
+                              ColorFilter.mode(buttonColor, BlendMode.srcIn),
                         ),
                         SizedBox(
                           width: 3,

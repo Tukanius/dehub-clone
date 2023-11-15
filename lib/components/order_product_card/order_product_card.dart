@@ -1,4 +1,6 @@
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/order.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +14,10 @@ class OrderProductCard extends StatefulWidget {
   final Order? data;
   final bool? readOnly;
   final bool? isTap;
+  final ListenController? listenController;
   const OrderProductCard({
     this.onCloseClick,
+    this.listenController,
     this.readOnly,
     this.isTap,
     Key? key,
@@ -43,14 +47,15 @@ class _OrderProductCardState extends State<OrderProductCard>
   }
 
   decrease() {
-    setState(() {
-      if (int.parse(quantityController.text) > 0) {
+    if (int.parse(quantityController.text) > 0) {
+      setState(() {
         int currentValue = int.tryParse(quantityController.text) ?? 0;
         newValue = currentValue - 1;
         quantityController.text = newValue.toString();
         widget.data?.quantity = int.parse(quantityController.text.toString());
-      }
-    });
+        widget.listenController?.changeVariable('decrease');
+      });
+    }
   }
 
   @override
@@ -65,6 +70,7 @@ class _OrderProductCardState extends State<OrderProductCard>
       newValue = currentValue + 1;
       quantityController.text = newValue.toString();
       widget.data?.quantity = int.parse(quantityController.text.toString());
+      widget.listenController?.changeVariable('increase');
     });
   }
 
@@ -77,7 +83,7 @@ class _OrderProductCardState extends State<OrderProductCard>
         decoration: BoxDecoration(
           border: Border.all(
             width: 2,
-            color: widget.isTap == true ? orderColor : transparent,
+            color: widget.data?.quantity != 0 ? orderColor : transparent,
           ),
           color: white,
         ),
@@ -95,7 +101,16 @@ class _OrderProductCardState extends State<OrderProductCard>
                           borderRadius: BorderRadius.circular(12),
                           image: DecorationImage(
                             image: NetworkImage('${widget.data?.image}'),
+                            fit: BoxFit.cover,
                           ),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(0, 1),
+                              blurRadius: 3,
+                              spreadRadius: 3,
+                              color: lightGrey,
+                            ),
+                          ],
                         ),
                       )
                     : Container(
@@ -103,11 +118,19 @@ class _OrderProductCardState extends State<OrderProductCard>
                         width: 56,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: black,
+                          color: grey,
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(0, 1),
+                              blurRadius: 3,
+                              spreadRadius: 3,
+                              color: lightGrey,
+                            ),
+                          ],
                         ),
                       ),
                 SizedBox(
-                  width: 5,
+                  width: 10,
                 ),
                 Expanded(
                   child: Column(
@@ -166,7 +189,7 @@ class _OrderProductCardState extends State<OrderProductCard>
                   onTap: widget.onCloseClick,
                   child: SvgPicture.asset(
                     'assets/svg/close.svg',
-                    color: grey3,
+                    colorFilter: ColorFilter.mode(grey3, BlendMode.srcIn),
                     height: 16,
                     width: 16,
                   ),
@@ -296,62 +319,6 @@ class _OrderProductCardState extends State<OrderProductCard>
                     ),
                   ],
                 ),
-                // Column(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Text(
-                //       'Үлдэгдэл',
-                //       style: TextStyle(
-                //         color: coolGrey,
-                //         fontSize: 12,
-                //       ),
-                //     ),
-                //     SizedBox(
-                //       height: 3,
-                //     ),
-                //     Row(
-                //       children: [
-                //         SvgPicture.asset(
-                //           'assets/svg/zahialga.svg',
-                //           color: black,
-                //           height: 9,
-                //           width: 12,
-                //         ),
-                //         SizedBox(
-                //           width: 5,
-                //         ),
-                //         Text(
-                //           '${widget.data?.onDeliveryQuantity}',
-                //           style: TextStyle(
-                //             color: orderColor,
-                //             fontSize: 12,
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //     Row(
-                //       children: [
-                //         SvgPicture.asset(
-                //           'assets/svg/ware-house.svg',
-                //           color: black,
-                //           height: 9,
-                //           width: 12,
-                //         ),
-                //         SizedBox(
-                //           width: 5,
-                //         ),
-                //         Text(
-                //           '${widget.data?.warehouseQuantity}',
-                //           style: TextStyle(
-                //             color: dark,
-                //             fontSize: 12,
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   ],
-                // ),
               ],
             ),
             Divider(),
@@ -415,8 +382,8 @@ class _OrderProductCardState extends State<OrderProductCard>
                         readOnly: widget.readOnly!,
                         onChanged: (value) {
                           setState(() {
-                            widget.data!.quantity =
-                                int.parse(quantityController.text);
+                            widget.data?.quantity =
+                                int.tryParse(quantityController.text) ?? 0;
                           });
                         },
                         fontSize: 18,
@@ -492,7 +459,7 @@ class _OrderProductCardState extends State<OrderProductCard>
                       ),
                 widget.data?.quantity != null && widget.data?.price != null
                     ? Text(
-                        '${widget.data!.price! * widget.data!.quantity!}₮',
+                        '${Utils().formatCurrency((widget.data!.price! * widget.data!.quantity!).toString())}₮',
                         style: TextStyle(
                           color: grey2,
                           fontWeight: FontWeight.w600,

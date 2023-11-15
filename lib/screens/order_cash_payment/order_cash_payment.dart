@@ -105,7 +105,7 @@ class _OrderCashPaymentState extends State<OrderCashPayment> {
                 children: [
                   SvgPicture.asset(
                     'assets/svg/sanhuujilt.svg',
-                    color: orderColor,
+                    colorFilter: ColorFilter.mode(orderColor, BlendMode.srcIn),
                     height: 20,
                   ),
                   SizedBox(

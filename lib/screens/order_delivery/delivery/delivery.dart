@@ -185,7 +185,8 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                     child: Center(
                                       child: SvgPicture.asset(
                                         'assets/svg/map.svg',
-                                        color: white,
+                                        colorFilter: ColorFilter.mode(
+                                            white, BlendMode.srcIn),
                                       ),
                                     ),
                                   ),
@@ -202,7 +203,8 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                     child: Center(
                                       child: SvgPicture.asset(
                                         'assets/svg/call.svg',
-                                        color: white,
+                                        colorFilter: ColorFilter.mode(
+                                            white, BlendMode.srcIn),
                                       ),
                                     ),
                                   ),
@@ -263,7 +265,8 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                     children: [
                                       SvgPicture.asset(
                                         'assets/svg/inv.svg',
-                                        color: darkGreen,
+                                        colorFilter: ColorFilter.mode(
+                                            darkGreen, BlendMode.srcIn),
                                       ),
                                       SizedBox(
                                         width: 5,

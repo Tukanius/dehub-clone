@@ -170,7 +170,9 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                     padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
                     child: SvgPicture.asset(
                       'assets/svg/home.svg',
-                      color: selectedIndex == 0 ? white : orderColor,
+                      colorFilter: ColorFilter.mode(
+                          selectedIndex == 0 ? white : orderColor,
+                          BlendMode.srcIn),
                     ),
                   ),
                   selectedIndex != 0
@@ -195,7 +197,9 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                   padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/dashboard.svg',
-                    color: selectedIndex == 1 ? white : orderColor,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 1 ? white : orderColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 selectedIndex != 1
@@ -219,7 +223,9 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/order.svg',
-                    color: selectedIndex == 2 ? white : orderColor,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 2 ? white : orderColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 selectedIndex != 2
@@ -243,7 +249,9 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/order_customer.svg',
-                    color: selectedIndex == 3 ? white : orderColor,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 3 ? white : orderColor,
+                        BlendMode.srcIn),
                   ),
                 ),
                 selectedIndex != 3

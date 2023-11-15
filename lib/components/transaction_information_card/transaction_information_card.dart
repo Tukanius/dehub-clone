@@ -26,10 +26,18 @@ class _TransactionInformationCardState
   General general = General();
 
   getCurrency() {
-    var res = general.currencies!
-        .firstWhere(
-            (element) => element.code == widget.data?.creditAccountCurrency)
-        .symbol;
+    var res;
+    if (widget.data?.creditAccountCurrency != null) {
+      res = general.currencies!
+          .firstWhere(
+              (element) => element.code == widget.data?.creditAccountCurrency)
+          .symbol;
+    } else {
+      res = general.currencies!
+          .firstWhere(
+              (element) => element.code == widget.data?.debitAccountCurrency)
+          .symbol;
+    }
     return res;
   }
 

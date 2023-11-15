@@ -87,7 +87,7 @@ class _SetAccountState extends State<SetAccount> {
         automaticallyImplyLeading: false,
         backgroundColor: networkColor,
         title: Text(
-          'Ажилтан хариуцуулах',
+          'Данс тохируулах',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -201,7 +201,7 @@ class _SetAccountState extends State<SetAccount> {
                 Container(
                   margin: const EdgeInsets.only(top: 25, bottom: 20),
                   child: Text(
-                    'Хариуцсан ажилтан сонгох',
+                    'Орлогын данс сонгох',
                     style: TextStyle(
                       color: grey2,
                       fontWeight: FontWeight.w500,
@@ -283,7 +283,7 @@ class _SetAccountState extends State<SetAccount> {
                 Container(
                   margin: const EdgeInsets.only(top: 25, bottom: 20),
                   child: Text(
-                    'Орлох ажилтан сонгох',
+                    'Зарлагын данс сонгох',
                     style: TextStyle(
                       color: grey2,
                       fontWeight: FontWeight.w500,

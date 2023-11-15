@@ -80,7 +80,7 @@ class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
               ),
               SvgPicture.asset(
                 'assets/svg/lock.svg',
-                color: orderColor,
+                colorFilter: ColorFilter.mode(orderColor, BlendMode.srcIn),
               ),
               SizedBox(
                 height: 15,

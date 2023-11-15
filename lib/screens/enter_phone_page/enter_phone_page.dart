@@ -70,7 +70,7 @@ class _EnterPhonePageState extends State<EnterPhonePage> {
               ),
               SvgPicture.asset(
                 'assets/svg/mobile.svg',
-                color: orderColor,
+                colorFilter: ColorFilter.mode(orderColor, BlendMode.srcIn),
               ),
               SizedBox(
                 height: 15,

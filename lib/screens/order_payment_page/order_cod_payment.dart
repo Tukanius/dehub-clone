@@ -8,7 +8,7 @@ import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/invoice/payment_page/qpay_page.dart';
+import 'package:dehub/screens/invoice_payment/qpay_page.dart';
 // import 'package:dehub/screens/order_invoice/order_invoice.dart';
 import 'package:dehub/screens/order_cash_payment/order_cash_payment.dart';
 import 'package:dehub/screens/order_invoice/order_invoice.dart';
@@ -172,35 +172,29 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                           (e) => Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              e.firstName == "Нэхэмжлэх №"
-                                  ? Container(
-                                      margin: const EdgeInsets.symmetric(
-                                        horizontal: 15,
-                                        vertical: 10,
-                                      ),
-                                      child: Text(
+                              Container(
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 15,
+                                  vertical: 10,
+                                ),
+                                child: e.firstName == "Нэхэмжлэх №"
+                                    ? Text(
                                         'Төлбөрийн мэдээлэл',
                                         style: TextStyle(
                                           color: grey2,
                                           fontWeight: FontWeight.bold,
                                         ),
-                                      ),
-                                    )
-                                  : e.firstName == "Дансны дугаар"
-                                      ? Container(
-                                          margin: const EdgeInsets.symmetric(
-                                            horizontal: 15,
-                                            vertical: 10,
-                                          ),
-                                          child: Text(
+                                      )
+                                    : e.firstName == "Дансны дугаар"
+                                        ? Text(
                                             'Төлбөр авах данс',
                                             style: TextStyle(
                                               color: grey2,
                                               fontWeight: FontWeight.bold,
                                             ),
-                                          ),
-                                        )
-                                      : SizedBox(),
+                                          )
+                                        : SizedBox(),
+                              ),
                               FieldCard(
                                 marginHorizontal: 15,
                                 marginVertical: 15,
@@ -245,32 +239,35 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                                       'assets/svg/bank_account.svg',
                                     )
                                   : selectedMethod == 'QPay'
-                                      ? Image(
-                                          image: AssetImage(
-                                              'images/qpay_logo.png'),
-                                        )
+                                      ? Image.asset('images/qpay_logo.png')
                                       : selectedMethod == "Social Pay"
-                                          ? Image(
-                                              image: AssetImage(
-                                                  'images/social_pay_logo.png'),
-                                            )
+                                          ? Image.asset(
+                                              'images/social_pay_logo.png')
                                           : selectedMethod == "Картаар"
                                               ? SvgPicture.asset(
                                                   'assets/svg/bank_card.svg',
-                                                  color: grey3,
+                                                  colorFilter: ColorFilter.mode(
+                                                      grey3, BlendMode.srcIn),
                                                 )
                                               : selectedMethod ==
                                                       "Бэлэн мөнгөөр"
                                                   ? SvgPicture.asset(
                                                       'assets/svg/sanhuujilt.svg',
                                                       height: 20,
-                                                      color: grey3,
+                                                      colorFilter:
+                                                          ColorFilter.mode(
+                                                              grey3,
+                                                              BlendMode.srcIn),
                                                     )
                                                   : selectedMethod ==
                                                           "Бизнес тооцооны дансаар"
                                                       ? SvgPicture.asset(
                                                           'assets/svg/bank.svg',
-                                                          color: grey3,
+                                                          colorFilter:
+                                                              ColorFilter.mode(
+                                                                  grey3,
+                                                                  BlendMode
+                                                                      .srcIn),
                                                         )
                                                       : SizedBox(),
                               SizedBox(
@@ -503,6 +500,33 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
     );
   }
 
+  List<Order> paymentMethodList = [
+    Order(
+      image: 'assets/svg/bank.svg',
+      name: 'Бизнес тооцооны дансаар',
+    ),
+    Order(
+      image: 'images/qpay_logo.png',
+      name: 'Qpay',
+    ),
+    Order(
+      image: 'images/social_pay_logo.png',
+      name: 'Social Pay',
+    ),
+    Order(
+      image: 'assets/svg/bank_card.svg',
+      name: 'Картаар',
+    ),
+    Order(
+      image: 'assets/svg/sanhuujilt.svg',
+      name: 'Бэлэн мөнгөөр',
+    ),
+    Order(
+      image: 'assets/svg/bank_account.svg',
+      name: 'Дансаар',
+    ),
+  ];
+
   showModal() {
     showModalBottomSheet(
       useSafeArea: true,
@@ -542,178 +566,47 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                 SizedBox(
                   height: 25,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedMethod = "Бизнес тооцооны дансаар";
-                    });
-                    Navigator.of(context).pop();
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 5,
-                      ),
-                      SvgPicture.asset(
-                        'assets/svg/bank.svg',
-                        color: grey3,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        "Бизнес тооцооны дансаар",
-                        style: TextStyle(color: grey3),
-                      ),
-                    ],
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: paymentMethodList
+                      .map(
+                        (data) => GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedMethod = data.name;
+                            });
+                            Navigator.of(context).pop();
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(bottom: 25),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                data.image?[0] == 'a'
+                                    ? SvgPicture.asset(
+                                        '${data.image}',
+                                        colorFilter: ColorFilter.mode(
+                                            grey3, BlendMode.srcIn),
+                                      )
+                                    : Image.asset('${data.image}'),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  "${data.name}",
+                                  style: TextStyle(color: grey3),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
                 ),
                 SizedBox(
                   height: 25,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedMethod = "QPay";
-                    });
-                    Navigator.of(context).pop();
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Image(
-                        image: AssetImage('images/qpay_logo.png'),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        "QPay",
-                        style: TextStyle(color: grey3),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedMethod = "Social Pay";
-                    });
-                    Navigator.of(context).pop();
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Image(
-                        image: AssetImage('images/social_pay_logo.png'),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        "Social Pay",
-                        style: TextStyle(color: grey3),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedMethod = "Картаар";
-                    });
-                    Navigator.of(context).pop();
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 5,
-                      ),
-                      SvgPicture.asset(
-                        'assets/svg/bank_card.svg',
-                        color: grey3,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        "Картаар",
-                        style: TextStyle(color: grey3),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedMethod = "Бэлэн мөнгөөр";
-                    });
-                    Navigator.of(context).pop();
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 5,
-                      ),
-                      SvgPicture.asset(
-                        'assets/svg/sanhuujilt.svg',
-                        color: grey3,
-                        height: 20,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        "Бэлэн мөнгөөр",
-                        style: TextStyle(color: grey3),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedMethod = 'Дансаар';
-                    });
-                    Navigator.of(context).pop();
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 5,
-                      ),
-                      SvgPicture.asset(
-                        'assets/svg/bank_account.svg',
-                        color: grey3,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        "Дансаар",
-                        style: TextStyle(color: grey3),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 50,
                 ),
               ],
             ),

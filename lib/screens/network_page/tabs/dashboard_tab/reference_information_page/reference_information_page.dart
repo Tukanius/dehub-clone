@@ -88,7 +88,7 @@ class _ReferenceInformationPageState extends State<ReferenceInformationPage>
                     ),
                     child: SvgPicture.asset(
                       'assets/svg/bag.svg',
-                      color: white,
+                      colorFilter: ColorFilter.mode(white, BlendMode.srcIn),
                     ),
                   ),
                   SizedBox(

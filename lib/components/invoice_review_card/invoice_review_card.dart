@@ -37,7 +37,7 @@ class _InvoiceReviewCardState extends State<InvoiceReviewCard> {
             children: [
               SvgPicture.asset(
                 '${widget.data.image}',
-                color: grey,
+                colorFilter: ColorFilter.mode(grey, BlendMode.srcIn),
               ),
               SizedBox(
                 width: 5,

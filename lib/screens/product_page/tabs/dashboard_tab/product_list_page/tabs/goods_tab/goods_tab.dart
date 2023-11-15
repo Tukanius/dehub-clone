@@ -31,7 +31,7 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
   }
 
   list(page, limit, String value) async {
-    Filter filter = Filter(query: '${value}');
+    Filter filter = Filter(itemStatus: '');
     Offset offset = Offset(page: page, limit: limit);
     Result res = await InventoryApi()
         .listProduct(ResultArguments(filter: filter, offset: offset));
