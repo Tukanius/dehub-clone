@@ -7,7 +7,6 @@ import 'package:dehub/models/order.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/new_order/new_order.dart';
 import 'package:dehub/screens/received_order_detail/received_order_detail.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,7 +24,6 @@ class SalesTab extends StatefulWidget {
 }
 
 class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
-  Map<DateTime, List<Order>> groupedItems = {};
   List<Order> groupedList = [];
   Result order = Result(count: 0, rows: []);
   int page = 1;
@@ -39,7 +37,7 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
-    list(page, limit);
+    await list(page, limit);
   }
 
   list(page, limit) async {
@@ -52,15 +50,16 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
       order = res;
       isLoading = false;
     });
-    makeGroup();
     Future.delayed(Duration(milliseconds: 100), () {
       setState(() {
         startAnimation = true;
       });
     });
+    await makeGroup();
   }
 
   makeGroup() {
+    Map<DateTime, List<Order>> groupedItems = {};
     for (var data in order.rows!) {
       DateTime date =
           DateTime.parse(DateFormat("yyyy-MM-dd").format(data.createdAt));
@@ -80,17 +79,9 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
     });
   }
 
-  @override
-  void initState() {
-    listenController.addListener(() {
-      list(page, limit);
-    });
-    super.initState();
-  }
-
   void _onLoading() async {
     setState(() {
-      limit += 10;
+      page += 1;
     });
     await list(page, limit);
     refreshController.loadComplete();
@@ -103,6 +94,8 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
     await Future.delayed(Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
+      page = 1;
+      groupedList = [];
     });
     await list(page, limit);
     refreshController.refreshCompleted();
@@ -112,155 +105,141 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
-
-    return isLoading == true
-        ? Center(
-            child: CircularProgressIndicator(
-              color: orderColor,
-            ),
-          )
-        : SmartRefresher(
-            enablePullDown: true,
-            enablePullUp: true,
-            controller: refreshController,
-            header: WaterDropHeader(
-              waterDropColor: invoiceColor,
-              refresh: SizedBox(
-                height: 20,
-                width: 20,
+    return Column(
+      children: [
+        SearchButton(
+          color: orderColor,
+          textColor: orderColor,
+        ),
+        isLoading == true
+            ? Center(
                 child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: invoiceColor,
+                  color: orderColor,
+                ),
+              )
+            : Expanded(
+                child: SmartRefresher(
+                  enablePullDown: true,
+                  enablePullUp: true,
+                  controller: refreshController,
+                  header: WaterDropHeader(
+                    waterDropColor: orderColor,
+                    refresh: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: orderColor,
+                      ),
+                    ),
+                  ),
+                  onRefresh: _onRefresh,
+                  onLoading: _onLoading,
+                  footer: CustomFooter(
+                    builder: (context, mode) {
+                      Widget body;
+                      if (mode == LoadStatus.idle) {
+                        body = const Text("");
+                      } else if (mode == LoadStatus.loading) {
+                        body = const CupertinoActivityIndicator();
+                      } else if (mode == LoadStatus.failed) {
+                        body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
+                      } else {
+                        body = const Text("Мэдээлэл алга байна");
+                      }
+                      return SizedBox(
+                        height: 55.0,
+                        child: Center(child: body),
+                      );
+                    },
+                  ),
+                  child: groupedList.length != 0
+                      ? SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Column(
+                                children: groupedList
+                                    .map(
+                                      (data) => Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          AnimatedContainer(
+                                            curve: Curves.ease,
+                                            transform:
+                                                Matrix4.translationValues(
+                                                    startAnimation
+                                                        ? 0
+                                                        : MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                    0,
+                                                    0),
+                                            duration: Duration(
+                                              milliseconds: 300 +
+                                                  (groupedList.indexOf(data) *
+                                                      200),
+                                            ),
+                                            margin: const EdgeInsets.only(
+                                                left: 15, bottom: 10, top: 10),
+                                            child: Text(
+                                              '${DateFormat("yyyy-MM-dd").format(data.header!)}',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  color: grey2),
+                                            ),
+                                          ),
+                                          Column(
+                                            children: data.values!
+                                                .map(
+                                                  (item) => SalesOrderCard(
+                                                    type: user.currentBusiness
+                                                                ?.type ==
+                                                            "SUPPLIER"
+                                                        ? "SALES"
+                                                        : "PURCHASE",
+                                                    index: order.rows!
+                                                            .indexOf(item) +
+                                                        groupedList
+                                                            .indexOf(data),
+                                                    startAnimation:
+                                                        startAnimation,
+                                                    isReceiver: true,
+                                                    onClick: () {
+                                                      Navigator.of(context)
+                                                          .pushNamed(
+                                                        ReceivedOrderDetail
+                                                            .routeName,
+                                                        arguments:
+                                                            ReceivedOrderDetailArguments(
+                                                          id: item.id!,
+                                                        ),
+                                                      );
+                                                    },
+                                                    data: item,
+                                                  ),
+                                                )
+                                                .toList(),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                    .toList(),
+                              )
+                            ],
+                          ),
+                        )
+                      : NotFound(
+                          module: "ORDER",
+                          labelText: "Захиалга олдсонгүй",
+                        ),
                 ),
               ),
-            ),
-            onRefresh: _onRefresh,
-            onLoading: _onLoading,
-            footer: CustomFooter(
-              builder: (context, mode) {
-                Widget body;
-                if (mode == LoadStatus.idle) {
-                  body = const Text("");
-                } else if (mode == LoadStatus.loading) {
-                  body = const CupertinoActivityIndicator();
-                } else if (mode == LoadStatus.failed) {
-                  body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                } else {
-                  body = const Text("Мэдээлэл алга байна");
-                }
-                return SizedBox(
-                  height: 55.0,
-                  child: Center(child: body),
-                );
-              },
-            ),
-            child: order.rows?.length != 0
-                ? Stack(
-                    children: [
-                      SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 5,
-                            ),
-                            SearchButton(
-                              color: orderColor,
-                              textColor: orderColor,
-                            ),
-                            Column(
-                              children: groupedList
-                                  .map(
-                                    (data) => Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        AnimatedContainer(
-                                          curve: Curves.ease,
-                                          transform: Matrix4.translationValues(
-                                              startAnimation
-                                                  ? 0
-                                                  : MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                              0,
-                                              0),
-                                          duration: Duration(
-                                            milliseconds: 300 +
-                                                (groupedList.indexOf(data) *
-                                                    200),
-                                          ),
-                                          margin: const EdgeInsets.only(
-                                              left: 15, bottom: 10, top: 10),
-                                          child: Text(
-                                            '${DateFormat("yyyy-MM-dd").format(data.header!)}',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                color: grey2),
-                                          ),
-                                        ),
-                                        Column(
-                                          children: data.values!
-                                              .map(
-                                                (item) => SalesOrderCard(
-                                                  type: user.currentBusiness
-                                                              ?.type ==
-                                                          "SUPPLIER"
-                                                      ? "SALES"
-                                                      : "PURCHASE",
-                                                  index:
-                                                      order.rows!.indexOf(item),
-                                                  startAnimation:
-                                                      startAnimation,
-                                                  isReceiver: true,
-                                                  onClick: () {
-                                                    Navigator.of(context)
-                                                        .pushNamed(
-                                                      ReceivedOrderDetail
-                                                          .routeName,
-                                                      arguments:
-                                                          ReceivedOrderDetailArguments(
-                                                        id: item.id!,
-                                                      ),
-                                                    );
-                                                  },
-                                                  data: item,
-                                                ),
-                                              )
-                                              .toList(),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                  .toList(),
-                            )
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 20,
-                        right: 20,
-                        child: FloatingActionButton(
-                          backgroundColor: orderColor,
-                          onPressed: () {
-                            Navigator.of(context).pushNamed(
-                              NewOrder.routeName,
-                              arguments: NewOrderArguments(
-                                id: null,
-                                listenController: listenController,
-                              ),
-                            );
-                          },
-                          child: Icon(Icons.add),
-                        ),
-                      ),
-                      Container(),
-                    ],
-                  )
-                : NotFound(
-                    module: "ORDER",
-                    labelText: "Захиалга олдсонгүй",
-                  ),
-          );
+      ],
+    );
   }
 }

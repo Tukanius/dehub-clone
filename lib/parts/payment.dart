@@ -6,9 +6,15 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => Payment.fromJson(e)).toList()
         : null,
+    values: json['values'] != null
+        ? (json['values'] as List).map((e) => Payment.fromJson(e)).toList()
+        : null,
     id: json['id'] != null ? json['id'] as String : null,
     createdAt: json['createdAt'] != null
         ? DateTime.parse(json['createdAt'].toString())
+        : null,
+    header: json['header'] != null
+        ? DateTime.parse(json['header'].toString())
         : null,
     updatedAt: json['updatedAt'] != null
         ? DateTime.parse(json['updatedAt'].toString())
@@ -134,6 +140,8 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$PaymentToJson(Payment instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.values != null) json['values'] = instance.values;
+  if (instance.header != null) json['header'] = instance.header;
   if (instance.inOutType != null) json['inOutType'] = instance.inOutType;
   if (instance.type != null) json['type'] = instance.type;
   if (instance.transactionStatus != null)

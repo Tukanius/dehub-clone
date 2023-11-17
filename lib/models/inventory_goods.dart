@@ -98,10 +98,11 @@ class InventoryGoods {
   List<InventoryGoods>? variants;
   List<InventoryGoods>? additionalUnits;
   List<InventoryGoods>? itemUnits;
-
+  String? profileName;
   bool? isBase;
 
   InventoryGoods({
+    this.profileName,
     this.isBase,
     this.optionValues,
     this.variants,

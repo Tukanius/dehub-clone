@@ -9,9 +9,13 @@ import 'package:provider/provider.dart';
 
 class TransactionInformationCard extends StatefulWidget {
   final Function()? onClick;
+  final bool startAnimation;
+  final int index;
   final Payment? data;
   const TransactionInformationCard({
     Key? key,
+    required this.index,
+    required this.startAnimation,
     this.onClick,
     this.data,
   }) : super(key: key);
@@ -47,7 +51,13 @@ class _TransactionInformationCardState
         Provider.of<GeneralProvider>(context, listen: true).paymentGeneral;
     return GestureDetector(
       onTap: widget.onClick,
-      child: Container(
+      child: AnimatedContainer(
+        curve: Curves.ease,
+        duration: Duration(milliseconds: 300 + (widget.index * 100)),
+        transform: Matrix4.translationValues(
+            widget.startAnimation ? 0 : MediaQuery.of(context).size.width,
+            0,
+            0),
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         color: white,

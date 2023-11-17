@@ -51,7 +51,7 @@ class _EntryPointState extends State<EntryPoint>
         children: [
           AnimatedPositioned(
             duration: Duration(milliseconds: 200),
-            curve: Curves.easeIn,
+            curve: Curves.ease,
             height: MediaQuery.of(context).size.height,
             left: isSideMenuClosed ? -288 : 0,
             width: MediaQuery.of(context).size.width * 0.75,
@@ -83,7 +83,7 @@ class _EntryPointState extends State<EntryPoint>
             top: MediaQuery.of(context).size.height /
                     MediaQuery.of(context).size.width +
                 15,
-            curve: Curves.easeIn,
+            curve: Curves.ease,
             child: GestureDetector(
               onTap: () {
                 setState(() {

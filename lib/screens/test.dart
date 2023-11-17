@@ -1,9 +1,5 @@
-import 'package:dehub/api/invoice_api.dart';
-import 'package:dehub/components/invoice_card/invoice_card.dart';
-import 'package:dehub/models/invoice.dart';
-import 'package:dehub/models/result.dart';
+import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:after_layout/after_layout.dart';
 
 class Test extends StatefulWidget {
@@ -14,99 +10,63 @@ class Test extends StatefulWidget {
 }
 
 class _TestState extends State<Test> with AfterLayoutMixin {
-  Map<DateTime, List<Invoice>> groupedItems = {};
-  Result result = Result(rows: [], count: 0);
-  int page = 1;
-  int limit = 10;
-  bool isloading = true;
-  List<Invoice> invoice = [];
+  bool isExpanded = false;
 
   @override
-  afterFirstLayout(BuildContext context) async {
-    // for (var item in itemList) {
-    //   DateTime asdf = item.date;
-
-    //   if (groupedItems.containsKey(asdf)) {
-    //     groupedItems[asdf]!.add(item);
-    //     print('----------');
-    //   } else {
-    //     groupedItems[asdf] = [item];
-    //     print('=========');
-    //   }
-    // }
-    // groupedItems.forEach((date, items) {
-    //   print("Date: $date");
-    //   for (var item in items) {
-    //     print("Name: ${item.name}");
-    //   }
-    // });
-    await list(page, limit);
-  }
-
-  makeGroup() {
-    if (result.rows?.length != 0) {
-      for (var data in result.rows!) {
-        DateTime date =
-            DateTime.parse(DateFormat("yyyy-MM-dd").format(data.createdAt));
-        if (groupedItems.containsKey(date)) {
-          groupedItems[date]!.add(data);
-        } else {
-          groupedItems[date] = [data];
-        }
-      }
-      groupedItems.forEach((key, value) {
-        invoice.add(
-          Invoice(
-            header: key,
-            values: value,
-          ),
-        );
-      });
-    }
-  }
-
-  list(page, limit) async {
-    Filter filter = Filter(query: '');
-    Offset offset = Offset(page: page, limit: limit);
-    var res = await InvoiceApi()
-        .list(ResultArguments(offset: offset, filter: filter));
-    setState(() {
-      result = res;
-      isloading = false;
-    });
-    makeGroup();
-  }
+  afterFirstLayout(BuildContext context) async {}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: grey,
       appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Column(
-            //   children: invoice
-            //       .map(
-            //         (data) => Column(
-            //           children: [
-            //             Text('${data.header}'),
-            //             Column(
-            //               children: data.values!
-            //                   .map(
-            //                     (item) => InvoiceCard(
-            //                       data: item,
-            //                     ),
-            //                   )
-            //                   .toList(),
-            //             )
-            //           ],
-            //         ),
-            //       )
-            //       .toList(),
-            // )
-          ],
-        ),
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          AnimatedPositioned(
+            curve: Curves.ease,
+            duration: Duration(milliseconds: 500),
+            bottom: isExpanded ? 50 : 100,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: black,
+              ),
+              height: 500,
+              width: isExpanded ? 350 : 300,
+            ),
+          ),
+          AnimatedPositioned(
+            curve: Curves.ease,
+            bottom: isExpanded ? 150 : 100,
+            duration: Duration(milliseconds: 500),
+            child: GestureDetector(
+              onTap: () {},
+              onPanUpdate: onPanUpdate,
+              child: Container(
+                height: 500,
+                width: 300,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: white,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
+  }
+
+  void onPanUpdate(DragUpdateDetails details) {
+    if (details.delta.dy < 0) {
+      setState(() {
+        isExpanded = true;
+      });
+    } else if (details.delta.dy > 0) {
+      setState(() {
+        isExpanded = false;
+      });
+    }
   }
 }

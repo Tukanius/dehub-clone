@@ -1,5 +1,6 @@
 import 'package:dehub/components/avaible_funding_card/requested_funding_card.dart';
 import 'package:dehub/components/back_button/back_button.dart';
+import 'package:dehub/components/dashboard_card/dashboard_card.dart';
 import 'package:dehub/screens/funding_request_page/funding_request_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,15 @@ class _FundingRequestPageState extends State<FundingRequestPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Container(
+              margin: const EdgeInsets.only(left: 10),
+              child: DashboardCard(
+                  boxColor: financingColor,
+                  padding: 8,
+                  labelText: 'Санхүүжилт хүсэлт',
+                  svgColor: white,
+                  svg: 'assets/svg/sanhuujiltS.svg'),
+            ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: Text(

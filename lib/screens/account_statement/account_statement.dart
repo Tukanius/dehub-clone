@@ -170,6 +170,8 @@ class _AccountStatementState extends State<AccountStatement>
                                         '${DateFormat("yyyy-MM-dd").format(data.createdAt)}'),
                                   ),
                                   TransactionInformationCard(
+                                    startAnimation: true,
+                                    index: 0,
                                     onClick: () {
                                       Navigator.of(context).pushNamed(
                                         TransactionDetailPage.routeName,

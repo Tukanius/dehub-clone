@@ -83,7 +83,7 @@ class _OrderProductCardState extends State<OrderProductCard>
         decoration: BoxDecoration(
           border: Border.all(
             width: 2,
-            color: widget.data?.quantity != 0 ? orderColor : transparent,
+            color: widget.isTap == true ? orderColor : transparent,
           ),
           color: white,
         ),

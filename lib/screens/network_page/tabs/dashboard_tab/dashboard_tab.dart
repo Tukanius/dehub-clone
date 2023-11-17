@@ -1,4 +1,5 @@
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/dashboard_card/dashboard_card.dart';
 import 'package:dehub/components/network_horizontal_chart/network_horizontal_chart.dart';
 import 'package:dehub/components/pie_chart/pie_chart.dart';
 import 'package:dehub/models/business.dart';
@@ -11,7 +12,6 @@ import 'package:dehub/screens/client_staffs/client_staffs.dart';
 import 'package:dehub/screens/payment_terms/payment_terms.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
 
 class DashboardTab extends StatefulWidget {
@@ -79,319 +79,82 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
           Container(
             height: 100,
             child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               scrollDirection: Axis.horizontal,
               children: [
-                GestureDetector(
-                  onTap: () {
+                DashboardCard(
+                  onClick: () {
                     Navigator.of(context)
                         .pushNamed(NetworkPartnerPage.routeName);
                   },
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 15, right: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: white,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    width: 100,
-                    height: 100,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: networkColor.withOpacity(0.1),
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/svg/partners.svg',
-                            colorFilter:
-                                ColorFilter.mode(networkColor, BlendMode.srcIn),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          'Манай харилцагч',
-                          style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w500),
-                          softWrap: true,
-                        ),
-                      ],
-                    ),
-                  ),
+                  boxColor: networkColor.withOpacity(0.1),
+                  padding: 10,
+                  labelText: 'Манай харилцагч',
+                  svgColor: networkColor,
+                  svg: 'assets/svg/partners.svg',
                 ),
-                GestureDetector(
-                  onTap: () {
+                DashboardCard(
+                  onClick: () {
                     Navigator.of(context).pushNamed(ClientStaffs.routeName);
                   },
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: white,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    width: 100,
-                    height: 100,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          padding: const EdgeInsets.all(9),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: networkColor.withOpacity(0.1),
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/svg/double-person.svg',
-                            colorFilter:
-                                ColorFilter.mode(networkColor, BlendMode.srcIn),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          'Хариуцсан ажилтан',
-                          style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w500),
-                          softWrap: true,
-                        ),
-                      ],
-                    ),
-                  ),
+                  boxColor: networkColor.withOpacity(0.1),
+                  padding: 9,
+                  labelText: 'Хариуцсан ажилтан',
+                  svgColor: networkColor,
+                  svg: 'assets/svg/double-person.svg',
                 ),
-                GestureDetector(
-                  onTap: () {
+                DashboardCard(
+                  onClick: () {
                     Navigator.of(context)
                         .pushNamed(ClientClassifications.routeName);
                   },
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: white,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    width: 100,
-                    height: 100,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          padding: const EdgeInsets.all(9),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: networkColor.withOpacity(0.1),
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/svg/double-person.svg',
-                            colorFilter:
-                                ColorFilter.mode(networkColor, BlendMode.srcIn),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          'Ангилал, зэрэглэл',
-                          style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w500),
-                          softWrap: true,
-                        ),
-                      ],
-                    ),
-                  ),
+                  boxColor: networkColor.withOpacity(0.1),
+                  padding: 9,
+                  labelText: 'Ангилал, зэрэглэл',
+                  svgColor: networkColor,
+                  svg: 'assets/svg/double-person.svg',
                 ),
-                GestureDetector(
-                  onTap: () {
+                DashboardCard(
+                  onClick: () {
                     Navigator.of(context).pushNamed(PaymentTerms.routeName);
                   },
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: white,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    width: 100,
-                    height: 100,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          padding: const EdgeInsets.all(9),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: networkColor.withOpacity(0.1),
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/svg/payment-term.svg',
-                            colorFilter:
-                                ColorFilter.mode(networkColor, BlendMode.srcIn),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          'Төлбөрийн нөхцөл',
-                          style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w500),
-                          softWrap: true,
-                        ),
-                      ],
-                    ),
-                  ),
+                  boxColor: networkColor.withOpacity(0.1),
+                  padding: 8,
+                  labelText: 'Төлбөрийн нөхцөл',
+                  svgColor: networkColor,
+                  svg: 'assets/svg/payment-term.svg',
                 ),
-                GestureDetector(
-                  onTap: () {
+                DashboardCard(
+                  onClick: () {
                     Navigator.of(context).pushNamed(AccountSetting.routeName);
                   },
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: white,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    width: 100,
-                    height: 100,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          padding: const EdgeInsets.all(9),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: networkColor.withOpacity(0.1),
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/svg/wallet.svg',
-                            colorFilter:
-                                ColorFilter.mode(networkColor, BlendMode.srcIn),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          'Данс тохиргоо',
-                          style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w500),
-                          softWrap: true,
-                        ),
-                      ],
-                    ),
-                  ),
+                  boxColor: networkColor.withOpacity(0.1),
+                  padding: 9,
+                  labelText: 'Данс тохиргоо',
+                  svgColor: networkColor,
+                  svg: 'assets/svg/wallet.svg',
                 ),
-                GestureDetector(
-                  onTap: () {
+                DashboardCard(
+                  onClick: () {
                     Navigator.of(context)
                         .pushNamed(DistributionAreas.routeName);
                   },
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: white,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    width: 100,
-                    height: 100,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: networkColor.withOpacity(0.1),
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/svg/map.svg',
-                            colorFilter:
-                                ColorFilter.mode(networkColor, BlendMode.srcIn),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 7,
-                        ),
-                        Text(
-                          'Чиглэл, бүсчлэл',
-                          style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w500),
-                          softWrap: true,
-                        ),
-                      ],
-                    ),
-                  ),
+                  boxColor: networkColor.withOpacity(0.1),
+                  padding: 10,
+                  labelText: 'Чиглэл, бүсчлэл',
+                  svgColor: networkColor,
+                  svg: 'assets/svg/map.svg',
                 ),
-                GestureDetector(
-                  onTap: () {
+                DashboardCard(
+                  onClick: () {
                     Navigator.of(context)
                         .pushNamed(ReferenceInformationPage.routeName);
                   },
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: white,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    width: 100,
-                    height: 100,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          padding: const EdgeInsets.all(7),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: networkColor.withOpacity(0.1),
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/svg/bag.svg',
-                            colorFilter:
-                                ColorFilter.mode(networkColor, BlendMode.srcIn),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          'Лавлах мэдээлэл',
-                          style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w500),
-                          softWrap: true,
-                        ),
-                      ],
-                    ),
-                  ),
+                  boxColor: networkColor.withOpacity(0.1),
+                  padding: 7,
+                  labelText: 'Лавлах мэдээлэл',
+                  svgColor: networkColor,
+                  svg: 'assets/svg/bag.svg',
                 ),
               ],
             ),

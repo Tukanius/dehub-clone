@@ -50,15 +50,6 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
     setState(() {
       isLoading = false;
     });
-    // removedList.rows = inventory.rows!.removeWhere(
-    //   (element) =>
-    //       element.unitVariantId ==
-    //       widget.data.map(
-    //         (e) {
-    //           return e.unitVariantId;
-    //         },
-    //       ),
-    // );
   }
 
   onChange(String value) async {
@@ -120,17 +111,12 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
                                                   .goodsInvoiceChange(data);
                                               Navigator.of(context).pop();
                                             } else {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                const SnackBar(
-                                                  backgroundColor: invoiceColor,
-                                                  shape: StadiumBorder(),
-                                                  content: Center(
-                                                    child: Text(
-                                                        'Тоо ширхэг нэмнэ үү'),
-                                                  ),
-                                                ),
-                                              );
+                                              data.quantity = 1;
+                                              data.totalAmount =
+                                                  data.quantity * data.price;
+                                              widget.goodsListenController
+                                                  .goodsInvoiceChange(data);
+                                              Navigator.of(context).pop();
                                             }
                                           },
                                           data: data,
@@ -141,94 +127,6 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
                                 SizedBox(
                                   height: 50,
                                 ),
-                                // Container(
-                                //   padding: const EdgeInsets.symmetric(
-                                //       vertical: 10, horizontal: 25),
-                                //   margin: const EdgeInsets.symmetric(
-                                //       horizontal: 10),
-                                //   decoration: BoxDecoration(
-                                //     borderRadius: BorderRadius.circular(5),
-                                //     color: black,
-                                //   ),
-                                //   child: Row(
-                                //     mainAxisAlignment:
-                                //         MainAxisAlignment.spaceBetween,
-                                //     children: [
-                                //       GestureDetector(
-                                //         onTap: () {
-                                //           Navigator.of(context).pop();
-                                //         },
-                                //         child: Column(
-                                //           children: [
-                                //             Icon(
-                                //               Icons.add_box_outlined,
-                                //               color: white,
-                                //             ),
-                                //             Text(
-                                //               'Сонгосонг нэмэх',
-                                //               style: TextStyle(
-                                //                 fontSize: 10,
-                                //                 color: white,
-                                //               ),
-                                //             ),
-                                //           ],
-                                //         ),
-                                //       ),
-                                //       Container(
-                                //         height: 35,
-                                //         child: VerticalDivider(
-                                //           color: white,
-                                //           thickness: 1,
-                                //         ),
-                                //       ),
-                                //       Container(
-                                //         child: Row(
-                                //           children: [
-                                //             GestureDetector(
-                                //               onTap: () {},
-                                //               child: Column(
-                                //                 children: [
-                                //                   Icon(
-                                //                     Icons.card_travel,
-                                //                     color: white,
-                                //                   ),
-                                //                   Text(
-                                //                     'Ердийн үнэ',
-                                //                     style: TextStyle(
-                                //                       color: white,
-                                //                       fontSize: 10,
-                                //                     ),
-                                //                   )
-                                //                 ],
-                                //               ),
-                                //             ),
-                                //             SizedBox(
-                                //               width: 40,
-                                //             ),
-                                //             GestureDetector(
-                                //               onTap: () {},
-                                //               child: Column(
-                                //                 children: [
-                                //                   Icon(
-                                //                     Icons.card_giftcard_rounded,
-                                //                     color: white,
-                                //                   ),
-                                //                   Text(
-                                //                     'Урамшуулал',
-                                //                     style: TextStyle(
-                                //                       color: white,
-                                //                       fontSize: 10,
-                                //                     ),
-                                //                   )
-                                //                 ],
-                                //               ),
-                                //             )
-                                //           ],
-                                //         ),
-                                //       )
-                                //     ],
-                                //   ),
-                                // )
                               ],
                             )
                       : Center(

@@ -40,7 +40,6 @@ class LocalStorage {
   }
 
   quantity(String id, String type) async {
-    // Invoice product = await findOne(id);
     List<Invoice> products = await findAll();
 
     Invoice product = products.firstWhere((item) => item.id == id);
@@ -88,5 +87,31 @@ class LocalStorage {
   clear() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove(storageName);
+  }
+
+  addCard(Invoice product, List<Invoice> inventory) async {
+    Invoice? duplicate;
+    try {
+      duplicate = inventory.firstWhere((element) => element.id == product.id);
+      print(duplicate);
+      print('====duplicate=====');
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    if (duplicate != null) {
+      product.quantity! + duplicate.quantity!;
+      print(product);
+      print('====product=====');
+    }
+
+    try {
+      inventory.removeWhere((element) => element.id == duplicate!.id);
+      print(inventory);
+      print('====inventory=====');
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+
+    return product;
   }
 }

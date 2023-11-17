@@ -1,6 +1,7 @@
 import 'package:dehub/components/transaction_filter_card/transaction_filter_card.dart';
 import 'package:dehub/models/payment.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/api/payment_api.dart';
@@ -10,6 +11,7 @@ import 'package:dehub/models/result.dart';
 import 'package:dehub/screens/transaction_detail_page/transaction_detail_page.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:intl/intl.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class TransactionHistoryArguments {
   Payment data;
@@ -32,10 +34,13 @@ class TransactionHistory extends StatefulWidget {
 
 class _TransactionHistoryState extends State<TransactionHistory>
     with SingleTickerProviderStateMixin, AfterLayoutMixin {
+  List<Payment> groupedList = [];
   DateTimeRange dateTimeRange = DateTimeRange(
     start: DateTime.now().subtract(Duration(days: 1)),
     end: DateTime.now(),
   );
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   int currentIndex = 0;
   List<String> filter = ['ALL', 'DEBIT', "CREDIT"];
   String? filterText = 'ALL';
@@ -43,6 +48,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
   int page = 1;
   int limit = 10;
   bool isLoading = true;
+  bool startAnimation = false;
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -62,6 +68,60 @@ class _TransactionHistoryState extends State<TransactionHistory>
         .transactionList(ResultArguments(filter: filter, offset: offset));
     setState(() {
       isLoading = false;
+    });
+    await groupMaker();
+    Future.delayed(Duration(milliseconds: 100), () {
+      setState(() {
+        startAnimation = true;
+      });
+    });
+  }
+
+  void _onLoading() async {
+    setState(() {
+      page += 1;
+    });
+    await list(page, limit, '${filterText}', dateTimeRange.start.toString(),
+        dateTimeRange.end.toString());
+    _refreshController.loadComplete();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  void _onRefresh() async {
+    await Future.delayed(Duration(milliseconds: 1000));
+    setState(() {
+      isLoading = true;
+      page = 1;
+      groupedList = [];
+    });
+    await list(page, limit, '${filterText}', dateTimeRange.start.toString(),
+        dateTimeRange.end.toString());
+    _refreshController.refreshCompleted();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  groupMaker() {
+    Map<DateTime, List<Payment>> groupItems = {};
+    for (var data in transaction.rows!) {
+      DateTime createdAt =
+          DateTime.parse(DateFormat('yyyy-MM-dd').format(data.createdAt));
+      if (groupItems.containsKey(createdAt)) {
+        groupItems[createdAt]!.add(data);
+      } else {
+        groupItems[createdAt] = [data];
+      }
+    }
+    groupItems.forEach((key, value) {
+      groupedList.add(
+        Payment(
+          header: key,
+          values: value,
+        ),
+      );
     });
   }
 
@@ -184,37 +244,110 @@ class _TransactionHistoryState extends State<TransactionHistory>
                     ),
                   ),
                 )
-              : transaction.rows?.length != 0
-                  ? SingleChildScrollView(
-                      child: Column(
-                        children: transaction.rows!
-                            .map(
-                              (data) => Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 10),
-                                    child: Text(
-                                        '${DateFormat("yyyy-MM-dd").format(data.createdAt)}'),
-                                  ),
-                                  TransactionInformationCard(
-                                    onClick: () {
-                                      Navigator.of(context).pushNamed(
-                                        TransactionDetailPage.routeName,
-                                        arguments:
-                                            TransactionDetailPageArguments(
-                                          data: data,
-                                        ),
-                                      );
-                                    },
-                                    data: data,
-                                  ),
-                                ],
+              : groupedList.length != 0
+                  ? Expanded(
+                      child: SmartRefresher(
+                          enablePullDown: true,
+                          enablePullUp: true,
+                          controller: _refreshController,
+                          header: WaterDropHeader(
+                            waterDropColor: networkColor,
+                            refresh: SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: networkColor,
                               ),
-                            )
-                            .toList(),
-                      ),
+                            ),
+                          ),
+                          onRefresh: _onRefresh,
+                          onLoading: _onLoading,
+                          footer: CustomFooter(
+                            builder: (context, mode) {
+                              Widget body;
+                              if (mode == LoadStatus.idle) {
+                                body = const Text("");
+                              } else if (mode == LoadStatus.loading) {
+                                body = const CupertinoActivityIndicator();
+                              } else if (mode == LoadStatus.failed) {
+                                body =
+                                    const Text("Алдаа гарлаа. Дахин үзнэ үү!");
+                              } else {
+                                body = const Text("Мэдээлэл алга байна");
+                              }
+                              return SizedBox(
+                                height: 55.0,
+                                child: Center(child: body),
+                              );
+                            },
+                          ),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: groupedList
+                                  .map(
+                                    (data) => Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        AnimatedContainer(
+                                          transform: Matrix4.translationValues(
+                                              startAnimation
+                                                  ? 0
+                                                  : MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                              0,
+                                              0),
+                                          curve: Curves.ease,
+                                          duration: Duration(
+                                              milliseconds: 200 +
+                                                  (groupedList.indexOf(data) +
+                                                      200)),
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 15, vertical: 10),
+                                          child: Text(
+                                            '${DateFormat("yyyy-MM-dd").format(data.header!)}',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              color: grey2,
+                                            ),
+                                          ),
+                                        ),
+                                        Column(
+                                          children: data.values!
+                                              .map(
+                                                (item) =>
+                                                    TransactionInformationCard(
+                                                  index: (data.values!
+                                                          .indexOf(item) +
+                                                      groupedList
+                                                          .indexOf(data) +
+                                                      1),
+                                                  startAnimation:
+                                                      startAnimation,
+                                                  onClick: () {
+                                                    Navigator.of(context)
+                                                        .pushNamed(
+                                                      TransactionDetailPage
+                                                          .routeName,
+                                                      arguments:
+                                                          TransactionDetailPageArguments(
+                                                        data: item,
+                                                      ),
+                                                    );
+                                                  },
+                                                  data: item,
+                                                ),
+                                              )
+                                              .toList(),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          )),
                     )
                   : NotFound(
                       module: "PAYMENT",
@@ -251,6 +384,9 @@ class _TransactionHistoryState extends State<TransactionHistory>
     setState(() {
       dateTimeRange = newDateRange;
       isLoading = true;
+    });
+    setState(() {
+      startAnimation = false;
     });
     list(page, limit, '${filterText}', dateTimeRange.start.toString(),
         dateTimeRange.end.toString());

@@ -12,6 +12,8 @@ import 'package:dehub/screens/invoice_payment/payment_approval_page.dart';
 import 'package:dehub/screens/invoice_payment/payment_page.dart';
 import 'package:dehub/screens/invoice_payment/qpay_page.dart';
 import 'package:dehub/screens/no_internet/no_internet_screen.dart';
+import 'package:dehub/screens/payback_detail/payback_detail.dart';
+import 'package:dehub/screens/payback_page/payback_page.dart';
 import 'package:dehub/screens/transaction_detail_page/transaction_detail_page.dart';
 import 'package:dehub/screens/bank_account_detail/bank_account_detail.dart';
 import 'package:dehub/screens/distribution_areas/distribution_area_detail/distribution_area_detail.dart';
@@ -839,8 +841,23 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return NewOrder(
                         id: arguments.id,
-                        listenController: arguments.listenController,
                       );
+                    });
+                  case PaybackDetail.routeName:
+                    // PaybackDetailArguments arguments =
+                    // settings.arguments as PaybackDetailArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return PaybackDetail(
+                          // id: arguments.id,
+                          );
+                    });
+                  case PaybackPage.routeName:
+                    // PaybackPageArguments arguments =
+                    // settings.arguments as PaybackPageArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return PaybackPage(
+                          // id: arguments.id,
+                          );
                     });
                   case PullSheetExpenses.routeName:
                     PullSheetExpensesArguments arguments =

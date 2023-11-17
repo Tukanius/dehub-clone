@@ -32,7 +32,6 @@ class GivePage extends StatefulWidget {
 
 class _GivePageState extends State<GivePage>
     with AfterLayoutMixin, SingleTickerProviderStateMixin {
-  Map<DateTime, List<Invoice>> groupItems = {};
   List<Invoice> groupedList = [];
   bool isLoading = true;
   late TabController tabController = TabController(length: 5, vsync: this);
@@ -49,7 +48,7 @@ class _GivePageState extends State<GivePage>
 
   void _onLoading() async {
     setState(() {
-      limit += 10;
+      page += 1;
     });
     await list(page, limit, '');
     _refreshController.loadComplete();
@@ -59,10 +58,12 @@ class _GivePageState extends State<GivePage>
   }
 
   void _onRefresh() async {
-    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
+      page = 1;
+      groupedList = [];
     });
+    await Future.delayed(const Duration(milliseconds: 1000));
     await list(page, limit, '');
     _refreshController.refreshCompleted();
     setState(() {
@@ -85,10 +86,10 @@ class _GivePageState extends State<GivePage>
       invoice = await InvoiceApi()
           .list(ResultArguments(filter: filter, offset: offset));
     }
+    await makeGroup();
     setState(() {
       isLoading = false;
     });
-    makeGroup();
     Future.delayed(Duration(milliseconds: 100), () {
       setState(() {
         startAnimation = true;
@@ -97,83 +98,50 @@ class _GivePageState extends State<GivePage>
   }
 
   makeGroup() {
+    Map<DateTime, List<Invoice>> groupItems = {};
     for (var data in invoice.rows!) {
-      DateTime date =
+      DateTime createdAt =
           DateTime.parse(DateFormat('yyyy-MM-dd').format(data.createdAt));
-      if (groupItems.containsKey(date)) {
-        groupItems[date]!.add(data);
+      if (groupItems.containsKey(createdAt)) {
+        groupItems[createdAt]?.add(data);
       } else {
-        groupItems[date] = [data];
+        groupItems[createdAt] = [data];
       }
-      groupItems.forEach((key, value) {
-        groupedList.add(
-          Invoice(
-            header: key,
-            values: value,
-          ),
-        );
-      });
     }
+    groupItems.forEach((key, value) {
+      groupedList.add(Invoice(
+        header: key,
+        values: value,
+      ));
+    });
   }
 
   @override
   void initState() {
-    listenController.addListener(() async {
-      await list(page, limit, '');
-    });
-    setState(() {
-      isLoading = true;
+    listenController.addListener(() {
+      setState(() {
+        isLoading = true;
+      });
+      list(page, limit, '');
     });
     super.initState();
   }
 
-  void onItemTapped() {
-    setState(() {
-      tabController.index == currentIndex;
-    });
-  }
-
   onChange(String query) async {
-    if (timer != null) timer?.cancel();
-    timer = Timer(Duration(milliseconds: 400), () {
+    Future.delayed(Duration(milliseconds: 400), () async {
       setState(() {
         isLoading = true;
         startAnimation = false;
       });
-      list(page, limit, query);
+      await list(page, limit, query);
       setState(() {
         isLoading = false;
       });
     });
   }
 
-  List<Invoice> filter = [
-    Invoice(
-      image: '',
-      name: 'Бүгд',
-    ),
-    Invoice(
-      image: 'assets/svg/clock.svg',
-      name: 'Хэтэрсэн',
-    ),
-    Invoice(
-      image: 'assets/svg/hesegchilsen.svg',
-      name: 'Хэсэгчилсэн',
-    ),
-    Invoice(
-      image: 'assets/svg/clock1.svg',
-      name: 'Хүлээж буй',
-    ),
-    Invoice(
-      image: 'assets/svg/tulson.svg',
-      name: 'Төлсөн',
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    print(startAnimation);
-    print('=========isloading =========');
     user = Provider.of<UserProvider>(context, listen: false).invoiceMe;
     return Scaffold(
       appBar: AppBar(
@@ -219,7 +187,6 @@ class _GivePageState extends State<GivePage>
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
               itemCount: filter.length,
-              physics: BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return AnimatedContainer(
@@ -275,7 +242,7 @@ class _GivePageState extends State<GivePage>
                     color: invoiceColor,
                   ),
                 )
-              : invoice.rows!.length == 0
+              : groupedList.length == 0
                   ? NotFound(
                       module: "INVOICE",
                       labelText: "Нэхэмжлэл олдсонгүй",
@@ -328,11 +295,11 @@ class _GivePageState extends State<GivePage>
                                         duration: Duration(
                                             milliseconds: 300 +
                                                 (groupedList.indexOf(item) *
-                                                    200)),
+                                                    400)),
                                         transform: Matrix4.translationValues(
                                             startAnimation
                                                 ? 0
-                                                : MediaQuery.of(context)
+                                                : -MediaQuery.of(context)
                                                     .size
                                                     .width,
                                             0,
@@ -355,8 +322,10 @@ class _GivePageState extends State<GivePage>
                                             .map(
                                               (data) => InvoiceCard(
                                                 startAnimation: startAnimation,
-                                                index:
-                                                    item.values!.indexOf(data),
+                                                index: (groupedList
+                                                        .indexOf(item) +
+                                                    item.values!.indexOf(data) +
+                                                    1),
                                                 data: data,
                                                 onClick: () {
                                                   Navigator.of(context)
@@ -384,4 +353,27 @@ class _GivePageState extends State<GivePage>
       ),
     );
   }
+
+  List<Invoice> filter = [
+    Invoice(
+      image: '',
+      name: 'Бүгд',
+    ),
+    Invoice(
+      image: 'assets/svg/clock.svg',
+      name: 'Хэтэрсэн',
+    ),
+    Invoice(
+      image: 'assets/svg/hesegchilsen.svg',
+      name: 'Хэсэгчилсэн',
+    ),
+    Invoice(
+      image: 'assets/svg/clock1.svg',
+      name: 'Хүлээж буй',
+    ),
+    Invoice(
+      image: 'assets/svg/tulson.svg',
+      name: 'Төлсөн',
+    ),
+  ];
 }

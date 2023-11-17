@@ -39,6 +39,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
   ListenController goodsListenController = ListenController();
   ListenController sectorListenController = ListenController();
   TextEditingController textController = TextEditingController();
+  TextEditingController discountController = TextEditingController();
   ListenController addRowController = ListenController();
   List<Invoice> additionalRowList = [];
   Invoice additionalRow = Invoice();
@@ -77,6 +78,47 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
   @override
   afterFirstLayout(BuildContext context) {}
 
+  addCard(Invoice product) async {
+    Invoice? duplicate;
+    try {
+      duplicate = inventory.firstWhere((element) => element.id == product.id);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    if (duplicate != null) {
+      product.quantity = product.quantity! + duplicate.quantity!;
+    }
+
+    try {
+      inventory.removeWhere((element) => element.id == duplicate!.id);
+      print(inventory);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    setState(() {
+      inventory.add(product);
+      data.add(product);
+    });
+  }
+
+  getTotalAmounts(List<Invoice> list) {
+    setState(() {
+      double eachAmount = list.fold(
+          0, (previousValue, element) => previousValue + element.totalAmount!);
+      amount = eachAmount.roundToDouble();
+      double vat = list
+          .map((e) => e.quantity! * e.vatAmount!)
+          .reduce((value, element) => value + element);
+      vatAmount = vat.roundToDouble();
+      double tax = list.fold(
+          0, (previousValue, element) => previousValue + element.taxAmount!);
+      taxAmount = tax.roundToDouble();
+      totalAmount = amount + vatAmount + taxAmount + additionalRowAmount;
+      finalAmount = totalAmount;
+      productValidate = false;
+    });
+  }
+
   @override
   void initState() {
     listenController.addListener(() {
@@ -87,23 +129,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
     });
     goodsListenController.addListener(() {
       goodsInvoice = goodsListenController.goodsInvoice!;
-      setState(() {
-        inventory.add(goodsInvoice);
-        data.add(goodsInvoice);
-        double eachAmount = inventory.fold(0,
-            (previousValue, element) => previousValue + element.totalAmount!);
-        amount = eachAmount.roundToDouble();
-        double vat = inventory
-            .map((e) => e.quantity! * e.vatAmount!)
-            .reduce((value, element) => value + element);
-        vatAmount = vat.roundToDouble();
-        double tax = inventory.fold(
-            0, (previousValue, element) => previousValue + element.taxAmount!);
-        taxAmount = tax.roundToDouble();
-        totalAmount = amount + vatAmount + taxAmount + additionalRowAmount;
-        finalAmount = totalAmount;
-        productValidate = false;
-      });
+      addCard(goodsInvoice);
+      getTotalAmounts(inventory);
     });
     partnerListenController.addListener(() {
       setState(() {
@@ -169,6 +196,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
           data[i].variantId = inventory[i].id;
           data[i].quantity = inventory[i].quantity;
         }
+        inventory.removeWhere((element) => element.quantity == 0);
+        data.removeWhere((element) => element.quantity == 0);
         createInvoice.senderBranchId = sectorInvoice.id;
         createInvoice.receiverBranchId = partnerInvoice.id;
         createInvoice.receiverBusinessId = invoice.id;
@@ -198,11 +227,21 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
     }
   }
 
-  updateTotalAmount() {
+  updateTotalAmount(String value, String type) {
+    if (type == "Хувиар") {
+      setState(() {
+        discountAmount =
+            totalAmount / 100 * (double.tryParse(value.toString()) ?? 0);
+        print(discountAmount);
+      });
+    } else {
+      setState(() {
+        discountAmount = double.tryParse(value.toString()) ?? 0;
+      });
+    }
     setState(() {
       finalAmount = totalAmount;
-      finalAmount =
-          finalAmount + (shippingAmount - discountAmount) + additionalRowAmount;
+      finalAmount += (shippingAmount - discountAmount) + additionalRowAmount;
     });
   }
 
@@ -595,6 +634,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                 onChanged: (value) {
                                   setState(() {
                                     dropdownValue = "${value}";
+                                    updateTotalAmount(
+                                        discountController.text, dropdownValue);
                                   });
                                   ;
                                 },
@@ -657,23 +698,11 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       ),
                       FormTextField(
                         textColor: invoiceColor,
+                        controller: discountController,
                         textAlign: TextAlign.end,
                         readOnly: dropdownValue == "Сонгох",
                         onChanged: (value) {
-                          if (dropdownValue == "Хувиар") {
-                            setState(() {
-                              discountAmount = totalAmount /
-                                  100 *
-                                  (double.tryParse(value.toString()) ?? 0);
-                              print(discountAmount);
-                            });
-                          } else {
-                            setState(() {
-                              discountAmount =
-                                  double.tryParse(value.toString()) ?? 0;
-                            });
-                          }
-                          updateTotalAmount();
+                          updateTotalAmount(value, dropdownValue);
                         },
                         name: 'discountAmount',
                         inputType: TextInputType.number,
@@ -746,7 +775,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                             shippingAmount =
                                 double.tryParse(value.toString()) ?? 0;
                           });
-                          updateTotalAmount();
+                          updateTotalAmount(
+                              discountController.text, dropdownValue);
                         },
                         textColor: orderColor,
                         name: "shippingAmount",

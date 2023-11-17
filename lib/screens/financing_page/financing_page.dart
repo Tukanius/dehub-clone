@@ -1,5 +1,6 @@
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/back_button/back_button.dart';
+import 'package:dehub/screens/first_page/first_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class _FinancingPageState extends State<FinancingPage> {
 
   void ontappedItem(int index) {
     if (index == 0) {
-      Navigator.of(context).pop();
+      Navigator.of(context).pushNamed(FirstPage.routeName);
     } else {
       setState(() {
         selectedIndex = index;
@@ -162,7 +163,7 @@ class _FinancingPageState extends State<FinancingPage> {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'assets/svg/inbox.svg',
+                    'assets/svg/finance_limit.svg',
                     colorFilter: ColorFilter.mode(
                         selectedIndex == 2 ? white : financingColor,
                         BlendMode.srcIn),
@@ -170,7 +171,7 @@ class _FinancingPageState extends State<FinancingPage> {
                 ),
                 selectedIndex != 2
                     ? Text(
-                        'Ирсэн',
+                        'Лимит',
                         style: TextStyle(color: financingColor, fontSize: 12),
                       )
                     : SizedBox(),
@@ -188,7 +189,7 @@ class _FinancingPageState extends State<FinancingPage> {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'assets/svg/sent.svg',
+                    'assets/svg/calculation.svg',
                     colorFilter: ColorFilter.mode(
                         selectedIndex == 3 ? white : financingColor,
                         BlendMode.srcIn),
@@ -196,7 +197,7 @@ class _FinancingPageState extends State<FinancingPage> {
                 ),
                 selectedIndex != 3
                     ? Text(
-                        'Илгээсэн',
+                        'Тооцоо',
                         style: TextStyle(color: financingColor, fontSize: 12),
                       )
                     : SizedBox(),

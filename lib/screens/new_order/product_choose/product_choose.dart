@@ -246,6 +246,17 @@ class _ProductChooseState extends State<ProductChoose>
                                                         .productOrderChange(
                                                             item);
                                                     Navigator.of(context).pop();
+                                                  } else if (item.quantity !=
+                                                          null &&
+                                                      item.quantity == 0 &&
+                                                      widget.isPackage ==
+                                                          false) {
+                                                    item.quantity = 1;
+                                                    widget
+                                                        .productListenController
+                                                        .productOrderChange(
+                                                            item);
+                                                    Navigator.of(context).pop();
                                                   } else if (widget.isPackage ==
                                                       true) {
                                                     if (packageProduct
@@ -259,6 +270,10 @@ class _ProductChooseState extends State<ProductChoose>
                                                       });
                                                     } else {
                                                       setState(() {
+                                                        if (item.quantity ==
+                                                            0) {
+                                                          item.quantity = 1;
+                                                        }
                                                         packageProduct
                                                             .add(item);
                                                       });

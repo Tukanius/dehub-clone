@@ -68,7 +68,12 @@ class Payment {
 
   String? inOutType;
 
+  DateTime? header;
+  List<Payment>? values;
+
   Payment({
+    this.header,
+    this.values,
     this.inOutType,
     this.type,
     this.transactionStatus,

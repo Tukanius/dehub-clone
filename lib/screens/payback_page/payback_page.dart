@@ -1,42 +1,28 @@
-import 'package:dehub/components/avaible_funding_card/give_funding_card.dart';
-import 'package:dehub/components/avaible_funding_card/received_funding_card.dart';
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/dashboard_card/dashboard_card.dart';
+import 'package:dehub/screens/payback_page/tabs/buyer_led.dart';
+import 'package:dehub/screens/payback_page/tabs/supplier_led.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
-class ReceivedFundingPage extends StatefulWidget {
-  static const routeName = '/ReceivedFundingPage';
-  const ReceivedFundingPage({super.key});
+class PaybackPage extends StatefulWidget {
+  static const routeName = '/PaybackPage';
+  const PaybackPage({Key? key}) : super(key: key);
 
   @override
-  State<ReceivedFundingPage> createState() => _ReceivedFundingPageState();
+  State<PaybackPage> createState() => _PaybackPageState();
 }
 
-class _ReceivedFundingPageState extends State<ReceivedFundingPage>
+class _PaybackPageState extends State<PaybackPage>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
-  ScrollController scrollController = ScrollController();
-  PageController pageController = PageController();
+  final PageController pageController = PageController();
   int currentIndex = 0;
 
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
-    tabController.index = currentIndex;
     super.initState();
-  }
-
-  changePage(index) {
-    setState(() {
-      tabController.index = index;
-    });
-  }
-
-  @override
-  void dispose() {
-    tabController.dispose();
-    super.dispose();
   }
 
   @override
@@ -44,31 +30,40 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: backgroundColor,
-        elevation: 0,
         leadingWidth: 100,
+        elevation: 0,
+        backgroundColor: backgroundColor,
         leading: CustomBackButton(color: financingColor),
+        actions: [
+          CircleAvatar(
+            radius: 18,
+            backgroundColor: grey,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.only(left: 10),
+            margin: const EdgeInsets.only(left: 10, bottom: 10),
             child: DashboardCard(
               boxColor: financingColor,
-              padding: 8,
-              labelText: 'Авсан санхүүжилт',
+              padding: 10,
+              labelText: 'Эргэн төлөлтүүд',
               svgColor: white,
-              svg: 'assets/svg/camera.svg',
+              svg: 'assets/svg/payback.svg',
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
+            margin: const EdgeInsets.only(left: 15, bottom: 10),
             child: Text(
-              'Авсан санхүүжилт',
+              'Эргэн төлөлтүүд',
               style: TextStyle(
-                fontSize: 16,
                 fontWeight: FontWeight.bold,
+                fontSize: 16,
               ),
             ),
           ),
@@ -77,11 +72,11 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
               SizedBox(
                 width: 15,
               ),
-              tabButton(0, 'Buyer-Led'),
+              tabButton(0, "Buyer-Led"),
               SizedBox(
-                width: 20,
+                width: 25,
               ),
-              tabButton(1, 'Supplier-Led'),
+              tabButton(1, "Supplier-Led"),
             ],
           ),
           Expanded(
@@ -93,8 +88,8 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
                 });
               },
               children: [
-                ReceivedFundingCard(),
-                GiveFundingCard(),
+                BuyerLed(),
+                SupplierLed(),
               ],
             ),
           ),
@@ -110,10 +105,10 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
             duration: Duration(milliseconds: 300), curve: Curves.ease);
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(
-          color: currentIndex == index ? financingColor : backgroundColor,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(8),
+          color: currentIndex == index ? Color(0xffB452D9) : backgroundColor,
         ),
         child: Text(
           '${label}',

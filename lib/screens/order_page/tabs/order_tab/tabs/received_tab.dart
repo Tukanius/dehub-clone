@@ -129,6 +129,7 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
                         SearchButton(
                           color: orderColor,
                           textColor: orderColor,
+                          onChange: (query) {},
                         ),
                         Column(
                           children: order.rows!

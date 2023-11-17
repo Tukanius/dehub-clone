@@ -80,16 +80,9 @@ class _AddRowState extends State<InvoiceAddRow> {
   void getTotalAmount() {
     double price;
     double quantity;
-    try {
-      price = double.parse(priceController.text);
-    } catch (e) {
-      price = 0;
-    }
-    try {
-      quantity = double.parse(quantityController.text);
-    } catch (e) {
-      quantity = 0;
-    }
+
+    price = double.tryParse(priceController.text) ?? 0;
+    quantity = double.tryParse(quantityController.text) ?? 0;
 
     setState(() {
       totalAmount = quantity * price;
@@ -271,12 +264,11 @@ class _AddRowState extends State<InvoiceAddRow> {
                 height: 3,
               ),
               FormTextField(
-                onChanged: (_) => getTotalAmount(),
+                onChanged: (value) {
+                  getTotalAmount();
+                },
                 controller: priceController,
                 textColor: invoiceColor,
-                inputFormatters: [
-                  // CurrencyInputFormatter(),
-                ],
                 textAlign: TextAlign.end,
                 name: 'price',
                 inputType: TextInputType.number,
@@ -315,11 +307,12 @@ class _AddRowState extends State<InvoiceAddRow> {
                 height: 2,
               ),
               FormTextField(
-                onChanged: (_) => getTotalAmount(),
+                onChanged: (value) {
+                  getTotalAmount();
+                },
                 textColor: invoiceColor,
                 controller: quantityController,
                 textAlign: TextAlign.end,
-                inputType: TextInputType.numberWithOptions(),
                 name: 'quantity',
                 decoration: InputDecoration(
                   border: InputBorder.none,
@@ -512,9 +505,13 @@ class _AddRowState extends State<InvoiceAddRow> {
                             'Үнийн дүн',
                             style: TextStyle(color: invoiceColor),
                           )
-                        : Text(
-                            '${Utils().formatCurrency(totalAmount.toString())}₮',
-                            style: TextStyle(color: invoiceColor),
+                        : Expanded(
+                            child: Text(
+                              '${Utils().formatCurrency(totalAmount.toString())}₮',
+                              style: TextStyle(color: invoiceColor),
+                              textAlign: TextAlign.end,
+                              maxLines: 1,
+                            ),
                           )
                   ],
                 ),

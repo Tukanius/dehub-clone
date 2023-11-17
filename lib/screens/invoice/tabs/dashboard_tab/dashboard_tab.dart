@@ -1,3 +1,4 @@
+import 'package:dehub/components/dashboard_card/dashboard_card.dart';
 import 'package:dehub/components/invoice_review_card/invoice_review_card.dart';
 import 'package:dehub/components/pie_chart/pie_chart.dart';
 import 'package:dehub/models/invoice.dart';
@@ -7,7 +8,6 @@ import 'package:dehub/screens/invoice/tabs/dashboard_tab/closed_invoice/closed_i
 import 'package:dehub/screens/invoice/tabs/dashboard_tab/invoice_list/give.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
@@ -115,139 +115,39 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
           Container(
             height: 100,
             child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               scrollDirection: Axis.horizontal,
               children: [
-                SizedBox(
-                  width: 15,
-                ),
-                GestureDetector(
-                  onTap: () {
+                DashboardCard(
+                  onClick: () {
                     Navigator.of(context).pushNamed(GivePage.routeName);
                   },
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: white,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    width: 100,
-                    height: 100,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: invoiceColor.withOpacity(0.1),
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/svg/take_invoice.svg',
-                            colorFilter:
-                                ColorFilter.mode(invoiceColor, BlendMode.srcIn),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                        user.currentBusiness?.type == "BUYER"
-                            ? Text(
-                                'Манай төлөх- нэхэмжлэл',
-                                style: TextStyle(
-                                    fontSize: 11, fontWeight: FontWeight.w500),
-                                softWrap: true,
-                              )
-                            : Text(
-                                'Манай авах- нэхэмжлэл',
-                                style: TextStyle(
-                                    fontSize: 11, fontWeight: FontWeight.w500),
-                                softWrap: true,
-                              ),
-                      ],
-                    ),
-                  ),
+                  boxColor: invoiceColor.withOpacity(0.1),
+                  padding: 10,
+                  labelText: user.currentBusiness?.type == "BUYER"
+                      ? 'Манай төлөх- нэхэмжлэл'
+                      : 'Манай авах- нэхэмжлэл',
+                  svgColor: invoiceColor,
+                  svg: 'assets/svg/take_invoice.svg',
                 ),
-                GestureDetector(
-                  onTap: () {
+                DashboardCard(
+                  onClick: () {
                     Navigator.of(context)
                         .pushNamed(ClosedInvoicePage.routeName);
                   },
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: white,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    width: 100,
-                    height: 100,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: invoiceColor.withOpacity(0.1),
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/svg/closed_invoice.svg',
-                            colorFilter:
-                                ColorFilter.mode(invoiceColor, BlendMode.srcIn),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                        Text(
-                          'Хаагдсан нэхэмжлэх',
-                          style: TextStyle(
-                              fontSize: 11, fontWeight: FontWeight.w500),
-                          softWrap: true,
-                        ),
-                      ],
-                    ),
-                  ),
+                  boxColor: invoiceColor.withOpacity(0.1),
+                  padding: 10,
+                  labelText: 'Хаагдсан нэхэмжлэх',
+                  svgColor: invoiceColor,
+                  svg: 'assets/svg/closed_invoice.svg',
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: white,
-                  ),
-                  padding: const EdgeInsets.all(8),
-                  width: 100,
-                  height: 100,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: invoiceColor.withOpacity(0.1),
-                        ),
-                        child: SvgPicture.asset(
-                          'assets/svg/map.svg',
-                          colorFilter:
-                              ColorFilter.mode(invoiceColor, BlendMode.srcIn),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 2,
-                      ),
-                      Text(
-                        'Лавлах мэдээлэл',
-                        softWrap: true,
-                        style: TextStyle(
-                            fontSize: 11, fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
+                DashboardCard(
+                  onClick: () {},
+                  boxColor: invoiceColor.withOpacity(0.1),
+                  padding: 10,
+                  labelText: 'Лавлах мэдээлэл',
+                  svgColor: invoiceColor,
+                  svg: 'assets/svg/map.svg',
                 ),
               ],
             ),

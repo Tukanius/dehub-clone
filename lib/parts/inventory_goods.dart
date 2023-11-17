@@ -16,6 +16,8 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     itemStatus:
         json['itemStatus'] != null ? json['itemStatus'] as String : null,
     refCode: json['refCode'] != null ? json['refCode'] as String : null,
+    profileName:
+        json['profileName'] != null ? json['profileName'] as String : null,
     skuCode: json['skuCode'] != null ? json['skuCode'] as String : null,
     barCode: json['barCode'] != null ? json['barCode'] as String : null,
     erpCode: json['erpCode'] != null ? json['erpCode'] as String : null,
@@ -246,6 +248,7 @@ Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
 
   if (instance.optionValues != null)
     json['optionValues'] = instance.optionValues;
+  if (instance.profileName != null) json['profileName'] = instance.profileName;
   if (instance.isBase != null) json['isBase'] = instance.isBase;
   if (instance.variants != null) json['variants'] = instance.variants;
   if (instance.additionalUnits != null)
