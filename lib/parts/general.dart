@@ -19,12 +19,37 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
     staffs: json['staffs'] != null
         ? (json['staffs'] as List).map((e) => Staffs.fromJson(e)).toList()
         : null,
+    repaymentOverDueStatus: json['repaymentOverDueStatus'] != null
+        ? (json['repaymentOverDueStatus'] as List)
+            .map((e) => RepaymentOverDueStatus.fromJson(e))
+            .toList()
+        : null,
+    scfRequestStatus: json['scfRequestStatus'] != null
+        ? (json['scfRequestStatus'] as List)
+            .map((e) => RequestStatus.fromJson(e))
+            .toList()
+        : null,
     // networks: json['networks'] != null
     //     ? (json['networks'] as List).map((e) => Networks.fromJson(e)).toList()
     //     : null,
     currencies: json['currencies'] != null
         ? (json['currencies'] as List)
             .map((e) => Currencies.fromJson(e))
+            .toList()
+        : null,
+    repaymentStatus: json['repaymentStatus'] != null
+        ? (json['repaymentStatus'] as List)
+            .map((e) => RepaymentStatus.fromJson(e))
+            .toList()
+        : null,
+    scfRequestTypes: json['scfRequestTypes'] != null
+        ? (json['scfRequestTypes'] as List)
+            .map((e) => RequestTypes.fromJson(e))
+            .toList()
+        : null,
+    invoiceOverdueStatus: json['invoiceOverdueStatus'] != null
+        ? (json['invoiceOverdueStatus'] as List)
+            .map((e) => InvoiceOverdueStatus.fromJson(e))
             .toList()
         : null,
     paymentTermConfigTypes: json['paymentTermConfigTypes'] != null
@@ -260,9 +285,17 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$GeneralToJson(General instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.scfRequestTypes != null)
+    json['scfRequestTypes'] = instance.scfRequestTypes;
+  if (instance.invoiceOverdueStatus != null)
+    json['invoiceOverdueStatus'] = instance.invoiceOverdueStatus;
   if (instance.zipCodes != null) json['zipCodes'] = instance.zipCodes;
+  if (instance.scfRequestStatus != null)
+    json['scfRequestStatus'] = instance.scfRequestStatus;
   if (instance.paymentTermConditions != null)
     json['paymentTermConditions'] = instance.paymentTermConditions;
+  if (instance.repaymentStatus != null)
+    json['repaymentStatus'] = instance.repaymentStatus;
   if (instance.paymentTermConfigTypes != null)
     json['paymentTermConfigTypes'] = instance.paymentTermConfigTypes;
   if (instance.bankNames != null) json['bankNames'] = instance.bankNames;

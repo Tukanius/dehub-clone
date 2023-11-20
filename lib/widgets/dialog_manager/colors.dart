@@ -60,6 +60,9 @@ const Color neonGreen = Color(0xff53D66B);
 const Color brown = Color(0xffBA502E);
 const Color eggPlant = Color(0xff74052C);
 const Color pieYellow = Color(0xffFBC600);
+const Color pieBlue = Color(0xff44A6E9);
+const Color pieOrange = Color(0xffFF8548);
+const Color pieRed = Color(0xffE2362F);
 
 const gradient2 = LinearGradient(colors: [
   Color(0xff5D7128),

@@ -1,11 +1,17 @@
-import 'package:dehub/screens/funding_request_page/funding_request_detail_page.dart';
+import 'package:dehub/models/finance.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 class RequestedFundingCard extends StatefulWidget {
   final Function()? onClick;
-  const RequestedFundingCard({Key? key, this.onClick}) : super(key: key);
+  final Finance? data;
+  const RequestedFundingCard({
+    Key? key,
+    this.data,
+    this.onClick,
+  }) : super(key: key);
 
   @override
   State<RequestedFundingCard> createState() => _RequestedFundingCardState();
@@ -15,9 +21,7 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(FundingRequestDetailPage.routeName);
-      },
+      onTap: widget.onClick,
       child: Container(
         padding: const EdgeInsets.all(15),
         color: white,
@@ -27,7 +31,7 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Buyer Business Name',
+                  '${widget.data?.invReceiverBusiness?.partner?.businessName}',
                   style: TextStyle(
                       color: dark, fontSize: 14, fontWeight: FontWeight.w600),
                 ),
@@ -79,7 +83,7 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '2021-12-01 15:05 PM',
+                  '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data!.createdAt!)}',
                   style: TextStyle(
                     color: Color(0xff555555),
                     fontSize: 12,
@@ -96,7 +100,7 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
                       width: 3,
                     ),
                     Text(
-                      'INV 23897',
+                      '${widget.data?.invRefCode}',
                       style: TextStyle(
                         color: dark,
                         fontWeight: FontWeight.w600,

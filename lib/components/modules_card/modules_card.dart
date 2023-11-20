@@ -1,21 +1,26 @@
 import 'package:dehub/models/partner.dart';
-import 'package:dehub/screens/auth/financing_login.dart';
+import 'package:dehub/src/auth/financing_login.dart';
+import 'package:dehub/src/finance_module/financing_page/financing_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:dehub/screens/debt_page/debt_page.dart';
-// import 'package:dehub/screens/financing_page/financing_page.dart';
-import 'package:dehub/screens/invoice/invoice_page.dart';
-import 'package:dehub/screens/network_page/network_page.dart';
-import 'package:dehub/screens/order_page/order_page.dart';
-import 'package:dehub/screens/partner_page/partner_page.dart';
-import 'package:dehub/screens/payment_page/payment_page.dart';
-import 'package:dehub/screens/product_page/product_page.dart';
-import 'package:dehub/screens/user_management_page/user_management_page.dart';
+// import 'package:dehub/src/debt_page/debt_page.dart';
+import 'package:dehub/src/invoice_module/main_page/invoice_page.dart';
+import 'package:dehub/src/network_module/network_page/network_page.dart';
+import 'package:dehub/src/order_module/order_page/order_page.dart';
+import 'package:dehub/src/partner_module/partner_page/partner_page.dart';
+import 'package:dehub/src/payment_module/payment_page/payment_page.dart';
+import 'package:dehub/src/product_module/product_page/product_page.dart';
+import 'package:dehub/src/user_module/user_management_page/user_management_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ModulesCard extends StatefulWidget {
+  final bool? isFinanceLogin;
   final Partner? partner;
-  const ModulesCard({Key? key, this.partner}) : super(key: key);
+  const ModulesCard({
+    Key? key,
+    this.partner,
+    this.isFinanceLogin,
+  }) : super(key: key);
 
   @override
   State<ModulesCard> createState() => _ModulesCardState();
@@ -150,10 +155,13 @@ class _ModulesCardState extends State<ModulesCard> {
           ),
           GestureDetector(
             onTap: () {
-              // Navigator.of(context).pushNamed(FinancingPage.routeName);
               if (widget.partner?.user?.currentBusiness!.type == 'SUPPLIER' ||
                   widget.partner?.user?.currentBusiness!.type == "BUYER") {
-                Navigator.of(context).pushNamed(FinancingLogin.routeName);
+                if (widget.isFinanceLogin == true) {
+                  Navigator.of(context).pushNamed(FinancingPage.routeName);
+                } else {
+                  Navigator.of(context).pushNamed(FinancingLogin.routeName);
+                }
               }
             },
             child: Column(
@@ -189,7 +197,7 @@ class _ModulesCardState extends State<ModulesCard> {
             onTap: () {
               if (widget.partner?.user?.currentBusiness!.type == 'SUPPLIER' ||
                   widget.partner?.user?.currentBusiness!.type == "BUYER") {
-                Navigator.of(context).pushNamed(DebtPage.routeName);
+                Navigator.of(context).pushNamed(NetworkPage.routeName);
               }
             },
             child: Column(
@@ -199,13 +207,13 @@ class _ModulesCardState extends State<ModulesCard> {
                   height: 36,
                   width: 36,
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 7, vertical: 7),
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: debtColor.withOpacity(0.2),
+                    color: networkColor.withOpacity(0.2),
                   ),
                   child: SvgPicture.asset(
-                    'assets/svg/avlaga_uglug.svg',
+                    'assets/svg/network.svg',
                     colorFilter: ColorFilter.mode(buttonColor, BlendMode.srcIn),
                   ),
                 ),
@@ -213,7 +221,7 @@ class _ModulesCardState extends State<ModulesCard> {
                   height: 5,
                 ),
                 Text(
-                  'Авлага, өглөг',
+                  'Бизнес нетворк',
                   style: TextStyle(
                     fontSize: 12,
                   ),
@@ -259,10 +267,10 @@ class _ModulesCardState extends State<ModulesCard> {
           ),
           GestureDetector(
             onTap: () {
-              if (widget.partner?.user?.currentBusiness!.type == 'SUPPLIER' ||
-                  widget.partner?.user?.currentBusiness!.type == "BUYER") {
-                Navigator.of(context).pushNamed(NetworkPage.routeName);
-              }
+              // if (widget.partner?.user?.currentBusiness!.type == 'SUPPLIER' ||
+              //     widget.partner?.user?.currentBusiness!.type == "BUYER") {
+              //   Navigator.of(context).pushNamed(DebtPage.routeName);
+              // }
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -271,23 +279,25 @@ class _ModulesCardState extends State<ModulesCard> {
                   height: 36,
                   width: 36,
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+                      const EdgeInsets.symmetric(horizontal: 7, vertical: 7),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: networkColor.withOpacity(0.2),
+                    color: debtColor.withOpacity(0.1),
                   ),
                   child: SvgPicture.asset(
-                    'assets/svg/network.svg',
-                    colorFilter: ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                    'assets/svg/avlaga_uglug.svg',
+                    colorFilter: ColorFilter.mode(
+                        buttonColor.withOpacity(0.3), BlendMode.srcIn),
                   ),
                 ),
                 SizedBox(
                   height: 5,
                 ),
                 Text(
-                  'Бизнес нетворк',
+                  'Авлага, өглөг',
                   style: TextStyle(
                     fontSize: 12,
+                    color: black.withOpacity(0.5),
                   ),
                 ),
               ],
@@ -337,6 +347,7 @@ class _ModulesCardState extends State<ModulesCard> {
                   'Манай бизнес',
                   style: TextStyle(
                     fontSize: 12,
+                    color: black.withOpacity(0.5),
                   ),
                 ),
               ],
@@ -386,6 +397,7 @@ class _ModulesCardState extends State<ModulesCard> {
                   'Хэрэглэгчид',
                   style: TextStyle(
                     fontSize: 12,
+                    color: black.withOpacity(0.5),
                   ),
                 ),
               ],

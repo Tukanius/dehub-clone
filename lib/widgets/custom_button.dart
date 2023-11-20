@@ -35,22 +35,23 @@ class _CustomButtonState extends State<CustomButton> {
       child: AnimatedOpacity(
         opacity: isVisible ? 1 : 0.7,
         duration: Duration(milliseconds: 50),
-        curve: Curves.ease,
+        curve: Curves.slowMiddle,
         child: GestureDetector(
           onTap: () {
             setState(() {
               isVisible = false;
             });
-            widget.onClick();
             Future.delayed(Duration(milliseconds: 50), () {
               setState(() {
                 isVisible = true;
               });
             });
+            widget.onClick();
           },
           child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15),
             height: 48,
-            width: 360,
+            width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               color: widget.isGradient == false || widget.isGradient == null

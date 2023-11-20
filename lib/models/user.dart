@@ -107,11 +107,19 @@ class User {
   String? oldPin;
   File? file;
 
+  User? partner;
+
+  String? businessRef;
+  String? partnerRef;
+
   getAvatar() {
     return HttpRequest.s3host + avatar.toString();
   }
 
   User({
+    this.businessRef,
+    this.partnerRef,
+    this.partner,
     this.file,
     this.oldPin,
     this.url,

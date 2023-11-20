@@ -1,6 +1,6 @@
-import 'package:dehub/main.dart';
-import 'package:dehub/screens/auth/login_page.dart';
-import 'package:dehub/services/navigation.dart';
+// import 'package:dehub/main.dart';
+// import 'package:dehub/src/auth/login_page.dart';
+// import 'package:dehub/services/navigation.dart';
 import 'package:flutter/cupertino.dart';
 
 class HttpHandler {
@@ -49,9 +49,9 @@ class HttpHandler {
       case 200:
       case 304:
         return data;
-      case 401:
-        locator<NavigationService>().pushNamed(routeName: LoginPage.routeName);
-        break;
+      // case 401:
+      //   locator<NavigationService>().pushNamed(routeName: LoginPage.routeName);
+      //   break;
       default:
         HttpHandler error = HttpHandler(
             statusCode: statusCode,

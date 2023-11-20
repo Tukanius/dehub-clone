@@ -1,4 +1,4 @@
-import 'package:dehub/screens/avaible_funding_page/avaible_funding_detail_page.dart';
+import 'package:dehub/src/finance_module/screens/avaible_funding_detail/avaible_funding_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

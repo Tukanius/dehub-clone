@@ -1,4 +1,4 @@
-import 'package:dehub/screens/network_page/tabs/dashboard_tab/direction_page/direction_detail_page.dart';
+import 'package:dehub/src/network_module/screens/direction_page/direction_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/screens/no_internet/no_internet_screen.dart';
+import 'package:dehub/src/auth/no_internet/no_internet_screen.dart';
 import 'package:dehub/services/dialog.dart';
 import 'package:dehub/services/navigation.dart';
 import 'package:dio/dio.dart';
@@ -32,6 +32,8 @@ class HttpRequest {
 
   static const media = 'http://dev-de-dehub.zto.mn/mdi';
 
+  static const financeHost = 'http://dev-de-fi.zto.mn';
+
   static const version = '/app';
 
   static const uri = host;
@@ -61,6 +63,8 @@ class HttpRequest {
       uri = "$paymentHost$version$api";
     } else if (type == "MEDIA") {
       uri = "$media$api";
+    } else if (type == "FINANCE") {
+      uri = "$financeHost$version$api";
     } else {
       uri = '$host$version$api';
     }

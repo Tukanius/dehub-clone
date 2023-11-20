@@ -1,3 +1,4 @@
+import 'package:dehub/api/finance_api.dart';
 import 'package:dehub/api/general_api.dart';
 import 'package:dehub/models/general.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ class GeneralProvider extends ChangeNotifier {
   General businessGeneral = General();
   General orderGeneral = General();
   General paymentGeneral = General();
+  General financeGeneral = General();
   General inventoryGeneral = General();
 
   init(bool handler) async {
@@ -31,6 +33,11 @@ class GeneralProvider extends ChangeNotifier {
 
   inventoryInit(bool handler) async {
     inventoryGeneral = await GeneralApi().inventoryInit(handler);
+    notifyListeners();
+  }
+
+  financeInit(bool handler) async {
+    financeGeneral = await FinanceApi().init(handler);
     notifyListeners();
   }
 }

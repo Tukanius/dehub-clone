@@ -26,8 +26,12 @@ class Filter {
   String? inOutType;
   String? accountId;
   String? itemStatus;
+  String? productType;
+  bool? isRecalled;
 
   Filter({
+    this.isRecalled,
+    this.productType,
     this.itemStatus,
     this.accountId,
     this.startDate,

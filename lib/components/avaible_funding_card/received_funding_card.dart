@@ -1,28 +1,46 @@
-import 'package:dehub/screens/received_funding_page/received_funding_detail_page.dart';
+import 'package:dehub/models/finance.dart';
+import 'package:dehub/models/general.dart';
+import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class ReceivedFundingCard extends StatefulWidget {
+  final Finance data;
   final Function()? onClick;
-  const ReceivedFundingCard({Key? key, this.onClick}) : super(key: key);
+  const ReceivedFundingCard({
+    Key? key,
+    this.onClick,
+    required this.data,
+  }) : super(key: key);
 
   @override
   State<ReceivedFundingCard> createState() => _ReceivedFundingCardState();
 }
 
 class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
+  General general = General();
+
+  symbol() {
+    final res = general.currencies!
+        .firstWhere((element) => element.code == widget.data.currency)
+        .symbol;
+    return res;
+  }
+
   @override
   Widget build(BuildContext context) {
+    general =
+        Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
+
     return Column(
       children: [
         GestureDetector(
-          onTap: () {
-            Navigator.of(context)
-                .pushNamed(ReceivedFundingDetailPage.routeName);
-          },
+          onTap: widget.onClick,
           child: Container(
-            margin: const EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(bottom: 3),
             padding: const EdgeInsets.all(15),
             color: white,
             child: Column(
@@ -31,7 +49,7 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'SFC-SL-100086-01',
+                      '${widget.data.refCode}',
                       style: TextStyle(
                           color: dark,
                           fontSize: 14,
@@ -71,7 +89,7 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                       ),
                     ),
                     Text(
-                      'Supplier_User',
+                      '${widget.data.requestedBusiness?.profileName}',
                       style: TextStyle(
                         color: financingColor,
                         fontWeight: FontWeight.w500,
@@ -92,7 +110,7 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                       ),
                     ),
                     Text(
-                      '49,510,000.00 ₮',
+                      '${Utils().formatCurrency(widget.data.requestedAmount.toString()) + symbol()}',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -107,7 +125,7 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Нийт шимтгэл: xxx,xxx,xxx.xx ₮',
+                      'Нийт шимтгэл: ${Utils().formatCurrency(widget.data.calculatedFeeAmount.toString()) + symbol()}',
                       style: TextStyle(
                         fontSize: 12,
                         color: Color(0xff555555),
@@ -124,7 +142,7 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                           width: 3,
                         ),
                         Text(
-                          'INV 23897',
+                          '${widget.data.invRefCode}',
                           style: TextStyle(
                             color: dark,
                             fontWeight: FontWeight.w600,

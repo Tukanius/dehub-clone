@@ -1,5 +1,7 @@
 import 'package:dehub/api/auth_api.dart';
+import 'package:dehub/api/finance_api.dart';
 import 'package:dehub/api/partner_api.dart';
+import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -15,6 +17,29 @@ class UserProvider extends ChangeNotifier {
   User orderMe = User();
   User paymentMe = User();
   User inventoryMe = User();
+  Finance financeUser = Finance();
+
+  financeMe() async {
+    financeUser = await FinanceApi().financeMe();
+    notifyListeners();
+  }
+
+  financeSetToken(String? token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (token != null) prefs.setString("FINANCE_TOKEN", token);
+  }
+
+  financeLogin(Finance data) async {
+    financeUser = await FinanceApi().financeLogin(data);
+    financeSetToken(financeUser.accessToken);
+    notifyListeners();
+  }
+
+  login(User data) async {
+    user = await AuthApi().login(data);
+    setAccessToken(user.accessToken);
+    notifyListeners();
+  }
 
   me(bool handler) async {
     user = await AuthApi().me(handler);
@@ -51,12 +76,6 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  login(User data) async {
-    user = await AuthApi().login(data);
-    setAccessToken(user.accessToken);
-    notifyListeners();
-  }
-
   mailOtp(User data) async {
     User res = await PartnerApi().mailOtp(data);
     await setAccessToken(res.accessToken);
@@ -74,6 +93,11 @@ class UserProvider extends ChangeNotifier {
     if (token != null) prefs.setString("ACCESS_TOKEN", token);
   }
 
+  clearFinanceToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove("FINANCE_TOKEN");
+  }
+
   clearAccessToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove("ACCESS_TOKEN");
@@ -86,8 +110,22 @@ class UserProvider extends ChangeNotifier {
     return token;
   }
 
+  static Future<String?> financeToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("FINANCE_TOKEN");
+
+    return token;
+  }
+
+  financeLogout() async {
+    financeUser = Finance();
+    await FinanceApi().logout();
+    clearFinanceToken();
+  }
+
   logout() async {
     user = User();
+    await AuthApi().logout();
     clearAccessToken();
   }
 

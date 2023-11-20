@@ -1,5 +1,5 @@
 import 'package:dehub/models/reference_information.dart';
-import 'package:dehub/screens/network_page/tabs/dashboard_tab/invoice_condition_page/invoice_condition_page.dart';
+import 'package:dehub/src/network_module/screens/invoice_condition_page/invoice_condition_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';

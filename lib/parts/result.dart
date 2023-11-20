@@ -38,6 +38,9 @@ Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
     if (instance.filter!.accountId != null) {
       params['filter']['accountId'] = instance.filter!.accountId;
     }
+    if (instance.filter!.productType != null) {
+      params['filter']['productType'] = instance.filter!.productType;
+    }
     if (instance.filter!.startDate != null) {
       params['filter']['startDate'] = instance.filter!.startDate;
     }
@@ -49,6 +52,9 @@ Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
     }
     if (instance.filter!.inOutType != null) {
       params['filter']['inOutType'] = instance.filter!.inOutType;
+    }
+    if (instance.filter!.isRecalled != null) {
+      params['filter']['isRecalled'] = instance.filter!.isRecalled;
     }
     if (instance.filter!.businessId != null) {
       params['filter']['businessId'] = instance.filter!.businessId;

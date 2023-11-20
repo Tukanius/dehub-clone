@@ -7,6 +7,7 @@ import 'package:dehub/models/client_classification.dart';
 import 'package:dehub/models/delivery_note_status.dart';
 import 'package:dehub/models/distribution_areas.dart';
 import 'package:dehub/models/equity_types.dart';
+import 'package:dehub/models/invoice_over_due_status.dart';
 import 'package:dehub/models/payment_term_conditions.dart';
 import 'package:dehub/models/payment_term_config_types.dart';
 import 'package:dehub/models/permissions.dart';
@@ -24,6 +25,10 @@ import 'package:dehub/models/invoice_history_types.dart';
 import 'package:dehub/models/invoice_status.dart';
 import 'package:dehub/models/pull_sheet_status.dart';
 import 'package:dehub/models/purchase_types.dart';
+import 'package:dehub/models/repayment_over_due_status.dart';
+import 'package:dehub/models/repayment_status.dart';
+import 'package:dehub/models/request_status.dart';
+import 'package:dehub/models/request_types.dart';
 import 'package:dehub/models/service_category_types.dart';
 import 'package:dehub/models/types.dart';
 import 'package:dehub/models/invoice_types.dart';
@@ -110,8 +115,18 @@ class General {
   List<PaymentTermConfigTypes>? paymentTermConfigTypes;
   List<PaymentTermConditions>? paymentTermConditions;
   List<ZipCodes>? zipCodes;
+  List<InvoiceOverdueStatus>? invoiceOverdueStatus;
+  List<RequestTypes>? scfRequestTypes;
+  List<RequestStatus>? scfRequestStatus;
+  List<RepaymentOverDueStatus>? repaymentOverDueStatus;
+  List<RepaymentStatus>? repaymentStatus;
 
   General({
+    this.repaymentStatus,
+    this.repaymentOverDueStatus,
+    this.scfRequestStatus,
+    this.scfRequestTypes,
+    this.invoiceOverdueStatus,
     this.zipCodes,
     this.paymentTermConditions,
     this.paymentTermConfigTypes,

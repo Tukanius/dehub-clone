@@ -12,6 +12,10 @@ User _$UserFromJson(Map<String, dynamic> json) {
     deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
     type: json['type'] != null ? json['type'] as String : null,
     sessionId: json['sessionId'] != null ? json['sessionId'] as String : null,
+    partnerRef:
+        json['partnerRef'] != null ? json['partnerRef'] as String : null,
+    businessRef:
+        json['businessRef'] != null ? json['businessRef'] as String : null,
     isActive: json['isActive'] != null ? json['isActive'] as bool : null,
     email: json['email'] != null ? json['email'] as String : null,
     username: json['username'] != null ? json['username'] as String : null,
@@ -125,6 +129,9 @@ User _$UserFromJson(Map<String, dynamic> json) {
     currentBusiness: json['currentBusiness'] != null
         ? User.fromJson(json['currentBusiness'] as Map<String, dynamic>)
         : null,
+    partner: json['partner'] != null
+        ? User.fromJson(json['partner'] as Map<String, dynamic>)
+        : null,
     regNumber: json['regNumber'] != null ? json['regNumber'] as String : null,
     stateRegNum: json['stateRegNum'] != null
         ? double.parse(json['stateRegNum'].toString())
@@ -201,6 +208,8 @@ Map<String, dynamic> _$UserToJson(User instance) {
 
   if (instance.businessName != null)
     json["businessName"] = instance.businessName;
+  if (instance.businessRef != null) json["businessRef"] = instance.businessRef;
+  if (instance.partnerRef != null) json["partnerRef"] = instance.partnerRef;
   if (instance.file != null) json["file"] = instance.file;
   if (instance.oldPin != null) json["oldPin"] = instance.oldPin;
   if (instance.url != null) json["url"] = instance.url;
@@ -237,6 +246,7 @@ Map<String, dynamic> _$UserToJson(User instance) {
   if (instance.hasPassword != null) json['hasPassword'] = instance.hasPassword;
   if (instance.currentBusiness != null)
     json['currentBusiness'] = instance.currentBusiness;
+  if (instance.partner != null) json['partner'] = instance.partner;
   if (instance.regNumber != null) json['regNumber'] = instance.regNumber;
   if (instance.stateRegNum != null) json['stateRegNum'] = instance.stateRegNum;
   if (instance.legalEntityType != null)

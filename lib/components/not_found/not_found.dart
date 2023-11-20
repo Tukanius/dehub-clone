@@ -36,8 +36,7 @@ class _NotFoundState extends State<NotFound> {
                         : widget.module == "DEBT"
                             ? Lottie.asset('/assets/lottie/debt-not-found.json')
                             : widget.module == "FINANCE"
-                                ? Lottie.asset(
-                                    '/assets/lottie/finance-not-found.json')
+                                ? Lottie.asset('/assets/lottie/finance.json')
                                 : SizedBox(),
         const SizedBox(
           height: 20,

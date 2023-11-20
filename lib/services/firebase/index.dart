@@ -7,8 +7,8 @@
 // import 'package:flutter/material.dart';
 // import 'package:dehub/models/notification.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-// import 'package:dehub/screens/notification/notification_page.dart';
-// // import 'package:dehub/screens/suit/post_detail_page.dart';
+// import 'package:dehub/src/notification/notification_page.dart';
+// // import 'package:dehub/src/suit/post_detail_page.dart';
 // import '../../main.dart';
 
 // import '../../services/navigation.dart';

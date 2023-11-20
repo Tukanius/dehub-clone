@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // import '../models/alert.dart';
-// import '../screens/no_internet/no_internet_page.dart';
+// import '../src/no_internet/no_internet_page.dart';
 
 class DialogService {
   late Function getContextListener;

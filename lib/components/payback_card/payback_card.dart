@@ -1,24 +1,45 @@
+import 'package:dehub/models/finance.dart';
+import 'package:dehub/models/general.dart';
+import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
-class PaybackCard extends StatefulWidget {
+class RePaymentCard extends StatefulWidget {
   final Function()? onClick;
-  const PaybackCard({
+  final Finance data;
+  const RePaymentCard({
     Key? key,
+    required this.data,
     this.onClick,
   }) : super(key: key);
 
   @override
-  State<PaybackCard> createState() => _PaybackCardState();
+  State<RePaymentCard> createState() => RePaymentCardState();
 }
 
-class _PaybackCardState extends State<PaybackCard> {
+class RePaymentCardState extends State<RePaymentCard> {
+  General general = General();
+
+  symbol() {
+    final res = general.currencies!
+        .firstWhere((element) => element.code == widget.data.payerAcc?.currency)
+        .symbol;
+    return res;
+  }
+
   @override
   Widget build(BuildContext context) {
+    general =
+        Provider.of<GeneralProvider>(context, listen: false).financeGeneral;
+
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
+        margin: const EdgeInsets.only(bottom: 3),
         padding: const EdgeInsets.all(15),
         color: white,
         child: Column(
@@ -28,7 +49,7 @@ class _PaybackCardState extends State<PaybackCard> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'REP-INV-100064',
+                  '${widget.data.refCode}',
                   style: TextStyle(
                     color: black,
                     fontWeight: FontWeight.w600,
@@ -57,21 +78,21 @@ class _PaybackCardState extends State<PaybackCard> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: yellow.withOpacity(0.2),
+                    color: repaymentStatusColor(true),
                   ),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                   child: Text(
-                    'Хүлээж буй',
+                    '${repaymentStatus()}',
                     style: TextStyle(
-                      color: yellow,
+                      color: repaymentStatusColor(false),
                       fontWeight: FontWeight.w500,
                       fontSize: 12,
                     ),
                   ),
                 ),
                 Text(
-                  'Supplier_user',
+                  '${widget.data.payerBusiness?.profileName}',
                   style: TextStyle(
                     color: financingColor,
                     fontWeight: FontWeight.w500,
@@ -92,7 +113,7 @@ class _PaybackCardState extends State<PaybackCard> {
                   ),
                 ),
                 Text(
-                  '49,510,000.00₮',
+                  '${Utils().formatCurrency(widget.data.amountToPay.toString()) + symbol()}',
                   style: TextStyle(
                     color: black,
                     fontWeight: FontWeight.w500,
@@ -109,7 +130,7 @@ class _PaybackCardState extends State<PaybackCard> {
                 Expanded(
                   flex: 3,
                   child: Text(
-                    'Эргэн төлөх огноо: DateTime ',
+                    'Эргэн төлөх огноо: ${DateFormat('yyyy-MM-dd').format(widget.data.repaymentDate!)} ',
                     style: TextStyle(
                       color: depBrown,
                       fontSize: 12,
@@ -131,8 +152,8 @@ class _PaybackCardState extends State<PaybackCard> {
                           style: TextStyle(color: depBrown),
                         ),
                         TextSpan(
-                          text: 'Хэвийн',
-                          style: TextStyle(color: green),
+                          text: '${overdueStatus()}',
+                          style: TextStyle(color: overdueStatusColor()),
                         ),
                       ],
                     ),
@@ -144,5 +165,65 @@ class _PaybackCardState extends State<PaybackCard> {
         ),
       ),
     );
+  }
+
+  overdueStatus() {
+    final res = general.repaymentOverDueStatus!
+        .firstWhere((element) => element.code == widget.data.overdueStatus)
+        .name;
+    return res;
+  }
+
+  repaymentStatus() {
+    final res = general.repaymentStatus!
+        .firstWhere((element) => element.code == widget.data.repaymentStatus)
+        .name;
+    return res;
+  }
+
+  repaymentStatusColor(bool opacity) {
+    if (opacity == false) {
+      switch (widget.data.repaymentStatus) {
+        case "CREATED":
+          return Color(0xffFF9900);
+        case "APPROVED":
+          return Color(0xff4169E1);
+        case "RECOURSED":
+          return Color(0xffFF540D);
+        case "CLOSED":
+          return Color(0xff25B475);
+        default:
+      }
+    } else {
+      switch (widget.data.repaymentStatus) {
+        case "CREATED":
+          return Color(0xffFF9900).withOpacity(0.2);
+        case "APPROVED":
+          return Color(0xff4169E1).withOpacity(0.2);
+        case "RECOURSED":
+          return Color(0xffFF540D).withOpacity(0.2);
+        case "CLOSED":
+          return Color(0xff25B475).withOpacity(0.2);
+        default:
+      }
+    }
+  }
+
+  overdueStatusColor() {
+    switch (widget.data.overdueStatus) {
+      case "NORMAL":
+        return Color(0xff25B475);
+      case "ONE_TO_THREE":
+        return Color(0xffFF9900);
+      case "FOUR_THIRTY":
+        return Color(0xffFF76A1);
+      case "THIRTY_ONE_SIXTY":
+        return Color(0xffFF540D);
+      case "SIXTY_ONE_NINETY":
+        return Color(0xffEB0404);
+      case "OVER_NINETY":
+        return Color(0xff890E34);
+      default:
+    }
   }
 }
