@@ -5,19 +5,24 @@ import 'package:dehub/components/invoice_product_card/add_product_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/invoice.dart';
+
 import 'package:dehub/models/result.dart';
+import 'package:dehub/providers/checkout-provider.dart';
+import 'package:dehub/utils/utils.dart';
+import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Bagtsaar extends StatefulWidget {
-  final ListenController goodsListenController;
-  final List<Invoice> data;
   final String businessId;
+  final bool isPackage;
   static const routeName = '/bagtsaar';
   Bagtsaar({
-    required this.data,
-    required this.goodsListenController,
+    required this.isPackage,
     required this.businessId,
     Key? key,
   }) : super(key: key);
@@ -29,13 +34,14 @@ class Bagtsaar extends StatefulWidget {
 class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
   bool isLoading = true;
   Result inventory = Result(rows: [], count: 0);
-  Result removedList = Result(rows: [], count: 0);
   int page = 1;
   int limit = 10;
   Timer? timer;
   bool isSubmit = false;
   String query = "";
-
+  List<Invoice> packageProduct = [];
+  ListenController listenController = ListenController();
+  RefreshController refreshController = RefreshController();
   @override
   afterFirstLayout(BuildContext context) {
     list(page, limit, '');
@@ -65,78 +71,167 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
     });
   }
 
+  void _onLoading() async {
+    setState(() {
+      limit += 10;
+    });
+    await list(page, limit, "");
+    refreshController.loadComplete();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  void _onRefresh() async {
+    await Future.delayed(Duration(milliseconds: 1000), () async {
+      setState(() {
+        isLoading = true;
+      });
+      await list(page, limit, "");
+      refreshController.refreshCompleted();
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    listenController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    listenController.addListener(() {
+      setState(() {
+        packageProduct = packageProduct;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      body: isLoading == true
-          ? Center(
-              child: CircularProgressIndicator(
-                color: invoiceColor,
-              ),
-            )
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  SearchButton(
-                    borderColor: invoiceColor,
-                    textColor: invoiceColor,
-                    onChange: (_query) {
-                      onChange(_query);
-                    },
+    return Column(
+      children: [
+        SearchButton(
+          borderColor: grey,
+          textColor: invoiceColor,
+          onChange: (_query) {
+            onChange(_query);
+          },
+          color: invoiceColor,
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Expanded(
+          child: isLoading == true
+              ? Center(
+                  child: CircularProgressIndicator(
                     color: invoiceColor,
                   ),
-                  SizedBox(
-                    height: 5,
+                )
+              : SmartRefresher(
+                  enablePullDown: true,
+                  enablePullUp: true,
+                  controller: refreshController,
+                  header: WaterDropHeader(
+                    waterDropColor: invoiceColor,
+                    refresh: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: invoiceColor,
+                      ),
+                    ),
                   ),
-                  isSubmit == false
-                      ? inventory.rows?.length == 0
-                          ? NotFound(
-                              module: "INVOICE",
-                              labelText: "Хоосон байна!",
-                            )
-                          : Column(
-                              children: [
-                                Column(
-                                  children: inventory.rows!
-                                      .map(
-                                        (data) => AddProductCard(
-                                          readOnly: false,
-                                          onClick: () {
-                                            if (data.quantity != null &&
-                                                data.quantity > 0) {
-                                              data.totalAmount =
-                                                  data.quantity * data.price;
-                                              widget.goodsListenController
-                                                  .goodsInvoiceChange(data);
-                                              Navigator.of(context).pop();
-                                            } else {
-                                              data.quantity = 1;
-                                              data.totalAmount =
-                                                  data.quantity * data.price;
-                                              widget.goodsListenController
-                                                  .goodsInvoiceChange(data);
-                                              Navigator.of(context).pop();
-                                            }
-                                          },
-                                          data: data,
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                                SizedBox(
-                                  height: 50,
-                                ),
-                              ],
-                            )
-                      : Center(
-                          child: CircularProgressIndicator(
-                            color: invoiceColor,
+                  onRefresh: _onRefresh,
+                  onLoading: _onLoading,
+                  footer: CustomFooter(
+                    builder: (context, mode) {
+                      Widget body;
+                      if (mode == LoadStatus.idle) {
+                        body = const Text("");
+                      } else if (mode == LoadStatus.loading) {
+                        body = const CupertinoActivityIndicator();
+                      } else if (mode == LoadStatus.failed) {
+                        body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
+                      } else {
+                        body = const Text("Мэдээлэл алга байна");
+                      }
+                      return SizedBox(
+                        height: 55.0,
+                        child: Center(child: body),
+                      );
+                    },
+                  ),
+                  child: SingleChildScrollView(
+                    child: isSubmit == false
+                        ? inventory.rows?.length == 0
+                            ? NotFound(
+                                module: "INVOICE",
+                                labelText: "Хоосон байна!",
+                              )
+                            : Column(
+                                children: [
+                                  Column(
+                                    children: inventory.rows!
+                                        .map(
+                                          (data) => AddProductCard(
+                                            isPackage: widget.isPackage,
+                                            package: packageProduct,
+                                            listenController: listenController,
+                                            readOnly: false,
+                                            onClick: () {
+                                              FocusScope.of(context).unfocus();
+                                            },
+                                            data: data,
+                                          ),
+                                        )
+                                        .toList(),
+                                  ),
+                                  SizedBox(
+                                    height: 50,
+                                  ),
+                                ],
+                              )
+                        : Center(
+                            child: CircularProgressIndicator(
+                              color: invoiceColor,
+                            ),
                           ),
-                        ),
-                ],
-              ),
-            ),
+                  ),
+                ),
+        ),
+        packageProduct.isNotEmpty && widget.isPackage == true
+            ? Container(
+                decoration: BoxDecoration(
+                  color: white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 25),
+                child: CustomButton(
+                  onClick: () {
+                    for (var i = 0; i < packageProduct.length; i++) {
+                      Provider.of<CheckOutProvider>(context, listen: false)
+                          .addCart(
+                              packageProduct[i], packageProduct[i].quantity!);
+                    }
+                    Navigator.of(context).pop();
+                  },
+                  labelText:
+                      "${packageProduct.fold(0, (previousValue, element) => previousValue + element.quantity!)} бараа = ${Utils().formatCurrency(packageProduct.fold(0.0, (previousValue, element) => previousValue + (element.quantity!.toDouble() * element.price!)).toString())} ₮",
+                  labelColor: invoiceColor,
+                ),
+              )
+            : SizedBox(),
+      ],
     );
   }
 }

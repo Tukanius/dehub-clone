@@ -1,5 +1,6 @@
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/order.dart';
+import 'package:dehub/providers/checkout-provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -7,21 +8,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 
 class OrderProductCard extends StatefulWidget {
   final Function()? onClick;
   final Function()? onCloseClick;
-  final Order? data;
+  final Order data;
   final bool? readOnly;
-  final bool? isTap;
+  final List<Order>? package;
+  final bool? isPackage;
   final ListenController? listenController;
   const OrderProductCard({
-    this.onCloseClick,
     this.listenController,
+    this.onCloseClick,
+    this.isPackage,
+    this.package,
     this.readOnly,
-    this.isTap,
     Key? key,
-    this.data,
+    required this.data,
     this.onClick,
   }) : super(key: key);
 
@@ -35,11 +39,18 @@ class _OrderProductCardState extends State<OrderProductCard>
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   int newValue = 0;
 
+  removeCart(int? quantity) {
+    if (quantity == 0) {
+      Provider.of<CheckOutProvider>(context, listen: false)
+          .orderRemoveCart(widget.data);
+    }
+  }
+
   @override
   afterFirstLayout(BuildContext context) async {
     setState(() {
-      if (widget.data?.quantity != null) {
-        quantityController.text = widget.data!.quantity.toString();
+      if (widget.data.quantity != null) {
+        quantityController.text = widget.data.quantity.toString();
       } else {
         quantityController.text = "0";
       }
@@ -47,31 +58,56 @@ class _OrderProductCardState extends State<OrderProductCard>
   }
 
   decrease() {
-    if (int.parse(quantityController.text) > 0) {
+    if (widget.data.quantity! > 0) {
       setState(() {
+        int newValue = 0;
         int currentValue = int.tryParse(quantityController.text) ?? 0;
         newValue = currentValue - 1;
         quantityController.text = newValue.toString();
-        widget.data?.quantity = int.parse(quantityController.text.toString());
+        widget.data.quantity = int.parse(quantityController.text.toString());
+        if (widget.isPackage == true) {
+          orderCart(widget.data, widget.data.quantity!);
+        }
         widget.listenController?.changeVariable('decrease');
+        removeCart(widget.data.quantity);
       });
     }
   }
 
-  @override
-  void dispose() {
-    quantityController.dispose();
-    super.dispose();
-  }
-
   increase() {
     setState(() {
+      int newValue = 0;
       int currentValue = int.tryParse(quantityController.text) ?? 0;
       newValue = currentValue + 1;
       quantityController.text = newValue.toString();
-      widget.data?.quantity = int.parse(quantityController.text.toString());
+      widget.data.quantity = int.parse(quantityController.text.toString());
+      if (widget.isPackage == true) {
+        orderCart(widget.data, widget.data.quantity!);
+      }
       widget.listenController?.changeVariable('increase');
     });
+  }
+
+  orderCart(Order product, int qty) {
+    int? index;
+    try {
+      index = widget.package?.indexWhere((item) => item.id == product.id);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    if (index! > -1) {
+      if (widget.package?[index].quantity != 0) {
+        widget.package?[index].quantity = qty;
+      } else {
+        widget.package?.removeAt(index);
+      }
+    } else {
+      setState(() {
+        widget.package?.add(
+          product,
+        );
+      });
+    }
   }
 
   @override
@@ -83,7 +119,10 @@ class _OrderProductCardState extends State<OrderProductCard>
         decoration: BoxDecoration(
           border: Border.all(
             width: 2,
-            color: widget.isTap == true ? orderColor : transparent,
+            color: widget.package?.contains(widget.data) == true &&
+                    widget.isPackage == true
+                ? orderColor
+                : transparent,
           ),
           color: white,
         ),
@@ -93,14 +132,14 @@ class _OrderProductCardState extends State<OrderProductCard>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                widget.data?.image != null
+                widget.data.image != null
                     ? Container(
                         height: 56,
                         width: 56,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           image: DecorationImage(
-                            image: NetworkImage('${widget.data?.image}'),
+                            image: NetworkImage('${widget.data.image}'),
                             fit: BoxFit.cover,
                           ),
                           boxShadow: [
@@ -136,9 +175,9 @@ class _OrderProductCardState extends State<OrderProductCard>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      widget.data?.nameMon != null
+                      widget.data.nameMon != null
                           ? Text(
-                              '${widget.data?.nameMon}',
+                              '${widget.data.nameMon}',
                               style: TextStyle(
                                 color: dark,
                                 fontWeight: FontWeight.bold,
@@ -146,7 +185,7 @@ class _OrderProductCardState extends State<OrderProductCard>
                               ),
                             )
                           : Text(
-                              '${widget.data?.name}',
+                              '${widget.data.name}',
                               style: TextStyle(
                                 color: dark,
                                 fontWeight: FontWeight.bold,
@@ -161,19 +200,19 @@ class _OrderProductCardState extends State<OrderProductCard>
                           style:
                               TextStyle(color: dark, fontFamily: 'Montserrat'),
                           children: [
-                            widget.data?.skuCode != null
-                                ? TextSpan(text: "${widget.data?.skuCode}, ")
+                            widget.data.skuCode != null
+                                ? TextSpan(text: "${widget.data.skuCode}, ")
                                 : TextSpan(),
-                            widget.data?.brand != null
-                                ? TextSpan(text: "${widget.data?.brand}, ")
+                            widget.data.brand != null
+                                ? TextSpan(text: "${widget.data.brand}, ")
                                 : TextSpan(),
-                            widget.data?.category != null
-                                ? TextSpan(text: "${widget.data?.category}, ")
+                            widget.data.category != null
+                                ? TextSpan(text: "${widget.data.category}, ")
                                 : TextSpan(),
-                            widget.data?.optionValues != null
+                            widget.data.optionValues != null
                                 ? TextSpan(
                                     text:
-                                        "${widget.data?.optionValues?.map((e) => e.name).join(', ')}",
+                                        "${widget.data.optionValues?.map((e) => e.name).join(', ')}",
                                   )
                                 : TextSpan(),
                           ],
@@ -216,14 +255,23 @@ class _OrderProductCardState extends State<OrderProductCard>
                     SizedBox(
                       height: 3,
                     ),
-                    Text(
-                      '${widget.data?.unit}',
-                      style: TextStyle(
-                        color: orderColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
+                    widget.data.unit != null
+                        ? Text(
+                            '${widget.data.unit}',
+                            style: TextStyle(
+                              color: orderColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          )
+                        : Text(
+                            '-',
+                            style: TextStyle(
+                              color: orderColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
                     SizedBox(
                       height: 3,
                     ),
@@ -242,7 +290,7 @@ class _OrderProductCardState extends State<OrderProductCard>
                           size: 12,
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
                 Column(
@@ -260,7 +308,7 @@ class _OrderProductCardState extends State<OrderProductCard>
                       height: 3,
                     ),
                     Text(
-                      '${widget.data?.price}₮',
+                      '${Utils().formatCurrency(widget.data.price.toString())}₮',
                       style: TextStyle(
                         color: orderColor,
                         fontWeight: FontWeight.bold,
@@ -380,15 +428,24 @@ class _OrderProductCardState extends State<OrderProductCard>
                       width: 90,
                       child: FormTextField(
                         readOnly: widget.readOnly!,
+                        onComplete: () {
+                          removeCart(
+                              int.tryParse(quantityController.text) ?? 0);
+                        },
                         onChanged: (value) {
                           setState(() {
-                            widget.data?.quantity =
+                            widget.data.quantity =
                                 int.tryParse(quantityController.text) ?? 0;
+                            if (widget.data.quantity != 0 &&
+                                widget.isPackage == true) {
+                              orderCart(widget.data, widget.data.quantity!);
+                            }
+                            widget.listenController?.changeVariable('form');
                           });
                         },
                         fontSize: 18,
-                        inputType: TextInputType.number,
                         controller: quantityController,
+                        inputType: TextInputType.number,
                         textAlign: TextAlign.end,
                         decoration: InputDecoration(
                           labelStyle: TextStyle(
@@ -440,7 +497,7 @@ class _OrderProductCardState extends State<OrderProductCard>
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                widget.data?.quantity == null || widget.data?.quantity == 0
+                widget.data.quantity == null || widget.data.quantity == 0
                     ? Text(
                         '... ширхэг',
                         style: TextStyle(
@@ -449,21 +506,26 @@ class _OrderProductCardState extends State<OrderProductCard>
                           fontSize: 16,
                         ),
                       )
-                    : Text(
-                        '${widget.data?.quantity} ширхэг',
-                        style: TextStyle(
-                          color: grey2,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                    : Expanded(
+                        child: Text(
+                          '${widget.data.quantity} ширхэг',
+                          style: TextStyle(
+                            color: grey2,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
-                widget.data?.quantity != null && widget.data?.price != null
-                    ? Text(
-                        '${Utils().formatCurrency((widget.data!.price! * widget.data!.quantity!).toString())}₮',
-                        style: TextStyle(
-                          color: grey2,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                widget.data.quantity != null && widget.data.price != null
+                    ? Expanded(
+                        child: Text(
+                          '${Utils().formatCurrency((widget.data.price! * widget.data.quantity!).toString())}₮',
+                          style: TextStyle(
+                            color: grey2,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.end,
                         ),
                       )
                     : Text(''),

@@ -34,7 +34,7 @@ class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
   Order order = Order();
 
   onSubmit(Order code) async {
-    order = await OrderApi().deliveryNoteConfirm('${widget.data.id}', code);
+    order = await OrderApi().receiptConfirm('${widget.data.id}', code);
     showCustomDialog(
       context,
       "Таны хүргэлтийг хүлээж авснаа амжилттай баталгаажууллаа",

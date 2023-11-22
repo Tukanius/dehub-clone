@@ -6,10 +6,12 @@ import 'package:after_layout/after_layout.dart';
 
 class ReferenceInformationCard extends StatefulWidget {
   final ReferenceInformation? data;
-  final int? index;
+  final int index;
+  final bool startAnimation;
   ReferenceInformationCard({
     Key? key,
-    this.index,
+    required this.startAnimation,
+    required this.index,
     this.data,
   }) : super(key: key);
 
@@ -34,7 +36,13 @@ class _ReferenceInformationCardState extends State<ReferenceInformationCard>
           ),
         );
       },
-      child: Container(
+      child: AnimatedContainer(
+        curve: Curves.ease,
+        transform: Matrix4.translationValues(
+            widget.startAnimation ? 0 : MediaQuery.of(context).size.width,
+            0,
+            0),
+        duration: Duration(milliseconds: 300 + (widget.index * 200)),
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -52,7 +60,7 @@ class _ReferenceInformationCardState extends State<ReferenceInformationCard>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${widget.index! + 1}',
+                  '${widget.index + 1}',
                   style: TextStyle(
                     color: grey3,
                     fontSize: 12,

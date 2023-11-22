@@ -43,7 +43,7 @@ class _NetworkHorizontalChartState extends State<NetworkHorizontalChart> {
             ),
             GestureDetector(
               onTap: () {
-                selectedIndex.networkIndexChange(widget.index);
+                selectedIndex.indexChange(widget.index);
               },
               child: Container(
                 color: transparent,

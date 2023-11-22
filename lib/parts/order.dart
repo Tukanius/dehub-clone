@@ -154,7 +154,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         ? (json['lines'] as List).map((e) => Order.fromJson(e)).toList()
         : null,
     attachments: json['attachments'] != null
-        ? (json['attachments'] as List).map((e) => FilePickerResult(e)).toList()
+        ? (json['attachments'] as List).map((e) => Order.fromJson(e)).toList()
         : null,
     additionalLines: json['additionalLines'] != null
         ? (json['additionalLines'] as List)

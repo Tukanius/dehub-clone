@@ -1,6 +1,4 @@
 import 'package:dehub/components/add_button/add_button.dart';
-import 'package:dehub/components/controller/listen.dart';
-import 'package:dehub/models/invoice.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/add_product/add_product_tabs/bagtsaar.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/add_product/add_product_tabs/shirhegeer.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -8,26 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AddProductArguments {
-  ListenController goodsListenController;
-  List<Invoice> data;
   String businessId;
   AddProductArguments({
-    required this.goodsListenController,
-    required this.data,
     required this.businessId,
   });
 }
 
 class AddProduct extends StatefulWidget {
-  final List<Invoice> data;
-  final ListenController goodsListenController;
   final String businessId;
   static const routeName = '/addproduct';
   const AddProduct({
-    required this.data,
     required this.businessId,
     Key? key,
-    required this.goodsListenController,
   }) : super(key: key);
 
   @override
@@ -37,10 +27,10 @@ class AddProduct extends StatefulWidget {
 class _AddProductState extends State<AddProduct> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-      ),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
       child: DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -83,8 +73,10 @@ class _AddProductState extends State<AddProduct> {
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
-                      Container(
-                        margin: const EdgeInsets.only(top: 10, bottom: 10),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Material(
                         color: white,
                         child: TabBar(
                           labelColor: invoiceColor,
@@ -92,15 +84,22 @@ class _AddProductState extends State<AddProduct> {
                           indicatorColor: invoiceColor,
                           tabs: [
                             Container(
+                              color: transparent,
                               alignment: Alignment.center,
                               height: 48,
                               child: Text('Багцаар'),
                             ),
                             Container(
+                              height: 48,
+                              alignment: Alignment.center,
+                              color: transparent,
                               child: Text('Ширхэгээр'),
                             ),
                           ],
                         ),
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                     ],
                   ),
@@ -111,11 +110,13 @@ class _AddProductState extends State<AddProduct> {
               physics: NeverScrollableScrollPhysics(),
               children: [
                 Bagtsaar(
-                  data: widget.data,
-                  goodsListenController: widget.goodsListenController,
+                  isPackage: true,
                   businessId: widget.businessId,
                 ),
-                Shirhegeer(),
+                Shirhegeer(
+                  isPackage: false,
+                  businessId: widget.businessId,
+                ),
               ],
             ),
           ),

@@ -60,34 +60,36 @@ class _SetClientClassificationState extends State<SetClientClassification> {
   }
 
   onSubmit() async {
-    try {
-      setState(() {
-        isSubmit = true;
-      });
-      await BusinessApi().setClientClassification(
-        BusinessNetwork(
-          businessIds: [widget.id],
-          classificationCategoryId: classId,
-          classificationPriorityId: rankId,
-          classificationDesc: controller.text,
-        ),
-      );
-      showCustomDialog(
-        context,
-        "Амжилттай хадгаллааа",
-        true,
-        onPressed: () {
-          Navigator.of(context).pop();
-          widget.listenController.changeVariable('SetClassification');
-        },
-      );
-      setState(() {
-        isSubmit = false;
-      });
-    } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+    if (classId != null || rankId != null) {
+      try {
+        setState(() {
+          isSubmit = true;
+        });
+        await BusinessApi().setClientClassification(
+          BusinessNetwork(
+            businessIds: [widget.id],
+            classificationCategoryId: classId,
+            classificationPriorityId: rankId,
+            classificationDesc: controller.text,
+          ),
+        );
+        showCustomDialog(
+          context,
+          "Амжилттай хадгаллааа",
+          true,
+          onPressed: () {
+            Navigator.of(context).pop();
+            widget.listenController.changeVariable('SetClassification');
+          },
+        );
+        setState(() {
+          isSubmit = false;
+        });
+      } catch (e) {
+        setState(() {
+          isSubmit = false;
+        });
+      }
     }
   }
 
@@ -187,7 +189,9 @@ class _SetClientClassificationState extends State<SetClientClassification> {
               isLoading: isSubmit,
               textColor: white,
               labelText: 'Хадгалах',
-              labelColor: networkColor,
+              labelColor: classId == null || rankId == null
+                  ? networkColor.withOpacity(0.3)
+                  : networkColor,
               onClick: () {
                 onSubmit();
               },

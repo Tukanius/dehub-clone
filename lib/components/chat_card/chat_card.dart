@@ -103,6 +103,7 @@ class _ChatCardState extends State<ChatCard> {
                           height: 36,
                           width: 36,
                           decoration: BoxDecoration(
+                            color: grey,
                             shape: BoxShape.circle,
                             image: DecorationImage(
                               image: NetworkImage(
@@ -120,7 +121,7 @@ class _ChatCardState extends State<ChatCard> {
                 left: widget.isOwnChat == false ? 40 : 0,
                 right: widget.isOwnChat == true ? 40 : 0),
             child: Text(
-              '${DateFormat().format(widget.data!.createdAt!)}',
+              '${DateFormat('yyyy-MM-dd HH:mm').format(widget.data!.createdAt!)}',
               style: TextStyle(
                   color: saaral, fontSize: 12, fontWeight: FontWeight.bold),
             ),

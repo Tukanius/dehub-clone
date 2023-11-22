@@ -5,7 +5,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 class FormTextField extends StatefulWidget {
   final String? name;
   final TextEditingController? controller;
-  final String? attribute;
   final String? labelText;
   final String? hintText;
   final TextInputType inputType;
@@ -38,7 +37,6 @@ class FormTextField extends StatefulWidget {
   final Color? textColor;
   final TextAlign? textAlign;
 
-  // ignore: use_key_in_widget_constructors
   const FormTextField(
       {Key? key,
       this.textAlign,
@@ -48,7 +46,6 @@ class FormTextField extends StatefulWidget {
       this.decoration,
       this.maxLines = 1,
       this.fontWeight = FontWeight.w400,
-      this.attribute,
       this.hintText,
       this.fontSize = 14,
       this.inputType = TextInputType.visiblePassword,
@@ -96,7 +93,6 @@ class _FormTextFieldState extends State<FormTextField> {
           ? null
           : (context, {int? currentLength, bool? isFocused, int? maxLength}) =>
               const SizedBox(),
-      // attribute: widget.attribute,
       controller: widget.controller,
       autofocus: widget.autoFocus,
       focusNode: widget.focusNode,

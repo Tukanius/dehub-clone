@@ -51,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage>
     setState(() {
       isLoading = true;
     });
-    await Provider.of<UserProvider>(context, listen: false).logout();
+    Provider.of<UserProvider>(context, listen: false).logout();
     Navigator.of(context).pushNamed(SplashPage.routeName);
     setState(() {
       isLoading = false;

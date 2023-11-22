@@ -3,6 +3,9 @@ import 'package:dehub/src/product_module/screens/product_detail_page/tabs/basic_
 import 'package:dehub/src/product_module/screens/product_detail_page/tabs/order_setting_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:after_layout/after_layout.dart';
+import 'package:dehub/models/inventory_goods.dart';
+import 'package:dehub/api/inventory_api.dart';
 
 class ProductDetailPageArguments {
   String? id;
@@ -23,7 +26,19 @@ class ProductDetailPage extends StatefulWidget {
   State<ProductDetailPage> createState() => _ProductDetailPageState();
 }
 
-class _ProductDetailPageState extends State<ProductDetailPage> {
+class _ProductDetailPageState extends State<ProductDetailPage>
+    with AfterLayoutMixin {
+  InventoryGoods inventory = InventoryGoods();
+  bool isLoading = true;
+
+  @override
+  afterFirstLayout(BuildContext context) async {
+    inventory = await InventoryApi().goodsGet(widget.id);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -69,20 +84,26 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             ],
           ),
         ),
-        body: TabBarView(
-          physics: NeverScrollableScrollPhysics(),
-          children: [
-            BasicInformationTab(
-              id: widget.id,
-            ),
-            AdditionalInformationTab(
-              id: widget.id,
-            ),
-            OrderSettingTab(
-              id: widget.id,
-            ),
-          ],
-        ),
+        body: isLoading == true
+            ? Center(
+                child: CircularProgressIndicator(
+                  color: productColor,
+                ),
+              )
+            : TabBarView(
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  BasicInformationTab(
+                    data: inventory,
+                  ),
+                  AdditionalInformationTab(
+                    data: inventory,
+                  ),
+                  OrderSettingTab(
+                    data: inventory,
+                  ),
+                ],
+              ),
       ),
     );
   }

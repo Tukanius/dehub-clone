@@ -6,10 +6,12 @@ import 'package:dehub/components/order_product_card/order_product_card.dart';
 import 'package:dehub/components/possible-schedule/possible-schedule-card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/checkout-provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/order_module/screens/new_order/add_attachment/add_attachment.dart';
 import 'package:dehub/src/order_module/screens/new_order/add_row/order_add_row.dart';
 import 'package:dehub/src/order_module/screens/new_order/change_branch/change_branch_name.dart';
+import 'package:dehub/src/order_module/screens/new_order/order_send/order_send_page.dart';
 import 'package:dehub/src/order_module/screens/new_order/product_choose/product_choose.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -22,7 +24,6 @@ import 'package:dehub/src/order_module/screens/new_order/customer_choose/custome
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/models/order.dart';
 import 'package:provider/provider.dart';
-import 'package:file_picker/file_picker.dart';
 
 class NewOrderArguments {
   String? id;
@@ -54,29 +55,27 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   Order createOrder = Order();
   Order receiverBranch = Order();
   DateTime? selectedDate;
-  FilePickerResult? result;
+  Order result = Order();
   // Lists
   List<Order> product = [];
   List<Order> data = [];
   List<Order> additionalLines = [];
   List<Order> asdf = [];
-  List<FilePickerResult> files = [];
+  List<Order> files = [];
   // Controllers
+  ListenController quantityController = ListenController();
   ListenController receiverBranchController = ListenController();
   ListenController customerListenController = ListenController();
   ListenController additionalRowsListenController = ListenController();
-  ListenController productListenController = ListenController();
   ListenController pickedFile = ListenController();
   ListenController productInPackageController = ListenController();
   ScrollController scrollController = ScrollController();
   TextEditingController shippingAmountController = TextEditingController();
+  TextEditingController discountAmountController = TextEditingController();
   // Amounts
-  double totalVatAmount = 0;
-  double totalTaxAmount = 0;
-  double totalAmount = 0;
-  double finalAmount = 0;
   double discountAmount = 0;
   double shippingAmount = 0;
+  double additionalRowAmount = 0;
   //
   var dateKey = GlobalKey();
   var customerKey = GlobalKey();
@@ -85,10 +84,10 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   // Validates
   bool selectedDateValidate = false;
   bool customerValidate = false;
-  bool productValidate = false;
 
   @override
   afterFirstLayout(BuildContext context) async {
+    Provider.of<CheckOutProvider>(context, listen: false).clearCart();
     if (widget.id != null) {
       customer = await OrderApi().networkGet(widget.id!);
       setState(() {
@@ -101,13 +100,6 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   }
 
   validateCheck(bool toReview, bool send) {
-    if (data.isEmpty) {
-      Scrollable.ensureVisible(productKey.currentContext!,
-          duration: Duration(milliseconds: 300), curve: Curves.ease);
-      setState(() {
-        productValidate = true;
-      });
-    }
     if (isCheck == false && selectedDate == null) {
       Scrollable.ensureVisible(dateKey.currentContext!,
           duration: Duration(milliseconds: 300), curve: Curves.ease);
@@ -122,140 +114,67 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
         customerValidate = true;
       });
     }
-    if (selectedDateValidate == false &&
-        productValidate == false &&
-        customerValidate == false) {
-      onSubmit(toReview, send);
+    if (selectedDateValidate == false && customerValidate == false) {
+      Navigator.of(context).pushNamed(
+        OrderSendPage.routeName,
+        arguments: OrderSendPageArguments(
+          data: Order(
+            image: send == true
+                ? "assets/svg/message_sent.svg"
+                : 'assets/svg/order_send.svg',
+            name: send == true ? 'Илгээх' : 'Хяналтад илгээх',
+            partnerName: '${customer.partner?.businessName}',
+            amountToPay: 100,
+            deliveryDate: isCheck == false
+                ? selectedDate.toString()
+                : dateTime.toString(),
+          ),
+          onSubmit: () {
+            onSubmit(toReview, send);
+          },
+        ),
+      );
     }
   }
 
   onSubmit(bool toReview, bool send) async {
-    try {
-      for (var i = 0; i < product.length; i++) {
-        data[i] = Order();
-        data[i].variantId = product[i].id;
-        data[i].quantity = product[i].quantity;
-        print(product[i].toJson());
-      }
-      await OrderApi().createOrder(Order(
-        businessId: order.id,
-        receiverBranchId: receiverBranch.id ?? order.receiverBranches?.first.id,
-        deliveryDate:
-            isCheck == false ? selectedDate.toString() : dateTime.toString(),
-        deliveryType: isCheck == false ? "DEFAULT_DATE" : "CUSTOM_DATE",
-        receiverStaffId: order.receiverStaff?.id,
-        lines: data,
-        discountType: "AMOUNT",
-        attachments: files,
-        discountValue: 0,
-        toReview: toReview,
-        send: send,
-      ));
-      showCustomDialog(
-        context,
-        "Захиалга амжилттай илгээгдлээ",
-        true,
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
+    for (var i = 0; i < product.length; i++) {
+      data.add(
+        Order(
+          variantId: product[i].id,
+          quantity: product[i].quantity,
+        ),
       );
-    } catch (e) {
-      debugPrint('==========e========');
-      debugPrint(e.toString());
-      debugPrint('==========e========');
     }
-  }
-
-  updateTotalAmount() {
-    setState(() {
-      finalAmount = totalAmount;
-      finalAmount = finalAmount + (shippingAmount - discountAmount);
-      print(totalAmount);
-    });
-  }
-
-  addCard(Order order) async {
-    Order? duplicate;
-    try {
-      duplicate = product.firstWhere((element) => element.id == order.id);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-    if (duplicate != null) {
-      order.quantity = order.quantity! + duplicate.quantity!;
-    }
-
-    try {
-      product.removeWhere((element) => element.id == duplicate!.id);
-      print(product);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-    setState(() {
-      product.add(order);
-      data.add(order);
-      totalAmounts(product);
-    });
-  }
-
-  totalAmounts(List<Order> list) {
-    setState(() {
-      double vat = list.fold(
-          0,
-          (previousValue, element) =>
-              previousValue + (element.quantity! * element.vatAmount!));
-      totalVatAmount = vat;
-      double tax = list.fold(
-          0,
-          (previousValue, element) =>
-              previousValue + (element.quantity! * element.taxAmount!));
-      totalTaxAmount = tax;
-      double total = list.fold(
-          0,
-          (previousValue, element) =>
-              previousValue + (element.quantity! * element.price!));
-      totalAmount = total + tax + vat;
-      finalAmount = totalAmount;
-      productValidate = false;
-    });
-  }
-
-  addCards(List<Order> goods) async {
-    List<Order>? duplicates;
-
-    try {
-      duplicates = product
-          .where(
-              (element) => goods.any((element1) => element1.id == element.id))
-          .toList();
-      print(duplicates.length);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-
-    if (duplicates!.isNotEmpty) {}
-
-    try {
-      product.removeWhere((element) =>
-          duplicates!.any((element1) => element1.id == element.id));
-      data.removeWhere((element) =>
-          duplicates!.any((element1) => element1.id == element.id));
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-    setState(() {
-      for (var i = 0; i < goods.length; i++) {
-        setState(() {
-          product.add(goods.elementAt(i));
-          data.add(goods.elementAt(i));
-        });
-      }
-    });
-    totalAmounts(product);
+    await OrderApi().createOrder(Order(
+      businessId: order.id,
+      receiverBranchId: receiverBranch.id ?? order.receiverBranches?.first.id,
+      deliveryDate:
+          isCheck == false ? selectedDate.toString() : dateTime.toString(),
+      deliveryType: isCheck == false ? "DEFAULT_DATE" : "CUSTOM_DATE",
+      receiverStaffId: order.receiverStaff?.id,
+      lines: data,
+      discountType: "AMOUNT",
+      attachments: files,
+      discountValue: 0,
+      toReview: toReview,
+      send: send,
+    ));
+    showCustomDialog(
+      context,
+      "Захиалга амжилттай илгээгдлээ",
+      true,
+      onPressed: () {
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<CheckOutProvider>(context, listen: true);
+    product = Provider.of<CheckOutProvider>(context, listen: true).order;
     user = Provider.of<UserProvider>(context, listen: true).orderMe;
     return GestureDetector(
       onTap: () {
@@ -371,68 +290,68 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                         ],
                       ),
                     ),
-                    Container(
-                      key: customerKey,
-                      margin: const EdgeInsets.only(bottom: 3),
-                      decoration: BoxDecoration(
-                        color: white,
-                        border: Border.all(
-                            color: customerValidate == true ? red : transparent,
-                            width: customerValidate == true ? 1 : 0),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              customer.logo != null
-                                  ? CircleAvatar(
-                                      radius: 12,
-                                      backgroundImage: NetworkImage(
-                                        '${customer.logo}',
-                                        scale: 1,
-                                      ),
-                                    )
-                                  : CircleAvatar(
-                                      radius: 12,
-                                      backgroundImage:
-                                          AssetImage('images/avatar.png'),
-                                    ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              customer.partner?.businessName != null
-                                  ? Text(
-                                      '${customer.partner?.businessName}',
-                                      style: const TextStyle(
-                                        color: orderColor,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    )
-                                  : Text(
-                                      'Харилцагч сонгох',
-                                      style: TextStyle(
-                                        color: customerValidate == true
-                                            ? red
-                                            : orderColor,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    )
-                            ],
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                          OrderCustomerChoose.routeName,
+                          arguments: OrderCustomerChooseArguments(
+                            customerListenController: customerListenController,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushNamed(
-                                OrderCustomerChoose.routeName,
-                                arguments: OrderCustomerChooseArguments(
-                                  customerListenController:
-                                      customerListenController,
+                        );
+                      },
+                      child: Container(
+                        key: customerKey,
+                        margin: const EdgeInsets.only(bottom: 3),
+                        decoration: BoxDecoration(
+                          color: white,
+                          border: Border.all(
+                              color:
+                                  customerValidate == true ? red : transparent,
+                              width: customerValidate == true ? 1 : 0),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                customer.logo != null
+                                    ? CircleAvatar(
+                                        radius: 12,
+                                        backgroundImage: NetworkImage(
+                                          '${customer.logo}',
+                                          scale: 1,
+                                        ),
+                                      )
+                                    : CircleAvatar(
+                                        radius: 12,
+                                        backgroundImage:
+                                            AssetImage('images/avatar.png'),
+                                      ),
+                                const SizedBox(
+                                  width: 5,
                                 ),
-                              );
-                            },
-                            child: Container(
+                                customer.partner?.businessName != null
+                                    ? Text(
+                                        '${customer.partner?.businessName}',
+                                        style: const TextStyle(
+                                          color: orderColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      )
+                                    : Text(
+                                        'Харилцагч сонгох',
+                                        style: TextStyle(
+                                          color: customerValidate == true
+                                              ? red
+                                              : orderColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      )
+                              ],
+                            ),
+                            Container(
                               color: transparent,
                               child: Row(
                                 children: [
@@ -453,12 +372,12 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                         ? red
                                         : orderColor,
                                     size: 14,
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     FieldCard(
@@ -823,13 +742,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       child: Container(
                         key: productKey,
                         margin: const EdgeInsets.only(bottom: 3),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color:
-                                  productValidate == true ? red : transparent,
-                              width: productValidate == true ? 1 : 0),
-                          color: white,
-                        ),
+                        color: white,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
                         child: Row(
@@ -841,12 +754,9 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                   Navigator.of(context).pushNamed(
                                     ProductChoose.routeName,
                                     arguments: ProductChooseArguments(
+                                      listenController: quantityController,
                                       isPackage: false,
                                       businessId: customer.id!,
-                                      packageListenController:
-                                          productInPackageController,
-                                      productListenController:
-                                          productListenController,
                                     ),
                                   );
                                 } else {
@@ -864,9 +774,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                               child: Text(
                                 'Ширхэгээр нэмэх',
                                 style: TextStyle(
-                                  color: productValidate == true
-                                      ? red
-                                      : orderColor,
+                                  color: orderColor,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -877,12 +785,9 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                   Navigator.of(context).pushNamed(
                                     ProductChoose.routeName,
                                     arguments: ProductChooseArguments(
+                                      listenController: quantityController,
                                       isPackage: true,
                                       businessId: customer.id!,
-                                      packageListenController:
-                                          productInPackageController,
-                                      productListenController:
-                                          productListenController,
                                     ),
                                   );
                                 } else {
@@ -902,9 +807,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                   Text(
                                     'Багцаар нэмэх',
                                     style: TextStyle(
-                                      color: productValidate == true
-                                          ? red
-                                          : orderColor,
+                                      color: orderColor,
                                     ),
                                   ),
                                   SizedBox(
@@ -912,9 +815,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                   ),
                                   Icon(
                                     Icons.download_for_offline_outlined,
-                                    color: productValidate == true
-                                        ? red
-                                        : orderColor,
+                                    color: orderColor,
                                     size: 16,
                                   )
                                 ],
@@ -928,25 +829,16 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       children: product
                           .map(
                             (item) => OrderProductCard(
-                              isTap: false,
+                              listenController: quantityController,
                               readOnly: false,
-                              onClick: () {},
+                              isPackage: false,
+                              onClick: () {
+                                FocusScope.of(context).unfocus();
+                              },
                               onCloseClick: () {
-                                setState(() {
-                                  product.removeWhere((element) =>
-                                      element.nameMon == item.nameMon);
-                                  print(product);
-                                  print('=========product========');
-                                  data.removeWhere((element) =>
-                                      element.nameMon == item.nameMon);
-                                  print(data);
-                                  print('=========data========');
-                                });
-                                if (data.isEmpty) {
-                                  setState(() {
-                                    productValidate = true;
-                                  });
-                                }
+                                Provider.of<CheckOutProvider>(context,
+                                        listen: false)
+                                    .orderRemoveCart(item);
                               },
                               data: item,
                             ),
@@ -999,6 +891,23 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                             (e) => Column(
                               children: [
                                 OrderAdditionalLine(
+                                  onClick: () {
+                                    int index = additionalLines.indexWhere(
+                                        (element) => element.name == e.name);
+                                    setState(() {
+                                      additionalLines.removeAt(index);
+                                    });
+                                    source.additional = additionalLines;
+                                    source.totalAmounts(
+                                      product,
+                                      double.tryParse(
+                                              shippingAmountController.text) ??
+                                          0,
+                                      double.tryParse(
+                                              discountAmountController.text) ??
+                                          0,
+                                    );
+                                  },
                                   data: e,
                                 ),
                                 const SizedBox(
@@ -1046,7 +955,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       color: white,
                       labelText: "Тооцсон НӨАТ",
                       secondText:
-                          "${Utils().formatCurrency(totalVatAmount.toString())}₮",
+                          "${Utils().formatCurrency(source.totalVatAmount.toString())}₮",
                       secondTextColor: orderColor,
                       arrowColor: orderColor,
                     ),
@@ -1056,7 +965,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       color: white,
                       labelText: "Тооцсон НХАТ",
                       secondText:
-                          "${Utils().formatCurrency(totalTaxAmount.toString())}₮",
+                          "${Utils().formatCurrency(source.totalTaxAmount.toString())}₮",
                       secondTextColor: orderColor,
                       arrowColor: orderColor,
                     ),
@@ -1066,7 +975,17 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       color: white,
                       labelText: "Захиалгын нийт дүн",
                       secondText:
-                          '${Utils().formatCurrency(totalAmount.toString())}₮',
+                          '${Utils().formatCurrency(source.total.toString())}₮',
+                      secondTextColor: orderColor,
+                      arrowColor: orderColor,
+                    ),
+                    FieldCard(
+                      marginHorizontal: 15,
+                      marginVertical: 10,
+                      color: white,
+                      labelText: "Нэмэлтээр",
+                      secondText:
+                          '${Utils().formatCurrency(source.additionalRowAmount.toString())}₮',
                       secondTextColor: orderColor,
                       arrowColor: orderColor,
                     ),
@@ -1078,7 +997,9 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       onChanged: (value) {
                         setState(() {
                           shippingAmount = double.tryParse(value) ?? 0;
-                          updateTotalAmount();
+                          source.shippingAmount = double.tryParse(value) ?? 0;
+                          source.totalAmounts(
+                              product, shippingAmount, discountAmount);
                         });
                       },
                       controller: shippingAmountController,
@@ -1114,9 +1035,12 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       onChanged: (value) {
                         setState(() {
                           discountAmount = double.tryParse(value) ?? 0;
-                          updateTotalAmount();
+                          source.discountAmount = double.tryParse(value) ?? 0;
+                          source.totalAmounts(
+                              product, shippingAmount, discountAmount);
                         });
                       },
+                      controller: discountAmountController,
                       name: 'discountAmount',
                       textAlign: TextAlign.end,
                       textColor: orderColor,
@@ -1154,7 +1078,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       color: white,
                       labelText: "НИЙТ ТӨЛБӨР",
                       secondText:
-                          '${Utils().formatCurrency(finalAmount.toString())}₮',
+                          '${Utils().formatCurrency(source.finalAmount.toString())}₮',
                       secondTextColor: orderColor,
                       arrowColor: orderColor,
                     ),
@@ -1176,13 +1100,13 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                 ),
                                 order.paymentTerm?.advancePercent != null
                                     ? Text(
-                                        '${Utils().formatCurrency((finalAmount * (order.paymentTerm!.advancePercent! ~/ 100)).toString())}₮',
+                                        '${Utils().formatCurrency((source.finalAmount * (order.paymentTerm!.advancePercent! ~/ 100)).toString())}₮',
                                         style: TextStyle(
                                           color: orderColor,
                                         ),
                                       )
                                     : Text(
-                                        "${Utils().formatCurrency(finalAmount.toString())}",
+                                        "${Utils().formatCurrency(source.finalAmount.toString())}",
                                         style: TextStyle(
                                           color: orderColor,
                                         ),
@@ -1251,24 +1175,27 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                         ),
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: const Text(
-                        'Хавсралт нэмэх',
-                        style: TextStyle(
-                          color: buttonColor,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
+                    files.length != 3
+                        ? Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: const Text(
+                              'Хавсралт нэмэх',
+                              style: TextStyle(
+                                color: buttonColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushNamed(
-                          AddAttachment.routeName,
-                          arguments:
-                              AddAttachmentArguments(pickedFile: pickedFile),
-                        );
+                        if (files.length != 3)
+                          Navigator.of(context).pushNamed(
+                            AddAttachment.routeName,
+                            arguments:
+                                AddAttachmentArguments(pickedFile: pickedFile),
+                          );
                       },
                       child: Container(
                         margin: const EdgeInsets.only(bottom: 3),
@@ -1281,12 +1208,19 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                             const SizedBox(
                               width: 5,
                             ),
-                            const Text(
-                              'Нэмэх',
-                              style: TextStyle(
-                                color: orderColor,
-                              ),
-                            ),
+                            files.length != 3
+                                ? const Text(
+                                    'Нэмэх',
+                                    style: TextStyle(
+                                      color: orderColor,
+                                    ),
+                                  )
+                                : const Text(
+                                    'Хавсрагасан файлууд',
+                                    style: TextStyle(
+                                      color: orderColor,
+                                    ),
+                                  ),
                           ],
                         ),
                       ),
@@ -1299,7 +1233,47 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                               width: MediaQuery.of(context).size.width,
                               padding: const EdgeInsets.all(15),
                               color: white,
-                              child: Text('${e}'),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Нэр: ${e.name}',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text('Тайлбар: ${e.description}'),
+                                      ],
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      int index = files.indexWhere(
+                                          (element) => element.url == e.url);
+                                      setState(() {
+                                        files.removeAt(index);
+                                      });
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.only(
+                                          left: 10, bottom: 10),
+                                      height: 30,
+                                      width: 30,
+                                      child: SvgPicture.asset(
+                                        'assets/svg/close.svg',
+                                        colorFilter: ColorFilter.mode(
+                                            grey2, BlendMode.srcIn),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           )
                           .toList(),
@@ -1330,7 +1304,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                 style: TextStyle(color: orderColor),
                               ),
                               Text(
-                                '${Utils().formatCurrency(finalAmount.toString())}₮',
+                                '${Utils().formatCurrency(source.finalAmount.toString())}₮',
                                 style: TextStyle(
                                   color: orderColor,
                                   fontWeight: FontWeight.w500,
@@ -1437,8 +1411,23 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
     );
   }
 
+  // @override
+  // void dispose() {
+  //   quantityController.dispose();
+  //   super.dispose();
+  // }
   @override
   void initState() {
+    quantityController.addListener(() {
+      setState(() {
+        product = product;
+        Provider.of<CheckOutProvider>(context, listen: false).totalAmounts(
+          product,
+          double.tryParse(shippingAmountController.text) ?? 0,
+          double.tryParse(discountAmountController.text) ?? 0,
+        );
+      });
+    });
     customerListenController.addListener(() async {
       setState(() {
         customer = customerListenController.customerOrder!;
@@ -1454,24 +1443,22 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
       });
     });
     pickedFile.addListener(() {
-      result = pickedFile.result;
+      result = pickedFile.file!;
       setState(() {
-        files.add(result!);
+        files.add(result);
       });
-    });
-    productInPackageController.addListener(() async {
-      List<Order> packageProduct = [];
-      packageProduct = productInPackageController.productInPackage!;
-      addCards(packageProduct);
-    });
-    productListenController.addListener(() {
-      productOrder = productListenController.productOrder!;
-      addCard(productOrder);
     });
     additionalRowsListenController.addListener(() {
       additionalRows = additionalRowsListenController.additionalRows!;
       setState(() {
         additionalLines.add(additionalRows);
+        Provider.of<CheckOutProvider>(context, listen: false).additional =
+            additionalLines;
+        Provider.of<CheckOutProvider>(context, listen: false).totalAmounts(
+          product,
+          double.tryParse(shippingAmountController.text) ?? 0,
+          double.tryParse(discountAmountController.text) ?? 0,
+        );
       });
     });
     receiverBranchController.addListener(() {

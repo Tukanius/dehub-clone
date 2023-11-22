@@ -48,10 +48,19 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                 Expanded(
                   child: Row(
                     children: [
-                      CircleAvatar(
-                        backgroundColor: grey,
-                        radius: 18,
-                      ),
+                      widget.data?.partner?.logo == null
+                          ? CircleAvatar(
+                              backgroundColor: grey,
+                              radius: 18,
+                              backgroundImage: AssetImage('images/avatar.png'),
+                            )
+                          : CircleAvatar(
+                              backgroundColor: grey,
+                              radius: 18,
+                              backgroundImage: NetworkImage(
+                                '${widget.data?.partner?.logo}',
+                              ),
+                            ),
                       SizedBox(
                         width: 10,
                       ),
@@ -145,7 +154,7 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                                       ? TextSpan(
                                           text:
                                               '${widget.data?.businessStaff?.lastName}')
-                                      : TextSpan(text: '-'),
+                                      : TextSpan(text: ''),
                                   widget.data?.businessStaff?.firstName != null
                                       ? TextSpan(
                                           text:
@@ -214,7 +223,7 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                                       ? TextSpan(
                                           text:
                                               '${widget.data?.businessStaff2?.lastName}')
-                                      : TextSpan(text: '-'),
+                                      : TextSpan(text: ''),
                                   widget.data?.businessStaff2?.firstName != null
                                       ? TextSpan(
                                           text:

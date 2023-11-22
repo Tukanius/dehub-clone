@@ -4,7 +4,7 @@ import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/network_module/network_page/tabs/inbox_tab/inbox_tab.dart';
-import 'package:dehub/src/network_module/network_page/tabs/sent_tab/new_invitation_page/new_invitation_page.dart';
+import 'package:dehub/src/network_module/screens/new_invitation_page/new_invitation_page.dart';
 import 'package:dehub/src/network_module/network_page/tabs/sent_tab/sent_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -28,8 +28,7 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
-    await Provider.of<IndexProvider>(context, listen: false)
-        .networkIndexChange(1);
+    await Provider.of<IndexProvider>(context, listen: false).indexChange(1);
     await Provider.of<UserProvider>(context, listen: false).businessMe(true);
     await Provider.of<GeneralProvider>(context, listen: false)
         .businessInit(true);
@@ -117,7 +116,7 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
           if (value == 0) {
             Navigator.of(context).pop();
           } else {
-            index.networkIndexChange(value);
+            index.indexChange(value);
           }
         },
         currentIndex: index.selectedIndex,

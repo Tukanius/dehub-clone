@@ -1,3 +1,4 @@
+import 'package:dehub/providers/checkout-provider.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
@@ -61,11 +62,10 @@ import 'package:dehub/src/network_module/screens/partner_page/partner_page.dart'
 import 'package:dehub/src/network_module/screens/zoning_page/add_zoning.dart';
 import 'package:dehub/src/network_module/screens/zoning_page/zoning_detail_page.dart';
 import 'package:dehub/src/network_module/screens/zoning_page/zoning_page.dart';
-import 'package:dehub/src/network_module/network_page/tabs/sent_tab/new_invitation_page/invitation_sent_page/invitation_sent_page.dart';
-import 'package:dehub/src/network_module/network_page/tabs/sent_tab/new_invitation_page/new_invitation_page.dart';
+import 'package:dehub/src/network_module/screens/new_invitation_page/invitation_sent_page/invitation_sent_page.dart';
+import 'package:dehub/src/network_module/screens/new_invitation_page/new_invitation_page.dart';
 import 'package:dehub/src/network_module/network_page/tabs/inbox_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
 import 'package:dehub/src/invoice_module/main_page/invoice_page.dart';
-import 'package:dehub/src/invoice_module/screens/new_invoice/add_product/add_product_tabs/shirhegeer.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/customer_choose.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/customer_choose_tabs/gereet.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/customer_choose_tabs/gereet_bish.dart';
@@ -78,7 +78,7 @@ import 'package:dehub/src/invoice_module/screens/invoice_detail_page/invoice_det
 import 'package:dehub/src/payment_module/screens/link_account_page/link_account_page.dart';
 import 'package:dehub/src/entry_point/menu/menu_page.dart';
 import 'package:dehub/src/network_module/network_page/network_page.dart';
-import 'package:dehub/src/network_module/network_page/tabs/sent_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
+import 'package:dehub/src/network_module/screens/invitation_detail_page/invitation_detail_page.dart';
 import 'package:dehub/src/order_module/screens/new_order/add_attachment/add_attachment.dart';
 import 'package:dehub/src/order_module/screens/new_order/add_row/order_add_row.dart';
 import 'package:dehub/src/order_module/screens/new_order/change_branch/change_branch_name.dart';
@@ -161,6 +161,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => UserProvider()),
           ChangeNotifierProvider(create: (_) => GeneralProvider()),
           ChangeNotifierProvider(create: (_) => IndexProvider()),
+          ChangeNotifierProvider(create: (_) => CheckOutProvider()),
         ],
         child: Stack(
           children: [
@@ -455,10 +456,6 @@ class MyApp extends StatelessWidget {
                   case RegisterPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return RegisterPage();
-                    });
-                  case Shirhegeer.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return Shirhegeer();
                     });
                   case NetworkPartnerPage.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -1091,6 +1088,7 @@ class MyApp extends StatelessWidget {
                         onSubmit: arguments.onSubmit,
                         color: arguments.color,
                         labelText: arguments.labelText,
+                        description: arguments.description,
                       );
                     });
                   case ReceivedOrderDetail.routeName:
@@ -1102,8 +1100,13 @@ class MyApp extends StatelessWidget {
                       );
                     });
                   case OrderSendPage.routeName:
+                    OrderSendPageArguments arguments =
+                        settings.arguments as OrderSendPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return OrderSendPage();
+                      return OrderSendPage(
+                        onSubmit: arguments.onSubmit,
+                        data: arguments.data,
+                      );
                     });
                   case OrderSendCustomer.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -1184,12 +1187,9 @@ class MyApp extends StatelessWidget {
                     return PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
                           ProductChoose(
-                        packageListenController:
-                            arguments.packageListenController,
+                        listenController: arguments.listenController,
                         isPackage: arguments.isPackage,
                         businessId: arguments.businessId,
-                        productListenController:
-                            arguments.productListenController,
                       ),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
@@ -1236,8 +1236,6 @@ class MyApp extends StatelessWidget {
                     return PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
                           AddProduct(
-                        data: arguments.data,
-                        goodsListenController: arguments.goodsListenController,
                         businessId: arguments.businessId,
                       ),
                       transitionsBuilder:

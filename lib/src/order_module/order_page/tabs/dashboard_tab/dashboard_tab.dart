@@ -2,6 +2,7 @@ import 'package:dehub/components/dashboard_card/dashboard_card.dart';
 import 'package:dehub/components/pie_chart/pie_chart.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/order_module/screens/order_delivery/order_delivery.dart';
 import 'package:dehub/src/order_module/screens/order_shipping/order_shipping.dart';
@@ -63,7 +64,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
-
+    final index = Provider.of<IndexProvider>(context, listen: true);
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,7 +163,9 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            index.indexChange(2);
+                          },
                           child: Container(
                             color: transparent,
                             padding: const EdgeInsets.symmetric(vertical: 5),
@@ -171,7 +174,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                                 Text(
                                   "Бүгдийг",
                                   style: TextStyle(
-                                    color: networkColor,
+                                    color: orderColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -181,7 +184,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                                 ),
                                 Icon(
                                   Icons.arrow_forward_ios,
-                                  color: networkColor,
+                                  color: orderColor,
                                   size: 16,
                                 ),
                                 SizedBox(
@@ -206,7 +209,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         Container(
                           margin: const EdgeInsets.only(left: 15),
                           child: Text(
-                            'Танай илгээсэн',
+                            'Захиалгын дүн',
                             style: TextStyle(
                               color: black,
                               fontSize: 16,
@@ -215,7 +218,9 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            index.indexChange(2);
+                          },
                           child: Container(
                             color: transparent,
                             padding: const EdgeInsets.symmetric(vertical: 5),
@@ -224,7 +229,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                                 Text(
                                   "Бүгдийг",
                                   style: TextStyle(
-                                    color: networkColor,
+                                    color: orderColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -234,7 +239,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                                 ),
                                 Icon(
                                   Icons.arrow_forward_ios,
-                                  color: networkColor,
+                                  color: orderColor,
                                   size: 16,
                                 ),
                                 SizedBox(
@@ -305,7 +310,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                                 datum.name == "Зөвшөөрсөн"
                                     ? networkDashboard2
                                     : datum.name == "Илгээсэн"
-                                        ? networkColor
+                                        ? orderColor
                                         : grey2,
                             dataSource: legend,
                             xValueMapper: (gdp, _) => gdp.profileName,

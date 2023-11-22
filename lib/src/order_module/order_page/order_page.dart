@@ -2,6 +2,7 @@
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 // import 'package:dehub/src/new_order/new_order.dart';
 import 'package:dehub/src/order_module/order_page/tabs/order_tab/order_tab.dart';
@@ -9,7 +10,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dehub/src/order_module/order_page/tabs/dashboard_tab.dart';
+import 'package:dehub/src/order_module/order_page/tabs/dashboard_tab/dashboard_tab.dart';
 import 'package:dehub/src/order_module/order_page/tabs/customer_tab/customer_tab.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
@@ -28,14 +29,13 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
+    await Provider.of<IndexProvider>(context, listen: false).indexChange(1);
     await Provider.of<GeneralProvider>(context, listen: false).orderInit(true);
     await Provider.of<UserProvider>(context, listen: false).order(true);
     setState(() {
       isLoading = false;
     });
   }
-
-  int selectedIndex = 1;
 
   static const List<Widget> currentPages = [
     NotFound(
@@ -47,18 +47,9 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
     CustomerTab(),
   ];
 
-  void ontappedItem(int index) {
-    if (index == 0) {
-      Navigator.of(context).pop();
-    } else {
-      setState(() {
-        selectedIndex = index;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final index = Provider.of<IndexProvider>(context, listen: true);
     user = Provider.of<UserProvider>(context, listen: true).orderMe;
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -81,7 +72,7 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
             ),
           ),
         ),
-        title: selectedIndex == 0
+        title: index.selectedIndex == 0
             ? Container(
                 child: FormTextField(
                   inputType: TextInputType.text,
@@ -91,7 +82,7 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                   hintText: 'Партнер нэрээр хайх',
                 ),
               )
-            : selectedIndex == 2
+            : index.selectedIndex == 2
                 ? Text(
                     'Захиалгын жагсаалт',
                     style: TextStyle(
@@ -100,7 +91,7 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                       fontWeight: FontWeight.w500,
                     ),
                   )
-                : selectedIndex == 3
+                : index.selectedIndex == 3
                     ? Text(
                         'Харилцагчийн жагсаалт',
                         style: TextStyle(
@@ -141,7 +132,7 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
       body: isLoading == true
           ? SizedBox()
           : Container(
-              child: currentPages.elementAt(selectedIndex),
+              child: currentPages.elementAt(index.selectedIndex),
             ),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: buttonColor,
@@ -152,8 +143,14 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
         backgroundColor: white,
         type: BottomNavigationBarType.fixed,
         fixedColor: orderColor,
-        onTap: ontappedItem,
-        currentIndex: selectedIndex,
+        onTap: (value) {
+          if (value != 0) {
+            index.indexChange(value);
+          } else {
+            Navigator.of(context).pop();
+          }
+        },
+        currentIndex: index.selectedIndex,
         items: [
           BottomNavigationBarItem(
             icon: GestureDetector(
@@ -165,17 +162,17 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                   Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: selectedIndex == 0 ? orderColor : white,
+                      color: index.selectedIndex == 0 ? orderColor : white,
                     ),
-                    padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
+                    padding: EdgeInsets.all(index.selectedIndex == 0 ? 7 : 0),
                     child: SvgPicture.asset(
                       'assets/svg/home.svg',
                       colorFilter: ColorFilter.mode(
-                          selectedIndex == 0 ? white : orderColor,
+                          index.selectedIndex == 0 ? white : orderColor,
                           BlendMode.srcIn),
                     ),
                   ),
-                  selectedIndex != 0
+                  index.selectedIndex != 0
                       ? Text(
                           'Нүүр',
                           style: TextStyle(color: orderColor, fontSize: 12),
@@ -192,17 +189,17 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                 Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: selectedIndex == 1 ? orderColor : white,
+                    color: index.selectedIndex == 1 ? orderColor : white,
                   ),
-                  padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
+                  padding: EdgeInsets.all(index.selectedIndex == 1 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/dashboard.svg',
                     colorFilter: ColorFilter.mode(
-                        selectedIndex == 1 ? white : orderColor,
+                        index.selectedIndex == 1 ? white : orderColor,
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 1
+                index.selectedIndex != 1
                     ? Text(
                         'Дашбоард',
                         style: TextStyle(color: orderColor, fontSize: 12),
@@ -218,17 +215,17 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                 Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: selectedIndex == 2 ? orderColor : white,
+                    color: index.selectedIndex == 2 ? orderColor : white,
                   ),
-                  padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
+                  padding: EdgeInsets.all(index.selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/order.svg',
                     colorFilter: ColorFilter.mode(
-                        selectedIndex == 2 ? white : orderColor,
+                        index.selectedIndex == 2 ? white : orderColor,
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 2
+                index.selectedIndex != 2
                     ? Text(
                         'Захиалга',
                         style: TextStyle(color: orderColor, fontSize: 12),
@@ -244,17 +241,17 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                 Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: selectedIndex == 3 ? orderColor : white,
+                    color: index.selectedIndex == 3 ? orderColor : white,
                   ),
-                  padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
+                  padding: EdgeInsets.all(index.selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
                     'assets/svg/order_customer.svg',
                     colorFilter: ColorFilter.mode(
-                        selectedIndex == 3 ? white : orderColor,
+                        index.selectedIndex == 3 ? white : orderColor,
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 3
+                index.selectedIndex != 3
                     ? Text(
                         'Харилцагч',
                         style: TextStyle(color: orderColor, fontSize: 12),

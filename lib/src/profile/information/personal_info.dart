@@ -31,7 +31,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   File? image;
   final picker = ImagePicker();
   String? imageName;
-  Uri? result;
+  User result = User();
 
   danVerify() async {
     setState(() {
@@ -55,7 +55,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
       });
       result = await AuthApi().upload(file);
       await AuthApi().avatar(
-        User(avatar: result.toString()),
+        User(avatar: result.url.toString()),
       );
       await Provider.of<UserProvider>(context, listen: false).me(true);
       setState(() {

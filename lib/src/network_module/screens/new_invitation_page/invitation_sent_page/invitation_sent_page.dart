@@ -483,11 +483,8 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                       Expanded(
                         child: Container(
                           margin: const EdgeInsets.only(left: 5, right: 2),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: networkColor),
-                          ),
                           child: CustomButton(
+                            borderColor: networkColor,
                             textColor: networkColor,
                             onClick: () {
                               if (isSubmit == false) {

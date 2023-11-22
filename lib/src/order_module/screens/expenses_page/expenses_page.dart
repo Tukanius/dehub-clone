@@ -49,7 +49,7 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
 
   onSubmit() async {
     try {
-      await OrderApi().deliveryNoteConfirm('${receipt.id}', Order());
+      await OrderApi().receiptConfirm('${receipt.id}', Order());
       showCustomDialog(
         context,
         'Амжилттай баталгаажууллаа',
@@ -67,7 +67,7 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
   }
 
   confirm(String id) async {
-    await OrderApi().deliveryNoteConfirm('${id}', Order());
+    await OrderApi().receiptConfirm('${id}', Order());
     showCustomDialog(
       context,
       'Амжилттай баталгаажууллаа',
@@ -577,11 +577,8 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                             receipt.isBuyerConfirmed == false
                                 ? Expanded(
                                     child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        border: Border.all(color: orderColor),
-                                      ),
                                       child: CustomButton(
+                                        borderColor: orderColor,
                                         isGradient: true,
                                         onClick: () {
                                           Navigator.of(context).pushNamed(

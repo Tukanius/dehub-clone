@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 class GoodsCard extends StatefulWidget {
   final Function()? onClick;
-  final InventoryGoods? data;
+  final InventoryGoods data;
   const GoodsCard({
     Key? key,
-    this.data,
+    required this.data,
     this.onClick,
   }) : super(key: key);
 
@@ -18,6 +18,7 @@ class GoodsCard extends StatefulWidget {
 class _GoodsCardState extends State<GoodsCard> {
   @override
   Widget build(BuildContext context) {
+    print(widget.data.optionValues);
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
@@ -25,7 +26,7 @@ class _GoodsCardState extends State<GoodsCard> {
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         color: white,
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               decoration: BoxDecoration(
@@ -45,7 +46,7 @@ class _GoodsCardState extends State<GoodsCard> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image(
-                  image: NetworkImage('${widget.data!.image}'),
+                  image: NetworkImage('${widget.data.image}'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -59,14 +60,52 @@ class _GoodsCardState extends State<GoodsCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: Text(
-                          '${widget.data!.nameMon}',
-                          style: TextStyle(
-                            color: grey2,
-                            fontWeight: FontWeight.w600,
+                        child: RichText(
+                          text: TextSpan(
+                            style: TextStyle(fontFamily: 'Montserrat'),
+                            children: [
+                              TextSpan(
+                                text: '${widget.data.nameMon}',
+                                style: TextStyle(
+                                  color: grey2,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              widget.data.optionValues?.length != 0 &&
+                                      widget.data.optionValues != null
+                                  ? TextSpan(
+                                      text: ': ',
+                                      style: TextStyle(
+                                        color: grey2,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    )
+                                  : TextSpan(),
+                              widget.data.optionValues?.length != 0 &&
+                                      widget.data.optionValues != null
+                                  ? TextSpan(
+                                      children: widget.data.optionValues!
+                                          .map(
+                                            (e) => TextSpan(
+                                              text: widget.data.optionValues!
+                                                          .last ==
+                                                      true
+                                                  ? "${e.name}, "
+                                                  : "${e.name}",
+                                              style: TextStyle(
+                                                color: grey2,
+                                                fontSize: 13,
+                                              ),
+                                            ),
+                                          )
+                                          .toList(),
+                                    )
+                                  : TextSpan(),
+                            ],
                           ),
                         ),
                       ),
@@ -81,7 +120,7 @@ class _GoodsCardState extends State<GoodsCard> {
                     height: 6,
                   ),
                   Text(
-                    'SKU: ${widget.data!.skuCode}',
+                    'SKU: ${widget.data.skuCode}',
                     style: TextStyle(
                       color: grey2,
                       fontSize: 12,
@@ -102,17 +141,25 @@ class _GoodsCardState extends State<GoodsCard> {
                               fontSize: 12,
                             ),
                           ),
-                          Text(
-                            '${widget.data?.unit?.name}',
-                            style: TextStyle(
-                              color: green,
-                              fontSize: 12,
-                            ),
-                          ),
+                          widget.data.itemUnit?.unit?.name == null
+                              ? Text(
+                                  '-',
+                                  style: TextStyle(
+                                    color: green,
+                                    fontSize: 12,
+                                  ),
+                                )
+                              : Text(
+                                  '${widget.data.itemUnit?.unit?.name}',
+                                  style: TextStyle(
+                                    color: green,
+                                    fontSize: 12,
+                                  ),
+                                ),
                         ],
                       ),
                       Text(
-                        'Үлдэгдэл: ${widget.data?.quantity?.toInt()}',
+                        'Үлдэгдэл: ${widget.data.availableQuantity?.toInt()}',
                         style: TextStyle(
                           color: productColor,
                           fontSize: 12,
@@ -125,7 +172,7 @@ class _GoodsCardState extends State<GoodsCard> {
                     height: 6,
                   ),
                   Text(
-                    '${widget.data!.category!.name}',
+                    '${widget.data.category?.name}',
                     style: TextStyle(color: grey2, fontSize: 12),
                   )
                 ],

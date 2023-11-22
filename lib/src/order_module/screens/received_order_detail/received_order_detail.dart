@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:dehub/api/order_api.dart';
+import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/order_product_card/order_product_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/order.dart';
@@ -11,6 +14,9 @@ import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_file_downloader/flutter_file_downloader.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:dio/dio.dart';
 
 class ReceivedOrderDetailArguments {
   String id;
@@ -36,6 +42,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
   Order order = Order();
   Order approve = Order();
   bool isLoading = true;
+  double? progress;
   User user = User();
   double? totalAmount;
 
@@ -222,35 +229,18 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                       ],
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
+                  FieldCard(
+                    labelTextColor: buttonColor,
+                    marginBottom: 3,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Бизнес код',
+                    secondTextColor: orderColor,
+                    secondText: user.currentBusiness?.type == "SUPPLIER"
+                        ? '${order.receiverBusiness?.refCode}'
+                        : '${order.senderBusiness?.refCode}',
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Бизнес код',
-                          style: TextStyle(color: buttonColor),
-                        ),
-                        user.currentBusiness?.type == "SUPPLIER"
-                            ? Text(
-                                '${order.receiverBusiness?.refCode}',
-                                style: TextStyle(
-                                  color: orderColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )
-                            : Text(
-                                '${order.senderBusiness?.refCode}',
-                                style: TextStyle(
-                                  color: orderColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                      ],
-                    ),
+                    secondTextFontWeight: FontWeight.w500,
                   ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 3),
@@ -322,114 +312,53 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                       ],
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
+                  FieldCard(
+                    labelTextColor: buttonColor,
+                    marginBottom: 3,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'ТТД',
+                    secondTextColor: buttonColor,
+                    secondText: user.currentBusiness?.type == "SUPPLIER"
+                        ? '${order.receiverBusiness?.regNumber}'
+                        : '${order.senderBusiness?.regNumber}',
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'ТТД',
-                          style: TextStyle(color: buttonColor),
-                        ),
-                        user.currentBusiness?.type == "SUPPLIER"
-                            ? Text(
-                                '${order.receiverBusiness?.regNumber}',
-                                style: TextStyle(
-                                  color: buttonColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )
-                            : Text(
-                                '${order.senderBusiness?.regNumber}',
-                                style: TextStyle(
-                                  color: buttonColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                      ],
-                    ),
+                    secondTextFontWeight: FontWeight.w500,
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
+                  FieldCard(
+                    labelTextColor: buttonColor,
+                    marginBottom: 3,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Төлбөрийн нөхцөл',
+                    secondTextColor: buttonColor,
+                    secondText: '${order.paymentTerm?.description}',
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Төлбөрийн нөхцөл',
-                            style: TextStyle(color: buttonColor),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            '${order.paymentTerm?.description}',
-                            style: TextStyle(
-                              color: buttonColor,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            textAlign: TextAlign.end,
-                          ),
-                        ),
-                      ],
-                    ),
+                    secondTextFontWeight: FontWeight.w500,
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
+                  FieldCard(
+                    labelTextColor: buttonColor,
+                    marginBottom: 3,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'НӨАТ төлөгч эсэх',
+                    secondTextColor: buttonColor,
+                    secondText: 'Тийм',
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'НӨАТ төлөгч эсэх',
-                          style: TextStyle(color: buttonColor),
-                        ),
-                        Text(
-                          'Тийм',
-                          style: TextStyle(
-                            color: buttonColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
+                    secondTextFontWeight: FontWeight.w500,
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
+                  FieldCard(
+                    labelTextColor: buttonColor,
+                    marginBottom: 3,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Менежер',
+                    secondTextColor: orderColor,
+                    secondText: user.currentBusiness?.type == "BUYER"
+                        ? '${order.buyerStaff?.firstName}'
+                        : '${order.supplierStaff?.firstName}',
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Менежер',
-                          style: TextStyle(color: buttonColor),
-                        ),
-                        user.currentBusiness?.type == "BUYER"
-                            ? Text(
-                                '${order.buyerStaff?.firstName}',
-                                style: TextStyle(
-                                  color: orderColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )
-                            : Text(
-                                '${order.supplierStaff?.firstName}',
-                                style: TextStyle(
-                                  color: orderColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                      ],
-                    ),
+                    secondTextFontWeight: FontWeight.w500,
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(
@@ -492,63 +421,29 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                       ],
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
+                  FieldCard(
+                    labelTextColor: buttonColor,
+                    marginBottom: 3,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Хүлээн авах ажилтан',
+                    secondTextColor: orderColor,
+                    secondText: 'B.Bolormaa',
+                    onClick: () {},
+                    arrowColor: orderColor,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Хүлээн авах ажилтан',
-                          style: TextStyle(
-                            color: buttonColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              'B.Bolormaa',
-                              style: TextStyle(
-                                color: orderColor,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: orderColor,
-                              size: 14,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
+                  FieldCard(
+                    labelTextColor: buttonColor,
+                    marginBottom: 3,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Хүлээн авах өдөр',
+                    secondTextColor: orderColor,
+                    secondText:
+                        '${DateFormat("yyyy-MM-dd").format(DateTime.parse(order.deliveryDate.toString()))}',
+                    arrowColor: orderColor,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Хүлээн авах өдөр',
-                          style: TextStyle(
-                            color: buttonColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Text(
-                          '${DateFormat("yyyy-MM-dd").format(DateTime.parse(order.deliveryDate.toString()))}',
-                          style: TextStyle(color: orderColor),
-                        ),
-                      ],
-                    ),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(
@@ -571,7 +466,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                         )
                         .toList(),
                   ),
-                  order.additionalLines!.isNotEmpty
+                  order.additionalLines?.length != 0
                       ? Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
@@ -584,52 +479,57 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           ),
                         )
                       : SizedBox(),
-                  Column(
-                    children: order.additionalLines!
-                        .map(
-                          (e) => Container(
-                            margin: const EdgeInsets.only(bottom: 3),
-                            color: white,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 10),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Бараа, ажлын нэр',
-                                      style: TextStyle(
-                                        color: buttonColor,
-                                        fontWeight: FontWeight.w500,
+                  order.additionalLines?.length != 0
+                      ? Column(
+                          children: order.additionalLines!
+                              .map(
+                                (e) => Container(
+                                  margin: const EdgeInsets.only(bottom: 3),
+                                  color: white,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 10),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Бараа, ажлын нэр',
+                                            style: TextStyle(
+                                              color: buttonColor,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            '20км-с дээш газарт',
+                                            style: TextStyle(
+                                              color: coolGrey,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      '20км-с дээш газарт',
-                                      style: TextStyle(
-                                        color: coolGrey,
-                                        fontSize: 12,
+                                      Text(
+                                        '20,000.00₮',
+                                        style: TextStyle(
+                                          color: orderColor,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                Text(
-                                  '20,000.00₮',
-                                  style: TextStyle(
-                                    color: orderColor,
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
+                              )
+                              .toList(),
                         )
-                        .toList(),
-                  ),
+                      : SizedBox(),
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
@@ -641,229 +541,115 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                       ),
                     ),
                   ),
-                  Container(
+                  FieldCard(
+                    labelTextColor: buttonColor,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Захиалгад буй',
+                    secondTextColor: orderColor,
+                    secondText: '${order.lines?.length}',
+                    arrowColor: orderColor,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Захиалгад буй',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        Text(
-                          '${order.lines?.length}',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
+                  FieldCard(
+                    labelTextColor: buttonColor,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Нийт тоо ширхэг',
+                    secondTextColor: orderColor,
+                    secondText:
+                        '${order.lines?.fold(0, (previousValue, element) => previousValue + element.quantity!)} ширхэг',
+                    arrowColor: orderColor,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Нийт тоо ширхэг',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        Text(
-                          '${order.lines?.fold(0, (previousValue, element) => previousValue + element.quantity!)} ширхэг',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
+                  FieldCard(
+                    labelTextColor: buttonColor,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Тооцсон НӨАТ',
+                    secondTextColor: orderColor,
+                    secondText:
+                        '${Utils().formatCurrency(order.lineVatAmount.toString())}₮',
+                    arrowColor: orderColor,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Тооцсон НӨАТ',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        Text(
-                          '${Utils().formatCurrency(order.lineVatAmount.toString())}₮',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
+                  FieldCard(
+                    labelTextColor: buttonColor,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Тооцсон НХАТ',
+                    secondTextColor: orderColor,
+                    secondText:
+                        '${Utils().formatCurrency(order.lineTaxAmount.toString())}₮',
+                    arrowColor: orderColor,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Тооцсон НХАТ',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        Text(
-                          '${Utils().formatCurrency(order.lineTaxAmount.toString())}₮',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
+                  FieldCard(
+                    labelTextColor: buttonColor,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Тооцсон хөнгөлөлт',
+                    secondTextColor: orderColor,
+                    secondText:
+                        '${Utils().formatCurrency(order.lineTotalDiscountAmount.toString())}₮',
+                    arrowColor: orderColor,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Тооцсон хөнгөлөлт',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        Text(
-                          '${Utils().formatCurrency(order.lineTotalDiscountAmount.toString())}₮',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
+                  FieldCard(
+                    labelTextColor: buttonColor,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Захиалгын нийт дүн',
+                    secondTextColor: orderColor,
+                    secondText:
+                        '${Utils().formatCurrency(order.orderAmount.toString())}₮',
+                    arrowColor: orderColor,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Захиалгын нийт дүн',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        Text(
-                          '${Utils().formatCurrency(order.orderAmount.toString())}₮',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
+                  FieldCard(
+                    labelTextColor: buttonColor,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Хүргэлтийн төлбөр',
+                    secondTextColor: orderColor,
+                    secondText:
+                        '${Utils().formatCurrency(order.shippingAmount.toString())}₮',
+                    arrowColor: orderColor,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Хүргэлтийн төлбөр',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        Text(
-                          '${Utils().formatCurrency(order.shippingAmount.toString())}₮',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
+                  FieldCard(
+                    labelTextColor: buttonColor,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Үнийн дүнгийн хөнгөлөлт',
+                    secondTextColor: orderColor,
+                    secondText:
+                        '${Utils().formatCurrency(order.lineTotalDiscountAmount.toString())}₮',
+                    arrowColor: orderColor,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Үнийн дүнгийн хөнгөлөлт',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        Text(
-                          '${Utils().formatCurrency(order.lineTotalDiscountAmount.toString())}₮',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
+                  FieldCard(
+                    labelTextColor: buttonColor,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'НИЙТ ТӨЛБӨР',
+                    secondTextColor: orderColor,
+                    secondText:
+                        '${Utils().formatCurrency(order.totalAmount.toString())}₮',
+                    arrowColor: orderColor,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'НИЙТ ТӨЛБӨР',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        Text(
-                          '${Utils().formatCurrency(order.totalAmount.toString())}₮',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
                   order.paymentTerm?.configType == "CIA" &&
                           order.paymentTerm?.configType == "CBD"
-                      ? Container(
-                          margin: const EdgeInsets.only(bottom: 3),
+                      ? FieldCard(
+                          labelTextColor: buttonColor,
+                          marginHorizontal: 15,
+                          marginVertical: 10,
+                          labelText: 'Төлбөр баталгаажуулалт',
+                          secondTextColor: orderColor,
+                          secondText: 'XXX,XXX,XXX.XX₮',
+                          arrowColor: orderColor,
                           color: white,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Төлбөр баталгаажуулалт',
-                                style: TextStyle(
-                                  color: buttonColor,
-                                ),
-                              ),
-                              Text(
-                                'XXX,XXX,XXX.XX₮',
-                                style: TextStyle(
-                                  color: orderColor,
-                                ),
-                              ),
-                            ],
-                          ),
                         )
                       : SizedBox(),
                   Container(
@@ -936,70 +722,31 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                       ),
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Text(
-                      'Нэмэлт хавсралтууд',
-                      style: TextStyle(
-                        color: buttonColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 3),
-                    color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
+                  order.attachments?.length != 0
+                      ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Файлын нэр',
-                              style: TextStyle(
-                                color: buttonColor,
-                                fontWeight: FontWeight.w500,
+                            Container(
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: Text(
+                                'Нэмэлт хавсралтууд',
+                                style: TextStyle(
+                                  color: buttonColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              'Тайлбар мэдээлэл, тайлбар',
-                              style: TextStyle(
-                                color: coolGrey,
-                                fontSize: 12,
-                              ),
+                            Column(
+                              children: order.attachments!
+                                  .map((data) => attachmentCard(data, () {
+                                        downloadFile(data);
+                                      }))
+                                  .toList(),
                             ),
                           ],
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Татах',
-                              style: TextStyle(
-                                color: orderColor,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: orderColor,
-                              size: 15,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                        )
+                      : SizedBox(),
                   SizedBox(
                     height: 40,
                   ),
@@ -1187,6 +934,110 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                 ],
               ),
             ),
+    );
+  }
+
+  Future<void> downloadFile(Order data) async {
+    if (Platform.isIOS) {
+      try {
+        Dio dio = Dio();
+        Response response = await dio.get(
+          data.url!,
+          options: Options(
+            responseType: ResponseType.bytes,
+          ),
+        );
+        String tempPath = (await getApplicationDocumentsDirectory()).path;
+        File file = File(tempPath);
+        await file.writeAsBytes(response.data, flush: true);
+        print("File downloaded to: $tempPath");
+      } catch (e) {
+        print("Error downloading file : $e");
+      }
+    } else {
+      FileDownloader.downloadFile(
+        url: data.url.toString(),
+        name: data.name,
+        onProgress: (fileName, _progress) {
+          setState(() {
+            progress = _progress;
+          });
+        },
+        onDownloadCompleted: (path) {
+          setState(() {
+            progress = null;
+          });
+        },
+      );
+    }
+  }
+
+  Widget attachmentCard(Order data, Function() onClick) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 3),
+      color: white,
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${data.name}',
+                style: TextStyle(
+                  color: buttonColor,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                '${data.description}',
+                style: TextStyle(
+                  color: coolGrey,
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          ),
+          GestureDetector(
+            onTap: onClick,
+            child: Container(
+              padding: const EdgeInsets.only(left: 10, bottom: 10),
+              color: transparent,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  progress != null
+                      ? Text(
+                          'Татаж байна',
+                          style: TextStyle(
+                            color: orderColor,
+                          ),
+                        )
+                      : Text(
+                          'Татах',
+                          style: TextStyle(
+                            color: orderColor,
+                          ),
+                        ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: orderColor,
+                    size: 15,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

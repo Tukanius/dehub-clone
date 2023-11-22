@@ -6,6 +6,7 @@ import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/product_module/product_page/tabs/dashboard_tab/dashboard_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/src/product_module/product_page/tabs/home_page_tab/home_page_tab.dart';
@@ -182,17 +183,20 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                     color: selectedIndex == 2 ? productColor : white,
                   ),
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
-                  child: SvgPicture.asset(
-                    'assets/svg/inbox.svg',
-                    colorFilter: ColorFilter.mode(
-                        selectedIndex == 2 ? white : productColor,
-                        BlendMode.srcIn),
+                  child: Icon(
+                    CupertinoIcons.person,
+                    color: selectedIndex != 2 ? productColor : white,
                   ),
                 ),
                 selectedIndex != 2
                     ? Text(
-                        'Ирсэн',
-                        style: TextStyle(color: productColor, fontSize: 12),
+                        'Үнэ',
+                        style: TextStyle(
+                          color: productColor,
+                          fontSize: 12,
+                        ),
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
                       )
                     : SizedBox(),
               ],
@@ -207,9 +211,10 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                     shape: BoxShape.circle,
                     color: selectedIndex == 3 ? productColor : white,
                   ),
-                  padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
+                  padding: EdgeInsets.all(selectedIndex == 3 ? 10 : 0),
                   child: SvgPicture.asset(
-                    'assets/svg/sent.svg',
+                    'assets/svg/zahialga.svg',
+                    height: 17,
                     colorFilter: ColorFilter.mode(
                         selectedIndex == 3 ? white : productColor,
                         BlendMode.srcIn),
@@ -217,7 +222,7 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                 ),
                 selectedIndex != 3
                     ? Text(
-                        'Илгээсэн',
+                        'Барааны нөөц',
                         style: TextStyle(color: productColor, fontSize: 12),
                       )
                     : SizedBox(),

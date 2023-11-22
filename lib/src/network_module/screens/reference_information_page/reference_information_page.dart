@@ -20,6 +20,7 @@ class _ReferenceInformationPageState extends State<ReferenceInformationPage>
     with AfterLayoutMixin {
   int index = 1;
   int page = 1;
+  bool startAnimation = false;
   int limit = 10;
   Result reference = Result(rows: [], count: 0);
   bool isLoading = true;
@@ -27,12 +28,16 @@ class _ReferenceInformationPageState extends State<ReferenceInformationPage>
   list(page, limit) async {
     Filter filter = Filter(query: '');
     Offset offset = Offset(page: page, limit: limit);
-    Result res = await BusinessApi().referenceList(
+    reference = await BusinessApi().referenceList(
       ResultArguments(filter: filter, offset: offset),
     );
     setState(() {
-      reference = res;
       isLoading = false;
+    });
+    Future.delayed(Duration(milliseconds: 100), () {
+      setState(() {
+        startAnimation = true;
+      });
     });
   }
 
@@ -109,6 +114,7 @@ class _ReferenceInformationPageState extends State<ReferenceInformationPage>
               children: reference.rows!
                   .map(
                     (e) => ReferenceInformationCard(
+                      startAnimation: startAnimation,
                       index: reference.rows!.indexOf(e),
                       data: e,
                     ),

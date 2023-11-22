@@ -117,20 +117,15 @@ class _CheckBiometricState extends State<CheckBiometric> with AfterLayoutMixin {
             SizedBox(
               height: 8,
             ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(color: buttonColor),
-              ),
-              child: CustomButton(
-                labelColor: backgroundColor,
-                labelText: "Алгасах",
-                isLoading: isLoading,
-                textColor: buttonColor,
-                onClick: () {
-                  Navigator.of(context).pushNamed(SplashPage.routeName);
-                },
-              ),
+            CustomButton(
+              borderColor: buttonColor,
+              labelColor: backgroundColor,
+              labelText: "Алгасах",
+              isLoading: isLoading,
+              textColor: buttonColor,
+              onClick: () {
+                Navigator.of(context).pushNamed(SplashPage.routeName);
+              },
             ),
           ],
         ),

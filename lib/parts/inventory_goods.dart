@@ -70,6 +70,9 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     unitId: json['unitId'] != null ? json['unitId'] as String : null,
     height:
         json['height'] != null ? double.parse(json['height'].toString()) : null,
+    availableQuantity: json['availableQuantity'] != null
+        ? double.parse(json['availableQuantity'].toString())
+        : null,
     width:
         json['width'] != null ? double.parse(json['width'].toString()) : null,
     length:
@@ -145,6 +148,9 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
         : null,
     subCategory: json['subCategory'] != null
         ? InventoryGoods.fromJson(json['subCategory'] as Map<String, dynamic>)
+        : null,
+    itemUnit: json['itemUnit'] != null
+        ? InventoryGoods.fromJson(json['itemUnit'] as Map<String, dynamic>)
         : null,
     tag: json['tag'] != null
         ? InventoryGoods.fromJson(json['tag'] as Map<String, dynamic>)
@@ -292,6 +298,7 @@ Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   if (instance.sections != null) json['sections'] = instance.sections;
   if (instance.sectionIds != null) json['sectionIds'] = instance.sectionIds;
   if (instance.fields != null) json['fields'] = instance.fields;
+  if (instance.itemUnit != null) json['itemUnit'] = instance.itemUnit;
   if (instance.itemFieldValues != null)
     json['itemFieldValues'] = instance.itemFieldValues;
   if (instance.quantityPrices != null)

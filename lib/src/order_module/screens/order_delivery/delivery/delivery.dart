@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class DeliveryPageArguments {
   Order data;
@@ -155,14 +156,14 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        '${widget.data.receiverBusiness?.profileName}',
+                                        '${get.receiverBusiness?.profileName}',
                                         style: TextStyle(
                                           color: black,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                       Text(
-                                        '${widget.data.receiverBusiness?.partner?.businessName}',
+                                        '${get.receiverBusiness?.partner?.businessName}',
                                         style: TextStyle(
                                           color: saaral,
                                           fontSize: 12,
@@ -222,14 +223,17 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                             children: [
                               Row(
                                 children: [
-                                  Container(
-                                    height: 36,
-                                    width: 36,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: grey,
-                                    ),
-                                  ),
+                                  get.staff?.avatar != null
+                                      ? CircleAvatar(
+                                          radius: 18,
+                                          backgroundColor: grey,
+                                          backgroundImage: NetworkImage(
+                                              '${get.staff?.avatar}'),
+                                        )
+                                      : CircleAvatar(
+                                          radius: 18,
+                                          backgroundColor: grey,
+                                        ),
                                   SizedBox(
                                     width: 10,
                                   ),
@@ -238,7 +242,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        '${widget.data.staff?.firstName}',
+                                        '${get.staff?.firstName}',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -272,7 +276,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                         width: 5,
                                       ),
                                       Text(
-                                        'PO-234343',
+                                        '${widget.data.refCode}',
                                         style: TextStyle(
                                           fontSize: 12,
                                           color: orderColor,
@@ -282,7 +286,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                     ],
                                   ),
                                   Text(
-                                    'Захиалсан: 2021-11-30',
+                                    'Захиалсан: ${DateFormat('yyyy-MM-dd').format(get.createdAt!)}',
                                     style: TextStyle(
                                       color: depBrown,
                                     ),
@@ -358,21 +362,11 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            '${item.name}:',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            textAlign: TextAlign.left,
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
                                           Row(
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  '${item.name}, ${item.optionValue} - ${item.quantity} ${item.baseUnit?.toLowerCase()}',
+                                                  '${item.name}, ${item.optionValue} - ${item.quantity} ${item.baseUnit?.toLowerCase()}.',
                                                 ),
                                               ),
                                             ],
@@ -421,17 +415,19 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                margin:
-                                    const EdgeInsets.only(top: 15, bottom: 5),
-                                child: Text(
-                                  'Харилцааны түүх',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
+                              conversationList.rows?.length != 0
+                                  ? Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 15, bottom: 5),
+                                      child: Text(
+                                        'Харилцааны түүх',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox(),
                               isSubmit == true
                                   ? Center(
                                       child: CircularProgressIndicator(

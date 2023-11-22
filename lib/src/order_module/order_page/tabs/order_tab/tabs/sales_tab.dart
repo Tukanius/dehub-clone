@@ -198,18 +198,12 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
                                             children: data.values!
                                                 .map(
                                                   (item) => SalesOrderCard(
-                                                    type: user.currentBusiness
-                                                                ?.type ==
-                                                            "SUPPLIER"
-                                                        ? "SALES"
-                                                        : "PURCHASE",
                                                     index: order.rows!
                                                             .indexOf(item) +
                                                         groupedList
                                                             .indexOf(data),
                                                     startAnimation:
                                                         startAnimation,
-                                                    isReceiver: true,
                                                     onClick: () {
                                                       Navigator.of(context)
                                                           .pushNamed(

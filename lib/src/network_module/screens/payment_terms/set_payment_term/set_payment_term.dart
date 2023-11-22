@@ -275,7 +275,9 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                     isLoading: isSubmit,
                     onClick: () {
                       paymentTerm == null || config == null
-                          ? () {}
+                          ? () {
+                              print('-');
+                            }
                           : onSubmit();
                     },
                   ),

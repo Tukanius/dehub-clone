@@ -9,40 +9,36 @@ import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/checkout-provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
-// import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
 
 class ProductChooseArguments {
-  bool? isPackage;
+  ListenController listenController;
+  bool isPackage;
   String businessId;
-  ListenController productListenController;
-  ListenController packageListenController;
   ProductChooseArguments({
-    required this.packageListenController,
-    this.isPackage,
+    required this.listenController,
+    required this.isPackage,
     required this.businessId,
-    required this.productListenController,
   });
 }
 
 class ProductChoose extends StatefulWidget {
-  final bool? isPackage;
+  final ListenController listenController;
+  final bool isPackage;
   final String businessId;
-  final ListenController packageListenController;
-  final ListenController productListenController;
   static const routeName = '/ProductChoose';
   const ProductChoose({
     Key? key,
-    this.isPackage,
-    required this.packageListenController,
+    required this.listenController,
+    required this.isPackage,
     required this.businessId,
-    required this.productListenController,
   }) : super(key: key);
 
   @override
@@ -59,8 +55,8 @@ class _ProductChooseState extends State<ProductChoose>
   Timer? timer;
   bool isSubmit = false;
   User user = User();
-  String type = '';
   List<Order> packageProduct = [];
+  String type = '';
   ListenController listenController = ListenController();
 
   @override
@@ -102,21 +98,20 @@ class _ProductChooseState extends State<ProductChoose>
     });
   }
 
+  // @override
+  // void dispose() {
+  //   listenController.dispose();
+  //   super.dispose();
+  // }
+
   @override
   void initState() {
-    listenController.addListener(() async {
+    listenController.addListener(() {
       setState(() {
         packageProduct = packageProduct;
-        print(packageProduct);
       });
     });
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    listenController.dispose();
-    super.dispose();
   }
 
   @override
@@ -231,54 +226,27 @@ class _ProductChooseState extends State<ProductChoose>
                                           (item) => Column(
                                             children: [
                                               OrderProductCard(
+                                                isPackage: widget.isPackage,
                                                 listenController:
                                                     listenController,
-                                                isTap: packageProduct
-                                                    .contains(item),
+                                                package: packageProduct,
                                                 readOnly: false,
                                                 onClick: () {
-                                                  if (item.quantity != null &&
-                                                      item.quantity > 0 &&
-                                                      widget.isPackage ==
-                                                          false) {
-                                                    widget
-                                                        .productListenController
-                                                        .productOrderChange(
-                                                            item);
+                                                  if (widget.isPackage ==
+                                                          false &&
+                                                      item.quantity != 0) {
                                                     Navigator.of(context).pop();
-                                                  } else if (item.quantity !=
-                                                          null &&
-                                                      item.quantity == 0 &&
-                                                      widget.isPackage ==
-                                                          false) {
-                                                    item.quantity = 1;
-                                                    widget
-                                                        .productListenController
-                                                        .productOrderChange(
-                                                            item);
-                                                    Navigator.of(context).pop();
+                                                    Provider.of<CheckOutProvider>(
+                                                            context,
+                                                            listen: false)
+                                                        .orderCart(item,
+                                                            item.quantity);
+                                                    widget.listenController
+                                                        .changeVariable(
+                                                            'addProduct');
                                                   } else if (widget.isPackage ==
-                                                      true) {
-                                                    if (packageProduct
-                                                        .contains(item)) {
-                                                      setState(() {
-                                                        packageProduct
-                                                            .removeWhere(
-                                                          (element) =>
-                                                              element == item,
-                                                        );
-                                                      });
-                                                    } else {
-                                                      setState(() {
-                                                        if (item.quantity ==
-                                                            0) {
-                                                          item.quantity = 1;
-                                                        }
-                                                        packageProduct
-                                                            .add(item);
-                                                      });
-                                                    }
-                                                  } else {
+                                                          false &&
+                                                      item.quantity == 0) {
                                                     ScaffoldMessenger.of(
                                                             context)
                                                         .showSnackBar(
@@ -286,6 +254,8 @@ class _ProductChooseState extends State<ProductChoose>
                                                         backgroundColor:
                                                             orderColor,
                                                         shape: StadiumBorder(),
+                                                        duration: Duration(
+                                                            milliseconds: 200),
                                                         content: Center(
                                                           child: Text(
                                                               'Тоо ширхэг нэмнэ үү!'),
@@ -293,6 +263,15 @@ class _ProductChooseState extends State<ProductChoose>
                                                       ),
                                                     );
                                                   }
+                                                  // if (widget.isPackage ==
+                                                  //     false) {
+                                                  //   Navigator.of(context).pop();
+                                                  //   Provider.of<CheckOutProvider>(
+                                                  //           context,
+                                                  //           listen: false)
+                                                  //       .orderCart(item,
+                                                  //           item.quantity);
+                                                  // }
                                                 },
                                                 data: item,
                                               ),
@@ -311,7 +290,7 @@ class _ProductChooseState extends State<ProductChoose>
                     ),
                   ),
                 ),
-                packageProduct.isNotEmpty
+                packageProduct.isNotEmpty && widget.isPackage == true
                     ? Container(
                         decoration: BoxDecoration(
                           color: white,
@@ -323,9 +302,14 @@ class _ProductChooseState extends State<ProductChoose>
                         padding: const EdgeInsets.symmetric(vertical: 25),
                         child: CustomButton(
                           onClick: () {
-                            widget.packageListenController
-                                .orderPackageProduct(packageProduct);
+                            for (var i = 0; i < packageProduct.length; i++) {
+                              Provider.of<CheckOutProvider>(context,
+                                      listen: false)
+                                  .orderCart(packageProduct[i],
+                                      packageProduct[i].quantity!);
+                            }
                             Navigator.of(context).pop();
+                            widget.listenController.changeVariable('addList');
                           },
                           labelText:
                               "${packageProduct.fold(0, (previousValue, element) => previousValue + element.quantity!)} бараа = ${Utils().formatCurrency(packageProduct.fold(0.0, (previousValue, element) => previousValue + (element.quantity!.toDouble() * element.price!)).toString())} ₮",

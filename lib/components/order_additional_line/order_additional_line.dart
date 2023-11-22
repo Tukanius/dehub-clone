@@ -1,10 +1,17 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/models/order.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class OrderAdditionalLine extends StatefulWidget {
+  final Function()? onClick;
   final Order? data;
-  const OrderAdditionalLine({Key? key, this.data}) : super(key: key);
+  const OrderAdditionalLine({
+    Key? key,
+    this.data,
+    this.onClick,
+  }) : super(key: key);
 
   @override
   State<OrderAdditionalLine> createState() => _OrderAdditionalLineState();
@@ -24,14 +31,15 @@ class _OrderAdditionalLineState extends State<OrderAdditionalLine> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('${widget.data?.name}'),
               SizedBox(
-                height: 5,
+                height: 10,
               ),
               Text(
-                '${widget.data?.quantity} ш х ${widget.data?.price}',
+                '${widget.data?.quantity} ш х ${Utils().formatCurrency(widget.data?.price.toString()) + "₮"}',
                 style: TextStyle(
                   color: Color(0xff657786),
                   fontSize: 12,
@@ -39,19 +47,38 @@ class _OrderAdditionalLineState extends State<OrderAdditionalLine> {
               ),
             ],
           ),
-          Row(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                '${widget.data!.price! * widget.data!.quantity!} ₮',
-                style: TextStyle(
-                  color: orderColor,
+              GestureDetector(
+                onTap: widget.onClick,
+                child: Container(
+                  padding: const EdgeInsets.only(left: 10, bottom: 10),
+                  color: transparent,
+                  height: 30,
+                  width: 30,
+                  child: SvgPicture.asset(
+                    'assets/svg/close.svg',
+                    colorFilter: ColorFilter.mode(grey2, BlendMode.srcIn),
+                  ),
                 ),
               ),
-              Icon(
-                Icons.arrow_forward_ios,
-                color: orderColor,
-                size: 15,
-              )
+              Row(
+                children: [
+                  Text(
+                    '${Utils().formatCurrency((widget.data!.price! * widget.data!.quantity!).toString())} ₮',
+                    style: TextStyle(
+                      color: orderColor,
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: orderColor,
+                    size: 15,
+                  )
+                ],
+              ),
             ],
           )
         ],

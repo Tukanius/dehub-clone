@@ -489,6 +489,7 @@ class _IncomeGuaranteeState extends State<IncomeGuarantee> {
                       border: Border.all(color: orderColor),
                     ),
                     child: CustomButton(
+                      borderColor: orderColor,
                       isGradient: true,
                       onClick: () {
                         Navigator.of(context).pushNamed(

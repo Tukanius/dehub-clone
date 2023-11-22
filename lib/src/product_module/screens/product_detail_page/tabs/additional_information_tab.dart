@@ -1,18 +1,12 @@
+import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
-class AdditionalInformationTabArguments {
-  String id;
-  AdditionalInformationTabArguments({
-    required this.id,
-  });
-}
-
 class AdditionalInformationTab extends StatefulWidget {
-  final String id;
+  final InventoryGoods data;
   const AdditionalInformationTab({
     Key? key,
-    required this.id,
+    required this.data,
   }) : super(key: key);
 
   @override

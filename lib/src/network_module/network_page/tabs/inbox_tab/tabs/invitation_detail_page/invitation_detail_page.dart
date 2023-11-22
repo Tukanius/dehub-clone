@@ -422,11 +422,8 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                               Expanded(
                                 child: Container(
                                   margin: const EdgeInsets.only(left: 10),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: networkColor),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
                                   child: CustomButton(
+                                    borderColor: networkColor,
                                     labelColor: backgroundColor,
                                     labelText: "Татгалзах",
                                     onClick: () {

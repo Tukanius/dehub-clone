@@ -1,5 +1,5 @@
 import 'package:dehub/components/dashboard_card/dashboard_card.dart';
-import 'package:dehub/components/pie_chart/pie_chart.dart';
+// import 'package:dehub/components/pie_chart/pie_chart.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
@@ -26,8 +26,11 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
   InventoryGoods confirmed = InventoryGoods();
   bool isLoading = true;
   Map<String, dynamic> pieChart = {
-    "Top 100": 5,
-    "Top 50": 3,
+    "Сэнгүр": 5,
+    "Боргио": 2,
+    "Сэрүүн": 3,
+    "Касс": 7,
+    "Эден": 10,
   };
   List<Color> colorList = [
     productColor,
@@ -135,66 +138,66 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Container(
+                    //       margin: const EdgeInsets.only(left: 15),
+                    //       child: Text(
+                    //         'Өндөр борлуулалттай',
+                    //         style: TextStyle(
+                    //           color: black,
+                    //           fontSize: 16,
+                    //           fontWeight: FontWeight.w500,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     GestureDetector(
+                    //       onTap: () {},
+                    //       child: Container(
+                    //         color: transparent,
+                    //         padding: const EdgeInsets.symmetric(vertical: 5),
+                    //         child: Row(
+                    //           children: [
+                    //             Text(
+                    //               "Бүгдийг",
+                    //               style: TextStyle(
+                    //                 color: networkColor,
+                    //                 fontSize: 12,
+                    //                 fontWeight: FontWeight.w500,
+                    //               ),
+                    //             ),
+                    //             SizedBox(
+                    //               width: 10,
+                    //             ),
+                    //             Icon(
+                    //               Icons.arrow_forward_ios,
+                    //               color: networkColor,
+                    //               size: 16,
+                    //             ),
+                    //             SizedBox(
+                    //               width: 15,
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    // SizedBox(
+                    //   height: 10,
+                    // ),
+                    // PieChart(legend: legend, colorList: colorList, data: data),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
                           margin: const EdgeInsets.only(left: 15),
                           child: Text(
-                            'Харилцагч бизнесүүд',
-                            style: TextStyle(
-                              color: black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            color: transparent,
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Бүгдийг",
-                                  style: TextStyle(
-                                    color: networkColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: networkColor,
-                                  size: 16,
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    PieChart(legend: legend, colorList: colorList, data: data),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(left: 15),
-                          child: Text(
-                            'Танай илгээсэн',
+                            'Нөөцөд анхаарах бараа',
                             style: TextStyle(
                               color: black,
                               fontSize: 16,
@@ -290,13 +293,17 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           BarSeries<InventoryGoods, String>(
                             borderRadius: BorderRadius.circular(5),
                             pointColorMapper: (datum, index) =>
-                                datum.name == "Зөвшөөрсөн"
-                                    ? networkDashboard2
-                                    : datum.name == "Илгээсэн"
-                                        ? networkColor
-                                        : grey2,
+                                datum.profileName == "Эден"
+                                    ? green
+                                    : datum.profileName == "Касс"
+                                        ? pieYellow
+                                        : datum.profileName == "Сэрүүн"
+                                            ? pieOrange
+                                            : datum.profileName == "Боргио"
+                                                ? pieRed
+                                                : brown,
                             dataSource: legend,
-                            xValueMapper: (gdp, _) => gdp.name,
+                            xValueMapper: (gdp, _) => gdp.profileName,
                             yValueMapper: (gdp, _) => gdp.count,
                           )
                         ],

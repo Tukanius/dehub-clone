@@ -27,11 +27,11 @@ class _MenuPageState extends State<MenuPage> {
   User user = User();
   bool isLoading = false;
 
-  logout() async {
+  logout() {
     setState(() {
       isLoading = true;
     });
-    await Provider.of<UserProvider>(context, listen: false).logout();
+    Provider.of<UserProvider>(context, listen: false).logout();
     Navigator.of(context).pushNamed(SplashPage.routeName);
     setState(() {
       isLoading = false;
@@ -281,7 +281,9 @@ class _MenuPageState extends State<MenuPage> {
                               }
                             },
                             child: Container(
-                              margin: const EdgeInsets.only(left: 15),
+                              color: transparent,
+                              padding: const EdgeInsets.only(
+                                  left: 15, bottom: 10, top: 10),
                               child: Row(
                                 children: [
                                   Icon(
@@ -308,16 +310,15 @@ class _MenuPageState extends State<MenuPage> {
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
                           GestureDetector(
                             onTap: () {
                               Navigator.of(context)
                                   .pushNamed(ChangePassword.routeName);
                             },
                             child: Container(
-                              margin: const EdgeInsets.only(left: 15),
+                              color: transparent,
+                              padding: const EdgeInsets.only(
+                                  left: 15, bottom: 10, top: 10),
                               child: Row(
                                 children: [
                                   Icon(
@@ -336,15 +337,16 @@ class _MenuPageState extends State<MenuPage> {
                             ),
                           ),
                           SizedBox(
-                            height: 40,
+                            height: 20,
                           ),
                           GestureDetector(
                             onTap: () {
                               logout();
                             },
                             child: Container(
-                              margin:
-                                  const EdgeInsets.only(left: 15, bottom: 25),
+                              color: transparent,
+                              padding: const EdgeInsets.only(
+                                  left: 15, bottom: 25, top: 10),
                               child: Row(
                                 children: [
                                   Icon(
@@ -360,7 +362,7 @@ class _MenuPageState extends State<MenuPage> {
                                       color: red,
                                       fontSize: 14,
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                             ),

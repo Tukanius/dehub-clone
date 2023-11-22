@@ -1,19 +1,41 @@
+import 'package:dehub/api/auth_api.dart';
 import 'package:dehub/components/back_button/back_button.dart';
-import 'package:dehub/widgets/custom_button.dart';
+import 'package:dehub/models/order.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+class OrderSendPageArguments {
+  Order data;
+  Function() onSubmit;
+  OrderSendPageArguments({
+    required this.data,
+    required this.onSubmit,
+  });
+}
 
 class OrderSendPage extends StatefulWidget {
+  final Order data;
+  final Function() onSubmit;
   static const routeName = '/OrderSendPage';
-  const OrderSendPage({Key? key}) : super(key: key);
+  const OrderSendPage({
+    Key? key,
+    required this.data,
+    required this.onSubmit,
+  }) : super(key: key);
 
   @override
   State<OrderSendPage> createState() => _OrderSendPageState();
 }
 
 class _OrderSendPageState extends State<OrderSendPage> {
+  User user = User();
   final defaultPinTheme = PinTheme(
     height: 50,
     width: 45,
@@ -25,8 +47,11 @@ class _OrderSendPageState extends State<OrderSendPage> {
       borderRadius: BorderRadius.circular(5),
     ),
   );
+
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).orderMe;
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -44,21 +69,19 @@ class _OrderSendPageState extends State<OrderSendPage> {
               SizedBox(
                 height: 50,
               ),
-              SvgPicture.asset('assets/svg/order_send.svg'),
+              SvgPicture.asset(
+                '${widget.data.image}',
+                colorFilter: ColorFilter.mode(orderColor, BlendMode.srcIn),
+                height: 40,
+              ),
               SizedBox(
                 height: 15,
               ),
               Text(
-                'Хяналтад илгээх',
+                '${widget.data.name}',
                 style: TextStyle(
                   color: buttonColor,
                   fontWeight: FontWeight.w600,
-                ),
-              ),
-              Text(
-                '№: SO-290812',
-                style: TextStyle(
-                  color: buttonColor,
                 ),
               ),
               SizedBox(
@@ -75,7 +98,7 @@ class _OrderSendPageState extends State<OrderSendPage> {
                       style: TextStyle(color: buttonColor),
                     ),
                     Text(
-                      'Batdorj, 9999-1111',
+                      '${user.lastName?[0]}.${user.firstName}',
                       style: TextStyle(color: orderColor),
                     ),
                   ],
@@ -92,7 +115,7 @@ class _OrderSendPageState extends State<OrderSendPage> {
                       style: TextStyle(color: buttonColor),
                     ),
                     Text(
-                      'Болор трэйд ХХК',
+                      '${widget.data.partnerName}',
                       style: TextStyle(color: orderColor),
                     ),
                   ],
@@ -109,7 +132,7 @@ class _OrderSendPageState extends State<OrderSendPage> {
                       style: TextStyle(color: buttonColor),
                     ),
                     Text(
-                      '8,820,000.00₮',
+                      '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
                       style: TextStyle(color: orderColor),
                     ),
                   ],
@@ -126,7 +149,7 @@ class _OrderSendPageState extends State<OrderSendPage> {
                       style: TextStyle(color: buttonColor),
                     ),
                     Text(
-                      '2022-04-20',
+                      '${DateFormat("yyyy-MM-dd").format(DateTime.parse(widget.data.deliveryDate.toString()))}',
                       style: TextStyle(color: orderColor),
                     ),
                   ],
@@ -146,7 +169,18 @@ class _OrderSendPageState extends State<OrderSendPage> {
                 autofocus: true,
                 keyboardType: TextInputType.number,
                 obscureText: true,
-                // onCompleted: (value) => checkPin(value),
+                onCompleted: (value) async {
+                  try {
+                    var res = await AuthApi().checkPin(User(pin: value));
+                    if (res == true) {
+                      widget.onSubmit();
+                    }
+                  } catch (e) {
+                    print('orderSendError==========>');
+                    print(e.toString());
+                    print('orderSendError==========>');
+                  }
+                },
                 length: 6,
                 hapticFeedbackType: HapticFeedbackType.lightImpact,
                 defaultPinTheme: defaultPinTheme,
@@ -161,13 +195,6 @@ class _OrderSendPageState extends State<OrderSendPage> {
               ),
               SizedBox(
                 height: 100,
-              ),
-              CustomButton(
-                onClick: () {},
-                isGradient: false,
-                labelColor: orderColor,
-                labelText: "Хяналтад илгээе.",
-                textColor: white,
               ),
             ],
           ),

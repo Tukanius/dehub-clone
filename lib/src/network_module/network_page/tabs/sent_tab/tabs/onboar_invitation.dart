@@ -2,7 +2,7 @@ import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/partner_cards/sent_card.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/src/network_module/network_page/tabs/sent_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
+import 'package:dehub/src/network_module/screens/invitation_detail_page/invitation_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,18 +22,23 @@ class _OnboarInvitationState extends State<OnboarInvitation>
   int limit = 10;
   Result invitation = Result(rows: [], count: 0);
   bool isLoading = true;
+  bool startAnimation = false;
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
     Filter filter = Filter(type: "ONBOARDING");
-    var res = await BusinessApi().listSent(
+    invitation = await BusinessApi().listSent(
       ResultArguments(offset: offset, filter: filter),
     );
     setState(() {
-      invitation = res;
       isLoading = false;
+    });
+    Future.delayed(Duration(milliseconds: 100), () {
+      setState(() {
+        startAnimation = true;
+      });
     });
   }
 
@@ -121,6 +126,8 @@ class _OnboarInvitationState extends State<OnboarInvitation>
                                 .map(
                                   (item) => SentCard(
                                     data: item,
+                                    startAnimation: startAnimation,
+                                    index: invitation.rows!.indexOf(item),
                                     onClick: () {
                                       Navigator.of(context).pushNamed(
                                         SentInvitationDetail.routeName,

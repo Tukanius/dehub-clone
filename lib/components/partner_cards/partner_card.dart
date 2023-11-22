@@ -66,21 +66,6 @@ class _PartnerCardState extends State<PartnerCard> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Container(
-                      //   height: 40,
-                      //   width: 40,
-                      //   decoration: BoxDecoration(
-                      //     color: grey,
-                      //     shape: BoxShape.circle,
-                      //     image: DecorationImage(
-                      //       image: widget.data?.logo == null
-                      //           ? NetworkImage(
-                      //               'https://camo.githubusercontent.com/137115c4e2eab897b580d1f0db934f330d84654bccb0947c5e9af4bc8a66c6b6/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f323639323831302f323130343036312f34643839316563302d386637362d313165332d393230322d6637333934306431306632302e706e67')
-                      //           : NetworkImage('${widget.data?.logo}'),
-                      //       fit: BoxFit.contain,
-                      //     ),
-                      //   ),
-                      // ),
                       widget.data?.logo == null
                           ? CircleAvatar(
                               radius: 20,
@@ -90,8 +75,8 @@ class _PartnerCardState extends State<PartnerCard> {
                           : CircleAvatar(
                               radius: 20,
                               backgroundColor: grey,
-                              backgroundImage:
-                                  NetworkImage('${widget.data?.logo}')),
+                              backgroundImage: NetworkImage(
+                                  '${widget.data?.partner?.logo}')),
                       SizedBox(
                         width: 10,
                       ),

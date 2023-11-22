@@ -1,4 +1,3 @@
-import 'package:file_picker/file_picker.dart';
 part '../parts/order.dart';
 
 class Order {
@@ -62,7 +61,7 @@ class Order {
   String? deliveryType;
   String? receiverStaffId;
   List<Order>? lines;
-  List<FilePickerResult>? attachments;
+  List<Order>? attachments;
   List<Order>? additionalLines;
   String? variantId;
   String? discountType;

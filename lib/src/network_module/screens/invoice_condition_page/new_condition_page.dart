@@ -410,11 +410,8 @@ class _NewConditionPageState extends State<NewConditionPage> {
                 Expanded(
                   child: Container(
                     margin: const EdgeInsets.only(left: 10, right: 2.5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: networkColor),
-                    ),
                     child: CustomButton(
+                      borderColor: networkColor,
                       labelText: 'Буцах',
                       labelColor: backgroundColor,
                       textColor: networkColor,

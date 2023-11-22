@@ -1,47 +1,23 @@
+import 'package:dehub/components/field_card/field_card.dart';
+import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/dialog_manager/image_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:after_layout/after_layout.dart';
-import 'package:dehub/models/inventory_goods.dart';
-import 'package:dehub/api/inventory_api.dart';
-
-class BasicInformationTabArguments {
-  String id;
-  BasicInformationTabArguments({
-    required this.id,
-  });
-}
 
 class BasicInformationTab extends StatefulWidget {
-  final String id;
+  final InventoryGoods data;
   const BasicInformationTab({
     super.key,
-    required this.id,
+    required this.data,
   });
 
   @override
   State<BasicInformationTab> createState() => _BasicInformationTabState();
 }
 
-class _BasicInformationTabState extends State<BasicInformationTab>
-    with AfterLayoutMixin {
-  InventoryGoods inventory = InventoryGoods();
-  bool isLoading = false;
-
-  @override
-  afterFirstLayout(BuildContext context) async {
-    setState(() {
-      isLoading = true;
-    });
-    inventory = await InventoryApi().goodsGet(widget.id);
-
-    setState(() {
-      isLoading = false;
-    });
-  }
-
+class _BasicInformationTabState extends State<BasicInformationTab> {
   itemStatus() {
-    switch (inventory.itemStatus) {
+    switch (widget.data.itemStatus) {
       case 'ACTIVE':
         return "Идэвхитэй";
       case 'INACTIVE':
@@ -57,551 +33,340 @@ class _BasicInformationTabState extends State<BasicInformationTab>
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: isLoading == true
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Text(
+              'Үндсэн мэдээлэл',
+              style: TextStyle(
+                color: grey2,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'DeHUB код',
+            secondText: 'Авто гарах',
+          ),
+          Container(
+            color: white,
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Text(
+                  'Бүртгэлийн статус',
+                  style: TextStyle(color: grey2),
+                ),
                 Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: Color(0xffAAB8C2).withOpacity(0.3),
+                    border: Border.all(
+                      color: grey2.withOpacity(0.4),
+                    ),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                   child: Text(
-                    'Үндсэн мэдээлэл',
+                    itemStatus().toString(),
                     style: TextStyle(
                       color: grey2,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
                     ),
                   ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'DeHUB код',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Text(
-                        'Авто гарах',
-                        style: TextStyle(color: grey2),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Бүртгэлийн статус',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: Color(0xffAAB8C2).withOpacity(0.3),
-                          border: Border.all(
-                            color: grey2.withOpacity(0.4),
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Text(
-                          itemStatus().toString(),
-                          style: TextStyle(
-                            color: grey2,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'SKU код',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Text(
-                        '${inventory.skuCode}',
-                        style: TextStyle(color: grey2),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Barcode',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Text(
-                        '${inventory.barCode}',
-                        style: TextStyle(color: grey2),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'ERP code',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Text(
-                        '${inventory.erpCode}',
-                        style: TextStyle(color: grey2),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Нэр /Монгол хэл/',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Text(
-                          '${inventory.nameMon}',
-                          style: TextStyle(color: grey2),
-                          textAlign: TextAlign.end,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Нэр /Англи хэл/',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Text(
-                          '${inventory.nameEng}',
-                          style: TextStyle(color: grey2),
-                          textAlign: TextAlign.end,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Падаанд гарах нэр',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Text(
-                          '${inventory.nameBill}',
-                          style: TextStyle(color: grey2),
-                          textAlign: TextAlign.end,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Вевд гарах нэр',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Text(
-                          '${inventory.nameWeb}',
-                          style: TextStyle(color: grey2),
-                          textAlign: TextAlign.end,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Апп-д гарах нэр:',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Text(
-                          '${inventory.nameApp}',
-                          style: TextStyle(color: grey2),
-                          textAlign: TextAlign.end,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Text(
-                    'Гарал үүсэл',
-                    style: TextStyle(
-                      color: grey2,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Брэнд',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Text(
-                        '${inventory.brand?.name}',
-                        style: TextStyle(color: grey2),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Нийлүүлэгч',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Text(
-                        '${inventory.supplier?.name}',
-                        style: TextStyle(color: grey2),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Үйлдвэрлэгч',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Text(
-                        '${inventory.manufacturer?.name}',
-                        style: TextStyle(color: grey2),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Үйлдвэрлэгч улс',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Text(
-                        '${inventory.originCountry}',
-                        style: TextStyle(color: grey2),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Импортлогч улс',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Text(
-                        '${inventory.importerCountry}',
-                        style: TextStyle(color: grey2),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Дистрибютор',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Text(
-                        '${inventory.distributor?.name}',
-                        style: TextStyle(color: grey2),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Нэр төрөл',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Text(
-                        '${inventory.itemType?.name}',
-                        style: TextStyle(color: grey2),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Ангилал',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Text(
-                        '${inventory.classification?.name}',
-                        style: TextStyle(color: grey2),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Дэд ангилал',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Text(
-                        '${inventory.subClassification?.name}',
-                        style: TextStyle(color: grey2),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Категори',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Text(
-                        '${inventory.category?.name}',
-                        style: TextStyle(color: grey2),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Таг',
-                        style: TextStyle(color: grey2),
-                      ),
-                      Text(
-                        '${inventory.tag?.text}',
-                        style: TextStyle(color: grey2),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Text(
-                    'Тайлбар',
-                    style: TextStyle(
-                      color: grey2,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  color: white,
-                  padding: const EdgeInsets.all(15),
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: grey2.withOpacity(0.3),
-                      ),
-                    ),
-                    child: Text('${inventory.description}'),
-                  ),
-                ),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Text(
-                    'Нүүрэнд гарах зураг',
-                    style: TextStyle(
-                      color: grey2,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 200,
-                  color: white,
-                  child: Image(
-                    image: NetworkImage('${inventory.image}'),
-                  ),
-                ),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Text(
-                    'Нэмэлт зураг',
-                    style: TextStyle(
-                      color: grey2,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                inventory.detailImages != null
-                    ? Container(
-                        height: 200,
-                        child: ListView(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          children: inventory.detailImages!
-                              .map(
-                                (e) => Container(
-                                  margin: const EdgeInsets.only(
-                                      left: 5, right: 5, bottom: 5),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 30),
-                                  height: 200,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: Offset(0, 3),
-                                        blurRadius: 3,
-                                        color: Colors.grey,
-                                      )
-                                    ],
-                                  ),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return ImageDialog(link: e);
-                                          });
-                                    },
-                                    child: Image(
-                                      image: NetworkImage('${e}'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      )
-                    : SizedBox(),
-                SizedBox(
-                  height: 100,
                 ),
               ],
             ),
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'SKU код',
+            secondText: '${widget.data.skuCode}',
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'Barcode',
+            secondText: '${widget.data.barCode}',
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'ERP code',
+            secondText: '${widget.data.erpCode}',
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'Нэр /Монгол хэл/',
+            secondText: '${widget.data.nameMon}',
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'Нэр /Англи хэл/',
+            secondText: '${widget.data.nameEng}',
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'Падаанд гарах нэр',
+            secondText: '${widget.data.nameBill}',
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'Вебд гарах нэр',
+            secondText: '${widget.data.nameWeb}',
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'Апп-д гарах нэр:',
+            secondText: '${widget.data.nameApp}',
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Text(
+              'Гарал үүсэл',
+              style: TextStyle(
+                color: grey2,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'Брэнд',
+            secondText: '${widget.data.brand?.name}',
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'Нийлүүлэгч',
+            secondText: '${widget.data.supplier?.name}',
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'Үйлдвэрлэгч',
+            secondText: '${widget.data.manufacturer?.name}',
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'Үйлдвэрлэгч улс',
+            secondText: '${widget.data.originCountry}',
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'Импортлогч улс',
+            secondText: '${widget.data.importerCountry}',
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'Дистрибютор',
+            secondText: '${widget.data.distributor?.name}',
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'Нэр төрөл',
+            secondText: '${widget.data.itemType?.name}',
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'Ангилал',
+            secondText: '${widget.data.classification?.name}',
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'Дэд ангилал',
+            secondText: '${widget.data.subClassification?.name}',
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'Категори',
+            secondText: '${widget.data.category?.name}',
+          ),
+          FieldCard(
+            marginHorizontal: 15,
+            marginVertical: 10,
+            color: white,
+            secondTextColor: grey2,
+            labelTextColor: grey2,
+            labelText: 'Таг',
+            secondText: '${widget.data.tag?.text}',
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Text(
+              'Тайлбар',
+              style: TextStyle(
+                color: grey2,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: white,
+            padding: const EdgeInsets.all(15),
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: grey2.withOpacity(0.3),
+                ),
+              ),
+              child: Text('${widget.data.description}'),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Text(
+              'Нүүрэнд гарах зураг',
+              style: TextStyle(
+                color: grey2,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: 200,
+            color: white,
+            child: Image(
+              image: NetworkImage('${widget.data.image}'),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Text(
+              'Нэмэлт зураг',
+              style: TextStyle(
+                color: grey2,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          widget.data.detailImages != null
+              ? Container(
+                  height: 200,
+                  child: ListView(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    children: widget.data.detailImages!
+                        .map(
+                          (e) => Container(
+                            margin: const EdgeInsets.only(
+                                left: 5, right: 5, bottom: 5),
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            height: 200,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: white,
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(0, 3),
+                                  blurRadius: 3,
+                                  color: Colors.grey,
+                                )
+                              ],
+                            ),
+                            child: GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return ImageDialog(link: e);
+                                    });
+                              },
+                              child: Image(
+                                image: NetworkImage('${e}'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                )
+              : SizedBox(),
+          SizedBox(
+            height: 100,
+          ),
+        ],
+      ),
     );
   }
 }

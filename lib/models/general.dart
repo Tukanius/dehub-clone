@@ -8,6 +8,7 @@ import 'package:dehub/models/delivery_note_status.dart';
 import 'package:dehub/models/distribution_areas.dart';
 import 'package:dehub/models/equity_types.dart';
 import 'package:dehub/models/invoice_over_due_status.dart';
+import 'package:dehub/models/order_status.dart';
 import 'package:dehub/models/payment_term_conditions.dart';
 import 'package:dehub/models/payment_term_config_types.dart';
 import 'package:dehub/models/permissions.dart';
@@ -120,8 +121,10 @@ class General {
   List<RequestStatus>? scfRequestStatus;
   List<RepaymentOverDueStatus>? repaymentOverDueStatus;
   List<RepaymentStatus>? repaymentStatus;
+  List<OrderStatus>? orderStatus;
 
   General({
+    this.orderStatus,
     this.repaymentStatus,
     this.repaymentOverDueStatus,
     this.scfRequestStatus,

@@ -1,5 +1,7 @@
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -10,18 +12,14 @@ import 'package:provider/provider.dart';
 
 class SalesOrderCard extends StatefulWidget {
   final Function()? onClick;
-  final bool isReceiver;
-  final Order? data;
+  final Order data;
   final int index;
   final bool startAnimation;
-  final String type;
   const SalesOrderCard({
     Key? key,
-    required this.type,
     required this.startAnimation,
     required this.index,
-    required this.isReceiver,
-    this.data,
+    required this.data,
     this.onClick,
   }) : super(key: key);
 
@@ -31,40 +29,16 @@ class SalesOrderCard extends StatefulWidget {
 
 class _SalesOrderCardState extends State<SalesOrderCard> {
   User user = User();
+  General general = General();
+
   orderStatus() {
-    switch (widget.data?.orderStatus) {
-      case "DRAFT":
-        return "Түр төлөв";
-      case "REGISTERED":
-        return "Бүртгэсэн";
-      case "REVIEW_REJECTED":
-        return "Хяналтаас татгалзсан";
-      case "REVIEWED":
-        return "Хянаад илгээсэн";
-      case "CANCELED":
-        return "Цуцалсан";
-      case "APPROVED":
-        return "Баталсан";
-      case "AUTHORIZED":
-        return "Баталгаажсан";
-      case "REJECTED":
-        return "Татгалзсан";
-      case "AUTO_CANCELED":
-        return "Авто цуцлагдсан";
-      case "PREPARING":
-        return "Бэлтгэж байна";
-      case "DELIVERING":
-        return "Хүргэж байна";
-      case "DELIVERED":
-        return "Хүргэсэн";
-      case "CLOSED":
-        return "Дууссан";
-      default:
-    }
+    final res = general.orderStatus!
+        .firstWhere((element) => element.code == widget.data.orderStatus);
+    return res;
   }
 
   paymentTerm() {
-    switch (widget.data?.paymentTerm?.condition) {
+    switch (widget.data.paymentTerm?.condition) {
       case "COD":
         return "Бэлэн төлөх нөхцөл";
       case "INV_CONFIG":
@@ -77,11 +51,12 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
 
   @override
   Widget build(BuildContext context) {
+    general = Provider.of<GeneralProvider>(context, listen: true).orderGeneral;
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
     return GestureDetector(
       onTap: widget.onClick,
       child: AnimatedContainer(
-        duration: Duration(milliseconds: 300 + (widget.index * 100)),
+        duration: Duration(milliseconds: 300 + (widget.index * 200)),
         transform: Matrix4.translationValues(
             widget.startAnimation ? 0 : MediaQuery.of(context).size.width,
             0,
@@ -97,8 +72,8 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
               children: [
                 Row(
                   children: [
-                    widget.data?.respondedUser?.avatar != null &&
-                            widget.data?.respondedUser?.avatar != ''
+                    widget.data.respondedUser?.avatar != null &&
+                            widget.data.respondedUser?.avatar != ''
                         ? Container(
                             height: 24,
                             width: 24,
@@ -107,7 +82,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                               color: grey,
                               image: DecorationImage(
                                 image: NetworkImage(
-                                  '${widget.data?.respondedUser?.avatar}',
+                                  '${widget.data.respondedUser?.avatar}',
                                   scale: 1,
                                 ),
                               ),
@@ -127,16 +102,19 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                     SizedBox(
                       width: 5,
                     ),
-                    widget.isReceiver == true
+                    widget.data.type == "PURCHASE" &&
+                                user.currentBusiness?.type == "BUYER" ||
+                            widget.data.type == "SALES" &&
+                                user.currentBusiness?.type == "SUPPLIER"
                         ? Text(
-                            '${widget.data?.receiverBusiness?.partner?.businessName}',
+                            '${widget.data.receiverBusiness?.partner?.businessName}',
                             style: TextStyle(
                               color: buttonColor,
                               fontWeight: FontWeight.bold,
                             ),
                           )
                         : Text(
-                            '${widget.data?.senderBusiness?.partner?.businessName}',
+                            '${widget.data.senderBusiness?.partner?.businessName}',
                             style: TextStyle(
                               color: buttonColor,
                               fontWeight: FontWeight.bold,
@@ -154,16 +132,16 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                     SizedBox(
                       width: 5,
                     ),
-                    widget.type == "PURCHASE"
+                    widget.data.purchaseCode != null
                         ? Text(
-                            '${widget.data?.purchaseCode}',
+                            '${widget.data.purchaseCode}',
                             style: TextStyle(
                               color: grey2,
                               fontWeight: FontWeight.w500,
                             ),
                           )
                         : Text(
-                            '${widget.data?.salesCode}',
+                            '${widget.data.salesCode}',
                             style: TextStyle(
                               color: grey2,
                               fontWeight: FontWeight.w500,
@@ -178,38 +156,65 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
                   children: [
                     Text(
-                      'Статус: ',
+                      'Статус:  ',
                       style: TextStyle(
                         color: depBrown,
                         fontWeight: FontWeight.w500,
                         fontSize: 12,
                       ),
                     ),
-                    Text(
-                      orderStatus(),
-                      style: TextStyle(
-                        color: grey2,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 3),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Color(int.parse(
+                                    orderStatus().color.substring(1, 7),
+                                    radix: 16) +
+                                0xff000000)
+                            .withOpacity(0.2),
                       ),
+                      child: widget.data.type == "PURCHASE" &&
+                                  user.currentBusiness?.type == "BUYER" ||
+                              widget.data.type == "SALES" &&
+                                  user.currentBusiness?.type == "SUPPLIER"
+                          ? Text(
+                              orderStatus().sentName.toString(),
+                              style: TextStyle(
+                                color: Color(int.parse(
+                                        orderStatus().color.substring(1, 7),
+                                        radix: 16) +
+                                    0xff000000),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            )
+                          : Text(
+                              orderStatus().receivedName.toString(),
+                              style: TextStyle(
+                                color: Color(int.parse(
+                                        orderStatus().color.substring(1, 7),
+                                        radix: 16) +
+                                    0xff000000),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
                     )
                   ],
                 ),
-                Row(
-                  children: [
-                    Text(
-                      '${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now())}',
-                      style: TextStyle(
-                        color: grey2,
-                        fontSize: 12,
-                      ),
-                    )
-                  ],
-                )
+                Text(
+                  '${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now())}',
+                  style: TextStyle(
+                    color: grey2,
+                    fontSize: 12,
+                  ),
+                ),
               ],
             ),
             SizedBox(
@@ -244,9 +249,9 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                 Row(
                   children: [
                     Text(
-                      'Төлбөр:',
+                      'Хүргэх: ',
                       style: TextStyle(
-                        color: depBrown,
+                        color: grey2,
                         fontWeight: FontWeight.w500,
                         fontSize: 12,
                       ),
@@ -254,20 +259,12 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                     SizedBox(
                       width: 5,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 3),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        color: orange.withOpacity(0.15),
-                      ),
-                      child: Text(
-                        'Хүлээж буй',
-                        style: TextStyle(
-                          color: orange,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
-                        ),
+                    Text(
+                      '${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.parse(widget.data.deliveryDate.toString()))}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: grey2,
+                        fontSize: 12,
                       ),
                     )
                   ],
@@ -291,7 +288,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                       ),
                     ),
                     Text(
-                      '${Utils().formatCurrency(widget.data?.amountToPay.toString())}₮',
+                      '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
                       style: TextStyle(
                         color: orderColor,
                         fontWeight: FontWeight.w500,
@@ -314,67 +311,9 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                       width: 5,
                     ),
                     Text(
-                      '${Utils().formatCurrency(widget.data?.amountToPay.toString())}₮',
+                      '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
                       style: TextStyle(
                         color: orderColor,
-                        fontSize: 12,
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'Хүргэлт: ',
-                      style: TextStyle(
-                        color: depBrown,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 2),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: grey),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        'Түр төлөв',
-                        style: TextStyle(
-                          color: grey2,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Хүргэх: ',
-                      style: TextStyle(
-                        color: grey2,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      '${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.parse(widget.data!.deliveryDate.toString()))}',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: grey2,
                         fontSize: 12,
                       ),
                     )

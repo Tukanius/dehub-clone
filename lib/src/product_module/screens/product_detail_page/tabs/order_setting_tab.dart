@@ -1,17 +1,15 @@
-import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/custom_switch/custom_switch.dart';
 import 'package:dehub/models/inventory_goods.dart';
-// import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 
 class OrderSettingTab extends StatefulWidget {
-  final String id;
+  final InventoryGoods data;
   const OrderSettingTab({
     Key? key,
-    required this.id,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -35,8 +33,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
     setState(() {
       isLoading = true;
     });
-    inventory = await InventoryApi().goodsGet(widget.id);
-    itemUnits = inventory.itemUnits!.firstWhere(
+    itemUnits = widget.data.itemUnits!.firstWhere(
       (element) => element.isBase == true,
     );
     setState(() {

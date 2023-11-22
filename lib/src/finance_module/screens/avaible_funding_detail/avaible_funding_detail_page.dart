@@ -1,7 +1,7 @@
 import 'package:dehub/src/finance_module/screens/avaible_funding_page/request_approval_page.dart';
-import 'package:dehub/src/finance_module/screens/avaible_funding_page/tabs/invoice.dart';
-import 'package:dehub/src/finance_module/screens/avaible_funding_page/tabs/limit_tab.dart';
-import 'package:dehub/src/finance_module/screens/avaible_funding_page/tabs/request_tab.dart';
+import 'package:dehub/src/finance_module/screens/avaible_funding_detail/tabs/invoice.dart';
+import 'package:dehub/src/finance_module/screens/avaible_funding_detail/tabs/limit_tab.dart';
+import 'package:dehub/src/finance_module/screens/avaible_funding_detail/tabs/request_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -196,6 +196,15 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                       onTap: () {
                         Navigator.of(context)
                             .pushNamed(RequestApprovalPage.routeName);
+                        // Navigator.of(context).pushNamed(
+                        //   PinCheckScreen.routeName,
+                        //   arguments: PinCheckScreenArguments(
+                        //       onSubmit: () {},
+                        //       color: financingColor,
+                        //       labelText: "SCF Хүсэлт батлах",
+                        //       description:
+                        //           'Та SCF хүсэлт батлах гэж байна. Та мэдээллээ сайтар шалгана уу.'),
+                        // );
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(

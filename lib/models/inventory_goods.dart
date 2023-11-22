@@ -100,8 +100,12 @@ class InventoryGoods {
   List<InventoryGoods>? itemUnits;
   String? profileName;
   bool? isBase;
+  double? availableQuantity;
+  InventoryGoods? itemUnit;
 
   InventoryGoods({
+    this.itemUnit,
+    this.availableQuantity,
     this.profileName,
     this.isBase,
     this.optionValues,

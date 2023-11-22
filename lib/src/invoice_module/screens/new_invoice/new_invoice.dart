@@ -6,6 +6,7 @@ import 'package:dehub/components/invoice_product_card/add_product_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/partner.dart';
+import 'package:dehub/providers/checkout-provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/add_product/add_product.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/add_row/invoice_add_row.dart';
@@ -34,41 +35,39 @@ class NewInvoice extends StatefulWidget {
 
 class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
+  //Controllers
+  ListenController productController = ListenController();
   ListenController listenController = ListenController();
   ListenController partnerListenController = ListenController();
-  ListenController goodsListenController = ListenController();
   ListenController sectorListenController = ListenController();
-  TextEditingController textController = TextEditingController();
   TextEditingController discountController = TextEditingController();
   ListenController addRowController = ListenController();
-  List<Invoice> additionalRowList = [];
+  //
   Invoice additionalRow = Invoice();
   Invoice invoice = Invoice();
   Invoice createInvoice = Invoice();
   Invoice partnerInvoice = Invoice();
   Invoice sectorInvoice = Invoice();
-  Invoice goodsInvoice = Invoice();
-  bool isLoading = false;
-  List<Invoice> inventory = [];
-  List<Invoice> data = [];
-  bool isSubmit = false;
   Partner user = Partner();
+
+  bool isLoading = false;
+  bool isSubmit = false;
   String dropdownValue = "Сонгох";
-  double amount = 0;
-  double vatAmount = 0;
-  double taxAmount = 0;
-  double totalAmount = 0;
-  double finalAmount = 0;
-  double additionalRowAmount = 0;
+  //amounts
   double shippingAmount = 0;
   double discountAmount = 0;
+  // key
   var productKey = GlobalKey();
   var sectorKey = GlobalKey();
   var invoiceKey = GlobalKey();
+  //validate
   bool invoiceValidate = false;
   bool sectorValidate = false;
   bool productValidate = false;
-  Map<String, List<Invoice>> duplicatedItems = {};
+  //list
+  List<Invoice> product = [];
+  List<Invoice> additionalRowList = [];
+  List<Invoice> data = [];
 
   List<String> list = <String>[
     "Хувиар",
@@ -76,203 +75,43 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
   ];
 
   @override
-  afterFirstLayout(BuildContext context) {}
-
-  addCard(Invoice product) async {
-    Invoice? duplicate;
-    try {
-      duplicate = inventory.firstWhere((element) => element.id == product.id);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-    if (duplicate != null) {
-      product.quantity = product.quantity! + duplicate.quantity!;
-    }
-
-    try {
-      inventory.removeWhere((element) => element.id == duplicate!.id);
-      print(inventory);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-    setState(() {
-      inventory.add(product);
-      data.add(product);
-    });
-  }
-
-  getTotalAmounts(List<Invoice> list) {
-    setState(() {
-      double eachAmount = list.fold(
-          0, (previousValue, element) => previousValue + element.totalAmount!);
-      amount = eachAmount.roundToDouble();
-      double vat = list
-          .map((e) => e.quantity! * e.vatAmount!)
-          .reduce((value, element) => value + element);
-      vatAmount = vat.roundToDouble();
-      double tax = list.fold(
-          0, (previousValue, element) => previousValue + element.taxAmount!);
-      taxAmount = tax.roundToDouble();
-      totalAmount = amount + vatAmount + taxAmount + additionalRowAmount;
-      finalAmount = totalAmount;
-      productValidate = false;
-    });
-  }
-
-  @override
-  void initState() {
-    listenController.addListener(() {
-      setState(() {
-        invoice = listenController.invoice!;
-        invoiceValidate = false;
-      });
-    });
-    goodsListenController.addListener(() {
-      goodsInvoice = goodsListenController.goodsInvoice!;
-      addCard(goodsInvoice);
-      getTotalAmounts(inventory);
-    });
-    partnerListenController.addListener(() {
-      setState(() {
-        partnerInvoice = partnerListenController.partnerInvoice!;
-      });
-    });
-    sectorListenController.addListener(() {
-      setState(() {
-        sectorInvoice = sectorListenController.sectorInvoice!;
-        sectorValidate = false;
-      });
-    });
-    addRowController.addListener(() {
-      setState(() {
-        additionalRow = addRowController.invoiceAdditionalRow!;
-        additionalRowList.add(additionalRow);
-        double addrow = additionalRowList.fold(0,
-            (previousValue, element) => previousValue + element.totalAmount!);
-        additionalRowAmount = addrow.roundToDouble();
-        finalAmount = amount + vatAmount + taxAmount + additionalRowAmount;
-      });
-    });
-    super.initState();
-  }
-
-  validateCheck(bool value) {
-    if (data.isEmpty) {
-      Scrollable.ensureVisible(productKey.currentContext!,
-          duration: Duration(milliseconds: 300), curve: Curves.ease);
-      setState(() {
-        productValidate = true;
-      });
-    }
-    if (sectorInvoice.name == null) {
-      Scrollable.ensureVisible(sectorKey.currentContext!,
-          duration: Duration(milliseconds: 300), curve: Curves.ease);
-      setState(() {
-        sectorValidate = true;
-      });
-    }
-    if (invoice.partner == null) {
-      Scrollable.ensureVisible(invoiceKey.currentContext!,
-          duration: Duration(milliseconds: 300), curve: Curves.ease);
-      setState(() {
-        invoiceValidate = true;
-      });
-    }
-    if (productValidate == false &&
-        sectorValidate == false &&
-        invoiceValidate == false) {
-      onSubmit(value);
-    }
-  }
-
-  onSubmit(bool value) async {
-    setState(() {
-      isSubmit = true;
-    });
-    try {
-      if (fbKey.currentState!.saveAndValidate()) {
-        for (var i = 0; i < inventory.length; i++) {
-          data[i] = Invoice();
-          data[i].variantId = inventory[i].id;
-          data[i].quantity = inventory[i].quantity;
-        }
-        inventory.removeWhere((element) => element.quantity == 0);
-        data.removeWhere((element) => element.quantity == 0);
-        createInvoice.senderBranchId = sectorInvoice.id;
-        createInvoice.receiverBranchId = partnerInvoice.id;
-        createInvoice.receiverBusinessId = invoice.id;
-        createInvoice.send = value;
-        createInvoice.lines = data;
-        createInvoice.additionalLines = additionalRowList;
-        createInvoice.description = textController.text;
-        await InvoiceApi().createInvoice(createInvoice);
-        showCustomDialog(
-          context,
-          value == true
-              ? 'Нэхэмжлэл амжилттай илгээгдлээ'
-              : "Нэхэмжэл амжилттай хадгалагдлаа",
-          true,
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        );
-      }
-      setState(() {
-        isSubmit = false;
-      });
-    } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
-    }
-  }
-
-  updateTotalAmount(String value, String type) {
-    if (type == "Хувиар") {
-      setState(() {
-        discountAmount =
-            totalAmount / 100 * (double.tryParse(value.toString()) ?? 0);
-        print(discountAmount);
-      });
-    } else {
-      setState(() {
-        discountAmount = double.tryParse(value.toString()) ?? 0;
-      });
-    }
-    setState(() {
-      finalAmount = totalAmount;
-      finalAmount += (shippingAmount - discountAmount) + additionalRowAmount;
-    });
+  afterFirstLayout(BuildContext context) {
+    Provider.of<CheckOutProvider>(context, listen: false).clearCart();
   }
 
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<CheckOutProvider>(context, listen: true);
+    product = Provider.of<CheckOutProvider>(context, listen: true).invoice;
     user = Provider.of<UserProvider>(context, listen: true).partnerUser;
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: AppBar(
-        backgroundColor: invoiceColor,
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: white,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: backgroundColor,
+        appBar: AppBar(
+          backgroundColor: invoiceColor,
+          elevation: 0,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: white,
+            ),
+          ),
+          title: Text(
+            'Шинэ нэхэмжлэл',
+            style: TextStyle(
+              color: white,
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
-        title: Text(
-          'Шинэ нэхэмжлэл',
-          style: TextStyle(
-            color: white,
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
-      body: SafeArea(
-        child: isLoading == false
+        body: isLoading == false
             ? SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 child: Container(
@@ -469,9 +308,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                             Navigator.of(context).pushNamed(
                               AddProduct.routeName,
                               arguments: AddProductArguments(
-                                data: inventory,
                                 businessId: invoice.id!,
-                                goodsListenController: goodsListenController,
                               ),
                             );
                           } else {
@@ -492,10 +329,6 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                           key: productKey,
                           decoration: BoxDecoration(
                             color: white,
-                            border: Border.all(
-                                color:
-                                    productValidate == true ? red : transparent,
-                                width: productValidate == true ? 1 : 0),
                           ),
                           padding: const EdgeInsets.all(15),
                           child: Row(
@@ -506,9 +339,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                   Container(
                                     child: Icon(
                                       Icons.download_for_offline_outlined,
-                                      color: productValidate == true
-                                          ? red
-                                          : invoiceColor,
+                                      color: invoiceColor,
                                     ),
                                   ),
                                   SizedBox(
@@ -516,43 +347,35 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                   ),
                                   Text(
                                     'Бараа нэмэх',
-                                    style: TextStyle(
-                                        color: productValidate == true
-                                            ? red
-                                            : invoiceColor),
+                                    style: TextStyle(color: invoiceColor),
                                   ),
                                 ],
                               ),
                               Icon(
                                 Icons.arrow_forward_ios,
                                 size: 14,
-                                color: productValidate == true ? red : black,
+                                color: black,
                               ),
                             ],
                           ),
                         ),
                       ),
                       Column(
-                        children: inventory
+                        children: product
                             .map(
                               (item) => AddProductCard(
+                                listenController: productController,
                                 readOnly: false,
                                 closeClick: () {
                                   setState(() {
-                                    inventory.removeWhere(
-                                        (element) => element.id == item.id);
-                                    data.removeWhere(
-                                        (element) => element.id == item.id);
+                                    Provider.of<CheckOutProvider>(context,
+                                            listen: false)
+                                        .removeCart(item);
                                   });
-                                  if (data.isEmpty) {
-                                    setState(() {
-                                      productValidate = true;
-                                    });
-                                  }
                                 },
                                 data: item,
                                 onClick: () {
-                                  print(item.toJson());
+                                  FocusScope.of(context).unfocus();
                                 },
                               ),
                             )
@@ -632,10 +455,16 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                             Expanded(
                               child: DropdownButtonFormField(
                                 onChanged: (value) {
+                                  dropdownValue = value.toString();
                                   setState(() {
-                                    dropdownValue = "${value}";
-                                    updateTotalAmount(
-                                        discountController.text, dropdownValue);
+                                    source.type = "${value}";
+                                    Provider.of<CheckOutProvider>(context,
+                                            listen: false)
+                                        .totalAmountInvoice(
+                                            source.type,
+                                            product,
+                                            shippingAmount,
+                                            discountAmount);
                                   });
                                   ;
                                 },
@@ -700,9 +529,13 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                         textColor: invoiceColor,
                         controller: discountController,
                         textAlign: TextAlign.end,
-                        readOnly: dropdownValue == "Сонгох",
+                        readOnly: source.type == "Сонгох",
                         onChanged: (value) {
-                          updateTotalAmount(value, dropdownValue);
+                          discountAmount =
+                              double.tryParse(discountController.text) ?? 0;
+                          Provider.of<CheckOutProvider>(context, listen: false)
+                              .totalAmountInvoice(source.type, product,
+                                  shippingAmount, discountAmount);
                         },
                         name: 'discountAmount',
                         inputType: TextInputType.number,
@@ -716,13 +549,13 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                             ),
                           ),
                           isDense: true,
-                          suffixIcon: dropdownValue == 'Хувиар'
+                          suffixIcon: source.type == 'Хувиар'
                               ? Icon(
                                   Icons.percent,
                                   size: 15,
                                   color: invoiceColor,
                                 )
-                              : dropdownValue == 'Дүнгээр'
+                              : source.type == 'Дүнгээр'
                                   ? Container(
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 15),
@@ -752,8 +585,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                         marginVertical: 15,
                         arrowColor: black,
                         labelText: 'Тооцсон НӨАТ',
-                        secondText: inventory.isNotEmpty
-                            ? "${Utils().formatCurrency(vatAmount.toString())}₮"
+                        secondText: product.isNotEmpty
+                            ? "${Utils().formatCurrency(source.totalVatAmount.toString())}₮"
                             : "0₮",
                         secondTextColor: invoiceColor,
                         color: white,
@@ -761,10 +594,20 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       FieldCard(
                         marginHorizontal: 15,
                         marginVertical: 15,
+                        color: white,
+                        labelText: "Нэмэлтээр",
+                        secondText:
+                            "${Utils().formatCurrency(source.additionalRowAmount.toString())}₮",
+                        secondTextColor: orderColor,
+                        arrowColor: orderColor,
+                      ),
+                      FieldCard(
+                        marginHorizontal: 15,
+                        marginVertical: 15,
                         arrowColor: black,
                         labelText: 'Тооцсон НХАТ',
-                        secondText: inventory.isNotEmpty
-                            ? "${Utils().formatCurrency(taxAmount.toString())}₮"
+                        secondText: product.isNotEmpty
+                            ? "${Utils().formatCurrency(source.totalTaxAmount.toString())}₮"
                             : "0₮",
                         secondTextColor: invoiceColor,
                         color: white,
@@ -775,8 +618,9 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                             shippingAmount =
                                 double.tryParse(value.toString()) ?? 0;
                           });
-                          updateTotalAmount(
-                              discountController.text, dropdownValue);
+                          Provider.of<CheckOutProvider>(context, listen: false)
+                              .totalAmountInvoice(source.type, product,
+                                  shippingAmount, discountAmount);
                         },
                         textColor: orderColor,
                         name: "shippingAmount",
@@ -817,8 +661,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                         marginVertical: 15,
                         arrowColor: black,
                         labelText: 'Тооцсон НХАТ',
-                        secondText: inventory.isNotEmpty
-                            ? "${Utils().formatCurrency(additionalRowAmount.toString())}₮"
+                        secondText: product.isNotEmpty
+                            ? "${Utils().formatCurrency(source.additionalRowAmount.toString())}₮"
                             : "0₮",
                         secondTextColor: invoiceColor,
                         color: white,
@@ -828,8 +672,9 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                         marginVertical: 15,
                         arrowColor: black,
                         labelText: 'Нийт Төлбөр',
-                        secondText:
-                            inventory.isNotEmpty ? "${finalAmount}" : "0₮",
+                        secondText: product.isNotEmpty
+                            ? "${Utils().formatCurrency(source.finalAmount.toString())}₮"
+                            : "0₮",
                         secondTextColor: invoiceColor,
                         color: white,
                         fontWeight: FontWeight.w600,
@@ -852,7 +697,6 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                         child: FormBuilder(
                           key: fbKey,
                           child: FormTextField(
-                            controller: textController,
                             textAlign: TextAlign.left,
                             name: 'description',
                             maxLines: 5,
@@ -905,9 +749,9 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                       Navigator.of(context).pushNamed(
                                         Harah.routeName,
                                         arguments: HarahArguments(
-                                          totalAmount: totalAmount,
+                                          totalAmount: source.totalAmount,
                                           invoice: invoice,
-                                          data: inventory,
+                                          data: product,
                                         ),
                                       );
                                     },
@@ -1008,5 +852,105 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
               ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    productController.addListener(() {
+      setState(() {
+        product = product;
+      });
+      Provider.of<CheckOutProvider>(context, listen: false).totalAmountInvoice(
+          dropdownValue, product, shippingAmount, discountAmount);
+    });
+    listenController.addListener(() {
+      setState(() {
+        invoice = listenController.invoice!;
+        invoiceValidate = false;
+      });
+    });
+    partnerListenController.addListener(() {
+      setState(() {
+        partnerInvoice = partnerListenController.partnerInvoice!;
+      });
+    });
+    sectorListenController.addListener(() {
+      setState(() {
+        sectorInvoice = sectorListenController.sectorInvoice!;
+        sectorValidate = false;
+      });
+    });
+    addRowController.addListener(() {
+      setState(() {
+        additionalRow = addRowController.invoiceAdditionalRow!;
+        additionalRowList.add(additionalRow);
+        Provider.of<CheckOutProvider>(context, listen: false).additionalRow =
+            additionalRowList;
+        Provider.of<CheckOutProvider>(context, listen: false)
+            .totalAmountInvoice(
+                dropdownValue, product, shippingAmount, discountAmount);
+      });
+    });
+    super.initState();
+  }
+
+  validateCheck(bool value) {
+    if (sectorInvoice.name == null) {
+      Scrollable.ensureVisible(sectorKey.currentContext!,
+          duration: Duration(milliseconds: 300), curve: Curves.ease);
+      setState(() {
+        sectorValidate = true;
+      });
+    }
+    if (invoice.partner == null) {
+      Scrollable.ensureVisible(invoiceKey.currentContext!,
+          duration: Duration(milliseconds: 300), curve: Curves.ease);
+      setState(() {
+        invoiceValidate = true;
+      });
+    }
+    if (sectorValidate == false && invoiceValidate == false) {
+      onSubmit(value);
+    }
+  }
+
+  onSubmit(bool value) async {
+    setState(() {
+      isSubmit = true;
+    });
+    try {
+      if (fbKey.currentState!.saveAndValidate()) {
+        for (var i = 0; i < product.length; i++) {
+          data.add(
+              Invoice(variantId: product[i].id, quantity: product[i].quantity));
+        }
+        product.removeWhere((element) => element.quantity == 0);
+        data.removeWhere((element) => element.quantity == 0);
+        createInvoice.senderBranchId = sectorInvoice.id;
+        createInvoice.receiverBranchId = partnerInvoice.id;
+        createInvoice.receiverBusinessId = invoice.id;
+        createInvoice.send = value;
+        createInvoice.lines = data;
+        createInvoice.additionalLines = additionalRowList;
+        await InvoiceApi().createInvoice(createInvoice);
+        showCustomDialog(
+          context,
+          value == true
+              ? 'Нэхэмжлэл амжилттай илгээгдлээ'
+              : "Нэхэмжэл амжилттай хадгалагдлаа",
+          true,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        );
+      }
+      setState(() {
+        isSubmit = false;
+      });
+    } catch (e) {
+      setState(() {
+        isSubmit = false;
+      });
+    }
   }
 }

@@ -10,8 +10,10 @@ class CustomButton extends StatefulWidget {
   final Container? container;
   final LinearGradient? gradient;
   final bool? isLoading;
+  final Color? borderColor;
   CustomButton({
     this.isLoading,
+    this.borderColor,
     this.gradient,
     this.container,
     this.isGradient,
@@ -49,10 +51,11 @@ class _CustomButtonState extends State<CustomButton> {
             widget.onClick();
           },
           child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 15),
+            // margin: const EdgeInsets.symmetric(horizontal: 15),
             height: 48,
-            width: MediaQuery.of(context).size.width,
+            width: 360,
             decoration: BoxDecoration(
+              border: Border.all(color: widget.borderColor ?? transparent),
               borderRadius: BorderRadius.circular(5),
               color: widget.isGradient == false || widget.isGradient == null
                   ? widget.labelColor

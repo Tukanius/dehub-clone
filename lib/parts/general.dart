@@ -29,6 +29,11 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => RequestStatus.fromJson(e))
             .toList()
         : null,
+    orderStatus: json['orderStatus'] != null
+        ? (json['orderStatus'] as List)
+            .map((e) => OrderStatus.fromJson(e))
+            .toList()
+        : null,
     // networks: json['networks'] != null
     //     ? (json['networks'] as List).map((e) => Networks.fromJson(e)).toList()
     //     : null,
@@ -301,6 +306,7 @@ Map<String, dynamic> _$GeneralToJson(General instance) {
   if (instance.bankNames != null) json['bankNames'] = instance.bankNames;
   if (instance.pullSheetStatus != null)
     json['pullSheetStatus'] = instance.pullSheetStatus;
+  if (instance.orderStatus != null) json['orderStatus'] = instance.orderStatus;
   if (instance.deliveryNoteStatus != null)
     json['deliveryNoteStatus'] = instance.deliveryNoteStatus;
   if (instance.distributionAreas != null)

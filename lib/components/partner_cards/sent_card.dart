@@ -5,7 +5,11 @@ import 'package:flutter/material.dart';
 class SentCard extends StatefulWidget {
   final Function()? onClick;
   final Invitation? data;
+  final int index;
+  final bool startAnimation;
   const SentCard({
+    required this.index,
+    required this.startAnimation,
     this.data,
     Key? key,
     this.onClick,
@@ -48,7 +52,13 @@ class _SentCardState extends State<SentCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: widget.onClick,
-      child: Container(
+      child: AnimatedContainer(
+        curve: Curves.ease,
+        duration: Duration(milliseconds: 300 + (widget.index * 200)),
+        transform: Matrix4.translationValues(
+            widget.startAnimation ? 0 : -MediaQuery.of(context).size.width,
+            0,
+            0),
         margin: const EdgeInsets.symmetric(vertical: 2),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),

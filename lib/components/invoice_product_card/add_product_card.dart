@@ -1,22 +1,31 @@
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/invoice.dart';
+import 'package:dehub/providers/checkout-provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 
 class AddProductCard extends StatefulWidget {
   final Function()? closeClick;
   final Function()? onClick;
   final bool? readOnly;
-  final Invoice? data;
+  final ListenController? listenController;
+  final Invoice data;
+  final bool? isPackage;
+  final List<Invoice>? package;
   const AddProductCard({
+    this.listenController,
     this.readOnly,
+    this.package,
+    this.isPackage,
     this.closeClick,
     this.onClick,
     Key? key,
-    this.data,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -25,7 +34,6 @@ class AddProductCard extends StatefulWidget {
 
 class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
   String? discount;
-  int newValue = 0;
   bool isCheck = false;
   TextEditingController quantityController = TextEditingController();
   bool isLoading = true;
@@ -33,8 +41,8 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
   @override
   afterFirstLayout(BuildContext context) {
     setState(() {
-      if (widget.data?.quantity != null) {
-        quantityController.text = widget.data!.quantity.toString();
+      if (widget.data.quantity != null) {
+        quantityController.text = widget.data.quantity.toString();
       } else {
         quantityController.text = "0";
       }
@@ -43,29 +51,79 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
   }
 
   decrease() {
-    setState(() {
-      if (int.parse(quantityController.text) > 0) {
+    if (widget.data.quantity! > 0) {
+      setState(() {
+        int newValue = 0;
         int currentValue = int.tryParse(quantityController.text) ?? 0;
         newValue = currentValue - 1;
         quantityController.text = newValue.toString();
-        widget.data?.quantity = int.parse(quantityController.text.toString());
+        widget.data.quantity = int.parse(quantityController.text.toString());
+        if (widget.isPackage == true) {
+          orderCart(widget.data, widget.data.quantity!);
+        }
+        widget.listenController?.changeVariable('decrease');
+        removeCart(widget.data.quantity!);
+      });
+    }
+  }
+
+  increase() {
+    setState(() {
+      int newValue = 0;
+      int currentValue = int.tryParse(quantityController.text) ?? 0;
+      newValue = currentValue + 1;
+      quantityController.text = newValue.toString();
+      widget.data.quantity = int.parse(quantityController.text.toString());
+      if (widget.isPackage == true) {
+        orderCart(widget.data, widget.data.quantity!);
       }
+      widget.listenController?.changeVariable('increase');
     });
+  }
+
+  orderCart(Invoice product, int qty) {
+    int? index;
+    try {
+      index = widget.package?.indexWhere((item) => item.id == product.id);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    if (index! > -1) {
+      if (widget.package?[index].quantity != 0) {
+        widget.package?[index].quantity = qty;
+      } else {
+        widget.package?.removeAt(index);
+      }
+    } else {
+      setState(() {
+        widget.package?.add(
+          product,
+        );
+      });
+    }
+  }
+
+  removeCart(int quantity) {
+    if (quantity == 0) {
+      Provider.of<CheckOutProvider>(context, listen: false)
+          .removeCart(widget.data);
+    }
+  }
+
+  @override
+  void initState() {
+    try {
+      quantityController.text = widget.data.quantity.toString();
+    } catch (e) {
+      quantityController.text = '0';
+    }
+    super.initState();
   }
 
   @override
   void dispose() {
     quantityController.dispose();
     super.dispose();
-  }
-
-  increase() {
-    setState(() {
-      int currentValue = int.tryParse(quantityController.text) ?? 0;
-      newValue = currentValue + 1;
-      quantityController.text = newValue.toString();
-      widget.data?.quantity = int.parse(quantityController.text.toString());
-    });
   }
 
   @override
@@ -76,11 +134,16 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
             onTap: widget.onClick,
             child: Container(
               margin: const EdgeInsets.only(bottom: 10),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 16,
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 2,
+                  color: widget.package?.contains(widget.data) == true
+                      ? invoiceColor
+                      : white,
+                ),
+                color: white,
               ),
-              color: white,
               child: Column(
                 children: [
                   Row(
@@ -90,9 +153,9 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
                       Container(
                         height: 56,
                         width: 56,
-                        child: widget.data?.image != null
+                        child: widget.data.image != null
                             ? Image(
-                                image: NetworkImage('${widget.data?.image}'),
+                                image: NetworkImage('${widget.data.image}'),
                                 fit: BoxFit.cover,
                               )
                             : Container(
@@ -108,16 +171,16 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            widget.data?.nameMon != null
+                            widget.data.nameMon != null
                                 ? Text(
-                                    '${widget.data?.nameMon}',
+                                    '${widget.data.nameMon}',
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16,
                                     ),
                                   )
                                 : Text(
-                                    '${widget.data?.name}',
+                                    '${widget.data.name}',
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16,
@@ -131,17 +194,17 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
                                 style: TextStyle(
                                     fontFamily: 'Montserrat', color: black),
                                 children: [
-                                  widget.data?.skuCode != null
+                                  widget.data.skuCode != null
                                       ? TextSpan(
-                                          text: '${widget.data?.skuCode} ')
+                                          text: '${widget.data.skuCode} ')
                                       : TextSpan(),
-                                  widget.data?.barCode != null
+                                  widget.data.barCode != null
                                       ? TextSpan(
-                                          text: '${widget.data?.barCode} ')
+                                          text: '${widget.data.barCode} ')
                                       : TextSpan(),
-                                  widget.data?.erpCode != null
+                                  widget.data.erpCode != null
                                       ? TextSpan(
-                                          text: '${widget.data?.erpCode} ')
+                                          text: '${widget.data.erpCode} ')
                                       : TextSpan(),
                                 ],
                               ),
@@ -209,7 +272,7 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
                                 height: 5,
                               ),
                               Text(
-                                '${Utils().formatCurrency(widget.data?.price.toString())}₮',
+                                '${Utils().formatCurrency(widget.data.price.toString())}₮',
                                 style: TextStyle(
                                   color: invoiceColor,
                                   fontWeight: FontWeight.bold,
@@ -246,18 +309,18 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
                               SizedBox(
                                 height: 5,
                               ),
-                              widget.data?.discountType == "PERCENTAGE"
+                              widget.data.discountType == "PERCENTAGE"
                                   ? Text(
-                                      '${widget.data?.discountValue?.toInt()}%',
+                                      '${widget.data.discountValue?.toInt()}%',
                                       style: TextStyle(
                                         color: invoiceColor,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15,
                                       ),
                                     )
-                                  : widget.data?.discountType == "AMOUNT"
+                                  : widget.data.discountType == "AMOUNT"
                                       ? Text(
-                                          '${widget.data?.discountValue?.toInt()}₮',
+                                          '${widget.data.discountValue?.toInt()}₮',
                                           style: TextStyle(
                                             color: invoiceColor,
                                             fontWeight: FontWeight.bold,
@@ -285,7 +348,7 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
                                   borderRadius: BorderRadius.circular(5),
                                   color: Color(0xffEBFAFA),
                                 ),
-                                child: widget.data?.discountType == "PERCENTAGE"
+                                child: widget.data.discountType == "PERCENTAGE"
                                     ? Text(
                                         'хувиар',
                                         style: TextStyle(
@@ -338,13 +401,11 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
                               readOnly: widget.readOnly!,
                               onChanged: (value) {
                                 setState(() {
-                                  if (quantityController.text != '') {
-                                    widget.data!.quantity =
-                                        int.parse(quantityController.text);
-                                  } else {
-                                    quantityController.text = '0';
-                                  }
+                                  widget.data.quantity =
+                                      int.tryParse(quantityController.text) ??
+                                          0;
                                 });
+                                widget.listenController?.changeVariable('zxcv');
                               },
                               fontSize: 18,
                               inputType: TextInputType.number,
@@ -410,9 +471,9 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
                           color: grey2,
                         ),
                       ),
-                      widget.data?.quantity != null
+                      widget.data.quantity != null
                           ? Text(
-                              '${Utils().formatCurrency((widget.data!.quantity! * widget.data!.price!).toString())} ₮',
+                              '${Utils().formatCurrency((widget.data.quantity! * widget.data.price!).toString())} ₮',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
@@ -420,7 +481,7 @@ class _AddProductCardState extends State<AddProductCard> with AfterLayoutMixin {
                               ),
                             )
                           : Text(
-                              '${Utils().formatCurrency((double.parse(quantityController.text.toString()) * widget.data!.price!).toString())} ₮',
+                              '${Utils().formatCurrency((double.parse(quantityController.text.toString()) * widget.data.price!).toString())} ₮',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,

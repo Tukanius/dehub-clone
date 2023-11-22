@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class IndexProvider extends ChangeNotifier {
   int selectedIndex = 1;
-  networkIndexChange(index) {
+  indexChange(index) {
     selectedIndex = index;
     notifyListeners();
   }

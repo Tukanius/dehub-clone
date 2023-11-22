@@ -5,6 +5,7 @@ class FieldCard extends StatefulWidget {
   final Function()? onClick;
   final double marginHorizontal;
   final double marginVertical;
+  final double? marginBottom;
   final Color? color;
   final String? labelText;
   final String? secondText;
@@ -20,6 +21,7 @@ class FieldCard extends StatefulWidget {
   final FontWeight? secondTextFontWeight;
   const FieldCard({
     Key? key,
+    this.marginBottom,
     this.secondTextFontWeight,
     this.fbKey,
     this.validate,
@@ -48,6 +50,8 @@ class _FieldCardState extends State<FieldCard> {
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
+        margin: EdgeInsets.only(
+            bottom: widget.marginBottom != null ? widget.marginBottom! : 0),
         key: widget.fbKey,
         decoration: BoxDecoration(
           color: widget.color,
@@ -77,7 +81,8 @@ class _FieldCardState extends State<FieldCard> {
               child: Row(
                 children: [
                   Expanded(
-                      child: widget.secondText != null
+                      child: widget.secondText != 'null' ||
+                              widget.secondText == null
                           ? Text(
                               '${widget.secondText}',
                               style: TextStyle(

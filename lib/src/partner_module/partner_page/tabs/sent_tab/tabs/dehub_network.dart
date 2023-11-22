@@ -20,7 +20,11 @@ class _DehubNetworkState extends State<DehubNetwork> {
             SizedBox(
               height: 15,
             ),
-            for (var i = 0; i < 10; i++) SentCard(),
+            for (var i = 0; i < 10; i++)
+              SentCard(
+                index: i,
+                startAnimation: true,
+              ),
           ],
         ),
       ),
