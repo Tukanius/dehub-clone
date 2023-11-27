@@ -34,57 +34,15 @@ class _InvoiceCardState extends State<InvoiceCard> {
   bool value = false;
 
   invoiceStatus() {
-    switch (widget.data?.invoiceStatus) {
-      case "CONFIRMED":
-        return "Баталсан";
-      case "DRAFT":
-        return "Түр Төлөв";
-      case "SENT":
-        return "Илгээсэн";
-      case "REJECTED":
-        return "Татгалзсан";
-      case "RETURNED":
-        return "Буцаасан";
-      case "CLOSED":
-        return "Хаасан";
-      default:
-    }
-  }
-
-  invoiceStatusColor() {
-    switch (widget.data?.invoiceStatus) {
-      case "CONFIRMED":
-        return Color(0xff4098F7);
-      case "DRAFT":
-        return Color(0xff727576);
-      case "SENT":
-        return Color(0xff1642F4);
-      case "REJECTED":
-        return Color(0xffFF1919);
-      case "RETURNED":
-        return Color(0xffFF19A1);
-      case "CLOSED":
-        return Color(0xff01C129);
-      case "CANCELED":
-        return Color(0xffFF19A1);
-      default:
-    }
+    final result = general.invoiceStatus!
+        .firstWhere((element) => element.code == widget.data?.invoiceStatus);
+    return result;
   }
 
   paymentStatus() {
-    switch (widget.data?.paymentStatus) {
-      case "PENDING":
-        return "Хүлээгдэж буй";
-      case "DIVIDED":
-        return "Хуваасан";
-      case "OVER_DUE":
-        return "Хугацаа хэтэрсэн";
-      case "CLOSED":
-        return "Хаасан";
-      case "PENDING":
-        return "Хүлээгдэж буй";
-      default:
-    }
+    final result = general.invoicePaymentStatus!
+        .firstWhere((element) => element.code == widget.data?.paymentStatus);
+    return result;
   }
 
   fillColor() {
@@ -139,7 +97,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).partnerUser;
     general =
-        Provider.of<GeneralProvider>(context, listen: false).inventoryGeneral;
+        Provider.of<GeneralProvider>(context, listen: false).invoiceGeneral;
     return GestureDetector(
       onTap: widget.onClick,
       child: AnimatedContainer(
@@ -218,14 +176,22 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                 vertical: 2, horizontal: 5),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
-                              border: Border.all(color: invoiceStatusColor()),
+                              border: Border.all(
+                                color: Color(int.parse(
+                                        invoiceStatus().color.substring(1, 7),
+                                        radix: 16) +
+                                    0xff000000),
+                              ),
                             ),
                             child: Text(
-                              invoiceStatus(),
+                              invoiceStatus().name,
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
-                                color: invoiceStatusColor(),
+                                color: Color(int.parse(
+                                        invoiceStatus().color.substring(1, 7),
+                                        radix: 16) +
+                                    0xff000000),
                               ),
                             ),
                           ),
@@ -317,7 +283,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                           ),
                         ),
                         child: Text(
-                          paymentStatus(),
+                          paymentStatus().name,
                           style: TextStyle(
                             fontSize: 12,
                             color: textColor(),

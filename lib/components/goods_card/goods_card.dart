@@ -18,7 +18,6 @@ class GoodsCard extends StatefulWidget {
 class _GoodsCardState extends State<GoodsCard> {
   @override
   Widget build(BuildContext context) {
-    print(widget.data.optionValues);
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(

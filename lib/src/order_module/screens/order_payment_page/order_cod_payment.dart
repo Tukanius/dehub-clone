@@ -156,7 +156,6 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
   Widget build(BuildContext context) {
     general = Provider.of<GeneralProvider>(context, listen: false).orderGeneral;
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
-    print(selectedMethod);
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -352,7 +351,6 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                       ? CustomButton(
                           onClick: () {
                             if (selectedMethod == "QPay") {
-                              print('1');
                               qpay();
                             } else {
                               if (selectedMethod == "Бизнес тооцооны дансаар") {

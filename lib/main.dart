@@ -386,7 +386,7 @@ class MyApp extends StatelessWidget {
                     return PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
                           SalbarSongoh(
-                        // listenController: arguments.listenController,
+                        data: arguments.data,
                         id: arguments.id,
                         partnerListenController:
                             arguments.partnerListenController,

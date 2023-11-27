@@ -7,7 +7,6 @@ import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
 
 class OrderProductCard extends StatefulWidget {
@@ -33,8 +32,7 @@ class OrderProductCard extends StatefulWidget {
   State<OrderProductCard> createState() => _OrderProductCardState();
 }
 
-class _OrderProductCardState extends State<OrderProductCard>
-    with AfterLayoutMixin {
+class _OrderProductCardState extends State<OrderProductCard> {
   TextEditingController quantityController = TextEditingController();
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   int newValue = 0;
@@ -44,17 +42,6 @@ class _OrderProductCardState extends State<OrderProductCard>
       Provider.of<CheckOutProvider>(context, listen: false)
           .orderRemoveCart(widget.data);
     }
-  }
-
-  @override
-  afterFirstLayout(BuildContext context) async {
-    setState(() {
-      if (widget.data.quantity != null) {
-        quantityController.text = widget.data.quantity.toString();
-      } else {
-        quantityController.text = "0";
-      }
-    });
   }
 
   decrease() {
@@ -112,6 +99,11 @@ class _OrderProductCardState extends State<OrderProductCard>
 
   @override
   Widget build(BuildContext context) {
+    if (widget.data.quantity == null) {
+      quantityController.text = '0';
+    } else {
+      quantityController.text = widget.data.quantity.toString();
+    }
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(

@@ -5,10 +5,12 @@ import 'package:dehub/components/schedule_card/schedule_card.dart';
 // import 'package:dehub/components/start_dialog/start_dialog.dart';
 import 'package:dehub/components/take_give_card/take_give_card.dart';
 import 'package:dehub/components/tutorial_card/tutorial_card.dart';
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/profile/profile_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -40,6 +42,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
   User user = User();
   bool startAnimation = false;
   bool isFinanceLogin = false;
+  General general = General();
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
@@ -63,6 +66,8 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
   @override
   afterFirstLayout(BuildContext context) async {
     // showStartDialog(context);
+    await Provider.of<GeneralProvider>(context, listen: false)
+        .invoiceInit(false);
     await list(page, limit);
     try {
       await Provider.of<UserProvider>(context, listen: false).financeMe();
@@ -74,9 +79,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
         isFinanceLogin = false;
       });
     }
-    invoice.rows!.map(
-      (e) => e.paymentDate == DateTime.now() ? filtered.add(e) : null,
-    );
+    for (var i = 0; i < invoice.rows!.length; i++) {}
   }
 
   @override
@@ -272,7 +275,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                                         (e) => TakeGiveCard(),
                                                       )
                                                       .toList(),
-                                                )
+                                                ),
                                         ],
                                       ),
                                     ),

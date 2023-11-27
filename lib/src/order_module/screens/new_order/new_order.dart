@@ -58,7 +58,6 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   Order result = Order();
   // Lists
   List<Order> product = [];
-  List<Order> data = [];
   List<Order> additionalLines = [];
   List<Order> asdf = [];
   List<Order> files = [];
@@ -76,6 +75,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   double discountAmount = 0;
   double shippingAmount = 0;
   double additionalRowAmount = 0;
+  double finalAmount = 0;
   //
   var dateKey = GlobalKey();
   var customerKey = GlobalKey();
@@ -115,29 +115,42 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
       });
     }
     if (selectedDateValidate == false && customerValidate == false) {
-      Navigator.of(context).pushNamed(
-        OrderSendPage.routeName,
-        arguments: OrderSendPageArguments(
-          data: Order(
-            image: send == true
-                ? "assets/svg/message_sent.svg"
-                : 'assets/svg/order_send.svg',
-            name: send == true ? 'Илгээх' : 'Хяналтад илгээх',
-            partnerName: '${customer.partner?.businessName}',
-            amountToPay: 100,
-            deliveryDate: isCheck == false
-                ? selectedDate.toString()
-                : dateTime.toString(),
+      if (product.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: orderColor,
+            shape: StadiumBorder(),
+            content: Center(
+              child: Text('Бараа нэмнэ үү!'),
+            ),
           ),
-          onSubmit: () {
-            onSubmit(toReview, send);
-          },
-        ),
-      );
+        );
+      } else {
+        Navigator.of(context).pushNamed(
+          OrderSendPage.routeName,
+          arguments: OrderSendPageArguments(
+            data: Order(
+              image: send == true
+                  ? "assets/svg/message_sent.svg"
+                  : 'assets/svg/order_send.svg',
+              name: send == true ? 'Илгээх' : 'Хяналтад илгээх',
+              partnerName: '${customer.partner?.businessName}',
+              amountToPay: finalAmount,
+              deliveryDate: isCheck == false
+                  ? selectedDate.toString()
+                  : dateTime.toString(),
+            ),
+            onSubmit: () {
+              onSubmit(toReview, send);
+            },
+          ),
+        );
+      }
     }
   }
 
   onSubmit(bool toReview, bool send) async {
+    List<Order> data = [];
     for (var i = 0; i < product.length; i++) {
       data.add(
         Order(
@@ -146,6 +159,9 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
         ),
       );
     }
+    print(data.first.toJson());
+    print(data.last.toJson());
+    print(data.length);
     await OrderApi().createOrder(Order(
       businessId: order.id,
       receiverBranchId: receiverBranch.id ?? order.receiverBranches?.first.id,
@@ -174,6 +190,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<CheckOutProvider>(context, listen: true);
+    finalAmount = source.finalAmount;
     product = Provider.of<CheckOutProvider>(context, listen: true).order;
     user = Provider.of<UserProvider>(context, listen: true).orderMe;
     return GestureDetector(
@@ -1316,7 +1333,19 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  validateCheck(false, false);
+                                  if (product.length == 0) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        backgroundColor: orderColor,
+                                        shape: StadiumBorder(),
+                                        content: Center(
+                                          child: Text('Харилцагч сонгоно уу!'),
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    validateCheck(false, false);
+                                  }
                                 },
                                 child: SizedBox(
                                   height: 32,
@@ -1411,11 +1440,6 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
     );
   }
 
-  // @override
-  // void dispose() {
-  //   quantityController.dispose();
-  //   super.dispose();
-  // }
   @override
   void initState() {
     quantityController.addListener(() {

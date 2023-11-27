@@ -132,11 +132,22 @@ class BusinessNetwork {
   String? classificationPriorityId;
   String? classificationDesc;
   String? icon;
-
   String? inAccId;
   String? outAccId;
+  List<BusinessNetwork>? profileBanners;
+
+  String? url;
+  double? sort;
+
+  DateTime? startDate;
+  DateTime? endDate;
 
   BusinessNetwork({
+    this.startDate,
+    this.endDate,
+    this.url,
+    this.sort,
+    this.profileBanners,
     this.inAccId,
     this.outAccId,
     this.icon,

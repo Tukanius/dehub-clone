@@ -8,8 +8,15 @@ BusinessNetwork _$BusinessNetworkFromJson(Map<String, dynamic> json) {
             .map((e) => BusinessNetwork.fromJson(e))
             .toList()
         : null,
+    profileBanners: json['profileBanners'] != null
+        ? (json['profileBanners'] as List)
+            .map((e) => BusinessNetwork.fromJson(e))
+            .toList()
+        : null,
     id: json['id'] != null ? json['id'] as String : null,
     country: json['country'] != null ? json['country'] as String : null,
+    url: json['url'] != null ? json['url'] as String : null,
+    sort: json['sort'] != null ? double.parse(json['sort'].toString()) : null,
     createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
     updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
     deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
@@ -167,6 +174,12 @@ BusinessNetwork _$BusinessNetworkFromJson(Map<String, dynamic> json) {
         ? BusinessNetwork.fromJson(
             json['coBusinessClassSetUser'] as Map<String, dynamic>)
         : null,
+    endDate: json['endDate'] != null
+        ? DateTime.parse(json['endDate'].toString())
+        : null,
+    startDate: json['startDate'] != null
+        ? DateTime.parse(json['startDate'].toString())
+        : null,
     avatar: json['avatar'] != null ? json['avatar'] as String : null,
     lastName: json['lastName'] != null ? json['lastName'] as String : null,
     firstName: json['firstName'] != null ? json['firstName'] as String : null,
@@ -315,6 +328,8 @@ BusinessNetwork _$BusinessNetworkFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$BusinessNetworkToJson(BusinessNetwork instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.profileBanners != null)
+    json['profileBanners'] = instance.profileBanners;
   if (instance.classificationCategory != null)
     json['classificationCategory'] = instance.classificationCategory;
   if (instance.classificationPriority != null)
@@ -325,7 +340,11 @@ Map<String, dynamic> _$BusinessNetworkToJson(BusinessNetwork instance) {
     json['classificationPriorityId'] = instance.classificationPriorityId;
   if (instance.classificationDesc != null)
     json['classificationDesc'] = instance.classificationDesc;
+  if (instance.startDate != null) json['startDate'] = instance.startDate;
+  if (instance.endDate != null) json['endDate'] = instance.endDate;
   if (instance.icon != null) json['icon'] = instance.icon;
+  if (instance.url != null) json['url'] = instance.url;
+  if (instance.sort != null) json['sort'] = instance.sort;
   if (instance.province != null) json['province'] = instance.province;
   if (instance.district != null) json['district'] = instance.district;
   if (instance.khoroo != null) json['khoroo'] = instance.khoroo;

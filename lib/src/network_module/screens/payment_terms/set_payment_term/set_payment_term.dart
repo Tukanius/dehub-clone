@@ -154,7 +154,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                       }
                     },
                     arrowColor: networkColor,
-                    secondText: config,
+                    secondText: "${config == null ? '-' : config}",
                     secondTextColor: networkColor,
                   ),
                   FieldCard(

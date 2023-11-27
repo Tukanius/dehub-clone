@@ -76,15 +76,15 @@ class _Page1State extends State<Page1> with AfterLayoutMixin {
             ),
             ProfileFieldCard(
               labelText: 'Улсын харъяалал',
-              text: partnerUser.partner?.legalEntityType,
+              text: partnerUser.partner?.country,
             ),
             ProfileFieldCard(
               labelText: 'Өмчийн хэлбэр',
-              text: partnerUser.partner?.legalEntityType,
+              text: partnerUser.partner?.type,
             ),
             ProfileFieldCard(
               labelText: 'НӨАТ төлөгч эсэх',
-              text: partnerUser.partner?.isVatPayer == false ? "Үгүй" : "Тийм",
+              text: partnerUser.partner?.isVatPayer == true ? "Тийи" : "Үгүй",
             ),
             SizedBox(
               height: 80,

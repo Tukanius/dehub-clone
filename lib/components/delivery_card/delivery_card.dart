@@ -36,42 +36,11 @@ class DeliveryCard extends StatefulWidget {
 class _DeliveryCardState extends State<DeliveryCard> {
   General general = General();
   User user = User();
-  deliveryNoteStatus() {
-    switch (widget.data?.deliveryNoteStatus) {
-      case "DRAFT":
-        return "Драфт";
-      case "ASSIGNED":
-        return "Хуваарилсан";
-      case "LOADED":
-        return "Хүргэхэд бэлэн";
-      case "DELIVERING":
-        return "Хүргэлт эхэлсэн";
-      case "DELIVERED":
-        return "Хүргэлт дууссан";
-      default:
-    }
-  }
 
   status(String? status) {
     final result = general.deliveryNoteStatus
         ?.firstWhere((element) => element.code == status);
-    return result?.name;
-  }
-
-  statusColor() {
-    switch (widget.data?.deliveryNoteStatus) {
-      case "DRAFT":
-        return Color(0xff727576);
-      case "ASSIGNED":
-        return Color(0xff1642F4);
-      case "LOADED":
-        return Color(0xffFED804);
-      case "DELIVERING":
-        return Color(0xffFD8E31);
-      case "DELIVERED":
-        return Color(0xff01C129);
-      default:
-    }
+    return result;
   }
 
   @override
@@ -241,9 +210,16 @@ class _DeliveryCardState extends State<DeliveryCard> {
                     ),
                     Text(
                       status(widget.data?.deliveryNoteStatus.toString())
+                          .name
                           .toString(),
                       style: TextStyle(
-                        color: statusColor(),
+                        color: Color(int.parse(
+                                status(widget.data?.deliveryNoteStatus
+                                        .toString())
+                                    .color
+                                    .substring(1, 7),
+                                radix: 16) +
+                            0xff000000),
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
                       ),

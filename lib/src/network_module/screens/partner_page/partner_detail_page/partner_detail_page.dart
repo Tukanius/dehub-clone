@@ -6,6 +6,7 @@ import 'package:dehub/src/network_module/screens/partner_page/partner_detail_pag
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class PartnerDetailPageArguments {
   String id;
@@ -80,15 +81,24 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
                     SliverToBoxAdapter(
                       child: Column(
                         children: [
-                          Container(
-                            height: 200,
-                            width: MediaQuery.of(context).size.width,
-                            child: Image(
-                              image: AssetImage('images/map.jpg'),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Container(
+                          businessNetwork.profileBanners?.length != 0
+                              ? CarouselSlider(
+                                  items: businessNetwork.profileBanners!
+                                      .map(
+                                        (data) => Image.network(
+                                          "${data.url}",
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )
+                                      .toList(),
+                                  options: CarouselOptions(
+                                      autoPlayCurve: Curves.ease,
+                                      height: 200,
+                                      autoPlay: true,
+                                      enableInfiniteScroll: true),
+                                )
+                              : SizedBox(),
+                          Material(
                             color: white,
                             child: TabBar(
                               indicatorColor: networkColor,

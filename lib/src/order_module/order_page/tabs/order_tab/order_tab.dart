@@ -44,11 +44,11 @@ class _OrderTabState extends State<OrderTab>
                           height: 45,
                           child: user.currentBusiness?.type == "SUPPLIER"
                               ? Text(
-                                  'Борлуулалт',
+                                  'Илгээсэн(SO)',
                                   style: TextStyle(fontFamily: 'Montserrat'),
                                 )
                               : Text(
-                                  'Худалдан авалт',
+                                  'Илгээсэн(PO)',
                                   style: TextStyle(fontFamily: 'Montserrat'),
                                 ),
                         ),
@@ -57,7 +57,7 @@ class _OrderTabState extends State<OrderTab>
                                 alignment: Alignment.center,
                                 height: 45,
                                 child: Text(
-                                  'Хүлээлгэн өгсөн',
+                                  'Ирсэн(PO)',
                                   style: TextStyle(fontFamily: 'Montserrat'),
                                 ),
                               )
@@ -65,10 +65,10 @@ class _OrderTabState extends State<OrderTab>
                                 alignment: Alignment.center,
                                 height: 45,
                                 child: Text(
-                                  'Хүлээн авсан',
+                                  'Ирсэн(SO)',
                                   style: TextStyle(fontFamily: 'Montserrat'),
                                 ),
-                              ),
+                              )
                       ],
                     ),
                   ),

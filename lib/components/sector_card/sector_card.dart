@@ -68,7 +68,7 @@ class _SectorCardState extends State<SectorCard> {
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 5),
                           child: Text(
-                            'Дэлгэр сайхан ХХК  ТТД: 315466',
+                            '${widget.data?.business?.businessName}  ТТД: ${widget.data?.business?.regNumber}',
                             style: TextStyle(
                               color: dark,
                             ),
@@ -81,7 +81,7 @@ class _SectorCardState extends State<SectorCard> {
                     ),
                     Container(
                       child: Text(
-                        '+976 - 9999 9999',
+                        'Утас: ${widget.data?.business?.partnerPhone}',
                         style: TextStyle(
                           color: dark,
                         ),

@@ -81,8 +81,8 @@ class _FieldCardState extends State<FieldCard> {
               child: Row(
                 children: [
                   Expanded(
-                      child: widget.secondText != 'null' ||
-                              widget.secondText == null
+                      child: widget.secondText != 'null' &&
+                              widget.secondText != null
                           ? Text(
                               '${widget.secondText}',
                               style: TextStyle(

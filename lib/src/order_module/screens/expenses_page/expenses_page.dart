@@ -248,136 +248,10 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Нийлүүлэгч',
-                                      style: TextStyle(
-                                        color: coolGrey,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 7.5,
-                                    ),
-                                    Text(
-                                      '${receipt.supplierBusiness?.profileName}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      '${receipt.supplierBusiness?.partnerName}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      'ТТД: ${receipt.supplierBusiness?.regNumber}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      '${receipt.supplierBusiness?.partnerEmail}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      '${receipt.supplierBusiness?.partnerPhone}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Худалдан авагч',
-                                      style: TextStyle(
-                                        color: coolGrey,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 7.5,
-                                    ),
-                                    Text(
-                                      '${receipt.buyerBusiness?.profileName}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      '${receipt.buyerBusiness?.partnerName}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      'ТТД: ${receipt.buyerBusiness?.regNumber}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      '${receipt.buyerBusiness?.partnerEmail}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      '${receipt.buyerBusiness?.partnerPhone}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              information(
+                                  receipt.supplierBusiness, 'Нийлүүлэгч'),
+                              information(
+                                  receipt.buyerBusiness, 'Худалдан авагч')
                             ],
                           ),
                           Divider(
@@ -616,43 +490,49 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                                       ),
                                     ),
                                   )
-                                : const SizedBox(),
+                                : SizedBox(),
                             SizedBox(
-                              width: receipt.isBuyerConfirmed == false ? 10 : 0,
+                              width: receipt.isBuyerConfirmed == false &&
+                                      receipt.isSupplierConfirmed == false
+                                  ? 10
+                                  : 0,
                             ),
-                            Expanded(
-                              child: CustomButton(
-                                isGradient: true,
-                                onClick: () {
-                                  onSubmit();
-                                },
-                                gradient: const LinearGradient(
-                                  colors: [orderColor, orderColor],
-                                ),
-                                container: Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SvgPicture.asset(
-                                        'assets/svg/mobile_message.svg',
-                                        height: 16,
-                                        width: 16,
+                            receipt.isSupplierConfirmed == false
+                                ? Expanded(
+                                    child: CustomButton(
+                                      isGradient: true,
+                                      onClick: () {
+                                        onSubmit();
+                                      },
+                                      gradient: const LinearGradient(
+                                        colors: [orderColor, orderColor],
                                       ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      const Text(
-                                        'Батлуулах',
-                                        style: TextStyle(
-                                          color: white,
-                                          fontSize: 18,
+                                      container: Container(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                              'assets/svg/mobile_message.svg',
+                                              height: 16,
+                                              width: 16,
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            const Text(
+                                              'Батлуулах',
+                                              style: TextStyle(
+                                                color: white,
+                                                fontSize: 18,
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox(),
                             SizedBox(
                               width: 15,
                             ),
@@ -695,6 +575,74 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                         : SizedBox(),
               ],
             ),
+    );
+  }
+
+  Widget information(Order? data, String labeltext) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '${labeltext}',
+            style: TextStyle(
+              color: coolGrey,
+              fontSize: 12,
+            ),
+          ),
+          SizedBox(
+            height: 7.5,
+          ),
+          Text(
+            '${data?.profileName}',
+            style: TextStyle(
+              color: black,
+              fontSize: 12,
+            ),
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          Text(
+            '${data?.partnerName}',
+            style: TextStyle(
+              color: black,
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+            ),
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          Text(
+            'ТТД: ${data?.regNumber}',
+            style: TextStyle(
+              color: black,
+              fontSize: 12,
+            ),
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          Text(
+            '${data?.partnerEmail}',
+            style: TextStyle(
+              color: black,
+              fontSize: 12,
+            ),
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          Text(
+            '${data?.partnerPhone}',
+            style: TextStyle(
+              color: black,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -83,18 +83,9 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverToBoxAdapter(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 0.5,
-                        blurRadius: 2,
-                        offset: const Offset(0, 1.5),
-                      ),
-                    ],
-                  ),
+                child: Material(
+                  color: white,
+                  elevation: 4,
                   child: TabBar(
                     controller: tabController,
                     indicatorColor: financingColor,

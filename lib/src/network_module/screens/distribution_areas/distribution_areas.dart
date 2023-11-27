@@ -6,8 +6,10 @@ import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/network_module/screens/distribution_areas/distribution_area_detail/distribution_area_detail.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class DistributionAreas extends StatefulWidget {
   static const routeName = '/DistributionAreas';
@@ -23,6 +25,8 @@ class _DistributionAreasState extends State<DistributionAreas>
   int page = 1;
   int limit = 10;
   bool isLoading = true;
+  RefreshController refreshController =
+      RefreshController(initialRefresh: false);
   Result network = Result(count: 0, rows: []);
   Timer? timer;
 
@@ -60,6 +64,29 @@ class _DistributionAreasState extends State<DistributionAreas>
     });
   }
 
+  void _onLoading() async {
+    setState(() {
+      limit += 10;
+    });
+    await list(page, limit, '');
+    refreshController.loadComplete();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  void _onRefresh() async {
+    await Future.delayed(Duration(milliseconds: 1000));
+    setState(() {
+      isLoading = true;
+    });
+    await list(page, limit, '');
+    refreshController.refreshCompleted();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,57 +105,92 @@ class _DistributionAreasState extends State<DistributionAreas>
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SearchButton(
-              textColor: networkColor,
-              color: networkColor,
-              onChange: (query) {
-                onChange(query);
-              },
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            isLoading == true
-                ? Center(
-                    child: CircularProgressIndicator(color: networkColor),
-                  )
-                : network.rows?.length != 0
-                    ? Column(
-                        children: network.rows!
-                            .map(
-                              (data) => Column(
-                                children: [
-                                  DistributionAreaCard(
-                                    onClick: () {
-                                      Navigator.of(context).pushNamed(
-                                        DistributionAreaDetail.routeName,
-                                        arguments:
-                                            DistributionAreaDetailArguments(
-                                          id: data.id,
-                                        ),
-                                      );
-                                    },
-                                    index: network.rows!.indexOf(data),
-                                    startAnimation: startAnimation,
-                                    data: data,
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                ],
-                              ),
-                            )
-                            .toList(),
+      body: Column(
+        children: [
+          SearchButton(
+            textColor: networkColor,
+            color: networkColor,
+            onChange: (query) {
+              onChange(query);
+            },
+          ),
+          Expanded(
+            child: SmartRefresher(
+              enablePullDown: true,
+              enablePullUp: true,
+              controller: refreshController,
+              header: WaterDropHeader(
+                waterDropColor: networkColor,
+                refresh: SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: networkColor,
+                  ),
+                ),
+              ),
+              onRefresh: _onRefresh,
+              onLoading: _onLoading,
+              footer: CustomFooter(
+                builder: (context, mode) {
+                  Widget body;
+                  if (mode == LoadStatus.idle) {
+                    body = const Text("");
+                  } else if (mode == LoadStatus.loading) {
+                    body = const CupertinoActivityIndicator();
+                  } else if (mode == LoadStatus.failed) {
+                    body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
+                  } else {
+                    body = const Text("Мэдээлэл алга байна");
+                  }
+                  return SizedBox(
+                    height: 55.0,
+                    child: Center(child: body),
+                  );
+                },
+              ),
+              child: SingleChildScrollView(
+                child: isLoading == true
+                    ? Center(
+                        child: CircularProgressIndicator(color: networkColor),
                       )
-                    : NotFound(
-                        module: "NETWORK",
-                        labelText: 'Хоосон байна',
-                      ),
-          ],
-        ),
+                    : network.rows?.length != 0
+                        ? Column(
+                            children: network.rows!
+                                .map(
+                                  (data) => Column(
+                                    children: [
+                                      DistributionAreaCard(
+                                        onClick: () {
+                                          Navigator.of(context).pushNamed(
+                                            DistributionAreaDetail.routeName,
+                                            arguments:
+                                                DistributionAreaDetailArguments(
+                                              id: data.id,
+                                            ),
+                                          );
+                                        },
+                                        index: network.rows!.indexOf(data),
+                                        startAnimation: startAnimation,
+                                        data: data,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                    ],
+                                  ),
+                                )
+                                .toList(),
+                          )
+                        : NotFound(
+                            module: "NETWORK",
+                            labelText: 'Хоосон байна',
+                          ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

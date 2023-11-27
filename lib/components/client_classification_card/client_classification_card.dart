@@ -48,7 +48,7 @@ class _ClientClassificationCardState extends State<ClientClassificationCard> {
                               backgroundColor: grey,
                               radius: 18,
                               backgroundImage:
-                                  NetworkImage('${widget.data?.logo}'),
+                                  NetworkImage('${widget.data?.partner?.logo}'),
                             )
                           : CircleAvatar(
                               backgroundColor: grey,

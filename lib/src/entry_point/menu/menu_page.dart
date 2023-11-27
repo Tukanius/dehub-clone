@@ -216,11 +216,18 @@ class _MenuPageState extends State<MenuPage> {
                                         width: 10,
                                       ),
                                       Expanded(
-                                        child: Text(
-                                          'Худалдан авалтын захиалга',
-                                          style: TextStyle(
-                                              fontSize: 14, color: white),
-                                        ),
+                                        child: user.currentBusiness?.type ==
+                                                "SUPPLIER"
+                                            ? Text(
+                                                'Борлуулалтын захиалга',
+                                                style: TextStyle(
+                                                    fontSize: 14, color: white),
+                                              )
+                                            : Text(
+                                                'Худалдан авалтын захиалга',
+                                                style: TextStyle(
+                                                    fontSize: 14, color: white),
+                                              ),
                                       ),
                                     ],
                                   ),

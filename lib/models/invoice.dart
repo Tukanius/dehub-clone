@@ -150,22 +150,21 @@ class Invoice {
   String? debitAccountName;
   String? debitAccountNumber;
   String? debitAccountCurrency;
-
   String? qr_image;
-
   List<Urls>? urls;
   bool? confirm;
-
   String? salesCode;
   String? purchaseCode;
   List<Invoice>? additionalLines;
   String? configType;
-
   List<Invoice>? stats;
   List<Invoice>? values;
   DateTime? header;
 
+  Invoice? business;
+
   Invoice({
+    this.business,
     this.values,
     this.header,
     this.stats,

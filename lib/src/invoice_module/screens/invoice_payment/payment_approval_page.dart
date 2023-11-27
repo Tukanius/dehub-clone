@@ -99,7 +99,6 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.data.receiverBusiness?.toJson());
     general = Provider.of<GeneralProvider>(context, listen: true).general;
     return Scaffold(
       backgroundColor: backgroundColor,

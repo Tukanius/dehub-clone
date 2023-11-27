@@ -184,7 +184,7 @@ class _DeliveryState extends State<Delivery> with AfterLayoutMixin {
                                       } else {
                                         await OrderApi()
                                             .deliveryNoteStart(item.id);
-                                        list(page, limit, '');
+                                        await list(page, limit, '');
                                       }
                                       setState(() {
                                         isLoading = false;

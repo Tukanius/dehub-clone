@@ -72,33 +72,17 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
               children: [
                 Row(
                   children: [
-                    widget.data.respondedUser?.avatar != null &&
-                            widget.data.respondedUser?.avatar != ''
-                        ? Container(
-                            height: 24,
-                            width: 24,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: grey,
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  '${widget.data.respondedUser?.avatar}',
-                                  scale: 1,
-                                ),
-                              ),
-                            ),
-                          )
-                        : Container(
-                            height: 24,
-                            width: 24,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: grey,
-                              image: DecorationImage(
-                                image: AssetImage('images/avatar.png'),
-                              ),
-                            ),
-                          ),
+                    CircleAvatar(
+                      radius: 12,
+                      backgroundColor: grey,
+                      backgroundImage: widget.data.type == "PURCHASE" &&
+                                  user.currentBusiness?.type == "BUYER" ||
+                              widget.data.type == "SALES" &&
+                                  user.currentBusiness?.type == "SUPPLIER"
+                          ? NetworkImage(
+                              '${widget.data.receiverBusiness?.logo}')
+                          : NetworkImage('${widget.data.senderBusiness?.logo}'),
+                    ),
                     SizedBox(
                       width: 5,
                     ),

@@ -129,6 +129,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     receiverBusiness: json['receiverBusiness'] != null
         ? Invoice.fromJson(json['receiverBusiness'] as Map<String, dynamic>)
         : null,
+    business: json['business'] != null
+        ? Invoice.fromJson(json['business'] as Map<String, dynamic>)
+        : null,
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
     regNumber: json['regNumber'] != null ? json['regNumber'] as String : null,
     salesCode: json['salesCode'] != null ? json['salesCode'] as String : null,
@@ -348,6 +351,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.business != null) json['business'] = instance.business;
   if (instance.values != null) json['values'] = instance.values;
   if (instance.header != null) json['header'] = instance.header;
   if (instance.stats != null) json['stats'] = instance.stats;

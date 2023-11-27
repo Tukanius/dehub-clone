@@ -263,131 +263,135 @@ class _DeliveryDetailState extends State<DeliveryDetail> with AfterLayoutMixin {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Нийлүүлэгч',
-                                    style: TextStyle(
-                                      color: coolGrey,
-                                      fontSize: 12,
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Нийлүүлэгч',
+                                      style: TextStyle(
+                                        color: coolGrey,
+                                        fontSize: 12,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 7.5,
-                                  ),
-                                  Text(
-                                    'Талын монгол',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontSize: 12,
+                                    SizedBox(
+                                      height: 7.5,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    'Трэйд Групп ХХК',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
+                                    Text(
+                                      '${get.supplierBusiness?.profileName}',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontSize: 12,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    'ТТД: 123123',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontSize: 12,
+                                    SizedBox(
+                                      height: 4,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    'mail@tradegroup.mn',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontSize: 12,
+                                    Text(
+                                      '${get.supplierBusiness?.partner?.businessName}',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    '9999 9999',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontSize: 12,
+                                    SizedBox(
+                                      height: 4,
                                     ),
-                                  ),
-                                ],
+                                    Text(
+                                      'ТТД: ${get.supplierBusiness?.regNumber}',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                      '${get.supplierBusiness?.partner?.email}',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                      '${get.supplierBusiness?.partner?.phone}',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Нийлүүлэгч',
-                                    style: TextStyle(
-                                      color: coolGrey,
-                                      fontSize: 12,
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Худалдан авагч',
+                                      style: TextStyle(
+                                        color: coolGrey,
+                                        fontSize: 12,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 7.5,
-                                  ),
-                                  Text(
-                                    'Талын монгол',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontSize: 12,
+                                    SizedBox(
+                                      height: 7.5,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    'Трэйд Групп ХХК',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
+                                    Text(
+                                      '${get.buyerBusiness?.profileName}',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontSize: 12,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    'ТТД: 123123',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontSize: 12,
+                                    SizedBox(
+                                      height: 4,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    'mail@tradegroup.mn',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontSize: 12,
+                                    Text(
+                                      '${get.buyerBusiness?.partner?.businessName}',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    '9999 9999',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontSize: 12,
+                                    SizedBox(
+                                      height: 4,
                                     ),
-                                  ),
-                                ],
+                                    Text(
+                                      'ТТД: ${get.buyerBusiness?.regNumber}',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                      '${get.buyerBusiness?.partner?.email}',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                      '${get.buyerBusiness?.partner?.phone}',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -568,27 +572,30 @@ class _DeliveryDetailState extends State<DeliveryDetail> with AfterLayoutMixin {
                     ),
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
-                  child: CustomButton(
-                    labelColor: orderColor,
-                    labelText: 'Хүрсэн. Бараа олгоё',
-                    onClick: () {
-                      Navigator.of(context).pushNamed(
-                        ProductGive.routeName,
-                        arguments: ProductGiveArguments(data: widget.data),
-                      );
-                    },
-                  ),
-                ),
+                get.deliveryNoteStatus == "DELIVERING"
+                    ? Container(
+                        decoration: BoxDecoration(
+                          color: white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 25),
+                        child: CustomButton(
+                          labelColor: orderColor,
+                          labelText: 'Хүрсэн. Бараа олгоё',
+                          onClick: () {
+                            Navigator.of(context).pushNamed(
+                              ProductGive.routeName,
+                              arguments:
+                                  ProductGiveArguments(data: widget.data),
+                            );
+                          },
+                        ),
+                      )
+                    : SizedBox(),
               ],
             ),
     );

@@ -129,9 +129,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                   },
                   boxColor: invoiceColor.withOpacity(0.1),
                   padding: 10,
-                  labelText: user.currentBusiness?.type == "BUYER"
-                      ? 'Манай төлөх- нэхэмжлэл'
-                      : 'Манай авах- нэхэмжлэл',
+                  labelText: 'Нээлттэй нэхэмжлэх',
                   svgColor: invoiceColor,
                   svg: 'assets/svg/take_invoice.svg',
                 ),
@@ -184,7 +182,9 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).pushNamed(GivePage.routeName);
+                          },
                           child: Container(
                             color: transparent,
                             padding: const EdgeInsets.symmetric(vertical: 5),
@@ -246,7 +246,9 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                                 ),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).pushNamed(GivePage.routeName);
+                          },
                           child: Container(
                             color: transparent,
                             padding: const EdgeInsets.symmetric(vertical: 5),

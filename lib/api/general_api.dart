@@ -22,6 +22,11 @@ class GeneralApi extends HttpRequest {
     return General.fromJson(res as Map<String, dynamic>);
   }
 
+  Future<General> invoiceInit(bool handler) async {
+    var res = await get('/general/init', "INVOICE", true, handler: handler);
+    return General.fromJson(res as Map<String, dynamic>);
+  }
+
   Future<General> inventoryInit(bool handler) async {
     var res = await get('/general/init', "INVENTORY", true, handler: handler);
     return General.fromJson(res as Map<String, dynamic>);

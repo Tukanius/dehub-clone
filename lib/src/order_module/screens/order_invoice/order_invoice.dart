@@ -1,3 +1,4 @@
+import 'package:dehub/components/close_button/close_button.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ class _OrderInvoiceState extends State<OrderInvoice> {
             fontWeight: FontWeight.w600,
           ),
         ),
+        leading: CustomCloseButton(),
       ),
       body: SingleChildScrollView(
         child: Column(

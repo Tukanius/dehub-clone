@@ -92,6 +92,7 @@ class _BugdState extends State<Bugd> with AfterLayoutMixin {
                                           Navigator.of(context).pushNamed(
                                             SalbarSongoh.routeName,
                                             arguments: SalbarSongohArguments(
+                                              data: data,
                                               id: data.id,
                                               partnerListenController: widget
                                                   .partnerListenController,

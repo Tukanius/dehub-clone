@@ -322,10 +322,8 @@ class _GivePageState extends State<GivePage>
                                             .map(
                                               (data) => InvoiceCard(
                                                 startAnimation: startAnimation,
-                                                index: (groupedList
-                                                        .indexOf(item) +
-                                                    item.values!.indexOf(data) +
-                                                    1),
+                                                index:
+                                                    invoice.rows!.indexOf(data),
                                                 data: data,
                                                 onClick: () {
                                                   Navigator.of(context)

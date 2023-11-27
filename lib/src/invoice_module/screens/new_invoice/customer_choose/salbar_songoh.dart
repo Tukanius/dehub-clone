@@ -5,6 +5,7 @@ import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/components/sector_card/sector_card.dart';
+import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,10 @@ import 'package:after_layout/after_layout.dart';
 
 class SalbarSongohArguments {
   ListenController partnerListenController;
+  Invoice data;
   String id;
   SalbarSongohArguments({
+    required this.data,
     required this.partnerListenController,
     required this.id,
   });
@@ -22,9 +25,11 @@ class SalbarSongohArguments {
 class SalbarSongoh extends StatefulWidget {
   final ListenController partnerListenController;
   final String id;
+  final Invoice data;
   static const routeName = '/salbarsongoh';
   const SalbarSongoh({
     Key? key,
+    required this.data,
     required this.partnerListenController,
     required this.id,
   }) : super(key: key);

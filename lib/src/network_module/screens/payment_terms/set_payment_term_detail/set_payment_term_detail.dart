@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class SetPaymentTermDetailArguments {
   String id;
@@ -92,177 +93,188 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
         leading: CustomBackButton(color: networkColor),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(left: 15, bottom: 15, top: 15),
-              child: Text(
-                'Харилцагчийн мэдээлэл',
-                style: TextStyle(
-                  color: grey3,
-                  fontWeight: FontWeight.w600,
+        child: isLoading == true
+            ? Center(
+                child: CircularProgressIndicator(
+                  color: networkColor,
                 ),
-              ),
-            ),
-            FieldCard(
-              color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
-              labelText: 'Партнерийн мэдээлэл',
-              secondText: '${business.partnerName}',
-              secondTextColor: networkColor,
-              labelTextColor: dark,
-            ),
-            FieldCard(
-              color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
-              labelText: 'Партнер код',
-              secondText: '${business.partner?.refCode}',
-              secondTextColor: networkColor,
-              labelTextColor: dark,
-            ),
-            FieldCard(
-              color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
-              labelText: 'Бизнесийн нэр',
-              secondText: '${business.partner?.businessName}',
-              secondTextColor: networkColor,
-              labelTextColor: dark,
-            ),
-            FieldCard(
-              color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
-              labelText: 'Бизнес код',
-              secondText: '${business.refCode}',
-              secondTextColor: networkColor,
-              labelTextColor: dark,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Статус',
-                    style: TextStyle(
-                      color: dark,
+                  Container(
+                    margin:
+                        const EdgeInsets.only(left: 15, bottom: 15, top: 15),
+                    child: Text(
+                      'Харилцагчийн мэдээлэл',
+                      style: TextStyle(
+                        color: grey3,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Партнерийн мэдээлэл',
+                    secondText: '${business.partnerName}',
+                    secondTextColor: networkColor,
+                    labelTextColor: dark,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Партнер код',
+                    secondText: '${business.partner?.refCode}',
+                    secondTextColor: networkColor,
+                    labelTextColor: dark,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Бизнесийн нэр',
+                    secondText: '${business.partner?.businessName}',
+                    secondTextColor: networkColor,
+                    labelTextColor: dark,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Бизнес код',
+                    secondText: '${business.refCode}',
+                    secondTextColor: networkColor,
+                    labelTextColor: dark,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    color: white,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Статус',
+                          style: TextStyle(
+                            color: dark,
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: Color(0xff71717A).withOpacity(0.1),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 3),
+                          child: Text(
+                            'Идэвхтэй',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: black,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Color(0xff71717A).withOpacity(0.1),
-                    ),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    margin:
+                        const EdgeInsets.only(left: 15, bottom: 15, top: 15),
                     child: Text(
-                      'Идэвхтэй',
+                      'Төлбөрийн нөхцөл',
                       style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: black,
+                        color: grey3,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    secondText: business.paymentTerm?.condition != null
+                        ? paymentTermCondition()
+                        : "-",
+                    labelText: 'Төлбөрийн хэлбэр',
+                    // onClick: () {},
+                    arrowColor: networkColor,
+                    secondTextColor: networkColor,
+                    labelTextColor: dark,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Төлбөрийн нөхцөл',
+                    // onClick: () {},
+                    secondText: business.paymentTerm?.description,
+                    arrowColor: networkColor,
+                    secondTextColor: networkColor,
+                    labelTextColor: dark,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Эхлэл огноо',
+                    secondTextColor: networkColor,
+                    secondText:
+                        "${business.paymentTerm?.startDate != null ? DateFormat("yyyy-MM-dd").format(business.paymentTerm!.startDate!) : '-'}",
+                    labelTextColor: dark,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: 'Дуусах огноо',
+                    secondTextColor: networkColor,
+                    secondText:
+                        "${business.paymentTerm?.endDate != null ? DateFormat("yyyy-MM-dd").format(business.paymentTerm!.endDate!) : '-'}",
+                    labelTextColor: dark,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                        SetPaymentTerm.routeName,
+                        arguments: SetPaymentTermArguments(
+                            id: widget.id, listenController: listenController),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 15),
+                      color: transparent,
+                      margin: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 0.5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Өөрчлөх',
+                            style: TextStyle(
+                              color: networkColor,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          SvgPicture.asset(
+                            'assets/svg/edit.svg',
+                            colorFilter:
+                                ColorFilter.mode(networkColor, BlendMode.srcIn),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ],
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 15, bottom: 15, top: 15),
-              child: Text(
-                'Төлбөрийн нөхцөл',
-                style: TextStyle(
-                  color: grey3,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            FieldCard(
-              color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
-              secondText: business.paymentTerm?.condition != null
-                  ? paymentTermCondition()
-                  : "-",
-              labelText: 'Төлбөрийн хэлбэр',
-              // onClick: () {},
-              arrowColor: networkColor,
-              secondTextColor: networkColor,
-              labelTextColor: dark,
-            ),
-            FieldCard(
-              color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
-              labelText: 'Төлбөрийн нөхцөл',
-              // onClick: () {},
-              secondText: business.paymentTerm?.configType != null
-                  ? paymentTermConfigType()
-                  : '-',
-              arrowColor: networkColor,
-              secondTextColor: networkColor,
-              labelTextColor: dark,
-            ),
-            FieldCard(
-              color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
-              labelText: 'Эхлэл огноо',
-              secondTextColor: networkColor,
-              labelTextColor: dark,
-            ),
-            FieldCard(
-              color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
-              labelText: 'Дуусах огноо',
-              secondTextColor: networkColor,
-              labelTextColor: dark,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed(
-                  SetPaymentTerm.routeName,
-                  arguments: SetPaymentTermArguments(
-                      id: widget.id, listenController: listenController),
-                );
-              },
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                color: transparent,
-                margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Өөрчлөх',
-                      style: TextStyle(
-                        color: networkColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    SvgPicture.asset(
-                      'assets/svg/edit.svg',
-                      colorFilter:
-                          ColorFilter.mode(networkColor, BlendMode.srcIn),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

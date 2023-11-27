@@ -50,11 +50,11 @@ class _SetClientClassificationState extends State<SetClientClassification> {
   list(bool isParent) {
     if (isParent == true) {
       classList = general.clientClassifications!
-          .where((element) => element.isParent == true)
+          .where((element) => element.parentId == null)
           .toList();
     } else {
       classList = general.clientClassifications!
-          .where((element) => element.isParent == false)
+          .where((element) => element.parentId == classId)
           .toList();
     }
   }
@@ -286,7 +286,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
                 Container(
                   margin: const EdgeInsets.only(top: 25, bottom: 20),
                   child: Text(
-                    'Ангилал',
+                    'Зэрэглэл',
                     style: TextStyle(
                       color: grey2,
                       fontWeight: FontWeight.w500,

@@ -61,7 +61,7 @@ class _OrderDeliveryState extends State<OrderDelivery> {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverToBoxAdapter(
-                child: Container(
+                child: Material(
                   color: white,
                   child: TabBar(
                     labelColor: orderColor,
@@ -85,6 +85,7 @@ class _OrderDeliveryState extends State<OrderDelivery> {
                               ),
                       ),
                       Container(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
                         child: user.currentBusiness?.type == "SUPPLIER"
                             ? Text(
                                 'Хүргэлт хийсэн',

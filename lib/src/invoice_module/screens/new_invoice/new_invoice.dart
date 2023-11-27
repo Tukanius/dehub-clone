@@ -19,8 +19,6 @@ import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:after_layout/after_layout.dart';
 
 class NewInvoice extends StatefulWidget {
@@ -34,18 +32,17 @@ class NewInvoice extends StatefulWidget {
 }
 
 class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
-  GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   //Controllers
   ListenController productController = ListenController();
   ListenController listenController = ListenController();
   ListenController partnerListenController = ListenController();
   ListenController sectorListenController = ListenController();
   TextEditingController discountController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   ListenController addRowController = ListenController();
   //
   Invoice additionalRow = Invoice();
   Invoice invoice = Invoice();
-  Invoice createInvoice = Invoice();
   Invoice partnerInvoice = Invoice();
   Invoice sectorInvoice = Invoice();
   Partner user = Partner();
@@ -63,7 +60,6 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
   //validate
   bool invoiceValidate = false;
   bool sectorValidate = false;
-  bool productValidate = false;
   //list
   List<Invoice> product = [];
   List<Invoice> additionalRowList = [];
@@ -694,26 +690,20 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       Container(
                         color: white,
                         padding: const EdgeInsets.all(15),
-                        child: FormBuilder(
-                          key: fbKey,
-                          child: FormTextField(
-                            textAlign: TextAlign.left,
-                            name: 'description',
-                            maxLines: 5,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.zero,
-                              ),
-                              fillColor: white,
-                              filled: true,
-                              hintStyle: TextStyle(
-                                color: orderColor,
-                              ),
+                        child: FormTextField(
+                          controller: descriptionController,
+                          textAlign: TextAlign.left,
+                          name: 'description',
+                          maxLines: 5,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.zero,
                             ),
-                            validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(
-                                  errorText: 'Тэмдэглэл оруулна уу')
-                            ]),
+                            fillColor: white,
+                            filled: true,
+                            hintStyle: TextStyle(
+                              color: orderColor,
+                            ),
                           ),
                         ),
                       ),
@@ -919,31 +909,31 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
       isSubmit = true;
     });
     try {
-      if (fbKey.currentState!.saveAndValidate()) {
-        for (var i = 0; i < product.length; i++) {
-          data.add(
-              Invoice(variantId: product[i].id, quantity: product[i].quantity));
-        }
-        product.removeWhere((element) => element.quantity == 0);
-        data.removeWhere((element) => element.quantity == 0);
-        createInvoice.senderBranchId = sectorInvoice.id;
-        createInvoice.receiverBranchId = partnerInvoice.id;
-        createInvoice.receiverBusinessId = invoice.id;
-        createInvoice.send = value;
-        createInvoice.lines = data;
-        createInvoice.additionalLines = additionalRowList;
-        await InvoiceApi().createInvoice(createInvoice);
-        showCustomDialog(
-          context,
-          value == true
-              ? 'Нэхэмжлэл амжилттай илгээгдлээ'
-              : "Нэхэмжэл амжилттай хадгалагдлаа",
-          true,
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        );
+      for (var i = 0; i < product.length; i++) {
+        data.add(
+            Invoice(variantId: product[i].id, quantity: product[i].quantity));
       }
+      await InvoiceApi().createInvoice(
+        Invoice(
+          description: descriptionController.text,
+          senderBranchId: sectorInvoice.id,
+          receiverBranchId: partnerInvoice.id,
+          receiverBusinessId: invoice.id,
+          send: value,
+          lines: data,
+          additionalLines: additionalRowList,
+        ),
+      );
+      showCustomDialog(
+        context,
+        value == true
+            ? 'Нэхэмжлэл амжилттай илгээгдлээ'
+            : "Нэхэмжэл амжилттай хадгалагдлаа",
+        true,
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      );
       setState(() {
         isSubmit = false;
       });

@@ -58,10 +58,18 @@ class _SetPaymentTermCardState extends State<SetPaymentTermCard> {
                 Expanded(
                   child: Row(
                     children: [
-                      CircleAvatar(
-                        backgroundColor: grey,
-                        radius: 18,
-                      ),
+                      widget.data?.partner?.logo != null
+                          ? CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage('${widget.data?.partner?.logo}'),
+                              backgroundColor: grey,
+                              radius: 18,
+                            )
+                          : CircleAvatar(
+                              backgroundImage: AssetImage('images/avatar.png'),
+                              backgroundColor: grey,
+                              radius: 18,
+                            ),
                       SizedBox(
                         width: 10,
                       ),

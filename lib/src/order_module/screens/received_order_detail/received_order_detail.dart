@@ -7,6 +7,7 @@ import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/auth/pin_check/pin_check.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -62,9 +63,10 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
     await OrderApi().respond(widget.id, approve);
     showCustomDialog(
       context,
-      "Амжилттай зөвшөөрлөө",
-      true,
+      isApprove == true ? "Амжилттай зөвшөөрлөө" : 'Татгалзлаа',
+      isApprove,
       onPressed: () {
+        Navigator.of(context).pop();
         Navigator.of(context).pop();
       },
     );
@@ -791,7 +793,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                               "REGISTERED") {
                                             review(false);
                                           } else {
-                                            onSubmit(true);
+                                            onSubmit(false);
                                           }
                                         },
                                         child: Container(
@@ -896,7 +898,17 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                               "REGISTERED") {
                                             review(true);
                                           } else {
-                                            onSubmit(true);
+                                            Navigator.of(context).pushNamed(
+                                              PinCheckScreen.routeName,
+                                              arguments:
+                                                  PinCheckScreenArguments(
+                                                onSubmit: () {
+                                                  onSubmit(true);
+                                                },
+                                                color: orderColor,
+                                                labelText: 'Захиалга зөвшөөрөх',
+                                              ),
+                                            );
                                           }
                                         },
                                         child: Container(
@@ -947,12 +959,28 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
             responseType: ResponseType.bytes,
           ),
         );
-        String tempPath = (await getApplicationDocumentsDirectory()).path;
+        String tempPath = (await getDownloadsDirectory())!.path;
         File file = File(tempPath);
         await file.writeAsBytes(response.data, flush: true);
-        print("File downloaded to: $tempPath");
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: orderColor,
+            shape: StadiumBorder(),
+            content: Center(
+              child: Text('Амжилттай татагдлаа'),
+            ),
+          ),
+        );
       } catch (e) {
-        print("Error downloading file : $e");
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: red,
+            shape: StadiumBorder(),
+            content: Center(
+              child: Text('Алдаа гарлаа'),
+            ),
+          ),
+        );
       }
     } else {
       FileDownloader.downloadFile(

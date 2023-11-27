@@ -34,6 +34,7 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
   ListenController listenController = ListenController();
+  Map<DateTime, List<Order>> groupItem = {};
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -44,10 +45,10 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
     Offset offset = Offset(page: page, limit: limit);
     Filter filter = Filter(
         type: user.currentBusiness?.type == "SUPPLIER" ? "SALES" : "PURCHASE");
-    var res = await OrderApi()
+    order = await OrderApi()
         .orderList(ResultArguments(filter: filter, offset: offset));
+    await groupMaker();
     setState(() {
-      order = res;
       isLoading = false;
     });
     Future.delayed(Duration(milliseconds: 100), () {
@@ -55,21 +56,30 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
         startAnimation = true;
       });
     });
-    await makeGroup();
   }
 
-  makeGroup() {
+  groupMaker() {
     Map<DateTime, List<Order>> groupedItems = {};
     for (var data in order.rows!) {
       DateTime date =
           DateTime.parse(DateFormat("yyyy-MM-dd").format(data.createdAt));
+      // if (groupedList.isEmpty) {
+      //   if (groupedItems.containsKey(date)) {
+      //     groupedItems[date]!.add(data);
+      //   } else {
+      //     groupedItems[date] = [data];
+      //   }
+      // }
+      // else {
       if (groupedItems.containsKey(date)) {
-        groupedItems[date]!.add(data);
+        groupedItems[date]?.add(data);
       } else {
         groupedItems[date] = [data];
       }
+      // }
     }
-    groupedItems.forEach((key, value) {
+    groupItem = groupedItems;
+    groupItem.forEach((key, value) {
       groupedList.add(
         Order(
           header: key,
@@ -199,9 +209,7 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
                                                 .map(
                                                   (item) => SalesOrderCard(
                                                     index: order.rows!
-                                                            .indexOf(item) +
-                                                        groupedList
-                                                            .indexOf(data),
+                                                        .indexOf(item),
                                                     startAnimation:
                                                         startAnimation,
                                                     onClick: () {
