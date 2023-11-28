@@ -120,7 +120,7 @@ class _SectorChooseState extends State<SectorChoose> with AfterLayoutMixin {
                                       data: e,
                                       onClick: () {
                                         widget.sectorListenController
-                                            .sectorInvoiceChange(e);
+                                            .sectorInvoiceChange(e.branch);
                                         Navigator.of(context).pop();
                                       },
                                     ),

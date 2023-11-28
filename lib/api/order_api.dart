@@ -39,7 +39,7 @@ class OrderApi extends HttpRequest {
 
   createOrder(Order data) async {
     var res = await post('/order', "ORDER", true, data: data.toJson());
-    return Order.fromJson(res as Map<String, dynamic>);
+    return res;
   }
 
   Future<Result> orderList(ResultArguments resultArguments) async {

@@ -23,17 +23,21 @@ import 'package:after_layout/after_layout.dart';
 import 'package:intl/intl.dart';
 
 class OrderCodPaymentArguments {
+  List<Order> lines;
   String id;
   OrderCodPaymentArguments({
     required this.id,
+    required this.lines,
   });
 }
 
 class OrderCodPayment extends StatefulWidget {
   final String id;
+  final List<Order> lines;
   static const routeName = '/OrderCodPayment';
   const OrderCodPayment({
     Key? key,
+    required this.lines,
     required this.id,
   }) : super(key: key);
 
@@ -99,7 +103,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
           amount: invoice.totalAmount,
           invoiceId: invoice.id,
           invoiceRefCode: invoice.refCode,
-          receiverBusinessId: invoice.receiverBusinessId,
+          receiverBusinessId: invoice.senderBusinessId,
           description: invoice.refCode,
           creditAccountId: invoice.receiverAcc?.id,
           creditAccountBank: invoice.receiverAcc?.bankName,
@@ -119,6 +123,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
         true,
         onPressed: () {
           Navigator.of(context).pop();
+          Navigator.of(context).pop();
         },
       );
     } catch (e) {
@@ -135,7 +140,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
           method: "QPAY",
           invoiceId: invoice.id,
           invoiceRefCode: invoice.refCode,
-          receiverBusinessId: invoice.receiverBusinessId,
+          receiverBusinessId: invoice.senderBusinessId,
           description: invoice.refCode,
           creditAccountId: invoice.receiverAcc?.id,
           creditAccountBank: invoice.receiverAcc?.bankName,
@@ -409,8 +414,13 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                             Expanded(
                               child: CustomButton(
                                 onClick: () {
-                                  Navigator.of(context)
-                                      .pushNamed(OrderInvoice.routeName);
+                                  Navigator.of(context).pushNamed(
+                                    OrderInvoice.routeName,
+                                    arguments: OrderInvoiceArguments(
+                                      lines: widget.lines,
+                                      data: invoice,
+                                    ),
+                                  );
                                 },
                                 labelColor: orderColor,
                                 labelText: "Нэхэмжлэх",

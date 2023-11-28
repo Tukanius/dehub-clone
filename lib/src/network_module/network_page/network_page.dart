@@ -84,15 +84,13 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
                         BlendMode.srcIn),
                   ),
                 )
-              : index.selectedIndex == 3 || index.selectedIndex == 2
+              : index.selectedIndex == 3
                   ? AddButton(
-                      color: index.selectedIndex != 2 ? white : networkColor,
-                      addColor: index.selectedIndex != 2 ? networkColor : white,
+                      color: white,
+                      addColor: networkColor,
                       onClick: () {
-                        index.selectedIndex == 3
-                            ? Navigator.of(context)
-                                .pushNamed(NewInvitationPage.routeName)
-                            : SizedBox();
+                        Navigator.of(context)
+                            .pushNamed(NewInvitationPage.routeName);
                       },
                     )
                   : SizedBox(),

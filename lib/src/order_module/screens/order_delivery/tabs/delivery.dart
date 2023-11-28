@@ -93,121 +93,123 @@ class _DeliveryState extends State<Delivery> with AfterLayoutMixin {
               color: orderColor,
             ),
           )
-        : SmartRefresher(
-            enablePullDown: true,
-            enablePullUp: true,
-            controller: refreshController,
-            header: WaterDropHeader(
-              waterDropColor: orderColor,
-              refresh: SizedBox(
-                height: 20,
-                width: 20,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: orderColor,
+        : Column(
+            children: [
+              SizedBox(
+                height: 5,
+              ),
+              SearchButton(
+                color: orderColor,
+                textColor: orderColor,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Expanded(
+                child: SmartRefresher(
+                  enablePullDown: true,
+                  enablePullUp: true,
+                  controller: refreshController,
+                  header: WaterDropHeader(
+                    waterDropColor: orderColor,
+                    refresh: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: orderColor,
+                      ),
+                    ),
+                  ),
+                  onRefresh: _onRefresh,
+                  onLoading: _onLoading,
+                  footer: CustomFooter(
+                    builder: (context, mode) {
+                      Widget body;
+                      if (mode == LoadStatus.idle) {
+                        body = const Text("");
+                      } else if (mode == LoadStatus.loading) {
+                        body = const CupertinoActivityIndicator();
+                      } else if (mode == LoadStatus.failed) {
+                        body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
+                      } else if (mode == LoadStatus.noMore) {
+                        body = const Text('Мэдээлэл алга байна');
+                      } else {
+                        body = const Text("Мэдээлэл алга байна");
+                      }
+                      return SizedBox(
+                        height: 55.0,
+                        child: Center(child: body),
+                      );
+                    },
+                  ),
+                  child: SingleChildScrollView(
+                    child: delivery.rows?.length != 0
+                        ? Column(
+                            children: delivery.rows!
+                                .map(
+                                  (item) => DeliveryCard(
+                                    startAnimation: startAnimation,
+                                    index: delivery.rows!.indexOf(item),
+                                    onClick: () {
+                                      Navigator.of(context).pushNamed(
+                                        DeliveryPage.routeName,
+                                        arguments: DeliveryPageArguments(
+                                          data: item,
+                                        ),
+                                      );
+                                    },
+                                    refCodeClick: () {
+                                      if (user.currentBusiness?.type ==
+                                          "SUPPLIER") {
+                                        Navigator.of(context).pushNamed(
+                                          DeliveryDetail.routeName,
+                                          arguments: DeliveryDetailArguments(
+                                              data: item),
+                                        );
+                                      }
+                                    },
+                                    startClick: () async {
+                                      try {
+                                        setState(() {
+                                          isLoading = true;
+                                        });
+                                        if (item.deliveryNoteStatus ==
+                                            "DELIVERING") {
+                                          Navigator.of(context).pushNamed(
+                                            ProductGive.routeName,
+                                            arguments: ProductGiveArguments(
+                                              data: item,
+                                            ),
+                                          );
+                                        } else {
+                                          await OrderApi()
+                                              .deliveryNoteStart(item.id);
+                                          await list(page, limit, '');
+                                        }
+                                        setState(() {
+                                          isLoading = false;
+                                        });
+                                      } catch (e) {
+                                        setState(() {
+                                          isLoading = false;
+                                        });
+                                      }
+                                    },
+                                    data: item,
+                                    isDeliveried: false,
+                                  ),
+                                )
+                                .toList(),
+                          )
+                        : NotFound(
+                            module: "ORDER",
+                            labelText: "Хоосон байна",
+                          ),
+                  ),
                 ),
               ),
-            ),
-            onRefresh: _onRefresh,
-            onLoading: _onLoading,
-            footer: CustomFooter(
-              builder: (context, mode) {
-                Widget body;
-                if (mode == LoadStatus.idle) {
-                  body = const Text("");
-                } else if (mode == LoadStatus.loading) {
-                  body = const CupertinoActivityIndicator();
-                } else if (mode == LoadStatus.failed) {
-                  body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                } else if (mode == LoadStatus.noMore) {
-                  body = const Text('Мэдээлэл алга байна');
-                } else {
-                  body = const Text("Мэдээлэл алга байна");
-                }
-                return SizedBox(
-                  height: 55.0,
-                  child: Center(child: body),
-                );
-              },
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 5,
-                  ),
-                  SearchButton(
-                    color: orderColor,
-                    textColor: orderColor,
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  delivery.rows?.length != 0
-                      ? Column(
-                          children: delivery.rows!
-                              .map(
-                                (item) => DeliveryCard(
-                                  startAnimation: startAnimation,
-                                  index: delivery.rows!.indexOf(item),
-                                  onClick: () {
-                                    Navigator.of(context).pushNamed(
-                                      DeliveryPage.routeName,
-                                      arguments: DeliveryPageArguments(
-                                        data: item,
-                                      ),
-                                    );
-                                  },
-                                  refCodeClick: () {
-                                    if (user.currentBusiness?.type ==
-                                        "SUPPLIER") {
-                                      Navigator.of(context).pushNamed(
-                                        DeliveryDetail.routeName,
-                                        arguments:
-                                            DeliveryDetailArguments(data: item),
-                                      );
-                                    }
-                                  },
-                                  startClick: () async {
-                                    try {
-                                      setState(() {
-                                        isLoading = true;
-                                      });
-                                      if (item.deliveryNoteStatus ==
-                                          "DELIVERING") {
-                                        Navigator.of(context).pushNamed(
-                                          ProductGive.routeName,
-                                          arguments: ProductGiveArguments(
-                                            data: item,
-                                          ),
-                                        );
-                                      } else {
-                                        await OrderApi()
-                                            .deliveryNoteStart(item.id);
-                                        await list(page, limit, '');
-                                      }
-                                      setState(() {
-                                        isLoading = false;
-                                      });
-                                    } catch (e) {
-                                      setState(() {
-                                        isLoading = false;
-                                      });
-                                    }
-                                  },
-                                  data: item,
-                                  isDeliveried: false,
-                                ),
-                              )
-                              .toList(),
-                        )
-                      : NotFound(
-                          module: "ORDER",
-                          labelText: "Хоосон байна",
-                        ),
-                ],
-              ),
-            ),
+            ],
           );
   }
 }

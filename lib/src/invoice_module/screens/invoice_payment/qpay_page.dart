@@ -71,6 +71,7 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(qpay.toJson());
     return Scaffold(
       backgroundColor: white,
       appBar: AppBar(

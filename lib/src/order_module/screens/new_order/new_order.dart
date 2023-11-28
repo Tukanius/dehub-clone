@@ -129,21 +129,26 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
         Navigator.of(context).pushNamed(
           OrderSendPage.routeName,
           arguments: OrderSendPageArguments(
-            data: Order(
-              image: send == true
-                  ? "assets/svg/message_sent.svg"
-                  : 'assets/svg/order_send.svg',
-              name: send == true ? 'Илгээх' : 'Хяналтад илгээх',
-              partnerName: '${customer.partner?.businessName}',
-              amountToPay: finalAmount,
-              deliveryDate: isCheck == false
-                  ? selectedDate.toString()
-                  : dateTime.toString(),
-            ),
-            onSubmit: () {
-              onSubmit(toReview, send);
-            },
-          ),
+              data: Order(
+                image: send == true
+                    ? "assets/svg/message_sent.svg"
+                    : send == false && toReview == true
+                        ? 'assets/svg/order_send.svg'
+                        : "assets/svg/save.svg",
+                name: send == true
+                    ? 'Илгээх'
+                    : send == false && toReview == true
+                        ? 'Хяналтад илгээх'
+                        : "Хадгалах",
+                partnerName: '${customer.partner?.businessName}',
+                amountToPay: finalAmount,
+                deliveryDate: isCheck == false
+                    ? selectedDate.toString()
+                    : dateTime.toString(),
+              ),
+              onSubmit: () {
+                onSubmit(toReview, send);
+              }),
         );
       }
     }
@@ -159,9 +164,6 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
         ),
       );
     }
-    print(data.first.toJson());
-    print(data.last.toJson());
-    print(data.length);
     await OrderApi().createOrder(Order(
       businessId: order.id,
       receiverBranchId: receiverBranch.id ?? order.receiverBranches?.first.id,
@@ -178,7 +180,9 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
     ));
     showCustomDialog(
       context,
-      "Захиалга амжилттай илгээгдлээ",
+      toReview == false
+          ? 'Захиалга амжилттай хадгалагдлаа'
+          : "Захиалга амжилттай илгээгдлээ",
       true,
       onPressed: () {
         Navigator.of(context).pop();
@@ -189,6 +193,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    print(order.receiverStaff?.id);
     final source = Provider.of<CheckOutProvider>(context, listen: true);
     finalAmount = source.finalAmount;
     product = Provider.of<CheckOutProvider>(context, listen: true).order;

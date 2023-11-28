@@ -6,7 +6,6 @@ import 'package:dehub/src/finance_module/screens/recalled_page/recalled_page.dar
 import 'package:dehub/src/network_module/screens/account_setting/account_setting.dart';
 import 'package:dehub/src/network_module/screens/account_setting/account_setting_detail/account_setting_detail.dart';
 import 'package:dehub/src/network_module/screens/account_setting/set_account/set_account.dart';
-import 'package:dehub/src/order_module/screens/income_guarantee/income_guarantee.dart';
 import 'package:dehub/src/payment_module/screens/account_statement/account_statement.dart';
 import 'package:dehub/src/network_module/screens/client_classifications/client_classification_detail/client_classification_detail.dart';
 import 'package:dehub/src/network_module/screens/client_classifications/client_classifications.dart';
@@ -787,14 +786,14 @@ class MyApp extends StatelessWidget {
                       },
                     );
                   case OrderInvoice.routeName:
-                    // OrderInvoiceArguments arguments =
-                    // settings.arguments as OrderInvoiceArguments;
+                    OrderInvoiceArguments arguments =
+                        settings.arguments as OrderInvoiceArguments;
                     return PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
                           OrderInvoice(
-                              // customerListenController:
-                              // arguments.customerListenController,
-                              ),
+                        lines: arguments.lines,
+                        data: arguments.data,
+                      ),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                         var begin = const Offset(0.0, 1.0);
@@ -874,10 +873,6 @@ class MyApp extends StatelessWidget {
                         data: arguments.data,
                       );
                     });
-                  case IncomeGuarantee.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return IncomeGuarantee();
-                    });
                   case ChangePassword.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return ChangePassword();
@@ -895,6 +890,7 @@ class MyApp extends StatelessWidget {
                         settings.arguments as OrderCodPaymentArguments;
                     return MaterialPageRoute(builder: (context) {
                       return OrderCodPayment(
+                        lines: arguments.lines,
                         id: arguments.id,
                       );
                     });

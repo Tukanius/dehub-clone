@@ -9,8 +9,10 @@ import 'package:dehub/src/order_module/screens/order_payment_page/order_cbd_paym
 import 'package:dehub/src/order_module/screens/order_payment_page/order_cod_payment.dart';
 import 'package:dehub/src/order_module/screens/product_give/product_give.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class DeliveryMade extends StatefulWidget {
   const DeliveryMade({super.key});
@@ -26,6 +28,8 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
   Result pullSheet = Result(count: 0, rows: []);
   Timer? timer;
   bool isSubmit = false;
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: false);
   bool startAnimation = false;
 
   @override
@@ -62,76 +66,145 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
     });
   }
 
+  void _onLoading() async {
+    setState(() {
+      limit += 10;
+    });
+    await list(page, limit, '');
+    refreshController.loadComplete();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  void _onRefresh() async {
+    await Future.delayed(Duration(milliseconds: 1000));
+    setState(() {
+      isLoading = true;
+    });
+    await list(page, limit, '');
+    setState(() {
+      startAnimation = false;
+    });
+    refreshController.refreshCompleted();
+    Future.delayed(Duration(milliseconds: 100), () {
+      setState(() {
+        startAnimation = true;
+      });
+    });
+    isLoading = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return isLoading == true
         ? Center(
             child: CircularProgressIndicator(color: orderColor),
           )
-        : SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 5,
-                ),
-                SearchButton(
-                  onChange: (query) {
-                    onChange(query);
-                  },
-                  color: orderColor,
-                  textColor: orderColor,
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                isSubmit == true
-                    ? Center(
-                        child: CircularProgressIndicator(color: orderColor),
-                      )
-                    : pullSheet.rows?.length != 0
-                        ? Column(
-                            children: pullSheet.rows!
-                                .map((data) => DeliveryCard(
-                                      startAnimation: startAnimation,
-                                      index: pullSheet.rows!.indexOf(data),
-                                      isDeliveried: true,
-                                      onClick: () {
-                                        Navigator.of(context).pushNamed(
-                                          DeliveryPage.routeName,
-                                          arguments:
-                                              DeliveryPageArguments(data: data),
-                                        );
-                                      },
-                                      refCodeClick: () {
-                                        Navigator.of(context).pushNamed(
-                                          ProductGive.routeName,
-                                          arguments:
-                                              ProductGiveArguments(data: data),
-                                        );
-                                      },
-                                      startClick: () {
-                                        if (data.paymentTerm?.configType ==
-                                            "CBD") {
-                                          Navigator.of(context).pushNamed(
-                                              OrderCbdPayment.routeName);
-                                        } else {
-                                          Navigator.of(context).pushNamed(
-                                            OrderCodPayment.routeName,
-                                            arguments: OrderCodPaymentArguments(
-                                                id: data.order.invoiceId),
-                                          );
-                                        }
-                                      },
-                                      data: data,
-                                    ))
-                                .toList(),
+        : Column(
+            children: [
+              SizedBox(
+                height: 5,
+              ),
+              SearchButton(
+                color: orderColor,
+                textColor: orderColor,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Expanded(
+                child: SmartRefresher(
+                  enablePullDown: true,
+                  enablePullUp: true,
+                  controller: refreshController,
+                  header: WaterDropHeader(
+                    waterDropColor: orderColor,
+                    refresh: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: orderColor,
+                      ),
+                    ),
+                  ),
+                  onRefresh: _onRefresh,
+                  onLoading: _onLoading,
+                  footer: CustomFooter(
+                    builder: (context, mode) {
+                      Widget body;
+                      if (mode == LoadStatus.idle) {
+                        body = const Text("");
+                      } else if (mode == LoadStatus.loading) {
+                        body = const CupertinoActivityIndicator();
+                      } else if (mode == LoadStatus.failed) {
+                        body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
+                      } else if (mode == LoadStatus.noMore) {
+                        body = const Text('Мэдээлэл алга байна');
+                      } else {
+                        body = const Text("Мэдээлэл алга байна");
+                      }
+                      return SizedBox(
+                        height: 55.0,
+                        child: Center(child: body),
+                      );
+                    },
+                  ),
+                  child: SingleChildScrollView(
+                    child: isSubmit == true
+                        ? Center(
+                            child: CircularProgressIndicator(color: orderColor),
                           )
-                        : NotFound(
-                            module: "ORDER",
-                            labelText: "Хоосон байна",
-                          ),
-              ],
-            ),
+                        : pullSheet.rows?.length != 0
+                            ? Column(
+                                children: pullSheet.rows!
+                                    .map((data) => DeliveryCard(
+                                          startAnimation: startAnimation,
+                                          index: pullSheet.rows!.indexOf(data),
+                                          isDeliveried: true,
+                                          onClick: () {
+                                            Navigator.of(context).pushNamed(
+                                              DeliveryPage.routeName,
+                                              arguments: DeliveryPageArguments(
+                                                  data: data),
+                                            );
+                                          },
+                                          refCodeClick: () {
+                                            Navigator.of(context).pushNamed(
+                                              ProductGive.routeName,
+                                              arguments: ProductGiveArguments(
+                                                  data: data),
+                                            );
+                                          },
+                                          startClick: () {
+                                            if (data.paymentTerm?.configType ==
+                                                "CBD") {
+                                              Navigator.of(context).pushNamed(
+                                                  OrderCbdPayment.routeName);
+                                            } else {
+                                              Navigator.of(context).pushNamed(
+                                                OrderCodPayment.routeName,
+                                                arguments:
+                                                    OrderCodPaymentArguments(
+                                                  lines: data.order.lines,
+                                                  id: data.order.invoiceId,
+                                                ),
+                                              );
+                                            }
+                                          },
+                                          data: data,
+                                        ))
+                                    .toList(),
+                              )
+                            : NotFound(
+                                module: "ORDER",
+                                labelText: "Хоосон байна",
+                              ),
+                  ),
+                ),
+              ),
+            ],
           );
   }
 }

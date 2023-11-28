@@ -8,6 +8,7 @@ import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/providers/checkout-provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/auth/pin_check/pin_check.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/add_product/add_product.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/add_row/invoice_add_row.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/customer_choose.dart';
@@ -63,7 +64,6 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
   //list
   List<Invoice> product = [];
   List<Invoice> additionalRowList = [];
-  List<Invoice> data = [];
 
   List<String> list = <String>[
     "Хувиар",
@@ -308,17 +308,16 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                               ),
                             );
                           } else {
-                            if (invoice.id == null) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  backgroundColor: invoiceColor,
-                                  shape: StadiumBorder(),
-                                  content: Center(
-                                    child: Text('Харилцагч сонгоно уу!'),
-                                  ),
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                duration: Duration(milliseconds: 150),
+                                backgroundColor: invoiceColor,
+                                shape: StadiumBorder(),
+                                content: Center(
+                                  child: Text('Харилцагч сонгоно уу!'),
                                 ),
-                              );
-                            }
+                              ),
+                            );
                           }
                         },
                         child: Container(
@@ -862,6 +861,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
     partnerListenController.addListener(() {
       setState(() {
         partnerInvoice = partnerListenController.partnerInvoice!;
+        print(partnerInvoice.toJson());
       });
     });
     sectorListenController.addListener(() {
@@ -900,7 +900,16 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
       });
     }
     if (sectorValidate == false && invoiceValidate == false) {
-      onSubmit(value);
+      Navigator.of(context).pushNamed(
+        PinCheckScreen.routeName,
+        arguments: PinCheckScreenArguments(
+          onSubmit: () {
+            onSubmit(value);
+          },
+          color: invoiceColor,
+          labelText: "Нэхэмжлэл илгээх",
+        ),
+      );
     }
   }
 
@@ -909,6 +918,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
       isSubmit = true;
     });
     try {
+      List<Invoice> data = [];
       for (var i = 0; i < product.length; i++) {
         data.add(
             Invoice(variantId: product[i].id, quantity: product[i].quantity));
@@ -931,6 +941,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
             : "Нэхэмжэл амжилттай хадгалагдлаа",
         true,
         onPressed: () {
+          Navigator.of(context).pop();
           Navigator.of(context).pop();
         },
       );

@@ -124,13 +124,21 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                               fontWeight: FontWeight.w500,
                             ),
                           )
-                        : Text(
-                            '${widget.data.salesCode}',
-                            style: TextStyle(
-                              color: grey2,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          )
+                        : widget.data.salesCode != null
+                            ? Text(
+                                '${widget.data.salesCode}',
+                                style: TextStyle(
+                                  color: grey2,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )
+                            : Text(
+                                '-',
+                                style: TextStyle(
+                                  color: grey2,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )
                   ],
                 ),
               ],

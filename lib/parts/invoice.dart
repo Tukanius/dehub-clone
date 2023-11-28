@@ -132,6 +132,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     business: json['business'] != null
         ? Invoice.fromJson(json['business'] as Map<String, dynamic>)
         : null,
+    branch: json['branch'] != null
+        ? Invoice.fromJson(json['branch'] as Map<String, dynamic>)
+        : null,
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
     regNumber: json['regNumber'] != null ? json['regNumber'] as String : null,
     salesCode: json['salesCode'] != null ? json['salesCode'] as String : null,
@@ -147,6 +150,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     isVatPayer: json['isVatPayer'] != null ? json['isVatPayer'] as bool : null,
     partnerEmail:
         json['partnerEmail'] != null ? json['partnerEmail'] as String : null,
+    email: json['email'] != null ? json['email'] as String : null,
     partnerPhone:
         json['partnerPhone'] != null ? json['partnerPhone'] as String : null,
     profileName:
@@ -351,7 +355,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.email != null) json['email'] = instance.email;
   if (instance.business != null) json['business'] = instance.business;
+  if (instance.branch != null) json['branch'] = instance.branch;
   if (instance.values != null) json['values'] = instance.values;
   if (instance.header != null) json['header'] = instance.header;
   if (instance.stats != null) json['stats'] = instance.stats;

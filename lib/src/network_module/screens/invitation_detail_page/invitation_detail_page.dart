@@ -1,9 +1,12 @@
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invitation_received.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class SentInvitationDetailArguments {
   String id;
@@ -27,6 +30,7 @@ class SentInvitationDetail extends StatefulWidget {
 class _SentInvitationDetailState extends State<SentInvitationDetail>
     with AfterLayoutMixin {
   Invitation invitation = Invitation();
+  General general = General();
   bool isLoading = true;
 
   @override
@@ -37,8 +41,44 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
     });
   }
 
+  invitationStatus() {
+    final result = general.invitationStatus!
+        .firstWhere((element) => element.code == invitation.invitationStatus);
+    return result;
+  }
+
+  statusColor(bool opacity) {
+    if (opacity == false) {
+      switch (invitation.invitationStatus) {
+        case 'DRAFT':
+          return grey;
+        case 'SENT':
+          return orange;
+        case 'ACCEPTED':
+          return green;
+        case 'REJECTED':
+          return red;
+        default:
+      }
+    } else {
+      switch (invitation.invitationStatus) {
+        case 'DRAFT':
+          return grey.withOpacity(0.1);
+        case 'SENT':
+          return orange.withOpacity(0.1);
+        case 'ACCEPTED':
+          return green.withOpacity(0.1);
+        case 'REJECTED':
+          return red.withOpacity(0.1);
+        default:
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    general =
+        Provider.of<GeneralProvider>(context, listen: true).businessGeneral;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -146,12 +186,12 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                               horizontal: 10, vertical: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xff38C0FE).withOpacity(0.1),
+                            color: statusColor(true),
                           ),
                           child: Text(
-                            '${invitation.invitationStatus}',
+                            '${invitationStatus().name}',
                             style: TextStyle(
-                              color: Color(0xff38C0FE),
+                              color: statusColor(false),
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
                             ),
@@ -495,62 +535,6 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                   SizedBox(
                     height: 25,
                   ),
-                  // invitation.invitationStatus == "SENT"
-                  //     ? Container(
-                  //         margin: const EdgeInsets.only(bottom: 50),
-                  //         child: Row(
-                  //           children: [
-                  //             Expanded(
-                  //               child: Container(
-                  //                 margin: const EdgeInsets.only(left: 15),
-                  //                 decoration: BoxDecoration(
-                  //                   borderRadius: BorderRadius.circular(5),
-                  //                   border: Border.all(
-                  //                     color: networkColor,
-                  //                   ),
-                  //                 ),
-                  //                 padding:
-                  //                     const EdgeInsets.symmetric(vertical: 12),
-                  //                 child: Center(
-                  //                   child: Text(
-                  //                     'Татгалзах',
-                  //                     style: TextStyle(
-                  //                       color: networkColor,
-                  //                       fontSize: 16,
-                  //                       fontWeight: FontWeight.w500,
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //             SizedBox(
-                  //               width: 5,
-                  //             ),
-                  //             Expanded(
-                  //               child: Container(
-                  //                 margin: const EdgeInsets.only(right: 15),
-                  //                 decoration: BoxDecoration(
-                  //                   borderRadius: BorderRadius.circular(5),
-                  //                   color: networkColor,
-                  //                 ),
-                  //                 padding:
-                  //                     const EdgeInsets.symmetric(vertical: 12),
-                  //                 child: Center(
-                  //                   child: Text(
-                  //                     'Батлах',
-                  //                     style: TextStyle(
-                  //                       color: white,
-                  //                       fontSize: 16,
-                  //                       fontWeight: FontWeight.w500,
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             )
-                  //           ],
-                  //         ),
-                  //       )
-                  //     : SizedBox(),
                 ],
               ),
             ),

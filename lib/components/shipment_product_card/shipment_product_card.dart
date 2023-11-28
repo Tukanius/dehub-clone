@@ -10,12 +10,12 @@ class ShipmentProductCard extends StatefulWidget {
   final Function()? onClick;
   final Function()? onCloseClick;
   final Order? data;
-  final Function()? approveButtonClick;
+  final Function() approveButtonClick;
   final String? lineConfirmText;
   const ShipmentProductCard({
     this.onCloseClick,
     this.lineConfirmText,
-    this.approveButtonClick,
+    required this.approveButtonClick,
     Key? key,
     this.data,
     this.onClick,
@@ -29,9 +29,9 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
     with AfterLayoutMixin {
   int count = 0;
   String quantity = '0';
-  bool isLoading = false;
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   TextEditingController quantityController = TextEditingController();
+  bool isSubmit = false;
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -59,8 +59,6 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
       quantityController.text = newValue.toString();
     });
   }
-
-  bool isSubmit = false;
 
   @override
   Widget build(BuildContext context) {
@@ -368,7 +366,9 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                 GestureDetector(
                   onTap: widget.data?.isConfirmed == true
                       ? () {}
-                      : widget.approveButtonClick,
+                      : () {
+                          widget.approveButtonClick();
+                        },
                   child: Container(
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
@@ -393,7 +393,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                         SizedBox(
                           width: 5,
                         ),
-                        isLoading == true
+                        isSubmit == true
                             ? Container(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 30),

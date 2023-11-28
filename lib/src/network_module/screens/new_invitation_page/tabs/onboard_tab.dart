@@ -871,10 +871,6 @@ class _OnboardTabState extends State<OnboardTab> {
                       color: grey2,
                     ),
                   ),
-                  // validator: FormBuilderValidators.compose([
-                  //   FormBuilderValidators.required(
-                  //       errorText: 'Тэмдэглэл оруулна уу')
-                  // ]),
                 ),
               ),
               SizedBox(

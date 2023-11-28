@@ -1,6 +1,6 @@
-import 'package:dehub/components/profile_field_card/profile_field_card.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/profile/components/card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -46,45 +46,55 @@ class _Page1State extends State<Page1> with AfterLayoutMixin {
                 ),
               ),
             ),
-            ProfileFieldCard(
+            InformationCard(
               labelText: 'Партнер код',
-              text: partnerUser.partner?.refCode.toString(),
+              value: partnerUser.partner?.refCode.toString(),
+              marginVertical: 5,
             ),
-            ProfileFieldCard(
+            InformationCard(
               labelText: 'Категори',
-              text: partnerUser.partner?.classification,
+              value: partnerUser.partner?.classification,
+              marginVertical: 5,
             ),
-            ProfileFieldCard(
+            InformationCard(
               labelText: 'ТТД/Регистр',
-              text: partnerUser.partner?.regNumber,
+              value: partnerUser.partner?.regNumber,
+              marginVertical: 5,
             ),
-            ProfileFieldCard(
+            InformationCard(
               labelText: 'Улсын бүргэлийн гэрчилгээ',
-              text: partnerUser.partner?.regNumber,
+              value: partnerUser.partner?.regNumber,
+              marginVertical: 5,
             ),
-            ProfileFieldCard(
+            InformationCard(
               labelText: 'Аж ахуйн нэгжийн нэр',
-              text: partnerUser.partner?.businessName,
+              value: partnerUser.partner?.businessName,
+              marginVertical: 5,
             ),
-            ProfileFieldCard(
+            InformationCard(
               labelText: 'Аж ахуйн нэгжийн нэр /Латин/',
-              text: partnerUser.partner?.businessNameEng,
+              value: partnerUser.partner?.businessNameEng,
+              marginVertical: 5,
             ),
-            ProfileFieldCard(
+            InformationCard(
               labelText: 'Аж ахуйн нэгжийн хэлбэр',
-              text: partnerUser.partner?.legalEntityType,
+              value: partnerUser.partner?.legalEntityType,
+              marginVertical: 5,
             ),
-            ProfileFieldCard(
+            InformationCard(
               labelText: 'Улсын харъяалал',
-              text: partnerUser.partner?.country,
+              value: partnerUser.partner?.country,
+              marginVertical: 5,
             ),
-            ProfileFieldCard(
+            InformationCard(
               labelText: 'Өмчийн хэлбэр',
-              text: partnerUser.partner?.type,
+              value: partnerUser.partner?.type,
+              marginVertical: 5,
             ),
-            ProfileFieldCard(
+            InformationCard(
               labelText: 'НӨАТ төлөгч эсэх',
-              text: partnerUser.partner?.isVatPayer == true ? "Тийи" : "Үгүй",
+              value: partnerUser.partner?.isVatPayer == true ? "Тийм" : "Үгүй",
+              marginVertical: 5,
             ),
             SizedBox(
               height: 80,

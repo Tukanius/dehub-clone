@@ -163,6 +163,7 @@ Business _$BusinessFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$BusinessToJson(Business instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.toMessage != null) json['toMessage'] = instance.toMessage;
   if (instance.description != null) json['description'] = instance.description;
   if (instance.businessId != null) json['businessId'] = instance.businessId;
   if (instance.modifiedUserId != null)

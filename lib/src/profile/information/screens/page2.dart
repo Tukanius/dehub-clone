@@ -1,6 +1,6 @@
-import 'package:dehub/components/profile_field_card/profile_field_card.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/profile/components/card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -40,29 +40,35 @@ class _Page2State extends State<Page2> {
           SizedBox(
             height: 20,
           ),
-          ProfileFieldCard(
+          InformationCard(
             labelText: 'Вэб сайтын хаяг',
-            text: partnerUser.partner?.web,
+            value: partnerUser.partner?.web,
+            marginVertical: 5,
           ),
-          ProfileFieldCard(
+          InformationCard(
             labelText: 'И-мэйл хаяг №1',
-            text: partnerUser.partner?.email,
+            value: partnerUser.partner?.email,
+            marginVertical: 5,
           ),
-          ProfileFieldCard(
+          InformationCard(
             labelText: 'И-мэйл хаяг №2',
-            text: partnerUser.partner?.email2,
+            value: partnerUser.partner?.email2,
+            marginVertical: 5,
           ),
-          ProfileFieldCard(
+          InformationCard(
             labelText: 'Утаны дугаар №1',
-            text: partnerUser.partner?.phone,
+            value: partnerUser.partner?.phone,
+            marginVertical: 5,
           ),
-          ProfileFieldCard(
+          InformationCard(
             labelText: 'Утаны дугаар №2',
-            text: partnerUser.partner?.phone2,
+            value: partnerUser.partner?.phone2,
+            marginVertical: 5,
           ),
-          ProfileFieldCard(
+          InformationCard(
             labelText: 'Facebook хаяг',
-            text: partnerUser.partner?.phone2,
+            value: partnerUser.partner?.phone2,
+            marginVertical: 5,
           ),
           SizedBox(
             height: 15,

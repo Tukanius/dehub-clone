@@ -160,10 +160,13 @@ class Invoice {
   List<Invoice>? stats;
   List<Invoice>? values;
   DateTime? header;
-
   Invoice? business;
+  Invoice? branch;
+  String? email;
 
   Invoice({
+    this.email,
+    this.branch,
     this.business,
     this.values,
     this.header,

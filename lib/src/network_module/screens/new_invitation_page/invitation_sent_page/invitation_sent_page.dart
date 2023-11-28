@@ -44,6 +44,7 @@ class InvitationSentPage extends StatefulWidget {
 
 class _InvitationSentPageState extends State<InvitationSentPage>
     with AfterLayoutMixin {
+  TextEditingController controller = TextEditingController();
   Partner partner = Partner();
   int page = 1;
   int limit = 10;
@@ -70,27 +71,13 @@ class _InvitationSentPageState extends State<InvitationSentPage>
     });
   }
 
-  validateCheck() async {
-    if (receiverIds.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: networkColor,
-          shape: StadiumBorder(),
-          content: Center(
-            child: Text('Харилцагч сонгоно уу!'),
-          ),
-        ),
-      );
-    } else {
-      onSubmit(true);
-    }
-  }
-
-  save() async {
-    if (receiverIds.isEmpty) {
-      show(context);
-    } else {
-      onSubmit(false);
+  save(bool send) async {
+    if (isSubmit == false) {
+      if (receiverIds.isEmpty) {
+        show(context);
+      } else {
+        onSubmit(send);
+      }
     }
   }
 
@@ -134,6 +121,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
       invitation.toMessage = "invite";
       invitation.send = send;
       invitation.receiverIds = receiverIds;
+      invitation.toMessage = controller.text;
       await BusinessApi().createInvitation(invitation);
       widget.listenController.changeVariable('invitationSent');
       showCustomDialog(
@@ -437,6 +425,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                     ),
                   ),
                   FormTextField(
+                    controller: controller,
                     textColor: networkColor,
                     name: 'description',
                     decoration: InputDecoration(
@@ -487,9 +476,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                             borderColor: networkColor,
                             textColor: networkColor,
                             onClick: () {
-                              if (isSubmit == false) {
-                                save();
-                              }
+                              save(false);
                             },
                             labelColor: backgroundColor,
                             labelText: 'Хадгалах',
@@ -501,9 +488,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                           margin: const EdgeInsets.only(left: 3, right: 5),
                           child: CustomButton(
                             onClick: () {
-                              if (isSubmit == false) {
-                                validateCheck();
-                              }
+                              save(true);
                             },
                             labelColor: networkColor,
                             labelText: 'Илгээх',

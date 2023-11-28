@@ -125,7 +125,7 @@ class _SalbarSongohState extends State<SalbarSongoh> with AfterLayoutMixin {
                                       data: e,
                                       onClick: () {
                                         widget.partnerListenController
-                                            .partnerInvoiceChange(e);
+                                            .partnerInvoiceChange(e.branch);
                                         Navigator.of(context).pop();
                                         Navigator.of(context).pop();
                                       },

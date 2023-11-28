@@ -4,6 +4,7 @@ import 'package:dehub/api/auth_api.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/profile/components/card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -221,269 +222,43 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Хэрэглэгчийн нэр',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: grey3,
-                            ),
+                          InformationCard(
+                            marginVertical: 5,
+                            labelText: 'Регистр №',
+                            value: user.username,
                           ),
-                          SizedBox(
-                            height: 10,
+                          InformationCard(
+                            marginVertical: 5,
+                            labelText: "user.registerNo",
+                            value: user.username,
                           ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 12,
-                            ),
-                            height: 40,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(color: grey3),
-                            ),
-                            child: user.username != null
-                                ? Text(
-                                    user.username.toString(),
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: grey3,
-                                    ),
-                                  )
-                                : Text(
-                                    '-',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: grey3,
-                                    ),
-                                  ),
+                          InformationCard(
+                            marginVertical: 5,
+                            labelText: 'Ургын овог',
+                            value: user.familyName,
                           ),
-                          SizedBox(
-                            height: 15,
+                          InformationCard(
+                            marginVertical: 5,
+                            labelText: 'Эцэг/Эхийн нэр',
+                            value: user.lastName,
                           ),
-                          Text(
-                            'Регист №',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: grey3,
-                            ),
+                          InformationCard(
+                            marginVertical: 5,
+                            labelText: 'Өөрийн нэр',
+                            value: user.firstName,
                           ),
-                          SizedBox(
-                            height: 10,
+                          InformationCard(
+                            marginVertical: 5,
+                            labelText: 'Харъяалах нэгж',
+                            value: 'Борлуулалтын алба',
+                          ),
+                          InformationCard(
+                            marginVertical: 5,
+                            labelText: 'Албан тушаал',
+                            value: 'Худалдааны төлөөлөгч',
                           ),
                           Container(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 8,
-                                horizontal: 12,
-                              ),
-                              height: 40,
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(color: grey3),
-                              ),
-                              child: user.registerNo != null
-                                  ? Text(
-                                      '${user.registerNo}',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: grey3,
-                                      ),
-                                    )
-                                  : Text(
-                                      '-',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: grey3,
-                                      ),
-                                    )),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Ургын овог',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: grey3,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 12,
-                            ),
-                            height: 40,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(color: grey3),
-                            ),
-                            child: user.familyName != null
-                                ? Text(
-                                    "${user.familyName}",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: grey3,
-                                    ),
-                                  )
-                                : Text(
-                                    "-",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: grey3,
-                                    ),
-                                  ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            'Эцэг/Эхийн нэр',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: grey3,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 12,
-                            ),
-                            height: 40,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(color: grey3),
-                            ),
-                            child: user.lastName != null
-                                ? Text(
-                                    '${user.lastName}',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: grey3,
-                                    ),
-                                  )
-                                : Text(
-                                    '-',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: grey3,
-                                    ),
-                                  ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            'Өөрийн нэр',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: grey3,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 12,
-                            ),
-                            height: 40,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(color: grey3),
-                            ),
-                            child: Text(
-                              '${user.firstName}',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: grey3,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            'Харъяалах нэгж',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: grey3,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 12,
-                            ),
-                            height: 40,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(color: grey3),
-                            ),
-                            child: Text(
-                              'Борлуулалтын алба',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: grey3,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            'Албан тушаал',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: grey3,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 12,
-                            ),
-                            height: 40,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(color: grey3),
-                            ),
-                            child: Text(
-                              'Худалдааны төлөөлөгч',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: grey3,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Container(
+                            margin: const EdgeInsets.symmetric(vertical: 15),
                             child: Text(
                               'Холбоо барих',
                               style: TextStyle(
@@ -493,137 +268,25 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: 15,
+                          InformationCard(
+                            marginVertical: 5,
+                            labelText: 'Утасны дугаар №1',
+                            value: '${user.phone}',
                           ),
-                          Text(
-                            'Утасны дугаар №1',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: grey3,
-                            ),
+                          InformationCard(
+                            marginVertical: 5,
+                            labelText: 'И-мэйл хаяг №1',
+                            value: '${user.email}',
                           ),
-                          SizedBox(
-                            height: 10,
+                          InformationCard(
+                            marginVertical: 5,
+                            labelText: 'Утасны дугаар №2',
+                            value: '${user.phone2}',
                           ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 12,
-                            ),
-                            height: 40,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(color: grey3),
-                            ),
-                            child: Text(
-                              '${user.phone}',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: grey3,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            'И-мэйл хаяг №1',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: grey3,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 12,
-                            ),
-                            height: 40,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(color: grey3),
-                            ),
-                            child: Text(
-                              '${user.email}',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: grey3,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            'Утасны дугаар №2',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: grey3,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 12,
-                            ),
-                            height: 40,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(color: grey3),
-                            ),
-                            child: Text(
-                              '-',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: grey3,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            'И-мэйл хаяг №2',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: grey3,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 12,
-                            ),
-                            height: 40,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(color: grey3),
-                            ),
-                            child: Text(
-                              '${user.email}',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: grey3,
-                              ),
-                            ),
+                          InformationCard(
+                            marginVertical: 5,
+                            labelText: 'И-мэйл хаяг №2',
+                            value: '${user.email2}',
                           ),
                           SizedBox(
                             height: 50,

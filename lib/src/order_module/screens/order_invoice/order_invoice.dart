@@ -1,12 +1,30 @@
 import 'package:dehub/components/close_button/close_button.dart';
+import 'package:dehub/models/invoice.dart';
+import 'package:dehub/models/order.dart';
+import 'package:dehub/src/order_module/screens/order_invoice/pdf/pdf.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+class OrderInvoiceArguments {
+  List<Order> lines;
+  Invoice data;
+  OrderInvoiceArguments({
+    required this.data,
+    required this.lines,
+  });
+}
+
 class OrderInvoice extends StatefulWidget {
+  final List<Order> lines;
+  final Invoice data;
   static const routeName = '/OrderInvoice';
-  const OrderInvoice({Key? key}) : super(key: key);
+  const OrderInvoice({
+    Key? key,
+    required this.lines,
+    required this.data,
+  }) : super(key: key);
 
   @override
   State<OrderInvoice> createState() => _OrderInvoiceState();
@@ -45,9 +63,16 @@ class _OrderInvoiceState extends State<OrderInvoice> {
                 ),
               ),
             ),
-            Image(
-              image: AssetImage('images/pdf.jpg'),
+            PDF(
+              lines: widget.lines,
+              data: widget.data,
             ),
+            SizedBox(
+              height: 25,
+            ),
+            // Image(
+            //   image: AssetImage('images/pdf.jpg'),
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

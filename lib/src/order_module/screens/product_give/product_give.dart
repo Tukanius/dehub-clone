@@ -172,7 +172,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
       endResponse = await OrderApi().deliveryNoteEnd(widget.data.id!);
       await Navigator.of(context).pushNamed(
         ExpensesPage.routeName,
-        arguments: ExpensesPageArguments(id: shipment.receipt!.id!),
+        arguments: ExpensesPageArguments(id: endResponse.id!),
       );
       setState(() {
         isLoading = false;
@@ -191,7 +191,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
     setState(() {
       isSubmit = true;
     });
-    OrderApi().deliveryNoteLineConfirm(
+    await OrderApi().deliveryNoteLineConfirm(
       Order(
         lineId: item.id,
         confirmedQuantity: item.quantity,

@@ -45,13 +45,29 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                       width: 10,
                     ),
                     Expanded(
-                      child: Text(
-                        '${widget.data?.name} SKU ${widget.data?.skuCode} ${widget.data?.brand}',
-                        style: TextStyle(
-                          color: black,
-                          fontSize: 12,
+                      child: RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                            color: black,
+                            fontSize: 12,
+                            fontFamily: "Montserrat",
+                          ),
+                          children: [
+                            TextSpan(text: widget.data?.name),
+                            TextSpan(text: " ${widget.data?.skuCode} "),
+                            widget.data?.brand != null
+                                ? TextSpan(text: "${widget.data?.brand}")
+                                : TextSpan(),
+                          ],
                         ),
                       ),
+                      // Text(
+                      //   '${widget.data?.name} SKU ${widget.data?.skuCode} ${widget.data?.brand}',
+                      //   style: TextStyle(
+                      //     color: black,
+                      //     fontSize: 12,
+                      //   ),
+                      // ),
                     ),
                   ],
                 ),
