@@ -200,7 +200,7 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${DateFormat("yyyy-MM-dd hh:mm").format(receipt.deliveryNote!.startDate!)}',
+                                '${DateFormat("yyyy-MM-dd hh:mm").format(DateTime.parse(receipt.deliveryNote!.startDate!))}',
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: orderColor,

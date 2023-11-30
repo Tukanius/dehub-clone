@@ -10,7 +10,7 @@ import 'package:after_layout/after_layout.dart';
 class ShipmentProductCard extends StatefulWidget {
   final Function()? onClick;
   final Function()? onCloseClick;
-  final Order? data;
+  final Order data;
   final Function() approveButtonClick;
   final String? lineConfirmText;
   const ShipmentProductCard({
@@ -18,7 +18,7 @@ class ShipmentProductCard extends StatefulWidget {
     this.lineConfirmText,
     required this.approveButtonClick,
     Key? key,
-    this.data,
+    required this.data,
     this.onClick,
   }) : super(key: key);
 
@@ -37,7 +37,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
   @override
   afterFirstLayout(BuildContext context) async {
     setState(() {
-      quantityController.text = widget.data!.quantity.toString();
+      quantityController.text = widget.data.quantity.toString();
     });
   }
 
@@ -70,14 +70,14 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                widget.data?.image != null
+                widget.data.image != null
                     ? Container(
                         height: 56,
                         width: 56,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           image: DecorationImage(
-                            image: NetworkImage('${widget.data?.image}'),
+                            image: NetworkImage('${widget.data.image}'),
                           ),
                         ),
                       )
@@ -97,7 +97,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${widget.data?.name}',
+                        '${widget.data.name}',
                         style: TextStyle(
                           color: dark,
                           fontWeight: FontWeight.bold,
@@ -112,19 +112,19 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                           style:
                               TextStyle(color: dark, fontFamily: "Montserrat"),
                           children: [
-                            widget.data?.skuCode != null
-                                ? TextSpan(text: "${widget.data?.skuCode}, ")
+                            widget.data.skuCode != null
+                                ? TextSpan(text: "${widget.data.skuCode}, ")
                                 : TextSpan(),
-                            widget.data?.brand != null
-                                ? TextSpan(text: "${widget.data?.brand}, ")
+                            widget.data.brand != null
+                                ? TextSpan(text: "${widget.data.brand}, ")
                                 : TextSpan(),
-                            widget.data?.category != null
-                                ? TextSpan(text: "${widget.data?.category}, ")
+                            widget.data.category != null
+                                ? TextSpan(text: "${widget.data.category}, ")
                                 : TextSpan(),
-                            widget.data?.optionValues != null
+                            widget.data.optionValues != null
                                 ? TextSpan(
                                     text:
-                                        "${widget.data?.optionValues?.map((e) => e.name).join(', ')}")
+                                        "${widget.data.optionValues?.map((e) => e.name).join(', ')}")
                                 : TextSpan(),
                           ],
                         ),
@@ -153,7 +153,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                         height: 3,
                       ),
                       Text(
-                        '${widget.data?.unit}',
+                        '${widget.data.unit}',
                         style: TextStyle(
                           color: orderColor,
                           fontWeight: FontWeight.bold,
@@ -198,7 +198,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                         height: 3,
                       ),
                       Text(
-                        '1',
+                        '${widget.data.quantity! * widget.data.unitConvertValue!}',
                         style: TextStyle(
                           color: orderColor,
                           fontWeight: FontWeight.bold,
@@ -206,7 +206,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                         ),
                       ),
                       Text(
-                        '${widget.data?.unitConvertValue} ш',
+                        '${widget.data.unitConvertValue} ш',
                         style: TextStyle(
                           color: buttonColor,
                           fontWeight: FontWeight.w500,
@@ -232,9 +232,9 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                     fontSize: 16,
                   ),
                 ),
-                widget.data?.quantity != null && widget.data?.price != null
+                widget.data.quantity != null && widget.data.price != null
                     ? Text(
-                        '${Utils().formatCurrency((widget.data!.price! * widget.data!.quantity!).toString())}₮',
+                        '${Utils().formatCurrency((widget.data.price! * widget.data.quantity!).toString())}₮',
                         style: TextStyle(
                           color: grey2,
                           fontWeight: FontWeight.w600,
@@ -254,7 +254,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                   children: [
                     GestureDetector(
                       onTap: () {
-                        if (widget.data?.isConfirmed == false) {
+                        if (widget.data.isConfirmed == false) {
                           decrease();
                         }
                       },
@@ -277,12 +277,12 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                       child: FormTextField(
                         onChanged: (p0) {
                           setState(() {
-                            widget.data?.quantity =
+                            widget.data.quantity =
                                 int.parse(quantityController.text);
                           });
                         },
                         readOnly:
-                            widget.data?.isConfirmed == false ? false : true,
+                            widget.data.isConfirmed == false ? false : true,
                         controller: quantityController,
                         fontSize: 18,
                         inputType: TextInputType.number,
@@ -309,7 +309,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                     ),
                     GestureDetector(
                       onTap: () {
-                        if (widget.data?.isConfirmed == false) {
+                        if (widget.data.isConfirmed == false) {
                           increase();
                         }
                       },
@@ -329,7 +329,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                   ],
                 ),
                 GestureDetector(
-                  onTap: widget.data?.isConfirmed == true
+                  onTap: widget.data.isConfirmed == true
                       ? () {}
                       : () {
                           widget.approveButtonClick();
@@ -340,7 +340,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                       borderRadius: BorderRadius.circular(5),
                       color: white,
                       border: Border.all(
-                        color: widget.data?.isConfirmed == true
+                        color: widget.data.isConfirmed == true
                             ? orderColor.withOpacity(0.3)
                             : orderColor,
                       ),
@@ -350,7 +350,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                         SvgPicture.asset(
                           'assets/svg/calculator.svg',
                           colorFilter: ColorFilter.mode(
-                              widget.data?.isConfirmed == true
+                              widget.data.isConfirmed == true
                                   ? orderColor.withOpacity(0.3)
                                   : orderColor,
                               BlendMode.srcIn),
@@ -377,7 +377,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                                 ? Text(
                                     'Зөв байна',
                                     style: TextStyle(
-                                      color: widget.data?.isConfirmed == true
+                                      color: widget.data.isConfirmed == true
                                           ? orderColor.withOpacity(0.3)
                                           : orderColor,
                                       fontSize: 18,
@@ -386,7 +386,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                                 : Text(
                                     '${widget.lineConfirmText}',
                                     style: TextStyle(
-                                      color: widget.data?.isConfirmed == true
+                                      color: widget.data.isConfirmed == true
                                           ? orderColor.withOpacity(0.3)
                                           : orderColor,
                                       fontSize: 18,

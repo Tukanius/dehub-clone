@@ -275,7 +275,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                                   ),
                                 )
                               : Text(
-                                  '${DateFormat('yyyy-MM-dd').format(widget.data.startDate!)}',
+                                  '${DateFormat('yyyy-MM-dd').format(DateTime.parse(widget.data.startDate!))}',
                                   style: TextStyle(
                                     color: buttonColor,
                                     fontSize: 12,
@@ -347,7 +347,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Эхэлсэн: ${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.startDate!)}',
+                        'Эхэлсэн: ${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.parse(widget.data.startDate!))}',
                         style: TextStyle(
                           color: buttonColor,
                           fontSize: 12,

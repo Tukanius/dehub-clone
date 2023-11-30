@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
@@ -122,7 +121,6 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
 
   @override
   Widget build(BuildContext context) {
-    print(order.deliveryNote);
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -1114,9 +1112,10 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                             ? GestureDetector(
                                                 onTap: () {
                                                   onSubmit(
-                                                      true,
-                                                      "Захиалга зөвшөөрөх",
-                                                      (approve) => create());
+                                                    true,
+                                                    "Хүргэлт хуваарилах",
+                                                    (approve) => create(),
+                                                  );
                                                 },
                                                 child: Container(
                                                   height: 36,

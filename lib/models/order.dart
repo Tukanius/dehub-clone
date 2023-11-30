@@ -135,10 +135,10 @@ class Order {
   double? locationLng;
   String? warehouseId;
   String? staffId;
-  DateTime? loadingDate;
+  String? loadingDate; // Must be String
   String? pullSheetStatus;
   DateTime? startedDate;
-  DateTime? startDate;
+  String? startDate; // Must be string
   bool? isPaused;
   DateTime? pausedDate;
   DateTime? proceededDate;
@@ -200,7 +200,10 @@ class Order {
   List<Order>? values;
   DateTime? header;
 
+  List<Order>? warehouses;
+
   Order({
+    this.warehouses,
     this.values,
     this.header,
     this.advancePercent,

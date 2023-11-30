@@ -9,6 +9,9 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     values: json['values'] != null
         ? (json['values'] as List).map((e) => Order.fromJson(e)).toList()
         : null,
+    warehouses: json['warehouses'] != null
+        ? (json['warehouses'] as List).map((e) => Order.fromJson(e)).toList()
+        : null,
     id: json['id'] != null ? json['id'] as String : null,
     code: json['code'] != null ? json['code'] as String : null,
     createdAt: json['createdAt'] != null
@@ -33,9 +36,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         : null,
     profileName:
         json['profileName'] != null ? json['profileName'] as String : null,
-    startDate: json['startDate'] != null
-        ? DateTime.parse(json['startDate'].toString())
-        : null,
+    startDate: json['startDate'] != null ? json['startDate'] as String : null,
     profileNameEng: json['profileNameEng'] != null
         ? json['profileNameEng'] as String
         : null,
@@ -332,9 +333,8 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     warehouseId:
         json['warehouseId'] != null ? json['warehouseId'] as String : null,
     staffId: json['staffId'] != null ? json['staffId'] as String : null,
-    loadingDate: json['loadingDate'] != null
-        ? DateTime.parse(json['loadingDate'].toString())
-        : null,
+    loadingDate:
+        json['loadingDate'] != null ? json['loadingDate'] as String : null,
     pullSheetStatus: json['pullSheetStatus'] != null
         ? json['pullSheetStatus'] as String
         : null,
@@ -457,6 +457,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$OrderToJson(Order instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.warehouses != null) json['warehouses'] = instance.warehouses;
   if (instance.values != null) json['values'] = instance.values;
   if (instance.header != null) json['header'] = instance.header;
   if (instance.receipt != null) json['receipt'] = instance.receipt;

@@ -198,4 +198,31 @@ class OrderApi extends HttpRequest {
         handler: true, data: data.toJson());
     return Order.fromJson(res as Map<String, dynamic>);
   }
+
+  Future<Order> deliveryManagementAssign(Order data, String id) async {
+    var res = await put('/delivery_management/$id/assign', "ORDER", true,
+        data: data.toJson());
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Order> deliveryManagementApprove(String id) async {
+    var res = await get('/delivery_management/$id/approve', "ORDER", true);
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Order> pullSheetCreate(Order data) async {
+    var res = await post('/pull_sheet', "ORDER", true, data: data.toJson());
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> deliveryManagementList(ResultArguments resultArguments) async {
+    var res = await get('/delivery_management', "ORDER", true,
+        data: resultArguments.toJson());
+    return Result.fromJson(res, Order.fromJson);
+  }
+
+  Future<Result> staffSelect(String businessId) async {
+    var res = await get('/staff/select?businessId=$businessId', "ORDER", true);
+    return Result.fromJson(res, Order.fromJson);
+  }
 }

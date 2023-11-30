@@ -1,7 +1,10 @@
+import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
+import 'package:dehub/models/order.dart';
+import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,20 +12,25 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:after_layout/after_layout.dart';
 
 class SetDeliveryDistributionArguments {
+  Order data;
   String id;
   SetDeliveryDistributionArguments({
+    required this.data,
     required this.id,
   });
 }
 
 class SetDeliveryDistribution extends StatefulWidget {
+  final Order data;
   final String id;
   static const routeName = '/SetDeliveryDistribution';
   const SetDeliveryDistribution({
     Key? key,
     required this.id,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -30,15 +38,23 @@ class SetDeliveryDistribution extends StatefulWidget {
       _SetDeliveryDistributionState();
 }
 
-class _SetDeliveryDistributionState extends State<SetDeliveryDistribution> {
+class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
+    with AfterLayoutMixin {
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now();
   DateTime shipmentDate = DateTime.now();
   General general = General();
-  String staff = 'Сонгох';
+  Result staff = Result(count: 0, rows: []);
+  String staffName = 'Сонгох';
+  bool isLoading = true;
   String? staffId;
 
-  onSubmit() {
+  onSubmit() async {
+    Order data = Order();
+    data.startDate = startDate.toString();
+    data.deliveryDate = shipmentDate.toString();
+    data.loadingDate = endDate.toString();
+    await OrderApi().deliveryManagementAssign(data, widget.id);
     showCustomDialog(
       context,
       "Амжилттай хуваариллаа",
@@ -47,6 +63,14 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution> {
         Navigator.of(context).pop();
       },
     );
+  }
+
+  @override
+  afterFirstLayout(BuildContext context) async {
+    staff = await OrderApi().staffSelect(widget.data.id!);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -60,284 +84,297 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution> {
         leadingWidth: 130,
         leading: CustomBackButton(color: orderColor),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Харилцагчийн мэдээлэл',
-                style: TextStyle(
-                  color: grey3,
-                  fontWeight: FontWeight.w600,
-                ),
+      body: isLoading == true
+          ? Center(
+              child: CircularProgressIndicator(
+                color: orderColor,
               ),
-            ),
-            FieldCard(
-              color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
-              labelText: "Худалдан авагч",
-              secondText: 'Биг супермаркет',
-              secondTextColor: orderColor,
-            ),
-            FieldCard(
-              color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
-              labelText: "Хүлээн авах салбар",
-              secondText: 'Биг супермаркет',
-              secondTextColor: orderColor,
-            ),
-            FieldCard(
-              color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
-              labelText: "Бүсчлэл",
-              secondText: 'Биг супермаркет',
-              secondTextColor: orderColor,
-            ),
-            FieldCard(
-              color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
-              labelText: "Чиглэл",
-              secondText: 'Биг супермаркет',
-              secondTextColor: orderColor,
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Хүргэлт',
-                style: TextStyle(
-                  color: grey3,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            FieldCard(
-              color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
-              labelText: "Эхлэх огноо",
-              secondText: '${DateFormat('yyyy-MM-dd').format(startDate)}',
-              secondTextColor: orderColor,
-              onClick: () {
-                showCupertinoModalPopup(
-                  context: context,
-                  builder: (context) {
-                    return Container(
-                      color: white,
-                      height: MediaQuery.of(context).size.height * 0.4,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(
-                              'Болсон',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: black,
-                                fontFamily: "Montserrat",
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: CupertinoDatePicker(
-                              minimumDate:
-                                  startDate.subtract(Duration(hours: 1)),
-                              initialDateTime: startDate,
-                              mode: CupertinoDatePickerMode.date,
-                              use24hFormat: true,
-                              showDayOfWeek: true,
-                              onDateTimeChanged: (DateTime newDate) {
-                                setState(() {
-                                  startDate = newDate;
-                                  if (startDate.difference(endDate).inHours >
-                                      12) {
-                                    setState(() {
-                                      endDate = newDate;
-                                    });
-                                  }
-                                  if (startDate
-                                          .difference(shipmentDate)
-                                          .inHours >
-                                      12) {
-                                    setState(() {
-                                      shipmentDate = newDate;
-                                    });
-                                  }
-                                });
-                              },
-                            ),
-                          ),
-                        ],
+            )
+          : SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    child: Text(
+                      'Харилцагчийн мэдээлэл',
+                      style: TextStyle(
+                        color: grey3,
+                        fontWeight: FontWeight.w600,
                       ),
-                    );
-                  },
-                );
-              },
-              arrowColor: orderColor,
-            ),
-            FieldCard(
-              color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
-              labelText: "Хүлээлгэж өгөх",
-              secondText: '${DateFormat('yyyy-MM-dd').format(endDate)}',
-              secondTextColor: orderColor,
-              onClick: () {
-                showCupertinoModalPopup(
-                  context: context,
-                  builder: (context) {
-                    return Container(
-                      color: white,
-                      height: MediaQuery.of(context).size.height * 0.4,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(
-                              'Болсон',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: black,
-                                fontFamily: "Montserrat",
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: CupertinoDatePicker(
-                              minimumDate: startDate,
-                              initialDateTime: startDate,
-                              mode: CupertinoDatePickerMode.date,
-                              use24hFormat: true,
-                              showDayOfWeek: true,
-                              onDateTimeChanged: (DateTime newDate) {
-                                setState(() => endDate = newDate);
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              },
-              arrowColor: orderColor,
-            ),
-            FieldCard(
-              color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
-              labelText: "Ачилт хийх",
-              secondText: '${DateFormat('yyyy-MM-dd').format(shipmentDate)}',
-              secondTextColor: orderColor,
-              onClick: () {
-                showCupertinoModalPopup(
-                  context: context,
-                  builder: (context) {
-                    return Container(
-                      color: white,
-                      height: MediaQuery.of(context).size.height * 0.4,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(
-                              'Болсон',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: black,
-                                fontFamily: "Montserrat",
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: CupertinoDatePicker(
-                              minimumDate: startDate,
-                              initialDateTime: startDate,
-                              mode: CupertinoDatePickerMode.date,
-                              use24hFormat: true,
-                              showDayOfWeek: true,
-                              onDateTimeChanged: (DateTime newDate) {
-                                setState(() => shipmentDate = newDate);
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              },
-              arrowColor: orderColor,
-            ),
-            FieldCard(
-              color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
-              labelText: "Хүргэлт хариуцсан",
-              secondText: '${staff}',
-              secondTextColor: orderColor,
-              onClick: () {
-                show();
-              },
-              arrowColor: orderColor,
-            ),
-            SizedBox(
-              height: 100,
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: GestureDetector(
-                onTap: () {
-                  onSubmit();
-                },
-                child: Container(
-                  margin: const EdgeInsets.only(right: 15),
-                  width: 150,
-                  padding: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: orderColor),
-                    borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  FieldCard(
                     color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: "Худалдан авагч",
+                    secondText:
+                        '${widget.data.receiverBusiness?.partner?.businessName}',
+                    secondTextColor: orderColor,
                   ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/svg/zahialga.svg',
-                        colorFilter:
-                            ColorFilter.mode(orderColor, BlendMode.srcIn),
-                        height: 17,
-                      ),
-                      SizedBox(
-                        width: 7,
-                      ),
-                      Text(
-                        'Хуваарилах',
-                        style: TextStyle(color: orderColor),
-                      )
-                    ],
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: "Хүлээн авах салбар",
+                    secondText:
+                        '${widget.data.order?.receiverBranch?.branchAddress}',
+                    secondTextColor: orderColor,
                   ),
-                ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: "Бүсчлэл",
+                    secondText: '-',
+                    secondTextColor: orderColor,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: "Чиглэл",
+                    secondText: '-',
+                    secondTextColor: orderColor,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    child: Text(
+                      'Хүргэлт',
+                      style: TextStyle(
+                        color: grey3,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: "Эхлэх огноо",
+                    secondText: '${DateFormat('yyyy-MM-dd').format(startDate)}',
+                    secondTextColor: orderColor,
+                    onClick: () {
+                      showCupertinoModalPopup(
+                        context: context,
+                        builder: (context) {
+                          return Container(
+                            color: white,
+                            height: MediaQuery.of(context).size.height * 0.4,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text(
+                                    'Болсон',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: black,
+                                      fontFamily: "Montserrat",
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: CupertinoDatePicker(
+                                    minimumDate:
+                                        startDate.subtract(Duration(hours: 1)),
+                                    initialDateTime: startDate,
+                                    mode: CupertinoDatePickerMode.date,
+                                    use24hFormat: true,
+                                    showDayOfWeek: true,
+                                    onDateTimeChanged: (DateTime newDate) {
+                                      setState(() {
+                                        startDate = newDate;
+                                        if (startDate
+                                                .difference(endDate)
+                                                .inHours >
+                                            12) {
+                                          setState(() {
+                                            endDate = newDate;
+                                          });
+                                        }
+                                        if (startDate
+                                                .difference(shipmentDate)
+                                                .inHours >
+                                            12) {
+                                          setState(() {
+                                            shipmentDate = newDate;
+                                          });
+                                        }
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    arrowColor: orderColor,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: "Хүлээлгэж өгөх",
+                    secondText: '${DateFormat('yyyy-MM-dd').format(endDate)}',
+                    secondTextColor: orderColor,
+                    onClick: () {
+                      showCupertinoModalPopup(
+                        context: context,
+                        builder: (context) {
+                          return Container(
+                            color: white,
+                            height: MediaQuery.of(context).size.height * 0.4,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text(
+                                    'Болсон',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: black,
+                                      fontFamily: "Montserrat",
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: CupertinoDatePicker(
+                                    minimumDate: startDate,
+                                    initialDateTime: startDate,
+                                    mode: CupertinoDatePickerMode.date,
+                                    use24hFormat: true,
+                                    showDayOfWeek: true,
+                                    onDateTimeChanged: (DateTime newDate) {
+                                      setState(() => endDate = newDate);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    arrowColor: orderColor,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: "Ачилт хийх",
+                    secondText:
+                        '${DateFormat('yyyy-MM-dd').format(shipmentDate)}',
+                    secondTextColor: orderColor,
+                    onClick: () {
+                      showCupertinoModalPopup(
+                        context: context,
+                        builder: (context) {
+                          return Container(
+                            color: white,
+                            height: MediaQuery.of(context).size.height * 0.4,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text(
+                                    'Болсон',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: black,
+                                      fontFamily: "Montserrat",
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: CupertinoDatePicker(
+                                    minimumDate: startDate,
+                                    initialDateTime: startDate,
+                                    mode: CupertinoDatePickerMode.date,
+                                    use24hFormat: true,
+                                    showDayOfWeek: true,
+                                    onDateTimeChanged: (DateTime newDate) {
+                                      setState(() => shipmentDate = newDate);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    arrowColor: orderColor,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 10,
+                    labelText: "Хүргэлт хариуцсан",
+                    secondText: '${staffName}',
+                    secondTextColor: orderColor,
+                    onClick: () {
+                      show();
+                    },
+                    arrowColor: orderColor,
+                  ),
+                  SizedBox(
+                    height: 100,
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: () {
+                        onSubmit();
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(right: 15),
+                        width: 150,
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: orderColor),
+                          borderRadius: BorderRadius.circular(5),
+                          color: white,
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/svg/zahialga.svg',
+                              colorFilter:
+                                  ColorFilter.mode(orderColor, BlendMode.srcIn),
+                              height: 17,
+                            ),
+                            SizedBox(
+                              width: 7,
+                            ),
+                            Text(
+                              'Хуваарилах',
+                              style: TextStyle(color: orderColor),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 
@@ -369,12 +406,12 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution> {
                   ),
                 ),
                 Column(
-                  children: general.staffs!
+                  children: staff.rows!
                       .map(
                         (e) => GestureDetector(
                           onTap: () {
                             setState(() {
-                              staff = "${e.lastName} ${e.firstName}";
+                              staffName = "${e.lastName} ${e.firstName}";
                               staffId = e.id.toString();
                             });
                             Navigator.of(context).pop();

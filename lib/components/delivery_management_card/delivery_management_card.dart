@@ -1,3 +1,4 @@
+import 'package:dehub/models/order.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -5,8 +6,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 class DeliveryManagementCard extends StatefulWidget {
   final Function()? onClick;
   final bool isFinished;
+  final Order data;
   const DeliveryManagementCard({
     Key? key,
+    required this.data,
     required this.isFinished,
     this.onClick,
   }) : super(key: key);
@@ -37,7 +40,7 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
                     width: 5,
                   ),
                   Text(
-                    'DN-100091',
+                    '${widget.data.refCode}',
                     style: TextStyle(
                       color: orderColor,
                       fontSize: 14,
@@ -56,10 +59,17 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 16,
-                    backgroundImage: AssetImage('images/avatar.png'),
-                  ),
+                  widget.data.order?.receiverBranch?.logo == null
+                      ? CircleAvatar(
+                          radius: 16,
+                          backgroundImage: AssetImage('images/avatar.png'),
+                        )
+                      : CircleAvatar(
+                          radius: 16,
+                          backgroundColor: grey,
+                          backgroundImage: NetworkImage(
+                              '${widget.data.order?.receiverBranch?.logo}'),
+                        ),
                   SizedBox(
                     width: 5,
                   ),
@@ -67,14 +77,14 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Биг супермаркет",
+                        "${widget.data.receiverBusiness?.profileName}",
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 14,
                         ),
                       ),
                       Text(
-                        'BU-100072',
+                        '${widget.data.receiverBusiness?.refCode}',
                         style: TextStyle(
                           color: grey2,
                           fontSize: 11,
@@ -129,7 +139,7 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
                     Expanded(
                       child: widget.isFinished == true
                           ? Text(
-                              'Баяр Амгалан',
+                              '${widget.data.staff?.lastName?[0]}. ${widget.data.staff?.firstName}',
                               style: TextStyle(
                                 color: depBrown,
                                 fontSize: 14,

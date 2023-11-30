@@ -1,10 +1,21 @@
+import 'package:dehub/api/order_api.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
+import 'package:dehub/models/order.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ShipmentDistributionCard extends StatefulWidget {
-  const ShipmentDistributionCard({super.key});
+  final List<Order> lines;
+  final Order data;
+  final String deliveryNoteId;
+  const ShipmentDistributionCard({
+    Key? key,
+    required this.deliveryNoteId,
+    required this.data,
+    required this.lines,
+  });
 
   @override
   State<ShipmentDistributionCard> createState() =>
@@ -13,6 +24,23 @@ class ShipmentDistributionCard extends StatefulWidget {
 
 class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
   DateTime? date;
+  bool dateValidate = false;
+
+  onSubmit() async {
+    Order data = Order();
+    data.warehouseId = widget.data.id;
+    data.loadingDate = date.toString();
+    data.deliveryNoteId = widget.deliveryNoteId;
+    await OrderApi().pullSheetCreate(data);
+    showCustomDialog(
+      context,
+      "Амжилттай хүргэлт хуваариллаа",
+      true,
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +65,7 @@ class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
                       ),
                       Expanded(
                         child: Text(
-                          ' Хөргүүртэй агуулах',
+                          ' ${widget.data.name}',
                           style: TextStyle(
                             color: grey3,
                             fontWeight: FontWeight.w500,
@@ -57,9 +85,9 @@ class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Column(
-                  children: [1, 2, 3]
+                  children: widget.lines
                       .map(
-                        (e) => Column(
+                        (item) => Column(
                           children: [
                             Divider(
                               thickness: 1,
@@ -69,18 +97,24 @@ class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
                                 Row(
                                   children: [
                                     Text(
-                                      '1',
+                                      '${widget.lines.indexOf(item) + 1}',
                                       style: TextStyle(
                                         fontSize: 10,
                                       ),
                                     ),
                                     SizedBox(
-                                      width: 5,
+                                      width: 10,
                                     ),
                                     Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(5),
                                         color: grey,
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                            '${item.image}',
+                                          ),
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                       height: 36,
                                       width: 36,
@@ -90,7 +124,7 @@ class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
                                     ),
                                     Expanded(
                                       child: Text(
-                                        'CALVET VARIETALS CINSAULT ROSE VIN DE PAYS 0.75L',
+                                        '${item.name}',
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
@@ -115,7 +149,7 @@ class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
                                           ),
                                         ),
                                         Text(
-                                          'GD-100033',
+                                          '${item.refCode}',
                                           style: TextStyle(
                                               fontSize: 12, color: orderColor),
                                         ),
@@ -130,7 +164,7 @@ class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
                                           ),
                                         ),
                                         Text(
-                                          'ширхэг',
+                                          '${item.unit?.toLowerCase()}',
                                           style: TextStyle(
                                               fontSize: 12, color: orderColor),
                                         ),
@@ -154,7 +188,7 @@ class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
                                           ),
                                         ),
                                         Text(
-                                          '12345678',
+                                          '${item.skuCode}',
                                           style: TextStyle(
                                               fontSize: 12, color: orderColor),
                                         ),
@@ -169,7 +203,7 @@ class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
                                           ),
                                         ),
                                         Text(
-                                          ' 1 ',
+                                          ' ${item.quantity} ',
                                           style: TextStyle(
                                             fontSize: 14,
                                             color: orderColor,
@@ -183,7 +217,7 @@ class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
                                 SizedBox(
                                   height: 15,
                                 ),
-                                e == 3
+                                widget.lines.last.id == item.id
                                     ? Divider(
                                         thickness: 1,
                                       )
@@ -209,7 +243,7 @@ class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
                           textAlign: TextAlign.end,
                         ),
                         Text(
-                          'Эрдэнэбаяр, Туул',
+                          ' ${widget.data.warehouseUser?.firstName}',
                           style: TextStyle(
                             color: grey3,
                             fontSize: 12,
@@ -221,6 +255,14 @@ class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
                     ),
                     GestureDetector(
                       onTap: () {
+                        setState(() {
+                          if (date == null) {
+                            date = DateTime.now();
+                            setState(() {
+                              dateValidate = false;
+                            });
+                          }
+                        });
                         showCupertinoModalPopup(
                           context: context,
                           builder: (context) {
@@ -267,12 +309,13 @@ class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 3),
                         decoration: BoxDecoration(
-                          border: Border.all(color: grey),
+                          border: Border.all(color: dateValidate ? red : grey),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Text(
                           '${date != null ? DateFormat("yyyy-MM-dd").format(date!) : "Өдөр сонгох"}',
-                          style: TextStyle(fontSize: 12, color: grey2),
+                          style: TextStyle(
+                              fontSize: 12, color: dateValidate ? red : grey2),
                         ),
                       ),
                     ),
@@ -287,7 +330,15 @@ class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
           Align(
             alignment: Alignment.centerRight,
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                if (date == null) {
+                  setState(() {
+                    dateValidate = true;
+                  });
+                } else {
+                  onSubmit();
+                }
+              },
               child: Container(
                 width: 150,
                 margin: const EdgeInsets.only(right: 15, top: 10),

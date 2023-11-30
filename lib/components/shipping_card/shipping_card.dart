@@ -49,6 +49,7 @@ class _DeliveryCardState extends State<ShippingCard> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.data?.loadingDate);
     general = Provider.of<GeneralProvider>(context, listen: false).orderGeneral;
     return GestureDetector(
       onTap: widget.onClick,
@@ -120,7 +121,7 @@ class _DeliveryCardState extends State<ShippingCard> {
                     ),
                     widget.data?.loadingDate != null
                         ? Text(
-                            '${DateFormat('yyyy-MM-dd').format(widget.data!.loadingDate!)}',
+                            '${DateFormat('yyyy-MM-dd').format(DateTime.parse(widget.data!.loadingDate!))}',
                             style: TextStyle(
                               color: buttonColor,
                               fontSize: 12,
@@ -143,7 +144,7 @@ class _DeliveryCardState extends State<ShippingCard> {
                     color: buttonColor,
                     fontSize: 12,
                   ),
-                )
+                ),
               ],
             ),
             SizedBox(

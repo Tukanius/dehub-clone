@@ -1061,12 +1061,12 @@ class MyApp extends StatelessWidget {
                       );
                     });
                   case ShipmentDistribution.routeName:
-                    // ShipmentDistributionArguments arguments =
-                    // settings.arguments as ShipmentDistributionArguments;
+                    ShipmentDistributionArguments arguments =
+                        settings.arguments as ShipmentDistributionArguments;
                     return MaterialPageRoute(builder: (context) {
                       return ShipmentDistribution(
-                          // id: arguments.id,
-                          );
+                        id: arguments.id,
+                      );
                     });
                   case SetDeliveryDistribution.routeName:
                     SetDeliveryDistributionArguments arguments =
@@ -1074,6 +1074,7 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return SetDeliveryDistribution(
                         id: arguments.id,
+                        data: arguments.data,
                       );
                     });
                   case DeliveryPage.routeName:

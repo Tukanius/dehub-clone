@@ -41,6 +41,7 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
     Filter filter = Filter(pullSheetStatus: '');
     pullSheet = await OrderApi()
         .pullSheet(ResultArguments(filter: filter, offset: offset));
+    await groupMaker();
     setState(() {
       isLoading = false;
       Future.delayed(Duration(milliseconds: 100), () {

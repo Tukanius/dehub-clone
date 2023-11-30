@@ -49,8 +49,8 @@ class _DistributionTabState extends State<DistributionTab>
   list(page, limit) async {
     Filter filter = Filter(deliveryNoteStatus: "DRAFT");
     Offset offset = Offset(page: page, limit: limit);
-    order = await OrderApi()
-        .deliveryNoteList(ResultArguments(filter: filter, offset: offset));
+    order = await OrderApi().deliveryManagementList(
+        ResultArguments(filter: filter, offset: offset));
     setState(() {
       isLoading = false;
     });
@@ -122,16 +122,19 @@ class _DistributionTabState extends State<DistributionTab>
                         ? Column(
                             children: order.rows!
                                 .map(
-                                  (e) => Column(
+                                  (data) => Column(
                                     children: [
                                       DeliveryManagementCard(
+                                        data: data,
                                         isFinished: false,
                                         onClick: () {
                                           Navigator.of(context).pushNamed(
                                             SetDeliveryDistribution.routeName,
                                             arguments:
                                                 SetDeliveryDistributionArguments(
-                                                    id: ''),
+                                              data: data,
+                                              id: '',
+                                            ),
                                           );
                                         },
                                       ),

@@ -104,114 +104,118 @@ class _ShippingMadeState extends State<ShippingMade> with AfterLayoutMixin {
               color: orderColor,
             ),
           )
-        : SmartRefresher(
-            enablePullDown: true,
-            enablePullUp: true,
-            controller: refreshController,
-            header: WaterDropHeader(
-              waterDropColor: orderColor,
-              refresh: SizedBox(
-                height: 20,
-                width: 20,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: orderColor,
-                ),
+        : Column(
+            children: [
+              SizedBox(
+                height: 5,
               ),
-            ),
-            onRefresh: _onRefresh,
-            onLoading: _onLoading,
-            footer: CustomFooter(
-              builder: (context, mode) {
-                Widget body;
-                if (mode == LoadStatus.idle) {
-                  body = const Text("");
-                } else if (mode == LoadStatus.loading) {
-                  body = const CupertinoActivityIndicator();
-                } else if (mode == LoadStatus.failed) {
-                  body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                } else {
-                  body = const Text("Мэдээлэл алга байна");
-                }
-                return SizedBox(
-                  height: 55.0,
-                  child: Center(child: body),
-                );
-              },
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 5,
+              SearchButton(
+                color: orderColor,
+                textColor: orderColor,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Expanded(
+                child: SmartRefresher(
+                  enablePullDown: true,
+                  enablePullUp: true,
+                  controller: refreshController,
+                  header: WaterDropHeader(
+                    waterDropColor: orderColor,
+                    refresh: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: orderColor,
+                      ),
+                    ),
                   ),
-                  SearchButton(
-                    color: orderColor,
-                    textColor: orderColor,
+                  onRefresh: _onRefresh,
+                  onLoading: _onLoading,
+                  footer: CustomFooter(
+                    builder: (context, mode) {
+                      Widget body;
+                      if (mode == LoadStatus.idle) {
+                        body = const Text("");
+                      } else if (mode == LoadStatus.loading) {
+                        body = const CupertinoActivityIndicator();
+                      } else if (mode == LoadStatus.failed) {
+                        body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
+                      } else {
+                        body = const Text("Мэдээлэл алга байна");
+                      }
+                      return SizedBox(
+                        height: 55.0,
+                        child: Center(child: body),
+                      );
+                    },
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  groupedList.length != 0
-                      ? Column(
-                          children: groupedList
-                              .map(
-                                (data) => Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    AnimatedContainer(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 10),
-                                      duration: Duration(
-                                        milliseconds: 300 +
-                                            (groupedList.indexOf(data) * 300),
-                                      ),
-                                      curve: Curves.ease,
-                                      transform: Matrix4.translationValues(
-                                          startAnimation ? 0 : -screenWidth,
-                                          0,
-                                          0),
-                                      child: Text(
-                                        '${DateFormat("yyyy-MM-dd").format(data.header!)}',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          color: grey3,
+                  child: SingleChildScrollView(
+                    child: groupedList.length != 0
+                        ? Column(
+                            children: groupedList
+                                .map(
+                                  (data) => Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      AnimatedContainer(
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 10),
+                                        duration: Duration(
+                                          milliseconds: 300 +
+                                              (groupedList.indexOf(data) * 300),
+                                        ),
+                                        curve: Curves.ease,
+                                        transform: Matrix4.translationValues(
+                                            startAnimation ? 0 : -screenWidth,
+                                            0,
+                                            0),
+                                        child: Text(
+                                          '${DateFormat("yyyy-MM-dd").format(data.header!)}',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            color: grey3,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Column(
-                                      children: data.values!
-                                          .map(
-                                            (item) => ShippingCard(
-                                              startAnimation: startAnimation,
-                                              index:
-                                                  pullSheet.rows!.indexOf(item),
-                                              data: item,
-                                              onClick: () {
-                                                Navigator.of(context).pushNamed(
-                                                  OrderShipment.routeName,
-                                                  arguments:
-                                                      OrderShipmentArguments(
-                                                    data: item,
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          )
-                                          .toList(),
-                                    )
-                                  ],
-                                ),
-                              )
-                              .toList(),
-                        )
-                      : NotFound(
-                          module: "ORDER",
-                          labelText: "Хоосон байна",
-                        ),
-                ],
+                                      Column(
+                                        children: data.values!
+                                            .map(
+                                              (item) => ShippingCard(
+                                                startAnimation: startAnimation,
+                                                index: pullSheet.rows!
+                                                    .indexOf(item),
+                                                data: item,
+                                                onClick: () {
+                                                  Navigator.of(context)
+                                                      .pushNamed(
+                                                    OrderShipment.routeName,
+                                                    arguments:
+                                                        OrderShipmentArguments(
+                                                      data: item,
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            )
+                                            .toList(),
+                                      )
+                                    ],
+                                  ),
+                                )
+                                .toList(),
+                          )
+                        : NotFound(
+                            module: "ORDER",
+                            labelText: "Хоосон байна",
+                          ),
+                  ),
+                ),
               ),
-            ),
+            ],
           );
   }
 }
