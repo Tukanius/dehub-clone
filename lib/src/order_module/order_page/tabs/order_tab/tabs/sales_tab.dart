@@ -13,8 +13,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class SalesTab extends StatefulWidget {
   const SalesTab({Key? key}) : super(key: key);
@@ -35,6 +35,17 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
       RefreshController(initialRefresh: false);
   ListenController listenController = ListenController();
   Map<DateTime, List<Order>> groupItem = {};
+
+  @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        isLoading = true;
+        list(page, limit);
+      });
+    });
+    super.initState();
+  }
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -63,19 +74,26 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
     for (var data in order.rows!) {
       DateTime date =
           DateTime.parse(DateFormat("yyyy-MM-dd").format(data.createdAt));
-      // if (groupedList.isEmpty) {
-      //   if (groupedItems.containsKey(date)) {
-      //     groupedItems[date]!.add(data);
-      //   } else {
-      //     groupedItems[date] = [data];
-      //   }
-      // }
-      // else {
+      // if (order.rows!.isEmpty) {
       if (groupedItems.containsKey(date)) {
         groupedItems[date]?.add(data);
       } else {
         groupedItems[date] = [data];
       }
+      // } else {
+      //   DateTime lastDate = DateTime.parse(
+      //       DateFormat("yyyy-MM-dd").format(order.rows?[9].createdAt));
+      //   if (groupedItems.containsKey(date)) {
+      //     if (groupItem.containsKey(lastDate)) {
+      //       print('asdf');
+      //       groupedList.last.values?.add(data);
+      //     } else {
+      //       print('1234');
+      //       groupedItems[date]?.add(data);
+      //     }
+      //   } else {
+      //     groupedItems[date] = [data];
+      //   }
       // }
     }
     groupItem = groupedItems;
@@ -114,7 +132,7 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserProvider>(context, listen: false).orderMe;
+    user = Provider.of<UserProvider>(context, listen: true).orderMe;
     return Column(
       children: [
         SearchButton(
@@ -219,6 +237,8 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
                                                             .routeName,
                                                         arguments:
                                                             ReceivedOrderDetailArguments(
+                                                          listenController:
+                                                              listenController,
                                                           id: item.id!,
                                                         ),
                                                       );

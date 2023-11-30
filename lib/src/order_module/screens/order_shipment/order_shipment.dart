@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:dehub/api/order_api.dart';
+import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/goods_info_card/order_goods_info_card.dart';
 import 'package:dehub/components/shipment_product_card/shipment_product_card.dart';
-// import 'package:dehub/components/order_product_card/order_product_card.dart';
 import 'package:dehub/components/shipping_card/shipping_card.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/src/order_module/screens/pull_sheet_expenses/pull_sheet_expenses.dart';
@@ -36,7 +36,6 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
   bool isLoading = true;
   Order shipment = Order();
   Timer? timer;
-  // bool isCountDown = true;
   bool startShipment = false;
   Duration resume = Duration();
   Duration difference1 = Duration();
@@ -86,14 +85,6 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
       });
     }
   }
-
-  // void reset() {
-  //   if (isCountDown) {
-  //     setState(() => duration = Duration());
-  //   } else {
-  //     setState(() => duration = Duration());
-  //   }
-  // }
 
   void startTimer(bool isProceed) async {
     if (shipment.startedDate == null) {
@@ -549,50 +540,13 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                       ),
                     ),
                   ),
-                  Container(
+                  FieldCard(
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    labelText: "Нэр төрлийн тоо",
+                    secondText: "${shipment.pullSheetLines?.length}",
+                    secondTextColor: orderColor,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Нийт дүн',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        Text(
-                          "351,671 ₮",
-                          style: TextStyle(
-                            color: orderColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Нэр төрлийн тоо',
-                          style: TextStyle(
-                            color: buttonColor,
-                          ),
-                        ),
-                        Text(
-                          "${shipment.pullSheetLines!.fold(0, (previousValue, element) => previousValue + element.quantity!)}",
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
                   Container(
                     color: white,

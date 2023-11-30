@@ -75,10 +75,8 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                     CircleAvatar(
                       radius: 12,
                       backgroundColor: grey,
-                      backgroundImage: widget.data.type == "PURCHASE" &&
-                                  user.currentBusiness?.type == "BUYER" ||
-                              widget.data.type == "SALES" &&
-                                  user.currentBusiness?.type == "SUPPLIER"
+                      backgroundImage: widget.data.type == "SALES" &&
+                              user.currentBusiness?.type == "SUPPLIER"
                           ? NetworkImage(
                               '${widget.data.receiverBusiness?.logo}')
                           : NetworkImage('${widget.data.senderBusiness?.logo}'),
@@ -86,10 +84,8 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                     SizedBox(
                       width: 5,
                     ),
-                    widget.data.type == "PURCHASE" &&
-                                user.currentBusiness?.type == "BUYER" ||
-                            widget.data.type == "SALES" &&
-                                user.currentBusiness?.type == "SUPPLIER"
+                    widget.data.type == "SALES" &&
+                            user.currentBusiness?.type == "SUPPLIER"
                         ? Text(
                             '${widget.data.receiverBusiness?.partner?.businessName}',
                             style: TextStyle(
@@ -116,17 +112,18 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                     SizedBox(
                       width: 5,
                     ),
-                    widget.data.purchaseCode != null
+                    widget.data.type == "SALES" && widget.data.salesCode != null
                         ? Text(
-                            '${widget.data.purchaseCode}',
+                            '${widget.data.salesCode}',
                             style: TextStyle(
                               color: grey2,
                               fontWeight: FontWeight.w500,
                             ),
                           )
-                        : widget.data.salesCode != null
+                        : widget.data.type == "PURCHASE" &&
+                                widget.data.purchaseCode != null
                             ? Text(
-                                '${widget.data.salesCode}',
+                                '${widget.data.purchaseCode}',
                                 style: TextStyle(
                                   color: grey2,
                                   fontWeight: FontWeight.w500,
@@ -269,48 +266,59 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      'Нийт дүн: ',
-                      style: TextStyle(
-                        color: depBrown,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
+                Container(
+                  width: (MediaQuery.of(context).size.width / 2) - 15,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Нийт дүн: ',
+                        style: TextStyle(
+                          color: depBrown,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                        ),
                       ),
-                    ),
-                    Text(
-                      '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
-                      style: TextStyle(
-                        color: orderColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
+                      Text(
+                        '${Utils().formatCurrency(widget.data.totalAmount.toString())}₮',
+                        style: TextStyle(
+                          color: orderColor,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    )
-                  ],
+                    ],
+                  ),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      'Төлбөл зохих: ',
-                      style: TextStyle(
-                        color: depBrown,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
+                Container(
+                  width: (MediaQuery.of(context).size.width / 2) - 15,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Төлбөл зохих: ',
+                        style: TextStyle(
+                          color: depBrown,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                        ),
+                        textAlign: TextAlign.end,
                       ),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
-                      style: TextStyle(
-                        color: orderColor,
-                        fontSize: 12,
+                      SizedBox(
+                        width: 5,
                       ),
-                    )
-                  ],
-                )
+                      Text(
+                        '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
+                        style: TextStyle(
+                          color: orderColor,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
             SizedBox(

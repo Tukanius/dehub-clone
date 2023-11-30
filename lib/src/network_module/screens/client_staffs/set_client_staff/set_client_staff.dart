@@ -80,8 +80,6 @@ class _SetClientStaffState extends State<SetClientStaff> {
 
   @override
   Widget build(BuildContext context) {
-    print(clientStaff);
-    print(coClientStaff);
     general =
         Provider.of<GeneralProvider>(context, listen: true).businessGeneral;
     return Scaffold(

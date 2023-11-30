@@ -738,9 +738,19 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                       Navigator.of(context).pushNamed(
                                         Harah.routeName,
                                         arguments: HarahArguments(
-                                          totalAmount: source.totalAmount,
-                                          invoice: invoice,
-                                          data: product,
+                                          isNewInvoice: true,
+                                          invoice: Invoice(
+                                            createdAt: DateTime.now(),
+                                            lines: source.invoice,
+                                            vatAmount: source.totalVatAmount,
+                                            taxAmount: source.totalTaxAmount,
+                                            totalAmount: source.total,
+                                            shippingAmount: shippingAmount,
+                                            discountAmount: discountAmount,
+                                            itemsTotal: source.total,
+                                            receiverBusiness: invoice,
+                                            senderBusiness: Invoice(),
+                                          ),
                                         ),
                                       );
                                     },
@@ -861,7 +871,6 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
     partnerListenController.addListener(() {
       setState(() {
         partnerInvoice = partnerListenController.partnerInvoice!;
-        print(partnerInvoice.toJson());
       });
     });
     sectorListenController.addListener(() {

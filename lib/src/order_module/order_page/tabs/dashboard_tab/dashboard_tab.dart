@@ -4,6 +4,7 @@ import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/order_module/screens/delivery_management/delivery_management.dart';
 import 'package:dehub/src/order_module/screens/order_delivery/order_delivery.dart';
 import 'package:dehub/src/order_module/screens/order_shipping/order_shipping.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -86,16 +87,19 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               scrollDirection: Axis.horizontal,
               children: [
-                DashboardCard(
-                  onClick: () {
-                    Navigator.of(context).pushNamed(OrderDelivery.routeName);
-                  },
-                  boxColor: orderColor.withOpacity(0.2),
-                  padding: 8,
-                  labelText: 'Захиалга хүргэлт',
-                  svgColor: buttonColor,
-                  svg: 'assets/svg/zahialga.svg',
-                ),
+                user.currentBusiness?.type == "SUPPLIER"
+                    ? DashboardCard(
+                        onClick: () {
+                          Navigator.of(context)
+                              .pushNamed(DeliveryManagement.routeName);
+                        },
+                        boxColor: orderColor.withOpacity(0.2),
+                        padding: 8,
+                        labelText: 'Хүргэлт удирдлага',
+                        svgColor: buttonColor,
+                        svg: 'assets/svg/zahialga.svg',
+                      )
+                    : SizedBox(),
                 user.currentBusiness?.type == "SUPPLIER"
                     ? DashboardCard(
                         onClick: () {
@@ -109,6 +113,16 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         svg: 'assets/svg/push.svg',
                       )
                     : SizedBox(),
+                DashboardCard(
+                  onClick: () {
+                    Navigator.of(context).pushNamed(OrderDelivery.routeName);
+                  },
+                  boxColor: orderColor.withOpacity(0.2),
+                  padding: 8,
+                  labelText: 'Захиалга хүргэлт',
+                  svgColor: buttonColor,
+                  svg: 'assets/svg/zahialga.svg',
+                ),
                 DashboardCard(
                   onClick: () {},
                   boxColor: orderColor.withOpacity(0.2),

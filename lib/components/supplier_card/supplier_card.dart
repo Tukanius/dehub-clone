@@ -109,9 +109,7 @@ class _SupplierCardState extends State<SupplierCard> {
                           color: orange,
                         ),
                       ),
-                      onRatingUpdate: (rating) {
-                        print(rating);
-                      },
+                      onRatingUpdate: (rating) {},
                     ),
                   ],
                 ),

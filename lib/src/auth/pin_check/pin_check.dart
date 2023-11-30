@@ -148,7 +148,9 @@ class _PinCheckScreenState extends State<PinCheckScreen> {
                           isSubmit = false;
                         });
                       } catch (e) {
-                        isSubmit = false;
+                        setState(() {
+                          isSubmit = false;
+                        });
                       }
                     },
                     length: 6,

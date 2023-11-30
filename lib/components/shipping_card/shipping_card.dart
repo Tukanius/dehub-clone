@@ -58,7 +58,7 @@ class _DeliveryCardState extends State<ShippingCard> {
             0,
             0),
         curve: Curves.ease,
-        duration: Duration(milliseconds: 300 + (widget.index * 100)),
+        duration: Duration(milliseconds: 300 + (widget.index * 200)),
         margin: const EdgeInsets.only(bottom: 5),
         padding: const EdgeInsets.all(15),
         color: white,
@@ -137,28 +137,13 @@ class _DeliveryCardState extends State<ShippingCard> {
                           )
                   ],
                 ),
-                Row(
-                  children: [
-                    Text(
-                      'Нярав: ',
-                      style: TextStyle(
-                        color: depBrown,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      '${widget.data?.staff?.firstName}',
-                      style: TextStyle(
-                        color: orderColor,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
+                Text(
+                  '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data!.createdAt!)}',
+                  style: TextStyle(
+                    color: buttonColor,
+                    fontSize: 12,
+                  ),
+                )
               ],
             ),
             SizedBox(
@@ -195,45 +180,28 @@ class _DeliveryCardState extends State<ShippingCard> {
                           )
                   ],
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    color: Color(statusColor()).withOpacity(0.2),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                  child: Text(
-                    '${status(widget.data!.pullSheetStatus!)}',
-                    style: TextStyle(
-                      color: Color(statusColor()),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
+                Row(
+                  children: [
+                    Text(
+                      'Нярав: ',
+                      style: TextStyle(
+                        color: depBrown,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12,
+                      ),
                     ),
-                  ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      '${widget.data?.staff?.firstName}',
+                      style: TextStyle(
+                        color: orderColor,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
                 ),
-                // Row(
-                //   children: [
-                //     Text(
-                //       'Агуулах:',
-                //       style: TextStyle(
-                //         color: depBrown,
-                //         fontWeight: FontWeight.w500,
-                //         fontSize: 12,
-                //       ),
-                //     ),
-                //     SizedBox(
-                //       width: 5,
-                //     ),
-                //     Text(
-                //       'Төв агуулах',
-                //       style: TextStyle(
-                //         color: buttonColor,
-                //         fontWeight: FontWeight.w700,
-                //         fontSize: 12,
-                //       ),
-                //     ),
-                //   ],
-                // ),
               ],
             ),
             SizedBox(
@@ -270,72 +238,24 @@ class _DeliveryCardState extends State<ShippingCard> {
                           ),
                   ],
                 ),
-                // Row(
-                //   children: [
-                //     Text(
-                //       'Нярав: ',
-                //       style: TextStyle(
-                //         color: depBrown,
-                //         fontWeight: FontWeight.w500,
-                //         fontSize: 12,
-                //       ),
-                //     ),
-                //     SizedBox(
-                //       width: 5,
-                //     ),
-                //     Text(
-                //       '${widget.data?.staff?.firstName}',
-                //       style: TextStyle(
-                //         color: orderColor,
-                //         fontSize: 12,
-                //       ),
-                //     ),
-                //   ],
-                // ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: Color(statusColor()).withOpacity(0.2),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                  child: Text(
+                    '${status(widget.data!.pullSheetStatus!)}',
+                    style: TextStyle(
+                      color: Color(statusColor()),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
               ],
             ),
-            // SizedBox(
-            //   height: 10,
-            // ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     Row(
-            //       children: [
-            //         Text(
-            //           'Нийт дүн: ',
-            //           style: TextStyle(
-            //             color: buttonColor,
-            //             fontSize: 12,
-            //           ),
-            //         ),
-            //         Text(
-            //           '2,820,000 ₮',
-            //           style: TextStyle(
-            //             color: orderColor,
-            //             fontSize: 12,
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //     Container(
-            //       decoration: BoxDecoration(
-            //         borderRadius: BorderRadius.circular(4),
-            //         color: yellow.withOpacity(0.2),
-            //       ),
-            //       padding:
-            //           const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-            //       child: Text(
-            //         'Хүлээж буй',
-            //         style: TextStyle(
-            //           color: yellow,
-            //           fontSize: 12,
-            //           fontWeight: FontWeight.w500,
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // )
           ],
         ),
       ),

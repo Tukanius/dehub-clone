@@ -84,9 +84,7 @@ class _ProductCardState extends State<ProductCard> {
                 color: orange,
               ),
             ),
-            onRatingUpdate: (rating) {
-              print(rating);
-            },
+            onRatingUpdate: (rating) {},
           ),
           SizedBox(
             height: 7,

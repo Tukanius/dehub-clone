@@ -38,7 +38,6 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
   bool isLoading = true;
   User user = User();
   TextEditingController chatController = TextEditingController();
-  ScrollController scrollController = ScrollController();
   Result conversationList = Result(count: 0, rows: []);
   Order chat = Order();
   bool isSubmit = false;
@@ -103,13 +102,6 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
           debugPrint('============err===========');
         }
       });
-      await Future.delayed(Duration(milliseconds: 100), () {
-        scrollController.animateTo(
-          scrollController.position.maxScrollExtent + 75,
-          duration: Duration(milliseconds: 300),
-          curve: Curves.ease,
-        );
-      });
     } else {
       try {
         setState(() {
@@ -130,20 +122,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
         debugPrint(e.toString());
         debugPrint('============err===========');
       }
-      await Future.delayed(Duration(milliseconds: 100), () {
-        scrollController.animateTo(
-          scrollController.position.maxScrollExtent + 75,
-          duration: Duration(milliseconds: 300),
-          curve: Curves.ease,
-        );
-      });
     }
-  }
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
   }
 
   @override
@@ -223,7 +202,6 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                       ),
                       child: SingleChildScrollView(
                         reverse: false,
-                        controller: scrollController,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

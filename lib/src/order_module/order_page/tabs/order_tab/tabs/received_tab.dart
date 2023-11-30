@@ -1,4 +1,5 @@
 import 'package:dehub/api/order_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/sales_order_card/sales_order_card.dart';
 import 'package:dehub/components/search_button/search_button.dart';
@@ -12,11 +13,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class ReceivedTab extends StatefulWidget {
-  const ReceivedTab({super.key});
+  const ReceivedTab({Key? key}) : super(key: key);
 
   @override
   State<ReceivedTab> createState() => _ReceivedTabState();
@@ -32,6 +33,18 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
   List<Order> groupedList = [];
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
+  ListenController listenController = ListenController();
+
+  @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        isLoading = true;
+        list(page, limit);
+      });
+    });
+    super.initState();
+  }
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -61,6 +74,24 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
     isLoading = false;
   }
 
+  list(page, limit) async {
+    Offset offset = Offset(page: page, limit: limit);
+    Filter filter = Filter(
+        type: user.currentBusiness?.type == "SUPPLIER" ? "PURCHASE" : "SALES");
+    var res = await OrderApi()
+        .orderList(ResultArguments(filter: filter, offset: offset));
+    setState(() {
+      order = res;
+      isLoading = false;
+      Future.delayed(Duration(milliseconds: 100), () {
+        setState(() {
+          startAnimation = true;
+        });
+      });
+    });
+    await groupMaker();
+  }
+
   groupMaker() {
     Map<DateTime, List<Order>> groupedItems = {};
     for (var item in order.rows!) {
@@ -82,54 +113,34 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
     });
   }
 
-  list(page, limit) async {
-    Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(
-        type: user.currentBusiness?.type == "SUPPLIER" ? "PURCHASE" : "SALES");
-    var res = await OrderApi()
-        .orderList(ResultArguments(filter: filter, offset: offset));
-    setState(() {
-      order = res;
-      isLoading = false;
-      Future.delayed(Duration(milliseconds: 100), () {
-        setState(() {
-          startAnimation = true;
-        });
-      });
-    });
-    await groupMaker();
-  }
-
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserProvider>(context, listen: false).orderMe;
-
-    return isLoading == true
-        ? Center(
-            child: CircularProgressIndicator(
-              color: orderColor,
-            ),
-          )
-        : Column(
-            children: [
-              SearchButton(
-                color: orderColor,
-                textColor: orderColor,
-                onChange: (query) {},
-              ),
-              Expanded(
+    user = Provider.of<UserProvider>(context, listen: true).orderMe;
+    return Column(
+      children: [
+        SearchButton(
+          color: orderColor,
+          textColor: orderColor,
+        ),
+        isLoading == true
+            ? Center(
+                child: CircularProgressIndicator(
+                  color: orderColor,
+                ),
+              )
+            : Expanded(
                 child: SmartRefresher(
                   enablePullDown: true,
                   enablePullUp: true,
                   controller: refreshController,
                   header: WaterDropHeader(
-                    waterDropColor: invoiceColor,
+                    waterDropColor: orderColor,
                     refresh: SizedBox(
                       height: 20,
                       width: 20,
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
-                        color: invoiceColor,
+                        color: orderColor,
                       ),
                     ),
                   ),
@@ -156,63 +167,76 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
                   child: groupedList.length != 0
                       ? SingleChildScrollView(
                           child: Column(
-                            children: groupedList
-                                .map(
-                                  (item) => Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      AnimatedContainer(
-                                        duration: Duration(
-                                          milliseconds: 300 +
-                                              (groupedList.indexOf(item) * 300),
-                                        ),
-                                        curve: Curves.ease,
-                                        transform: Matrix4.translationValues(
-                                            startAnimation
-                                                ? 0
-                                                : -MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                            0,
-                                            0),
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 15, vertical: 10),
-                                        child: Text(
-                                          '${DateFormat("yyyy-MM-dd").format(item.header!)}',
-                                          style: TextStyle(
-                                            color: grey3,
-                                            fontWeight: FontWeight.bold,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Column(
+                                children: groupedList
+                                    .map(
+                                      (data) => Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          AnimatedContainer(
+                                            curve: Curves.ease,
+                                            transform:
+                                                Matrix4.translationValues(
+                                                    startAnimation
+                                                        ? 0
+                                                        : -MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                    0,
+                                                    0),
+                                            duration: Duration(
+                                              milliseconds: 300 +
+                                                  (groupedList.indexOf(data) *
+                                                      300),
+                                            ),
+                                            margin: const EdgeInsets.only(
+                                                left: 15, bottom: 10, top: 10),
+                                            child: Text(
+                                              '${DateFormat("yyyy-MM-dd").format(data.header!)}',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  color: grey2),
+                                            ),
                                           ),
-                                        ),
+                                          Column(
+                                            children: data.values!
+                                                .map(
+                                                  (item) => SalesOrderCard(
+                                                    index: order.rows!
+                                                        .indexOf(item),
+                                                    startAnimation:
+                                                        startAnimation,
+                                                    onClick: () {
+                                                      Navigator.of(context)
+                                                          .pushNamed(
+                                                        ReceivedOrderDetail
+                                                            .routeName,
+                                                        arguments:
+                                                            ReceivedOrderDetailArguments(
+                                                          listenController:
+                                                              listenController,
+                                                          id: item.id!,
+                                                        ),
+                                                      );
+                                                    },
+                                                    data: item,
+                                                  ),
+                                                )
+                                                .toList(),
+                                          )
+                                        ],
                                       ),
-                                      Column(
-                                        children: item.values!
-                                            .map(
-                                              (data) => SalesOrderCard(
-                                                index:
-                                                    order.rows!.indexOf(data),
-                                                startAnimation: startAnimation,
-                                                data: data,
-                                                onClick: () {
-                                                  Navigator.of(context)
-                                                      .pushNamed(
-                                                    ReceivedOrderDetail
-                                                        .routeName,
-                                                    arguments:
-                                                        ReceivedOrderDetailArguments(
-                                                      id: data.id!,
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                            )
-                                            .toList(),
-                                      )
-                                    ],
-                                  ),
-                                )
-                                .toList(),
+                                    )
+                                    .toList(),
+                              )
+                            ],
                           ),
                         )
                       : NotFound(
@@ -221,7 +245,7 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
                         ),
                 ),
               ),
-            ],
-          );
+      ],
+    );
   }
 }

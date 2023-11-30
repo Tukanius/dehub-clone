@@ -77,7 +77,7 @@ class General {
   List<Types>? types;
   List<NumberUnits>? numberUnits;
   List<OrderConfirmTerms>? orderConfirmTerms;
-  List<OverDueStatus>? overDueStatus;
+  List<OverDueStatus>? overdueStatus;
   List<PaymentMethod>? paymentMethod;
   List<PaymentTermRules>? paymentTermRules;
   List<PerTypes>? perTypes;
@@ -154,7 +154,7 @@ class General {
     this.types,
     this.numberUnits,
     this.orderConfirmTerms,
-    this.overDueStatus,
+    this.overdueStatus,
     this.paymentMethod,
     this.paymentTermRules,
     this.perTypes,

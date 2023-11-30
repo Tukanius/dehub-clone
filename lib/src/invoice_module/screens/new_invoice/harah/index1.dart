@@ -1,4 +1,3 @@
-import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/goods_info_card/goods_info_card.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/user.dart';
@@ -12,14 +11,12 @@ import 'package:after_layout/after_layout.dart';
 
 class Index1 extends StatefulWidget {
   final Invoice invoice;
-  final double totalAmount;
-  final List<Invoice>? data;
+  final bool isNewInvoice;
   static const routeName = '/index1';
   const Index1({
-    required this.totalAmount,
+    required this.isNewInvoice,
     required this.invoice,
     Key? key,
-    this.data,
   }) : super(key: key);
 
   @override
@@ -28,12 +25,22 @@ class Index1 extends StatefulWidget {
 
 class _Index1State extends State<Index1> with AfterLayoutMixin {
   User user = User();
-  Invoice invoice = Invoice();
+  Invoice supplierBusiness = Invoice();
+  Invoice buyerBusiness = Invoice();
   bool isLoading = true;
 
   @override
   afterFirstLayout(BuildContext context) async {
-    invoice = await InvoiceApi().networkGet(widget.invoice.id!);
+    if (widget.isNewInvoice == false) {
+      supplierBusiness = widget.invoice.type == "SALES"
+          ? widget.invoice.senderBusiness!
+          : widget.invoice.receiverBusiness!;
+      buyerBusiness = widget.invoice.type == "SALES"
+          ? widget.invoice.receiverBusiness!
+          : widget.invoice.senderBusiness!;
+    } else {
+      buyerBusiness = widget.invoice.receiverBusiness!;
+    }
     setState(() {
       isLoading = false;
     });
@@ -52,217 +59,243 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      children: [
-                        Text(
-                          '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
-                          style: TextStyle(),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '${user.lastName?[0]}.${user.firstName}',
-                          style: TextStyle(
-                            color: invoiceColor,
-                            fontWeight: FontWeight.w600,
+                    child: RichText(
+                      text: TextSpan(
+                        style:
+                            TextStyle(fontFamily: 'Montserrat', color: black),
+                        children: [
+                          TextSpan(
+                            text:
+                                '${DateFormat("yyyy-MM-dd").format(DateTime.now())} ',
                           ),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text('үүсгэсэн')
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 15),
-                        child: Text(
-                          'НЭХЭМЖЛЭХ',
-                          style: TextStyle(
-                            color: grey3,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 160,
-                          padding: const EdgeInsets.only(left: 15),
-                          color: white,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Container(
-                                height: 20,
-                                child: Text(
-                                  'Нэхэмжлэх №',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xff8181A5),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                height: 20,
-                                child: Text(
-                                  'Бүртгэсэн',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xff8181A5),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                height: 30,
-                                child: Text(
-                                  'Төлбөрийн сонголт',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xff8181A5),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                height: 20,
-                                child: Text(
-                                  'Нэхэмжлэх баталсан',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xff8181A5),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                height: 20,
-                                child: Text(
-                                  'Төлөх сүүлийн өдөр',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xff8181A5),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            height: 160,
-                            padding: const EdgeInsets.only(right: 15, left: 15),
-                            color: white,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  height: 20,
-                                  child: Text(
-                                    '-',
-                                    style: TextStyle(
-                                        color: black,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  height: 20,
-                                  child: Text(
-                                    '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  height: 30,
-                                  child: Text(
-                                    '${invoice.paymentTerm?.description}',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  height: 20,
-                                  child: Text(
-                                    '-',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: black,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  height: 20,
-                                  child: Text(
-                                    '${DateFormat("yyyy-MM-dd").format(invoice.paymentDate!)}',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: black,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                              ],
+                          user.lastName != null
+                              ? TextSpan(text: '${user.lastName?[0]} ')
+                              : TextSpan(),
+                          TextSpan(
+                            text: "${user.firstName} ",
+                            style: TextStyle(
+                              color: invoiceColor,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
+                          TextSpan(text: 'үүсгэсэн.'),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin:
+                        const EdgeInsets.only(left: 15, top: 25, bottom: 10),
+                    child: Text(
+                      'НЭХЭМЖЛЭХ',
+                      style: TextStyle(
+                        color: grey3,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    color: white,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 4,
+                              child: Text(
+                                'Нэхэмжлэх №',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0xff8181A5),
+                                ),
+                                textAlign: TextAlign.end,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Expanded(
+                              flex: 6,
+                              child: widget.invoice.refCode == null
+                                  ? Text(
+                                      '-',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    )
+                                  : Text(
+                                      '${widget.invoice.refCode}',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 4,
+                              child: Text(
+                                'Бүртгэсэн',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0xff8181A5),
+                                ),
+                                textAlign: TextAlign.end,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Expanded(
+                              flex: 6,
+                              child: Text(
+                                '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
+                                style: TextStyle(
+                                  color: black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 4,
+                              child: Text(
+                                'Төлбөрийн сонголт',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0xff8181A5),
+                                ),
+                                textAlign: TextAlign.end,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Expanded(
+                              flex: 6,
+                              child: widget.invoice.paymentTerm?.description !=
+                                      null
+                                  ? Text(
+                                      '${widget.invoice.paymentTerm?.description}',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    )
+                                  : Text(
+                                      '-',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 4,
+                              child: Text(
+                                'Нэхэмжлэх баталсан',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0xff8181A5),
+                                ),
+                                textAlign: TextAlign.end,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Expanded(
+                              flex: 6,
+                              child: widget.invoice.createdAt != null
+                                  ? Text(
+                                      '${DateFormat("yyyy-MM-dd").format(widget.invoice.createdAt!)}',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    )
+                                  : Text(
+                                      "-",
+                                      style: TextStyle(
+                                        color: black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 4,
+                              child: Text(
+                                'Төлөх сүүлийн өдөр',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0xff8181A5),
+                                ),
+                                textAlign: TextAlign.end,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Expanded(
+                              flex: 6,
+                              child: widget.invoice.paymentDate != null
+                                  ? Text(
+                                      '${DateFormat("yyyy-MM-dd").format(widget.invoice.paymentDate!)}',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    )
+                                  : Text(
+                                      '-',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -298,52 +331,99 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                         child: Container(
                           padding: const EdgeInsets.all(15),
                           color: white,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '${user.currentBusiness?.profileName}',
-                                style: TextStyle(
-                                  color: black,
-                                  fontWeight: FontWeight.bold,
+                          child: widget.isNewInvoice == false
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${supplierBusiness.partner?.businessName}',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      'ТТД: ${supplierBusiness.regNumber}',
+                                      style: TextStyle(
+                                        color: black,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      '${supplierBusiness.profileName}',
+                                      style: TextStyle(
+                                        color: invoiceColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      '${supplierBusiness.partner?.email}',
+                                      style: TextStyle(
+                                        color: black,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      '${supplierBusiness.partner?.phone}',
+                                      style: TextStyle(color: black),
+                                    )
+                                  ],
+                                )
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${user.currentBusiness?.partner?.businessName}',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      'ТТД: ${user.currentBusiness?.regNumber}',
+                                      style: TextStyle(
+                                        color: black,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      '${user.currentBusiness?.profileName}',
+                                      style: TextStyle(
+                                        color: invoiceColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      '${user.currentBusiness?.partner?.email}',
+                                      style: TextStyle(
+                                        color: black,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      '${user.currentBusiness?.partner?.phone}',
+                                      style: TextStyle(color: black),
+                                    )
+                                  ],
                                 ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                'ТТД: ${user.currentBusiness?.regNumber}',
-                                style: TextStyle(
-                                  color: black,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                '${user.currentBusiness?.partnerName}',
-                                style: TextStyle(
-                                  color: invoiceColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                '${user.currentBusiness?.partnerEmail}',
-                                style: TextStyle(
-                                  color: black,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                '${user.currentBusiness?.partnerPhone}',
-                                style: TextStyle(color: black),
-                              )
-                            ],
-                          ),
                         ),
                       ),
                       SizedBox(
@@ -357,7 +437,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${widget.invoice.partner?.businessName}',
+                                '${buyerBusiness.partner?.businessName}',
                                 style: TextStyle(
                                   color: black,
                                   fontWeight: FontWeight.bold,
@@ -367,7 +447,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                 height: 10,
                               ),
                               Text(
-                                'ТТД: ${widget.invoice.regNumber}',
+                                'ТТД: ${buyerBusiness.regNumber}',
                                 style: TextStyle(
                                   color: black,
                                 ),
@@ -376,7 +456,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                 height: 10,
                               ),
                               Text(
-                                '${widget.invoice.partnerName}',
+                                '${buyerBusiness.profileName}',
                                 style: TextStyle(
                                   color: invoiceColor,
                                 ),
@@ -385,7 +465,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                 height: 10,
                               ),
                               Text(
-                                '${widget.invoice.partnerEmail}',
+                                '${buyerBusiness.partner?.email}',
                                 style: TextStyle(
                                   color: black,
                                 ),
@@ -394,7 +474,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                 height: 10,
                               ),
                               Text(
-                                '${widget.invoice.partnerPhone}',
+                                '${buyerBusiness.partner?.phone}',
                                 style: TextStyle(color: black),
                               )
                             ],
@@ -406,114 +486,8 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                   SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    color: white,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(top: 10, left: 15),
-                          child: Text(
-                            'Барааны мэдээлэл',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: grey3,
-                            ),
-                          ),
-                        ),
-                        Divider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    '#',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: black,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text(
-                                    'Бараа',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Container(
-                                    child: Text(
-                                      'Хэм.н',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Container(
-                                    child: Text(
-                                      'Тоо',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 30,
-                                  ),
-                                  Container(
-                                    child: Text(
-                                      'Нэгж үнэ',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Divider(),
-                        Column(
-                          children: widget.data!
-                              .map(
-                                (e) => GoodsInfoCard(
-                                  index: widget.data?.indexOf(e),
-                                  data: e,
-                                ),
-                              )
-                              .toList(),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
+                  GoodsInfoCard(
+                    data: widget.invoice.lines!,
                   ),
                   SizedBox(
                     height: 10,
@@ -537,8 +511,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                   ),
                   Container(
                     color: white,
-                    padding: EdgeInsets.only(
-                        left: 10, top: 10, bottom: 10, right: 10),
+                    padding: EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -546,7 +519,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                         Row(
                           children: [
                             Text(
-                              '25,500 ₮',
+                              '${Utils().formatCurrency(widget.invoice.discountAmount.toString())} ₮',
                               style: TextStyle(
                                 color: invoiceColor,
                               ),
@@ -566,8 +539,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                   ),
                   Container(
                     color: white,
-                    padding: EdgeInsets.only(
-                        left: 10, top: 10, bottom: 10, right: 10),
+                    padding: EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -576,7 +548,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                           child: Row(
                             children: [
                               Text(
-                                '379,500.00 ₮',
+                                '${Utils().formatCurrency(widget.invoice.itemsTotal.toString())} ₮',
                                 style: TextStyle(
                                   color: invoiceColor,
                                 ),
@@ -592,8 +564,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                   ),
                   Container(
                     color: white,
-                    padding: EdgeInsets.only(
-                        left: 10, top: 10, bottom: 10, right: 10),
+                    padding: EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -602,7 +573,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                           child: Row(
                             children: [
                               Text(
-                                '37,95.00 ₮',
+                                '${Utils().formatCurrency(widget.invoice.vatAmount.toString())} ₮',
                                 style: TextStyle(
                                   color: invoiceColor,
                                 ),
@@ -618,8 +589,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                   ),
                   Container(
                     color: white,
-                    padding: EdgeInsets.only(
-                        left: 10, top: 10, bottom: 10, right: 10),
+                    padding: EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -628,7 +598,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                           child: Row(
                             children: [
                               Text(
-                                '00.00 ₮',
+                                '${Utils().formatCurrency(widget.invoice.taxAmount.toString())}₮',
                                 style: TextStyle(
                                   color: invoiceColor,
                                 ),
@@ -644,8 +614,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                   ),
                   Container(
                     color: white,
-                    padding: EdgeInsets.only(
-                        left: 10, top: 10, bottom: 10, right: 10),
+                    padding: EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -654,7 +623,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                           child: Row(
                             children: [
                               Text(
-                                '00.00 ₮',
+                                '${Utils().formatCurrency("${widget.invoice.shippingAmount}")}₮',
                                 style: TextStyle(
                                   color: invoiceColor,
                                 ),
@@ -689,7 +658,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                         Row(
                           children: [
                             Text(
-                              '${Utils().formatCurrency(widget.totalAmount.toString())} ₮',
+                              '${Utils().formatCurrency(widget.invoice.totalAmount.toString())} ₮',
                               style: TextStyle(
                                 color: invoiceColor,
                                 fontWeight: FontWeight.bold,

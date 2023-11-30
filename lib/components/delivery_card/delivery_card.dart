@@ -13,7 +13,7 @@ import 'package:intl/intl.dart';
 class DeliveryCard extends StatefulWidget {
   final bool? isDeliveried;
   final int index;
-  final Order? data;
+  final Order data;
   final bool startAnimation;
   final Function()? refCodeClick;
   final Function()? startClick;
@@ -26,7 +26,7 @@ class DeliveryCard extends StatefulWidget {
     this.onClick,
     this.startClick,
     this.isDeliveried,
-    this.data,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -82,7 +82,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                       user.currentBusiness?.type == "SUPPLIER"
                           ? Expanded(
                               child: Text(
-                                '${widget.data?.receiverBusiness?.profileName}',
+                                '${widget.data.receiverBusiness?.profileName}',
                                 style: TextStyle(
                                   color: buttonColor,
                                   fontWeight: FontWeight.bold,
@@ -91,7 +91,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                             )
                           : Expanded(
                               child: Text(
-                                '${widget.data?.business?.profileName}',
+                                '${widget.data.business?.profileName}',
                                 style: TextStyle(
                                   color: buttonColor,
                                   fontWeight: FontWeight.bold,
@@ -113,7 +113,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                           width: 5,
                         ),
                         Text(
-                          '${widget.data?.refCode}',
+                          '${widget.data.refCode}',
                           style: TextStyle(
                             color: darkGreen,
                             fontWeight: FontWeight.w500,
@@ -156,7 +156,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                             ColorFilter.mode(darkGreen, BlendMode.srcIn),
                       ),
                       Text(
-                        ' ${widget.data?.salesCode}',
+                        ' ${widget.data.order?.purchaseCode}',
                         style: TextStyle(
                           color: orderColor,
                           fontSize: 12,
@@ -182,7 +182,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                         width: 5,
                       ),
                       Text(
-                        '${Utils().formatCurrency(widget.data?.totalAmount.toString())}₮',
+                        '${Utils().formatCurrency(widget.data.totalAmount.toString())}₮',
                         style: TextStyle(
                           color: orderColor,
                           fontSize: 12,
@@ -209,12 +209,12 @@ class _DeliveryCardState extends State<DeliveryCard> {
                       ),
                     ),
                     Text(
-                      status(widget.data?.deliveryNoteStatus.toString())
+                      status(widget.data.deliveryNoteStatus.toString())
                           .name
                           .toString(),
                       style: TextStyle(
                         color: Color(int.parse(
-                                status(widget.data?.deliveryNoteStatus
+                                status(widget.data.deliveryNoteStatus
                                         .toString())
                                     .color
                                     .substring(1, 7),
@@ -240,7 +240,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                       width: 5,
                     ),
                     Text(
-                      '${DateFormat("yyyy-MM-dd").format(DateTime.parse(widget.data!.deliveryDate.toString()))}',
+                      '${DateFormat("yyyy-MM-dd").format(DateTime.parse(widget.data.deliveryDate.toString()))}',
                       style: TextStyle(
                         color: buttonColor,
                         fontSize: 12,
@@ -266,36 +266,43 @@ class _DeliveryCardState extends State<DeliveryCard> {
                               fontSize: 12,
                             ),
                           ),
-                          Text(
-                            '-',
-                            style: TextStyle(
-                              color: buttonColor,
-                              fontSize: 12,
-                            ),
-                          ),
+                          widget.data.startDate == null
+                              ? Text(
+                                  '-',
+                                  style: TextStyle(
+                                    color: buttonColor,
+                                    fontSize: 12,
+                                  ),
+                                )
+                              : Text(
+                                  '${DateFormat('yyyy-MM-dd').format(widget.data.startDate!)}',
+                                  style: TextStyle(
+                                    color: buttonColor,
+                                    fontSize: 12,
+                                  ),
+                                ),
                         ],
                       ),
                       GestureDetector(
-                        onTap: widget.data?.deliveryNoteStatus == "LOADED" ||
-                                widget.data?.deliveryNoteStatus == "DELIVERING"
+                        onTap: widget.data.deliveryNoteStatus == "LOADED" ||
+                                widget.data.deliveryNoteStatus == "DELIVERING"
                             ? widget.startClick
                             : () {},
                         child: Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            color:
-                                widget.data?.deliveryNoteStatus == "LOADED" &&
-                                            user.currentBusiness?.type ==
-                                                "SUPPLIER" ||
-                                        widget.data?.deliveryNoteStatus ==
-                                            "DELIVERING"
-                                    ? orderColor
-                                    : orderColor.withOpacity(0.2),
+                            color: widget.data.deliveryNoteStatus == "LOADED" &&
+                                        user.currentBusiness?.type ==
+                                            "SUPPLIER" ||
+                                    widget.data.deliveryNoteStatus ==
+                                        "DELIVERING"
+                                ? orderColor
+                                : orderColor.withOpacity(0.2),
                           ),
                           child: Row(
                             children: [
-                              widget.data?.deliveryNoteStatus == "DELIVERING" ||
+                              widget.data.deliveryNoteStatus == "DELIVERING" ||
                                       user.currentBusiness?.type == "BUYER"
                                   ? SvgPicture.asset(
                                       'assets/svg/check_underline.svg',
@@ -307,7 +314,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                                 width: 5,
                               ),
                               user.currentBusiness?.type == "SUPPLIER"
-                                  ? widget.data?.deliveryNoteStatus ==
+                                  ? widget.data.deliveryNoteStatus ==
                                           "DELIVERING"
                                       ? Text(
                                           'Хүрсэн',
@@ -340,14 +347,14 @@ class _DeliveryCardState extends State<DeliveryCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Эхэлсэн: ${DateFormat("yyyy-MM-dd HH:mm").format(widget.data!.startDate!)}',
+                        'Эхэлсэн: ${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.startDate!)}',
                         style: TextStyle(
                           color: buttonColor,
                           fontSize: 12,
                         ),
                       ),
                       Text(
-                        'Дууссан: ${DateFormat("yyyy-MM-dd HH:mm").format(widget.data!.deliveredDate!)}',
+                        'Дууссан: ${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.deliveredDate!)}',
                         style: TextStyle(
                           color: buttonColor,
                           fontSize: 12,
@@ -359,30 +366,11 @@ class _DeliveryCardState extends State<DeliveryCard> {
               height: 10,
             ),
             widget.isDeliveried == true &&
-                    widget.data?.amountToPay != 0 &&
+                    widget.data.amountToPay != 0 &&
                     user.currentBusiness?.type == "BUYER"
                 ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            'Ачилт: ',
-                            style: TextStyle(
-                              color: buttonColor,
-                              fontSize: 12,
-                            ),
-                          ),
-                          Text(
-                            ' Хүргэхэд бэлэн',
-                            style: TextStyle(
-                              color: blue,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ],
-                      ),
                       GestureDetector(
                         onTap: widget.startClick,
                         child: Container(

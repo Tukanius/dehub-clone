@@ -4,7 +4,7 @@ class Utils {
   formatCurrency(String? value) {
     var result;
     if (value == '0.00' || value == '0' || value == "0.0") {
-      return result = '0.00';
+      return result = '0';
     }
     var formattedNumber =
         NumberFormat("#,###", "en_US").format(double.parse(value.toString()));

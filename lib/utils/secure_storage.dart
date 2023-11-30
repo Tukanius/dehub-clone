@@ -34,7 +34,6 @@ class SecureStorage {
 
   Future deleteAll() async {
     await storage.deleteAll();
-    print("ALL STORAGE DELETED");
   }
 
   Future setBioMetric(bool bioMetric) async {

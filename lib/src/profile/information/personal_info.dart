@@ -225,12 +225,12 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           InformationCard(
                             marginVertical: 5,
                             labelText: 'Регистр №',
-                            value: user.username,
+                            value: user.registerNo,
                           ),
                           InformationCard(
                             marginVertical: 5,
-                            labelText: "user.registerNo",
-                            value: user.username,
+                            labelText: "Бизнес код",
+                            value: user.currentBusiness?.refCode,
                           ),
                           InformationCard(
                             marginVertical: 5,

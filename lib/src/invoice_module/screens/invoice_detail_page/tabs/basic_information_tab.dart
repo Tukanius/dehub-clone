@@ -10,9 +10,7 @@ import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/harah/harah.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_payment/payment_page.dart';
-// import 'package:dehub/src/payment_page/payment_page.dart';
 import 'package:dehub/utils/utils.dart';
-import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -35,10 +33,8 @@ class _BasicInformationTabState extends State<BasicInformationTab>
     with AfterLayoutMixin {
   Invoice invoice = Invoice();
   General general = General();
-  Invoice approval = Invoice();
   bool isLoading = true;
   User user = User();
-  List<Invoice> fields = [];
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -46,153 +42,10 @@ class _BasicInformationTabState extends State<BasicInformationTab>
     setState(() {
       isLoading = false;
     });
-    fields = [
-      Invoice(
-        firstName: "Нэхэмжлэл №",
-        lastName: invoice.refCode,
-      ),
-      Invoice(
-        firstName: "Нэхэмжлэл статус",
-        lastName: invoiceStatus(),
-      ),
-      Invoice(
-        firstName: "Төлбөрийн төлөв",
-        lastName: invoicePaymentStatus(),
-      ),
-      Invoice(
-        firstName: "Нийт дүн",
-        lastName: Utils().formatCurrency(invoice.totalAmount.toString()),
-      ),
-      Invoice(
-        firstName: "Төлсөн дүн",
-        lastName: Utils().formatCurrency(invoice.paidAmount.toString()),
-      ),
-      Invoice(
-        firstName: "Төлбөрийн үлдэгдэл",
-        lastName: Utils().formatCurrency(invoice.amountToPay.toString()),
-      ),
-      Invoice(
-        firstName: "Төлөх огноо",
-        lastName: invoice.paymentDate == null
-            ? "-"
-            : DateFormat('yyyy-MM-dd').format(invoice.paymentDate!),
-      ),
-      Invoice(
-        firstName: "Хугацаа хэтрэлт",
-        lastName: overdueStatus(),
-      ),
-      Invoice(
-        firstName: "Баталсан огноо",
-        lastName: invoice.confirmedDate == null
-            ? '-'
-            : DateFormat('yyyy-MM-dd').format(invoice.confirmedDate!),
-      ),
-      Invoice(
-        firstName: "Татвар төлөгч дугаар",
-        lastName: invoice.receiverBusiness?.regNumber,
-      ),
-      Invoice(
-        firstName: "Партнер нэр",
-        lastName: invoice.receiverBusiness?.partner?.businessName,
-      ),
-      Invoice(
-        firstName: "Партнер код",
-        lastName: invoice.receiverBusiness?.partner?.refCode,
-      ),
-      Invoice(
-        firstName: "Бизнес нэр",
-        lastName: invoice.receiverBusiness?.profileName,
-      ),
-      Invoice(
-        firstName: "Бизнес код",
-        lastName: invoice.receiverBusiness?.refCode,
-      ),
-      Invoice(
-        firstName: "Төлбөрийн нөхцөл",
-        lastName: invoice.paymentTerm?.description,
-      ),
-      Invoice(
-        firstName: "Бизнесийн хаяг",
-        lastName: invoice.receiverBranch?.branchAddress,
-      ),
-      Invoice(
-        firstName: "Санхүүгийн ажилтан",
-        lastName: invoice.receiverFinUser?.firstName,
-      ),
-      Invoice(
-        firstName: "Дансны мэдээлэл",
-        lastName:
-            '${invoice.receiverAcc?.number}, ${invoice.receiverAcc?.bankName}',
-      ),
-      Invoice(
-        firstName: "PO дугаар",
-        lastName: invoice.purchaseCode,
-      ),
-      Invoice(
-        firstName: "Татвар төлөгч дугаар",
-        lastName: invoice.senderBusiness?.regNumber,
-      ),
-      Invoice(
-        firstName: "Партнер нэр",
-        lastName: invoice.senderBusiness?.partner?.businessName,
-      ),
-      Invoice(
-        firstName: "Партнер код",
-        lastName: invoice.senderBusiness?.partner?.refCode,
-      ),
-      Invoice(
-        firstName: "Бизнес нэр",
-        lastName: invoice.senderBusiness?.profileName,
-      ),
-      Invoice(
-        firstName: "Бизнес код",
-        lastName: invoice.senderBusiness?.refCode,
-      ),
-      Invoice(
-        firstName: "Нэхэмжлэх бичсэн",
-        lastName: invoice.createdAt.toString(),
-      ),
-      Invoice(
-        firstName: "Бизнесийн хаяг",
-        lastName: invoice.senderBranch?.branchAddress,
-      ),
-      Invoice(
-        firstName: "Санхүүгийн ажилтан",
-        lastName: invoice.senderFinUser?.firstName,
-      ),
-      Invoice(
-        firstName: "Дансны мэдээлэл",
-        lastName:
-            '${invoice.senderAcc?.number}, ${invoice.senderAcc?.bankName}',
-      ),
-      Invoice(
-        firstName: "SO дугаар",
-        lastName: invoice.salesCode,
-      ),
-      Invoice(
-        firstName: "Хөнгөлөлт",
-        lastName: Utils().formatCurrency(invoice.discountAmount.toString()),
-      ),
-      Invoice(
-        firstName: "Тооцсон НӨАТ",
-        lastName: Utils().formatCurrency(invoice.vatAmount.toString()),
-      ),
-      Invoice(
-        firstName: "Тооцсон НХАТ",
-        lastName: Utils().formatCurrency(invoice.taxAmount.toString()),
-      ),
-      Invoice(
-        firstName: "Хүргэлт төлбөр",
-        lastName: Utils().formatCurrency(invoice.shippingAmount.toString()),
-      ),
-      Invoice(
-        firstName: "Нийт төлбөр",
-        lastName: Utils().formatCurrency(invoice.totalAmount.toString()),
-      ),
-    ];
   }
 
   approve(bool confirm) async {
+    Invoice approval = Invoice();
     try {
       approval = Invoice(
         confirm: confirm,
@@ -244,144 +97,376 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                       ),
                     ),
                   ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Нэхэмжлэл №",
+                    secondText: invoice.refCode,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: Color(int.parse(
+                            invoiceStatus().color.substring(1, 7),
+                            radix: 16) +
+                        0xff000000),
+                    labelText: "Нэхэмжлэл статус",
+                    secondText: invoiceStatus().name,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Төлбөрийн төлөв",
+                    secondText: invoicePaymentStatus().name,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Нийт дүн",
+                    secondText:
+                        Utils().formatCurrency(invoice.totalAmount.toString()),
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Төлсөн дүн",
+                    secondText:
+                        Utils().formatCurrency(invoice.paidAmount.toString()),
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Төлбөрийн үлдэгдэл",
+                    secondText:
+                        Utils().formatCurrency(invoice.amountToPay.toString()),
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Төлөх огноо",
+                    secondText: invoice.paymentDate == null
+                        ? "-"
+                        : DateFormat('yyyy-MM-dd').format(invoice.paymentDate!),
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: Color(int.parse(
+                            overdueStatus().color.substring(1, 7),
+                            radix: 16) +
+                        0xff000000),
+                    labelText: "Хугацаа хэтрэлт",
+                    secondText: overdueStatus().name,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Баталсан огноо",
+                    secondText: invoice.confirmedDate == null
+                        ? '-'
+                        : DateFormat('yyyy-MM-dd')
+                            .format(invoice.confirmedDate!),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    child: Text(
+                      'Худалдан авагч тал',
+                      style: TextStyle(
+                        color: grey3,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Татвар төлөгч дугаар",
+                    secondText: invoice.receiverBusiness?.regNumber,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Партнер нэр",
+                    secondText: invoice.receiverBusiness?.partner?.businessName,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Партнер код",
+                    secondText: invoice.receiverBusiness?.partner?.refCode,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Бизнес нэр",
+                    secondText: invoice.receiverBusiness?.profileName,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Бизнес код",
+                    secondText: invoice.receiverBusiness?.refCode,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Төлбөрийн нөхцөл",
+                    secondText: invoice.paymentTerm?.description,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Бизнесийн хаяг",
+                    secondText: invoice.receiverBranch?.branchAddress,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Санхүүгийн ажилтан",
+                    secondText: invoice.receiverFinUser?.firstName,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Дансны мэдээлэл",
+                    secondText:
+                        '${invoice.receiverAcc?.number}, ${invoice.receiverAcc?.bankName}',
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "PO дугаар",
+                    secondText: invoice.purchaseCode,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    child: Text(
+                      'Нийлүүлэгч тал',
+                      style: TextStyle(
+                        color: grey3,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Татвар төлөгч дугаар",
+                    secondText: invoice.senderBusiness?.regNumber,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Партнер нэр",
+                    secondText: invoice.senderBusiness?.partner?.businessName,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Партнер код",
+                    secondText: invoice.senderBusiness?.partner?.refCode,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Бизнес нэр",
+                    secondText: invoice.senderBusiness?.profileName,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Бизнес код",
+                    secondText: invoice.senderBusiness?.refCode,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Нэхэмжлэх бичсэн",
+                    secondText: invoice.createdAt.toString(),
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Бизнесийн хаяг",
+                    secondText: invoice.senderBranch?.branchAddress,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Санхүүгийн ажилтан",
+                    secondText: invoice.senderFinUser?.firstName,
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Дансны мэдээлэл",
+                    secondText:
+                        '${invoice.senderAcc?.number}, ${invoice.senderAcc?.bankName}',
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "SO дугаар",
+                    secondText: invoice.salesCode,
+                  ),
                   Column(
-                    children: fields
-                        .map(
-                          (e) => Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              FieldCard(
-                                color: white,
-                                marginHorizontal: 15,
-                                marginVertical: 15,
-                                labelText: e.firstName,
-                                secondText:
-                                    e.lastName != null ? e.lastName : '-',
-                                secondTextColor: invoiceColor,
-                                fontWeight: e.firstName == "Нийт төлбөр"
-                                    ? FontWeight.bold
-                                    : FontWeight.normal,
-                                fontSize:
-                                    e.firstName == "Нийт төлбөр" ? 16 : 14,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      invoice.lines!.isNotEmpty
+                          ? Container(
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: Text(
+                                'БАРАА, ҮЙЛЧИЛГЭЭ',
+                                style: TextStyle(
+                                  color: grey3,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                              e.firstName == "Баталсан огноо"
-                                  ? Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 10),
-                                      child: Text(
-                                        'Худалдан авагч тал',
-                                        style: TextStyle(
-                                          color: grey3,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    )
-                                  : e.firstName == "PO дугаар"
-                                      ? Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              horizontal: 15, vertical: 10),
-                                          child: Text(
-                                            'Нийлүүлэгч тал',
-                                            style: TextStyle(
-                                              color: grey3,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        )
-                                      : e.firstName == "SO дугаар"
-                                          ? Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                invoice.lines!.isNotEmpty
-                                                    ? Container(
-                                                        margin: const EdgeInsets
-                                                                .symmetric(
-                                                            horizontal: 15,
-                                                            vertical: 10),
-                                                        child: Text(
-                                                          'БАРАА, ҮЙЛЧИЛГЭЭ',
-                                                          style: TextStyle(
-                                                            color: grey3,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : SizedBox(),
-                                                Column(
-                                                  children: invoice.lines!
-                                                      .map(
-                                                        (item) =>
-                                                            AddProductCard(
-                                                          readOnly: true,
-                                                          data: item,
-                                                        ),
-                                                      )
-                                                      .toList(),
-                                                ),
-                                                Container(
-                                                  margin: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 15,
-                                                      vertical: 10),
-                                                  child: Text(
-                                                    'Нэмэлт Тэмдэглэл',
-                                                    style: TextStyle(
-                                                      color: grey3,
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 15,
-                                                      vertical: 8),
-                                                  height: 125,
-                                                  color: white,
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            10),
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                        color: grey3
-                                                            .withOpacity(0.3),
-                                                      ),
-                                                    ),
-                                                    child: Text(
-                                                        '${invoice.description}'),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          : e.firstName == "Хөнгөлөлт"
-                                              ? Container(
-                                                  margin: const EdgeInsets.only(
-                                                      left: 15,
-                                                      bottom: 10,
-                                                      top: 10),
-                                                  child: Text(
-                                                    'НИЙТ ТӨЛБӨР',
-                                                    style: TextStyle(
-                                                      color: grey3,
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                )
-                                              : SizedBox(),
-                            ],
+                            )
+                          : SizedBox(),
+                      Column(
+                        children: invoice.lines!
+                            .map(
+                              (item) => AddProductCard(
+                                readOnly: true,
+                                data: item,
+                              ),
+                            )
+                            .toList(),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        child: Text(
+                          'Нэмэлт Тэмдэглэл',
+                          style: TextStyle(
+                            color: grey3,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
                           ),
-                        )
-                        .toList(),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 8),
+                        height: 125,
+                        color: white,
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: grey3.withOpacity(0.3),
+                            ),
+                          ),
+                          child: Text('${invoice.description}'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Хөнгөлөлт",
+                    secondText: Utils()
+                        .formatCurrency(invoice.discountAmount.toString()),
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Тооцсон НӨАТ",
+                    secondText:
+                        Utils().formatCurrency(invoice.vatAmount.toString()),
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Тооцсон НХАТ",
+                    secondText:
+                        Utils().formatCurrency(invoice.taxAmount.toString()),
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Хүргэлт төлбөр",
+                    secondText: Utils()
+                        .formatCurrency(invoice.shippingAmount.toString()),
+                  ),
+                  FieldCard(
+                    color: white,
+                    marginHorizontal: 15,
+                    marginVertical: 15,
+                    secondTextColor: invoiceColor,
+                    labelText: "Нийт төлбөр",
+                    secondText:
+                        Utils().formatCurrency(invoice.totalAmount.toString()),
                   ),
                   invoice.additionalLines!.isNotEmpty
                       ? Container(
@@ -465,9 +550,8 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                                   Navigator.of(context).pushNamed(
                                     Harah.routeName,
                                     arguments: HarahArguments(
-                                      totalAmount: 1000,
+                                      isNewInvoice: false,
                                       invoice: invoice,
-                                      data: invoice.lines!,
                                     ),
                                   );
                                 },
@@ -592,22 +676,48 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                             ],
                           ),
                         )
-                      : CustomButton(
-                          labelText: "Харах",
-                          labelColor: invoiceColor,
-                          onClick: () {
+                      : GestureDetector(
+                          onTap: () {
                             Navigator.of(context).pushNamed(
                               Harah.routeName,
                               arguments: HarahArguments(
-                                totalAmount: 1000,
+                                isNewInvoice: false,
                                 invoice: invoice,
-                                data: invoice.lines!,
                               ),
                             );
                           },
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                              width: 130,
+                              padding: const EdgeInsets.symmetric(vertical: 15),
+                              margin: const EdgeInsets.only(right: 15),
+                              decoration: BoxDecoration(
+                                color: black,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.visibility_outlined,
+                                    color: white,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Харах',
+                                    style: TextStyle(color: white),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                   SizedBox(
-                    height: 30,
+                    height: 40,
                   ),
                 ],
               ),
@@ -625,83 +735,20 @@ class _BasicInformationTabState extends State<BasicInformationTab>
         ),
       );
   overdueStatus() {
-    switch (invoice.overdueStatus) {
-      case "NORMAL":
-        return "Хэвийн";
-      case "ONE_TO_THREE":
-        return "1-3 хоног";
-      case "FOUR_TO_THIRTY":
-        return "4-30 хоног";
-      case "THIRTY_ONE_TO_SIXTY":
-        return "31-60 хоног";
-      case "SIXTY_ONE_TO_NINETY":
-        return "61-90 хоног";
-      case "MORE_THAN_NINETY":
-        return "91 < хоног";
-    }
+    final res = general.overdueStatus!
+        .firstWhere((element) => element.code == invoice.overdueStatus);
+    return res;
   }
 
   invoicePaymentStatus() {
-    switch (invoice.paymentStatus) {
-      case "PENDING":
-        return "Хүлээгдэж буй";
-      case "DIVIDED":
-        return "Хуваасан";
-      case "OVER_DUE":
-        return "Хугацаа хэтэрсэн";
-      case "CLOSED":
-        return "Хаасан";
-      default:
-    }
-  }
-
-  textColor() {
-    switch (invoice.paymentStatus) {
-      case "PENDING":
-        return yellow;
-      case "DIVIDED":
-        return buttonColor;
-      case "OVER_DUE":
-        return red;
-      case "CLOSED":
-        return green;
-      default:
-    }
+    final res = general.invoicePaymentStatus!
+        .firstWhere((element) => element.code == invoice.paymentStatus);
+    return res;
   }
 
   invoiceStatus() {
-    switch (invoice.invoiceStatus) {
-      case "DRAFT":
-        return "Түр төлөв";
-      case "SENT":
-        return "Илгээсэн";
-      case "CONFIRMED":
-        return "Баталсан";
-      case "REJECTED":
-        return "Татгалзсан";
-      case "RETURNED":
-        return "Буцаасан";
-      case "CLOSED":
-        return "Хаасан";
-      default:
-    }
-  }
-
-  invoiceStatusColor() {
-    switch (invoice.invoiceStatus) {
-      case "DRAFT":
-        return grey;
-      case "SENT":
-        return Colors.indigo;
-      case "CONFIRMED":
-        return Colors.lightBlue;
-      case "REJECTED":
-        return red;
-      case "RETURNED":
-        return Colors.pink;
-      case "CLOSED":
-        return green;
-      default:
-    }
+    final res = general.invoiceStatus!
+        .firstWhere((element) => element.code == invoice.invoiceStatus);
+    return res;
   }
 }

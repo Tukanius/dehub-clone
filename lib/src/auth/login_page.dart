@@ -592,7 +592,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
         isSubmit = false;
       });
     } on PlatformException catch (e) {
-      print(e);
+      debugPrint(e.toString());
       setState(() {
         isSubmit = false;
       });

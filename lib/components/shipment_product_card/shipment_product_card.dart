@@ -1,4 +1,5 @@
 import 'package:dehub/models/order.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
@@ -42,13 +43,9 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
 
   decrease() {
     setState(() {
-      // if (count > 0) {
-      setState(() {
-        int currentValue = int.tryParse(quantityController.text) ?? 0;
-        int newValue = currentValue - 1;
-        quantityController.text = newValue.toString();
-      });
-      // }
+      int currentValue = int.tryParse(quantityController.text) ?? 0;
+      int newValue = currentValue - 1;
+      quantityController.text = newValue.toString();
     });
   }
 
@@ -201,7 +198,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                         height: 3,
                       ),
                       Text(
-                        '0',
+                        '1',
                         style: TextStyle(
                           color: orderColor,
                           fontWeight: FontWeight.bold,
@@ -209,7 +206,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                         ),
                       ),
                       Text(
-                        '50 ш',
+                        '${widget.data?.unitConvertValue} ш',
                         style: TextStyle(
                           color: buttonColor,
                           fontWeight: FontWeight.w500,
@@ -219,38 +216,6 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                     ],
                   ),
                 ),
-                // Column(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Text(
-                //       'Нэгж үнэ',
-                //       style: TextStyle(
-                //         color: coolGrey,
-                //         fontSize: 12,
-                //       ),
-                //     ),
-                //     SizedBox(
-                //       height: 3,
-                //     ),
-                //     Text(
-                //       '${widget.data?.price}₮',
-                //       style: TextStyle(
-                //         color: orderColor,
-                //         fontWeight: FontWeight.bold,
-                //         fontSize: 16,
-                //       ),
-                //     ),
-                //     Text(
-                //       '1 ш',
-                //       style: TextStyle(
-                //         color: dark,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w500,
-                //       ),
-                //     ),
-                //   ],
-                // ),
               ],
             ),
             SizedBox(
@@ -269,7 +234,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                 ),
                 widget.data?.quantity != null && widget.data?.price != null
                     ? Text(
-                        '${widget.data!.price! * widget.data!.quantity!}₮',
+                        '${Utils().formatCurrency((widget.data!.price! * widget.data!.quantity!).toString())}₮',
                         style: TextStyle(
                           color: grey2,
                           fontWeight: FontWeight.w600,

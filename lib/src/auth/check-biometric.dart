@@ -42,7 +42,7 @@ class _CheckBiometricState extends State<CheckBiometric> with AfterLayoutMixin {
         isLoading = false;
       });
     } on PlatformException catch (e) {
-      print(e);
+      debugPrint(e.toString());
       setState(() {
         isLoading = false;
       });
@@ -140,13 +140,11 @@ class _CheckBiometricState extends State<CheckBiometric> with AfterLayoutMixin {
     if (availableBiometrics.contains(BiometricType.face)) {
       setState(() {
         bioType = "FACE";
-        print('FACE');
       });
     }
     if (availableBiometrics.contains(BiometricType.fingerprint)) {
       setState(() {
         bioType = "FINGER_PRINT";
-        print("FINGERPRINT");
       });
     }
     if (availableBiometrics.contains(BiometricType.values)) {

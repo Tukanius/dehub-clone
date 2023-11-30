@@ -176,9 +176,9 @@ class _OrderSendPageState extends State<OrderSendPage> {
                       widget.onSubmit();
                     }
                   } catch (e) {
-                    print('orderSendError==========>');
-                    print(e.toString());
-                    print('orderSendError==========>');
+                    debugPrint('orderSendError==========>');
+                    debugPrint(e.toString());
+                    debugPrint('orderSendError==========>');
                   }
                 },
                 length: 6,

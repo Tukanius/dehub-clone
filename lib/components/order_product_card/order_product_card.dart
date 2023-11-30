@@ -308,7 +308,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                       ),
                     ),
                     Text(
-                      '1 ш',
+                      '${widget.data.unitConvertValue} ш',
                       style: TextStyle(
                         color: dark,
                         fontSize: 16,

@@ -4,7 +4,7 @@ import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/src/order_module/screens/order_delivery/delivery_detail/delivery_detail.dart';
+import 'package:dehub/src/order_module/screens/delivery_detail/delivery_detail.dart';
 import 'package:dehub/src/order_module/screens/order_delivery/delivery/delivery.dart';
 import 'package:dehub/src/order_module/screens/product_give/product_give.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';

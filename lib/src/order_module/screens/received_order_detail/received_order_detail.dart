@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dehub/api/order_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/order_product_card/order_product_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
@@ -20,17 +21,21 @@ import 'package:path_provider/path_provider.dart';
 import 'package:dio/dio.dart';
 
 class ReceivedOrderDetailArguments {
+  ListenController listenController;
   String id;
   ReceivedOrderDetailArguments({
+    required this.listenController,
     required this.id,
   });
 }
 
 class ReceivedOrderDetail extends StatefulWidget {
+  final ListenController listenController;
   final String id;
   static const routeName = '/ReceivedOrderDetail';
   const ReceivedOrderDetail({
     Key? key,
+    required this.listenController,
     required this.id,
   }) : super(key: key);
 
@@ -58,7 +63,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
     });
   }
 
-  onSubmit(bool isApprove) async {
+  respond(bool isApprove) async {
     approve.approve = isApprove;
     await OrderApi().respond(widget.id, approve);
     showCustomDialog(
@@ -66,20 +71,58 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
       isApprove == true ? "Амжилттай зөвшөөрлөө" : 'Татгалзлаа',
       isApprove,
       onPressed: () {
+        widget.listenController.changeVariable('respond');
         Navigator.of(context).pop();
         Navigator.of(context).pop();
       },
     );
   }
 
+  create() async {
+    Order create = Order();
+    create.orderId = order.id;
+    await OrderApi().deliveryNoteCreate(create);
+    showCustomDialog(
+      context,
+      "Амжилттай",
+      true,
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  onSubmit(bool approve, String labelText, Function(bool approve) function) {
+    Navigator.of(context).pushNamed(
+      PinCheckScreen.routeName,
+      arguments: PinCheckScreenArguments(
+        onSubmit: () {
+          function(approve);
+        },
+        color: orderColor,
+        labelText: labelText,
+      ),
+    );
+  }
+
   review(bool isReview) async {
     approve.review = isReview;
     await OrderApi().review(widget.id, approve);
-    Navigator.of(context).pop();
+    showCustomDialog(
+      context,
+      isReview == true ? "Амжилттай" : 'Татгалзлаа',
+      isReview,
+      onPressed: () {
+        widget.listenController.changeVariable('review');
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    print(order.deliveryNote);
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -125,7 +168,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            user.currentBusiness?.type == "SUPPLIER"
+                            order.type == "SALES" && order.salesCode != null
                                 ? Text(
                                     '${order.salesCode}',
                                     style: TextStyle(
@@ -133,13 +176,16 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                       fontWeight: FontWeight.w500,
                                     ),
                                   )
-                                : Text(
-                                    '${order.purchaseCode}',
-                                    style: TextStyle(
-                                      color: orderColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
+                                : order.type == "PURCHASE" &&
+                                        order.purchaseCode != null
+                                    ? Text(
+                                        '${order.purchaseCode}',
+                                        style: TextStyle(
+                                          color: orderColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      )
+                                    : SizedBox(),
                             Text(
                               '${DateFormat("yyyy-MM-dd").format(order.createdAt!)}',
                               style: TextStyle(
@@ -783,18 +829,80 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                             ),
                           ],
                         ),
-                        user.currentBusiness?.type == "SUPPLIER"
-                            ? order.orderStatus == "REGISTERED"
+                        user.currentBusiness?.type == "SUPPLIER" &&
+                                order.type == "SALES" &&
+                                order.orderStatus == "REGISTERED"
+                            ? Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      onSubmit(false, "Татгалзах",
+                                          (approve) => review(false));
+                                    },
+                                    child: Container(
+                                      height: 36,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/svg/alert-circle.svg',
+                                          ),
+                                          Text(
+                                            'Татгалзах',
+                                            style: TextStyle(
+                                              color: Color(0xffFE2413),
+                                              fontSize: 10,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      onSubmit(true, "SO үүсгэх",
+                                          (approve) => review(true));
+                                    },
+                                    child: Container(
+                                      height: 36,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/svg/create-so.svg',
+                                            colorFilter: ColorFilter.mode(
+                                                orderColor, BlendMode.srcIn),
+                                          ),
+                                          Text(
+                                            'SO болгох',
+                                            style: TextStyle(
+                                              color: orderColor,
+                                              fontSize: 10,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                ],
+                              )
+                            : user.currentBusiness?.type == "SUPPLIER" &&
+                                    order.type == "PURCHASE" &&
+                                    order.orderStatus == "REVIEWED"
                                 ? Row(
                                     children: [
                                       GestureDetector(
                                         onTap: () {
-                                          if (order.orderStatus ==
-                                              "REGISTERED") {
-                                            review(false);
-                                          } else {
-                                            onSubmit(false);
-                                          }
+                                          onSubmit(false, "Захиалга цуцлах",
+                                              (approve) => respond(false));
                                         },
                                         child: Container(
                                           height: 36,
@@ -821,95 +929,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                       ),
                                       GestureDetector(
                                         onTap: () {
-                                          if (order.orderStatus ==
-                                              "REGISTERED") {
-                                            review(true);
-                                          } else {
-                                            onSubmit(true);
-                                          }
-                                        },
-                                        child: Container(
-                                          height: 36,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SvgPicture.asset(
-                                                'assets/svg/create-so.svg',
-                                                colorFilter: ColorFilter.mode(
-                                                    orderColor,
-                                                    BlendMode.srcIn),
-                                              ),
-                                              Text(
-                                                'SO болгох',
-                                                style: TextStyle(
-                                                  color: orderColor,
-                                                  fontSize: 10,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                    ],
-                                  )
-                                : SizedBox()
-                            : order.orderStatus == "REVIEWED"
-                                ? Row(
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          if (order.orderStatus ==
-                                              "REGISTERED") {
-                                            review(false);
-                                          } else {
-                                            onSubmit(true);
-                                          }
-                                        },
-                                        child: Container(
-                                          height: 36,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SvgPicture.asset(
-                                                'assets/svg/alert-circle.svg',
-                                              ),
-                                              Text(
-                                                'Татгалзах',
-                                                style: TextStyle(
-                                                  color: Color(0xffFE2413),
-                                                  fontSize: 10,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 15,
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          if (order.orderStatus ==
-                                              "REGISTERED") {
-                                            review(true);
-                                          } else {
-                                            Navigator.of(context).pushNamed(
-                                              PinCheckScreen.routeName,
-                                              arguments:
-                                                  PinCheckScreenArguments(
-                                                onSubmit: () {
-                                                  onSubmit(true);
-                                                },
-                                                color: orderColor,
-                                                labelText: 'Захиалга зөвшөөрөх',
-                                              ),
-                                            );
-                                          }
+                                          onSubmit(true, "Захиалга зөвшөөрөх",
+                                              (approve) => respond(true));
                                         },
                                         child: Container(
                                           height: 36,
@@ -939,7 +960,191 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                       ),
                                     ],
                                   )
-                                : SizedBox(),
+                                : user.currentBusiness?.type == "BUYER" &&
+                                        order.type == "PURCHASE" &&
+                                        order.orderStatus == "REGISTERED"
+                                    ? Row(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              onSubmit(false, "Татгалзах",
+                                                  (approve) => review(false));
+                                            },
+                                            child: Container(
+                                              height: 36,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    'assets/svg/alert-circle.svg',
+                                                  ),
+                                                  Text(
+                                                    'Татгалзах',
+                                                    style: TextStyle(
+                                                      color: Color(0xffFE2413),
+                                                      fontSize: 10,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              onSubmit(true, "SO үүсгэх",
+                                                  (approve) => review(true));
+                                            },
+                                            child: Container(
+                                              height: 36,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    'assets/svg/create-so.svg',
+                                                    colorFilter:
+                                                        ColorFilter.mode(
+                                                            orderColor,
+                                                            BlendMode.srcIn),
+                                                  ),
+                                                  Text(
+                                                    'SO болгох',
+                                                    style: TextStyle(
+                                                      color: orderColor,
+                                                      fontSize: 10,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                        ],
+                                      )
+                                    : user.currentBusiness?.type == "BUYER" &&
+                                            order.type == "SALES" &&
+                                            order.orderStatus == "REVIEWED"
+                                        ? Row(
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () {
+                                                  onSubmit(
+                                                      false,
+                                                      "Захиалга цуцлах",
+                                                      (approve) =>
+                                                          respond(false));
+                                                },
+                                                child: Container(
+                                                  height: 36,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                        'assets/svg/alert-circle.svg',
+                                                      ),
+                                                      Text(
+                                                        'Татгалзах',
+                                                        style: TextStyle(
+                                                          color:
+                                                              Color(0xffFE2413),
+                                                          fontSize: 10,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 15,
+                                              ),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  onSubmit(
+                                                      true,
+                                                      "Захиалга зөвшөөрөх",
+                                                      (approve) =>
+                                                          respond(true));
+                                                },
+                                                child: Container(
+                                                  height: 36,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                        'assets/svg/create-so.svg',
+                                                        colorFilter:
+                                                            ColorFilter.mode(
+                                                                orderColor,
+                                                                BlendMode
+                                                                    .srcIn),
+                                                      ),
+                                                      Text(
+                                                        'Зөвшөөрөх',
+                                                        style: TextStyle(
+                                                          color: orderColor,
+                                                          fontSize: 10,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                            ],
+                                          )
+                                        : user.currentBusiness?.type ==
+                                                    "SUPPLIER" &&
+                                                order.deliveryNote == null &&
+                                                order.orderStatus ==
+                                                    "AUTHORIZED"
+                                            ? GestureDetector(
+                                                onTap: () {
+                                                  onSubmit(
+                                                      true,
+                                                      "Захиалга зөвшөөрөх",
+                                                      (approve) => create());
+                                                },
+                                                child: Container(
+                                                  height: 36,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                        'assets/svg/create-so.svg',
+                                                        colorFilter:
+                                                            ColorFilter.mode(
+                                                                orderColor,
+                                                                BlendMode
+                                                                    .srcIn),
+                                                      ),
+                                                      Text(
+                                                        'Хүргэлт хуваарилах',
+                                                        style: TextStyle(
+                                                          color: orderColor,
+                                                          fontSize: 10,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                            : SizedBox(),
                       ],
                     ),
                   ),

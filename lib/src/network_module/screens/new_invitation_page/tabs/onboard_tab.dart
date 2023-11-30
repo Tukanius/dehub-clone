@@ -156,7 +156,6 @@ class _OnboardTabState extends State<OnboardTab> {
       data.khoroo = khorooCode;
       data.locationLat = 90.45;
       data.locationLng = 45.45;
-      print(data.toJson());
       await BusinessApi().createOnboard(data);
       setState(() {
         isSubmit = false;

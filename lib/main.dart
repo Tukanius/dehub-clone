@@ -6,6 +6,9 @@ import 'package:dehub/src/finance_module/screens/recalled_page/recalled_page.dar
 import 'package:dehub/src/network_module/screens/account_setting/account_setting.dart';
 import 'package:dehub/src/network_module/screens/account_setting/account_setting_detail/account_setting_detail.dart';
 import 'package:dehub/src/network_module/screens/account_setting/set_account/set_account.dart';
+import 'package:dehub/src/order_module/screens/delivery_management/delivery_management.dart';
+import 'package:dehub/src/order_module/screens/set_delivery_distribution/set_delivery_distribution.dart';
+import 'package:dehub/src/order_module/screens/shipment_distribution/shipment_distribution.dart';
 import 'package:dehub/src/payment_module/screens/account_statement/account_statement.dart';
 import 'package:dehub/src/network_module/screens/client_classifications/client_classification_detail/client_classification_detail.dart';
 import 'package:dehub/src/network_module/screens/client_classifications/client_classifications.dart';
@@ -70,7 +73,6 @@ import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/cus
 import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/customer_choose_tabs/gereet_bish.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/salbar_songoh.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/harah/harah.dart';
-import 'package:dehub/src/invoice_module/screens/new_invoice/harah/pdf_page.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/harah/send_page.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/new_invoice.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_detail_page/invoice_detail_page.dart';
@@ -87,7 +89,7 @@ import 'package:dehub/src/order_module/screens/new_order/order_send/order_send_c
 import 'package:dehub/src/order_module/screens/new_order/order_send/order_send_page.dart';
 import 'package:dehub/src/order_module/screens/new_order/product_choose/product_choose.dart';
 import 'package:dehub/src/order_module/screens/order_cash_approval/order_cash_approval.dart';
-import 'package:dehub/src/order_module/screens/order_delivery/delivery_detail/delivery_detail.dart';
+import 'package:dehub/src/order_module/screens/delivery_detail/delivery_detail.dart';
 import 'package:dehub/src/order_module/screens/order_delivery/order_delivery.dart';
 import 'package:dehub/src/order_module/screens/order_delivery/delivery/delivery.dart';
 import 'package:dehub/src/order_module/screens/order_invoice/order_invoice.dart';
@@ -473,9 +475,8 @@ class MyApp extends StatelessWidget {
                         settings.arguments as HarahArguments;
                     return MaterialPageRoute(builder: (context) {
                       return Harah(
+                        isNewInvoice: arguments.isNewInvoice,
                         invoice: arguments.invoice,
-                        totalAmount: arguments.totalAmount,
-                        data: arguments.data,
                       );
                     });
                   case ZoningDetailPage.routeName:
@@ -533,10 +534,6 @@ class MyApp extends StatelessWidget {
                       return SentInvitationDetail(
                         id: arguments.id,
                       );
-                    });
-                  case PdfPage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return PdfPage();
                     });
                   case SendPage.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -810,14 +807,13 @@ class MyApp extends StatelessWidget {
                       },
                     );
                   case OrderCashPayment.routeName:
-                    // OrderCashPaymentArguments arguments =
-                    // settings.arguments as OrderCashPaymentArguments;
+                    OrderCashPaymentArguments arguments =
+                        settings.arguments as OrderCashPaymentArguments;
                     return PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
                           OrderCashPayment(
-                              // customerListenController:
-                              // arguments.customerListenController,
-                              ),
+                        data: arguments.data,
+                      ),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                         var begin = const Offset(0.0, 1.0);
@@ -1052,11 +1048,31 @@ class MyApp extends StatelessWidget {
                         data: arguments.data,
                       );
                     });
+                  case DeliveryManagement.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return DeliveryManagement();
+                    });
                   case ExpensesPage.routeName:
                     ExpensesPageArguments arguments =
                         settings.arguments as ExpensesPageArguments;
                     return MaterialPageRoute(builder: (context) {
                       return ExpensesPage(
+                        id: arguments.id,
+                      );
+                    });
+                  case ShipmentDistribution.routeName:
+                    // ShipmentDistributionArguments arguments =
+                    // settings.arguments as ShipmentDistributionArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return ShipmentDistribution(
+                          // id: arguments.id,
+                          );
+                    });
+                  case SetDeliveryDistribution.routeName:
+                    SetDeliveryDistributionArguments arguments =
+                        settings.arguments as SetDeliveryDistributionArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return SetDeliveryDistribution(
                         id: arguments.id,
                       );
                     });
@@ -1092,6 +1108,7 @@ class MyApp extends StatelessWidget {
                         settings.arguments as ReceivedOrderDetailArguments;
                     return MaterialPageRoute(builder: (context) {
                       return ReceivedOrderDetail(
+                        listenController: arguments.listenController,
                         id: arguments.id,
                       );
                     });

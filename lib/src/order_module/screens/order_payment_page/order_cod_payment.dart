@@ -89,9 +89,13 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
       Order(
           firstName: "Төлөх огноо цаг",
           lastName: "${DateFormat("yyyy-MM-dd").format(invoice.paymentDate!)}"),
-      Order(firstName: "Дансны дугаар", lastName: "123456789"),
-      Order(firstName: "Дансны нэр", lastName: "Трэйд групп ХХК"),
-      Order(firstName: "Банкны нэр", lastName: "Голомж банк"),
+      Order(
+          firstName: "Дансны дугаар",
+          lastName: "${invoice.receiverAcc?.number}"),
+      Order(firstName: "Дансны нэр", lastName: "${invoice.receiverAcc?.name}"),
+      Order(
+          firstName: "Банкны нэр",
+          lastName: "${invoice.receiverAcc?.bankName}"),
     ];
   }
 
@@ -360,14 +364,18 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                             } else {
                               if (selectedMethod == "Бизнес тооцооны дансаар") {
                                 Navigator.of(context).pushNamed(
-                                    PinCheckScreen.routeName,
-                                    arguments: PinCheckScreenArguments(
-                                        onSubmit: payment,
-                                        color: orderColor,
-                                        labelText: "Захиалгын төлбөр төлөх"));
+                                  PinCheckScreen.routeName,
+                                  arguments: PinCheckScreenArguments(
+                                    onSubmit: payment,
+                                    color: orderColor,
+                                    labelText: "Захиалгын төлбөр төлөх",
+                                  ),
+                                );
                               } else if (selectedMethod == "Бэлэн мөнгөөр") {
-                                Navigator.of(context)
-                                    .pushNamed(OrderCashPayment.routeName);
+                                Navigator.of(context).pushNamed(
+                                    OrderCashPayment.routeName,
+                                    arguments: OrderCashPaymentArguments(
+                                        data: invoice));
                               }
                             }
                           },
@@ -399,7 +407,11 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                                     } else if (selectedMethod ==
                                         "Бэлэн мөнгөөр") {
                                       Navigator.of(context).pushNamed(
-                                          OrderCashPayment.routeName);
+                                        OrderCashPayment.routeName,
+                                        arguments: OrderCashPaymentArguments(
+                                          data: invoice,
+                                        ),
+                                      );
                                     }
                                   }
                                 },

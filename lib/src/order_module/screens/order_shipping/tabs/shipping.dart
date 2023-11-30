@@ -1,9 +1,10 @@
 import 'dart:async';
-
+import 'package:intl/intl.dart';
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/components/shipping_card/shipping_card.dart';
+import 'package:dehub/models/order.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/order_module/screens/order_shipment/order_shipment.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -28,6 +29,7 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
   double screenWidth = 0;
+  List<Order> groupedList = [];
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -37,10 +39,9 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
     Filter filter = Filter(pullSheetStatus: '');
-    var res = await OrderApi()
+    pullSheet = await OrderApi()
         .pullSheet(ResultArguments(filter: filter, offset: offset));
     setState(() {
-      pullSheet = res;
       isLoading = false;
       Future.delayed(Duration(milliseconds: 100), () {
         setState(() {
@@ -54,15 +55,38 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
     await Future.delayed(Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
+      groupedList = [];
+      page = 1;
     });
     await list(page, limit);
     refreshController.refreshCompleted();
     isLoading = false;
   }
 
+  groupMaker() {
+    Map<DateTime, List<Order>> groupItems = {};
+    for (var data in pullSheet.rows!) {
+      DateTime date =
+          DateTime.parse(DateFormat('yyyy-MM-dd').format(data.createdAt));
+      if (groupItems.containsKey(date)) {
+        groupItems[date]!.add(data);
+      } else {
+        groupItems[date] = [data];
+      }
+    }
+    groupItems.forEach((key, value) {
+      groupedList.add(
+        Order(
+          header: key,
+          values: value,
+        ),
+      );
+    });
+  }
+
   void _onLoading() async {
     setState(() {
-      limit += 10;
+      page += 1;
     });
     await list(page, limit);
     refreshController.loadComplete();
@@ -129,29 +153,66 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
                     },
                   ),
                   child: SingleChildScrollView(
-                      child: pullSheet.rows?.length != 0
-                          ? Column(
-                              children: pullSheet.rows!
-                                  .map(
-                                    (data) => ShippingCard(
-                                      startAnimation: startAnimation,
-                                      index: pullSheet.rows!.indexOf(data),
-                                      data: data,
-                                      onClick: () {
-                                        Navigator.of(context).pushNamed(
-                                          OrderShipment.routeName,
-                                          arguments: OrderShipmentArguments(
-                                              data: data),
-                                        );
-                                      },
-                                    ),
-                                  )
-                                  .toList(),
-                            )
-                          : NotFound(
-                              module: "ORDER",
-                              labelText: "Хоосон байна",
-                            )),
+                    child: groupedList.length != 0
+                        ? Column(
+                            children: groupedList
+                                .map(
+                                  (data) => Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      AnimatedContainer(
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 10),
+                                        duration: Duration(
+                                          milliseconds: 300 +
+                                              (groupedList.indexOf(data) * 300),
+                                        ),
+                                        curve: Curves.ease,
+                                        transform: Matrix4.translationValues(
+                                            startAnimation ? 0 : -screenWidth,
+                                            0,
+                                            0),
+                                        child: Text(
+                                          '${DateFormat("yyyy-MM-dd").format(data.header!)}',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            color: grey3,
+                                          ),
+                                        ),
+                                      ),
+                                      Column(
+                                        children: data.values!
+                                            .map(
+                                              (item) => ShippingCard(
+                                                startAnimation: startAnimation,
+                                                index: pullSheet.rows!
+                                                    .indexOf(item),
+                                                data: item,
+                                                onClick: () {
+                                                  Navigator.of(context)
+                                                      .pushNamed(
+                                                    OrderShipment.routeName,
+                                                    arguments:
+                                                        OrderShipmentArguments(
+                                                      data: item,
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            )
+                                            .toList(),
+                                      )
+                                    ],
+                                  ),
+                                )
+                                .toList(),
+                          )
+                        : NotFound(
+                            module: "ORDER",
+                            labelText: "Хоосон байна",
+                          ),
+                  ),
                 ),
               ),
             ],

@@ -93,21 +93,15 @@ class LocalStorage {
     Invoice? duplicate;
     try {
       duplicate = inventory.firstWhere((element) => element.id == product.id);
-      print(duplicate);
-      print('====duplicate=====');
     } catch (e) {
       debugPrint(e.toString());
     }
     if (duplicate != null) {
       product.quantity! + duplicate.quantity!;
-      print(product);
-      print('====product=====');
     }
 
     try {
       inventory.removeWhere((element) => element.id == duplicate!.id);
-      print(inventory);
-      print('====inventory=====');
     } catch (e) {
       debugPrint(e.toString());
     }

@@ -39,7 +39,6 @@ class _PinConfirmationState extends State<PinConfirmation> {
       var res = await AuthApi().changePin(
         User(oldPin: widget.oldPin, pin: value),
       );
-      print('==========res========');
       if (res == true) {
         showCustomDialog(context, 'Пин код амжилттай солигдлоо', true,
             onPressed: () {
@@ -48,7 +47,6 @@ class _PinConfirmationState extends State<PinConfirmation> {
           Navigator.of(context).pop();
         });
       }
-      print('=====change=====');
     } else if (widget.value != value) {
       showCustomDialog(
         context,
@@ -58,7 +56,6 @@ class _PinConfirmationState extends State<PinConfirmation> {
           Navigator.of(context).pop();
         },
       );
-      print('=============validate=========');
     } else {
       var res = await AuthApi().createPin(
         User(pin: value),
@@ -71,7 +68,6 @@ class _PinConfirmationState extends State<PinConfirmation> {
           Navigator.of(context).pop();
         });
       }
-      print('======create=======');
     }
   }
 

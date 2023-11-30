@@ -110,8 +110,8 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => OrderConfirmTerms.fromJson(e))
             .toList()
         : null,
-    overDueStatus: json['overDueStatus'] != null
-        ? (json['overDueStatus'] as List)
+    overdueStatus: json['overdueStatus'] != null
+        ? (json['overdueStatus'] as List)
             .map((e) => OverDueStatus.fromJson(e))
             .toList()
         : null,
@@ -372,8 +372,8 @@ Map<String, dynamic> _$GeneralToJson(General instance) {
   if (instance.numberUnits != null) json['numberUnits'] = instance.numberUnits;
   if (instance.orderConfirmTerms != null)
     json['orderConfirmTerms'] = instance.orderConfirmTerms;
-  if (instance.overDueStatus != null)
-    json['overDueStatus'] = instance.overDueStatus;
+  if (instance.overdueStatus != null)
+    json['overdueStatus'] = instance.overdueStatus;
   if (instance.paymentMethod != null)
     json['paymentMethod'] = instance.paymentMethod;
   if (instance.paymentTermRules != null)

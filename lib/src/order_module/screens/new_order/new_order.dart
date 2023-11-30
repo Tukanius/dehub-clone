@@ -193,7 +193,6 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    print(order.receiverStaff?.id);
     final source = Provider.of<CheckOutProvider>(context, listen: true);
     finalAmount = source.finalAmount;
     product = Provider.of<CheckOutProvider>(context, listen: true).order;
