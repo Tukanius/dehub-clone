@@ -121,8 +121,8 @@ class _AddAttachmentState extends State<AddAttachment> {
     showCupertinoModalPopup(
       context: context,
       builder: (context) => Container(
-        height: MediaQuery.of(context).size.height * 0.5,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             CupertinoActionSheet(
               title: Column(
@@ -188,7 +188,7 @@ class _AddAttachmentState extends State<AddAttachment> {
                 Navigator.of(context).pop();
               },
               child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 8),
+                margin: const EdgeInsets.only(right: 8, left: 8, bottom: 15),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(13),
                   color: white,

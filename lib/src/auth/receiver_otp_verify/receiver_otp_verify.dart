@@ -43,6 +43,7 @@ class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
         Navigator.of(context).pop();
         Navigator.of(context).pop();
         Navigator.of(context).pop();
+        Navigator.of(context).pop();
       },
     );
   }

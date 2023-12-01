@@ -210,6 +210,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
               height: 5,
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
@@ -264,10 +265,10 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
               height: 5,
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  width: (MediaQuery.of(context).size.width / 2) - 15,
+                Expanded(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -279,20 +280,20 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                           fontSize: 12,
                         ),
                       ),
-                      Text(
-                        '${Utils().formatCurrency(widget.data.totalAmount.toString())}₮',
-                        style: TextStyle(
-                          color: orderColor,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
+                      Expanded(
+                        child: Text(
+                          '${Utils().formatCurrency(widget.data.totalAmount.toString())}₮',
+                          style: TextStyle(
+                            color: orderColor,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                          ),
                         ),
-                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
                 ),
-                Container(
-                  width: (MediaQuery.of(context).size.width / 2) - 15,
+                Expanded(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.end,

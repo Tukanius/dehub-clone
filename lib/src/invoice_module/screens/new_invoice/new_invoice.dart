@@ -2,7 +2,7 @@ import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/invoice_additional_line/invoice_additional_line.dart';
-import 'package:dehub/components/invoice_product_card/add_product_card.dart';
+import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/partner.dart';
@@ -358,7 +358,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       Column(
                         children: product
                             .map(
-                              (item) => AddProductCard(
+                              (item) => InvoiceProductCard(
                                 listenController: productController,
                                 readOnly: false,
                                 closeClick: () {

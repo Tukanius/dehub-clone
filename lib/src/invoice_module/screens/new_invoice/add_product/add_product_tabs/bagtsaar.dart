@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/controller/listen.dart';
-import 'package:dehub/components/invoice_product_card/add_product_card.dart';
+import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/invoice.dart';
@@ -180,7 +180,7 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
                                   Column(
                                     children: inventory.rows!
                                         .map(
-                                          (data) => AddProductCard(
+                                          (data) => InvoiceProductCard(
                                             isPackage: widget.isPackage,
                                             package: packageProduct,
                                             listenController: listenController,

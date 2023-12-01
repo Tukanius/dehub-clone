@@ -334,6 +334,7 @@ class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
                 if (date == null) {
                   setState(() {
                     dateValidate = true;
+                    showCustomDialog(context, 'Өдөр сонгоно уу', false);
                   });
                 } else {
                   onSubmit();

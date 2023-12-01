@@ -211,7 +211,7 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                     shape: BoxShape.circle,
                     color: selectedIndex == 3 ? productColor : white,
                   ),
-                  padding: EdgeInsets.all(selectedIndex == 3 ? 10 : 0),
+                  padding: EdgeInsets.all(selectedIndex == 3 ? 10 : 3),
                   child: SvgPicture.asset(
                     'assets/svg/zahialga.svg',
                     height: 17,

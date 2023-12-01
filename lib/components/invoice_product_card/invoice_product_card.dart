@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class AddProductCard extends StatefulWidget {
+class InvoiceProductCard extends StatefulWidget {
   final Function()? closeClick;
   final Function()? onClick;
   final bool? readOnly;
@@ -16,7 +16,7 @@ class AddProductCard extends StatefulWidget {
   final Invoice data;
   final bool? isPackage;
   final List<Invoice>? package;
-  const AddProductCard({
+  const InvoiceProductCard({
     this.listenController,
     this.readOnly,
     this.package,
@@ -28,10 +28,10 @@ class AddProductCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<AddProductCard> createState() => _AddProductCardState();
+  State<InvoiceProductCard> createState() => _InvoiceProductCardState();
 }
 
-class _AddProductCardState extends State<AddProductCard> {
+class _InvoiceProductCardState extends State<InvoiceProductCard> {
   String? discount;
   bool isCheck = false;
   TextEditingController quantityController = TextEditingController();
@@ -203,27 +203,27 @@ class _AddProductCardState extends State<AddProductCard> {
                         ),
                       )
                     : SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Checkbox(
-                          side: MaterialStateBorderSide.resolveWith(
-                            (states) => BorderSide(
-                              color: invoiceColor,
-                              width: 2,
-                            ),
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          activeColor: invoiceColor,
-                          value: isCheck,
-                          onChanged: (value) {
-                            setState(() {
-                              isCheck = value!;
-                            });
-                          },
+                        // height: 20,
+                        // width: 20,
+                        // child: Checkbox(
+                        //   side: MaterialStateBorderSide.resolveWith(
+                        //     (states) => BorderSide(
+                        //       color: invoiceColor,
+                        //       width: 2,
+                        //     ),
+                        //   ),
+                        //   shape: RoundedRectangleBorder(
+                        //     borderRadius: BorderRadius.circular(5),
+                        //   ),
+                        //   activeColor: invoiceColor,
+                        //   value: isCheck,
+                        //   onChanged: (value) {
+                        //     setState(() {
+                        //       isCheck = value!;
+                        //     });
+                        //   },
+                        // ),
                         ),
-                      ),
               ],
             ),
             Divider(

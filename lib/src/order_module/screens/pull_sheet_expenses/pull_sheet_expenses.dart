@@ -85,113 +85,22 @@ class _PullSheetExpensesState extends State<PullSheetExpenses> {
                       ),
                     ),
                   ),
-                  Container(
-                    color: white,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(top: 10, left: 15),
-                          child: Text(
-                            'Барааны мэдээлэл',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: grey3,
-                            ),
-                          ),
-                        ),
-                        Divider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    '#',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: black,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text(
-                                    'Бараа',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        children: widget.data.pullSheetLines!
+                            .map(
+                              (e) => OrderGoodsInfo(
+                                data: widget.data.pullSheetLines,
                               ),
-                            ),
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Container(
-                                    child: Text(
-                                      'Хэм.н',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Container(
-                                    child: Text(
-                                      'Тоо',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 30,
-                                  ),
-                                  Container(
-                                    child: Text(
-                                      'Нэгж үнэ',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Divider(),
-                        Column(
-                          children: widget.data.pullSheetLines!
-                              .map(
-                                (e) => OrderGoodsInfo(
-                                  data: widget.data.pullSheetLines,
-                                ),
-                              )
-                              .toList(),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
+                            )
+                            .toList(),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
                   ),
                   Container(
                     margin:

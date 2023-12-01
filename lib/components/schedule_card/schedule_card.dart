@@ -2,7 +2,13 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class ScheduleCard extends StatefulWidget {
-  const ScheduleCard({super.key});
+  final String labelText;
+  final int count;
+  const ScheduleCard({
+    Key? key,
+    required this.count,
+    required this.labelText,
+  }) : super(key: key);
 
   @override
   State<ScheduleCard> createState() => _ScheduleCardState();
@@ -15,16 +21,9 @@ class _ScheduleCardState extends State<ScheduleCard> {
       shadowColor: Colors.grey,
       elevation: 5,
       child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
           color: white,
-          // boxShadow: [
-          //   BoxShadow(
-          //     blurRadius: 3,
-          //     offset: Offset(3, 3),
-          //     color: Colors.grey,
-          //     spreadRadius: 3,
-          //   )
-          // ],
         ),
         height: 100,
         width: 110,
@@ -33,7 +32,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              '5',
+              '${widget.count}',
               style: TextStyle(
                 color: buttonColor,
                 fontSize: 20,
@@ -41,14 +40,37 @@ class _ScheduleCardState extends State<ScheduleCard> {
               ),
             ),
             Text(
-              'Хугацаа хэтэрсэн',
+              '${widget.labelText}',
               style: TextStyle(color: buttonColor),
               textAlign: TextAlign.center,
             ),
             SizedBox(
               height: 10,
             ),
-            Container(),
+            Stack(
+              children: [
+                Container(
+                  height: 4,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xffF6F6F6),
+                  ),
+                ),
+                Container(
+                  height: 4,
+                  width: MediaQuery.of(context).size.width * 0.1,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: widget.labelText == "Нээлттэй нэхэмжлэх"
+                        ? pink
+                        : widget.labelText == "Батлах хүлээж буй"
+                            ? yellow
+                            : blue,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

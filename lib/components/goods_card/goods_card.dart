@@ -5,8 +5,12 @@ import 'package:flutter/material.dart';
 class GoodsCard extends StatefulWidget {
   final Function()? onClick;
   final InventoryGoods data;
+  final bool startAnimation;
+  final int index;
   const GoodsCard({
     Key? key,
+    required this.index,
+    required this.startAnimation,
     required this.data,
     this.onClick,
   }) : super(key: key);
@@ -20,7 +24,13 @@ class _GoodsCardState extends State<GoodsCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: widget.onClick,
-      child: Container(
+      child: AnimatedContainer(
+        curve: Curves.ease,
+        transform: Matrix4.translationValues(
+            widget.startAnimation ? 0 : MediaQuery.of(context).size.width,
+            0,
+            0),
+        duration: Duration(milliseconds: 300 + (widget.index * 200)),
         margin: const EdgeInsets.symmetric(vertical: 1),
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         color: white,

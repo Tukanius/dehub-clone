@@ -320,21 +320,30 @@ class _GivePageState extends State<GivePage>
                                       Column(
                                         children: item.values!
                                             .map(
-                                              (data) => InvoiceCard(
-                                                startAnimation: startAnimation,
-                                                index:
-                                                    invoice.rows!.indexOf(data),
-                                                data: data,
-                                                onClick: () {
-                                                  Navigator.of(context)
-                                                      .pushNamed(
-                                                    InvoiceDetailPage.routeName,
-                                                    arguments:
-                                                        InvoiceDetailPageArguments(
-                                                      id: data.id!,
-                                                    ),
-                                                  );
-                                                },
+                                              (data) => Column(
+                                                children: [
+                                                  InvoiceCard(
+                                                    startAnimation:
+                                                        startAnimation,
+                                                    index: invoice.rows!
+                                                        .indexOf(data),
+                                                    data: data,
+                                                    onClick: () {
+                                                      Navigator.of(context)
+                                                          .pushNamed(
+                                                        InvoiceDetailPage
+                                                            .routeName,
+                                                        arguments:
+                                                            InvoiceDetailPageArguments(
+                                                          id: data.id!,
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                ],
                                               ),
                                             )
                                             .toList(),

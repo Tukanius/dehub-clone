@@ -80,7 +80,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
   create() async {
     Order create = Order();
     create.orderId = order.id;
-    await OrderApi().deliveryNoteCreate(create);
+    await OrderApi().deliveryManagementCreate(create);
     showCustomDialog(
       context,
       "Амжилттай",

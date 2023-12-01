@@ -221,6 +221,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
                       setState(() {
                         filterText = item;
                         isLoading = true;
+                        groupedList = [];
                       });
                       list(page, limit, "${filterText}", start.toString(),
                           end.toString());

@@ -318,9 +318,18 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  ScheduleCard(),
-                                  ScheduleCard(),
-                                  ScheduleCard(),
+                                  ScheduleCard(
+                                    count: 5,
+                                    labelText: 'Нээлттэй нэхэмжлэх',
+                                  ),
+                                  ScheduleCard(
+                                    count: 15,
+                                    labelText: 'Батлах хүлээж буй',
+                                  ),
+                                  ScheduleCard(
+                                    count: 345,
+                                    labelText: 'Хугацаа хэтэрсэн',
+                                  ),
                                 ],
                               ),
                             ],

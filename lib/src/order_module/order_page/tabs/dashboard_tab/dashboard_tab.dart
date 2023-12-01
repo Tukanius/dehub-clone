@@ -94,10 +94,10 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                               .pushNamed(DeliveryManagement.routeName);
                         },
                         boxColor: orderColor.withOpacity(0.2),
-                        padding: 8,
+                        padding: 10,
                         labelText: 'Хүргэлт удирдлага',
                         svgColor: buttonColor,
-                        svg: 'assets/svg/zahialga.svg',
+                        svg: 'assets/svg/push.svg',
                       )
                     : SizedBox(),
                 user.currentBusiness?.type == "SUPPLIER"
@@ -107,10 +107,10 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                               .pushNamed(OrderShipping.routeName);
                         },
                         boxColor: orderColor.withOpacity(0.2),
-                        padding: 10,
+                        padding: 7,
                         labelText: 'Ачилт удирдлага',
                         svgColor: buttonColor,
-                        svg: 'assets/svg/push.svg',
+                        svg: 'assets/svg/assign.svg',
                       )
                     : SizedBox(),
                 DashboardCard(

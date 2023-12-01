@@ -57,8 +57,6 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
         onPressed: () {
           Navigator.of(context).pop();
           Navigator.of(context).pop();
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
         },
       );
     } catch (e) {
@@ -73,7 +71,6 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
       'Амжилттай баталгаажууллаа',
       true,
       onPressed: () {
-        Navigator.of(context).pop();
         Navigator.of(context).pop();
         Navigator.of(context).pop();
       },
@@ -238,14 +235,12 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                 ),
                 Expanded(
                   child: SingleChildScrollView(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 17,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 17),
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               information(
@@ -254,174 +249,97 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                                   receipt.buyerBusiness, 'Худалдан авагч')
                             ],
                           ),
-                          Divider(
-                            color: orderColor,
-                            thickness: 1,
-                          ),
-                          Text(
-                            'БАРААНЫ МЭДЭЭЛЭЛ',
-                            style: TextStyle(
-                              color: coolGrey,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Divider(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      '#',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: black,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Text(
-                                      'Бараа',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Container(
-                                      child: Text(
-                                        'Хэм.н',
-                                        style: TextStyle(
-                                          color: black,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        'Тоо',
-                                        style: TextStyle(
-                                          color: black,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 30,
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        'Нэгж үнэ',
-                                        style: TextStyle(
-                                          color: black,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Divider(),
-                          OrderGoodsInfo(
-                            data: receipt.receiptLines,
-                          ),
-                          Text(
+                        ),
+                        Divider(
+                          color: orderColor,
+                          thickness: 1,
+                        ),
+                        OrderGoodsInfo(
+                          data: receipt.receiptLines,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Text(
                             'ПАДААНЫ ДҮН',
                             style: TextStyle(
                               color: coolGrey,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 17),
+                          child: Column(
                             children: [
-                              Text(
-                                'Нийт дүн',
-                                style: TextStyle(
-                                  color: black,
-                                ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Нийт дүн',
+                                    style: TextStyle(
+                                      color: black,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${Utils().formatCurrency(receipt.totalAmount.toString())} ₮',
+                                    style: TextStyle(
+                                      color: orderColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                '${Utils().formatCurrency(receipt.totalAmount.toString())} ₮',
-                                style: TextStyle(
-                                  color: orderColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    'Нэр төрлийн тоо',
+                                    style: TextStyle(
+                                      color: black,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${receipt.receiptLines?.length}',
+                                    style: const TextStyle(
+                                      color: orderColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    'Хүлээн авах барааны тоо',
+                                    style: TextStyle(
+                                      color: black,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${receipt.receiptLines?.fold(0, (previousValue, element) => previousValue + element.quantity!)}',
+                                    style: const TextStyle(
+                                      color: orderColor,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'Нэр төрлийн тоо',
-                                style: TextStyle(
-                                  color: black,
-                                ),
-                              ),
-                              Text(
-                                '${receipt.receiptLines?.length}',
-                                style: const TextStyle(
-                                  color: orderColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'Хүлээн авах барааны тоо',
-                                style: TextStyle(
-                                  color: black,
-                                ),
-                              ),
-                              Text(
-                                '${receipt.receiptLines?.fold(0, (previousValue, element) => previousValue + element.quantity!)}',
-                                style: const TextStyle(
-                                  color: orderColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 50,
-                          ),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                      ],
                     ),
                   ),
                 ),

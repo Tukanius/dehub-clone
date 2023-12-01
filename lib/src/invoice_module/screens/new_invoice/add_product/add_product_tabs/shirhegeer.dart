@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:dehub/api/inventory_api.dart';
-import 'package:dehub/components/invoice_product_card/add_product_card.dart';
+import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
@@ -29,7 +29,6 @@ class Shirhegeer extends StatefulWidget {
 class _ShirhegeerState extends State<Shirhegeer> with AfterLayoutMixin {
   bool isLoading = true;
   Result inventory = Result(rows: [], count: 0);
-  Result removedList = Result(rows: [], count: 0);
   int page = 1;
   int limit = 10;
   Timer? timer;
@@ -158,7 +157,7 @@ class _ShirhegeerState extends State<Shirhegeer> with AfterLayoutMixin {
                                   Column(
                                     children: inventory.rows!
                                         .map(
-                                          (data) => AddProductCard(
+                                          (data) => InvoiceProductCard(
                                             isPackage: false,
                                             readOnly: false,
                                             onClick: () {

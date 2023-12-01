@@ -24,11 +24,21 @@ void showCustomDialog(BuildContext context, String labelText, bool? isSuccess,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  const Text(
-                    'Амжилттай',
-                    style: TextStyle(
-                        color: dark, fontWeight: FontWeight.bold, fontSize: 24),
-                  ),
+                  isSuccess == true
+                      ? const Text(
+                          'Амжилттай',
+                          style: TextStyle(
+                              color: dark,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24),
+                        )
+                      : const Text(
+                          'Амжилтгүй',
+                          style: TextStyle(
+                              color: dark,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24),
+                        ),
                   const SizedBox(
                     height: 16,
                   ),

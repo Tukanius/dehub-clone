@@ -122,7 +122,7 @@ Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
     if (instance.offset!.page! > 0) {
       params['offset']['page'] = instance.offset!.page;
     }
-    if (instance.offset!.limit! > 0) {
+    if (instance.offset?.limit != 0) {
       params['offset']['limit'] = instance.offset!.limit;
     }
   }

@@ -1,4 +1,4 @@
-import 'package:dehub/components/add_button/add_button.dart';
+// import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/splash/splash_page.dart';
@@ -19,10 +19,10 @@ class FinancingPage extends StatefulWidget {
 
 class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
   static const List<Widget> currentPages = [
-    Text('1'),
+    SizedBox(),
     DashBoardTab(),
     Text('1'),
-    Text('1'),
+    Text('2'),
   ];
   int selectedIndex = 1;
   bool isLoading = true;
@@ -59,7 +59,7 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
       appBar: AppBar(
         leadingWidth: 100,
         elevation: 0,
-        backgroundColor: selectedIndex != 3 ? backgroundColor : financingColor,
+        backgroundColor: backgroundColor,
         leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pushNamed(SplashPage.routeName);
@@ -88,25 +88,46 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
           ),
         ),
         actions: [
-          selectedIndex == 1
-              ? GestureDetector(
-                  onTap: () {
-                    logout();
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 15),
-                    child: CircleAvatar(
-                      radius: 18,
-                      backgroundColor: grey,
-                    ),
+          // selectedIndex == 1
+          //     ?
+          GestureDetector(
+            onTap: () async {
+              logout();
+            },
+            child: Container(
+              margin: const EdgeInsets.only(right: 25),
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                border: Border.all(color: financingColor, width: 0.5),
+                shape: BoxShape.circle,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.logout,
+                    color: financingColor,
+                    size: 12,
                   ),
-                )
-              : selectedIndex == 3
-                  ? AddButton(
-                      color: white,
-                      addColor: financingColor,
-                    )
-                  : SizedBox(),
+                  Text(
+                    'Гарах',
+                    style: TextStyle(
+                      color: financingColor,
+                      fontSize: 8,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          // : selectedIndex == 3
+          //     ? AddButton(
+          //         color: white,
+          //         addColor: financingColor,
+          //       )
+          //     : SizedBox(),
         ],
       ),
       body: isLoading == true

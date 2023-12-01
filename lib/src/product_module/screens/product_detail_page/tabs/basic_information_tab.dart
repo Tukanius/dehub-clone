@@ -346,10 +346,12 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
                             child: GestureDetector(
                               onTap: () {
                                 showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return ImageDialog(link: e);
-                                    });
+                                  barrierDismissible: true,
+                                  context: context,
+                                  builder: (context) {
+                                    return ImageDialog(link: e);
+                                  },
+                                );
                               },
                               child: Image(
                                 image: NetworkImage('${e}'),
