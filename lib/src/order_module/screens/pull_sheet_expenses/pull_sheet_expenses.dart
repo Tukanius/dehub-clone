@@ -182,9 +182,7 @@ class _PullSheetExpensesState extends State<PullSheetExpenses> {
                           children: widget.data.pullSheetLines!
                               .map(
                                 (e) => OrderGoodsInfo(
-                                  isConfirmed: true,
-                                  index: widget.data.pullSheetLines?.indexOf(e),
-                                  data: e,
+                                  data: widget.data.pullSheetLines,
                                 ),
                               )
                               .toList(),

@@ -197,22 +197,40 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                       SizedBox(
                         height: 3,
                       ),
-                      Text(
-                        '${widget.data.quantity! * widget.data.unitConvertValue!}',
-                        style: TextStyle(
-                          color: orderColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      Text(
-                        '${widget.data.unitConvertValue} ш',
-                        style: TextStyle(
-                          color: buttonColor,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                        ),
-                      ),
+                      widget.data.unitConvertValue != null
+                          ? Text(
+                              '${widget.data.quantity! * widget.data.unitConvertValue!}',
+                              style: TextStyle(
+                                color: orderColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            )
+                          : Text(
+                              '${widget.data.quantity}',
+                              style: TextStyle(
+                                color: orderColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                      widget.data.unitConvertValue != null
+                          ? Text(
+                              '${widget.data.unitConvertValue} ш',
+                              style: TextStyle(
+                                color: buttonColor,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                              ),
+                            )
+                          : Text(
+                              '1 ш',
+                              style: TextStyle(
+                                color: buttonColor,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                              ),
+                            ),
                     ],
                   ),
                 ),

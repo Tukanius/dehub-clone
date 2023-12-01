@@ -487,15 +487,8 @@ class _DeliveryDetailState extends State<DeliveryDetail> with AfterLayoutMixin {
                             ],
                           ),
                           Divider(),
-                          Column(
-                            children: get.lines!
-                                .map(
-                                  (e) => OrderGoodsInfo(
-                                    data: e,
-                                    index: get.lines?.indexOf(e),
-                                  ),
-                                )
-                                .toList(),
+                          OrderGoodsInfo(
+                            data: get.lines,
                           ),
                           Text(
                             'ПАДААНЫ ДҮН',

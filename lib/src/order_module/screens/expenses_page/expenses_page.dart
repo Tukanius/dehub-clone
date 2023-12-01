@@ -346,15 +346,8 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                             ],
                           ),
                           Divider(),
-                          Column(
-                            children: receipt.receiptLines!
-                                .map(
-                                  (e) => OrderGoodsInfo(
-                                    index: receipt.receiptLines?.indexOf(e),
-                                    data: e,
-                                  ),
-                                )
-                                .toList(),
+                          OrderGoodsInfo(
+                            data: receipt.receiptLines,
                           ),
                           Text(
                             'ПАДААНЫ ДҮН',

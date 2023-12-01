@@ -49,7 +49,6 @@ class _DeliveryCardState extends State<ShippingCard> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.data?.loadingDate);
     general = Provider.of<GeneralProvider>(context, listen: false).orderGeneral;
     return GestureDetector(
       onTap: widget.onClick,
