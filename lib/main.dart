@@ -3,6 +3,9 @@ import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/finance_module/screens/recalled_page/recalled_page.dart';
+import 'package:dehub/src/invoice_module/screens/invoice_transaction/invoice_transaction.dart';
+import 'package:dehub/src/invoice_module/screens/statement_detail/statement_detail.dart';
+import 'package:dehub/src/invoice_module/screens/transaction_detail/transaction_detail.dart';
 import 'package:dehub/src/network_module/screens/account_setting/account_setting.dart';
 import 'package:dehub/src/network_module/screens/account_setting/account_setting_detail/account_setting_detail.dart';
 import 'package:dehub/src/network_module/screens/account_setting/set_account/set_account.dart';
@@ -612,17 +615,26 @@ class MyApp extends StatelessWidget {
                         data: arguments.data,
                       );
                     });
+                  case TransactionDetailPage.routeName:
+                    TransactionDetailPageArguments arguments =
+                        settings.arguments as TransactionDetailPageArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return TransactionDetailPage(
+                        data: arguments.data,
+                      );
+                    });
+                  case InvoiceTransactionDetail.routeName:
+                    InvoiceTransactionDetailArguments arguments =
+                        settings.arguments as InvoiceTransactionDetailArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return InvoiceTransactionDetail(
+                        id: arguments.id,
+                      );
+                    });
                   case MenuPage.routeName:
-                    // MenuPageArguments arguments =
-                    //     settings.arguments as MenuPageArguments;
                     return PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
-                          MenuPage(
-                              // listenController: arguments.listenController,
-                              // id: arguments.id,
-                              // partnerListenController:
-                              //     arguments.partnerListenController,
-                              ),
+                          MenuPage(),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                         var begin = const Offset(-1.0, 0.0);
@@ -842,7 +854,24 @@ class MyApp extends StatelessWidget {
                         settings.arguments as NewOrderArguments;
                     return MaterialPageRoute(builder: (context) {
                       return NewOrder(
+                        data: arguments.data,
                         id: arguments.id,
+                      );
+                    });
+                  case StatementDetail.routeName:
+                    StatementDetailArguments arguments =
+                        settings.arguments as StatementDetailArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return StatementDetail(
+                        data: arguments.data,
+                      );
+                    });
+                  case InvoiceTransaction.routeName:
+                    InvoiceTransactionArguments arguments =
+                        settings.arguments as InvoiceTransactionArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return InvoiceTransaction(
+                        data: arguments.data,
                       );
                     });
                   case RePaymentDetail.routeName:

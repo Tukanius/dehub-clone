@@ -35,6 +35,7 @@ class TransactionHistory extends StatefulWidget {
 class _TransactionHistoryState extends State<TransactionHistory>
     with SingleTickerProviderStateMixin, AfterLayoutMixin {
   List<Payment> groupedList = [];
+  Map<DateTime, List<Payment>> groupItems = {};
   DateTimeRange dateTimeRange = DateTimeRange(
     start: DateTime.now().subtract(Duration(days: 1)),
     end: DateTime.now(),
@@ -94,7 +95,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
     setState(() {
       isLoading = true;
       page = 1;
-      groupedList = [];
+      groupItems = {};
     });
     await list(page, limit, '${filterText}', dateTimeRange.start.toString(),
         dateTimeRange.end.toString());
@@ -105,7 +106,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
   }
 
   groupMaker() {
-    Map<DateTime, List<Payment>> groupItems = {};
+    List<Payment> group = [];
     for (var data in transaction.rows!) {
       DateTime createdAt =
           DateTime.parse(DateFormat('yyyy-MM-dd').format(data.createdAt));
@@ -116,20 +117,20 @@ class _TransactionHistoryState extends State<TransactionHistory>
       }
     }
     groupItems.forEach((key, value) {
-      groupedList.add(
+      group.add(
         Payment(
           header: key,
           values: value,
         ),
       );
     });
+    groupedList = group;
   }
 
   @override
   Widget build(BuildContext context) {
     final start = dateTimeRange.start;
     final end = dateTimeRange.end;
-
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -221,7 +222,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
                       setState(() {
                         filterText = item;
                         isLoading = true;
-                        groupedList = [];
+                        groupItems = {};
                       });
                       list(page, limit, "${filterText}", start.toString(),
                           end.toString());

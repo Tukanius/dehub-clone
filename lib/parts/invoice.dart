@@ -32,6 +32,8 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     configType:
         json['configType'] != null ? json['configType'] as String : null,
     updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
+    paymentMethod:
+        json['paymentMethod'] != null ? json['paymentMethod'] as String : null,
     deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
     refCode: json['refCode'] != null ? json['refCode'] as String : null,
     senderUserId:
@@ -79,6 +81,8 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     shippingAmount: json['shippingAmount'] != null
         ? double.parse("${json['shippingAmount']}")
         : null,
+    trxAmount:
+        json['trxAmount'] != null ? double.parse("${json['trxAmount']}") : null,
     vatAmount:
         json['vatAmount'] != null ? double.parse("${json['vatAmount']}") : null,
     taxAmount:
@@ -128,6 +132,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     type: json['type'] != null ? json['type'] as String : null,
     receiverBusiness: json['receiverBusiness'] != null
         ? Invoice.fromJson(json['receiverBusiness'] as Map<String, dynamic>)
+        : null,
+    actionUser: json['actionUser'] != null
+        ? Invoice.fromJson(json['actionUser'] as Map<String, dynamic>)
         : null,
     business: json['business'] != null
         ? Invoice.fromJson(json['business'] as Map<String, dynamic>)
@@ -187,6 +194,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     remainingDays: json['remainingDays'] != null
         ? int.parse('${json['remainingDays']}')
         : null,
+    confirmationDay: json['confirmationDay'] != null
+        ? int.parse('${json['confirmationDay']}')
+        : null,
     senderBusiness: json['senderBusiness'] != null
         ? Invoice.fromJson(json['senderBusiness'] as Map<String, dynamic>)
         : null,
@@ -217,6 +227,18 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
         json['branchAddress'] != null ? json['branchAddress'] as String : null,
     locationLat: json['locationLat'] != null
         ? double.parse("${json['locationLat']}")
+        : null,
+    invoicesCount: json['invoicesCount'] != null
+        ? int.parse("${json['invoicesCount']}")
+        : null,
+    invoicesAmount: json['invoicesAmount'] != null
+        ? double.parse("${json['invoicesAmount']}")
+        : null,
+    overdueInvoicesCount: json['overdueInvoicesCount'] != null
+        ? int.parse("${json['overdueInvoicesCount']}")
+        : null,
+    overdueInvoicesAmount: json['overdueInvoicesAmount'] != null
+        ? double.parse("${json['overdueInvoicesAmount']}")
         : null,
     locationLng: json['locationLng'] != null
         ? double.parse("${json['locationLng']}")
@@ -355,9 +377,21 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.actionUser != null) json['actionUser'] = instance.actionUser;
+  if (instance.invoicesCount != null)
+    json['invoicesCount'] = instance.invoicesCount;
+  if (instance.invoicesAmount != null)
+    json['invoicesAmount'] = instance.invoicesAmount;
+  if (instance.trxAmount != null) json['trxAmount'] = instance.trxAmount;
+  if (instance.overdueInvoicesCount != null)
+    json['overdueInvoicesCount'] = instance.overdueInvoicesCount;
+  if (instance.overdueInvoicesAmount != null)
+    json['overdueInvoicesAmount'] = instance.overdueInvoicesAmount;
   if (instance.email != null) json['email'] = instance.email;
   if (instance.business != null) json['business'] = instance.business;
   if (instance.branch != null) json['branch'] = instance.branch;
+  if (instance.confirmationDay != null)
+    json['confirmationDay'] = instance.confirmationDay;
   if (instance.values != null) json['values'] = instance.values;
   if (instance.header != null) json['header'] = instance.header;
   if (instance.stats != null) json['stats'] = instance.stats;
@@ -392,6 +426,8 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   if (instance.brand != null) json['brand'] = instance.brand;
   if (instance.optionValues != null)
     json['optionValues'] = instance.optionValues;
+  if (instance.paymentMethod != null)
+    json['paymentMethod'] = instance.paymentMethod;
   if (instance.optionId != null) json['optionId'] = instance.optionId;
   if (instance.phone != null) json['phone'] = instance.phone;
   if (instance.businessAddress != null)

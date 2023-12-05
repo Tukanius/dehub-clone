@@ -57,42 +57,46 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  widget.data.order?.receiverBranch?.logo == null
-                      ? CircleAvatar(
-                          radius: 16,
-                          backgroundImage: AssetImage('images/avatar.png'),
-                        )
-                      : CircleAvatar(
-                          radius: 16,
-                          backgroundColor: grey,
-                          backgroundImage: NetworkImage(
-                              '${widget.data.order?.receiverBranch?.logo}'),
-                        ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${widget.data.receiverBusiness?.profileName}",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                        ),
+              Expanded(
+                child: Row(
+                  children: [
+                    widget.data.order?.receiverBranch?.logo == null
+                        ? CircleAvatar(
+                            radius: 16,
+                            backgroundImage: AssetImage('images/avatar.png'),
+                          )
+                        : CircleAvatar(
+                            radius: 16,
+                            backgroundColor: grey,
+                            backgroundImage: NetworkImage(
+                                '${widget.data.order?.receiverBranch?.logo}'),
+                          ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${widget.data.receiverBusiness?.profileName}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Text(
+                            '${widget.data.receiverBusiness?.refCode}',
+                            style: TextStyle(
+                              color: grey2,
+                              fontSize: 11,
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        '${widget.data.receiverBusiness?.refCode}',
-                        style: TextStyle(
-                          color: grey2,
-                          fontSize: 11,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
               Row(
                 children: [

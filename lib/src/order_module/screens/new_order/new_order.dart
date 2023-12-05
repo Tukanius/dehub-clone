@@ -26,17 +26,21 @@ import 'package:dehub/models/order.dart';
 import 'package:provider/provider.dart';
 
 class NewOrderArguments {
+  Order? data;
   String? id;
   NewOrderArguments({
     this.id,
+    this.data,
   });
 }
 
 class NewOrder extends StatefulWidget {
   final String? id;
+  final Order? data;
   static const routeName = '/NewOrder';
   const NewOrder({
     this.id,
+    this.data,
     Key? key,
   }) : super(key: key);
 
@@ -56,6 +60,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   Order receiverBranch = Order();
   DateTime? selectedDate;
   Order result = Order();
+  bool isCheck = false;
   // Lists
   List<Order> product = [];
   List<Order> additionalLines = [];
@@ -76,11 +81,10 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   double shippingAmount = 0;
   double additionalRowAmount = 0;
   double finalAmount = 0;
-  //
+  // Keys
   var dateKey = GlobalKey();
   var customerKey = GlobalKey();
   var productKey = GlobalKey();
-  bool isCheck = false;
   // Validates
   bool selectedDateValidate = false;
   bool customerValidate = false;
@@ -94,9 +98,83 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
         order = customer;
       });
     }
+    if (widget.data?.lines != null) {
+      for (var i = 0; i < widget.data!.lines!.length; i++) {
+        Provider.of<CheckOutProvider>(context, listen: false).orderCart(
+            widget.data!.lines![i], widget.data!.lines![i].quantity!);
+      }
+      for (var i = 0; i < widget.data!.additionalLines!.length; i++) {
+        additionalLines.add(
+          Order(
+            price: widget.data!.additionalLines![i].price,
+            quantity: widget.data!.additionalLines![i].quantity,
+            name: widget.data!.additionalLines![i].name,
+            unit: widget.data!.additionalLines![i].unit,
+            discountValue: widget.data!.additionalLines![i].discountValue,
+          ),
+        );
+      }
+      Provider.of<CheckOutProvider>(context, listen: false).additional =
+          additionalLines;
+      Provider.of<CheckOutProvider>(context, listen: false).totalAmounts(
+        product,
+        double.tryParse(shippingAmountController.text) ?? 0,
+        double.tryParse(discountAmountController.text) ?? 0,
+      );
+      for (var i = 0; i < widget.data!.attachments!.length; i++) {
+        files.add(
+          Order(
+            url: widget.data!.attachments![i].url,
+            name: widget.data!.attachments![i].name,
+            description: widget.data!.attachments![i].description,
+          ),
+        );
+      }
+    }
     setState(() {
       isLoading = false;
     });
+  }
+
+  update(bool toReview, bool send) async {
+    List<Order> data = [];
+    for (var i = 0; i < product.length; i++) {
+      data.add(
+        Order(
+          variantId: product[i].id,
+          quantity: product[i].quantity,
+        ),
+      );
+    }
+    await OrderApi().update(
+        widget.data!.id!,
+        Order(
+          additionalLines: additionalLines,
+          businessId: order.id,
+          receiverBranchId:
+              receiverBranch.id ?? order.receiverBranches?.first.id,
+          deliveryDate:
+              isCheck == false ? selectedDate.toString() : dateTime.toString(),
+          deliveryType: isCheck == false ? "DEFAULT_DATE" : "CUSTOM_DATE",
+          receiverStaffId: order.receiverStaff?.id,
+          lines: data,
+          discountType: "AMOUNT",
+          attachments: files,
+          discountValue: 0,
+          toReview: toReview,
+          send: send,
+        ));
+    showCustomDialog(
+      context,
+      toReview == false
+          ? 'Захиалга амжилттай хадгалагдлаа'
+          : "Захиалга амжилттай илгээгдлээ",
+      true,
+      onPressed: () {
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+      },
+    );
   }
 
   validateCheck(bool toReview, bool send) {
@@ -139,7 +217,9 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     ? 'Илгээх'
                     : send == false && toReview == true
                         ? 'Хяналтад илгээх'
-                        : "Хадгалах",
+                        : widget.data == null
+                            ? "Хадгалах"
+                            : "Засах",
                 partnerName: '${customer.partner?.businessName}',
                 amountToPay: finalAmount,
                 deliveryDate: isCheck == false
@@ -147,7 +227,9 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     : dateTime.toString(),
               ),
               onSubmit: () {
-                onSubmit(toReview, send);
+                widget.data == null
+                    ? onSubmit(toReview, send)
+                    : update(toReview, send);
               }),
         );
       }
@@ -165,6 +247,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
       );
     }
     await OrderApi().createOrder(Order(
+      additionalLines: additionalLines,
       businessId: order.id,
       receiverBranchId: receiverBranch.id ?? order.receiverBranches?.first.id,
       deliveryDate:
@@ -174,6 +257,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
       lines: data,
       discountType: "AMOUNT",
       attachments: files,
+      shippingAmount: shippingAmount,
       discountValue: 0,
       toReview: toReview,
       send: send,
@@ -219,13 +303,15 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
               ),
             ),
           ),
-          title: const Text(
-            'Шинэ захиалга',
-            style: TextStyle(
-              color: orderColor,
-              fontSize: 17,
-            ),
-          ),
+          title: widget.data == null
+              ? const Text(
+                  'Шинэ захиалга',
+                  style: TextStyle(
+                    color: orderColor,
+                    fontSize: 17,
+                  ),
+                )
+              : const Text(''),
           bottom: PreferredSize(
             child: Container(
               color: orderColor,
@@ -372,31 +458,33 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                       )
                               ],
                             ),
-                            Container(
-                              color: transparent,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'Солих',
-                                    style: TextStyle(
-                                      color: customerValidate == true
-                                          ? red
-                                          : orderColor,
+                            widget.data == null
+                                ? Container(
+                                    color: transparent,
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          'Солих',
+                                          style: TextStyle(
+                                            color: customerValidate == true
+                                                ? red
+                                                : orderColor,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: customerValidate == true
+                                              ? red
+                                              : orderColor,
+                                          size: 14,
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: customerValidate == true
-                                        ? red
-                                        : orderColor,
-                                    size: 14,
-                                  ),
-                                ],
-                              ),
-                            ),
+                                  )
+                                : SizedBox(),
                           ],
                         ),
                       ),
@@ -759,91 +847,89 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      child: Container(
-                        key: productKey,
-                        margin: const EdgeInsets.only(bottom: 3),
-                        color: white,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                if (customer.id != null) {
-                                  Navigator.of(context).pushNamed(
-                                    ProductChoose.routeName,
-                                    arguments: ProductChooseArguments(
-                                      listenController: quantityController,
-                                      isPackage: false,
-                                      businessId: customer.id!,
+                    Container(
+                      key: productKey,
+                      margin: const EdgeInsets.only(bottom: 3),
+                      color: white,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              if (customer.id != null) {
+                                Navigator.of(context).pushNamed(
+                                  ProductChoose.routeName,
+                                  arguments: ProductChooseArguments(
+                                    listenController: quantityController,
+                                    isPackage: false,
+                                    businessId: customer.id!,
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    backgroundColor: orderColor,
+                                    shape: StadiumBorder(),
+                                    content: Center(
+                                      child: Text('Харилцагч сонгоно уу!'),
                                     ),
-                                  );
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      backgroundColor: orderColor,
-                                      shape: StadiumBorder(),
-                                      content: Center(
-                                        child: Text('Харилцагч сонгоно уу!'),
-                                      ),
-                                    ),
-                                  );
-                                }
-                              },
-                              child: Text(
-                                'Ширхэгээр нэмэх',
-                                style: TextStyle(
-                                  color: orderColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                                  ),
+                                );
+                              }
+                            },
+                            child: Text(
+                              'Ширхэгээр нэмэх',
+                              style: TextStyle(
+                                color: orderColor,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                if (customer.id != null) {
-                                  Navigator.of(context).pushNamed(
-                                    ProductChoose.routeName,
-                                    arguments: ProductChooseArguments(
-                                      listenController: quantityController,
-                                      isPackage: true,
-                                      businessId: customer.id!,
-                                    ),
-                                  );
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      backgroundColor: orderColor,
-                                      shape: StadiumBorder(),
-                                      content: Center(
-                                        child: Text('Харилцагч сонгоно уу!'),
-                                      ),
-                                    ),
-                                  );
-                                }
-                              },
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'Багцаар нэмэх',
-                                    style: TextStyle(
-                                      color: orderColor,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              if (customer.id != null) {
+                                Navigator.of(context).pushNamed(
+                                  ProductChoose.routeName,
+                                  arguments: ProductChooseArguments(
+                                    listenController: quantityController,
+                                    isPackage: true,
+                                    businessId: customer.id!,
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    backgroundColor: orderColor,
+                                    shape: StadiumBorder(),
+                                    content: Center(
+                                      child: Text('Харилцагч сонгоно уу!'),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Icon(
-                                    Icons.download_for_offline_outlined,
+                                );
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Багцаар нэмэх',
+                                  style: TextStyle(
                                     color: orderColor,
-                                    size: 16,
-                                  )
-                                ],
-                              ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Icon(
+                                  Icons.download_for_offline_outlined,
+                                  color: orderColor,
+                                  size: 16,
+                                )
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                     Column(
@@ -1335,44 +1421,62 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                           ),
                           Row(
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  if (product.length == 0) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        backgroundColor: orderColor,
-                                        shape: StadiumBorder(),
-                                        content: Center(
-                                          child: Text('Харилцагч сонгоно уу!'),
+                              widget.data == null
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        validateCheck(false, false);
+                                      },
+                                      child: SizedBox(
+                                        height: 32,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            SvgPicture.asset(
+                                              'assets/svg/save.svg',
+                                              colorFilter: ColorFilter.mode(
+                                                  orderColor, BlendMode.srcIn),
+                                            ),
+                                            const Text(
+                                              'Хадгалах',
+                                              style: TextStyle(
+                                                color: orderColor,
+                                                fontSize: 10,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    );
-                                  } else {
-                                    validateCheck(false, false);
-                                  }
-                                },
-                                child: SizedBox(
-                                  height: 32,
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      SvgPicture.asset(
-                                        'assets/svg/save.svg',
-                                        colorFilter: ColorFilter.mode(
-                                            orderColor, BlendMode.srcIn),
-                                      ),
-                                      const Text(
-                                        'Хадгалах',
-                                        style: TextStyle(
-                                          color: orderColor,
-                                          fontSize: 10,
+                                    )
+                                  : GestureDetector(
+                                      onTap: () {
+                                        validateCheck(false, false);
+                                      },
+                                      child: SizedBox(
+                                        height: 32,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            SvgPicture.asset(
+                                              'assets/svg/edit.svg',
+                                              colorFilter: ColorFilter.mode(
+                                                orderColor,
+                                                BlendMode.srcIn,
+                                              ),
+                                              height: 20,
+                                            ),
+                                            const Text(
+                                              'Засах',
+                                              style: TextStyle(
+                                                color: orderColor,
+                                                fontSize: 10,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                                    ),
                               const SizedBox(
                                 width: 10,
                               ),

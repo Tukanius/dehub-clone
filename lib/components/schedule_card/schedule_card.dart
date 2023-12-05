@@ -15,8 +15,11 @@ class ScheduleCard extends StatefulWidget {
 }
 
 class _ScheduleCardState extends State<ScheduleCard> {
+  double width = 0;
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width - 20;
+
     return Card(
       shadowColor: Colors.grey,
       elevation: 5,
@@ -51,7 +54,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
               children: [
                 Container(
                   height: 4,
-                  width: MediaQuery.of(context).size.width,
+                  width: width,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Color(0xffF6F6F6),
@@ -59,7 +62,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                 ),
                 Container(
                   height: 4,
-                  width: MediaQuery.of(context).size.width * 0.1,
+                  width: width * 0.5,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: widget.labelText == "Нээлттэй нэхэмжлэх"

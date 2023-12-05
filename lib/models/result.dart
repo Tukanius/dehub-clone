@@ -28,8 +28,10 @@ class Filter {
   String? itemStatus;
   String? productType;
   bool? isRecalled;
+  String? invoiceId;
 
   Filter({
+    this.invoiceId,
     this.isRecalled,
     this.productType,
     this.itemStatus,

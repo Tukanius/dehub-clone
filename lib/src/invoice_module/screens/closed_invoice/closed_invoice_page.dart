@@ -32,6 +32,7 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
   Timer? timer;
   bool startAnimation = false;
   List<Invoice> groupedList = [];
+  Map<DateTime, List<Invoice>> groupItems = {};
 
   list(page, limit, String query) async {
     Filter filter = Filter(query: '$query');
@@ -66,7 +67,7 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
     setState(() {
       isLoading = true;
       page = 1;
-      groupedList = [];
+      groupItems = {};
     });
     await list(page, limit, '');
     refreshController.refreshCompleted();
@@ -83,6 +84,7 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
     timer = Timer(Duration(milliseconds: 400), () {
       setState(() {
         isLoading = true;
+        groupItems = {};
       });
       list(page, limit, query);
       setState(() {
@@ -92,7 +94,7 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
   }
 
   groupMaker() {
-    Map<DateTime, List<Invoice>> groupItems = {};
+    List<Invoice> group = [];
     for (var data in invoice.rows!) {
       DateTime date =
           DateTime.parse(DateFormat("yyyy-MM-dd").format(data.createdAt));
@@ -104,7 +106,7 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
     }
     groupItems.forEach((key, value) {
       setState(() {
-        groupedList.add(
+        group.add(
           Invoice(
             header: key,
             values: value,
@@ -112,6 +114,7 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
         );
       });
     });
+    groupedList = group;
   }
 
   @override
@@ -223,10 +226,8 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
                                           children: data.values!
                                               .map(
                                                 (item) => InvoiceCard(
-                                                  startAnimation:
-                                                      startAnimation,
-                                                  index: invoice.rows!
-                                                      .indexOf(item),
+                                                  startAnimation: true,
+                                                  index: 0,
                                                   data: item,
                                                 ),
                                               )

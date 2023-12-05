@@ -34,7 +34,7 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
   ListenController listenController = ListenController();
-  Map<DateTime, List<Order>> groupItem = {};
+  Map<DateTime, List<Order>> groupedItems = {};
 
   @override
   void initState() {
@@ -70,41 +70,25 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
   }
 
   groupMaker() {
-    Map<DateTime, List<Order>> groupedItems = {};
+    List<Order> group = [];
     for (var data in order.rows!) {
       DateTime date =
           DateTime.parse(DateFormat("yyyy-MM-dd").format(data.createdAt));
-      // if (order.rows!.isEmpty) {
       if (groupedItems.containsKey(date)) {
         groupedItems[date]?.add(data);
       } else {
         groupedItems[date] = [data];
       }
-      // } else {
-      //   DateTime lastDate = DateTime.parse(
-      //       DateFormat("yyyy-MM-dd").format(order.rows?[9].createdAt));
-      //   if (groupedItems.containsKey(date)) {
-      //     if (groupItem.containsKey(lastDate)) {
-      //       print('asdf');
-      //       groupedList.last.values?.add(data);
-      //     } else {
-      //       print('1234');
-      //       groupedItems[date]?.add(data);
-      //     }
-      //   } else {
-      //     groupedItems[date] = [data];
-      //   }
-      // }
     }
-    groupItem = groupedItems;
-    groupItem.forEach((key, value) {
-      groupedList.add(
+    groupedItems.forEach((key, value) {
+      group.add(
         Order(
           header: key,
           values: value,
         ),
       );
     });
+    groupedList = group;
   }
 
   void _onLoading() async {
@@ -113,9 +97,6 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
     });
     await list(page, limit);
     refreshController.loadComplete();
-    setState(() {
-      isLoading = false;
-    });
   }
 
   void _onRefresh() async {
@@ -123,11 +104,10 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
     setState(() {
       isLoading = true;
       page = 1;
-      groupedList = [];
+      groupedItems = {};
     });
     await list(page, limit);
     refreshController.refreshCompleted();
-    isLoading = false;
   }
 
   @override

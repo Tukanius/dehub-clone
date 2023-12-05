@@ -225,4 +225,10 @@ class OrderApi extends HttpRequest {
     var res = await get('/staff/select?businessId=$businessId', "ORDER", true);
     return Result.fromJson(res, Order.fromJson);
   }
+
+  Future<Order> update(String id, Order data) async {
+    var res = await put('/order/$id', "ORDER", true,
+        handler: true, data: data.toJson());
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
 }

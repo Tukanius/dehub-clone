@@ -4,10 +4,13 @@ import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/order_product_card/order_product_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/pin_check/pin_check.dart';
+import 'package:dehub/src/order_module/screens/new_order/new_order.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +53,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
   double? progress;
   User user = User();
   double? totalAmount;
+  General general = General();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -119,9 +123,16 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
     );
   }
 
+  orderStatus() {
+    final res = general.orderStatus!
+        .firstWhere((element) => element.code == order.orderStatus);
+    return res;
+  }
+
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserProvider>(context, listen: false).orderMe;
+    user = Provider.of<UserProvider>(context, listen: true).orderMe;
+    general = Provider.of<GeneralProvider>(context, listen: true).orderGeneral;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -199,20 +210,45 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 3, horizontal: 5),
-                              decoration: BoxDecoration(
-                                color: lightGrey,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Text(
-                                'Түр төлөв',
-                                style: TextStyle(
-                                  color: buttonColor,
-                                  fontWeight: FontWeight.w500,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 3, horizontal: 5),
+                                decoration: BoxDecoration(
+                                  color: Color(int.parse(
+                                              orderStatus()
+                                                  .color
+                                                  .substring(1, 7),
+                                              radix: 16) +
+                                          0xff000000)
+                                      .withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                              ),
-                            ),
+                                child:
+                                    user.currentBusiness?.type == "SUPPLIER" &&
+                                            order.type == "SALES"
+                                        ? Text(
+                                            '${orderStatus().sentName}',
+                                            style: TextStyle(
+                                              color: Color(int.parse(
+                                                      orderStatus()
+                                                          .color
+                                                          .substring(1, 7),
+                                                      radix: 16) +
+                                                  0xff000000),
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          )
+                                        : Text(
+                                            '${orderStatus().receivedName}',
+                                            style: TextStyle(
+                                              color: Color(int.parse(
+                                                      orderStatus()
+                                                          .color
+                                                          .substring(1, 7),
+                                                      radix: 16) +
+                                                  0xff000000),
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          )),
                             Text(
                               '${user.firstName}',
                               style: TextStyle(
@@ -529,7 +565,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                       ? Column(
                           children: order.additionalLines!
                               .map(
-                                (e) => Container(
+                                (item) => Container(
                                   margin: const EdgeInsets.only(bottom: 3),
                                   color: white,
                                   padding: const EdgeInsets.symmetric(
@@ -545,7 +581,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Бараа, ажлын нэр',
+                                            '${item.name}',
                                             style: TextStyle(
                                               color: buttonColor,
                                               fontWeight: FontWeight.w500,
@@ -554,17 +590,25 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                           SizedBox(
                                             height: 5,
                                           ),
-                                          Text(
-                                            '20км-с дээш газарт',
-                                            style: TextStyle(
-                                              color: coolGrey,
-                                              fontSize: 12,
-                                            ),
-                                          ),
+                                          item.description != null
+                                              ? Text(
+                                                  '${item.description}',
+                                                  style: TextStyle(
+                                                    color: coolGrey,
+                                                    fontSize: 12,
+                                                  ),
+                                                )
+                                              : Text(
+                                                  '-',
+                                                  style: TextStyle(
+                                                    color: coolGrey,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
                                         ],
                                       ),
                                       Text(
-                                        '20,000.00₮',
+                                        '${Utils().formatCurrency(item.totalAmount.toString())}₮',
                                         style: TextStyle(
                                           color: orderColor,
                                         ),
@@ -1035,10 +1079,10 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                               GestureDetector(
                                                 onTap: () {
                                                   onSubmit(
-                                                      false,
-                                                      "Захиалга цуцлах",
-                                                      (approve) =>
-                                                          respond(false));
+                                                    false,
+                                                    "Захиалга цуцлах",
+                                                    (approve) => respond(false),
+                                                  );
                                                 },
                                                 child: Container(
                                                   height: 36,
@@ -1143,7 +1187,41 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                   ),
                                                 ),
                                               )
-                                            : SizedBox(),
+                                            : order.orderStatus == "DRAFT"
+                                                ? GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.of(context)
+                                                          .pushNamed(
+                                                        NewOrder.routeName,
+                                                        arguments:
+                                                            NewOrderArguments(
+                                                          data: order,
+                                                          id: order
+                                                              .receiverBusinessId,
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      color: transparent,
+                                                      child: Column(
+                                                        children: [
+                                                          Icon(
+                                                            Icons.edit_square,
+                                                            color: orderColor,
+                                                            size: 18,
+                                                          ),
+                                                          Text(
+                                                            'Засах',
+                                                            style: TextStyle(
+                                                              color: orderColor,
+                                                              fontSize: 12,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )
+                                                : SizedBox(),
                       ],
                     ),
                   ),

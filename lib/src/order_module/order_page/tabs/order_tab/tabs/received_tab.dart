@@ -34,6 +34,7 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
   ListenController listenController = ListenController();
+  Map<DateTime, List<Order>> groupedItems = {};
 
   @override
   void initState() {
@@ -54,6 +55,7 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
   void _onLoading() async {
     setState(() {
       page += 1;
+      groupedItems = {};
     });
     await list(page, limit);
     refreshController.loadComplete();
@@ -93,7 +95,7 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
   }
 
   groupMaker() {
-    Map<DateTime, List<Order>> groupedItems = {};
+    List<Order> group = [];
     for (var item in order.rows!) {
       DateTime date =
           DateTime.parse(DateFormat("yyyy-MM-dd").format(item.createdAt));
@@ -104,13 +106,14 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
       }
     }
     groupedItems.forEach((key, value) {
-      groupedList.add(
+      group.add(
         Order(
           header: key,
           values: value,
         ),
       );
     });
+    groupedList = group;
   }
 
   @override

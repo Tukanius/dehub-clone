@@ -30,6 +30,7 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
       RefreshController(initialRefresh: false);
   double screenWidth = 0;
   List<Order> groupedList = [];
+  Map<DateTime, List<Order>> groupItems = {};
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -56,7 +57,7 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
     await Future.delayed(Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
-      groupedList = [];
+      groupItems = {};
       page = 1;
     });
     await list(page, limit);
@@ -65,7 +66,7 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
   }
 
   groupMaker() {
-    Map<DateTime, List<Order>> groupItems = {};
+    List<Order> group = [];
     for (var data in pullSheet.rows!) {
       DateTime date =
           DateTime.parse(DateFormat('yyyy-MM-dd').format(data.createdAt));
@@ -76,13 +77,14 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
       }
     }
     groupItems.forEach((key, value) {
-      groupedList.add(
+      group.add(
         Order(
           header: key,
           values: value,
         ),
       );
     });
+    groupedList = group;
   }
 
   void _onLoading() async {

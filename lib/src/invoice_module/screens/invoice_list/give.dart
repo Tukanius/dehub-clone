@@ -45,6 +45,7 @@ class _GivePageState extends State<GivePage>
   User user = User();
   ListenController listenController = ListenController();
   bool startAnimation = false;
+  Map<DateTime, List<Invoice>> groupItems = {};
 
   void _onLoading() async {
     setState(() {
@@ -61,7 +62,7 @@ class _GivePageState extends State<GivePage>
     setState(() {
       isLoading = true;
       page = 1;
-      groupedList = [];
+      groupItems = {};
     });
     await Future.delayed(const Duration(milliseconds: 1000));
     await list(page, limit, '');
@@ -86,7 +87,7 @@ class _GivePageState extends State<GivePage>
       invoice = await InvoiceApi()
           .list(ResultArguments(filter: filter, offset: offset));
     }
-    await makeGroup();
+    await groupMaker();
     setState(() {
       isLoading = false;
     });
@@ -97,8 +98,8 @@ class _GivePageState extends State<GivePage>
     });
   }
 
-  makeGroup() {
-    Map<DateTime, List<Invoice>> groupItems = {};
+  groupMaker() {
+    List<Invoice> group = [];
     for (var data in invoice.rows!) {
       DateTime createdAt =
           DateTime.parse(DateFormat('yyyy-MM-dd').format(data.createdAt));
@@ -109,11 +110,12 @@ class _GivePageState extends State<GivePage>
       }
     }
     groupItems.forEach((key, value) {
-      groupedList.add(Invoice(
+      group.add(Invoice(
         header: key,
         values: value,
       ));
     });
+    groupedList = group;
   }
 
   @override
@@ -128,10 +130,12 @@ class _GivePageState extends State<GivePage>
   }
 
   onChange(String query) async {
-    Future.delayed(Duration(milliseconds: 400), () async {
+    if (timer != null) timer?.cancel();
+    timer = Timer(Duration(milliseconds: 500), () async {
       setState(() {
         isLoading = true;
         startAnimation = false;
+        groupItems = {};
       });
       await list(page, limit, query);
       setState(() {

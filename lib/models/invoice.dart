@@ -163,8 +163,24 @@ class Invoice {
   Invoice? business;
   Invoice? branch;
   String? email;
+  int? invoicesCount;
+  double? invoicesAmount;
+  int? overdueInvoicesCount;
+  double? overdueInvoicesAmount;
+  int? confirmationDay;
+  String? paymentMethod;
+  Invoice? actionUser;
+  double? trxAmount;
 
   Invoice({
+    this.trxAmount,
+    this.actionUser,
+    this.paymentMethod,
+    this.confirmationDay,
+    this.invoicesCount,
+    this.invoicesAmount,
+    this.overdueInvoicesCount,
+    this.overdueInvoicesAmount,
     this.email,
     this.branch,
     this.business,

@@ -1,12 +1,12 @@
-import 'package:dehub/api/business_api.dart';
-import 'package:dehub/models/business_network.dart';
 import 'package:dehub/src/network_module/screens/partner_page/partner_detail_page/tabs/information_tab.dart';
 import 'package:dehub/src/network_module/screens/partner_page/partner_detail_page/tabs/sector_tab.dart';
 import 'package:dehub/src/network_module/screens/partner_page/partner_detail_page/tabs/staffs_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:flutter/material.dart';
-import 'package:after_layout/after_layout.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dehub/models/business_network.dart';
+import 'package:after_layout/after_layout.dart';
+import 'package:dehub/api/business_api.dart';
+import 'package:flutter/material.dart';
 
 class PartnerDetailPageArguments {
   String id;
@@ -85,17 +85,34 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
                               ? CarouselSlider(
                                   items: businessNetwork.profileBanners!
                                       .map(
-                                        (data) => Image.network(
-                                          "${data.url}",
-                                          fit: BoxFit.cover,
+                                        (data) => Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: white,
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                '${data.url}',
+                                              ),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
                                         ),
                                       )
                                       .toList(),
                                   options: CarouselOptions(
-                                      autoPlayCurve: Curves.ease,
-                                      height: 200,
-                                      autoPlay: true,
-                                      enableInfiniteScroll: true),
+                                    enlargeCenterPage: businessNetwork
+                                                .profileBanners?.length ==
+                                            1
+                                        ? false
+                                        : true,
+                                    autoPlayCurve: Curves.ease,
+                                    height: 200,
+                                    autoPlay: true,
+                                    enableInfiniteScroll: true,
+                                  ),
                                 )
                               : SizedBox(),
                           Material(

@@ -1,8 +1,9 @@
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/back_button/back_button.dart';
-import 'package:dehub/models/general.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/invoice_module/main_page/tabs/statement_tab/statement_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +21,9 @@ class Invoicepage extends StatefulWidget {
 }
 
 class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
-  General general = General();
   int selectedIndex = 1;
   bool isLoading = true;
+  User user = User();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -36,7 +37,7 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
   static const List<Widget> currentPages = [
     Text(''),
     DashBoardTab(),
-    Text('1'),
+    StatementTab(),
     Text('1'),
   ];
 
@@ -52,15 +53,30 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).invoiceMe;
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        leadingWidth: 100,
+        leadingWidth: selectedIndex != 2 ? 100 : 56,
         elevation: 0,
-        backgroundColor: selectedIndex != 2 ? backgroundColor : invoiceColor,
-        leading: CustomBackButton(
-          color: selectedIndex != 2 ? invoiceColor : white,
-        ),
+        backgroundColor: selectedIndex == 2 ? white : backgroundColor,
+        leading: selectedIndex == 2
+            ? GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: Container(
+                  color: transparent,
+                  child: Icon(
+                    Icons.arrow_back_ios_new,
+                    color: invoiceColor,
+                  ),
+                ),
+              )
+            : CustomBackButton(
+                color: invoiceColor,
+              ),
         title: selectedIndex == 0
             ? Container(
                 child: FormTextField(
@@ -71,7 +87,25 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
                   hintText: 'Партнер нэрээр хайх',
                 ),
               )
-            : SizedBox(),
+            : selectedIndex == 2
+                ? user.currentBusiness?.type == "SUPPLIER"
+                    ? Text(
+                        'Харилцагчийн тооцоо',
+                        style: TextStyle(
+                          color: invoiceColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      )
+                    : Text(
+                        'Нийлүүлэгчийн тооцоо',
+                        style: TextStyle(
+                          color: invoiceColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      )
+                : SizedBox(),
         actions: [
           selectedIndex == 0
               ? Container(

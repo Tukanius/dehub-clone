@@ -68,4 +68,22 @@ class InvoiceApi extends HttpRequest {
         handler: true, data: data.toJson());
     return Invoice.fromJson(res as Map<String, dynamic>);
   }
+
+  Future<Result> settlement(ResultArguments resultArguments) async {
+    var res = await get('/network_settlement/network', "INVOICE", true,
+        data: resultArguments.toJson());
+    return Result.fromJson(res, Invoice.$fromJson);
+  }
+
+  Future<Result> settlementInvoice(ResultArguments resultArguments) async {
+    var res = await get('/network_settlement/invoice', "INVOICE", true,
+        data: resultArguments.toJson());
+    return Result.fromJson(res, Invoice.$fromJson);
+  }
+
+  Future<Result> settlementHistory(ResultArguments resultArguments) async {
+    var res = await get('/network_settlement/invoice/history', "INVOICE", true,
+        data: resultArguments.toJson());
+    return Result.fromJson(res, Invoice.fromJson);
+  }
 }
