@@ -104,6 +104,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
         elevation: 0,
         automaticallyImplyLeading: false,
         backgroundColor: networkColor,
+        surfaceTintColor: networkColor,
         title: Text(
           'Ангилал, зэрэглэл тохируулах',
           style: TextStyle(

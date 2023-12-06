@@ -46,6 +46,7 @@ class _DeliveryDetailState extends State<DeliveryDetail> with AfterLayoutMixin {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: orderColor,
+        surfaceTintColor: orderColor,
         elevation: 0,
         leading: GestureDetector(
           onTap: () {

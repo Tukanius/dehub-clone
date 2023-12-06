@@ -69,7 +69,7 @@ class _HistoryCardState extends State<HistoryCard> {
                       Icon(
                         Icons.arrow_forward_ios,
                         color: grey3,
-                        size: 18,
+                        size: 16,
                       ),
                     ],
                   ),

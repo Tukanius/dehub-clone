@@ -16,20 +16,16 @@ import 'package:after_layout/after_layout.dart';
 
 class SetDeliveryDistributionArguments {
   Order data;
-  String id;
   SetDeliveryDistributionArguments({
     required this.data,
-    required this.id,
   });
 }
 
 class SetDeliveryDistribution extends StatefulWidget {
   final Order data;
-  final String id;
   static const routeName = '/SetDeliveryDistribution';
   const SetDeliveryDistribution({
     Key? key,
-    required this.id,
     required this.data,
   }) : super(key: key);
 
@@ -48,26 +44,40 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
   String staffName = 'Сонгох';
   bool isLoading = true;
   String? staffId;
+  bool isSubmit = false;
 
   onSubmit() async {
-    Order data = Order();
-    data.startDate = startDate.toString();
-    data.deliveryDate = shipmentDate.toString();
-    data.loadingDate = endDate.toString();
-    await OrderApi().deliveryManagementAssign(data, widget.id);
-    showCustomDialog(
-      context,
-      "Амжилттай хуваариллаа",
-      true,
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
+    try {
+      setState(() {
+        isSubmit = true;
+      });
+      Order data = Order();
+      data.startDate = startDate.toString();
+      data.deliveryDate = shipmentDate.toString();
+      data.loadingDate = endDate.toString();
+      data.staffId = staffId;
+      await OrderApi().deliveryManagementAssign(data, widget.data.id!);
+      showCustomDialog(
+        context,
+        "Амжилттай хуваариллаа",
+        true,
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      );
+      setState(() {
+        isSubmit = false;
+      });
+    } catch (e) {
+      setState(() {
+        isSubmit = false;
+      });
+    }
   }
 
   @override
   afterFirstLayout(BuildContext context) async {
-    staff = await OrderApi().staffSelect(widget.data.id!);
+    staff = await OrderApi().staffSelect(widget.data.receiverBusinessId!);
     setState(() {
       isLoading = false;
     });
@@ -80,6 +90,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
     return Scaffold(
       appBar: AppBar(
         backgroundColor: white,
+        surfaceTintColor: white,
         elevation: 0,
         leadingWidth: 130,
         leading: CustomBackButton(color: orderColor),
@@ -350,25 +361,39 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                           borderRadius: BorderRadius.circular(5),
                           color: white,
                         ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/svg/zahialga.svg',
-                              colorFilter:
-                                  ColorFilter.mode(orderColor, BlendMode.srcIn),
-                              height: 17,
-                            ),
-                            SizedBox(
-                              width: 7,
-                            ),
-                            Text(
-                              'Хуваарилах',
-                              style: TextStyle(color: orderColor),
-                            )
-                          ],
-                        ),
+                        child: isSubmit == true
+                            ? Center(
+                                child: SizedBox(
+                                  width: 17,
+                                  height: 17,
+                                  child: CircularProgressIndicator(
+                                    color: orderColor,
+                                    strokeWidth: 1,
+                                  ),
+                                ),
+                              )
+                            : Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/svg/zahialga.svg',
+                                    colorFilter: ColorFilter.mode(
+                                        orderColor, BlendMode.srcIn),
+                                    height: 17,
+                                  ),
+                                  SizedBox(
+                                    width: 7,
+                                  ),
+                                  Text(
+                                    'Хуваарилах',
+                                    style: TextStyle(
+                                      color: orderColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  )
+                                ],
+                              ),
                       ),
                     ),
                   ),
@@ -411,7 +436,9 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                         (e) => GestureDetector(
                           onTap: () {
                             setState(() {
-                              staffName = "${e.lastName} ${e.firstName}";
+                              staffName = e.lastName != null
+                                  ? "${e.lastName} ${e.firstName}"
+                                  : e.firstName;
                               staffId = e.id.toString();
                             });
                             Navigator.of(context).pop();
@@ -436,12 +463,18 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Text(
-                                  '${e.lastName} ${e.firstName}',
-                                  style: TextStyle(
-                                    color: black.withOpacity(0.7),
+                                RichText(
+                                  text: TextSpan(
+                                    style: TextStyle(
+                                      fontFamily: "Montserrat",
+                                      color: black.withOpacity(0.7),
+                                    ),
+                                    children: [
+                                      TextSpan(text: e.lastName),
+                                      TextSpan(text: e.firstName),
+                                    ],
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),

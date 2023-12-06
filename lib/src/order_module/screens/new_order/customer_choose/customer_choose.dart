@@ -61,6 +61,7 @@ class _OrderCustomerChooseState extends State<OrderCustomerChoose>
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: white,
+        surfaceTintColor: white,
         elevation: 0,
         leading: GestureDetector(
           onTap: () {

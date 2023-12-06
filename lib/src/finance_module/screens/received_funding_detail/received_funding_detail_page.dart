@@ -46,6 +46,7 @@ class _ReceivedFundingDetailPageState extends State<ReceivedFundingDetailPage>
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
         elevation: 0,
         leadingWidth: 200,
         leading: CustomBackButton(
@@ -62,6 +63,8 @@ class _ReceivedFundingDetailPageState extends State<ReceivedFundingDetailPage>
                   color: white,
                   elevation: 2,
                   child: TabBar(
+                    overlayColor:
+                        MaterialStatePropertyAll(Colors.grey.shade100),
                     indicatorColor: financingColor,
                     labelColor: financingColor,
                     unselectedLabelColor: grey2,

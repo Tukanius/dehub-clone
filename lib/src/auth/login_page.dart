@@ -114,7 +114,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: WillPopScope(
+      child: PopScope(
         child: Scaffold(
           backgroundColor: backgroundColor,
           body: SingleChildScrollView(
@@ -489,9 +489,9 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
             ),
           ),
         ),
-        onWillPop: () async {
-          final shouldPop = await showMyDialog();
-          return shouldPop!;
+        canPop: false,
+        onPopInvoked: (didPop) {
+          showMyDialog();
         },
       ),
     );

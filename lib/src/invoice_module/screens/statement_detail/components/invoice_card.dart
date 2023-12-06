@@ -104,7 +104,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                           ),
                           Expanded(
                             child: Text(
-                              '${Utils().formatCurrency(widget.data.totalAmount.toString())}₮',
+                              '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
                               style: TextStyle(
                                 color: grey2,
                                 fontWeight: FontWeight.w500,
@@ -121,13 +121,21 @@ class _InvoiceCardState extends State<InvoiceCard> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.createdAt!)}',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: grey2,
-                            ),
-                          ),
+                          widget.data.paidDate == null
+                              ? Text(
+                                  '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.createdAt!)}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: grey2,
+                                  ),
+                                )
+                              : Text(
+                                  '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.paidDate!)}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: grey2,
+                                  ),
+                                ),
                           Text(
                             "Төлөх огноо: ${DateFormat("yyyy-MM-dd").format(widget.data.paymentDate!)}",
                             style: TextStyle(
@@ -143,13 +151,21 @@ class _InvoiceCardState extends State<InvoiceCard> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            '${widget.data.respondText}',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: invoiceColor,
-                            ),
-                          ),
+                          widget.data.respondText != null
+                              ? Text(
+                                  '${widget.data.respondText}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: invoiceColor,
+                                  ),
+                                )
+                              : Text(
+                                  '-',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: invoiceColor,
+                                  ),
+                                ),
                           Text(
                             'Баталсан: ${Utils().formatCurrency(widget.data.confirmedAmount.toString())}₮',
                             style: TextStyle(
@@ -214,14 +230,23 @@ class _InvoiceCardState extends State<InvoiceCard> {
                               color: depBrown,
                             ),
                           ),
-                          Text(
-                            '${widget.data.paymentDate?.difference(DateTime.now()).inDays}',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: grey2,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                          widget.data.paidDate == null
+                              ? Text(
+                                  '${widget.data.paymentDate?.difference(DateTime.now()).inDays}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: grey2,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                )
+                              : Text(
+                                  '${widget.data.paymentDate?.difference(widget.data.paidDate!).inDays}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: grey2,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                         ],
                       ),
                       SizedBox(

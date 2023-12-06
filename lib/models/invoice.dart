@@ -18,6 +18,7 @@ class Invoice {
   String? purchaseOrderId;
   String? paymentTermId;
   DateTime? paymentDate;
+  DateTime? paidDate;
   String? receiverBusinessId;
   String? receiverAccId;
   String? receiverAddress;
@@ -173,6 +174,7 @@ class Invoice {
   double? trxAmount;
 
   Invoice({
+    this.paidDate,
     this.trxAmount,
     this.actionUser,
     this.paymentMethod,

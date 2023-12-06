@@ -56,6 +56,7 @@ class _PinCheckScreenState extends State<PinCheckScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        surfaceTintColor: widget.color,
         backgroundColor: widget.color,
         elevation: 0,
         leading: isSubmit == true

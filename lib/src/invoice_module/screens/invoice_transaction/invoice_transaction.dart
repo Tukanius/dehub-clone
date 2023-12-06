@@ -74,6 +74,7 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: white,
+        surfaceTintColor: white,
         leading: CustomBackButton(color: invoiceColor),
         leadingWidth: 130,
         elevation: 0,

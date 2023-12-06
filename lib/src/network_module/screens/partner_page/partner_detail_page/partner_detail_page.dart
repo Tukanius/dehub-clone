@@ -46,6 +46,7 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
         elevation: 0,
         leading: IconButton(
           onPressed: () {
@@ -118,6 +119,8 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
                           Material(
                             color: white,
                             child: TabBar(
+                              overlayColor: MaterialStatePropertyAll(
+                                  Colors.grey.shade100),
                               indicatorColor: networkColor,
                               labelColor: networkColor,
                               unselectedLabelColor: dark,

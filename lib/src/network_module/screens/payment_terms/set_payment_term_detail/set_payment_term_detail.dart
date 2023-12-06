@@ -88,6 +88,7 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
         elevation: 0,
         leadingWidth: 150,
         leading: CustomBackButton(color: networkColor),

@@ -39,6 +39,7 @@ class _DirectionDetailPageState extends State<DirectionDetailPage>
       appBar: AppBar(
         elevation: 0,
         backgroundColor: white,
+        surfaceTintColor: white,
         iconTheme: IconThemeData(color: networkColor),
         title: Text(
           'Чиглэл',

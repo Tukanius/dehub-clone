@@ -21,6 +21,7 @@ class _AvaibleFundingPageState extends State<AvaibleFundingPage> {
       appBar: AppBar(
         leadingWidth: 100,
         elevation: 0,
+        surfaceTintColor: backgroundColor,
         backgroundColor: backgroundColor,
         leading: CustomBackButton(
           color: financingColor,

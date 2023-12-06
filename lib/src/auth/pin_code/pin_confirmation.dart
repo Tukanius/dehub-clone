@@ -79,6 +79,7 @@ class _PinConfirmationState extends State<PinConfirmation> {
       appBar: AppBar(
         backgroundColor: backgroundColor,
         elevation: 0,
+        surfaceTintColor: backgroundColor,
         leadingWidth: 150,
         leading: CustomBackButton(color: buttonColor),
       ),

@@ -59,6 +59,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
         leadingWidth: 100,
         elevation: 0,
         backgroundColor: selectedIndex != 3 ? backgroundColor : paymentColor,
+        surfaceTintColor: selectedIndex != 3 ? backgroundColor : paymentColor,
         leading: CustomBackButton(
           color: selectedIndex != 3 ? paymentColor : backgroundColor,
         ),

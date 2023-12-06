@@ -94,6 +94,7 @@ class _OrderCashPaymentState extends State<OrderCashPayment>
       appBar: AppBar(
         leading: CustomCloseButton(),
         backgroundColor: orderColor,
+        surfaceTintColor: orderColor,
         centerTitle: true,
         automaticallyImplyLeading: false,
         elevation: 0,

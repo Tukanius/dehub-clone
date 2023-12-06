@@ -121,6 +121,7 @@ class _ProductChooseState extends State<ProductChoose>
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: orderColor,
+        surfaceTintColor: orderColor,
         elevation: 0,
         leading: CustomCloseButton(),
         title: Text(
@@ -128,6 +129,7 @@ class _ProductChooseState extends State<ProductChoose>
           style: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 16,
+            color: white,
           ),
         ),
       ),

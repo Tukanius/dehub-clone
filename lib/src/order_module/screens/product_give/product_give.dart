@@ -212,6 +212,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: white,
+        surfaceTintColor: white,
         leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();

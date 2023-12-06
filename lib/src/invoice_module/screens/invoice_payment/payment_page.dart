@@ -100,6 +100,7 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
       appBar: AppBar(
         elevation: 0,
         backgroundColor: invoiceColor,
+        surfaceTintColor: invoiceColor,
         leading: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           child: GestureDetector(
@@ -376,7 +377,7 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                                                           ? Container(
                                                               margin:
                                                                   const EdgeInsets
-                                                                          .only(
+                                                                      .only(
                                                                       right:
                                                                           10),
                                                               child: SvgPicture

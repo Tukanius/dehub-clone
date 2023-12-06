@@ -35,11 +35,13 @@ class _StatementDetailState extends State<StatementDetail> {
         appBar: AppBar(
           elevation: 3,
           backgroundColor: white,
+          surfaceTintColor: white,
           leading: CustomBackButton(
             color: invoiceColor,
           ),
           leadingWidth: 130,
           bottom: TabBar(
+            overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
             labelStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             unselectedLabelStyle:
                 TextStyle(fontSize: 16, fontWeight: FontWeight.w500),

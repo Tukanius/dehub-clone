@@ -37,8 +37,9 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        leadingWidth: 200,
         elevation: 0,
+        leadingWidth: 205,
+        surfaceTintColor: backgroundColor,
         backgroundColor: backgroundColor,
         leading: GestureDetector(
           onTap: () {
@@ -87,6 +88,8 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                   color: white,
                   elevation: 4,
                   child: TabBar(
+                    overlayColor:
+                        MaterialStatePropertyAll(Colors.grey.shade100),
                     controller: tabController,
                     indicatorColor: financingColor,
                     labelColor: financingColor,
@@ -127,6 +130,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                         horizontal: 20, vertical: 20),
                     alignment: Alignment.bottomRight,
                     child: FloatingActionButton.small(
+                      shape: CircleBorder(),
                       hoverColor: financingColor,
                       onPressed: () {
                         tabController.animateTo(tabController.index + 1);
@@ -148,6 +152,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                         horizontal: 20, vertical: 20),
                     alignment: Alignment.bottomRight,
                     child: FloatingActionButton.small(
+                      shape: CircleBorder(),
                       hoverColor: financingColor,
                       onPressed: () {
                         tabController.animateTo(tabController.index + 1);
@@ -165,6 +170,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                     alignment: Alignment.bottomRight,
                     child: FloatingActionButton.small(
                       hoverColor: financingColor,
+                      shape: CircleBorder(),
                       onPressed: () {
                         tabController.animateTo(tabController.index - 1);
                       },
@@ -223,6 +229,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                     alignment: Alignment.bottomLeft,
                     child: FloatingActionButton.small(
                       hoverColor: financingColor,
+                      shape: CircleBorder(),
                       onPressed: () {
                         tabController.animateTo(tabController.index - 1);
                       },

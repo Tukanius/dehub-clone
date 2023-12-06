@@ -289,6 +289,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
         backgroundColor: backgroundColor,
         appBar: AppBar(
           backgroundColor: white,
+          surfaceTintColor: white,
           elevation: 0,
           centerTitle: false,
           leading: GestureDetector(

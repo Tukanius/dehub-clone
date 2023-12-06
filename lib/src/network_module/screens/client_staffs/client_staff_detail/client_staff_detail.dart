@@ -72,6 +72,7 @@ class _ResponsibleStaffDetailState extends State<ClientStaffDetail>
       appBar: AppBar(
         elevation: 0,
         backgroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
         leadingWidth: 150,
         leading: CustomBackButton(
           color: networkColor,

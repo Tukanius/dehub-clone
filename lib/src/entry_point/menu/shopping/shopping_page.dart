@@ -24,6 +24,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
       appBar: AppBar(
         backgroundColor: white,
         elevation: 0,
+        surfaceTintColor: white,
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
@@ -91,6 +92,9 @@ class _ShoppingPageState extends State<ShoppingPage> {
                   margin: const EdgeInsets.only(bottom: 5),
                   color: white,
                   child: TabBar(
+                    tabAlignment: TabAlignment.start,
+                    overlayColor:
+                        MaterialStatePropertyAll(Colors.grey.shade100),
                     isScrollable: true,
                     labelStyle:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.w500),

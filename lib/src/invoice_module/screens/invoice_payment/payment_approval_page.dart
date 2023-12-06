@@ -104,6 +104,7 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: invoiceColor,
+        surfaceTintColor: invoiceColor,
         elevation: 0,
         leading: IconButton(
           onPressed: () {

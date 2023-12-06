@@ -42,6 +42,7 @@ class _ZoningDetailPageState extends State<ZoningDetailPage>
       appBar: AppBar(
         elevation: 0,
         backgroundColor: white,
+        surfaceTintColor: white,
         iconTheme: IconThemeData(color: networkColor),
         title: Text(
           'Бүсчлэл',

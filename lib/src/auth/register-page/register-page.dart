@@ -71,6 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
       appBar: AppBar(
         backgroundColor: backgroundColor,
         elevation: 0,
+        surfaceTintColor: backgroundColor,
         leadingWidth: 150,
         leading: CustomBackButton(color: buttonColor),
       ),

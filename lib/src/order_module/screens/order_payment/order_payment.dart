@@ -66,6 +66,7 @@ class _OrderPaymentState extends State<OrderPayment> with AfterLayoutMixin {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: invoiceColor,
+        surfaceTintColor: invoiceColor,
         leading: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           child: GestureDetector(
@@ -345,7 +346,7 @@ class _OrderPaymentState extends State<OrderPayment> with AfterLayoutMixin {
                                                           ? Container(
                                                               margin:
                                                                   const EdgeInsets
-                                                                          .only(
+                                                                      .only(
                                                                       right:
                                                                           10),
                                                               child: SvgPicture

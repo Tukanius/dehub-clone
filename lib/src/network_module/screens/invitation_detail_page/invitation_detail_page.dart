@@ -84,6 +84,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
       appBar: AppBar(
         elevation: 0,
         backgroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
         leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();

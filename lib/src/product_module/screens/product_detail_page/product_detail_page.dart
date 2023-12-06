@@ -48,6 +48,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         appBar: AppBar(
           elevation: 0,
           backgroundColor: white,
+          surfaceTintColor: white,
           iconTheme: IconThemeData(color: productColor),
           title: Text(
             'Барааны дэлгэрэнгүй',
@@ -58,7 +59,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             ),
           ),
           bottom: TabBar(
+            overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
             isScrollable: true,
+            tabAlignment: TabAlignment.start,
             indicatorColor: productColor,
             labelColor: productColor,
             unselectedLabelColor: grey2,

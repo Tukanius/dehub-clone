@@ -44,6 +44,7 @@ class _PartnerPageState extends State<PartnerPage> {
         leadingWidth: 100,
         elevation: 0,
         backgroundColor: selectedIndex != 3 ? backgroundColor : partnerColor,
+        surfaceTintColor: selectedIndex != 3 ? backgroundColor : partnerColor,
         leading: CustomBackButton(
           color: selectedIndex != 3 ? partnerColor : white,
         ),

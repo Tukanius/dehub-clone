@@ -83,6 +83,7 @@ class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: networkColor,
+        surfaceTintColor: networkColor,
         elevation: 0,
         leading: GestureDetector(
           onTap: () {

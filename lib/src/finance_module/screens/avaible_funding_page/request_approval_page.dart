@@ -18,6 +18,7 @@ class _RequestApprovalPageState extends State<RequestApprovalPage> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
           backgroundColor: backgroundColor,
+          surfaceTintColor: backgroundColor,
           elevation: 0,
           leadingWidth: 100,
           leading: CustomBackButton(

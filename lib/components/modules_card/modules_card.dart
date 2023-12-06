@@ -72,7 +72,9 @@ class _ModulesCardState extends State<ModulesCard> {
                 ),
                 Text(
                   'Нэхэмжлэх',
-                  style: TextStyle(fontSize: 12),
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
                 ),
               ],
             ),
@@ -258,9 +260,7 @@ class _ModulesCardState extends State<ModulesCard> {
                 ),
                 Text(
                   'Бараа, ажил',
-                  style: TextStyle(
-                    fontSize: 12,
-                  ),
+                  style: TextStyle(fontSize: 12),
                 ),
               ],
             ),

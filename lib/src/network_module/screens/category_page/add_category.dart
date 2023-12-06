@@ -51,6 +51,7 @@ class _AddCategoryState extends State<AddCategory> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: networkColor,
+        surfaceTintColor: networkColor,
         elevation: 0,
         leading: GestureDetector(
           onTap: () {

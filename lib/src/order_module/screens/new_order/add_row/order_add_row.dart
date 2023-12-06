@@ -102,6 +102,7 @@ class _AddRowState extends State<OrderAddRow> {
         backgroundColor: backgroundColor,
         appBar: AppBar(
           backgroundColor: white,
+          surfaceTintColor: white,
           elevation: 0,
           leading: GestureDetector(
             onTap: () {

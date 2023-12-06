@@ -53,6 +53,7 @@ class _NetworkPartnerPageState extends State<NetworkPartnerPage>
       appBar: AppBar(
         elevation: 0,
         backgroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
         leadingWidth: 100,
         leading: CustomBackButton(color: networkColor),
       ),

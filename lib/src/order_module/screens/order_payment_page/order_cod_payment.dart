@@ -183,6 +183,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
         automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: orderColor,
+        surfaceTintColor: orderColor,
         title: Text(
           'Захиалгын төлбөр төлөх',
           style: TextStyle(

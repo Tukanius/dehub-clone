@@ -21,6 +21,7 @@ class _NewInvitationPageState extends State<NewInvitationPage> {
         appBar: AppBar(
           elevation: 3,
           backgroundColor: white,
+          surfaceTintColor: white,
           leading: IconButton(
             onPressed: () {
               Navigator.of(context).pop();
@@ -39,6 +40,7 @@ class _NewInvitationPageState extends State<NewInvitationPage> {
             ),
           ),
           bottom: TabBar(
+            overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
             labelColor: networkColor,
             unselectedLabelColor: dark,
             labelStyle: TextStyle(

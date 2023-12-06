@@ -48,6 +48,7 @@ class _FundingRequestDetailPageState extends State<FundingRequestDetailPage>
         leadingWidth: 200,
         elevation: 0,
         backgroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
         leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
@@ -104,6 +105,8 @@ class _FundingRequestDetailPageState extends State<FundingRequestDetailPage>
                     ],
                   ),
                   child: TabBar(
+                    overlayColor:
+                        MaterialStatePropertyAll(Colors.grey.shade100),
                     indicatorColor: financingColor,
                     labelColor: financingColor,
                     unselectedLabelColor: grey2,

@@ -136,6 +136,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
         backgroundColor: backgroundColor,
         appBar: AppBar(
           backgroundColor: white,
+          surfaceTintColor: white,
           elevation: 0,
           leading: GestureDetector(
             onTap: () {
@@ -428,7 +429,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                                   left: 10,
                                                   child: Container(
                                                     padding: const EdgeInsets
-                                                            .symmetric(
+                                                        .symmetric(
                                                         vertical: 7,
                                                         horizontal: 8),
                                                     decoration: BoxDecoration(

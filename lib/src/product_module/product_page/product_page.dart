@@ -62,6 +62,7 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
         leadingWidth: 100,
         elevation: 0,
         backgroundColor: selectedIndex != 3 ? backgroundColor : productColor,
+        surfaceTintColor: selectedIndex != 3 ? backgroundColor : productColor,
         leading: CustomBackButton(
           color: selectedIndex != 3 ? productColor : white,
         ),

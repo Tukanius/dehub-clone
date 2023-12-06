@@ -54,6 +54,7 @@ class _EnterPhonePageState extends State<EnterPhonePage> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        surfaceTintColor: orderColor,
         backgroundColor: orderColor,
         elevation: 0,
         leadingWidth: 150,

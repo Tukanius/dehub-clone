@@ -42,6 +42,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage>
       appBar: AppBar(
         elevation: 0,
         backgroundColor: white,
+        surfaceTintColor: white,
         iconTheme: IconThemeData(color: networkColor),
         title: Text(
           'Харилцагчийн ангилал',

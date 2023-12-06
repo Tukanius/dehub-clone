@@ -39,6 +39,7 @@ class _UserMangementPageState extends State<UserMangementPage> {
         leadingWidth: 100,
         elevation: 0,
         backgroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
         leading: CustomBackButton(color: userColor),
         actions: [
           Container(

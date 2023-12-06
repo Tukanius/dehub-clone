@@ -29,6 +29,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: white,
+        surfaceTintColor: white,
         elevation: 0,
         iconTheme: IconThemeData(color: invoiceColor),
         title: Text(

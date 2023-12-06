@@ -54,6 +54,8 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
         elevation: 0,
         backgroundColor:
             index.selectedIndex != 3 ? backgroundColor : networkColor,
+        surfaceTintColor:
+            index.selectedIndex != 3 ? backgroundColor : networkColor,
         leading: CustomBackButton(
           color: index.selectedIndex != 3 ? networkColor : white,
         ),

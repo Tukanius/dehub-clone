@@ -75,6 +75,7 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
       backgroundColor: white,
       appBar: AppBar(
         backgroundColor: white,
+        surfaceTintColor: white,
         iconTheme: IconThemeData(color: widget.color),
         elevation: 0,
         centerTitle: true,

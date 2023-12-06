@@ -50,6 +50,7 @@ class _PullSheetExpensesState extends State<PullSheetExpenses> {
         elevation: 0,
         iconTheme: IconThemeData(color: orderColor),
         backgroundColor: white,
+        surfaceTintColor: white,
         title: Text(
           'Ачилтын падаан',
           style: TextStyle(

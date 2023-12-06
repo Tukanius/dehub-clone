@@ -133,7 +133,6 @@ class _DistributionTabState extends State<DistributionTab>
                                             arguments:
                                                 SetDeliveryDistributionArguments(
                                               data: data,
-                                              id: '',
                                             ),
                                           );
                                         },

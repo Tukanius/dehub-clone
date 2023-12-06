@@ -114,6 +114,7 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
         elevation: 0,
         leadingWidth: 100,
         leading: CustomBackButton(color: networkColor),

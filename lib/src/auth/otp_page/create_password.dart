@@ -104,6 +104,7 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
+        surfaceTintColor: backgroundColor,
         backgroundColor: backgroundColor,
         leadingWidth: 150,
         leading: CustomBackButton(color: buttonColor),

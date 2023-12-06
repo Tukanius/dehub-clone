@@ -87,6 +87,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
         elevation: 0,
         automaticallyImplyLeading: false,
         backgroundColor: networkColor,
+        surfaceTintColor: networkColor,
         title: Text(
           'Ажилтан хариуцуулах',
           style: TextStyle(

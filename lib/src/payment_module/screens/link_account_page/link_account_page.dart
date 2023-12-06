@@ -93,6 +93,7 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();

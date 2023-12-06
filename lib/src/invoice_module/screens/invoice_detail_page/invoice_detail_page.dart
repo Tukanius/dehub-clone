@@ -29,6 +29,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
           iconTheme: IconThemeData(color: invoiceColor),
           elevation: 0,
           backgroundColor: white,
+          surfaceTintColor: white,
           title: Text(
             'Нэхэмжлэл дэлгэрэнгүй',
             style: TextStyle(
@@ -38,10 +39,12 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
             ),
           ),
           bottom: TabBar(
+            overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
             indicatorColor: invoiceColor,
             labelColor: invoiceColor,
             unselectedLabelColor: grey2,
             isScrollable: true,
+            tabAlignment: TabAlignment.start,
             tabs: [
               Container(
                 height: 40,

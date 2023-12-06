@@ -71,6 +71,7 @@ class _PendingTabState extends State<PendingTab> with AfterLayoutMixin {
                 )
               : invoice.rows?.length != 0
                   ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         AnimatedContainer(
                           duration: Duration(milliseconds: 300),
@@ -84,7 +85,7 @@ class _PendingTabState extends State<PendingTab> with AfterLayoutMixin {
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
                           child: Text(
-                            'Төлбөрийн үлдэгдэлтэй',
+                            'Батлах нэхэмжлэхүүд',
                             style: TextStyle(
                                 color: grey3, fontWeight: FontWeight.w600),
                           ),

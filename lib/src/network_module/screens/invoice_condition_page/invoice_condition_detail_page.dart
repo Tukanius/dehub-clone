@@ -43,6 +43,7 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: white,
+        surfaceTintColor: white,
         elevation: 0,
         iconTheme: IconThemeData(color: networkColor),
         title: Text(

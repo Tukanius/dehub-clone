@@ -88,6 +88,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
         backgroundColor: backgroundColor,
         appBar: AppBar(
           backgroundColor: invoiceColor,
+          surfaceTintColor: invoiceColor,
           elevation: 0,
           leading: IconButton(
             onPressed: () {

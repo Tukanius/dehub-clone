@@ -59,6 +59,7 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
       appBar: AppBar(
         leadingWidth: 100,
         elevation: 0,
+        surfaceTintColor: backgroundColor,
         backgroundColor: backgroundColor,
         leading: GestureDetector(
           onTap: () {

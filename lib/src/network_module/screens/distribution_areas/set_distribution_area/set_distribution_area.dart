@@ -101,6 +101,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
         elevation: 0,
         automaticallyImplyLeading: false,
         backgroundColor: networkColor,
+        surfaceTintColor: networkColor,
         title: Text(
           'Чиглэл, бүслэл тохируулах',
           style: TextStyle(

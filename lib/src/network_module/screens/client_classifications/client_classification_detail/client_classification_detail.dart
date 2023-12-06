@@ -67,6 +67,7 @@ class _ClientClassificationDetailState extends State<ClientClassificationDetail>
         leadingWidth: 100,
         elevation: 0,
         backgroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
         leading: CustomBackButton(color: networkColor),
       ),
       body: isLoading == true

@@ -75,6 +75,7 @@ class _ProfilePageState extends State<ProfilePage>
         backgroundColor: Color(0xffF5F5F5),
         appBar: AppBar(
           backgroundColor: grey2,
+          surfaceTintColor: grey2,
           iconTheme: IconThemeData(color: white),
           leading: IconButton(
             onPressed: () {
@@ -121,16 +122,16 @@ class _ProfilePageState extends State<ProfilePage>
           title: tabController.index == 0
               ? Text(
                   'Миний мэдээлэл',
-                  style: TextStyle(fontSize: 15),
+                  style: TextStyle(fontSize: 15, color: white),
                 )
               : tabController.index == 1
                   ? Text(
                       'Партнер мэдээлэл',
-                      style: TextStyle(fontSize: 15),
+                      style: TextStyle(fontSize: 15, color: white),
                     )
                   : Text(
                       'Систем тохиргоо',
-                      style: TextStyle(fontSize: 15),
+                      style: TextStyle(fontSize: 15, color: white),
                     ),
         ),
         body: isLoading == true

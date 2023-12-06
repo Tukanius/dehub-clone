@@ -61,6 +61,7 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
         leadingWidth: selectedIndex != 2 ? 100 : 56,
         elevation: 0,
         backgroundColor: selectedIndex == 2 ? white : backgroundColor,
+        surfaceTintColor: selectedIndex == 2 ? white : backgroundColor,
         leading: selectedIndex == 2
             ? GestureDetector(
                 onTap: () {

@@ -85,7 +85,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     partnerUser = Provider.of<UserProvider>(context, listen: true).partnerUser;
-    return WillPopScope(
+    return PopScope(
       child: Scaffold(
         backgroundColor: backgroundColor,
         body: SingleChildScrollView(
@@ -251,7 +251,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                                         (e) => Container(
                                                           margin:
                                                               const EdgeInsets
-                                                                      .symmetric(
+                                                                  .symmetric(
                                                                   horizontal:
                                                                       3),
                                                           child: SkeletonAvatar(
@@ -443,9 +443,9 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
           ),
         ),
       ),
-      onWillPop: () async {
-        final shoudPop = await showMyDialog();
-        return shoudPop!;
+      canPop: false,
+      onPopInvoked: (shouldPop) async {
+        await showMyDialog();
       },
     );
   }
@@ -468,6 +468,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                 ),
               ),
               onPressed: () {
+                Navigator.pop(context, true);
                 Navigator.pop(context, true);
               },
               child: Text(

@@ -72,6 +72,7 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
       appBar: AppBar(
         elevation: 0,
         backgroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
         leadingWidth: 150,
         leading: CustomBackButton(color: networkColor),
       ),

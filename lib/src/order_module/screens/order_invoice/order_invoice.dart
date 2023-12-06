@@ -38,6 +38,7 @@ class _OrderInvoiceState extends State<OrderInvoice> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: orderColor,
+        surfaceTintColor: orderColor,
         centerTitle: true,
         automaticallyImplyLeading: false,
         title: Text(

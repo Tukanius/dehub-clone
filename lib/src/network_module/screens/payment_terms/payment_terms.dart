@@ -91,6 +91,7 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: networkColor,
+        surfaceTintColor: networkColor,
         iconTheme: IconThemeData(color: white),
         centerTitle: true,
         title: Text(

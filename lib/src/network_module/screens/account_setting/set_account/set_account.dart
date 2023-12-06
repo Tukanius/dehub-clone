@@ -86,6 +86,7 @@ class _SetAccountState extends State<SetAccount> {
         elevation: 0,
         automaticallyImplyLeading: false,
         backgroundColor: networkColor,
+        surfaceTintColor: networkColor,
         title: Text(
           'Данс тохируулах',
           style: TextStyle(

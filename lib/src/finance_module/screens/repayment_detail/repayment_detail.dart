@@ -46,6 +46,7 @@ class _RePaymentDetailState extends State<RePaymentDetail>
         backgroundColor: backgroundColor,
         appBar: AppBar(
           backgroundColor: backgroundColor,
+          surfaceTintColor: backgroundColor,
           leadingWidth: 100,
           leading: CustomBackButton(color: financingColor),
           elevation: 0,
@@ -56,6 +57,7 @@ class _RePaymentDetailState extends State<RePaymentDetail>
               color: white,
               elevation: 2,
               child: TabBar(
+                overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
                 unselectedLabelColor: buttonColor,
                 indicatorColor: financingColor,
                 labelColor: financingColor,

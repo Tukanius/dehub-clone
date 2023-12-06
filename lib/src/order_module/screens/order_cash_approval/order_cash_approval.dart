@@ -17,6 +17,7 @@ class _OrderCashApprovalState extends State<OrderCashApproval> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: orderColor,
+        surfaceTintColor: orderColor,
         elevation: 0,
         title: Text(
           "Бэлэн төлбөр батлах",

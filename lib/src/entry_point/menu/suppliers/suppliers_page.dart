@@ -25,18 +25,23 @@ class _SuppliersPageState extends State<SuppliersPage> {
         child: Scaffold(
           backgroundColor: backgroundColor,
           appBar: AppBar(
+            surfaceTintColor: purpleButtonColor,
             backgroundColor: purpleButtonColor,
             leading: IconButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              icon: Icon(Icons.arrow_back_ios),
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: white,
+              ),
             ),
             title: Text(
               'Нийлүүлэгчид',
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 16,
+                color: white,
               ),
             ),
             centerTitle: false,
@@ -52,6 +57,8 @@ class _SuppliersPageState extends State<SuppliersPage> {
                         margin: const EdgeInsets.only(top: 10, bottom: 10),
                         color: white,
                         child: TabBar(
+                          overlayColor:
+                              MaterialStatePropertyAll(Colors.grey.shade100),
                           labelColor: purpleButtonColor,
                           unselectedLabelColor: grey3,
                           indicatorColor: purpleButtonColor,

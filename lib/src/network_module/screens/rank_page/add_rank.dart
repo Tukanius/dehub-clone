@@ -87,6 +87,7 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: networkColor,
+        surfaceTintColor: networkColor,
         elevation: 0,
         leading: CustomCloseButton(),
         title: Text(

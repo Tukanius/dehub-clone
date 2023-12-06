@@ -50,6 +50,7 @@ class _OrderCbdPaymentState extends State<OrderCbdPayment> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: orderColor,
+        surfaceTintColor: orderColor,
         elevation: 0,
         leading: CustomCloseButton(),
         title: Text(

@@ -137,6 +137,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: white,
+        surfaceTintColor: white,
         elevation: 0,
         centerTitle: false,
         leading: GestureDetector(

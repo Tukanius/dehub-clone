@@ -85,7 +85,7 @@ class _ClosedTabState extends State<ClosedTab> with AfterLayoutMixin {
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
                           child: Text(
-                            'Төлбөрийн үлдэгдэлтэй',
+                            'Төлбөрийн үлдэгдэлгүй',
                             style: TextStyle(
                                 color: grey3, fontWeight: FontWeight.w600),
                           ),

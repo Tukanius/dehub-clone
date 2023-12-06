@@ -94,6 +94,7 @@ class _DistributionAreasState extends State<DistributionAreas>
       appBar: AppBar(
         elevation: 0,
         backgroundColor: networkColor,
+        surfaceTintColor: networkColor,
         iconTheme: IconThemeData(color: white),
         centerTitle: true,
         title: Text(

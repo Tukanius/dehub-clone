@@ -76,6 +76,7 @@ class _SalbarSongohState extends State<SalbarSongoh> with AfterLayoutMixin {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: invoiceColor,
+        surfaceTintColor: invoiceColor,
         elevation: 0.0,
         centerTitle: true,
         title: Text(

@@ -37,6 +37,7 @@ class _AddProductState extends State<AddProduct> {
           backgroundColor: backgroundColor,
           appBar: AppBar(
             backgroundColor: invoiceColor,
+            surfaceTintColor: invoiceColor,
             leading: GestureDetector(
               onTap: () {
                 Navigator.of(context).pop();
@@ -55,6 +56,7 @@ class _AddProductState extends State<AddProduct> {
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 16,
+                color: white,
               ),
             ),
             centerTitle: true,
@@ -79,6 +81,8 @@ class _AddProductState extends State<AddProduct> {
                       Material(
                         color: white,
                         child: TabBar(
+                          overlayColor:
+                              MaterialStatePropertyAll(Colors.grey.shade100),
                           labelColor: invoiceColor,
                           unselectedLabelColor: grey3,
                           indicatorColor: invoiceColor,

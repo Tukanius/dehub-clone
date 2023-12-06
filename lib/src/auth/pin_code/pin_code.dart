@@ -42,6 +42,7 @@ class _PinCodeState extends State<PinCode> {
       appBar: AppBar(
         backgroundColor: backgroundColor,
         elevation: 0,
+        surfaceTintColor: backgroundColor,
         iconTheme: IconThemeData(color: buttonColor),
         centerTitle: true,
         title: Text(

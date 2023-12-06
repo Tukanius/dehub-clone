@@ -37,6 +37,7 @@ class _HarahState extends State<Harah> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: invoiceColor,
+        surfaceTintColor: invoiceColor,
         elevation: 0,
         centerTitle: true,
         leading: IconButton(

@@ -19,6 +19,7 @@ class _OrderDeliveryState extends State<OrderShipping> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: white,
+        surfaceTintColor: white,
         leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
@@ -57,6 +58,8 @@ class _OrderDeliveryState extends State<OrderShipping> {
                 child: Material(
                   color: white,
                   child: TabBar(
+                    overlayColor:
+                        MaterialStatePropertyAll(Colors.grey.shade100),
                     labelColor: orderColor,
                     indicatorColor: orderColor,
                     unselectedLabelColor: buttonColor,

@@ -23,6 +23,7 @@ class _SentTabState extends State<SentTab> {
                 color: white,
                 elevation: 2,
                 child: TabBar(
+                  overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
                   labelColor: networkColor,
                   unselectedLabelColor: dark,
                   indicatorColor: networkColor,

@@ -19,6 +19,7 @@ class _DirectionPageState extends State<DirectionPage> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
         elevation: 0,
         leadingWidth: 100,
         leading: CustomBackButton(color: networkColor),

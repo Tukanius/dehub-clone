@@ -43,6 +43,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage>
       appBar: AppBar(
         elevation: 0,
         backgroundColor: white,
+        surfaceTintColor: white,
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();

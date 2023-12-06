@@ -67,6 +67,7 @@ class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
       appBar: AppBar(
         backgroundColor: white,
         elevation: 0,
+        surfaceTintColor: white,
         leadingWidth: 150,
         leading: CustomBackButton(color: orderColor),
       ),

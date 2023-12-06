@@ -53,6 +53,7 @@ class _ReferenceInformationPageState extends State<ReferenceInformationPage>
       appBar: AppBar(
         elevation: 0,
         backgroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
         leadingWidth: 100,
         leading: CustomBackButton(color: networkColor),
       ),

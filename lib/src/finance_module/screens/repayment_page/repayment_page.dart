@@ -33,6 +33,7 @@ class _RePaymentState extends State<RePayment>
         leadingWidth: 100,
         elevation: 0,
         backgroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
         leading: CustomBackButton(color: financingColor),
         actions: [
           CircleAvatar(

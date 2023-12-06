@@ -29,6 +29,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     createdAt: json['createdAt'] != null
         ? DateTime.parse(json['createdAt'].toString())
         : null,
+    paidDate: json['paidDate'] != null
+        ? DateTime.parse(json['paidDate'].toString())
+        : null,
     configType:
         json['configType'] != null ? json['configType'] as String : null,
     updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
@@ -377,6 +380,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.paidDate != null) json['paidDate'] = instance.paidDate;
   if (instance.actionUser != null) json['actionUser'] = instance.actionUser;
   if (instance.invoicesCount != null)
     json['invoicesCount'] = instance.invoicesCount;

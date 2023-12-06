@@ -20,6 +20,7 @@ class _DeliveryManagementState extends State<DeliveryManagement> {
         backgroundColor: backgroundColor,
         appBar: AppBar(
           backgroundColor: white,
+          surfaceTintColor: white,
           elevation: 0,
           iconTheme: IconThemeData(color: orderColor),
           title: Text(
@@ -30,6 +31,7 @@ class _DeliveryManagementState extends State<DeliveryManagement> {
             ),
           ),
           bottom: TabBar(
+            overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
             indicatorColor: orderColor,
             labelColor: orderColor,
             unselectedLabelColor: grey2,

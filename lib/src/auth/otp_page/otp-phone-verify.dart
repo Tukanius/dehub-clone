@@ -131,6 +131,7 @@ class _OtpPhoneVerifyState extends State<OtpPhoneVerify> with AfterLayoutMixin {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
+        surfaceTintColor: backgroundColor,
         backgroundColor: backgroundColor,
         leadingWidth: 150,
         leading: CustomBackButton(color: buttonColor),

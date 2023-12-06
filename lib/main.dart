@@ -1102,7 +1102,6 @@ class MyApp extends StatelessWidget {
                         settings.arguments as SetDeliveryDistributionArguments;
                     return MaterialPageRoute(builder: (context) {
                       return SetDeliveryDistribution(
-                        id: arguments.id,
                         data: arguments.data,
                       );
                     });
@@ -1450,7 +1449,7 @@ class MyApp extends StatelessWidget {
   Widget loading(BuildContext context, widget) {
     bool shouldPop = false;
 
-    return WillPopScope(
+    return PopScope(
       child: Scaffold(
         backgroundColor: Colors.black.withOpacity(0.3),
         body: Container(
@@ -1478,9 +1477,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      onWillPop: () async {
-        return shouldPop;
-      },
+      canPop: shouldPop,
     );
   }
 }

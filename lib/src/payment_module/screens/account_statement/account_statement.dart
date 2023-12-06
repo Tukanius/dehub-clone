@@ -70,6 +70,7 @@ class _AccountStatementState extends State<AccountStatement>
       appBar: AppBar(
         elevation: 0,
         backgroundColor: white,
+        surfaceTintColor: white,
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();

@@ -45,6 +45,7 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
         elevation: 0,
         leadingWidth: 100,
         leading: CustomBackButton(color: financingColor),

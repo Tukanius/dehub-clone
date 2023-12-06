@@ -77,6 +77,7 @@ class _SectorChooseState extends State<SectorChoose> with AfterLayoutMixin {
       appBar: AppBar(
         leading: CustomCloseButton(),
         backgroundColor: invoiceColor,
+        surfaceTintColor: invoiceColor,
         elevation: 0.0,
         centerTitle: true,
         title: Text(

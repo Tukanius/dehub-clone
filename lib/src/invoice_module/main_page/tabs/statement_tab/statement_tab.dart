@@ -100,13 +100,13 @@ class _StatementTabState extends State<StatementTab> with AfterLayoutMixin {
             enablePullUp: true,
             controller: refreshController,
             header: WaterDropHeader(
-              waterDropColor: financingColor,
+              waterDropColor: invoiceColor,
               refresh: SizedBox(
                 height: 20,
                 width: 20,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
-                  color: financingColor,
+                  color: invoiceColor,
                 ),
               ),
             ),

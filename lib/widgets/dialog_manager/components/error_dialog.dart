@@ -2,7 +2,6 @@ import 'package:dehub/services/dialog.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import '../dialog_wrapper.dart';
 
 class ErrorDialog {
   final BuildContext? context;
@@ -15,80 +14,81 @@ class ErrorDialog {
   });
 
   void show(String message, {VoidCallback? onPress}) {
+    final currentContext = context;
     showDialog(
-      context: context!,
+      context: currentContext!,
       barrierDismissible: true,
       builder: (context) {
         Future.delayed(duration, () {
           dialogService!.dialogComplete();
-          // ignore: unnecessary_null_comparison
-          if (context == null) return;
           if (Navigator.of(context, rootNavigator: true).canPop()) {
             Navigator.of(context).pop(true);
           }
         });
-        return DialogWrapper(
+        return Container(
+          alignment: Alignment.center,
+          margin: const EdgeInsets.symmetric(horizontal: 20),
           child: Stack(
             alignment: Alignment.topCenter,
-            children: [
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.only(top: 75),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.only(top: 75),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.only(top: 90, left: 20, right: 20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    const Text(
+                      'Амжилтгүй',
+                      style: TextStyle(
+                          color: dark,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.none,
+                          fontSize: 24,
+                          fontFamily: "Montserrat"),
                     ),
-                    padding:
-                        const EdgeInsets.only(top: 90, left: 20, right: 20),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Text(
+                      '${message}',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: "Montserrat",
+                        color: dark,
+                        fontWeight: FontWeight.normal,
+                        decoration: TextDecoration.none,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    ButtonBar(
+                      buttonMinWidth: 100,
+                      alignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        const Text(
-                          'Амжилтгүй',
-                          style: TextStyle(
-                              color: dark,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24),
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        Text(
-                          message,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: black),
-                        ),
-                        ButtonBar(
-                          buttonMinWidth: 100,
-                          alignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            TextButton(
-                              style: ButtonStyle(
-                                overlayColor: MaterialStateProperty.all(
-                                    Colors.transparent),
-                              ),
-                              child: const Text(
-                                "Ок",
-                                style: TextStyle(color: dark),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                if (onPress != null) {
-                                  onPress;
-                                }
-                              },
-                            ),
-                          ],
+                        TextButton(
+                          style: ButtonStyle(
+                            overlayColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                          ),
+                          child: const Text(
+                            "Ойлголоо",
+                            style: TextStyle(
+                                color: dark, fontFamily: "Montserrat"),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
                         ),
                       ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               Lottie.asset('assets/lottie/error.json',
-                  height: 150, repeat: false)
+                  height: 150, repeat: false),
             ],
           ),
         );

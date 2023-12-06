@@ -37,6 +37,7 @@ class _ChangeBranchNamePageState extends State<ChangeBranchNamePage> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: white,
+        surfaceTintColor: white,
         elevation: 0,
         leading: GestureDetector(
           onTap: () {

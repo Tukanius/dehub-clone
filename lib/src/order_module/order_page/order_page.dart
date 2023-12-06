@@ -56,6 +56,7 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: white,
+        surfaceTintColor: white,
         leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();

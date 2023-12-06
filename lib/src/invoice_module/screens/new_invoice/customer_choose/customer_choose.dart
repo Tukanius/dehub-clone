@@ -49,6 +49,7 @@ class _CustomerChooseState extends State<CustomerChoose> {
         child: Scaffold(
           backgroundColor: backgroundColor,
           appBar: AppBar(
+            surfaceTintColor: invoiceColor,
             backgroundColor: invoiceColor,
             leading: GestureDetector(
               onTap: () {
@@ -66,9 +67,7 @@ class _CustomerChooseState extends State<CustomerChoose> {
             title: Text(
               'Харилцагч сонгох',
               style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 16,
-              ),
+                  fontWeight: FontWeight.w500, fontSize: 16, color: white),
             ),
             centerTitle: true,
             elevation: 0,
@@ -90,6 +89,8 @@ class _CustomerChooseState extends State<CustomerChoose> {
                         margin: const EdgeInsets.only(top: 10, bottom: 10),
                         color: white,
                         child: TabBar(
+                          overlayColor:
+                              MaterialStatePropertyAll(Colors.grey.shade100),
                           labelColor: invoiceColor,
                           unselectedLabelColor: grey3,
                           indicatorColor: invoiceColor,

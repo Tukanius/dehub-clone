@@ -105,6 +105,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
       backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
+        surfaceTintColor: backgroundColor,
         backgroundColor: backgroundColor,
         leading: GestureDetector(
           onTap: () {

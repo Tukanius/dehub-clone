@@ -33,6 +33,8 @@ class _OrderTabState extends State<OrderTab>
                   Material(
                     color: white,
                     child: TabBar(
+                      overlayColor:
+                          MaterialStatePropertyAll(Colors.grey.shade100),
                       indicatorColor: orderColor,
                       unselectedLabelColor: buttonColor,
                       labelColor: orderColor,
@@ -86,6 +88,7 @@ class _OrderTabState extends State<OrderTab>
                   bottom: 20,
                   right: 20,
                   child: FloatingActionButton(
+                    shape: CircleBorder(),
                     backgroundColor: orderColor,
                     onPressed: () {
                       Navigator.of(context).pushNamed(
@@ -95,7 +98,10 @@ class _OrderTabState extends State<OrderTab>
                         ),
                       );
                     },
-                    child: Icon(Icons.add),
+                    child: Icon(
+                      Icons.add,
+                      color: white,
+                    ),
                   ),
                 ),
               ],

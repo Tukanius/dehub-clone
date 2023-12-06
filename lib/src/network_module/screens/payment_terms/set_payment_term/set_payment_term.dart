@@ -105,6 +105,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
         elevation: 0,
         automaticallyImplyLeading: false,
         backgroundColor: networkColor,
+        surfaceTintColor: networkColor,
         title: Text(
           'Төлбөрийн нөхцөл',
           style: TextStyle(

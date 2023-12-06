@@ -38,6 +38,7 @@ class _DebtPageState extends State<DebtPage> {
       appBar: AppBar(
         leadingWidth: 100,
         elevation: 0,
+        surfaceTintColor: backgroundColor,
         backgroundColor: backgroundColor,
         leading: CustomBackButton(color: debtColor),
         actions: [

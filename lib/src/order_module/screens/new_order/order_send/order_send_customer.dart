@@ -31,6 +31,7 @@ class _OrderSendCustomerState extends State<OrderSendCustomer> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: white,
+        surfaceTintColor: white,
         elevation: 0,
         leadingWidth: 150,
         leading: CustomBackButton(color: orderColor),

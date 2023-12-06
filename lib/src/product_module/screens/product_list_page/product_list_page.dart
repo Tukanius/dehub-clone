@@ -20,6 +20,7 @@ class _ProductListPageState extends State<ProductListPage> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: white,
+          surfaceTintColor: white,
           iconTheme: IconThemeData(color: productColor),
           title: Text(
             'Барааны жагсаалт',
@@ -30,6 +31,8 @@ class _ProductListPageState extends State<ProductListPage> {
             ),
           ),
           bottom: TabBar(
+            tabAlignment: TabAlignment.start,
+            overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
             indicatorColor: productColor,
             isScrollable: true,
             labelColor: productColor,

@@ -43,6 +43,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        surfaceTintColor: backgroundColor,
         backgroundColor: backgroundColor,
         elevation: 0,
         iconTheme: IconThemeData(color: buttonColor),

@@ -28,6 +28,7 @@ class _CategoryPageState extends State<CategoryPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
         leading: CustomBackButton(color: networkColor),
         leadingWidth: 100,
         actions: [

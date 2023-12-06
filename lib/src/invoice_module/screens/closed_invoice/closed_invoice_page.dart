@@ -123,6 +123,7 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
       appBar: AppBar(
         elevation: 0,
         backgroundColor: white,
+        surfaceTintColor: white,
         iconTheme: IconThemeData(color: invoiceColor),
         title: Text(
           'Хаагдсан нэхэмжлэх',

@@ -95,6 +95,7 @@ class _AddRowState extends State<InvoiceAddRow> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        surfaceTintColor: white,
         backgroundColor: white,
         elevation: 0,
         leading: GestureDetector(

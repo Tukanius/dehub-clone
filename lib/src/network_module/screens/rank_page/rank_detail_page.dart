@@ -42,6 +42,7 @@ class _RankDetailPageState extends State<RankDetailPage> with AfterLayoutMixin {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: white,
+        surfaceTintColor: white,
         iconTheme: IconThemeData(color: networkColor),
         title: Text(
           'Зэрэглэл нэр, код',

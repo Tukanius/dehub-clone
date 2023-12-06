@@ -46,6 +46,7 @@ class _ShipmentDistributionState extends State<ShipmentDistribution>
         iconTheme: IconThemeData(color: orderColor),
         elevation: 0,
         backgroundColor: white,
+        surfaceTintColor: white,
         title: Text(
           'Ачилт хуваарилах',
           style: TextStyle(
