@@ -1,12 +1,13 @@
 import 'package:dehub/api/finance_api.dart';
 import 'package:dehub/components/payback_card/payback_card.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/src/finance_module/screens/repayment_detail/repayment_detail.dart';
-import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:provider/provider.dart';
 
 class SupplierLed extends StatefulWidget {
   const SupplierLed({super.key});
@@ -60,18 +61,20 @@ class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
+
     return SmartRefresher(
       enablePullDown: true,
       enablePullUp: true,
       controller: refreshController,
       header: WaterDropHeader(
-        waterDropColor: financingColor,
+        waterDropColor: source.currentColor,
         refresh: SizedBox(
           height: 20,
           width: 20,
           child: CircularProgressIndicator(
             strokeWidth: 2,
-            color: financingColor,
+            color: source.currentColor,
           ),
         ),
       ),

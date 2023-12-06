@@ -1,7 +1,9 @@
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/finance.dart';
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LimitTab extends StatefulWidget {
   final Finance data;
@@ -17,6 +19,8 @@ class LimitTab extends StatefulWidget {
 class _LimitTabState extends State<LimitTab> {
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
+
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +41,7 @@ class _LimitTabState extends State<LimitTab> {
             marginVertical: 10,
             labelText: 'Баталсан лимит',
             secondText: 'Дүн',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -45,7 +49,7 @@ class _LimitTabState extends State<LimitTab> {
             marginVertical: 10,
             labelText: 'Боломжит лимит',
             secondText: 'Дүн',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           Container(
@@ -78,7 +82,7 @@ class _LimitTabState extends State<LimitTab> {
             marginVertical: 10,
             labelText: 'Лимит ашигласан',
             secondText: 'Дүн',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -86,7 +90,7 @@ class _LimitTabState extends State<LimitTab> {
             marginVertical: 10,
             labelText: 'Олголт хүлээж буй',
             secondText: 'Дүн',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -94,7 +98,7 @@ class _LimitTabState extends State<LimitTab> {
             marginVertical: 10,
             labelText: 'Хүсэлт илгээсэн',
             secondText: 'Дүн',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           Container(
@@ -113,7 +117,7 @@ class _LimitTabState extends State<LimitTab> {
             marginVertical: 10,
             labelText: 'Лимит ашигласан',
             secondText: 'Тоо',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -121,7 +125,7 @@ class _LimitTabState extends State<LimitTab> {
             marginVertical: 10,
             labelText: 'Олголт хүлээж буй',
             secondText: 'Тоо',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -129,7 +133,7 @@ class _LimitTabState extends State<LimitTab> {
             marginVertical: 10,
             labelText: 'Хүсэлт илгээсэн',
             secondText: 'Тоо',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
         ],

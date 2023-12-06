@@ -1,7 +1,9 @@
 import 'package:dehub/providers/checkout-provider.dart';
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/auth/finance_entry/finance_entry.dart';
 import 'package:dehub/src/finance_module/screens/recalled_page/recalled_page.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_transaction/invoice_transaction.dart';
 import 'package:dehub/src/invoice_module/screens/statement_detail/statement_detail.dart';
@@ -166,6 +168,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => GeneralProvider()),
           ChangeNotifierProvider(create: (_) => IndexProvider()),
           ChangeNotifierProvider(create: (_) => CheckOutProvider()),
+          ChangeNotifierProvider(create: (_) => FinanceProvider()),
         ],
         child: Stack(
           children: [
@@ -260,6 +263,10 @@ class MyApp extends StatelessWidget {
                       return NewPin(
                         oldPin: arguments.oldPin,
                       );
+                    });
+                  case FinanceEntry.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return FinanceEntry();
                     });
                   case AccountSettingDetail.routeName:
                     AccountSettingDetailArguments arguments =

@@ -1,11 +1,13 @@
 import 'package:dehub/api/finance_api.dart';
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/models/finance.dart';
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/src/finance_module/screens/received_funding_detail/tabs/bank_decision_tab.dart';
 import 'package:dehub/src/finance_module/screens/received_funding_detail/tabs/main_information.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 
 class ReceivedFundingDetailPageArguments {
   String id;
@@ -42,6 +44,8 @@ class _ReceivedFundingDetailPageState extends State<ReceivedFundingDetailPage>
 
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -50,7 +54,7 @@ class _ReceivedFundingDetailPageState extends State<ReceivedFundingDetailPage>
         elevation: 0,
         leadingWidth: 200,
         leading: CustomBackButton(
-          color: financingColor,
+          color: source.currentColor,
         ),
       ),
       body: DefaultTabController(
@@ -65,8 +69,8 @@ class _ReceivedFundingDetailPageState extends State<ReceivedFundingDetailPage>
                   child: TabBar(
                     overlayColor:
                         MaterialStatePropertyAll(Colors.grey.shade100),
-                    indicatorColor: financingColor,
-                    labelColor: financingColor,
+                    indicatorColor: source.currentColor,
+                    labelColor: source.currentColor,
                     unselectedLabelColor: grey2,
                     tabs: [
                       Container(
@@ -90,7 +94,7 @@ class _ReceivedFundingDetailPageState extends State<ReceivedFundingDetailPage>
           body: isLoading == true
               ? Center(
                   child: CircularProgressIndicator(
-                    color: financingColor,
+                    color: source.currentColor,
                   ),
                 )
               : TabBarView(

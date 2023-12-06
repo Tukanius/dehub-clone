@@ -1,5 +1,7 @@
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class InvoiceTab extends StatefulWidget {
   const InvoiceTab({super.key});
@@ -11,6 +13,7 @@ class InvoiceTab extends StatefulWidget {
 class _InvoiceTabState extends State<InvoiceTab> {
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Container(
@@ -40,7 +43,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     'Invoice_ref',
-                    style: TextStyle(color: financingColor),
+                    style: TextStyle(color: source.currentColor),
                   ),
                 ],
               ),
@@ -57,7 +60,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     'Supplier_UserName',
-                    style: TextStyle(color: financingColor),
+                    style: TextStyle(color: source.currentColor),
                   ),
                 ],
               ),
@@ -91,7 +94,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     'Buyer_UserName',
-                    style: TextStyle(color: financingColor),
+                    style: TextStyle(color: source.currentColor),
                   ),
                 ],
               ),
@@ -125,7 +128,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     '00.00 ₮',
-                    style: TextStyle(color: financingColor),
+                    style: TextStyle(color: source.currentColor),
                   ),
                 ],
               ),
@@ -142,7 +145,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     'Нийт төлсөн дүн',
-                    style: TextStyle(color: financingColor),
+                    style: TextStyle(color: source.currentColor),
                   ),
                 ],
               ),
@@ -160,7 +163,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   Text(
                     '10,200,200.00 ₮',
                     style: TextStyle(
-                      color: financingColor,
+                      color: source.currentColor,
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
                     ),
@@ -259,7 +262,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     'INV_NET_30',
-                    style: TextStyle(color: financingColor, fontSize: 18),
+                    style: TextStyle(color: source.currentColor, fontSize: 18),
                   ),
                 ],
               ),
@@ -276,7 +279,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     'Invoice_Due_Date',
-                    style: TextStyle(color: financingColor, fontSize: 18),
+                    style: TextStyle(color: source.currentColor, fontSize: 18),
                   ),
                 ],
               ),
@@ -327,7 +330,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     'PO#3232-1',
-                    style: TextStyle(color: financingColor, fontSize: 20),
+                    style: TextStyle(color: source.currentColor, fontSize: 20),
                   ),
                 ],
               ),
@@ -350,7 +353,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
-                            color: financingColor,
+                            color: source.currentColor,
                           ),
                         ),
                         TextSpan(
@@ -375,7 +378,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     'Tax_Registration_ID',
-                    style: TextStyle(color: financingColor, fontSize: 18),
+                    style: TextStyle(color: source.currentColor, fontSize: 18),
                   ),
                 ],
               ),
@@ -392,7 +395,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     'Account_Number',
-                    style: TextStyle(color: financingColor),
+                    style: TextStyle(color: source.currentColor),
                   ),
                 ],
               ),
@@ -409,7 +412,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     'Account_Name',
-                    style: TextStyle(color: financingColor),
+                    style: TextStyle(color: source.currentColor),
                   ),
                 ],
               ),
@@ -443,7 +446,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     'Finance_user',
-                    style: TextStyle(color: financingColor),
+                    style: TextStyle(color: source.currentColor),
                   ),
                 ],
               ),
@@ -460,7 +463,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     'Phone_Number',
-                    style: TextStyle(color: financingColor),
+                    style: TextStyle(color: source.currentColor),
                   ),
                 ],
               ),

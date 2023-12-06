@@ -1,8 +1,10 @@
 import 'package:dehub/models/finance.dart';
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class RequestedFundingCard extends StatefulWidget {
   final Function()? onClick;
@@ -20,6 +22,7 @@ class RequestedFundingCard extends StatefulWidget {
 class _RequestedFundingCardState extends State<RequestedFundingCard> {
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
@@ -39,10 +42,14 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
                   padding: const EdgeInsets.all(7),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
-                    border: Border.all(color: financingColor),
-                    color: financingColor.withOpacity(0.1),
+                    border: Border.all(color: source.currentColor),
+                    color: source.currentColor.withOpacity(0.1),
                   ),
-                  child: SvgPicture.asset('assets/svg/sanhuujiltS.svg'),
+                  child: SvgPicture.asset(
+                    'assets/svg/sanhuujiltS.svg',
+                    colorFilter:
+                        ColorFilter.mode(source.currentColor, BlendMode.srcIn),
+                  ),
                 ),
               ],
             ),

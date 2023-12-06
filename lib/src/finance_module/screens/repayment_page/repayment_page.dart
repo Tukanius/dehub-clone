@@ -1,9 +1,11 @@
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/dashboard_card/dashboard_card.dart';
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/src/finance_module/screens/repayment_page/tabs/buyer_led.dart';
 import 'package:dehub/src/finance_module/screens/repayment_page/tabs/supplier_led.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RePayment extends StatefulWidget {
   static const routeName = '/RePayment';
@@ -27,6 +29,8 @@ class _RePaymentState extends State<RePayment>
 
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -34,7 +38,7 @@ class _RePaymentState extends State<RePayment>
         elevation: 0,
         backgroundColor: backgroundColor,
         surfaceTintColor: backgroundColor,
-        leading: CustomBackButton(color: financingColor),
+        leading: CustomBackButton(color: source.currentColor),
         actions: [
           CircleAvatar(
             radius: 18,
@@ -51,7 +55,7 @@ class _RePaymentState extends State<RePayment>
           Container(
             margin: const EdgeInsets.only(left: 10, bottom: 10),
             child: DashboardCard(
-              boxColor: financingColor,
+              boxColor: source.currentColor,
               padding: 10,
               labelText: 'Эргэн төлөлтүүд',
               svgColor: white,
@@ -73,11 +77,59 @@ class _RePaymentState extends State<RePayment>
               SizedBox(
                 width: 15,
               ),
-              tabButton(0, "Buyer-Led"),
+              GestureDetector(
+                onTap: () {
+                  pageController.animateToPage(0,
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.ease);
+                },
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: currentIndex == 0
+                        ? source.currentColor
+                        : backgroundColor,
+                  ),
+                  child: Text(
+                    'Buyer-Led',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: currentIndex == 0 ? white : black,
+                    ),
+                  ),
+                ),
+              ),
               SizedBox(
                 width: 25,
               ),
-              tabButton(1, "Supplier-Led"),
+              GestureDetector(
+                onTap: () {
+                  pageController.animateToPage(1,
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.ease);
+                },
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: currentIndex == 1
+                        ? source.currentColor
+                        : backgroundColor,
+                  ),
+                  child: Text(
+                    'Supplier-Led',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: currentIndex == 1 ? white : black,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
           Expanded(
@@ -95,30 +147,6 @@ class _RePaymentState extends State<RePayment>
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget tabButton(int index, String label) {
-    return GestureDetector(
-      onTap: () {
-        pageController.animateToPage(index,
-            duration: Duration(milliseconds: 300), curve: Curves.ease);
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: currentIndex == index ? financingColor : backgroundColor,
-        ),
-        child: Text(
-          '${label}',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: currentIndex == index ? white : black,
-          ),
-        ),
       ),
     );
   }

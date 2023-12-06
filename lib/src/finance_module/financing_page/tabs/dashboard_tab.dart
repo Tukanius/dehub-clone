@@ -1,6 +1,7 @@
 import 'package:dehub/components/dashboard_card/dashboard_card.dart';
 import 'package:dehub/components/pie_chart/pie_chart.dart';
 import 'package:dehub/models/finance.dart';
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/src/finance_module/screens/avaible_funding_page/avaible_funding_page.dart';
 import 'package:dehub/src/finance_module/screens/funding_request_page/funding_request_page.dart';
 import 'package:dehub/src/finance_module/screens/recalled_page/recalled_page.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:provider/provider.dart';
 
 class DashBoardTab extends StatefulWidget {
   const DashBoardTab({super.key});
@@ -60,6 +62,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,10 +86,10 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                     Navigator.of(context)
                         .pushNamed(AvaibleFundingPage.routeName);
                   },
-                  boxColor: financingColor.withOpacity(0.1),
+                  boxColor: source.currentColor.withOpacity(0.1),
                   padding: 10,
                   labelText: 'Боломжит нэхэмжлэх',
-                  svgColor: financingColor,
+                  svgColor: source.currentColor,
                   svg: 'assets/svg/available_invoice.svg',
                 ),
                 DashboardCard(
@@ -94,10 +97,10 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                     Navigator.of(context)
                         .pushNamed(FundingRequestPage.routeName);
                   },
-                  boxColor: financingColor.withOpacity(0.1),
+                  boxColor: source.currentColor.withOpacity(0.1),
                   padding: 10,
                   labelText: 'Санхүүжилт хүсэлт',
-                  svgColor: financingColor,
+                  svgColor: source.currentColor,
                   svg: 'assets/svg/sanhuujiltS.svg',
                 ),
                 DashboardCard(
@@ -105,30 +108,30 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                     Navigator.of(context)
                         .pushNamed(ReceivedFundingPage.routeName);
                   },
-                  boxColor: financingColor.withOpacity(0.1),
+                  boxColor: source.currentColor.withOpacity(0.1),
                   padding: 10,
                   labelText: 'Авсан санхүүжилт',
-                  svgColor: financingColor,
+                  svgColor: source.currentColor,
                   svg: 'assets/svg/camera.svg',
                 ),
                 DashboardCard(
                   onClick: () {
                     Navigator.of(context).pushNamed(RePayment.routeName);
                   },
-                  boxColor: financingColor.withOpacity(0.1),
+                  boxColor: source.currentColor.withOpacity(0.1),
                   padding: 10,
                   labelText: 'Эргэн төлөлтүүд',
-                  svgColor: financingColor,
+                  svgColor: source.currentColor,
                   svg: 'assets/svg/payback.svg',
                 ),
                 DashboardCard(
                   onClick: () {
                     Navigator.of(context).pushNamed(ReCalledPage.routeName);
                   },
-                  boxColor: financingColor.withOpacity(0.1),
+                  boxColor: source.currentColor.withOpacity(0.1),
                   padding: 10,
                   labelText: 'Буцаан дуудсан',
-                  svgColor: financingColor,
+                  svgColor: source.currentColor,
                   svg: 'assets/svg/return.svg',
                 ),
               ],
@@ -140,7 +143,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
           isLoading == true
               ? Center(
                   child: CircularProgressIndicator(
-                    color: financingColor,
+                    color: source.currentColor,
                   ),
                 )
               : Column(
@@ -170,7 +173,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                                 Text(
                                   "Бүгдийг",
                                   style: TextStyle(
-                                    color: financingColor,
+                                    color: source.currentColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -180,7 +183,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                                 ),
                                 Icon(
                                   Icons.arrow_forward_ios,
-                                  color: financingColor,
+                                  color: source.currentColor,
                                   size: 16,
                                 ),
                                 SizedBox(
@@ -227,7 +230,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                                 Text(
                                   "Бүгдийг",
                                   style: TextStyle(
-                                    color: financingColor,
+                                    color: source.currentColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -237,7 +240,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                                 ),
                                 Icon(
                                   Icons.arrow_forward_ios,
-                                  color: financingColor,
+                                  color: source.currentColor,
                                   size: 16,
                                 ),
                                 SizedBox(
@@ -308,7 +311,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                                 datum.profileName == "Зөвшөөрсөн"
                                     ? networkDashboard2
                                     : datum.profileName == "Илгээсэн"
-                                        ? financingColor
+                                        ? source.currentColor
                                         : grey2,
                             dataSource: legend,
                             xValueMapper: (gdp, _) => gdp.profileName,

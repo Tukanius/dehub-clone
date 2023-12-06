@@ -1,7 +1,9 @@
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RequestTab extends StatefulWidget {
   const RequestTab({super.key});
@@ -14,6 +16,8 @@ class _RequestTabState extends State<RequestTab> {
   bool isSwitched = false;
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +45,7 @@ class _RequestTabState extends State<RequestTab> {
                 ),
                 Text(
                   'Fin_Ref#',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -58,7 +62,7 @@ class _RequestTabState extends State<RequestTab> {
                 ),
                 Text(
                   'Эрт санхүүжилт',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -75,7 +79,7 @@ class _RequestTabState extends State<RequestTab> {
                 ),
                 Text(
                   'Supplier_Ref#',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -92,7 +96,7 @@ class _RequestTabState extends State<RequestTab> {
                 ),
                 Text(
                   'Supplier_Name',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -109,7 +113,7 @@ class _RequestTabState extends State<RequestTab> {
                 ),
                 Text(
                   'UserName_Supplier',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -126,7 +130,7 @@ class _RequestTabState extends State<RequestTab> {
                 ),
                 Text(
                   'Request_Datetime',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -143,7 +147,7 @@ class _RequestTabState extends State<RequestTab> {
                 ),
                 Text(
                   'Response_date',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -187,7 +191,7 @@ class _RequestTabState extends State<RequestTab> {
                   children: [
                     Text(
                       'ProgramName',
-                      style: TextStyle(color: financingColor),
+                      style: TextStyle(color: source.currentColor),
                     ),
                     SizedBox(
                       width: 10,
@@ -216,7 +220,7 @@ class _RequestTabState extends State<RequestTab> {
                   children: [
                     Text(
                       'SCF_Prod021',
-                      style: TextStyle(color: financingColor),
+                      style: TextStyle(color: source.currentColor),
                     ),
                     SizedBox(
                       width: 10,
@@ -257,7 +261,7 @@ class _RequestTabState extends State<RequestTab> {
                 border: OutlineInputBorder(),
                 fillColor: Colors.white,
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: financingColor),
+                  borderSide: BorderSide(color: source.currentColor),
                 ),
               ),
             ),
@@ -274,7 +278,7 @@ class _RequestTabState extends State<RequestTab> {
                 ),
                 Text(
                   'Response_date',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),

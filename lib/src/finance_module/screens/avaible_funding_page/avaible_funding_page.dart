@@ -1,9 +1,11 @@
 import 'package:dehub/components/avaible_funding_card/avaible_funding_card.dart';
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/dashboard_card/dashboard_card.dart';
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/src/finance_module/screens/avaible_funding_detail/avaible_funding_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AvaibleFundingPage extends StatefulWidget {
   static const routeName = '/AvaibleFundingPage';
@@ -16,6 +18,8 @@ class AvaibleFundingPage extends StatefulWidget {
 class _AvaibleFundingPageState extends State<AvaibleFundingPage> {
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -24,7 +28,7 @@ class _AvaibleFundingPageState extends State<AvaibleFundingPage> {
         surfaceTintColor: backgroundColor,
         backgroundColor: backgroundColor,
         leading: CustomBackButton(
-          color: financingColor,
+          color: source.currentColor,
         ),
         actions: [
           Container(
@@ -44,7 +48,7 @@ class _AvaibleFundingPageState extends State<AvaibleFundingPage> {
             Container(
               margin: const EdgeInsets.only(left: 10),
               child: DashboardCard(
-                boxColor: financingColor,
+                boxColor: source.currentColor,
                 padding: 10,
                 labelText: 'Боломжит нэхэмжлэх',
                 svgColor: white,

@@ -1,7 +1,9 @@
 import 'package:dehub/components/back_button/back_button.dart';
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
 
 class RequestApprovalPage extends StatefulWidget {
   static const routeName = '/RequestApprovalPage';
@@ -14,6 +16,8 @@ class RequestApprovalPage extends StatefulWidget {
 class _RequestApprovalPageState extends State<RequestApprovalPage> {
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -22,7 +26,7 @@ class _RequestApprovalPageState extends State<RequestApprovalPage> {
           elevation: 0,
           leadingWidth: 100,
           leading: CustomBackButton(
-            color: financingColor,
+            color: source.currentColor,
           )),
       body: SingleChildScrollView(
         child: Column(

@@ -1,6 +1,8 @@
 import 'package:dehub/models/finance.dart';
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BankDecisionTab extends StatefulWidget {
   final Finance data;
@@ -16,6 +18,8 @@ class BankDecisionTab extends StatefulWidget {
 class _BankDecisionTabState extends State<BankDecisionTab> {
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +47,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                 ),
                 Text(
                   'Огноо, цаг',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -87,7 +91,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                 ),
                 Text(
                   'Bank user',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -105,7 +109,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                 Text(
                   'XXX,XXX,XXX.00 ₮',
                   style: TextStyle(
-                    color: financingColor,
+                    color: source.currentColor,
                     fontWeight: FontWeight.w500,
                     fontSize: 15,
                   ),
@@ -126,7 +130,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                 Text(
                   'XXX,XXX,XXX.00 ₮',
                   style: TextStyle(
-                    color: financingColor,
+                    color: source.currentColor,
                     fontWeight: FontWeight.w500,
                     fontSize: 15,
                   ),
@@ -147,7 +151,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                 Text(
                   'XXX,XXX,XXX.00 ₮',
                   style: TextStyle(
-                    color: financingColor,
+                    color: source.currentColor,
                     fontWeight: FontWeight.w500,
                     fontSize: 15,
                   ),
@@ -168,7 +172,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                 Text(
                   'XXX,XXX,XXX.00 ₮',
                   style: TextStyle(
-                    color: financingColor,
+                    color: source.currentColor,
                     fontWeight: FontWeight.w500,
                     fontSize: 15,
                   ),
@@ -188,7 +192,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                 ),
                 Text(
                   'Огноо, цаг',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -205,7 +209,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                 ),
                 Text(
                   'Огноо, цаг',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -237,7 +241,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                 Text(
                   'REP_INV_100042',
                   style: TextStyle(
-                    color: financingColor,
+                    color: source.currentColor,
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
                   ),
@@ -278,7 +282,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                 Text(
                   'XXX,XXX,XXX.00 ₮',
                   style: TextStyle(
-                    color: financingColor,
+                    color: source.currentColor,
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
                   ),
@@ -299,7 +303,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                 Text(
                   'Огноо, цаг',
                   style: TextStyle(
-                    color: financingColor,
+                    color: source.currentColor,
                   ),
                 ),
               ],

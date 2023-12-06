@@ -1428,7 +1428,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                         validateCheck(false, false);
                                       },
                                       child: SizedBox(
-                                        height: 32,
+                                        height: 34,
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -1454,7 +1454,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                         validateCheck(false, false);
                                       },
                                       child: SizedBox(
-                                        height: 32,
+                                        height: 34,
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -1486,7 +1486,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                   validateCheck(true, false);
                                 },
                                 child: Container(
-                                  height: 32,
+                                  height: 34,
                                   child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -1516,7 +1516,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                 },
                                 child: Container(
                                   color: transparent,
-                                  height: 32,
+                                  height: 34,
                                   child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,

@@ -35,6 +35,8 @@ class _DeliveryManagementState extends State<DeliveryManagement> {
             indicatorColor: orderColor,
             labelColor: orderColor,
             unselectedLabelColor: grey2,
+            isScrollable: true,
+            tabAlignment: TabAlignment.center,
             tabs: [
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 15),

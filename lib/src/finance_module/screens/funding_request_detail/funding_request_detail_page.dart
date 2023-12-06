@@ -1,11 +1,13 @@
 import 'package:dehub/api/finance_api.dart';
 import 'package:dehub/models/finance.dart';
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dehub/src/finance_module/screens/funding_request_detail/tabs/invoice.dart';
 import 'package:dehub/src/finance_module/screens/funding_request_detail/tabs/request_tab.dart';
 import 'package:dehub/src/finance_module/screens/funding_request_detail/tabs/limit_tab.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 
 class FundingRequestDetailPageArguments {
   String id;
@@ -42,6 +44,8 @@ class _FundingRequestDetailPageState extends State<FundingRequestDetailPage>
 
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -59,7 +63,7 @@ class _FundingRequestDetailPageState extends State<FundingRequestDetailPage>
               children: [
                 Icon(
                   Icons.arrow_back_ios_new,
-                  color: financingColor,
+                  color: source.currentColor,
                 ),
                 SizedBox(
                   width: 5,
@@ -67,7 +71,7 @@ class _FundingRequestDetailPageState extends State<FundingRequestDetailPage>
                 Text(
                   'Санхүүжилт хүсэх',
                   style: TextStyle(
-                    color: financingColor,
+                    color: source.currentColor,
                     fontSize: 17,
                   ),
                 ),
@@ -107,8 +111,8 @@ class _FundingRequestDetailPageState extends State<FundingRequestDetailPage>
                   child: TabBar(
                     overlayColor:
                         MaterialStatePropertyAll(Colors.grey.shade100),
-                    indicatorColor: financingColor,
-                    labelColor: financingColor,
+                    indicatorColor: source.currentColor,
+                    labelColor: source.currentColor,
                     unselectedLabelColor: grey2,
                     tabs: [
                       Container(
@@ -138,7 +142,7 @@ class _FundingRequestDetailPageState extends State<FundingRequestDetailPage>
           body: isLoading == true
               ? Center(
                   child: CircularProgressIndicator(
-                    color: financingColor,
+                    color: source.currentColor,
                   ),
                 )
               : TabBarView(

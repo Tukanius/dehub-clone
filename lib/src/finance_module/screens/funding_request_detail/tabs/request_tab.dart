@@ -2,6 +2,7 @@ import 'package:dehub/components/custom_switch/custom_switch.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/general.dart';
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -27,6 +28,7 @@ class _RequestTabState extends State<RequestTab> {
 
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
     general =
         Provider.of<GeneralProvider>(context, listen: false).financeGeneral;
     return SingleChildScrollView(
@@ -49,7 +51,7 @@ class _RequestTabState extends State<RequestTab> {
             marginVertical: 10,
             labelText: 'Хүсэлтийн код',
             secondText: '${widget.data.refCode}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -57,7 +59,7 @@ class _RequestTabState extends State<RequestTab> {
             marginVertical: 10,
             labelText: 'Хүсэлтийн код',
             secondText: '${widget.data.refCode}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -65,7 +67,7 @@ class _RequestTabState extends State<RequestTab> {
             marginVertical: 10,
             labelText: 'Хүсэлтийн код',
             secondText: '${requestType()}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -73,7 +75,7 @@ class _RequestTabState extends State<RequestTab> {
             marginVertical: 10,
             labelText: 'Нийлүүлэгч код',
             secondText: '${widget.data.requestedBusiness?.refCode}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -81,7 +83,7 @@ class _RequestTabState extends State<RequestTab> {
             marginVertical: 10,
             labelText: 'Нийлүүлэгч',
             secondText: '${widget.data.requestedBusiness?.profileName}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -89,7 +91,7 @@ class _RequestTabState extends State<RequestTab> {
             marginVertical: 10,
             labelText: 'Хүсэлт гаргасан',
             secondText: '${widget.data.requestedFinUser?.firstName}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -98,7 +100,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Хүсэлтийн огноо',
             secondText:
                 '${DateFormat('yyyy-MM-dd').format(widget.data.createdAt!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -107,7 +109,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Хариу өгөх хугацаа',
             secondText:
                 '${DateFormat('yyyy-MM-dd').format(widget.data.responseDate!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           Container(
@@ -141,7 +143,7 @@ class _RequestTabState extends State<RequestTab> {
             marginVertical: 10,
             labelText: 'Хөтөлбөрийн нэр',
             secondText: '${widget.data.program?.name}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -150,7 +152,7 @@ class _RequestTabState extends State<RequestTab> {
             marginVertical: 10,
             labelText: 'Бүтээгдэхүүн',
             secondText: '${widget.data.product?.name}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           Container(
@@ -179,7 +181,7 @@ class _RequestTabState extends State<RequestTab> {
                 border: OutlineInputBorder(),
                 fillColor: Colors.white,
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: financingColor),
+                  borderSide: BorderSide(color: source.currentColor),
                 ),
               ),
             ),
@@ -196,7 +198,7 @@ class _RequestTabState extends State<RequestTab> {
                 ),
                 Text(
                   '${currency()}',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -218,7 +220,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Боломжилт доод дүн',
             secondText:
                 '${Utils().formatCurrency(widget.data.finMinAmount.toString()) + symbol()}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -227,7 +229,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Боломжилт дээд дүн',
             secondText:
                 '${Utils().formatCurrency(widget.data.finMaxAmount.toString()) + symbol()}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -236,7 +238,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Нэхэмжлэх доод үлдэгдэл',
             secondText:
                 '${Utils().formatCurrency(widget.data.minInvBalance.toString()) + symbol()}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -244,7 +246,7 @@ class _RequestTabState extends State<RequestTab> {
             marginVertical: 10,
             labelText: 'Нэх min.тенор',
             secondText: '${widget.data.minTenor?.toInt()}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -252,7 +254,7 @@ class _RequestTabState extends State<RequestTab> {
             marginVertical: 10,
             labelText: 'Нэх max.тенор',
             secondText: '${widget.data.maxTenor?.toInt()}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -260,7 +262,7 @@ class _RequestTabState extends State<RequestTab> {
             marginVertical: 10,
             labelText: 'Санхүүжилт хоног',
             secondText: '${widget.data.remainingDays?.toInt()}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -268,7 +270,7 @@ class _RequestTabState extends State<RequestTab> {
             marginVertical: 10,
             labelText: 'Шимтгэл тооцсон хувь',
             secondText: '${widget.data.calculatedFeePercent?.toInt()}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -277,7 +279,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Тооцсон шимтгэл',
             secondText:
                 '${Utils().formatCurrency(widget.data.calculatedFeeAmount.toString()) + symbol()}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -286,7 +288,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Санхүүжих шимтгэл',
             secondText:
                 '${Utils().formatCurrency(widget.data.scfFee.toString()) + symbol()}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -295,7 +297,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Гүйлгээний шимтгэл',
             secondText:
                 '${Utils().formatCurrency(widget.data.trxFee.toString()) + symbol()}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -304,7 +306,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Өргөдөл хураамж',
             secondText:
                 '${Utils().formatCurrency(widget.data.appFee.toString()) + symbol()}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -313,7 +315,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Олголт шимтгэл',
             secondText:
                 '${Utils().formatCurrency(widget.data.disbursementFee.toString()) + symbol()}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -321,7 +323,7 @@ class _RequestTabState extends State<RequestTab> {
             marginVertical: 10,
             labelText: 'Нийт шимтгэл',
             secondText: 'SUM_FEE',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             secondTextFontWeight: FontWeight.bold,
             color: white,
           ),
@@ -330,7 +332,7 @@ class _RequestTabState extends State<RequestTab> {
             marginVertical: 10,
             labelText: 'Шимтгэл дүрэм',
             secondText: '${widget.data.feeRule}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -339,7 +341,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Шимтгэл дээд дүн',
             secondText:
                 '${Utils().formatCurrency(widget.data.maxFeeAmount.toString()) + symbol()}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -348,7 +350,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Шимтгэл доод дүн',
             secondText:
                 '${Utils().formatCurrency(widget.data.minFeeAmount.toString()) + symbol()}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -357,7 +359,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Эргэн төлөх хугацаа',
             secondText:
                 '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           Container(
@@ -383,7 +385,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Буцаан дуудах огноо',
             secondText:
                 '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -392,7 +394,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Ху.Хэтрэлт алданги',
             secondText:
                 '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -401,7 +403,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Алдангийн арга',
             secondText:
                 '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -410,7 +412,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Эргэн төлөх дүрэм',
             secondText:
                 '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -419,7 +421,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Нэхэмжлэх хугацаа',
             secondText:
                 '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -428,7 +430,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Хугацааны Min шалгуур',
             secondText:
                 '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -437,7 +439,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Хугацааны Max шалгуур',
             secondText:
                 '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -446,7 +448,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Хугацаа хэтрэлт',
             secondText:
                 '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           Container(
@@ -466,7 +468,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Дансны дугаар',
             secondText:
                 '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -475,7 +477,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Дансны нэр',
             secondText:
                 '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -484,7 +486,7 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Банкны нэр',
             secondText:
                 '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           Container(

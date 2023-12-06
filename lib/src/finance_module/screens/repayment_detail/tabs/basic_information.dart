@@ -2,6 +2,7 @@ import 'package:dehub/components/custom_switch/custom_switch.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/general.dart';
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -45,6 +46,7 @@ class _BasicInformationState extends State<BasicInformation> {
   Widget build(BuildContext context) {
     general =
         Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
+    final source = Provider.of<FinanceProvider>(context, listen: true);
 
     return SingleChildScrollView(
       child: Column(
@@ -65,7 +67,7 @@ class _BasicInformationState extends State<BasicInformation> {
             marginVertical: 10,
             labelText: 'ЭТН код',
             secondText: '${widget.data.refCode}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -74,7 +76,7 @@ class _BasicInformationState extends State<BasicInformation> {
             labelText: 'Үүссэн огноо, цаг',
             secondText:
                 '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.createdAt!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -83,7 +85,7 @@ class _BasicInformationState extends State<BasicInformation> {
             labelText: 'Эргэн төлөх огноо',
             secondText:
                 '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -93,7 +95,7 @@ class _BasicInformationState extends State<BasicInformation> {
             secondText:
                 '${Utils().formatCurrency(widget.data.repaymentAmount.toString()) + symbol().symbol}',
             secondTextFontWeight: FontWeight.w500,
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -103,7 +105,7 @@ class _BasicInformationState extends State<BasicInformation> {
             secondText:
                 '${Utils().formatCurrency(widget.data.paidAmount.toString()) + symbol().symbol}',
             secondTextFontWeight: FontWeight.w500,
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -113,7 +115,7 @@ class _BasicInformationState extends State<BasicInformation> {
             secondText:
                 '${Utils().formatCurrency(widget.data.amountToPay.toString()) + symbol().symbol}',
             secondTextFontWeight: FontWeight.w500,
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -122,7 +124,7 @@ class _BasicInformationState extends State<BasicInformation> {
             labelText: 'Санхүүжилт авсан огноо',
             secondText:
                 '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.updatedAt!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           Container(
@@ -195,7 +197,7 @@ class _BasicInformationState extends State<BasicInformation> {
             marginVertical: 10,
             labelText: 'Хугацаа хэтэрсэн хоног',
             secondText: '0',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -203,7 +205,7 @@ class _BasicInformationState extends State<BasicInformation> {
             marginVertical: 10,
             labelText: 'Хугацаа хэтрэлтийн мэдээлэл',
             secondText: '0',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           Container(
@@ -221,7 +223,7 @@ class _BasicInformationState extends State<BasicInformation> {
             marginVertical: 10,
             labelText: 'Хөтөлбөрийн код',
             secondText: 'Program_Ref#',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -229,7 +231,7 @@ class _BasicInformationState extends State<BasicInformation> {
             marginVertical: 10,
             labelText: 'Хөтөлбөрийн нэр',
             secondText: 'Program_Name',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           Container(
@@ -251,7 +253,7 @@ class _BasicInformationState extends State<BasicInformation> {
             marginVertical: 10,
             labelText: 'Буцаан дуудсан',
             secondText: 'Үгүй',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -259,7 +261,7 @@ class _BasicInformationState extends State<BasicInformation> {
             marginVertical: 10,
             labelText: 'Нэхэмжлэх код',
             secondText: '${widget.data.invRefCode}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -267,7 +269,7 @@ class _BasicInformationState extends State<BasicInformation> {
             marginVertical: 10,
             labelText: 'Хүсэлтийн код',
             secondText: 'Fin_Req_#',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -275,7 +277,7 @@ class _BasicInformationState extends State<BasicInformation> {
             marginVertical: 10,
             labelText: 'Олголтын код',
             secondText: 'Dis_Ref#',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           Container(
@@ -319,7 +321,7 @@ class _BasicInformationState extends State<BasicInformation> {
             marginVertical: 10,
             labelText: 'Нийлүүлэгч нэр',
             secondText: 'Buyer_Name',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -327,7 +329,7 @@ class _BasicInformationState extends State<BasicInformation> {
             marginVertical: 10,
             labelText: 'Нийлүүлэгч код',
             secondText: 'Buyer_Ref#',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -335,7 +337,7 @@ class _BasicInformationState extends State<BasicInformation> {
             marginVertical: 10,
             labelText: 'Партнер нэр',
             secondText: 'Partner_Name',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -343,7 +345,7 @@ class _BasicInformationState extends State<BasicInformation> {
             marginVertical: 10,
             labelText: 'Партнер код',
             secondText: 'Partner_ref#',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           SizedBox(

@@ -1,5 +1,6 @@
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/general.dart';
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -34,7 +35,7 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
   Widget build(BuildContext context) {
     general =
         Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
-
+    final source = Provider.of<FinanceProvider>(context, listen: true);
     return Column(
       children: [
         GestureDetector(
@@ -60,8 +61,8 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                           horizontal: 9, vertical: 7),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
-                        border: Border.all(color: financingColor),
-                        color: financingColor.withOpacity(0.1),
+                        border: Border.all(color: source.currentColor),
+                        color: source.currentColor.withOpacity(0.1),
                       ),
                       child: SvgPicture.asset('assets/svg/note.svg'),
                     ),
@@ -91,7 +92,7 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                     Text(
                       '${widget.data.requestedBusiness?.profileName}',
                       style: TextStyle(
-                        color: financingColor,
+                        color: source.currentColor,
                         fontWeight: FontWeight.w500,
                       ),
                     )

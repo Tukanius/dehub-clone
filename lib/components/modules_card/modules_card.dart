@@ -1,6 +1,5 @@
 import 'package:dehub/models/partner.dart';
-import 'package:dehub/src/auth/financing_login.dart';
-import 'package:dehub/src/finance_module/financing_page/financing_page.dart';
+import 'package:dehub/src/auth/finance_entry/finance_entry.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 // import 'package:dehub/src/debt_page/debt_page.dart';
@@ -159,11 +158,7 @@ class _ModulesCardState extends State<ModulesCard> {
             onTap: () {
               if (widget.partner?.user?.currentBusiness!.type == 'SUPPLIER' ||
                   widget.partner?.user?.currentBusiness!.type == "BUYER") {
-                if (widget.isFinanceLogin == true) {
-                  Navigator.of(context).pushNamed(FinancingPage.routeName);
-                } else {
-                  Navigator.of(context).pushNamed(FinancingLogin.routeName);
-                }
+                Navigator.of(context).pushNamed(FinanceEntry.routeName);
               }
             },
             child: Column(

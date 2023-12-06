@@ -1,5 +1,7 @@
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LimitTab extends StatefulWidget {
   const LimitTab({super.key});
@@ -11,6 +13,8 @@ class LimitTab extends StatefulWidget {
 class _LimitTabState extends State<LimitTab> {
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
+
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +42,7 @@ class _LimitTabState extends State<LimitTab> {
                 ),
                 Text(
                   'Дүн',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -55,7 +59,7 @@ class _LimitTabState extends State<LimitTab> {
                 ),
                 Text(
                   'Дүн',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -97,7 +101,7 @@ class _LimitTabState extends State<LimitTab> {
                 ),
                 Text(
                   'Дүн',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -114,7 +118,7 @@ class _LimitTabState extends State<LimitTab> {
                 ),
                 Text(
                   'Дүн',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -131,7 +135,7 @@ class _LimitTabState extends State<LimitTab> {
                 ),
                 Text(
                   'Дүн',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -159,7 +163,7 @@ class _LimitTabState extends State<LimitTab> {
                 ),
                 Text(
                   'Тоо',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -176,7 +180,7 @@ class _LimitTabState extends State<LimitTab> {
                 ),
                 Text(
                   'Тоо',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),
@@ -193,7 +197,7 @@ class _LimitTabState extends State<LimitTab> {
                 ),
                 Text(
                   'Тоо',
-                  style: TextStyle(color: financingColor),
+                  style: TextStyle(color: source.currentColor),
                 ),
               ],
             ),

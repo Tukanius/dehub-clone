@@ -1,9 +1,11 @@
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/src/finance_module/screens/avaible_funding_page/request_approval_page.dart';
 import 'package:dehub/src/finance_module/screens/avaible_funding_detail/tabs/invoice.dart';
 import 'package:dehub/src/finance_module/screens/avaible_funding_detail/tabs/limit_tab.dart';
 import 'package:dehub/src/finance_module/screens/avaible_funding_detail/tabs/request_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AvaibleFundingDetailPage extends StatefulWidget {
   static const routeName = '/avaiblefundingdetailpage';
@@ -34,6 +36,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
 
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -51,7 +54,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
               children: [
                 Icon(
                   Icons.arrow_back_ios_new,
-                  color: financingColor,
+                  color: source.currentColor,
                 ),
                 SizedBox(
                   width: 5,
@@ -59,7 +62,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                 Text(
                   'Санхүүжилт хүсэх',
                   style: TextStyle(
-                    color: financingColor,
+                    color: source.currentColor,
                     fontSize: 17,
                   ),
                 ),
@@ -91,8 +94,8 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                     overlayColor:
                         MaterialStatePropertyAll(Colors.grey.shade100),
                     controller: tabController,
-                    indicatorColor: financingColor,
-                    labelColor: financingColor,
+                    indicatorColor: source.currentColor,
+                    labelColor: source.currentColor,
                     unselectedLabelColor: grey2,
                     tabs: [
                       Container(
@@ -131,7 +134,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                     alignment: Alignment.bottomRight,
                     child: FloatingActionButton.small(
                       shape: CircleBorder(),
-                      hoverColor: financingColor,
+                      hoverColor: source.currentColor,
                       onPressed: () {
                         tabController.animateTo(tabController.index + 1);
                       },
@@ -139,7 +142,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                         Icons.fast_forward_outlined,
                         color: white,
                       ),
-                      backgroundColor: financingColor,
+                      backgroundColor: source.currentColor,
                     ),
                   )
                 ],
@@ -153,7 +156,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                     alignment: Alignment.bottomRight,
                     child: FloatingActionButton.small(
                       shape: CircleBorder(),
-                      hoverColor: financingColor,
+                      hoverColor: source.currentColor,
                       onPressed: () {
                         tabController.animateTo(tabController.index + 1);
                       },
@@ -161,7 +164,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                         Icons.fast_forward_outlined,
                         color: white,
                       ),
-                      backgroundColor: financingColor,
+                      backgroundColor: source.currentColor,
                     ),
                   ),
                   Container(
@@ -169,7 +172,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                         horizontal: 80, vertical: 20),
                     alignment: Alignment.bottomRight,
                     child: FloatingActionButton.small(
-                      hoverColor: financingColor,
+                      hoverColor: source.currentColor,
                       shape: CircleBorder(),
                       onPressed: () {
                         tabController.animateTo(tabController.index - 1);
@@ -178,7 +181,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                         Icons.fast_rewind_outlined,
                         color: white,
                       ),
-                      backgroundColor: financingColor,
+                      backgroundColor: source.currentColor,
                     ),
                   )
                 ],
@@ -197,7 +200,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                         //   PinCheckScreen.routeName,
                         //   arguments: PinCheckScreenArguments(
                         //       onSubmit: () {},
-                        //       color: financingColor,
+                        //       color: source.currentColor,
                         //       labelText: "SCF Хүсэлт батлах",
                         //       description:
                         //           'Та SCF хүсэлт батлах гэж байна. Та мэдээллээ сайтар шалгана уу.'),
@@ -209,12 +212,12 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                         decoration: BoxDecoration(
                           color: white,
                           borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: financingColor),
+                          border: Border.all(color: source.currentColor),
                         ),
                         child: Text(
                           'Санхүүжилт хүсэх',
                           style: TextStyle(
-                            color: financingColor,
+                            color: source.currentColor,
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
@@ -228,7 +231,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                         horizontal: 20, vertical: 20),
                     alignment: Alignment.bottomLeft,
                     child: FloatingActionButton.small(
-                      hoverColor: financingColor,
+                      hoverColor: source.currentColor,
                       shape: CircleBorder(),
                       onPressed: () {
                         tabController.animateTo(tabController.index - 1);
@@ -237,7 +240,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                         Icons.fast_rewind_outlined,
                         color: white,
                       ),
-                      backgroundColor: financingColor,
+                      backgroundColor: source.currentColor,
                     ),
                   )
                 ],

@@ -1,5 +1,6 @@
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/general.dart';
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -35,7 +36,7 @@ class RePaymentCardState extends State<RePaymentCard> {
   Widget build(BuildContext context) {
     general =
         Provider.of<GeneralProvider>(context, listen: false).financeGeneral;
-
+    final source = Provider.of<FinanceProvider>(context, listen: true);
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
@@ -61,8 +62,8 @@ class RePaymentCardState extends State<RePaymentCard> {
                   width: 36,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(color: financingColor),
-                    color: financingColor.withOpacity(0.1),
+                    border: Border.all(color: source.currentColor),
+                    color: source.currentColor.withOpacity(0.1),
                   ),
                   child: SvgPicture.asset('assets/svg/note.svg'),
                 ),
@@ -94,7 +95,7 @@ class RePaymentCardState extends State<RePaymentCard> {
                 Text(
                   '${widget.data.payerBusiness?.profileName}',
                   style: TextStyle(
-                    color: financingColor,
+                    color: source.currentColor,
                     fontWeight: FontWeight.w500,
                   ),
                 )

@@ -1,6 +1,7 @@
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/general.dart';
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -29,6 +30,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
 
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
     general =
         Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
 
@@ -52,7 +54,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             marginVertical: 10,
             labelText: 'Хүсэлтийн код',
             secondText: '${widget.data.refCode}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           Container(
@@ -95,7 +97,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             labelText: 'Хүсэлтийн дүн',
             secondText:
                 '${Utils().formatCurrency(widget.data.requestedAmount.toString()) + symbol().symbol}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -103,7 +105,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             marginVertical: 10,
             labelText: 'Санхүүжилт валют',
             secondText: '${symbol().name}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -111,7 +113,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             marginVertical: 10,
             labelText: 'Санхүүжилт хоног',
             secondText: '365',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -120,7 +122,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             labelText: 'Санхүүжилтийн шимтгэл',
             secondText:
                 '${Utils().formatCurrency(widget.data.scfFeeAmount.toString()) + symbol().symbol}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -129,7 +131,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             labelText: 'Банк шимтгэл дүн',
             secondText:
                 '${Utils().formatCurrency(widget.data.bankFeeAmount.toString()) + symbol().symbol}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -137,7 +139,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             marginVertical: 10,
             labelText: 'Бусад шимтгэл дүн',
             secondText: 'XXX,XXX,XXX.00 ₮',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           Container(
@@ -156,7 +158,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             marginVertical: 10,
             labelText: 'Хөтөлбөрийн код',
             secondText: '${widget.data.program?.refCode}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -164,7 +166,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             marginVertical: 10,
             labelText: 'Хөтөлбөрийн нэр',
             secondText: '${widget.data.program?.name}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -172,7 +174,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             marginVertical: 10,
             labelText: 'Бүтээгдэхүүн код',
             secondText: '${widget.data.product?.refCode}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -180,7 +182,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             marginVertical: 10,
             labelText: 'Бүтээгдэхүүн нэр',
             secondText: '${widget.data.product?.name}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -188,7 +190,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             marginVertical: 10,
             labelText: 'Нийлүүлэгч нэр',
             secondText: '${widget.data.requestedBusiness?.profileName}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -196,7 +198,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             marginVertical: 10,
             labelText: 'Нийлүүлэгч код',
             secondText: '${widget.data.requestedBusiness?.refCode}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -205,7 +207,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             labelText: 'Партнер нэр',
             secondText:
                 '${widget.data.requestedBusiness?.partner?.businessName}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -213,7 +215,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             marginVertical: 10,
             labelText: 'Партнер код',
             secondText: '${widget.data.requestedBusiness?.partner?.refCode}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           Container(
@@ -232,7 +234,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             marginVertical: 10,
             labelText: 'Нэхэмжлэх код',
             secondText: '${widget.data.invRefCode}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             onClick: () {},
             color: white,
           ),
@@ -243,7 +245,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             secondText:
                 '${Utils().formatCurrency(widget.data.minInvBalance.toString())}',
             secondTextFontWeight: FontWeight.w500,
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -252,7 +254,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             labelText: 'Илгээсэн огноо, цаг',
             secondText:
                 '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.invCreatedAt!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -261,7 +263,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             labelText: 'Баталсан огноо, цаг',
             secondText:
                 '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.invConfirmedDate!)}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -269,7 +271,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             marginVertical: 10,
             labelText: 'Худалдан авагч код',
             secondText: '${widget.data.invReceiverBusiness?.refCode}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -277,7 +279,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             marginVertical: 10,
             labelText: 'Худалдан авагч нэр',
             secondText: '${widget.data.invReceiverBusiness?.profileName}',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           FieldCard(
@@ -285,7 +287,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             marginVertical: 10,
             labelText: 'Санхүү ажилтан утас',
             secondText: 'Phone_Number',
-            secondTextColor: financingColor,
+            secondTextColor: source.currentColor,
             color: white,
           ),
           SizedBox(

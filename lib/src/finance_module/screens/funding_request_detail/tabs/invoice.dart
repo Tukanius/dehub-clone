@@ -1,6 +1,7 @@
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/general.dart';
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -24,6 +25,8 @@ class _InvoiceTabState extends State<InvoiceTab> {
 
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
+
     general =
         Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
     return SingleChildScrollView(
@@ -48,7 +51,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
               marginVertical: 10,
               labelText: 'Нэхэмжлэх статус',
               secondText: '${widget.data.invRefCode}',
-              secondTextColor: financingColor,
+              secondTextColor: source.currentColor,
               color: white,
             ),
             FieldCard(
@@ -56,7 +59,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
               marginVertical: 10,
               labelText: 'Илгээсэн ажилтан',
               secondText: '${widget.data.invSenderUser?.firstName}',
-              secondTextColor: financingColor,
+              secondTextColor: source.currentColor,
               color: white,
             ),
             FieldCard(
@@ -72,7 +75,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
               marginVertical: 10,
               labelText: 'Баталсан ажилтан',
               secondText: '${widget.data.invConfirmedUser?.firstName}',
-              secondTextColor: financingColor,
+              secondTextColor: source.currentColor,
               color: white,
             ),
             FieldCard(
@@ -90,7 +93,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
               secondText:
                   '${Utils().formatCurrency(widget.data.invConfirmedAmount.toString())}',
               color: white,
-              secondTextColor: financingColor,
+              secondTextColor: source.currentColor,
             ),
             FieldCard(
               marginHorizontal: 15,
@@ -99,7 +102,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
               secondText:
                   '${Utils().formatCurrency(widget.data.invPaidAmount.toString()) + currency()}',
               color: white,
-              secondTextColor: financingColor,
+              secondTextColor: source.currentColor,
             ),
             FieldCard(
               marginHorizontal: 15,
@@ -108,7 +111,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
               secondText:
                   '${Utils().formatCurrency(widget.data.invAmountToPay.toString()) + currency()}',
               color: white,
-              secondTextColor: financingColor,
+              secondTextColor: source.currentColor,
               secondTextFontWeight: FontWeight.w500,
             ),
             Container(
@@ -211,7 +214,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     '${widget.data.invPaymentTermConfigType}',
-                    style: TextStyle(color: financingColor, fontSize: 18),
+                    style: TextStyle(color: source.currentColor, fontSize: 18),
                   ),
                 ],
               ),
@@ -228,7 +231,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     '${DateFormat("yyyy-MM-dd").format(widget.data.invPaymentDate!)}',
-                    style: TextStyle(color: financingColor, fontSize: 18),
+                    style: TextStyle(color: source.currentColor, fontSize: 18),
                   ),
                 ],
               ),
@@ -279,7 +282,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     'PO#3232-1',
-                    style: TextStyle(color: financingColor, fontSize: 20),
+                    style: TextStyle(color: source.currentColor, fontSize: 20),
                   ),
                 ],
               ),
@@ -302,7 +305,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
-                            color: financingColor,
+                            color: source.currentColor,
                           ),
                         ),
                         TextSpan(
@@ -327,7 +330,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     'Tax_Registration_ID',
-                    style: TextStyle(color: financingColor, fontSize: 18),
+                    style: TextStyle(color: source.currentColor, fontSize: 18),
                   ),
                 ],
               ),
@@ -344,7 +347,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     'Account_Number',
-                    style: TextStyle(color: financingColor),
+                    style: TextStyle(color: source.currentColor),
                   ),
                 ],
               ),
@@ -361,7 +364,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     'Account_Name',
-                    style: TextStyle(color: financingColor),
+                    style: TextStyle(color: source.currentColor),
                   ),
                 ],
               ),
@@ -395,7 +398,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     'Finance_user',
-                    style: TextStyle(color: financingColor),
+                    style: TextStyle(color: source.currentColor),
                   ),
                 ],
               ),
@@ -412,7 +415,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   ),
                   Text(
                     'Phone_Number',
-                    style: TextStyle(color: financingColor),
+                    style: TextStyle(color: source.currentColor),
                   ),
                 ],
               ),

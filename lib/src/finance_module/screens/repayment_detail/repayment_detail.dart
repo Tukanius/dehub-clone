@@ -1,10 +1,12 @@
 import 'package:dehub/api/finance_api.dart';
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/models/finance.dart';
+import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/src/finance_module/screens/repayment_detail/tabs/basic_information.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 
 class RePaymentDetailArguments {
   String id;
@@ -40,6 +42,8 @@ class _RePaymentDetailState extends State<RePaymentDetail>
 
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -48,7 +52,7 @@ class _RePaymentDetailState extends State<RePaymentDetail>
           backgroundColor: backgroundColor,
           surfaceTintColor: backgroundColor,
           leadingWidth: 100,
-          leading: CustomBackButton(color: financingColor),
+          leading: CustomBackButton(color: source.currentColor),
           elevation: 0,
         ),
         body: Column(
@@ -59,8 +63,8 @@ class _RePaymentDetailState extends State<RePaymentDetail>
               child: TabBar(
                 overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
                 unselectedLabelColor: buttonColor,
-                indicatorColor: financingColor,
-                labelColor: financingColor,
+                indicatorColor: source.currentColor,
+                labelColor: source.currentColor,
                 tabs: [
                   Container(
                     height: 45,
@@ -81,7 +85,7 @@ class _RePaymentDetailState extends State<RePaymentDetail>
               child: isLoading == true
                   ? Center(
                       child: CircularProgressIndicator(
-                        color: financingColor,
+                        color: source.currentColor,
                       ),
                     )
                   : TabBarView(

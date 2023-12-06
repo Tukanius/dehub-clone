@@ -218,8 +218,7 @@ class _AddRowState extends State<OrderAddRow> {
                             width: 135,
                             child: Text(
                               "Сонгох",
-                              style:
-                                  TextStyle(color: invoiceColor, fontSize: 14),
+                              style: TextStyle(color: orderColor, fontSize: 14),
                               textAlign: TextAlign.end,
                             ),
                           ),
@@ -232,7 +231,7 @@ class _AddRowState extends State<OrderAddRow> {
                             contentPadding:
                                 const EdgeInsets.symmetric(horizontal: 15),
                             hintStyle:
-                                TextStyle(color: invoiceColor, fontSize: 14),
+                                TextStyle(color: orderColor, fontSize: 14),
                             filled: true,
                             fillColor: white,
                             border: OutlineInputBorder(
@@ -254,7 +253,7 @@ class _AddRowState extends State<OrderAddRow> {
                                       child: Text(
                                         "${item}",
                                         style: TextStyle(
-                                          color: invoiceColor,
+                                          color: orderColor,
                                           fontSize: 14,
                                         ),
                                       ),
@@ -379,8 +378,7 @@ class _AddRowState extends State<OrderAddRow> {
                             width: 135,
                             child: Text(
                               "Сонгох",
-                              style:
-                                  TextStyle(color: invoiceColor, fontSize: 14),
+                              style: TextStyle(color: orderColor, fontSize: 14),
                               textAlign: TextAlign.end,
                             ),
                           ),
@@ -393,7 +391,7 @@ class _AddRowState extends State<OrderAddRow> {
                             contentPadding:
                                 const EdgeInsets.symmetric(horizontal: 15),
                             hintStyle:
-                                TextStyle(color: invoiceColor, fontSize: 14),
+                                TextStyle(color: orderColor, fontSize: 14),
                             filled: true,
                             fillColor: white,
                             border: OutlineInputBorder(
@@ -415,7 +413,7 @@ class _AddRowState extends State<OrderAddRow> {
                                       child: Text(
                                         "${item}",
                                         style: TextStyle(
-                                          color: invoiceColor,
+                                          color: orderColor,
                                           fontSize: 14,
                                         ),
                                       ),
@@ -462,7 +460,7 @@ class _AddRowState extends State<OrderAddRow> {
                         ? Icon(
                             Icons.percent,
                             size: 15,
-                            color: invoiceColor,
+                            color: orderColor,
                           )
                         : dropdownValue == 'Дүнгээр'
                             ? Container(
@@ -471,7 +469,7 @@ class _AddRowState extends State<OrderAddRow> {
                                 child: Text(
                                   '₮',
                                   style: TextStyle(
-                                    color: invoiceColor,
+                                    color: orderColor,
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -481,7 +479,7 @@ class _AddRowState extends State<OrderAddRow> {
                     filled: true,
                     contentPadding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 15),
-                    hintStyle: TextStyle(color: invoiceColor),
+                    hintStyle: TextStyle(color: orderColor),
                     hintText: 'Дүн оруулна уу',
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
