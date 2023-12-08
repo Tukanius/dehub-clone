@@ -41,7 +41,6 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
   List<Invoice> filtered = [];
   User user = User();
   bool startAnimation = false;
-  bool isFinanceLogin = false;
   General general = General();
 
   list(page, limit) async {
@@ -69,16 +68,6 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
     await Provider.of<GeneralProvider>(context, listen: false)
         .invoiceInit(false);
     await list(page, limit);
-    try {
-      await Provider.of<UserProvider>(context, listen: false).financeMe();
-      setState(() {
-        isFinanceLogin = true;
-      });
-    } catch (e) {
-      setState(() {
-        isFinanceLogin = false;
-      });
-    }
     for (var i = 0; i < invoice.rows!.length; i++) {}
   }
 
@@ -192,7 +181,6 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                     ),
                   ),
                   ModulesCard(
-                    isFinanceLogin: isFinanceLogin,
                     partner: partnerUser,
                   ),
                 ],

@@ -3,7 +3,7 @@ import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/src/auth/finance_entry/finance_entry.dart';
+import 'package:dehub/src/entry_point/finance_entry/finance_entry.dart';
 import 'package:dehub/src/finance_module/screens/recalled_page/recalled_page.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_transaction/invoice_transaction.dart';
 import 'package:dehub/src/invoice_module/screens/statement_detail/statement_detail.dart';

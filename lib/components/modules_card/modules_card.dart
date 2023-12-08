@@ -1,5 +1,5 @@
 import 'package:dehub/models/partner.dart';
-import 'package:dehub/src/auth/finance_entry/finance_entry.dart';
+import 'package:dehub/src/entry_point/finance_entry/finance_entry.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 // import 'package:dehub/src/debt_page/debt_page.dart';
@@ -13,12 +13,10 @@ import 'package:dehub/src/user_module/user_management_page/user_management_page.
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ModulesCard extends StatefulWidget {
-  final bool? isFinanceLogin;
   final Partner? partner;
   const ModulesCard({
     Key? key,
     this.partner,
-    this.isFinanceLogin,
   }) : super(key: key);
 
   @override
