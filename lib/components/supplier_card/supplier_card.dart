@@ -61,7 +61,7 @@ class _SupplierCardState extends State<SupplierCard> {
                       )
                     : CircleAvatar(
                         radius: 20,
-                        backgroundImage: AssetImage('images/empty-avatar.webp'),
+                        backgroundImage: AssetImage('images/avatar.png'),
                       ),
                 SizedBox(
                   width: 15,

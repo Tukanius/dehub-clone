@@ -39,7 +39,7 @@ class _SectorCardState extends State<SectorCard> {
                       )
                     : CircleAvatar(
                         radius: 20,
-                        backgroundImage: AssetImage('images/empty-avatar.webp'),
+                        backgroundImage: AssetImage('images/avatar.png'),
                       ),
                 SizedBox(
                   width: 16,
