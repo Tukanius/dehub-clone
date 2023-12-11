@@ -126,8 +126,8 @@ class _SetClientClassificationState extends State<SetClientClassification> {
             ),
             FieldCard(
               color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               onClick: () {
                 list(true);
                 classification();
@@ -139,8 +139,8 @@ class _SetClientClassificationState extends State<SetClientClassification> {
             ),
             FieldCard(
               color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               onClick: () {
                 list(false);
                 rank();

@@ -24,6 +24,8 @@ import 'package:dehub/models/item_status.dart';
 import 'package:dehub/models/invoice_payment_status.dart';
 import 'package:dehub/models/invoice_history_types.dart';
 import 'package:dehub/models/invoice_status.dart';
+import 'package:dehub/models/product_buyer_fee_rules.dart';
+import 'package:dehub/models/product_supp_fee_rules.dart';
 import 'package:dehub/models/pull_sheet_status.dart';
 import 'package:dehub/models/purchase_types.dart';
 import 'package:dehub/models/repayment_over_due_status.dart';
@@ -122,8 +124,12 @@ class General {
   List<RepaymentOverDueStatus>? repaymentOverDueStatus;
   List<RepaymentStatus>? repaymentStatus;
   List<OrderStatus>? orderStatus;
+  List<ProductBuyerFeeRules>? productBuyerFeeRules;
+  List<ProductSuppFeeRules>? productSuppFeeRules;
 
   General({
+    this.productBuyerFeeRules,
+    this.productSuppFeeRules,
     this.orderStatus,
     this.repaymentStatus,
     this.repaymentOverDueStatus,

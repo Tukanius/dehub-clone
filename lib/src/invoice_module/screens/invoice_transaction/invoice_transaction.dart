@@ -123,8 +123,8 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
               ),
             ),
             FieldCard(
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: "Харилцагчийн код",
               secondText: user.currentBusiness?.type == "SUPPLIER"
                   ? buyerBusiness.refCode
@@ -133,8 +133,8 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
               color: white,
             ),
             FieldCard(
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: user.currentBusiness?.type == "SUPPLIER"
                   ? "Худалдан авагч"
                   : "Нийлүүлэгч",
@@ -145,8 +145,8 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
               color: white,
             ),
             FieldCard(
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: "Партнер нэр",
               secondText: user.currentBusiness?.type == "SUPPLIER"
                   ? "${buyerBusiness.partner?.refCode}, ${buyerBusiness.partner?.businessName}"
@@ -155,8 +155,8 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
               color: white,
             ),
             FieldCard(
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: "Баталсан",
               secondText:
                   '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.confirmedDate!)}',
@@ -164,8 +164,8 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
               color: white,
             ),
             FieldCard(
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: "Баталсан дүн",
               secondText:
                   '${Utils().formatCurrency(widget.data.confirmedAmount.toString())}₮',
@@ -173,8 +173,8 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
               color: white,
             ),
             FieldCard(
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: "Үлдэгдэл дүн",
               secondText:
                   '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',

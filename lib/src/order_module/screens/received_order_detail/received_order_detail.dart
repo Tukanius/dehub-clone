@@ -315,8 +315,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   FieldCard(
                     labelTextColor: buttonColor,
                     marginBottom: 3,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Бизнес код',
                     secondTextColor: orderColor,
                     secondText: user.currentBusiness?.type == "SUPPLIER"
@@ -398,8 +398,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   FieldCard(
                     labelTextColor: buttonColor,
                     marginBottom: 3,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'ТТД',
                     secondTextColor: buttonColor,
                     secondText: user.currentBusiness?.type == "SUPPLIER"
@@ -411,8 +411,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   FieldCard(
                     labelTextColor: buttonColor,
                     marginBottom: 3,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Төлбөрийн нөхцөл',
                     secondTextColor: buttonColor,
                     secondText: '${order.paymentTerm?.description}',
@@ -422,8 +422,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   FieldCard(
                     labelTextColor: buttonColor,
                     marginBottom: 3,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'НӨАТ төлөгч эсэх',
                     secondTextColor: buttonColor,
                     secondText: 'Тийм',
@@ -433,8 +433,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   FieldCard(
                     labelTextColor: buttonColor,
                     marginBottom: 3,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Менежер',
                     secondTextColor: orderColor,
                     secondText: user.currentBusiness?.type == "BUYER"
@@ -507,8 +507,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   FieldCard(
                     labelTextColor: buttonColor,
                     marginBottom: 3,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Хүлээн авах ажилтан',
                     secondTextColor: orderColor,
                     secondText: 'B.Bolormaa',
@@ -519,8 +519,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   FieldCard(
                     labelTextColor: buttonColor,
                     marginBottom: 3,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Хүлээн авах өдөр',
                     secondTextColor: orderColor,
                     secondText:
@@ -542,9 +542,16 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   Column(
                     children: order.lines!
                         .map(
-                          (e) => OrderProductCard(
-                            readOnly: true,
-                            data: e,
+                          (e) => Column(
+                            children: [
+                              OrderProductCard(
+                                readOnly: true,
+                                data: e,
+                              ),
+                              SizedBox(
+                                height: 3,
+                              ),
+                            ],
                           ),
                         )
                         .toList(),
@@ -634,8 +641,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   ),
                   FieldCard(
                     labelTextColor: buttonColor,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Захиалгад буй',
                     secondTextColor: orderColor,
                     secondText: '${order.lines?.length}',
@@ -644,8 +651,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   ),
                   FieldCard(
                     labelTextColor: buttonColor,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Нийт тоо ширхэг',
                     secondTextColor: orderColor,
                     secondText:
@@ -655,8 +662,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   ),
                   FieldCard(
                     labelTextColor: buttonColor,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Тооцсон НӨАТ',
                     secondTextColor: orderColor,
                     secondText:
@@ -666,8 +673,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   ),
                   FieldCard(
                     labelTextColor: buttonColor,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Тооцсон НХАТ',
                     secondTextColor: orderColor,
                     secondText:
@@ -677,8 +684,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   ),
                   FieldCard(
                     labelTextColor: buttonColor,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Тооцсон хөнгөлөлт',
                     secondTextColor: orderColor,
                     secondText:
@@ -688,8 +695,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   ),
                   FieldCard(
                     labelTextColor: buttonColor,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Захиалгын нийт дүн',
                     secondTextColor: orderColor,
                     secondText:
@@ -699,8 +706,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   ),
                   FieldCard(
                     labelTextColor: buttonColor,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Хүргэлтийн төлбөр',
                     secondTextColor: orderColor,
                     secondText:
@@ -710,8 +717,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   ),
                   FieldCard(
                     labelTextColor: buttonColor,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Үнийн дүнгийн хөнгөлөлт',
                     secondTextColor: orderColor,
                     secondText:
@@ -721,8 +728,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   ),
                   FieldCard(
                     labelTextColor: buttonColor,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'НИЙТ ТӨЛБӨР',
                     secondTextColor: orderColor,
                     secondText:
@@ -734,8 +741,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           order.paymentTerm?.configType == "CBD"
                       ? FieldCard(
                           labelTextColor: buttonColor,
-                          marginHorizontal: 15,
-                          marginVertical: 10,
+                          paddingHorizontal: 15,
+                          paddingVertical: 10,
                           labelText: 'Төлбөр баталгаажуулалт',
                           secondTextColor: orderColor,
                           secondText: 'XXX,XXX,XXX.XX₮',

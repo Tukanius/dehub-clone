@@ -2,6 +2,7 @@ import 'package:dehub/providers/checkout-provider.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/index_provider.dart';
+import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/entry_point/finance_entry/finance_entry.dart';
 import 'package:dehub/src/finance_module/screens/recalled_page/recalled_page.dart';
@@ -113,6 +114,7 @@ import 'package:dehub/src/auth/pin_code/pin_code.dart';
 import 'package:dehub/src/auth/pin_code/pin_confirmation.dart';
 import 'package:dehub/src/order_module/screens/product_give/product_give.dart';
 import 'package:dehub/src/product_module/product_page/product_page.dart';
+import 'package:dehub/src/product_module/screens/new_product/new_product.dart';
 import 'package:dehub/src/product_module/screens/product_detail_page/product_detail_page.dart';
 import 'package:dehub/src/product_module/screens/product_list_page/product_list_page.dart';
 import 'package:dehub/src/order_module/screens/pull_sheet_expenses/pull_sheet_expenses.dart';
@@ -169,6 +171,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => IndexProvider()),
           ChangeNotifierProvider(create: (_) => CheckOutProvider()),
           ChangeNotifierProvider(create: (_) => FinanceProvider()),
+          ChangeNotifierProvider(create: (_) => InventoryProvider()),
         ],
         child: Stack(
           children: [
@@ -243,6 +246,10 @@ class MyApp extends StatelessWidget {
                   case NetworkPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return NetworkPage();
+                    });
+                  case NewProduct.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return NewProduct();
                     });
                   case NewInvoice.routeName:
                     return MaterialPageRoute(builder: (context) {

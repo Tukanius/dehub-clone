@@ -17,12 +17,14 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         ? DateTime.parse(json['deletedAt'].toString())
         : null,
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
+    number: json['number'] != null ? json['number'] as String : null,
     repaymentStatus: json['repaymentStatus'] != null
         ? json['repaymentStatus'] as String
         : null,
     name: json['name'] != null ? json['name'] as String : null,
     businessRef:
         json['businessRef'] != null ? json['businessRef'] as String : null,
+    regNumber: json['regNumber'] != null ? json['regNumber'] as String : null,
     partnerRef:
         json['partnerRef'] != null ? json['partnerRef'] as String : null,
     overdueStatus:
@@ -271,6 +273,19 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
     program: json['program'] != null
         ? Finance.fromJson(json['program'] as Map<String, dynamic>)
         : null,
+    invReceiverBusinessAcc: json['invReceiverBusinessAcc'] != null
+        ? Finance.fromJson(
+            json['invReceiverBusinessAcc'] as Map<String, dynamic>)
+        : null,
+    finUser: json['finUser'] != null
+        ? Finance.fromJson(json['finUser'] as Map<String, dynamic>)
+        : null,
+    requestedBusinessAcc: json['requestedBusinessAcc'] != null
+        ? Finance.fromJson(json['requestedBusinessAcc'] as Map<String, dynamic>)
+        : null,
+    receiverBusinessAcc: json['receiverBusinessAcc'] != null
+        ? Finance.fromJson(json['receiverBusinessAcc'] as Map<String, dynamic>)
+        : null,
     respondedUser: json['respondedUser'] != null
         ? Finance.fromJson(json['respondedUser'] as Map<String, dynamic>)
         : null,
@@ -318,6 +333,12 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$FinanceToJson(Finance instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.requestedBusinessAcc != null)
+    json['requestedBusinessAcc'] = instance.requestedBusinessAcc;
+  if (instance.receiverBusinessAcc != null)
+    json['receiverBusinessAcc'] = instance.receiverBusinessAcc;
+  if (instance.number != null) json['number'] = instance.number;
+  if (instance.regNumber != null) json['regNumber'] = instance.regNumber;
   if (instance.repaymentStatus != null)
     json['repaymentStatus'] = instance.repaymentStatus;
   if (instance.payerAcc != null) json['payerAcc'] = instance.payerAcc;
@@ -409,6 +430,7 @@ Map<String, dynamic> _$FinanceToJson(Finance instance) {
     json['invConfirmedDays'] = instance.invConfirmedDays;
   if (instance.daysAcceptable != null)
     json['daysAcceptable'] = instance.daysAcceptable;
+  if (instance.finUser != null) json['finUser'] = instance.finUser;
   if (instance.amountToPay != null) json['amountToPay'] = instance.amountToPay;
   if (instance.minDays != null) json['minDays'] = instance.minDays;
   if (instance.maxDays != null) json['maxDays'] = instance.maxDays;
@@ -476,6 +498,8 @@ Map<String, dynamic> _$FinanceToJson(Finance instance) {
   if (instance.isApproved != null) json['isApproved'] = instance.isApproved;
   if (instance.approvedAmount != null)
     json['approvedAmount'] = instance.approvedAmount;
+  if (instance.invReceiverBusinessAcc != null)
+    json['invReceiverBusinessAcc'] = instance.invReceiverBusinessAcc;
   if (instance.isResponded != null) json['isResponded'] = instance.isResponded;
   if (instance.respondDesc != null) json['respondDesc'] = instance.respondDesc;
   if (instance.interestStartDate != null)

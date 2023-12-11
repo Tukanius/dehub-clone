@@ -80,8 +80,8 @@ class _OrderCbdPaymentState extends State<OrderCbdPayment> {
             children: field
                 .map(
                   (e) => FieldCard(
-                    marginHorizontal: 15,
-                    marginVertical: 15,
+                    paddingHorizontal: 15,
+                    paddingVertical: 15,
                     labelText: e.firstName,
                     secondText: e.lastName,
                     secondTextColor: orderColor,

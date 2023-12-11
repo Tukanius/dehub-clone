@@ -116,16 +116,16 @@ class _PullSheetExpensesState extends State<PullSheetExpenses> {
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 15,
+                    paddingHorizontal: 15,
+                    paddingVertical: 15,
                     labelText: "Нэр төрлийн тоо",
                     secondText: "${widget.data.pullSheetLines?.length}",
                     secondTextColor: blue,
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 15,
+                    paddingHorizontal: 15,
+                    paddingVertical: 15,
                     labelText: "Хүлээн авах барааны тоо",
                     secondTextColor: blue,
                     secondText:

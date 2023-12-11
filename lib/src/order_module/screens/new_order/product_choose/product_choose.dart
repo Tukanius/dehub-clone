@@ -83,6 +83,7 @@ class _ProductChooseState extends State<ProductChoose>
     if (timer != null) timer!.cancel();
     timer = Timer(const Duration(milliseconds: 500), () async {
       setState(() {
+        packageProduct = [];
         isSubmit = true;
       });
       order = await OrderApi().variantSelect(
@@ -97,12 +98,6 @@ class _ProductChooseState extends State<ProductChoose>
       });
     });
   }
-
-  // @override
-  // void dispose() {
-  //   listenController.dispose();
-  //   super.dispose();
-  // }
 
   @override
   void initState() {
@@ -165,6 +160,7 @@ class _ProductChooseState extends State<ProductChoose>
                                     (e) => GestureDetector(
                                       onTap: () async {
                                         setState(() {
+                                          packageProduct = [];
                                           type = e.id;
                                         });
                                         setState(() {
@@ -265,15 +261,6 @@ class _ProductChooseState extends State<ProductChoose>
                                                       ),
                                                     );
                                                   }
-                                                  // if (widget.isPackage ==
-                                                  //     false) {
-                                                  //   Navigator.of(context).pop();
-                                                  //   Provider.of<CheckOutProvider>(
-                                                  //           context,
-                                                  //           listen: false)
-                                                  //       .orderCart(item,
-                                                  //           item.quantity);
-                                                  // }
                                                 },
                                                 data: item,
                                               ),

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class FieldCard extends StatefulWidget {
   final Function()? onClick;
-  final double marginHorizontal;
-  final double marginVertical;
+  final double paddingHorizontal;
+  final double paddingVertical;
   final double? marginBottom;
   final Color? color;
   final String? labelText;
@@ -35,8 +35,8 @@ class FieldCard extends StatefulWidget {
     this.secondText,
     this.color,
     this.labelText,
-    required this.marginHorizontal,
-    required this.marginVertical,
+    required this.paddingHorizontal,
+    required this.paddingVertical,
     this.onClick,
   }) : super(key: key);
 
@@ -59,8 +59,8 @@ class _FieldCardState extends State<FieldCard> {
               Border.all(color: widget.validate == true ? red : transparent),
         ),
         padding: EdgeInsets.symmetric(
-          horizontal: widget.marginHorizontal,
-          vertical: widget.marginVertical,
+          horizontal: widget.paddingHorizontal,
+          vertical: widget.paddingVertical,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

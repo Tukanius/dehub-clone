@@ -39,4 +39,24 @@ class InventoryApi extends HttpRequest {
         handler: true);
     return Result.fromJson(res, InventoryGoods.fromJson);
   }
+
+  Future<Result> brandList() async {
+    var res = await get('/brand/select', 'INVENTORY', true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<InventoryGoods> brandCreate(InventoryGoods data) async {
+    var res = await post('/brand', 'INVENTORY', true, data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> supplierList() async {
+    var res = await get('/supplier/select', 'INVENTORY', true, handler: true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<InventoryGoods> supplierCreate(InventoryGoods data) async {
+    var res = await post('/supplier', "INVENTORY", true, data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
 }

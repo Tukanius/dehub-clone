@@ -99,7 +99,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                   },
                   boxColor: source.currentColor.withOpacity(0.1),
                   padding: 10,
-                  labelText: 'Санхүүжилт хүсэлт',
+                  labelText: 'Санхүүжих хүсэлт',
                   svgColor: source.currentColor,
                   svg: 'assets/svg/sanhuujiltS.svg',
                 ),

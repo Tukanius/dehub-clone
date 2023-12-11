@@ -65,7 +65,11 @@ class RePaymentCardState extends State<RePaymentCard> {
                     border: Border.all(color: source.currentColor),
                     color: source.currentColor.withOpacity(0.1),
                   ),
-                  child: SvgPicture.asset('assets/svg/note.svg'),
+                  child: SvgPicture.asset(
+                    'assets/svg/note.svg',
+                    colorFilter:
+                        ColorFilter.mode(source.currentColor, BlendMode.srcIn),
+                  ),
                 ),
               ],
             ),

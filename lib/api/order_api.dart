@@ -227,6 +227,9 @@ class OrderApi extends HttpRequest {
   }
 
   Future<Order> update(String id, Order data) async {
+    print(data.toJson());
+    print(data.lines?.first.toJson());
+    print('=======data=========');
     var res = await put('/order/$id', "ORDER", true,
         handler: true, data: data.toJson());
     return Order.fromJson(res as Map<String, dynamic>);

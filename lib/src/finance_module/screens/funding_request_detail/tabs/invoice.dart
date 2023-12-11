@@ -8,6 +8,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class InvoiceTab extends StatefulWidget {
   final Finance data;
@@ -22,11 +23,34 @@ class InvoiceTab extends StatefulWidget {
 
 class _InvoiceTabState extends State<InvoiceTab> {
   General general = General();
+  Finance supplier = Finance();
+  Finance supplierAcc = Finance();
+  Finance supplierUser = Finance();
+  Finance buyer = Finance();
+  Finance buyerAcc = Finance();
+  Finance buyerUser = Finance();
 
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<FinanceProvider>(context, listen: true);
-
+    supplier = widget.data.type == "SUPPLIER"
+        ? widget.data.requestedBusiness!
+        : widget.data.invReceiverBusiness!;
+    buyer = widget.data.type == "BUYER"
+        ? widget.data.requestedBusiness!
+        : widget.data.invReceiverBusiness!;
+    supplierAcc = widget.data.type == "SUPPLIER"
+        ? widget.data.requestedBusinessAcc!
+        : widget.data.invReceiverBusinessAcc!;
+    buyerAcc = widget.data.type == "BUYER"
+        ? widget.data.requestedBusinessAcc!
+        : widget.data.invReceiverBusinessAcc!;
+    supplierUser = widget.data.type == "SUPPLIER"
+        ? widget.data.requestedUser!
+        : widget.data.finUser!;
+    buyerUser = widget.data.type == "BUYER"
+        ? widget.data.requestedUser!
+        : widget.data.finUser!;
     general =
         Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
     return SingleChildScrollView(
@@ -47,48 +71,48 @@ class _InvoiceTabState extends State<InvoiceTab> {
               ),
             ),
             FieldCard(
-              marginHorizontal: 15,
-              marginVertical: 10,
-              labelText: 'Нэхэмжлэх статус',
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              labelText: 'Нэхэмжлэх дугаар',
               secondText: '${widget.data.invRefCode}',
               secondTextColor: source.currentColor,
               color: white,
             ),
             FieldCard(
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: 'Илгээсэн ажилтан',
               secondText: '${widget.data.invSenderUser?.firstName}',
               secondTextColor: source.currentColor,
               color: white,
             ),
             FieldCard(
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: 'Илгээсэн огноо, цаг',
               secondText:
-                  '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.createdAt!)}',
+                  '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.invCreatedAt!)}',
               color: white,
             ),
             FieldCard(
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: 'Баталсан ажилтан',
               secondText: '${widget.data.invConfirmedUser?.firstName}',
               secondTextColor: source.currentColor,
               color: white,
             ),
             FieldCard(
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: 'Баталсан огноо, цаг',
               secondText:
                   '${DateFormat('yyyy-MM-dd HH:mm').format(widget.data.invConfirmedDate!)}',
               color: white,
             ),
             FieldCard(
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: 'Баталсан дүн',
               secondText:
                   '${Utils().formatCurrency(widget.data.invConfirmedAmount.toString())}',
@@ -96,8 +120,8 @@ class _InvoiceTabState extends State<InvoiceTab> {
               secondTextColor: source.currentColor,
             ),
             FieldCard(
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: 'Төлсөн дүн',
               secondText:
                   '${Utils().formatCurrency(widget.data.invPaidAmount.toString()) + currency()}',
@@ -105,8 +129,8 @@ class _InvoiceTabState extends State<InvoiceTab> {
               secondTextColor: source.currentColor,
             ),
             FieldCard(
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: 'Үлдэгдэл төлбөр',
               secondText:
                   '${Utils().formatCurrency(widget.data.invAmountToPay.toString()) + currency()}',
@@ -202,22 +226,13 @@ class _InvoiceTabState extends State<InvoiceTab> {
                 ],
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            FieldCard(
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              labelText: 'Төлбөрийн нөхцөл',
+              secondText: '${widget.data.invPaymentTermDesc}',
               color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Төлбөрийн нөхцөл',
-                    style: TextStyle(color: dark),
-                  ),
-                  Text(
-                    '${widget.data.invPaymentTermConfigType}',
-                    style: TextStyle(color: source.currentColor, fontSize: 18),
-                  ),
-                ],
-              ),
+              secondTextColor: source.currentColor,
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -281,7 +296,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                     style: TextStyle(color: dark),
                   ),
                   Text(
-                    'PO#3232-1',
+                    '-',
                     style: TextStyle(color: source.currentColor, fontSize: 20),
                   ),
                 ],
@@ -293,26 +308,34 @@ class _InvoiceTabState extends State<InvoiceTab> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Партнер',
-                    style: TextStyle(color: dark),
+                  Expanded(
+                    flex: 3,
+                    child: Text(
+                      'Партнер',
+                      style: TextStyle(color: dark),
+                    ),
                   ),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Partner_Ref#, ',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: source.currentColor,
+                  Expanded(
+                    flex: 7,
+                    child: RichText(
+                      textAlign: TextAlign.end,
+                      text: TextSpan(
+                        style: TextStyle(fontFamily: 'Montserrat'),
+                        children: [
+                          TextSpan(
+                            text: "${buyer.partner?.refCode}, ",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: source.currentColor,
+                            ),
                           ),
-                        ),
-                        TextSpan(
-                          text: 'PartnerName',
-                          style: TextStyle(color: grey2, fontSize: 18),
-                        ),
-                      ],
+                          TextSpan(
+                            text: "${buyer.partner?.businessName}",
+                            style: TextStyle(color: grey2, fontSize: 18),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -329,9 +352,58 @@ class _InvoiceTabState extends State<InvoiceTab> {
                     style: TextStyle(color: dark),
                   ),
                   Text(
-                    'Tax_Registration_ID',
+                    '${buyer.regNumber}',
                     style: TextStyle(color: source.currentColor, fontSize: 18),
                   ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              color: white,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SvgPicture.asset(
+                    'assets/svg/contact.svg',
+                    colorFilter:
+                        ColorFilter.mode(source.currentColor, BlendMode.srcIn),
+                  ),
+                  SizedBox(
+                    width: 12,
+                  ),
+                  Expanded(
+                    child: RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: '${buyer.refCode}, ',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: source.currentColor,
+                            ),
+                          ),
+                          TextSpan(
+                            text: buyer.profileName,
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: grey2,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: grey3,
+                    size: 18,
+                  )
                 ],
               ),
             ),
@@ -346,7 +418,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                     style: TextStyle(color: dark),
                   ),
                   Text(
-                    'Account_Number',
+                    '${buyerAcc.number}',
                     style: TextStyle(color: source.currentColor),
                   ),
                 ],
@@ -363,7 +435,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                     style: TextStyle(color: dark),
                   ),
                   Text(
-                    'Account_Name',
+                    '${buyerAcc.name}',
                     style: TextStyle(color: source.currentColor),
                   ),
                 ],
@@ -397,7 +469,220 @@ class _InvoiceTabState extends State<InvoiceTab> {
                     style: TextStyle(color: dark),
                   ),
                   Text(
-                    'Finance_user',
+                    '${buyerUser.firstName}',
+                    style: TextStyle(color: source.currentColor),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              color: white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Санхүү ажилтан утас',
+                    style: TextStyle(color: dark),
+                  ),
+                  Text(
+                    'Phone_Number',
+                    style: TextStyle(color: source.currentColor),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              child: Text(
+                'Нийлүүлэгч тал',
+                style: TextStyle(color: grey3, fontWeight: FontWeight.w600),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              color: white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Бор Захиалга №',
+                    style: TextStyle(color: dark),
+                  ),
+                  Text(
+                    '-',
+                    style: TextStyle(color: source.currentColor, fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              color: white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Text(
+                      'Партнер',
+                      style: TextStyle(color: dark),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 7,
+                    child: RichText(
+                      textAlign: TextAlign.end,
+                      text: TextSpan(
+                        style: TextStyle(fontFamily: 'Montserrat'),
+                        children: [
+                          TextSpan(
+                            text: "${supplier.partner?.refCode}, ",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: source.currentColor,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "${supplier.partner?.businessName}",
+                            style: TextStyle(color: grey2, fontSize: 18),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              color: white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'ТТД',
+                    style: TextStyle(color: dark),
+                  ),
+                  Text(
+                    '${supplier.regNumber}',
+                    style: TextStyle(color: source.currentColor, fontSize: 18),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              color: white,
+              child: Row(
+                children: [
+                  SvgPicture.asset(
+                    'assets/svg/contact.svg',
+                    colorFilter:
+                        ColorFilter.mode(source.currentColor, BlendMode.srcIn),
+                  ),
+                  SizedBox(
+                    width: 12,
+                  ),
+                  Expanded(
+                    child: RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: '${supplier.refCode}, ',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: source.currentColor,
+                            ),
+                          ),
+                          TextSpan(
+                            text: supplier.profileName,
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: grey2,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: grey3,
+                    size: 18,
+                  )
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              color: white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Дансны дугаар',
+                    style: TextStyle(color: dark),
+                  ),
+                  Text(
+                    '${supplierAcc.number}',
+                    style: TextStyle(color: source.currentColor),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              color: white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Дансны нэр',
+                    style: TextStyle(color: dark),
+                  ),
+                  Text(
+                    '${supplierAcc.name}',
+                    style: TextStyle(color: source.currentColor),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              color: white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Банкны нэр',
+                    style: TextStyle(color: dark),
+                  ),
+                  Text(
+                    'Банкны нэр',
+                    style: TextStyle(color: dark),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              color: white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Санхүү ажилтан нэр',
+                    style: TextStyle(color: dark),
+                  ),
+                  Text(
+                    '${supplierUser.firstName}',
                     style: TextStyle(color: source.currentColor),
                   ),
                 ],

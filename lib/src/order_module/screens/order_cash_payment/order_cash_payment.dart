@@ -127,8 +127,8 @@ class _OrderCashPaymentState extends State<OrderCashPayment>
                     children: list
                         .map(
                           (e) => FieldCard(
-                            marginHorizontal: 15,
-                            marginVertical: 15,
+                            paddingHorizontal: 15,
+                            paddingVertical: 15,
                             color: white,
                             labelText: e.firstName,
                             secondText: e.lastName,

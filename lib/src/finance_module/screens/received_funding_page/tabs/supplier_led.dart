@@ -120,7 +120,11 @@ class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
                               data: data,
                               onClick: () {
                                 Navigator.of(context).pushNamed(
-                                    ReceivedFundingDetailPage.routeName);
+                                  ReceivedFundingDetailPage.routeName,
+                                  arguments: ReceivedFundingDetailPageArguments(
+                                    id: data.id,
+                                  ),
+                                );
                               },
                             ),
                           )

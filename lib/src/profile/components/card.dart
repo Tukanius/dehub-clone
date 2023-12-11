@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class InformationCard extends StatefulWidget {
   final String labelText;
-  final double marginVertical;
+  final double paddingVertical;
   final String? value;
   const InformationCard({
     Key? key,
     this.value,
-    required this.marginVertical,
+    required this.paddingVertical,
     required this.labelText,
   }) : super(key: key);
 
@@ -20,7 +20,7 @@ class InformationCardState extends State<InformationCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: widget.marginVertical),
+      margin: EdgeInsets.symmetric(vertical: widget.paddingVertical),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

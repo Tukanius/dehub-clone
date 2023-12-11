@@ -125,8 +125,19 @@ class Finance {
   String? overdueStatus;
   String? repaymentStatus;
   double? paidAmount;
+  String? regNumber;
+  Finance? requestedBusinessAcc;
+  Finance? invReceiverBusinessAcc;
+  Finance? receiverBusinessAcc;
+  Finance? finUser;
+  String? number;
 
   Finance({
+    this.invReceiverBusinessAcc,
+    this.finUser,
+    this.requestedBusinessAcc,
+    this.receiverBusinessAcc,
+    this.regNumber,
     this.paidAmount,
     this.repaymentStatus,
     this.overdueStatus,
@@ -179,6 +190,7 @@ class Finance {
     this.recourseDate,
     this.restrictDate,
     this.penaltyPercent,
+    this.number,
     this.penaltyType,
     this.repaymentRule,
     this.invConfirmedDays,

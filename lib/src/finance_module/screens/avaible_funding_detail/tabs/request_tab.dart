@@ -1,7 +1,9 @@
+import 'package:dehub/components/custom_switch/custom_switch.dart';
+import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,124 +35,61 @@ class _RequestTabState extends State<RequestTab> {
               ),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Хүсэлтийн код',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Fin_Ref#',
-                  style: TextStyle(color: source.currentColor),
-                ),
-              ],
-            ),
+            labelText: 'Хүсэлтийн код',
+            secondText: 'Fin_Ref#',
+            secondTextColor: source.currentColor,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Хүсэлтийн төрөл',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Эрт санхүүжилт',
-                  style: TextStyle(color: source.currentColor),
-                ),
-              ],
-            ),
+            labelText: 'Хүсэлтийн төрөл',
+            secondText: 'Эрт санхүүжилт',
+            secondTextColor: source.currentColor,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Нийлүүлэгч код',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Supplier_Ref#',
-                  style: TextStyle(color: source.currentColor),
-                ),
-              ],
-            ),
+            labelText: 'Нийлүүлэгч код',
+            secondText: 'Supplier_Ref#',
+            secondTextColor: source.currentColor,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Нийлүүлэгч',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Supplier_Name',
-                  style: TextStyle(color: source.currentColor),
-                ),
-              ],
-            ),
+            labelText: 'Нийлүүлэгч',
+            secondText: 'Supplier_Name',
+            secondTextColor: source.currentColor,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Хүсэлт гаргасан',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'UserName_Supplier',
-                  style: TextStyle(color: source.currentColor),
-                ),
-              ],
-            ),
+            labelText: 'Хүсэлт гаргасан',
+            secondText: 'UserName_Supplier',
+            secondTextColor: source.currentColor,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Хүсэлтийн огноо',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Request_Datetime',
-                  style: TextStyle(color: source.currentColor),
-                ),
-              ],
-            ),
+            labelText: 'Хүсэлтийн огноо',
+            secondText: 'Request_Datetime',
+            secondTextColor: source.currentColor,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Хариу өгөх хугацаа',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Response_date',
-                  style: TextStyle(color: source.currentColor),
-                ),
-              ],
-            ),
+            labelText: 'Хариу өгөх хугацаа',
+            secondText: 'Response_date',
+            secondTextColor: source.currentColor,
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -177,68 +116,28 @@ class _RequestTabState extends State<RequestTab> {
               ],
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Хөтөлбөрийн нэр',
-                  style: TextStyle(color: dark),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'ProgramName',
-                      style: TextStyle(color: source.currentColor),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 14,
-                      color: grey3,
-                    )
-                  ],
-                ),
-              ],
-            ),
+            labelText: 'Хөтөлбөрийн нэр',
+            secondText: 'ProgramName',
+            secondTextColor: source.currentColor,
+            onClick: () {},
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Бүтээгдэхүүн',
-                  style: TextStyle(color: dark),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'SCF_Prod021',
-                      style: TextStyle(color: source.currentColor),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 14,
-                      color: grey3,
-                    ),
-                  ],
-                ),
-              ],
-            ),
+            labelText: 'Бүтээгдэхүүн',
+            secondText: 'SCF_Prod021',
+            secondTextColor: source.currentColor,
+            onClick: () {},
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             child: Text(
-              'Санхүүжилт олгох дүн',
+              'Санхүүжилт хүсэх дүн',
               style: TextStyle(
                 color: grey3,
                 fontSize: 14,
@@ -258,6 +157,13 @@ class _RequestTabState extends State<RequestTab> {
               name: "amount",
               inputType: TextInputType.number,
               decoration: InputDecoration(
+                hintText: 'Санхүүжилт дүн',
+                hintStyle: TextStyle(
+                  color: source.currentColor,
+                  fontSize: 18,
+                ),
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                 border: OutlineInputBorder(),
                 fillColor: Colors.white,
                 focusedBorder: OutlineInputBorder(
@@ -266,27 +172,18 @@ class _RequestTabState extends State<RequestTab> {
               ),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Хариу өгөх хугацаа',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Response_date',
-                  style: TextStyle(color: source.currentColor),
-                ),
-              ],
-            ),
+            labelText: 'Санхүүжилт валют',
+            secondText: 'Төгрөг',
+            secondTextColor: source.currentColor,
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             child: Text(
-              'Санхүүжилт олгох дүн',
+              'Нөхцөл хангах байдал',
               style: TextStyle(
                 color: grey3,
                 fontSize: 14,
@@ -294,10 +191,145 @@ class _RequestTabState extends State<RequestTab> {
               ),
             ),
           ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Боломжит доод дүн',
+            secondText: 'Fin_Min_Amount',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Боломжит дээд дүн',
+            secondText: 'Fin_Max_Amount',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Нэх доод үлдэгдэл',
+            secondText: 'Min_Inv_Balance',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Нэх мах.тенор',
+            secondText: 'Max_Tenor',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Нэх min.тенор',
+            secondText: 'Min_Tenor',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Санхүүжилт хоног',
+            secondText: 'Day_Finance',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Шимтгэл тооцсон хувь',
+            secondText: 'Тооцох',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Тооцсон шимтгэл',
+            secondText: 'Шимтгэл ₮',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Санхүүжих шимтгэл',
+            secondText: 'Trans_Fee',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Гүйлгээний шимтгэл',
+            secondText: 'Trans_Fee',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Өргөдөл хураамж',
+            secondText: 'Application_Fee',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Олголт шимтгэл',
+            secondText: 'Disburse_Fee',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Нийт шимтгэл',
+            secondText: 'SUM_FEE',
+            secondTextFontWeight: FontWeight.bold,
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Шимтгэл дүрэм',
+            secondText: 'Санхүүжилт олгох үед',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Шимтгэл дээд дүн',
+            secondText: 'Min_Fee',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Шимтгэл доод дүн',
+            secondText: 'Max_Fee',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Эргэн төлөх хугацаа',
+            secondText: 'Fin_Due_Date',
+            secondTextColor: source.currentColor,
+          ),
           Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 15,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             color: white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -306,18 +338,133 @@ class _RequestTabState extends State<RequestTab> {
                   'Буцаан дуудах эсэх',
                   style: TextStyle(color: dark),
                 ),
-                Transform.scale(
-                  scale: 0.8,
-                  child: CupertinoSwitch(
-                    activeColor: Color(0xff151357),
-                    value: isSwitched,
-                    onChanged: (value) {
-                      setState(() {
-                        isSwitched = value;
-                      });
-                    },
-                  ),
-                )
+                CustomSwitch(
+                  isDefault: true,
+                  color: Color(0xff151357),
+                ),
+              ],
+            ),
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Буцаан дуудах огноо',
+            secondText: 'Тооцсон огноо',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Ху.Хэтрэлт алданги',
+            secondText: 'Penalty Rate',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Алдангийн арга',
+            secondText: 'Хэтэрсэн хоног',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Эргэн төлөх дүрэм',
+            secondText: 'Алданга+Үндсэн',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Нэхэмжлэх хугацаа',
+            secondText: 'Хоног',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Хугацааны Min шалгуур',
+            secondText: 'Min_Day',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Хугацааны Max шалгуур',
+            secondText: 'Max_Day',
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            color: white,
+            labelText: 'Хугацаа хэтрэлт',
+            secondText: 'Хэвийн',
+            secondTextColor: source.currentColor,
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            child: Text(
+              'Гэрээ баталгаажилт',
+              style: TextStyle(
+                color: grey3,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          Container(
+            color: white,
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/svg/pdf_download.svg',
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      'Гэрээг уншиж зөвшөөрөх',
+                      style: TextStyle(
+                        color: Color(0xff151357),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Баталгаажилт',
+                      style: TextStyle(color: dark),
+                    ),
+                    Text(
+                      'Баталгаажаагүй',
+                      style: TextStyle(
+                        color: red,
+                        decoration: TextDecoration.underline,
+                        decorationColor: red,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

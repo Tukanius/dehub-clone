@@ -267,7 +267,16 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => ClientClassifications.fromJson(e))
             .toList()
         : null,
-
+    productBuyerFeeRules: json['productBuyerFeeRules'] != null
+        ? (json['productBuyerFeeRules'] as List)
+            .map((e) => ProductBuyerFeeRules.fromJson(e))
+            .toList()
+        : null,
+    productSuppFeeRules: json['productSuppFeeRules'] != null
+        ? (json['productSuppFeeRules'] as List)
+            .map((e) => ProductSuppFeeRules.fromJson(e))
+            .toList()
+        : null,
     deliveryNoteStatus: json['deliveryNoteStatus'] != null
         ? (json['deliveryNoteStatus'] as List)
             .map((e) => DeliveryNoteStatus.fromJson(e))

@@ -1,3 +1,5 @@
+import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/src/product_module/screens/new_product/new_product.dart';
 import 'package:dehub/src/product_module/screens/product_list_page/tabs/goods_tab/goods_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +32,14 @@ class _ProductListPageState extends State<ProductListPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
+          actions: [
+            AddButton(
+              color: productColor,
+              onClick: () {
+                Navigator.of(context).pushNamed(NewProduct.routeName);
+              },
+            ),
+          ],
           bottom: TabBar(
             tabAlignment: TabAlignment.start,
             overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),

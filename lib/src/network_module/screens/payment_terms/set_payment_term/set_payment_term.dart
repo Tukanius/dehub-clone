@@ -134,8 +134,8 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: "Төлбөрийн хэлбэр",
                     onClick: () {
                       condition();
@@ -146,8 +146,8 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: "Төлбөрийн нөхцөл",
                     onClick: () {
                       if (isLoading == false) {
@@ -160,8 +160,8 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: "Эхлэх хугацаа",
                     onClick: () {
                       showCupertinoModalPopup(
@@ -215,8 +215,8 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                   FieldCard(
                     arrowColor: networkColor,
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: "Дуусах хугацаа",
                     onClick: () {
                       showCupertinoModalPopup(

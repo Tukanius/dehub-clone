@@ -23,25 +23,6 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
   int currentIndex = 0;
 
   @override
-  void initState() {
-    tabController = TabController(length: 2, vsync: this);
-    tabController.index = currentIndex;
-    super.initState();
-  }
-
-  changePage(index) {
-    setState(() {
-      tabController.index = index;
-    });
-  }
-
-  @override
-  void dispose() {
-    tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final source = Provider.of<FinanceProvider>(context, listen: true);
     return Scaffold(
@@ -135,6 +116,9 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
                 ),
               ),
             ],
+          ),
+          SizedBox(
+            height: 10,
           ),
           Expanded(
             child: PageView(

@@ -49,7 +49,7 @@ class _FundingRequestDetailPageState extends State<FundingRequestDetailPage>
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        leadingWidth: 200,
+        leadingWidth: 205,
         elevation: 0,
         backgroundColor: backgroundColor,
         surfaceTintColor: backgroundColor,
@@ -96,18 +96,9 @@ class _FundingRequestDetailPageState extends State<FundingRequestDetailPage>
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverToBoxAdapter(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 0.5,
-                        blurRadius: 2,
-                        offset: const Offset(0, 1.5),
-                      ),
-                    ],
-                  ),
+                child: Material(
+                  elevation: 3,
+                  color: white,
                   child: TabBar(
                     overlayColor:
                         MaterialStatePropertyAll(Colors.grey.shade100),

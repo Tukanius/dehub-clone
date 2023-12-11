@@ -223,37 +223,37 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           InformationCard(
-                            marginVertical: 5,
+                            paddingVertical: 5,
                             labelText: 'Регистр №',
                             value: user.registerNo,
                           ),
                           InformationCard(
-                            marginVertical: 5,
+                            paddingVertical: 5,
                             labelText: "Бизнес код",
                             value: user.currentBusiness?.refCode,
                           ),
                           InformationCard(
-                            marginVertical: 5,
+                            paddingVertical: 5,
                             labelText: 'Ургын овог',
                             value: user.familyName,
                           ),
                           InformationCard(
-                            marginVertical: 5,
+                            paddingVertical: 5,
                             labelText: 'Эцэг/Эхийн нэр',
                             value: user.lastName,
                           ),
                           InformationCard(
-                            marginVertical: 5,
+                            paddingVertical: 5,
                             labelText: 'Өөрийн нэр',
                             value: user.firstName,
                           ),
                           InformationCard(
-                            marginVertical: 5,
+                            paddingVertical: 5,
                             labelText: 'Харъяалах нэгж',
                             value: 'Борлуулалтын алба',
                           ),
                           InformationCard(
-                            marginVertical: 5,
+                            paddingVertical: 5,
                             labelText: 'Албан тушаал',
                             value: 'Худалдааны төлөөлөгч',
                           ),
@@ -269,22 +269,22 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             ),
                           ),
                           InformationCard(
-                            marginVertical: 5,
+                            paddingVertical: 5,
                             labelText: 'Утасны дугаар №1',
                             value: '${user.phone}',
                           ),
                           InformationCard(
-                            marginVertical: 5,
+                            paddingVertical: 5,
                             labelText: 'И-мэйл хаяг №1',
                             value: '${user.email}',
                           ),
                           InformationCard(
-                            marginVertical: 5,
+                            paddingVertical: 5,
                             labelText: 'Утасны дугаар №2',
                             value: '${user.phone2}',
                           ),
                           InformationCard(
-                            marginVertical: 5,
+                            paddingVertical: 5,
                             labelText: 'И-мэйл хаяг №2',
                             value: '${user.email2}',
                           ),

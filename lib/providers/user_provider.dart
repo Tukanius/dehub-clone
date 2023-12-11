@@ -17,7 +17,7 @@ class UserProvider extends ChangeNotifier {
   User orderMe = User();
   User paymentMe = User();
   User inventoryMe = User();
-  Finance financeUser = Finance();
+  User financeUser = User();
 
   financeMe() async {
     financeUser = await FinanceApi().financeMe();
@@ -118,7 +118,6 @@ class UserProvider extends ChangeNotifier {
   }
 
   financeLogout() async {
-    financeUser = Finance();
     await FinanceApi().logout();
     clearFinanceToken();
   }

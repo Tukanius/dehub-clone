@@ -49,52 +49,52 @@ class _Page1State extends State<Page1> with AfterLayoutMixin {
             InformationCard(
               labelText: 'Партнер код',
               value: partnerUser.partner?.refCode.toString(),
-              marginVertical: 5,
+              paddingVertical: 5,
             ),
             InformationCard(
               labelText: 'Категори',
               value: partnerUser.partner?.classification,
-              marginVertical: 5,
+              paddingVertical: 5,
             ),
             InformationCard(
               labelText: 'ТТД/Регистр',
               value: partnerUser.partner?.regNumber,
-              marginVertical: 5,
+              paddingVertical: 5,
             ),
             InformationCard(
               labelText: 'Улсын бүргэлийн гэрчилгээ',
               value: partnerUser.partner?.regNumber,
-              marginVertical: 5,
+              paddingVertical: 5,
             ),
             InformationCard(
               labelText: 'Аж ахуйн нэгжийн нэр',
               value: partnerUser.partner?.businessName,
-              marginVertical: 5,
+              paddingVertical: 5,
             ),
             InformationCard(
               labelText: 'Аж ахуйн нэгжийн нэр /Латин/',
               value: partnerUser.partner?.businessNameEng,
-              marginVertical: 5,
+              paddingVertical: 5,
             ),
             InformationCard(
               labelText: 'Аж ахуйн нэгжийн хэлбэр',
               value: partnerUser.partner?.legalEntityType,
-              marginVertical: 5,
+              paddingVertical: 5,
             ),
             InformationCard(
               labelText: 'Улсын харъяалал',
               value: partnerUser.partner?.country,
-              marginVertical: 5,
+              paddingVertical: 5,
             ),
             InformationCard(
               labelText: 'Өмчийн хэлбэр',
               value: partnerUser.partner?.type,
-              marginVertical: 5,
+              paddingVertical: 5,
             ),
             InformationCard(
               labelText: 'НӨАТ төлөгч эсэх',
               value: partnerUser.partner?.isVatPayer == true ? "Тийм" : "Үгүй",
-              marginVertical: 5,
+              paddingVertical: 5,
             ),
             SizedBox(
               height: 80,

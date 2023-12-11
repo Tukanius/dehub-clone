@@ -235,8 +235,8 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                                         )
                                       : SizedBox(),
                               FieldCard(
-                                marginHorizontal: 15,
-                                marginVertical: 15,
+                                paddingHorizontal: 15,
+                                paddingVertical: 15,
                                 labelText: e.firstName,
                                 secondText: e.lastName,
                                 color: white,
@@ -320,8 +320,8 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                       ? Column(
                           children: [
                             FieldCard(
-                              marginHorizontal: 15,
-                              marginVertical: 15,
+                              paddingHorizontal: 15,
+                              paddingVertical: 15,
                               labelText: "Дансны дугаар",
                               secondText: "${bankNumber}",
                               color: white,
@@ -333,8 +333,8 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                               secondTextColor: orderColor,
                             ),
                             FieldCard(
-                              marginHorizontal: 15,
-                              marginVertical: 15,
+                              paddingHorizontal: 15,
+                              paddingVertical: 15,
                               labelText: "Банкны нэр",
                               secondText: "${bankName}",
                               color: white,
@@ -342,8 +342,8 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                               secondTextColor: orderColor,
                             ),
                             FieldCard(
-                              marginHorizontal: 15,
-                              marginVertical: 15,
+                              paddingHorizontal: 15,
+                              paddingVertical: 15,
                               labelText: "Дансны нэр",
                               secondText: "${accountName}",
                               color: white,

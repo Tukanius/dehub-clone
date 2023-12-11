@@ -124,8 +124,8 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
             ),
             FieldCard(
               color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: "Бүсийн нэр",
               onClick: () {
                 dArea(true);
@@ -138,8 +138,8 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
             ),
             FieldCard(
               color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: "Чиглэлийн нэр",
               onClick: () {
                 dArea(false);

@@ -109,8 +109,8 @@ class _SetAccountState extends State<SetAccount> {
             ),
             FieldCard(
               color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: "Орлого авах данс",
               onClick: () {
                 inAcc();
@@ -121,8 +121,8 @@ class _SetAccountState extends State<SetAccount> {
             ),
             FieldCard(
               color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: "Зарлага гаргах данс",
               onClick: () {
                 outAcc();

@@ -43,32 +43,32 @@ class _Page2State extends State<Page2> {
           InformationCard(
             labelText: 'Вэб сайтын хаяг',
             value: partnerUser.partner?.web,
-            marginVertical: 5,
+            paddingVertical: 5,
           ),
           InformationCard(
             labelText: 'И-мэйл хаяг №1',
             value: partnerUser.partner?.email,
-            marginVertical: 5,
+            paddingVertical: 5,
           ),
           InformationCard(
             labelText: 'И-мэйл хаяг №2',
             value: partnerUser.partner?.email2,
-            marginVertical: 5,
+            paddingVertical: 5,
           ),
           InformationCard(
             labelText: 'Утаны дугаар №1',
             value: partnerUser.partner?.phone,
-            marginVertical: 5,
+            paddingVertical: 5,
           ),
           InformationCard(
             labelText: 'Утаны дугаар №2',
             value: partnerUser.partner?.phone2,
-            marginVertical: 5,
+            paddingVertical: 5,
           ),
           InformationCard(
             labelText: 'Facebook хаяг',
             value: partnerUser.partner?.phone2,
-            marginVertical: 5,
+            paddingVertical: 5,
           ),
           SizedBox(
             height: 15,

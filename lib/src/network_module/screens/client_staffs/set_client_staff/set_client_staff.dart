@@ -110,8 +110,8 @@ class _SetClientStaffState extends State<SetClientStaff> {
             ),
             FieldCard(
               color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: "Хариуцсан",
               onClick: () {
                 show();
@@ -122,8 +122,8 @@ class _SetClientStaffState extends State<SetClientStaff> {
             ),
             FieldCard(
               color: white,
-              marginHorizontal: 15,
-              marginVertical: 10,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
               labelText: "Орлох ажилтан",
               onClick: () {
                 coStaff();

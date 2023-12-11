@@ -102,8 +102,10 @@ class InventoryGoods {
   bool? isBase;
   double? availableQuantity;
   InventoryGoods? itemUnit;
+  String? logo;
 
   InventoryGoods({
+    this.logo,
     this.itemUnit,
     this.availableQuantity,
     this.profileName,

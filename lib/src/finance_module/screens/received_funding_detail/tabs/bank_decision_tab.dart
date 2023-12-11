@@ -1,8 +1,12 @@
 import 'package:dehub/models/finance.dart';
+import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/finance_provider.dart';
+import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class BankDecisionTab extends StatefulWidget {
   final Finance data;
@@ -16,9 +20,20 @@ class BankDecisionTab extends StatefulWidget {
 }
 
 class _BankDecisionTabState extends State<BankDecisionTab> {
+  General general = General();
+
+  symbol() {
+    final res = general.currencies!
+        .firstWhere((element) => element.code == widget.data.currency)
+        .symbol;
+    return res;
+  }
+
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<FinanceProvider>(context, listen: true);
+    general =
+        Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
 
     return SingleChildScrollView(
       child: Column(
@@ -46,7 +61,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  'Огноо, цаг',
+                  '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.responseDate!)}',
                   style: TextStyle(color: source.currentColor),
                 ),
               ],
@@ -90,7 +105,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  'Bank user',
+                  '${widget.data.respondedUser?.firstName}',
                   style: TextStyle(color: source.currentColor),
                 ),
               ],
@@ -107,7 +122,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  'XXX,XXX,XXX.00 ₮',
+                  '${Utils().formatCurrency(widget.data.approvedAmount.toString()) + symbol()}',
                   style: TextStyle(
                     color: source.currentColor,
                     fontWeight: FontWeight.w500,
@@ -128,7 +143,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  'XXX,XXX,XXX.00 ₮',
+                  '${Utils().formatCurrency(widget.data.scfFeeAmount.toString()) + symbol()}',
                   style: TextStyle(
                     color: source.currentColor,
                     fontWeight: FontWeight.w500,
@@ -149,7 +164,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  'XXX,XXX,XXX.00 ₮',
+                  '${Utils().formatCurrency(widget.data.bankFeeAmount.toString()) + symbol()}',
                   style: TextStyle(
                     color: source.currentColor,
                     fontWeight: FontWeight.w500,
@@ -191,7 +206,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  'Огноо, цаг',
+                  '-',
                   style: TextStyle(color: source.currentColor),
                 ),
               ],
@@ -208,7 +223,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  'Огноо, цаг',
+                  '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.toDisburseDate!)}',
                   style: TextStyle(color: source.currentColor),
                 ),
               ],
@@ -280,7 +295,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  'XXX,XXX,XXX.00 ₮',
+                  '${Utils().formatCurrency(widget.data.repaymentAmount.toString()) + symbol()}',
                   style: TextStyle(
                     color: source.currentColor,
                     fontSize: 15,
@@ -300,12 +315,19 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                   'Эргэн төлөх огноо',
                   style: TextStyle(color: dark),
                 ),
-                Text(
-                  'Огноо, цаг',
-                  style: TextStyle(
-                    color: source.currentColor,
-                  ),
-                ),
+                widget.data.repaymentDate != null
+                    ? Text(
+                        '${DateFormat("yyyy-MM-dd HH: mm").format(widget.data.repaymentDate!)}',
+                        style: TextStyle(
+                          color: source.currentColor,
+                        ),
+                      )
+                    : Text(
+                        '-',
+                        style: TextStyle(
+                          color: source.currentColor,
+                        ),
+                      ),
               ],
             ),
           ),

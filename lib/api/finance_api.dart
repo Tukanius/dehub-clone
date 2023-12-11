@@ -2,17 +2,18 @@
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/utils/http_request_finance.dart';
 
 class FinanceApi extends HttpRequestFinance {
   financeMe() async {
     var res = await get('/auth/me', handler: false);
-    return Finance.fromJson(res as Map<String, dynamic>);
+    return User.fromJson(res as Map<String, dynamic>);
   }
 
   financeLogin(Finance data) async {
     var res = await post('/auth/login', handler: true, data: data.toJson());
-    return Finance.fromJson(res as Map<String, dynamic>);
+    return User.fromJson(res as Map<String, dynamic>);
   }
 
   Future<Result> requestList(ResultArguments resultArguments) async {

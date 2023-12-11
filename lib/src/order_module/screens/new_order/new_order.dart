@@ -76,6 +76,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
   ScrollController scrollController = ScrollController();
   TextEditingController shippingAmountController = TextEditingController();
   TextEditingController discountAmountController = TextEditingController();
+  TextEditingController senderAdditionalNote = TextEditingController();
+  TextEditingController senderNote = TextEditingController();
   // Amounts
   double discountAmount = 0;
   double shippingAmount = 0;
@@ -146,24 +148,28 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
         ),
       );
     }
+    print(data.first.toJson());
     await OrderApi().update(
-        widget.data!.id!,
-        Order(
-          additionalLines: additionalLines,
-          businessId: order.id,
-          receiverBranchId:
-              receiverBranch.id ?? order.receiverBranches?.first.id,
-          deliveryDate:
-              isCheck == false ? selectedDate.toString() : dateTime.toString(),
-          deliveryType: isCheck == false ? "DEFAULT_DATE" : "CUSTOM_DATE",
-          receiverStaffId: order.receiverStaff?.id,
-          lines: data,
-          discountType: "AMOUNT",
-          attachments: files,
-          discountValue: 0,
-          toReview: toReview,
-          send: send,
-        ));
+      widget.data!.id!,
+      Order(
+        additionalLines: additionalLines,
+        businessId: order.id,
+        receiverBranchId: receiverBranch.id ?? order.receiverBranches?.first.id,
+        deliveryDate:
+            isCheck == false ? selectedDate.toString() : dateTime.toString(),
+        deliveryType: isCheck == false ? "DEFAULT_DATE" : "CUSTOM_DATE",
+        receiverStaffId: order.receiverStaff?.id,
+        lines: data,
+        discountType: "AMOUNT",
+        attachments: files,
+        discountValue: discountAmount,
+        shippingAmount: shippingAmount,
+        senderNote: senderNote.text,
+        senderAdditionalNote: senderAdditionalNote.text,
+        toReview: toReview,
+        send: send,
+      ),
+    );
     showCustomDialog(
       context,
       toReview == false
@@ -258,7 +264,9 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
       discountType: "AMOUNT",
       attachments: files,
       shippingAmount: shippingAmount,
-      discountValue: 0,
+      discountValue: discountAmount,
+      senderNote: senderNote.text,
+      senderAdditionalNote: senderAdditionalNote.text,
       toReview: toReview,
       send: send,
     ));
@@ -491,8 +499,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       ),
                     ),
                     FieldCard(
-                      marginHorizontal: 15,
-                      marginVertical: 10,
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
                       color: white,
                       labelText: "Бизнес код",
                       secondText: customer.refCode != null
@@ -550,8 +558,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     ),
                     const SizedBox(height: 3),
                     FieldCard(
-                      marginHorizontal: 15,
-                      marginVertical: 10,
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
                       color: white,
                       labelText: "ТТД",
                       secondText: customer.regNumber != null
@@ -562,8 +570,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     ),
                     const SizedBox(height: 3),
                     FieldCard(
-                      marginHorizontal: 15,
-                      marginVertical: 10,
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
                       color: white,
                       labelText: "Төлбөрийн нөхцөл",
                       secondText: order.paymentTerm?.description != null
@@ -574,8 +582,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     ),
                     const SizedBox(height: 3),
                     FieldCard(
-                      marginHorizontal: 15,
-                      marginVertical: 10,
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
                       color: white,
                       labelText: "НӨАТ төлөгч эсэх",
                       secondText: order.isVatPayer == true ? "Тийм" : "Үгүй",
@@ -584,8 +592,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     ),
                     const SizedBox(height: 3),
                     FieldCard(
-                      marginHorizontal: 15,
-                      marginVertical: 10,
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
                       color: white,
                       labelText: "Менежер",
                       secondText: order.receiverStaff != null
@@ -606,8 +614,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       ),
                     ),
                     FieldCard(
-                      marginHorizontal: 15,
-                      marginVertical: 10,
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
                       color: white,
                       labelText: "Хүлээн авах салбар",
                       secondText: order.receiverBranches != null &&
@@ -687,8 +695,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       ),
                     ),
                     FieldCard(
-                      marginHorizontal: 15,
-                      marginVertical: 10,
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
                       color: white,
                       labelText: "Хүлээн авах ажилтан",
                       secondText: order.receiverStaff?.firstName != null
@@ -1038,8 +1046,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       ),
                     ),
                     FieldCard(
-                      marginHorizontal: 15,
-                      marginVertical: 10,
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
                       color: white,
                       labelText: "Захиалгад буй",
                       secondText: "${product.length}",
@@ -1047,8 +1055,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       arrowColor: orderColor,
                     ),
                     FieldCard(
-                      marginHorizontal: 15,
-                      marginVertical: 10,
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
                       color: white,
                       labelText: "Нийт тоо ширхэг",
                       secondText: product.isNotEmpty
@@ -1058,8 +1066,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       arrowColor: orderColor,
                     ),
                     FieldCard(
-                      marginHorizontal: 15,
-                      marginVertical: 10,
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
                       color: white,
                       labelText: "Тооцсон НӨАТ",
                       secondText:
@@ -1068,8 +1076,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       arrowColor: orderColor,
                     ),
                     FieldCard(
-                      marginHorizontal: 15,
-                      marginVertical: 10,
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
                       color: white,
                       labelText: "Тооцсон НХАТ",
                       secondText:
@@ -1078,8 +1086,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       arrowColor: orderColor,
                     ),
                     FieldCard(
-                      marginHorizontal: 15,
-                      marginVertical: 10,
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
                       color: white,
                       labelText: "Захиалгын нийт дүн",
                       secondText:
@@ -1088,8 +1096,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       arrowColor: orderColor,
                     ),
                     FieldCard(
-                      marginHorizontal: 15,
-                      marginVertical: 10,
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
                       color: white,
                       labelText: "Нэмэлтээр",
                       secondText:
@@ -1181,8 +1189,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       ),
                     ),
                     FieldCard(
-                      marginHorizontal: 15,
-                      marginVertical: 10,
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
                       color: white,
                       labelText: "НИЙТ ТӨЛБӨР",
                       secondText:
@@ -1237,9 +1245,10 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     Container(
                       color: white,
                       padding: const EdgeInsets.all(15),
-                      child: const FormTextField(
+                      child: FormTextField(
+                        controller: senderNote,
                         textAlign: TextAlign.left,
-                        name: 'additional',
+                        name: 'senderNote',
                         maxLines: 5,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -1267,9 +1276,10 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     Container(
                       color: white,
                       padding: const EdgeInsets.all(15),
-                      child: const FormTextField(
+                      child: FormTextField(
+                        controller: senderAdditionalNote,
                         textAlign: TextAlign.left,
-                        name: 'description',
+                        name: 'senderAdditionalNote',
                         maxLines: 5,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(

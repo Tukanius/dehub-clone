@@ -116,8 +116,8 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Партнерийн мэдээлэл',
                     secondText: '${business.partnerName}',
                     secondTextColor: networkColor,
@@ -125,8 +125,8 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Партнер код',
                     secondText: '${business.partner?.refCode}',
                     secondTextColor: networkColor,
@@ -134,8 +134,8 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Бизнесийн нэр',
                     secondText: '${business.partner?.businessName}',
                     secondTextColor: networkColor,
@@ -143,8 +143,8 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Бизнес код',
                     secondText: '${business.refCode}',
                     secondTextColor: networkColor,
@@ -195,8 +195,8 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     secondText: business.paymentTerm?.condition != null
                         ? paymentTermCondition()
                         : "-",
@@ -208,8 +208,8 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Төлбөрийн нөхцөл',
                     // onClick: () {},
                     secondText: business.paymentTerm?.description,
@@ -219,8 +219,8 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Эхлэл огноо',
                     secondTextColor: networkColor,
                     secondText:
@@ -229,8 +229,8 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: 'Дуусах огноо',
                     secondTextColor: networkColor,
                     secondText:

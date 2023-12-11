@@ -189,8 +189,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                         ),
                       ),
                       FieldCard(
-                        marginHorizontal: 15,
-                        marginVertical: 15,
+                        paddingHorizontal: 15,
+                        paddingVertical: 15,
                         arrowColor: black,
                         onClick: () {},
                         labelText: 'Хүргэлтийн хаяг',
@@ -201,8 +201,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                         color: white,
                       ),
                       FieldCard(
-                        marginHorizontal: 15,
-                        marginVertical: 15,
+                        paddingHorizontal: 15,
+                        paddingVertical: 15,
                         arrowColor: black,
                         onClick: () {},
                         labelText: 'Нэхэмжлэх илгээх',
@@ -258,8 +258,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                         ),
                       ),
                       FieldCard(
-                        marginHorizontal: 15,
-                        marginVertical: 15,
+                        paddingHorizontal: 15,
+                        paddingVertical: 15,
                         arrowColor: black,
                         onClick: () {},
                         labelText: 'Партнерийн нэр',
@@ -270,8 +270,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       FieldCard(
                         key: sectorKey,
                         validate: sectorValidate,
-                        marginHorizontal: 15,
-                        marginVertical: 15,
+                        paddingHorizontal: 15,
+                        paddingVertical: 15,
                         arrowColor: black,
                         onClick: () {
                           Navigator.of(context).pushNamed(
@@ -577,8 +577,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                         ),
                       ),
                       FieldCard(
-                        marginHorizontal: 15,
-                        marginVertical: 15,
+                        paddingHorizontal: 15,
+                        paddingVertical: 15,
                         arrowColor: black,
                         labelText: 'Тооцсон НӨАТ',
                         secondText: product.isNotEmpty
@@ -588,8 +588,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                         color: white,
                       ),
                       FieldCard(
-                        marginHorizontal: 15,
-                        marginVertical: 15,
+                        paddingHorizontal: 15,
+                        paddingVertical: 15,
                         color: white,
                         labelText: "Нэмэлтээр",
                         secondText:
@@ -598,8 +598,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                         arrowColor: orderColor,
                       ),
                       FieldCard(
-                        marginHorizontal: 15,
-                        marginVertical: 15,
+                        paddingHorizontal: 15,
+                        paddingVertical: 15,
                         arrowColor: black,
                         labelText: 'Тооцсон НХАТ',
                         secondText: product.isNotEmpty
@@ -653,8 +653,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                         ),
                       ),
                       FieldCard(
-                        marginHorizontal: 15,
-                        marginVertical: 15,
+                        paddingHorizontal: 15,
+                        paddingVertical: 15,
                         arrowColor: black,
                         labelText: 'Тооцсон НХАТ',
                         secondText: product.isNotEmpty
@@ -664,8 +664,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                         color: white,
                       ),
                       FieldCard(
-                        marginHorizontal: 15,
-                        marginVertical: 15,
+                        paddingHorizontal: 15,
+                        paddingVertical: 15,
                         arrowColor: black,
                         labelText: 'Нийт Төлбөр',
                         secondText: product.isNotEmpty

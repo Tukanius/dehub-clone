@@ -7,6 +7,7 @@ class CheckOutProvider extends ChangeNotifier {
   List<Invoice> additionalRow = [];
   List<Order> order = [];
   List<Order> additional = [];
+  List<Order> packageProduct = [];
   String type = 'Сонгох';
   double totalAmount = 0;
   double finalAmount = 0;
@@ -16,6 +17,20 @@ class CheckOutProvider extends ChangeNotifier {
   double shippingAmount = 0;
   double discountAmount = 0;
   double additionalRowAmount = 0;
+
+  package(Order product, int qty) {
+    int index = packageProduct.indexWhere((item) => item.id == product.id);
+
+    if (index > -1) {
+      packageProduct[index].quantity = packageProduct[index].quantity! + qty;
+    } else {
+      packageProduct.add(
+        product,
+      );
+    }
+
+    notifyListeners();
+  }
 
   // ******************************************
   // InvoiceProducts

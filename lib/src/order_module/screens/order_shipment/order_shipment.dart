@@ -436,8 +436,8 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                     ),
                   ),
                   FieldCard(
-                    marginHorizontal: 15,
-                    marginVertical: 15,
+                    paddingHorizontal: 15,
+                    paddingVertical: 15,
                     labelText: "Нэр төрлийн тоо",
                     secondText: "${shipment.pullSheetLines?.length}",
                     secondTextColor: orderColor,

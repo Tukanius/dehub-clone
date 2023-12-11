@@ -118,8 +118,8 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: "Худалдан авагч",
                     secondText:
                         '${widget.data.receiverBusiness?.partner?.businessName}',
@@ -127,8 +127,8 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: "Хүлээн авах салбар",
                     secondText:
                         '${widget.data.order?.receiverBranch?.branchAddress}',
@@ -136,16 +136,16 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: "Бүсчлэл",
                     secondText: '-',
                     secondTextColor: orderColor,
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: "Чиглэл",
                     secondText: '-',
                     secondTextColor: orderColor,
@@ -163,8 +163,8 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: "Эхлэх огноо",
                     secondText: '${DateFormat('yyyy-MM-dd').format(startDate)}',
                     secondTextColor: orderColor,
@@ -232,8 +232,8 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: "Хүлээлгэж өгөх",
                     secondText: '${DateFormat('yyyy-MM-dd').format(endDate)}',
                     secondTextColor: orderColor,
@@ -282,8 +282,8 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: "Ачилт хийх",
                     secondText:
                         '${DateFormat('yyyy-MM-dd').format(shipmentDate)}',
@@ -333,8 +333,8 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                   ),
                   FieldCard(
                     color: white,
-                    marginHorizontal: 15,
-                    marginVertical: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     labelText: "Хүргэлт хариуцсан",
                     secondText: '${staffName}',
                     secondTextColor: orderColor,
