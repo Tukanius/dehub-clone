@@ -116,6 +116,9 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
                                   ),
                                 )
                               : SizedBox(),
+                          SizedBox(
+                            height: 5,
+                          ),
                           Material(
                             color: white,
                             child: TabBar(

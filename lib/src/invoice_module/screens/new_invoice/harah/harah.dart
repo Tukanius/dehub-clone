@@ -44,7 +44,10 @@ class _HarahState extends State<Harah> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(Icons.arrow_back_ios),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: white,
+          ),
         ),
         automaticallyImplyLeading: false,
         title: widget.invoice.refCode == null
@@ -197,15 +200,11 @@ class _HarahState extends State<Harah> {
 
   pdf() {
     showModalBottomSheet(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(20),
-        ),
-      ),
       useSafeArea: true,
-      backgroundColor: transparent,
+      backgroundColor: white,
       context: context,
       builder: (context) => SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
         child: Container(
           color: white,
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),

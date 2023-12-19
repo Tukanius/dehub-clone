@@ -46,7 +46,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
     Filter filter = Filter(query: '', status: "SENT");
-    var res = partnerUser.user?.currentBusiness?.type == "SUPPLIER"
+    var res = user.currentBusiness?.type == "SUPPLIER"
         ? await InvoiceApi()
             .list(ResultArguments(filter: filter, offset: offset))
         : await InvoiceApi()
@@ -73,7 +73,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    partnerUser = Provider.of<UserProvider>(context, listen: true).partnerUser;
+    user = Provider.of<UserProvider>(context, listen: true).user;
     return PopScope(
       child: Scaffold(
         backgroundColor: backgroundColor,
@@ -124,9 +124,8 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(),
-                                        child: partnerUser.user?.avatar ==
-                                                    null ||
-                                                partnerUser.user?.avatar == ''
+                                        child: user.avatar == null ||
+                                                user.avatar == ''
                                             ? CircleAvatar(
                                                 backgroundColor: grey,
                                                 radius: 14,
@@ -137,7 +136,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                                 backgroundColor: grey,
                                                 radius: 14,
                                                 backgroundImage: NetworkImage(
-                                                    '${partnerUser.user?.avatar}'),
+                                                    '${user.avatar}'),
                                               ),
                                       ),
                                     ),
@@ -148,7 +147,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                           ),
                         ),
                         Text(
-                          '${partnerUser.user?.currentBusiness?.partnerName}',
+                          '${user.currentBusiness?.partner?.businessName}',
                           style: TextStyle(
                             color: white,
                             fontWeight: FontWeight.w500,
@@ -162,14 +161,14 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "${partnerUser.user?.currentBusiness?.type}: ",
+                              "${user.currentBusiness?.type}: ",
                               style: TextStyle(
                                 color: Color(0xffFEBC11),
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                             Text(
-                              "${partnerUser.user?.currentBusiness?.partnerName}",
+                              "${user.currentBusiness?.profileName}",
                               style: TextStyle(
                                 color: white,
                                 fontWeight: FontWeight.w500,
@@ -181,12 +180,12 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                     ),
                   ),
                   ModulesCard(
-                    partner: partnerUser,
+                    user: user,
                   ),
                 ],
               ),
-              partnerUser.user?.currentBusiness?.type == "BUYER" ||
-                      partnerUser.user?.currentBusiness?.type == "SUPPLIER"
+              user.currentBusiness?.type == "BUYER" ||
+                      user.currentBusiness?.type == "SUPPLIER"
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -203,8 +202,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                     Container(
                                         margin: const EdgeInsets.symmetric(
                                             horizontal: 15),
-                                        child: partnerUser.user?.currentBusiness
-                                                    ?.type ==
+                                        child: user.currentBusiness?.type ==
                                                 "SUPPLIER"
                                             ? Text(
                                                 "Өнөөдөр хүлээлгэн өгөх",
@@ -366,6 +364,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                 children: invoice.rows!
                                     .map(
                                       (e) => InvoiceCard(
+                                        isClosed: false,
                                         startAnimation: startAnimation,
                                         index: invoice.rows!.indexOf(e),
                                         data: e,

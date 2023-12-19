@@ -109,6 +109,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
         title: Text(
           'Төлбөрийн нөхцөл',
           style: TextStyle(
+            color: white,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),

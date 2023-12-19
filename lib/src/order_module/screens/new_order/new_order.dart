@@ -148,7 +148,6 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
         ),
       );
     }
-    print(data.first.toJson());
     await OrderApi().update(
       widget.data!.id!,
       Order(
@@ -694,20 +693,42 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                         ],
                       ),
                     ),
-                    FieldCard(
-                      paddingHorizontal: 15,
-                      paddingVertical: 10,
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
                       color: white,
-                      labelText: "Хүлээн авах ажилтан",
-                      secondText: order.receiverStaff?.firstName != null
-                          ? "${order.receiverStaff?.firstName}"
-                          : "Хүлээн авах ажилтан",
-                      secondTextColor: orderColor,
-                      onClick: () {},
-                      arrowColor: orderColor,
-                      fontWeight: FontWeight.w500,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Хүлээн авах ажилтан',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: order.receiverStaff?.firstName != null
+                                ? Text(
+                                    '${order.receiverStaff?.firstName}',
+                                    style: TextStyle(
+                                      color: orderColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    textAlign: TextAlign.end,
+                                  )
+                                : Text(
+                                    'Хүлээн авах ажилтан',
+                                    style: TextStyle(
+                                      color: orderColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    textAlign: TextAlign.end,
+                                  ),
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 3),
                     Row(
                       children: [
                         Checkbox(

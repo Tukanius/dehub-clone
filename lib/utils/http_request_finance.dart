@@ -18,8 +18,6 @@ class HttpRequestFinance {
 
   static const version = '/app';
 
-  static const uri = host;
-
   Dio dio = Dio();
 
   Future<dynamic> request(String api, String method, dynamic data,

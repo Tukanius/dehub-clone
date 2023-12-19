@@ -63,6 +63,9 @@ const Color pieYellow = Color(0xffFBC600);
 const Color pieBlue = Color(0xff44A6E9);
 const Color pieOrange = Color(0xffFF8548);
 const Color pieRed = Color(0xffE2362F);
+const Color golomtBank = Color(0xff6872F9);
+const Color bogdBank = Color(0xff006B60);
+const Color dehub = Color(0xff2e3192);
 
 const gradient2 = LinearGradient(colors: [
   Color(0xff5D7128),

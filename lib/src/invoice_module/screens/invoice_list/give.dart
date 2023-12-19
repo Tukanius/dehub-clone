@@ -5,15 +5,17 @@ import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/invoice_card/invoice_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
+import 'package:dehub/models/invoice_status.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/new_invoice.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_detail_page/invoice_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,7 +37,6 @@ class _GivePageState extends State<GivePage>
   List<Invoice> groupedList = [];
   bool isLoading = true;
   late TabController tabController = TabController(length: 5, vsync: this);
-  int currentIndex = 0;
   int page = 1;
   Result invoice = Result(rows: [], count: 0);
   int limit = 10;
@@ -46,12 +47,16 @@ class _GivePageState extends State<GivePage>
   ListenController listenController = ListenController();
   bool startAnimation = false;
   Map<DateTime, List<Invoice>> groupItems = {};
+  General general = General();
+  String? invoiceStatus = '';
+  String search = '';
+  InvoiceStatus filterAll = InvoiceStatus(code: '', name: 'Бүгд', color: null);
 
   void _onLoading() async {
     setState(() {
       page += 1;
     });
-    await list(page, limit, '');
+    await list(page, limit, '', invoiceStatus!);
     _refreshController.loadComplete();
     setState(() {
       isLoading = false;
@@ -65,7 +70,7 @@ class _GivePageState extends State<GivePage>
       groupItems = {};
     });
     await Future.delayed(const Duration(milliseconds: 1000));
-    await list(page, limit, '');
+    await list(page, limit, '', invoiceStatus!);
     _refreshController.refreshCompleted();
     setState(() {
       isLoading = false;
@@ -74,11 +79,17 @@ class _GivePageState extends State<GivePage>
 
   @override
   afterFirstLayout(BuildContext context) async {
-    await list(page, limit, '');
+    int? index =
+        general.invoiceStatus?.indexWhere((element) => element.code == '');
+    if (index! < 0) {
+      general.invoiceStatus?.insert(0, filterAll);
+    }
+    general.invoiceStatus?.removeWhere((element) => element.code == "CLOSED");
+    await list(page, limit, '', invoiceStatus!);
   }
 
-  list(int page, int limit, String query) async {
-    Filter filter = Filter(query: '${query}');
+  list(int page, int limit, String query, String status) async {
+    Filter filter = Filter(query: '${query}', status: "");
     Offset offset = Offset(limit: limit, page: page);
     if (user.currentBusiness?.type == "BUYER") {
       invoice = await InvoiceApi()
@@ -124,7 +135,7 @@ class _GivePageState extends State<GivePage>
       setState(() {
         isLoading = true;
       });
-      list(page, limit, '');
+      list(page, limit, '', invoiceStatus!);
     });
     super.initState();
   }
@@ -137,7 +148,7 @@ class _GivePageState extends State<GivePage>
         startAnimation = false;
         groupItems = {};
       });
-      await list(page, limit, query);
+      await list(page, limit, query, invoiceStatus!);
       setState(() {
         isLoading = false;
       });
@@ -147,6 +158,9 @@ class _GivePageState extends State<GivePage>
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).invoiceMe;
+    general =
+        Provider.of<GeneralProvider>(context, listen: true).invoiceGeneral;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -191,43 +205,38 @@ class _GivePageState extends State<GivePage>
             height: 50,
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-              itemCount: filter.length,
+              itemCount: general.invoiceStatus?.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                return AnimatedContainer(
-                  duration: Duration(milliseconds: 300),
-                  margin: EdgeInsets.only(right: 5, left: 5),
-                  padding: EdgeInsets.symmetric(horizontal: 18),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color:
-                        currentIndex == 1 ? invoiceColor : Colors.grey.shade100,
-                  ),
-                  child: GestureDetector(
-                    onTap: () {},
+                return GestureDetector(
+                  onTap: invoiceStatus != general.invoiceStatus?[index].code
+                      ? () {
+                          setState(() {
+                            invoiceStatus = general.invoiceStatus?[index].code;
+                            isLoading = true;
+                          });
+                          list(page, limit, search, invoiceStatus!);
+                        }
+                      : () {},
+                  child: Container(
+                    margin: EdgeInsets.only(right: 5, left: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 18),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: invoiceStatus == general.invoiceStatus?[index].code
+                          ? invoiceColor
+                          : Colors.grey.shade100,
+                    ),
                     child: Center(
-                      child: Row(
-                        children: [
-                          filter[index].image != ''
-                              ? SvgPicture.asset(
-                                  '${filter[index].image}',
-                                  colorFilter: ColorFilter.mode(
-                                    currentIndex == 1 ? white : grey2,
-                                    BlendMode.srcIn,
-                                  ),
-                                )
-                              : SizedBox(),
-                          SizedBox(
-                            width: 3,
-                          ),
-                          Text(
-                            '${filter[index].name}',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: currentIndex == 1 ? white : grey2,
-                            ),
-                          ),
-                        ],
+                      child: Text(
+                        '${general.invoiceStatus?[index].name}',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: invoiceStatus ==
+                                  general.invoiceStatus?[index].code
+                              ? white
+                              : grey2,
+                        ),
                       ),
                     ),
                   ),
@@ -237,6 +246,9 @@ class _GivePageState extends State<GivePage>
           ),
           SearchButton(
             onChange: (query) {
+              setState(() {
+                search = query;
+              });
               onChange(query);
             },
             color: invoiceColor,
@@ -328,6 +340,7 @@ class _GivePageState extends State<GivePage>
                                               (data) => Column(
                                                 children: [
                                                   InvoiceCard(
+                                                    isClosed: false,
                                                     startAnimation:
                                                         startAnimation,
                                                     index: invoice.rows!
@@ -365,27 +378,4 @@ class _GivePageState extends State<GivePage>
       ),
     );
   }
-
-  List<Invoice> filter = [
-    Invoice(
-      image: '',
-      name: 'Бүгд',
-    ),
-    Invoice(
-      image: 'assets/svg/clock.svg',
-      name: 'Хэтэрсэн',
-    ),
-    Invoice(
-      image: 'assets/svg/hesegchilsen.svg',
-      name: 'Хэсэгчилсэн',
-    ),
-    Invoice(
-      image: 'assets/svg/clock1.svg',
-      name: 'Хүлээж буй',
-    ),
-    Invoice(
-      image: 'assets/svg/tulson.svg',
-      name: 'Төлсөн',
-    ),
-  ];
 }

@@ -48,6 +48,7 @@ class InventoryGoods {
   String? spaceLabel;
   bool? returnAllow;
   String? returnType;
+  String? returnTypeId;
   String? image;
   String? packageTypeId;
   bool? isCompleted;
@@ -104,7 +105,57 @@ class InventoryGoods {
   InventoryGoods? itemUnit;
   String? logo;
 
+  String? padName;
+  String? brandName;
+  String? supplierName;
+  String? manufacturerName;
+  String? manufacturerCountryName;
+  String? manufacturerCountryId;
+  String? importerCountryName;
+  String? distributorName;
+  String? itemTypeName;
+  String? classificationName;
+  String? subClassificationName;
+  String? categoryName;
+  String? subCategoryName;
+  String? tagName;
+
+  List<String>? urls;
+  String? unitName;
+
+  String? unitWeightLabel;
+  String? unitWeightLabelId;
+  String? unitSpaceLabel;
+  String? unitSpaceLabelId;
+  bool? isMain;
+  String? option;
+  String? optionId;
+
   InventoryGoods({
+    this.isMain,
+    this.option,
+    this.optionId,
+    this.returnTypeId,
+    this.unitSpaceLabel,
+    this.unitSpaceLabelId,
+    this.unitWeightLabel,
+    this.unitWeightLabelId,
+    this.unitName,
+    this.urls,
+    this.padName,
+    this.brandName,
+    this.supplierName,
+    this.manufacturerName,
+    this.manufacturerCountryName,
+    this.manufacturerCountryId,
+    this.importerCountryName,
+    this.distributorName,
+    this.itemTypeName,
+    this.classificationName,
+    this.subClassificationName,
+    this.categoryName,
+    this.subCategoryName,
+    this.tagName,
     this.logo,
     this.itemUnit,
     this.availableQuantity,

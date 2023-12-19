@@ -330,8 +330,8 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
                           (e) => Container(
                             margin: const EdgeInsets.only(
                                 left: 5, right: 5, bottom: 5),
-                            padding: const EdgeInsets.symmetric(horizontal: 30),
                             height: 200,
+                            width: 330,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: white,
@@ -353,9 +353,12 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
                                   },
                                 );
                               },
-                              child: Image(
-                                image: NetworkImage('${e}'),
-                                fit: BoxFit.cover,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Image(
+                                  image: NetworkImage('${e}'),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ),

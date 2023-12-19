@@ -42,6 +42,7 @@ class _NewInvitationPageState extends State<NewInvitationPage> {
           bottom: TabBar(
             overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
             labelColor: networkColor,
+            indicatorColor: networkColor,
             unselectedLabelColor: dark,
             labelStyle: TextStyle(
               fontWeight: FontWeight.bold,

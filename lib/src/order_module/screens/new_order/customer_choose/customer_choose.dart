@@ -4,8 +4,10 @@ import 'package:dehub/components/order_customer_card/order_customer_card.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class OrderCustomerChooseArguments {
   ListenController customerListenController;
@@ -33,6 +35,7 @@ class _OrderCustomerChooseState extends State<OrderCustomerChoose>
   bool isLoading = true;
   Result customer = Result(count: 0, rows: []);
   bool startAnimation = false;
+  RefreshController refreshController = RefreshController();
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -53,6 +56,27 @@ class _OrderCustomerChooseState extends State<OrderCustomerChoose>
         });
       });
     });
+  }
+
+  void _onLoading() async {
+    setState(() {
+      limit += 10;
+    });
+    await list(page, limit);
+    refreshController.loadComplete();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  void _onRefresh() async {
+    await Future.delayed(Duration(milliseconds: 1000));
+    setState(() {
+      isLoading = true;
+    });
+    await list(page, limit);
+    refreshController.refreshCompleted();
+    isLoading = false;
   }
 
   @override
@@ -87,31 +111,69 @@ class _OrderCustomerChooseState extends State<OrderCustomerChoose>
                 color: orderColor,
               ),
             )
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  SearchButton(
-                    color: orderColor,
-                    textColor: orderColor,
+          : Column(
+              children: [
+                SearchButton(
+                  color: orderColor,
+                  textColor: orderColor,
+                ),
+                Expanded(
+                  child: SmartRefresher(
+                    enablePullDown: true,
+                    enablePullUp: true,
+                    controller: refreshController,
+                    header: WaterDropHeader(
+                      waterDropColor: orderColor,
+                      refresh: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: orderColor,
+                        ),
+                      ),
+                    ),
+                    onRefresh: _onRefresh,
+                    onLoading: _onLoading,
+                    footer: CustomFooter(
+                      builder: (context, mode) {
+                        Widget body;
+                        if (mode == LoadStatus.idle) {
+                          body = const Text("");
+                        } else if (mode == LoadStatus.loading) {
+                          body = const CupertinoActivityIndicator();
+                        } else if (mode == LoadStatus.failed) {
+                          body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
+                        } else {
+                          body = const Text("Мэдээлэл алга байна");
+                        }
+                        return SizedBox(
+                          height: 55.0,
+                          child: Center(child: body),
+                        );
+                      },
+                    ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: customer.rows!
+                            .map(
+                              (item) => OrderCustomerCard(
+                                index: customer.rows!.indexOf(item),
+                                startAnimation: startAnimation,
+                                onClick: () {
+                                  widget.customerListenController
+                                      .customerOrderChange(item);
+                                  Navigator.of(context).pop();
+                                },
+                                data: item,
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ),
                   ),
-                  Column(
-                    children: customer.rows!
-                        .map(
-                          (item) => OrderCustomerCard(
-                            index: customer.rows!.indexOf(item),
-                            startAnimation: startAnimation,
-                            onClick: () {
-                              widget.customerListenController
-                                  .customerOrderChange(item);
-                              Navigator.of(context).pop();
-                            },
-                            data: item,
-                          ),
-                        )
-                        .toList(),
-                  )
-                ],
-              ),
+                ),
+              ],
             ),
     );
   }

@@ -85,8 +85,7 @@ class _CustomerChooseState extends State<CustomerChoose> {
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
-                      Container(
-                        margin: const EdgeInsets.only(top: 10, bottom: 10),
+                      Material(
                         color: white,
                         child: TabBar(
                           overlayColor:
@@ -101,9 +100,13 @@ class _CustomerChooseState extends State<CustomerChoose> {
                               child: Text('Бүгд'),
                             ),
                             Container(
+                              alignment: Alignment.center,
+                              height: 48,
                               child: Text('Гэрээт'),
                             ),
                             Container(
+                              alignment: Alignment.center,
+                              height: 48,
                               child: Text('Гэрээт биш'),
                             ),
                           ],

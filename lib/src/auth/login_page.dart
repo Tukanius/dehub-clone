@@ -2,7 +2,6 @@ import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/check-biometric.dart';
 import 'package:dehub/src/auth/register-page/register-page.dart';
-import 'package:dehub/src/product_module/screens/new_product/new_product.dart';
 import 'package:dehub/src/splash/splash_page.dart';
 import 'package:dehub/utils/secure_storage.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -413,11 +412,9 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                         CustomButton(
                           isLoading: isSubmit,
                           onClick: () {
-                            // if (isSubmit == false) {
-                            //   _performLogin(context);
-                            // }
-                            Navigator.of(context)
-                                .pushNamed(NewProduct.routeName);
+                            if (isSubmit == false) {
+                              _performLogin(context);
+                            }
                             // show(context);
                           },
                           labelText: "Нэвтрэх",

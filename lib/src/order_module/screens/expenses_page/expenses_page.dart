@@ -118,6 +118,7 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
             child: Text(
               "№97278",
               style: TextStyle(
+                color: white,
                 fontWeight: FontWeight.w500,
                 fontSize: 16,
               ),

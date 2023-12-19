@@ -1,5 +1,5 @@
 import 'package:dehub/models/general.dart';
-import 'package:dehub/models/partner.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/utils/utils.dart';
@@ -16,8 +16,10 @@ class InvoiceCard extends StatefulWidget {
   final Invoice? data;
   final int index;
   final bool startAnimation;
+  final bool isClosed;
   const InvoiceCard({
     Key? key,
+    required this.isClosed,
     required this.startAnimation,
     required this.index,
     this.onClick,
@@ -29,7 +31,7 @@ class InvoiceCard extends StatefulWidget {
 }
 
 class _InvoiceCardState extends State<InvoiceCard> {
-  Partner user = Partner();
+  User user = User();
   General general = General();
   bool value = false;
 
@@ -95,7 +97,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserProvider>(context, listen: false).partnerUser;
+    user = Provider.of<UserProvider>(context, listen: false).invoiceMe;
     general =
         Provider.of<GeneralProvider>(context, listen: false).invoiceGeneral;
     return GestureDetector(
@@ -137,30 +139,52 @@ class _InvoiceCardState extends State<InvoiceCard> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 15,
+                        height: 12,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          user.user?.currentBusiness?.type == "SUPPLIER"
+                          widget.isClosed == false
                               ? Expanded(
-                                  child: Text(
-                                    '${widget.data?.receiverBusiness?.partner?.businessName}',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
+                                  child:
+                                      user.currentBusiness?.type == "SUPPLIER"
+                                          ? Text(
+                                              '${widget.data?.receiverBusiness?.partner?.businessName}',
+                                              style: TextStyle(
+                                                color: black,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            )
+                                          : Text(
+                                              '${widget.data?.senderBusiness?.partner?.businessName}',
+                                              style: TextStyle(
+                                                color: black,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
                                 )
-                              : Expanded(
-                                  child: Text(
-                                    '${widget.data?.senderBusiness?.partner?.businessName}',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontWeight: FontWeight.w500,
+                              : user.currentBusiness?.type == "SUPPLIER" &&
+                                          widget.data?.type == "SALES" ||
+                                      user.currentBusiness?.type == "BUYER" &&
+                                          widget.data?.type == "PURCHASE"
+                                  ? Expanded(
+                                      child: Text(
+                                        '${widget.data?.receiverBusiness?.partner?.businessName}',
+                                        style: TextStyle(
+                                          color: black,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    )
+                                  : Expanded(
+                                      child: Text(
+                                        '${widget.data?.senderBusiness?.partner?.businessName}',
+                                        style: TextStyle(
+                                          color: black,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
                           Expanded(
                             child: Text(
                               '${Utils().formatCurrency(widget.data!.amountToPay.toString())}₮',

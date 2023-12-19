@@ -4,9 +4,20 @@ import 'package:dehub/src/product_module/screens/product_list_page/tabs/goods_ta
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
+class ProductListPageArguments {
+  String id;
+  ProductListPageArguments({
+    required this.id,
+  });
+}
+
 class ProductListPage extends StatefulWidget {
   static const routeName = '/ProductListPage';
-  const ProductListPage({super.key});
+  final String id;
+  const ProductListPage({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
   @override
   State<ProductListPage> createState() => _ProductListPageState();
@@ -78,7 +89,9 @@ class _ProductListPageState extends State<ProductListPage> {
         body: TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
-            GoodsTab(),
+            GoodsTab(
+              id: widget.id,
+            ),
             Text('1'),
             Text('1'),
           ],

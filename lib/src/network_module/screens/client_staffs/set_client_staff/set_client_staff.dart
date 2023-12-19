@@ -91,6 +91,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
         title: Text(
           'Ажилтан хариуцуулах',
           style: TextStyle(
+            color: white,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),

@@ -5,7 +5,6 @@ import 'package:dehub/models/result.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_transaction/invoice_transaction.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import '../components/partner_card.dart';
 import '../components/invoice_card.dart';
 import 'package:after_layout/after_layout.dart';
 
@@ -50,73 +49,58 @@ class _OpenTabState extends State<OpenTab> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
-              'Харилцагч',
-              style: TextStyle(color: grey3, fontWeight: FontWeight.w600),
-            ),
-          ),
-          PartnerCard(
-            data: widget.data,
-          ),
-          isLoading == true
-              ? Center(
-                  child: CircularProgressIndicator(
-                    color: invoiceColor,
-                  ),
+      child: isLoading == true
+          ? Center(
+              child: CircularProgressIndicator(
+                color: invoiceColor,
+              ),
+            )
+          : invoice.rows?.length != 0
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AnimatedContainer(
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.ease,
+                      transform: Matrix4.translationValues(
+                          !startAnimation
+                              ? -MediaQuery.of(context).size.width
+                              : 0,
+                          0,
+                          0),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: Text(
+                        'Төлбөрийн үлдэгдэлтэй',
+                        style: TextStyle(
+                            color: grey3, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    Column(
+                      children: invoice.rows!
+                          .map(
+                            (data) => InvoiceCard(
+                              data: data,
+                              index: invoice.rows!.indexOf(data),
+                              startAnimation: startAnimation,
+                              onClick: () {
+                                Navigator.of(context).pushNamed(
+                                  InvoiceTransaction.routeName,
+                                  arguments: InvoiceTransactionArguments(
+                                    data: data,
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                          .toList(),
+                    )
+                  ],
                 )
-              : invoice.rows?.length != 0
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AnimatedContainer(
-                          duration: Duration(milliseconds: 300),
-                          curve: Curves.ease,
-                          transform: Matrix4.translationValues(
-                              !startAnimation
-                                  ? -MediaQuery.of(context).size.width
-                                  : 0,
-                              0,
-                              0),
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          child: Text(
-                            'Төлбөрийн үлдэгдэлтэй',
-                            style: TextStyle(
-                                color: grey3, fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        Column(
-                          children: invoice.rows!
-                              .map(
-                                (data) => InvoiceCard(
-                                  data: data,
-                                  index: invoice.rows!.indexOf(data),
-                                  startAnimation: startAnimation,
-                                  onClick: () {
-                                    Navigator.of(context).pushNamed(
-                                      InvoiceTransaction.routeName,
-                                      arguments: InvoiceTransactionArguments(
-                                        data: data,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              )
-                              .toList(),
-                        )
-                      ],
-                    )
-                  : NotFound(
-                      module: "INVOICE",
-                      labelText: "Хоосон байна",
-                    )
-        ],
-      ),
+              : NotFound(
+                  module: "INVOICE",
+                  labelText: "Хоосон байна",
+                ),
     );
   }
 }

@@ -20,7 +20,6 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
     with SingleTickerProviderStateMixin {
   ScrollController scrollController = ScrollController();
   late TabController tabController;
-  int tabIndex = 0;
 
   @override
   void initState() {

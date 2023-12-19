@@ -111,12 +111,14 @@ class User {
 
   String? businessRef;
   String? partnerRef;
+  List<String>? urls;
 
   getAvatar() {
     return HttpRequest.s3host + avatar.toString();
   }
 
   User({
+    this.urls,
     this.businessRef,
     this.partnerRef,
     this.partner,

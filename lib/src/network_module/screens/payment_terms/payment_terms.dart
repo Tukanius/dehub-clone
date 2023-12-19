@@ -97,6 +97,7 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
         title: Text(
           'Төлбөрийн нөхцөл',
           style: TextStyle(
+            color: white,
             fontWeight: FontWeight.w500,
             fontSize: 16,
           ),
@@ -163,11 +164,12 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
                                       SetPaymentTermCard(
                                         onClick: () {
                                           Navigator.of(context).pushNamed(
-                                              SetPaymentTermDetail.routeName,
-                                              arguments:
-                                                  SetPaymentTermDetailArguments(
-                                                id: data.id,
-                                              ));
+                                            SetPaymentTermDetail.routeName,
+                                            arguments:
+                                                SetPaymentTermDetailArguments(
+                                              id: data.id,
+                                            ),
+                                          );
                                         },
                                         index: network.rows!.indexOf(data),
                                         startAnimation: startAnimation,

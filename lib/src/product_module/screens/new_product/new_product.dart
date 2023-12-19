@@ -1,4 +1,5 @@
 import 'package:dehub/components/back_button/back_button.dart';
+import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/src/product_module/screens/new_product/tabs/additional_tab.dart';
 import 'package:dehub/src/product_module/screens/new_product/tabs/main_tab.dart';
@@ -16,58 +17,79 @@ class NewProduct extends StatefulWidget {
   State<NewProduct> createState() => _NewProductState();
 }
 
-class _NewProductState extends State<NewProduct> with AfterLayoutMixin {
+class _NewProductState extends State<NewProduct>
+    with AfterLayoutMixin, SingleTickerProviderStateMixin {
+  late TabController tabController;
+  bool isLoading = true;
+
   @override
   afterFirstLayout(BuildContext context) {
+    Provider.of<IndexProvider>(context, listen: false).newProductIndexChange(0);
     Provider.of<InventoryProvider>(context, listen: false).clearData();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    tabController = TabController(length: 3, vsync: this);
+    tabController.index = 0;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        backgroundColor: backgroundColor,
-        appBar: AppBar(
-          leadingWidth: 130,
-          leading: CustomBackButton(color: productColor),
-          elevation: 0,
-          backgroundColor: white,
-          bottom: TabBar(
-            overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
-            labelColor: productColor,
-            unselectedLabelColor: dark,
-            indicatorColor: productColor,
-            tabs: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Text(
-                  "Үндсэн",
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Text(
-                  "Нэмэлт",
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Text(
-                  "Захиалга",
-                ),
-              ),
-            ],
-          ),
-        ),
-        body: TabBarView(
-          children: [
-            MainTab(),
-            AdditionalTab(),
-            OrderTab(),
+    tabController.index =
+        Provider.of<IndexProvider>(context, listen: true).newProductIndex;
+
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      appBar: AppBar(
+        leadingWidth: 130,
+        leading: CustomBackButton(color: productColor),
+        elevation: 2,
+        shadowColor: grey,
+        surfaceTintColor: white,
+        backgroundColor: white,
+        foregroundColor: white,
+        bottom: TabBar(
+          controller: tabController,
+          overlayColor: MaterialStatePropertyAll(transparent),
+          labelColor: productColor,
+          unselectedLabelColor: dark,
+          indicatorColor: productColor,
+          onTap: (value) {
+            if (tabController.indexIsChanging) {
+              tabController.index = tabController.previousIndex;
+            } else {
+              return;
+            }
+          },
+          tabs: [
+            Tab(
+              text: 'Үндсэн',
+            ),
+            Tab(
+              text: 'Нэмэлт',
+            ),
+            Tab(
+              text: 'Захиалга',
+            ),
           ],
         ),
       ),
+      body: isLoading == true
+          ? SizedBox()
+          : TabBarView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: tabController,
+              children: [
+                MainTab(),
+                AdditionalTab(),
+                OrderTab(),
+              ],
+            ),
     );
   }
 }

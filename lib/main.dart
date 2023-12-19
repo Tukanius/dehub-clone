@@ -131,6 +131,7 @@ import 'package:dehub/src/network_module/screens/payment_terms/set_payment_term_
 import 'package:dehub/src/network_module/screens/payment_terms/payment_terms.dart';
 import 'package:dehub/src/entry_point/menu/shopping/shopping_page.dart';
 import 'package:dehub/src/entry_point/menu/suppliers/suppliers_page.dart';
+import 'package:dehub/src/product_module/screens/supplier_list/supplier_list.dart';
 import 'package:dehub/src/profile/information/partner_info.dart';
 import 'package:dehub/src/profile/profile_page.dart';
 import 'package:dehub/src/splash/splash_page.dart';
@@ -214,7 +215,10 @@ class MyApp extends StatelessWidget {
                         id: arguments.id,
                       );
                     });
-
+                  case SupplierList.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return const SupplierList();
+                    });
                   case LoginPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return const LoginPage();
@@ -1404,8 +1408,12 @@ class MyApp extends StatelessWidget {
                       return RankPage();
                     });
                   case ProductListPage.routeName:
+                    ProductListPageArguments arguments =
+                        settings.arguments as ProductListPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return ProductListPage();
+                      return ProductListPage(
+                        id: arguments.id,
+                      );
                     });
                   case EntryPoint.routeName:
                     return MaterialPageRoute(builder: (context) {

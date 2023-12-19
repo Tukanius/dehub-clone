@@ -4,6 +4,7 @@ import 'package:dehub/models/business_sectors.dart';
 import 'package:dehub/models/business_staff_roles.dart';
 import 'package:dehub/models/business_status.dart';
 import 'package:dehub/models/client_classification.dart';
+import 'package:dehub/models/countries.dart';
 import 'package:dehub/models/delivery_note_status.dart';
 import 'package:dehub/models/distribution_areas.dart';
 import 'package:dehub/models/equity_types.dart';
@@ -59,6 +60,7 @@ import 'package:dehub/models/partner_types.dart';
 import 'package:dehub/models/product_category_types.dart';
 import 'package:dehub/models/reference_list_types.dart';
 import 'package:dehub/models/reference_types.dart';
+import 'package:dehub/models/units.dart';
 import 'package:dehub/models/zip_codes.dart';
 part '../parts/general.dart';
 
@@ -126,8 +128,13 @@ class General {
   List<OrderStatus>? orderStatus;
   List<ProductBuyerFeeRules>? productBuyerFeeRules;
   List<ProductSuppFeeRules>? productSuppFeeRules;
+  List<Countries>? countries;
+
+  List<Units>? units;
 
   General({
+    this.units,
+    this.countries,
     this.productBuyerFeeRules,
     this.productSuppFeeRules,
     this.orderStatus,

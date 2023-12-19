@@ -103,8 +103,9 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
         backgroundColor: networkColor,
         surfaceTintColor: networkColor,
         title: Text(
-          'Чиглэл, бүслэл тохируулах',
+          'Чиглэл, бүсчлэл тохируулах',
           style: TextStyle(
+            color: white,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -306,14 +307,15 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
                             Navigator.of(context).pop();
                           },
                           child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              color: transparent,
-                              child: Text(
-                                '${e.name}',
-                                style: TextStyle(
-                                  color: black.withOpacity(0.7),
-                                ),
-                              )),
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            color: transparent,
+                            child: Text(
+                              '${e.name}',
+                              style: TextStyle(
+                                color: black.withOpacity(0.7),
+                              ),
+                            ),
+                          ),
                         ),
                       )
                       .toList(),

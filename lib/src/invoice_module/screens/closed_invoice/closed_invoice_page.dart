@@ -227,6 +227,7 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
                                           children: data.values!
                                               .map(
                                                 (item) => InvoiceCard(
+                                                  isClosed: true,
                                                   startAnimation: true,
                                                   index: 0,
                                                   data: item,

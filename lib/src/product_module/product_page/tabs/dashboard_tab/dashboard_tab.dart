@@ -4,6 +4,7 @@ import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/product_module/screens/product_list_page/product_list_page.dart';
+import 'package:dehub/src/product_module/screens/supplier_list/supplier_list.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -79,18 +80,33 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               scrollDirection: Axis.horizontal,
               children: [
-                DashboardCard(
-                  onClick: () {
-                    Navigator.of(context).pushNamed(ProductListPage.routeName);
-                  },
-                  boxColor: productColor.withOpacity(0.1),
-                  padding: 9,
-                  labelText: user.currentBusiness?.type == "SUPPLIER"
-                      ? "Барааны жагсаалт"
-                      : 'Нийлүүлэгчдийн бараа',
-                  svgColor: productColor,
-                  svg: 'assets/svg/grid1.svg',
-                ),
+                user.currentBusiness?.type == "SUPPLIER"
+                    ? DashboardCard(
+                        onClick: () {
+                          Navigator.of(context).pushNamed(
+                            ProductListPage.routeName,
+                            arguments: ProductListPageArguments(
+                              id: '',
+                            ),
+                          );
+                        },
+                        boxColor: productColor.withOpacity(0.1),
+                        padding: 9,
+                        labelText: "Барааны жагсаалт",
+                        svgColor: productColor,
+                        svg: 'assets/svg/grid1.svg',
+                      )
+                    : DashboardCard(
+                        onClick: () {
+                          Navigator.of(context)
+                              .pushNamed(SupplierList.routeName);
+                        },
+                        boxColor: productColor.withOpacity(0.1),
+                        padding: 9,
+                        labelText: 'Нийлүүлэгчдийн бараа',
+                        svgColor: productColor,
+                        svg: 'assets/svg/grid1.svg',
+                      ),
                 DashboardCard(
                   onClick: () {},
                   boxColor: productColor.withOpacity(0.1),

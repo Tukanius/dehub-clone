@@ -33,9 +33,11 @@ class _OrderSettingTabState extends State<OrderSettingTab>
     setState(() {
       isLoading = true;
     });
-    itemUnits = widget.data.itemUnits!.firstWhere(
-      (element) => element.isBase == true,
-    );
+    if (widget.data.itemUnits?.length != 0) {
+      itemUnits = widget.data.itemUnits!.firstWhere(
+        (element) => element.isBase == true,
+      );
+    }
     setState(() {
       isLoading = false;
     });

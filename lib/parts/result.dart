@@ -38,6 +38,15 @@ Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
     if (instance.filter!.accountId != null) {
       params['filter']['accountId'] = instance.filter!.accountId;
     }
+    if (instance.filter!.supplierId != null) {
+      params['filter']['supplierId'] = instance.filter!.supplierId;
+    }
+    if (instance.filter!.isService != null) {
+      params['filter']['isService'] = instance.filter!.isService;
+    }
+    if (instance.filter!.isGoods != null) {
+      params['filter']['isGoods'] = instance.filter!.isGoods;
+    }
     if (instance.filter!.invoiceId != null) {
       params['filter']['invoiceId'] = instance.filter!.invoiceId;
     }
@@ -122,7 +131,7 @@ Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
       params['filter']['itemStatus'] = instance.filter!.itemStatus;
     }
 
-    if (instance.offset!.page! > 0) {
+    if (instance.offset!.page! != 0) {
       params['offset']['page'] = instance.offset!.page;
     }
     if (instance.offset?.limit != 0) {

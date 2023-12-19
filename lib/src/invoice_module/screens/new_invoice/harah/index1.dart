@@ -73,7 +73,13 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                 '${DateFormat("yyyy-MM-dd").format(DateTime.now())} ',
                           ),
                           user.lastName != null
-                              ? TextSpan(text: '${user.lastName?[0]} ')
+                              ? TextSpan(
+                                  text: '${user.lastName?[0]}. ',
+                                  style: TextStyle(
+                                    color: invoiceColor,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                )
                               : TextSpan(),
                           TextSpan(
                             text: "${user.firstName} ",

@@ -90,6 +90,7 @@ class _SetAccountState extends State<SetAccount> {
         title: Text(
           'Данс тохируулах',
           style: TextStyle(
+            color: white,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),

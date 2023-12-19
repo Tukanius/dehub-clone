@@ -36,8 +36,6 @@ class HttpRequest {
 
   static const version = '/app';
 
-  static const uri = host;
-
   Dio dio = Dio();
 
   Future<dynamic> request(

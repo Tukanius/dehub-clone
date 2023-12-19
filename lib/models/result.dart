@@ -29,8 +29,14 @@ class Filter {
   String? productType;
   bool? isRecalled;
   String? invoiceId;
+  bool? isGoods;
+  bool? isService;
+  String? supplierId;
 
   Filter({
+    this.supplierId,
+    this.isService,
+    this.isGoods,
     this.invoiceId,
     this.isRecalled,
     this.productType,

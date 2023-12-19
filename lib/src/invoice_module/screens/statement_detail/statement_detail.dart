@@ -1,5 +1,6 @@
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/models/invoice.dart';
+import 'package:dehub/src/invoice_module/screens/statement_detail/components/partner_card.dart';
 import 'package:dehub/src/invoice_module/screens/statement_detail/tabs/closed_tab.dart';
 import 'package:dehub/src/invoice_module/screens/statement_detail/tabs/pending_tab.dart';
 import 'package:dehub/src/invoice_module/screens/statement_detail/tabs/open_tab.dart';
@@ -40,40 +41,67 @@ class _StatementDetailState extends State<StatementDetail> {
             color: invoiceColor,
           ),
           leadingWidth: 130,
-          bottom: TabBar(
-            overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
-            labelStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            unselectedLabelStyle:
-                TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            labelColor: invoiceColor,
-            indicatorColor: invoiceColor,
-            unselectedLabelColor: grey2,
-            tabs: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Text('Нээлттэй'),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Text('Батлах'),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Text('Хаагдсан'),
-              ),
-            ],
-          ),
         ),
-        body: TabBarView(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            OpenTab(
+            Material(
+              color: white,
+              child: TabBar(
+                overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
+                labelStyle: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: "Montserrat",
+                ),
+                unselectedLabelStyle: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: "Montserrat",
+                ),
+                labelColor: invoiceColor,
+                indicatorColor: invoiceColor,
+                unselectedLabelColor: grey2,
+                tabs: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text('Нээлттэй'),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text('Батлах'),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text('Хаагдсан'),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              child: Text(
+                'Харилцагч',
+                style: TextStyle(color: grey3, fontWeight: FontWeight.w600),
+              ),
+            ),
+            PartnerCard(
               data: widget.data,
             ),
-            PendingTab(
-              data: widget.data,
-            ),
-            ClosedTab(
-              data: widget.data,
+            Expanded(
+              child: TabBarView(
+                children: [
+                  OpenTab(
+                    data: widget.data,
+                  ),
+                  PendingTab(
+                    data: widget.data,
+                  ),
+                  ClosedTab(
+                    data: widget.data,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

@@ -57,6 +57,9 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => InvoiceOverdueStatus.fromJson(e))
             .toList()
         : null,
+    units: json['units'] != null
+        ? (json['units'] as List).map((e) => Units.fromJson(e)).toList()
+        : null,
     paymentTermConfigTypes: json['paymentTermConfigTypes'] != null
         ? (json['paymentTermConfigTypes'] as List)
             .map((e) => PaymentTermConfigTypes.fromJson(e))
@@ -76,6 +79,9 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
         ? (json['invoiceHistoryTypes'] as List)
             .map((e) => InvoiceHistoryTypes.fromJson(e))
             .toList()
+        : null,
+    countries: json['countries'] != null
+        ? (json['countries'] as List).map((e) => Countries.fromJson(e)).toList()
         : null,
     invoiceTypes: json['invoiceTypes'] != null
         ? (json['invoiceTypes'] as List)
@@ -299,6 +305,7 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$GeneralToJson(General instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.countries != null) json['countries'] = instance.countries;
   if (instance.scfRequestTypes != null)
     json['scfRequestTypes'] = instance.scfRequestTypes;
   if (instance.invoiceOverdueStatus != null)
@@ -315,6 +322,7 @@ Map<String, dynamic> _$GeneralToJson(General instance) {
   if (instance.bankNames != null) json['bankNames'] = instance.bankNames;
   if (instance.pullSheetStatus != null)
     json['pullSheetStatus'] = instance.pullSheetStatus;
+  if (instance.units != null) json['units'] = instance.units;
   if (instance.orderStatus != null) json['orderStatus'] = instance.orderStatus;
   if (instance.deliveryNoteStatus != null)
     json['deliveryNoteStatus'] = instance.deliveryNoteStatus;
