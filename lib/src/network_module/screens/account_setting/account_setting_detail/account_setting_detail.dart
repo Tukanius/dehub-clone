@@ -3,6 +3,7 @@ import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/business_network.dart';
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/network_module/screens/account_setting/set_account/set_account.dart';
@@ -35,12 +36,12 @@ class AccountSettingDetail extends StatefulWidget {
 
 class _ResponsibleStaffDetailState extends State<AccountSettingDetail>
     with AfterLayoutMixin {
-  TextEditingController textController = TextEditingController();
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   BusinessNetwork business = BusinessNetwork();
   ListenController listenController = ListenController();
   bool isLoading = true;
   User user = User();
+  General general = General();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -167,7 +168,7 @@ class _ResponsibleStaffDetailState extends State<AccountSettingDetail>
                     margin:
                         const EdgeInsets.only(left: 15, top: 15, bottom: 20),
                     child: Text(
-                      'Харилцааг хариуцан ажилтан',
+                      'Орлого, зарлагын данс',
                       style: TextStyle(
                         color: grey3,
                         fontWeight: FontWeight.w600,
@@ -180,7 +181,7 @@ class _ResponsibleStaffDetailState extends State<AccountSettingDetail>
                     paddingVertical: 10,
                     labelText: "Зарлагын данс",
                     secondText:
-                        '${business.businessInAcc?.bankName} ${business.businessInAcc?.number}',
+                        '${business.businessInAcc?.bankName != null ? business.businessInAcc?.bankName : ''} ${business.businessInAcc?.number != null ? business.businessInAcc?.number : '-'}',
                     secondTextColor: networkColor,
                   ),
                   FieldCard(
@@ -189,7 +190,7 @@ class _ResponsibleStaffDetailState extends State<AccountSettingDetail>
                     paddingVertical: 10,
                     labelText: "Орлогын данс",
                     secondText:
-                        '${business.businessOutAcc?.bankName} ${business.businessOutAcc?.number}',
+                        '${business.businessOutAcc?.bankName != null ? business.businessOutAcc?.bankName : ""} ${business.businessOutAcc?.number != null ? business.businessOutAcc?.number : '-'}',
                     secondTextColor: networkColor,
                   ),
                   GestureDetector(
@@ -244,7 +245,7 @@ class _ResponsibleStaffDetailState extends State<AccountSettingDetail>
                       key: fbKey,
                       child: FormTextField(
                         readOnly: true,
-                        controller: textController,
+                        initialValue: business.description,
                         textAlign: TextAlign.left,
                         name: 'description',
                         maxLines: 5,

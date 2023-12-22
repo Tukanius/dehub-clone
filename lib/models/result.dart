@@ -32,8 +32,10 @@ class Filter {
   bool? isGoods;
   bool? isService;
   String? supplierId;
+  bool? isContracted;
 
   Filter({
+    this.isContracted,
     this.supplierId,
     this.isService,
     this.isGoods,

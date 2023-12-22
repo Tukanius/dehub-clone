@@ -189,20 +189,36 @@ class _BrandSheetState extends State<BrandSheet> with AfterLayoutMixin {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 15, vertical: 10),
                                     child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        data.logo != null && data.logo != ''
-                                            ? CircleAvatar(
-                                                radius: 14,
-                                                backgroundColor: grey,
-                                                backgroundImage: NetworkImage(
-                                                    '${data.logo}'),
-                                              )
-                                            : SizedBox(),
-                                        SizedBox(
-                                          width: 5,
+                                        Row(
+                                          children: [
+                                            data.logo != null && data.logo != ''
+                                                ? CircleAvatar(
+                                                    radius: 14,
+                                                    backgroundColor: grey,
+                                                    backgroundImage:
+                                                        NetworkImage(
+                                                            '${data.logo}'),
+                                                  )
+                                                : SizedBox(),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              data.name,
+                                            ),
+                                          ],
                                         ),
-                                        Text(
-                                          data.name,
+                                        SvgPicture.asset(
+                                          'assets/svg/double-check.svg',
+                                          colorFilter: ColorFilter.mode(
+                                              source.product.brandName ==
+                                                      data.name
+                                                  ? productColor
+                                                  : grey3,
+                                              BlendMode.srcIn),
                                         ),
                                       ],
                                     ),

@@ -69,7 +69,7 @@ class _DistributionAreaCardState extends State<DistributionAreaCard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${widget.data?.partner?.businessName}',
+                              '${widget.data?.profileName}',
                               style: TextStyle(
                                 color: networkColor,
                                 fontWeight: FontWeight.bold,

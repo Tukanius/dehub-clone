@@ -226,7 +226,7 @@ class _ProfilePageState extends State<ProfilePage>
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
                         PersonalInfo(),
-                        PartnerInfo1(),
+                        PartnerInfo(),
                         SettingsPage(),
                       ],
                     ),

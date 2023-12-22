@@ -139,9 +139,10 @@ class _FromDehubTabState extends State<FromDehubTab> with AfterLayoutMixin {
                                     Navigator.of(context).pushNamed(
                                       InvitationSentPage.routeName,
                                       arguments: InvitationSentPageArguments(
-                                          listenController: listenController,
-                                          data: item,
-                                          invitationType: "DeHUB Network"),
+                                        listenController: listenController,
+                                        data: item,
+                                        invitationType: "DeHUB Network",
+                                      ),
                                     );
                                   },
                                 ),

@@ -85,9 +85,6 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         onClick: () {
                           Navigator.of(context).pushNamed(
                             ProductListPage.routeName,
-                            arguments: ProductListPageArguments(
-                              id: '',
-                            ),
                           );
                         },
                         boxColor: productColor.withOpacity(0.1),
@@ -207,125 +204,136 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                     SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(left: 15),
-                          child: Text(
-                            'Нөөцөд анхаарах бараа',
-                            style: TextStyle(
-                              color: black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            color: transparent,
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Бүгдийг",
-                                  style: TextStyle(
-                                    color: networkColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
+                    user.currentBusiness?.type == "SUPPLIER"
+                        ? Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 15),
+                                    child: Text(
+                                      'Нөөцөд анхаарах бараа',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                                   ),
+                                  GestureDetector(
+                                    onTap: () {},
+                                    child: Container(
+                                      color: transparent,
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Бүгдийг",
+                                            style: TextStyle(
+                                              color: networkColor,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: networkColor,
+                                            size: 16,
+                                          ),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Icon(
+                                    Icons.calendar_today,
+                                    color: grey,
+                                    size: 18,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    '${DateFormat("yyyy-MM-dd").format(DateTime.now())} - ',
+                                    style: TextStyle(
+                                      color: grey,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.calendar_today,
+                                    color: grey,
+                                    size: 18,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
+                                    style: TextStyle(
+                                      color: grey,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Container(
+                                height: 180,
+                                padding: const EdgeInsets.all(10),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: white,
                                 ),
-                                SizedBox(
-                                  width: 10,
+                                child: SfCartesianChart(
+                                  series: <ChartSeries>[
+                                    BarSeries<InventoryGoods, String>(
+                                      borderRadius: BorderRadius.circular(5),
+                                      pointColorMapper: (datum, index) =>
+                                          datum.profileName == "Эден"
+                                              ? green
+                                              : datum.profileName == "Касс"
+                                                  ? pieYellow
+                                                  : datum.profileName ==
+                                                          "Сэрүүн"
+                                                      ? pieOrange
+                                                      : datum.profileName ==
+                                                              "Боргио"
+                                                          ? pieRed
+                                                          : brown,
+                                      dataSource: legend,
+                                      xValueMapper: (gdp, _) => gdp.profileName,
+                                      yValueMapper: (gdp, _) => gdp.count,
+                                    )
+                                  ],
+                                  primaryXAxis: CategoryAxis(),
                                 ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: networkColor,
-                                  size: 16,
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Icon(
-                          Icons.calendar_today,
-                          color: grey,
-                          size: 18,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '${DateFormat("yyyy-MM-dd").format(DateTime.now())} - ',
-                          style: TextStyle(
-                            color: grey,
-                            fontSize: 12,
-                          ),
-                        ),
-                        Icon(
-                          Icons.calendar_today,
-                          color: grey,
-                          size: 18,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
-                          style: TextStyle(
-                            color: grey,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      height: 180,
-                      padding: const EdgeInsets.all(10),
-                      margin: const EdgeInsets.symmetric(horizontal: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: white,
-                      ),
-                      child: SfCartesianChart(
-                        series: <ChartSeries>[
-                          BarSeries<InventoryGoods, String>(
-                            borderRadius: BorderRadius.circular(5),
-                            pointColorMapper: (datum, index) =>
-                                datum.profileName == "Эден"
-                                    ? green
-                                    : datum.profileName == "Касс"
-                                        ? pieYellow
-                                        : datum.profileName == "Сэрүүн"
-                                            ? pieOrange
-                                            : datum.profileName == "Боргио"
-                                                ? pieRed
-                                                : brown,
-                            dataSource: legend,
-                            xValueMapper: (gdp, _) => gdp.profileName,
-                            yValueMapper: (gdp, _) => gdp.count,
+                              ),
+                            ],
                           )
-                        ],
-                        primaryXAxis: CategoryAxis(),
-                      ),
-                    ),
+                        : SizedBox(),
                     SizedBox(
                       height: 10,
                     ),

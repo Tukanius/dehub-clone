@@ -120,6 +120,7 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: white,

@@ -66,7 +66,7 @@ class _MenuPageState extends State<MenuPage> {
                             margin: const EdgeInsets.only(left: 15, top: 20),
                             child: Row(
                               children: [
-                                user.avatar != null || user.avatar != ''
+                                user.avatar != null && user.avatar != ''
                                     ? CircleAvatar(
                                         radius: 17,
                                         backgroundImage:

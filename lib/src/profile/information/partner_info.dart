@@ -7,15 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class PartnerInfo1 extends StatefulWidget {
-  static const routeName = '/PartnerInfo1';
-  const PartnerInfo1({Key? key}) : super(key: key);
+class PartnerInfo extends StatefulWidget {
+  const PartnerInfo({Key? key}) : super(key: key);
 
   @override
-  State<PartnerInfo1> createState() => _PartnerInfo1State();
+  State<PartnerInfo> createState() => _PartnerInfoState();
 }
 
-class _PartnerInfo1State extends State<PartnerInfo1> {
+class _PartnerInfoState extends State<PartnerInfo> {
   int currentIndex = 1;
   Partner partner = Partner();
 
@@ -72,16 +71,21 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
           Positioned(
             bottom: 0,
             child: Container(
-                child: currentIndex == 1
-                    ? Container(
-                        margin: const EdgeInsets.only(bottom: 50),
-                        width: MediaQuery.of(context).size.width,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              currentIndex = 2;
-                            });
-                          },
+              child: currentIndex == 1
+                  ? Container(
+                      margin: const EdgeInsets.only(bottom: 50),
+                      width: MediaQuery.of(context).size.width,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            currentIndex = 2;
+                          });
+                        },
+                        child: Container(
+                          color: transparent,
+                          margin: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width / 1.8),
+                          padding: const EdgeInsets.symmetric(vertical: 5),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -108,15 +112,19 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                             ],
                           ),
                         ),
-                      )
-                    : Container(
-                        margin: const EdgeInsets.only(bottom: 50, left: 16),
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              currentIndex = 1;
-                            });
-                          },
+                      ),
+                    )
+                  : Container(
+                      margin: const EdgeInsets.only(bottom: 50, left: 16),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            currentIndex = 1;
+                          });
+                        },
+                        child: Container(
+                          color: transparent,
+                          padding: const EdgeInsets.symmetric(vertical: 5),
                           child: Row(
                             children: [
                               SvgPicture.asset(
@@ -141,43 +149,9 @@ class _PartnerInfo1State extends State<PartnerInfo1> {
                             ],
                           ),
                         ),
-                      )
-                // : Container(
-                //     margin: const EdgeInsets.only(bottom: 50),
-                //     width: MediaQuery.of(context).size.width,
-                //     child: GestureDetector(
-                //       onTap: () {
-                //         setState(() {
-                //           currentIndex = 2;
-                //         });
-                //       },
-                //       child: Row(
-                //         crossAxisAlignment: CrossAxisAlignment.center,
-                //         mainAxisAlignment: MainAxisAlignment.end,
-                //         children: [
-                //           Text(
-                //             'Дараах',
-                //             style: TextStyle(
-                //               color: buttonColor,
-                //               fontSize: 14,
-                //               fontWeight: FontWeight.w500,
-                //             ),
-                //           ),
-                //           SizedBox(
-                //             width: 10,
-                //           ),
-                //           SvgPicture.asset(
-                //             'assets/svg/arrow_forward.svg',
-                //             color: buttonColor,
-                //           ),
-                //           SizedBox(
-                //             width: 16,
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                ),
+                      ),
+                    ),
+            ),
           ),
         ],
       ),

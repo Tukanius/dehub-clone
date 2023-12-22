@@ -3,12 +3,15 @@ import 'package:dehub/components/client_classification_card/client_classificatio
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/network_module/screens/client_classifications/client_classification_detail/client_classification_detail.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:provider/provider.dart';
 
 class ClientClassifications extends StatefulWidget {
   static const routeName = '/ClientClassifications';
@@ -26,6 +29,7 @@ class _ClientClassificationsState extends State<ClientClassifications>
   bool isLoading = true;
   RefreshController refreshController = RefreshController();
   bool startAnimation = false;
+  User user = User();
 
   list(page, limit, String value) async {
     Offset offset = Offset(page: page, limit: limit);
@@ -71,6 +75,8 @@ class _ClientClassificationsState extends State<ClientClassifications>
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).businessUser;
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -148,15 +154,19 @@ class _ClientClassificationsState extends State<ClientClassifications>
                               children: business.rows!
                                   .map(
                                     (data) => ClientClassificationCard(
-                                      onClick: () {
-                                        Navigator.of(context).pushNamed(
-                                          ClientClassificationDetail.routeName,
-                                          arguments:
-                                              ClientClassificationDetailArguments(
-                                            id: data.id,
-                                          ),
-                                        );
-                                      },
+                                      onClick: user.currentBusiness?.type ==
+                                              "SUPPLIER"
+                                          ? () {
+                                              Navigator.of(context).pushNamed(
+                                                ClientClassificationDetail
+                                                    .routeName,
+                                                arguments:
+                                                    ClientClassificationDetailArguments(
+                                                  id: data.id,
+                                                ),
+                                              );
+                                            }
+                                          : () {},
                                       data: data,
                                       index: business.rows!.indexOf(data),
                                       startAnimation: startAnimation,

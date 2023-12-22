@@ -50,8 +50,8 @@ class HttpHandler {
       case 304:
         return data;
       // case 401:
-      // locator<NavigationService>().pushNamed(routeName: LoginPage.routeName);
-      // break;
+      //   locator<NavigationService>().pushNamed(routeName: LoginPage.routeName);
+      //   break;
       default:
         HttpHandler error = HttpHandler(
             statusCode: statusCode,

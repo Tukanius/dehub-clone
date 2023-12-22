@@ -4,12 +4,15 @@ import 'package:dehub/components/distribution_area_card/distribution_area_card.d
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/network_module/screens/distribution_areas/distribution_area_detail/distribution_area_detail.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:provider/provider.dart';
 
 class DistributionAreas extends StatefulWidget {
   static const routeName = '/DistributionAreas';
@@ -29,6 +32,7 @@ class _DistributionAreasState extends State<DistributionAreas>
       RefreshController(initialRefresh: false);
   Result network = Result(count: 0, rows: []);
   Timer? timer;
+  User user = User();
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -89,6 +93,8 @@ class _DistributionAreasState extends State<DistributionAreas>
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).businessUser;
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -163,15 +169,19 @@ class _DistributionAreasState extends State<DistributionAreas>
                                   (data) => Column(
                                     children: [
                                       DistributionAreaCard(
-                                        onClick: () {
-                                          Navigator.of(context).pushNamed(
-                                            DistributionAreaDetail.routeName,
-                                            arguments:
-                                                DistributionAreaDetailArguments(
-                                              id: data.id,
-                                            ),
-                                          );
-                                        },
+                                        onClick: user.currentBusiness?.type ==
+                                                "SUPPLIER"
+                                            ? () {
+                                                Navigator.of(context).pushNamed(
+                                                  DistributionAreaDetail
+                                                      .routeName,
+                                                  arguments:
+                                                      DistributionAreaDetailArguments(
+                                                    id: data.id,
+                                                  ),
+                                                );
+                                              }
+                                            : () {},
                                         index: network.rows!.indexOf(data),
                                         startAnimation: startAnimation,
                                         data: data,

@@ -307,9 +307,11 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                                 height: 8,
                               ),
                               FormTextField(
-                                onComplete: () {
-                                  _performLogin(context);
-                                },
+                                onComplete: isSubmit == false
+                                    ? () {
+                                        _performLogin(context);
+                                      }
+                                    : () {},
                                 inputAction: TextInputAction.done,
                                 textColor: buttonColor,
                                 name: "password",

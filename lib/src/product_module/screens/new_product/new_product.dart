@@ -1,7 +1,7 @@
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
-import 'package:dehub/src/product_module/screens/new_product/tabs/additional_tab.dart';
+import 'package:dehub/src/product_module/screens/new_product/tabs/dynamic_tab.dart';
 import 'package:dehub/src/product_module/screens/new_product/tabs/main_tab.dart';
 import 'package:dehub/src/product_module/screens/new_product/tabs/order_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -24,7 +24,7 @@ class _NewProductState extends State<NewProduct>
 
   @override
   afterFirstLayout(BuildContext context) {
-    Provider.of<IndexProvider>(context, listen: false).newProductIndexChange(0);
+    Provider.of<IndexProvider>(context, listen: false).newProductIndexChange(2);
     Provider.of<InventoryProvider>(context, listen: false).clearData();
     setState(() {
       isLoading = false;
@@ -59,6 +59,8 @@ class _NewProductState extends State<NewProduct>
           labelColor: productColor,
           unselectedLabelColor: dark,
           indicatorColor: productColor,
+          isScrollable: true,
+          tabAlignment: TabAlignment.start,
           onTap: (value) {
             if (tabController.indexIsChanging) {
               tabController.index = tabController.previousIndex;
@@ -68,10 +70,10 @@ class _NewProductState extends State<NewProduct>
           },
           tabs: [
             Tab(
-              text: 'Үндсэн',
+              text: 'Үндсэн мэдээлэл',
             ),
             Tab(
-              text: 'Нэмэлт',
+              text: 'Динамик мэдээлэл',
             ),
             Tab(
               text: 'Захиалга',
@@ -86,7 +88,7 @@ class _NewProductState extends State<NewProduct>
               controller: tabController,
               children: [
                 MainTab(),
-                AdditionalTab(),
+                DynamicTab(),
                 OrderTab(),
               ],
             ),

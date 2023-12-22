@@ -47,6 +47,12 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: grey,
+                              image: DecorationImage(
+                                image: AssetImage(
+                                  'images/avatar.png',
+                                ),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           )
                         : Container(
@@ -57,6 +63,7 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                               color: grey,
                               image: DecorationImage(
                                 image: NetworkImage('${widget.data?.logo}'),
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
@@ -123,76 +130,86 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                         ),
                         Container(
                           width: 250,
-                          child: Divider(
-                            thickness: 1,
-                          ),
-                        ),
-                        Container(
-                          width: 250,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          child: Column(
                             children: [
+                              Divider(
+                                thickness: 1,
+                              ),
                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  widget.data?.staff?.avatar == null
-                                      ? CircleAvatar(
-                                          radius: 12,
-                                          backgroundColor: grey,
-                                        )
-                                      : CircleAvatar(
-                                          radius: 12,
-                                          backgroundImage: NetworkImage(
-                                              '${widget.data?.staff?.avatar}'),
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        widget.data?.staff?.avatar == null
+                                            ? CircleAvatar(
+                                                radius: 12,
+                                                backgroundColor: grey,
+                                                backgroundImage: AssetImage(
+                                                    'images/avatar.png'),
+                                              )
+                                            : CircleAvatar(
+                                                radius: 12,
+                                                backgroundImage: NetworkImage(
+                                                    '${widget.data?.staff?.avatar}'),
+                                              ),
+                                        SizedBox(
+                                          width: 5,
                                         ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Container(
-                                    child: Text(
-                                      '${widget.data?.staff?.firstName}',
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                      ),
+                                        Container(
+                                          child: Text(
+                                            '${widget.data?.staff?.firstName}',
+                                            style: TextStyle(
+                                              fontSize: 10,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          '${widget.data?.staff?.email}',
+                                          style: TextStyle(
+                                              color: grey3, fontSize: 10),
+                                          textAlign: TextAlign.end,
+                                        ),
+                                        Text(
+                                          '${widget.data?.staff?.phone}',
+                                          style: TextStyle(
+                                              color: grey3, fontSize: 10),
+                                          textAlign: TextAlign.end,
+                                        ),
+                                      ],
+                                    ),
+                                  )
                                 ],
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    '${widget.data?.staff?.email}',
-                                    style:
-                                        TextStyle(color: grey3, fontSize: 10),
-                                  ),
-                                  Text(
-                                    '${widget.data?.staff?.phone}',
-                                    style:
-                                        TextStyle(color: grey3, fontSize: 10),
-                                  ),
-                                ],
-                              )
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ],
                 ),
-                Container(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: networkColor,
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: SvgPicture.asset('assets/svg/message_sent.svg'),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: networkColor,
+                        borderRadius: BorderRadius.circular(100),
                       ),
-                    ],
-                  ),
+                      child: SvgPicture.asset('assets/svg/message_sent.svg'),
+                    ),
+                  ],
                 ),
               ],
             ),

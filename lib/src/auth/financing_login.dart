@@ -271,6 +271,9 @@ class _FinancingLoginState extends State<FinancingLogin> {
                   labelText: 'Нэвтрэх',
                   textColor: buttonColor,
                 ),
+                SizedBox(
+                  height: 50,
+                ),
               ],
             ),
           ),

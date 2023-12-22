@@ -13,6 +13,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: networkColor,

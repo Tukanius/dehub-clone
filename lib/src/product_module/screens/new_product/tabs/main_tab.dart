@@ -4,12 +4,16 @@ import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/src/product_module/screens/new_product/components/brand_form.dart';
 import 'package:dehub/src/product_module/screens/new_product/components/group_form.dart';
+import 'package:dehub/src/product_module/screens/new_product/components/picture_form.dart';
 import 'package:dehub/src/product_module/screens/new_product/components/product_form.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
+import 'package:dehub/widgets/form_textfield.dart';
+import 'package:dehub/api/inventory_api.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 
 class MainTab extends StatefulWidget {
   const MainTab({super.key});
@@ -21,9 +25,22 @@ class MainTab extends StatefulWidget {
 class _MainTabState extends State<MainTab> {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   InventoryGoods data = InventoryGoods();
+  var profileKey = GlobalKey();
   var res;
+  bool isSubmit = false;
 
   validateCheck() {
+    if (data.detailImages?.length == null) {
+      res.banValidate();
+    }
+    if (data.url == null) {
+      res.proValidate();
+      Scrollable.ensureVisible(
+        profileKey.currentContext!,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
+    }
     if (data.itemTypeName == null) {
       res.itValidate();
     }
@@ -48,16 +65,61 @@ class _MainTabState extends State<MainTab> {
         data.subClassificationName != null &&
         data.categoryName != null &&
         data.subCategoryName != null &&
-        data.tagName != null) {
-      Provider.of<IndexProvider>(context, listen: false)
-          .newProductIndexChange(1);
+        data.tagName != null &&
+        res.bannerValidate == false &&
+        res.profileValidate == false) {
+      onSubmit();
     }
   }
 
-  onSubmit() {
-    if (fbKey.currentState!.saveAndValidate()) {
-      Provider.of<IndexProvider>(context, listen: false)
+  onSubmit() async {
+    try {
+      setState(() {
+        isSubmit = true;
+      });
+      var res = await InventoryApi().goodsCreate(
+        InventoryGoods(
+          skuCode: data.skuCode,
+          barCode: data.barCode,
+          erpCode: data.erpCode,
+          nameMon: data.nameMon,
+          nameEng: data.nameEng,
+          nameBill: data.padName,
+          nameWeb: data.nameWeb,
+          nameApp: data.nameApp,
+          brandId: data.brandId,
+          supplierId: data.supplierId,
+          manufacturerId: data.manufacturerId,
+          originCountry: data.manufacturerCountryId,
+          importerCountry: data.importerCountry,
+          distributorId: data.distributorId,
+          itemTypeId: data.itemTypeId,
+          classificationId: data.classificationId,
+          subClassificationId: data.subClassificationId,
+          categoryId: data.categoryId,
+          subCategoryId: data.subCategoryId,
+          tagId: data.tagId,
+          description: data.description,
+          coverImages: [
+            InventoryGoods(
+              isMain: true,
+              url: data.url,
+            ),
+          ],
+          detailImages: data.detailImages,
+        ),
+      );
+      await Provider.of<InventoryProvider>(context, listen: false)
+          .id(res.id.toString());
+      await Provider.of<IndexProvider>(context, listen: false)
           .newProductIndexChange(1);
+      setState(() {
+        isSubmit = false;
+      });
+    } catch (e) {
+      setState(() {
+        isSubmit = false;
+      });
     }
   }
 
@@ -71,136 +133,184 @@ class _MainTabState extends State<MainTab> {
         FocusScope.of(context).unfocus();
       },
       child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Бүртгэлийн мэдээлэл',
-                style: TextStyle(
-                  color: grey3,
-                  fontSize: 12,
+        child: FormBuilder(
+          key: fbKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              PictureForm(
+                profileKey: profileKey,
+              ),
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Text(
+                  'Бүртгэлийн мэдээлэл',
+                  style: TextStyle(
+                    color: productColor,
+                    fontSize: 14,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 0.5,
-              color: productColor,
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: "DeHUB код",
-              color: white,
-              labelTextColor: dark,
-              secondTextColor: grey3,
-              secondText: 'Авто гарна',
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Бүртгэлийн статус',
-                    style: TextStyle(
-                      color: dark,
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 0.5,
+                color: productColor,
+              ),
+              FieldCard(
+                paddingHorizontal: 15,
+                paddingVertical: 10,
+                labelText: "DeHUB код",
+                color: white,
+                labelTextColor: dark,
+                secondTextColor: grey3,
+                secondText: 'Авто гарна',
+              ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                color: white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Бүртгэлийн статус',
+                      style: TextStyle(
+                        color: dark,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: grey3.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: grey3),
+                      ),
+                      child: Text(
+                        'Түр төлөв',
+                        style: TextStyle(fontSize: 14, color: grey3),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              FieldCard(
+                paddingHorizontal: 15,
+                paddingVertical: 10,
+                labelText: "Бүртгэсэн ажилтан",
+                color: white,
+                labelTextColor: dark,
+                secondTextColor: grey3,
+                secondText: 'Авто гарна',
+              ),
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Text(
+                  'Барааны нэр код',
+                  style: TextStyle(
+                    color: productColor,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 0.5,
+                color: productColor,
+              ),
+              ProductForm(),
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Text(
+                  'Бүртгэлийн мэдээлэл',
+                  style: TextStyle(
+                    color: productColor,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 0.5,
+                color: productColor,
+              ),
+              BrandForm(),
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Text(
+                  'Бараа хамаарах бүлэг',
+                  style: TextStyle(
+                    color: productColor,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 0.5,
+                color: productColor,
+              ),
+              GroupForm(),
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Text(
+                  'Тайлбар',
+                  style: TextStyle(
+                    color: grey3,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              Container(
+                color: white,
+                padding: const EdgeInsets.all(15),
+                child: FormTextField(
+                  onChanged: (value) {
+                    res.description(value);
+                  },
+                  initialValue: res.product.description,
+                  readOnly: false,
+                  textAlign: TextAlign.left,
+                  name: 'description',
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.zero,
+                      borderSide: BorderSide(color: grey3),
+                    ),
+                    fillColor: white,
+                    filled: true,
+                    hintStyle: TextStyle(
+                      color: grey2,
                     ),
                   ),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-                    decoration: BoxDecoration(
-                      color: grey3.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: grey3),
-                    ),
-                    child: Text(
-                      'Түр төлөв',
-                      style: TextStyle(fontSize: 12, color: grey3),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: "Бүртгэсэн ажилтан",
-              color: white,
-              labelTextColor: dark,
-              secondTextColor: grey3,
-              secondText: 'Авто гарна',
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Барааны нэр код',
-                style: TextStyle(
-                  color: grey3,
-                  fontSize: 12,
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(
+                        errorText: 'Тайлбар оруулна уу'),
+                  ]),
                 ),
               ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 0.5,
-              color: productColor,
-            ),
-            FormBuilder(
-              key: fbKey,
-              child: ProductForm(),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Бүртгэлийн мэдээлэл',
-                style: TextStyle(
-                  color: grey3,
-                  fontSize: 12,
-                ),
+              SizedBox(
+                height: 100,
               ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 0.5,
-              color: productColor,
-            ),
-            BrandForm(),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Бараа хамаарах бүлэг',
-                style: TextStyle(
-                  color: grey3,
-                  fontSize: 12,
-                ),
+              CustomButton(
+                onClick: () {
+                  validateCheck();
+                },
+                isLoading: isSubmit,
+                labelColor: productColor,
+                labelText: "Үргэлжлүүлэх",
               ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 0.5,
-              color: productColor,
-            ),
-            GroupForm(),
-            SizedBox(
-              height: 100,
-            ),
-            CustomButton(
-              onClick: () {
-                // onSubmit();
-                validateCheck();
-              },
-              labelColor: productColor,
-              labelText: "Үргэлжлүүлэх",
-            ),
-            SizedBox(
-              height: 50,
-            ),
-          ],
+              SizedBox(
+                height: 50,
+              ),
+            ],
+          ),
         ),
       ),
     );

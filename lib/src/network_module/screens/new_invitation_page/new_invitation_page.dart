@@ -47,6 +47,7 @@ class _NewInvitationPageState extends State<NewInvitationPage> {
             labelStyle: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
+              fontFamily: "Montserrat",
             ),
             tabs: [
               Container(

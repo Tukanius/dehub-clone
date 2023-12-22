@@ -167,7 +167,7 @@ class _ResponsibleStaffDetailState extends State<ClientStaffDetail>
                     margin:
                         const EdgeInsets.only(left: 15, top: 15, bottom: 20),
                     child: Text(
-                      'Харилцааг хариуцан ажилтан',
+                      'Харилцааг хариуцсан ажилтан',
                       style: TextStyle(
                         color: grey3,
                         fontWeight: FontWeight.w600,

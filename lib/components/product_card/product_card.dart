@@ -1,12 +1,16 @@
+import 'package:dehub/models/inventory_goods.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ProductCard extends StatefulWidget {
-  final bool? ratingBar;
+  final Function()? buttonClick;
+  final InventoryGoods data;
   const ProductCard({
     Key? key,
-    this.ratingBar,
+    this.buttonClick,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -25,13 +29,9 @@ class _ProductCardState extends State<ProductCard> {
         children: [
           Stack(
             children: [
-              Container(
-                child: Image(
-                  image: AssetImage(
-                    'images/juice.png',
-                  ),
-                  fit: BoxFit.cover,
-                ),
+              Image.network(
+                '${widget.data.image}',
+                fit: BoxFit.cover,
               ),
               Positioned(
                 right: 10,
@@ -39,13 +39,14 @@ class _ProductCardState extends State<ProductCard> {
                 child: SizedBox(
                   height: 40,
                   child: FloatingActionButton(
+                    shape: CircleBorder(),
                     backgroundColor: white,
                     child: Icon(
                       Icons.add_shopping_cart,
                       color: buttonColor,
                       size: 24,
                     ),
-                    onPressed: () {},
+                    onPressed: widget.buttonClick,
                   ),
                 ),
               ),
@@ -55,7 +56,7 @@ class _ProductCardState extends State<ProductCard> {
             height: 15,
           ),
           Text(
-            'Гүзээлзгэнэтэй иогурт',
+            '${widget.data.nameMon}',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -89,10 +90,16 @@ class _ProductCardState extends State<ProductCard> {
           SizedBox(
             height: 7,
           ),
-          Text(
-            'SKU 32165456, Brand Name, 250 гр, савлагааны нэр боөрсорыбх',
-            style: TextStyle(
-              fontSize: 16,
+          RichText(
+            textAlign: TextAlign.left,
+            text: TextSpan(
+              style: TextStyle(
+                  fontFamily: 'Montserrat', fontSize: 16, color: black),
+              children: [
+                TextSpan(text: '${widget.data.skuCode} '),
+                TextSpan(text: '${widget.data.barCode} '),
+                TextSpan(text: '${widget.data.erpCode} '),
+              ],
             ),
           ),
           SizedBox(
@@ -101,7 +108,7 @@ class _ProductCardState extends State<ProductCard> {
           Row(
             children: [
               Text(
-                '₮ 6800.00',
+                '₮${Utils().formatCurrency(widget.data.customPrice.toString())}',
                 style: TextStyle(
                   color: buttonColor,
                   fontWeight: FontWeight.w500,
@@ -112,7 +119,7 @@ class _ProductCardState extends State<ProductCard> {
                 width: 30,
               ),
               Text(
-                '₮ 6800.00',
+                '₮${Utils().formatCurrency(widget.data.standardPrice.toString())}',
                 style: TextStyle(
                   fontSize: 20,
                   color: grey3,

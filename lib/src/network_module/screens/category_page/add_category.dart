@@ -1,6 +1,7 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/business-staffs.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -8,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class AddCategoryArguments {
   ListenController listenController;
@@ -30,6 +33,7 @@ class AddCategory extends StatefulWidget {
 
 class _AddCategoryState extends State<AddCategory> {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
+
   onSubmit() async {
     if (fbKey.currentState!.saveAndValidate()) {
       try {
@@ -37,6 +41,8 @@ class _AddCategoryState extends State<AddCategory> {
             BusinessStaffs.fromJson(fbKey.currentState!.value);
         businessStaffs.parentId = '';
         await BusinessApi().createClientClassification(businessStaffs);
+        await Provider.of<GeneralProvider>(context, listen: false)
+            .businessInit(true);
         widget.listenController.changeVariable('createCategory');
         Navigator.of(context).pop();
       } catch (e) {
@@ -181,7 +187,7 @@ class _AddCategoryState extends State<AddCategory> {
                     style: TextStyle(color: dark),
                   ),
                   Text(
-                    '2023-04-08 16:24 PM',
+                    '${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now())}',
                     style: TextStyle(
                       color: dark,
                     ),

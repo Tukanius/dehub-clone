@@ -3,6 +3,8 @@ part of '../models/inventory_goods.dart';
 InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
   return InventoryGoods(
     count: json['count'] != null ? int.parse(json['count'].toString()) : null,
+    number:
+        json['number'] != null ? int.parse(json['number'].toString()) : null,
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => InventoryGoods.fromJson(e)).toList()
         : null,
@@ -11,8 +13,21 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
     unitName: json['unitName'] != null ? json['unitName'] as String : null,
     deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
+    fieldValueName: json['fieldValueName'] != null
+        ? json['fieldValueName'] as String
+        : null,
+    fieldValueId:
+        json['fieldValueId'] != null ? json['fieldValueId'] as String : null,
+    supplierTypeId: json['supplierTypeId'] != null
+        ? json['supplierTypeId'] as String
+        : null,
+    supplierTypeName: json['supplierTypeName'] != null
+        ? json['supplierTypeName'] as String
+        : null,
     businessId:
         json['businessId'] != null ? json['businessId'] as String : null,
+    variantStatus:
+        json['variantStatus'] != null ? json['variantStatus'] as String : null,
     type: json['type'] != null ? json['type'] as String : null,
     itemStatus:
         json['itemStatus'] != null ? json['itemStatus'] as String : null,
@@ -20,9 +35,13 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     profileName:
         json['profileName'] != null ? json['profileName'] as String : null,
     skuCode: json['skuCode'] != null ? json['skuCode'] as String : null,
+    checked: json['checked'] != null ? json['checked'] as bool : null,
     barCode: json['barCode'] != null ? json['barCode'] as String : null,
+    regNumber: json['regNumber'] != null ? json['regNumber'] as String : null,
     option: json['option'] != null ? json['option'] as String : null,
     optionId: json['optionId'] != null ? json['optionId'] as String : null,
+    sectionName:
+        json['sectionName'] != null ? json['sectionName'] as String : null,
     urls: json['urls'] != null
         ? (json['urls'] as List).map((e) => e as String).toList()
         : null,
@@ -80,6 +99,12 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     availableQuantity: json['availableQuantity'] != null
         ? double.parse(json['availableQuantity'].toString())
         : null,
+    standardPrice: json['standardPrice'] != null
+        ? double.parse(json['standardPrice'].toString())
+        : null,
+    customPrice: json['customPrice'] != null
+        ? double.parse(json['customPrice'].toString())
+        : null,
     width:
         json['width'] != null ? double.parse(json['width'].toString()) : null,
     length:
@@ -109,6 +134,10 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
         ? InventoryGoods.fromJson(json['catergory'] as Map<String, dynamic>)
         : null,
     parentId: json['parentId'] != null ? json['parentId'] as String : null,
+    partnerName:
+        json['partnerName'] != null ? json['partnerName'] as String : null,
+    businessName:
+        json['businessName'] != null ? json['businessName'] as String : null,
     regUserId: json['regUserId'] != null ? json['regUserId'] as String : null,
     name: json['name'] != null ? json['name'] as String : null,
     fieldCount: json['fieldCount'] != null
@@ -132,6 +161,9 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
         : null,
     manufacturer: json['manufacturer'] != null
         ? InventoryGoods.fromJson(json['manufacturer'] as Map<String, dynamic>)
+        : null,
+    partner: json['partner'] != null
+        ? InventoryGoods.fromJson(json['partner'] as Map<String, dynamic>)
         : null,
     originCountry:
         json['originCountry'] != null ? json['originCountry'] as String : null,
@@ -249,9 +281,11 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
             .map((e) => InventoryGoods.fromJson(e))
             .toList()
         : null,
-    // values: json['values'] != null
-    //     ? InventoryGoods.fromJson(json['values'] as Map<String, dynamic>)
-    //     : null,
+    values: json['values'] != null
+        ? (json['values'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
     hasAdditionalUnit: json['hasAdditionalUnit'] != null
         ? json['hasAdditionalUnit'] as bool
         : null,
@@ -301,11 +335,36 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     unitSpaceLabelId: json['unitSpaceLabelId'] != null
         ? json['unitSpaceLabelId'] as String
         : null,
+    sectionId: json['sectionId'] != null ? json['sectionId'] as String : null,
+    fieldId: json['fieldId'] != null ? json['fieldId'] as String : null,
+    fieldType: json['fieldType'] != null ? json['fieldType'] as String : null,
   );
 }
 
 Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   Map<String, dynamic> json = {};
+  if (instance.variantStatus != null)
+    json['variantStatus'] = instance.variantStatus;
+  if (instance.sectionId != null) json['sectionId'] = instance.sectionId;
+  if (instance.fieldId != null) json['fieldId'] = instance.fieldId;
+  if (instance.fieldType != null) json['fieldType'] = instance.fieldType;
+  if (instance.fieldValueName != null)
+    json['fieldValueName'] = instance.fieldValueName;
+  if (instance.fieldValueId != null)
+    json['fieldValueId'] = instance.fieldValueId;
+  if (instance.supplierTypeId != null)
+    json['supplierTypeId'] = instance.supplierTypeId;
+  if (instance.supplierTypeName != null)
+    json['supplierTypeName'] = instance.supplierTypeName;
+  if (instance.partnerName != null) json['partnerName'] = instance.partnerName;
+  if (instance.checked != null) json['checked'] = instance.checked;
+  if (instance.businessName != null)
+    json['businessName'] = instance.businessName;
+  if (instance.standardPrice != null)
+    json['standardPrice'] = instance.standardPrice;
+  if (instance.customPrice != null) json['customPrice'] = instance.customPrice;
+  if (instance.regNumber != null) json['regNumber'] = instance.regNumber;
+  if (instance.partner != null) json['partner'] = instance.partner;
   if (instance.unitSpaceLabel != null)
     json['unitSpaceLabel'] = instance.unitSpaceLabel;
   if (instance.unitSpaceLabelId != null)
@@ -314,6 +373,8 @@ Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
     json['unitWeightLabel'] = instance.unitWeightLabel;
   if (instance.unitWeightLabelId != null)
     json['unitWeightLabelId'] = instance.unitWeightLabelId;
+  if (instance.sectionName != null) json['sectionName'] = instance.sectionName;
+  if (instance.number != null) json['number'] = instance.number;
   if (instance.option != null) json['option'] = instance.option;
   if (instance.optionId != null) json['optionId'] = instance.optionId;
   if (instance.urls != null) json['urls'] = instance.urls;

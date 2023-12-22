@@ -2,10 +2,13 @@ import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/close_button/close_button.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/src/network_module/screens/category_page/add_category.dart';
+import 'package:dehub/src/network_module/screens/rank_page/add_rank.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -42,6 +45,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
   General general = General();
   String? className;
   String? classId;
+  String? classRefCode;
   String? rankName;
   String? rankId;
   bool? isSubmit;
@@ -97,7 +101,6 @@ class _SetClientClassificationState extends State<SetClientClassification> {
   Widget build(BuildContext context) {
     general =
         Provider.of<GeneralProvider>(context, listen: true).businessGeneral;
-
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -133,7 +136,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
                 classification();
               },
               labelText: 'Ангилал',
-              secondText: "${className == null ? "-" : className}",
+              secondText: className,
               arrowColor: networkColor,
               secondTextColor: networkColor,
             ),
@@ -141,12 +144,14 @@ class _SetClientClassificationState extends State<SetClientClassification> {
               color: white,
               paddingHorizontal: 15,
               paddingVertical: 10,
-              onClick: () {
-                list(false);
-                rank();
-              },
+              onClick: className != null
+                  ? () {
+                      list(false);
+                      rank();
+                    }
+                  : () {},
               labelText: 'Зэрэглэл',
-              secondText: "${rankName == null ? "-" : rankName}",
+              secondText: rankName,
               arrowColor: networkColor,
               secondTextColor: networkColor,
             ),
@@ -216,6 +221,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
       builder: (context) {
         return SingleChildScrollView(
           child: Container(
+            width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,32 +236,57 @@ class _SetClientClassificationState extends State<SetClientClassification> {
                     ),
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: classList!
-                      .map(
-                        (e) => GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              className = e.name;
-                              classId = e.id;
-                            });
-                            Navigator.of(context).pop();
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            color: transparent,
-                            child: Text(
-                              '${e.name}',
-                              style: TextStyle(
-                                color: black.withOpacity(0.7),
+                classList!.isNotEmpty
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: classList!
+                            .map(
+                              (e) => GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    className = e.name;
+                                    classRefCode = e.refCode;
+                                    classId = e.id;
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  color: transparent,
+                                  child: Text(
+                                    '${e.name}',
+                                    style: TextStyle(
+                                      color: black.withOpacity(0.7),
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
+                            )
+                            .toList(),
                       )
-                      .toList(),
-                ),
+                    : Column(
+                        children: [
+                          NotFound(
+                            module: "NETWORK",
+                            labelText: '',
+                          ),
+                          CustomButton(
+                            onClick: () {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pushNamed(
+                                AddCategory.routeName,
+                                arguments: AddCategoryArguments(
+                                  listenController: ListenController(),
+                                ),
+                              );
+                            },
+                            labelColor: networkColor,
+                            labelText: 'Ангилал нэмэх',
+                          )
+                        ],
+                      ),
                 SizedBox(
                   height: 40,
                 ),
@@ -280,6 +311,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
       builder: (context) {
         return SingleChildScrollView(
           child: Container(
+            width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -294,32 +326,59 @@ class _SetClientClassificationState extends State<SetClientClassification> {
                     ),
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: classList!
-                      .map(
-                        (e) => GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              rankName = e.name;
-                              rankId = e.id;
-                            });
-                            Navigator.of(context).pop();
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            color: transparent,
-                            child: Text(
-                              '${e.name}',
-                              style: TextStyle(
-                                color: black.withOpacity(0.7),
+                classList!.isNotEmpty
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: classList!
+                            .map(
+                              (e) => GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    rankName = e.name;
+                                    rankId = e.id;
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  color: transparent,
+                                  child: Text(
+                                    '${e.name}',
+                                    style: TextStyle(
+                                      color: black.withOpacity(0.7),
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
+                            )
+                            .toList(),
                       )
-                      .toList(),
-                ),
+                    : Column(
+                        children: [
+                          NotFound(
+                            module: "NETWORK",
+                            labelText: '',
+                          ),
+                          CustomButton(
+                            onClick: () {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pushNamed(
+                                AddRank.routeName,
+                                arguments: AddRankArguments(
+                                  parentId: classId,
+                                  parentRefCode: classRefCode,
+                                  parentName: className,
+                                  listenController: ListenController(),
+                                ),
+                              );
+                            },
+                            labelColor: networkColor,
+                            labelText: 'Зэрэглэл нэмэх',
+                          )
+                        ],
+                      ),
                 SizedBox(
                   height: 40,
                 ),

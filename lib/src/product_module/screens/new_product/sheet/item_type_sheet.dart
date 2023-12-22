@@ -39,6 +39,7 @@ class _ItemTypeSheetState extends State<ItemTypeSheet> with AfterLayoutMixin {
   create() async {
     InventoryGoods create = InventoryGoods();
     create.name = controller.text;
+    create.description = controller.text;
     create.isGoods = true;
     create.isService = true;
     var res = await InventoryApi().itemTypeCreate(create);
@@ -50,7 +51,6 @@ class _ItemTypeSheetState extends State<ItemTypeSheet> with AfterLayoutMixin {
   update(String id) async {
     if (fbKey.currentState!.saveAndValidate()) {
       InventoryGoods data = InventoryGoods.fromJson(fbKey.currentState!.value);
-
       try {
         await InventoryApi().itemTypeUpdate(id, data);
         await itemTypeList();

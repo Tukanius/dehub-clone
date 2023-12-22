@@ -79,7 +79,7 @@ class _SentCardState extends State<SentCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${widget.data?.receiver?.partner?.businessName}',
+                          '${widget.data?.receiver?.profileName}',
                           style: TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
                         ),
@@ -94,7 +94,7 @@ class _SentCardState extends State<SentCard> {
                           height: 5,
                         ),
                         Text(
-                          '${widget.data?.sender?.staff?.firstName}, ${widget.data?.sender?.staff?.phone}',
+                          '${widget.data?.receiver?.staff?.firstName}, ${widget.data?.receiver?.staff?.phone}',
                           style: TextStyle(fontSize: 12, color: grey3),
                         ),
                       ],

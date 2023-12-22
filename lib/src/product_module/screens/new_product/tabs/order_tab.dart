@@ -1,12 +1,12 @@
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/field_card/field_card.dart';
-import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/number_unit_sheet.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/option_sheet.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/return_type_sheet.dart';
+import 'package:dehub/src/product_module/screens/new_product/sheet/supplier_type_sheet.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/unit_sheet.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/unit_space_labels.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -23,62 +23,12 @@ class OrderTab extends StatefulWidget {
 
 class _OrderTabState extends State<OrderTab> {
   InventoryGoods data = InventoryGoods();
-  bool isSubmit = false;
 
   onSubmit() async {
-    try {
-      setState(() {
-        isSubmit = true;
-      });
-      await InventoryApi().goodsCreate(
-        InventoryGoods(
-          skuCode: data.skuCode,
-          barCode: data.barCode,
-          erpCode: data.erpCode,
-          nameMon: data.nameMon,
-          nameEng: data.nameEng,
-          nameBill: data.padName,
-          nameWeb: data.nameWeb,
-          nameApp: data.nameApp,
-          brandId: data.brandId,
-          supplierId: data.supplierId,
-          manufacturerId: data.manufacturerId,
-          originCountry: data.manufacturerCountryId,
-          importerCountry: data.importerCountry,
-          distributorId: data.distributorId,
-          itemTypeId: data.itemTypeId,
-          classificationId: data.classificationId,
-          subClassificationId: data.subClassificationId,
-          categoryId: data.categoryId,
-          subCategoryId: data.subCategoryId,
-          tagId: data.tagId,
-          description: data.description,
-          coverImages: [
-            InventoryGoods(
-              isMain: true,
-              url: data.url,
-            ),
-          ],
-          detailImages: data.detailImages,
-        ),
-      );
-
-      showCustomDialog(
-        context,
-        "Бараа амжилттай нэмлээ",
-        true,
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-      );
-      setState(() {
-        isSubmit = false;
-      });
-    } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
-    }
+    await InventoryApi().updateVariant(
+      InventoryGoods(),
+      '8a0c39a9-49f7-44d3-97e5-68139cd45938',
+    );
   }
 
   @override
@@ -93,10 +43,9 @@ class _OrderTabState extends State<OrderTab> {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: Text(
-              'Бараа захиалгатай холбоотой мэдээлэл',
+              'Ханган нийлүүлэгч',
               style: TextStyle(
                 color: grey3,
-                fontSize: 12,
               ),
             ),
           ),
@@ -104,8 +53,18 @@ class _OrderTabState extends State<OrderTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Ханган нийлүүлэгч',
-            secondText: 'Өөрийн бараа',
-            secondTextColor: grey3,
+            secondText: source.product.supplierTypeName != null
+                ? source.product.supplierTypeName
+                : 'Сонгох',
+            secondTextColor: productColor,
+            arrowColor: productColor,
+            onClick: () {
+              showModalBottomSheet(
+                context: context,
+                useSafeArea: true,
+                builder: (context) => SupplierTypeSheet(),
+              );
+            },
             color: white,
           ),
           Container(
@@ -114,7 +73,6 @@ class _OrderTabState extends State<OrderTab> {
               'Үндсэн нэгж',
               style: TextStyle(
                 color: grey3,
-                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -184,7 +142,6 @@ class _OrderTabState extends State<OrderTab> {
               'Буцаалт',
               style: TextStyle(
                 color: grey3,
-                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -192,13 +149,50 @@ class _OrderTabState extends State<OrderTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Буцаалт зөвшөөрөх',
-            secondText: 'Сонгох',
+            secondText: source.product.returnAllow == true ? "Тийм" : "Үгүй",
             secondTextColor: productColor,
             onClick: () {
               showModalBottomSheet(
                 context: context,
+                useSafeArea: true,
+                backgroundColor: backgroundColor,
                 builder: (context) {
-                  return Container();
+                  return SingleChildScrollView(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: const EdgeInsets.only(bottom: 30, top: 15),
+                      child: Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              source.returnAllow(true);
+                              Navigator.of(context).pop();
+                            },
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              color: transparent,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 15),
+                              child: Text('Тийм'),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              source.returnAllow(false);
+                              Navigator.of(context).pop();
+                            },
+                            child: Container(
+                              color: transparent,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 15),
+                              width: MediaQuery.of(context).size.width,
+                              child: Text('Үгүй'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
                 },
               );
             },
@@ -231,7 +225,6 @@ class _OrderTabState extends State<OrderTab> {
               'Барааны хувилбар',
               style: TextStyle(
                 color: grey3,
-                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -265,12 +258,14 @@ class _OrderTabState extends State<OrderTab> {
               ),
               Expanded(
                 child: CustomButton(
+                  borderColor: productColor,
                   onClick: () {
                     Provider.of<IndexProvider>(context, listen: false)
                         .newProductIndexChange(1);
                   },
-                  labelText: 'Өмнөх хуудас',
-                  labelColor: productColor,
+                  labelText: 'Хадгалах',
+                  textColor: productColor,
+                  labelColor: white,
                 ),
               ),
               SizedBox(
@@ -281,8 +276,8 @@ class _OrderTabState extends State<OrderTab> {
                   onClick: () {
                     onSubmit();
                   },
-                  isLoading: isSubmit,
-                  labelText: 'Бүртгэсэн',
+                  isLoading: false,
+                  labelText: 'Бүртгэл дуусгах',
                   labelColor: productColor,
                 ),
               ),

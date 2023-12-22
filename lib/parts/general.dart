@@ -19,6 +19,14 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
     staffs: json['staffs'] != null
         ? (json['staffs'] as List).map((e) => Staffs.fromJson(e)).toList()
         : null,
+    suppliers: json['suppliers'] != null
+        ? (json['suppliers'] as List).map((e) => Suppliers.fromJson(e)).toList()
+        : null,
+    supplierTypes: json['supplierTypes'] != null
+        ? (json['supplierTypes'] as List)
+            .map((e) => SupplierTypes.fromJson(e))
+            .toList()
+        : null,
     repaymentOverDueStatus: json['repaymentOverDueStatus'] != null
         ? (json['repaymentOverDueStatus'] as List)
             .map((e) => RepaymentOverDueStatus.fromJson(e))
@@ -299,17 +307,27 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
     zipCodes: json['zipCodes'] != null
         ? (json['zipCodes'] as List).map((e) => ZipCodes.fromJson(e)).toList()
         : null,
+    supplierBusinesses: json['supplierBusinesses'] != null
+        ? (json['supplierBusinesses'] as List)
+            .map((e) => SupplierBusinesses.fromJson(e))
+            .toList()
+        : null,
   );
 }
 
 Map<String, dynamic> _$GeneralToJson(General instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.suppliers != null) json['suppliers'] = instance.suppliers;
   if (instance.countries != null) json['countries'] = instance.countries;
+  if (instance.supplierTypes != null)
+    json['supplierTypes'] = instance.supplierTypes;
   if (instance.scfRequestTypes != null)
     json['scfRequestTypes'] = instance.scfRequestTypes;
   if (instance.invoiceOverdueStatus != null)
     json['invoiceOverdueStatus'] = instance.invoiceOverdueStatus;
+  if (instance.supplierBusinesses != null)
+    json['supplierBusinesses'] = instance.supplierBusinesses;
   if (instance.zipCodes != null) json['zipCodes'] = instance.zipCodes;
   if (instance.scfRequestStatus != null)
     json['scfRequestStatus'] = instance.scfRequestStatus;

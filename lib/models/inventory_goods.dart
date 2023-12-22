@@ -94,7 +94,7 @@ class InventoryGoods {
   List<InventoryGoods>? quantityPrices;
   List<InventoryGoods>? units;
   bool? hasAdditionalUnit;
-  InventoryGoods? values;
+  List<InventoryGoods>? values;
   List<InventoryGoods>? optionValues;
   List<InventoryGoods>? variants;
   List<InventoryGoods>? additionalUnits;
@@ -104,7 +104,6 @@ class InventoryGoods {
   double? availableQuantity;
   InventoryGoods? itemUnit;
   String? logo;
-
   String? padName;
   String? brandName;
   String? supplierName;
@@ -119,10 +118,9 @@ class InventoryGoods {
   String? categoryName;
   String? subCategoryName;
   String? tagName;
-
+  String? regNumber;
   List<String>? urls;
   String? unitName;
-
   String? unitWeightLabel;
   String? unitWeightLabelId;
   String? unitSpaceLabel;
@@ -130,8 +128,41 @@ class InventoryGoods {
   bool? isMain;
   String? option;
   String? optionId;
+  InventoryGoods? partner;
+  String? partnerName;
+  String? businessName;
+  double? customPrice;
+  double? standardPrice;
+  String? sectionName;
+  bool? checked = false;
+  int? number;
+  String? fieldValueId;
+  String? fieldValueName;
+  String? sectionId;
+  String? fieldId;
+  String? fieldType;
+  String? variantStatus;
+  String? supplierTypeName;
+  String? supplierTypeId;
 
   InventoryGoods({
+    this.supplierTypeName,
+    this.supplierTypeId,
+    this.variantStatus,
+    this.sectionId,
+    this.fieldId,
+    this.fieldType,
+    this.fieldValueId,
+    this.fieldValueName,
+    this.number,
+    this.checked,
+    this.sectionName,
+    this.customPrice,
+    this.standardPrice,
+    this.regNumber,
+    this.partnerName,
+    this.businessName,
+    this.partner,
     this.isMain,
     this.option,
     this.optionId,

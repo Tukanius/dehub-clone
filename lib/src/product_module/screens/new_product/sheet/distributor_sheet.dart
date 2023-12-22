@@ -188,8 +188,24 @@ class _DistributorSheetState extends State<DistributorSheet>
                                     width: MediaQuery.of(context).size.width,
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 15, vertical: 10),
-                                    child: Text(
-                                      data.name,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          data.name,
+                                        ),
+                                        SvgPicture.asset(
+                                          'assets/svg/double-check.svg',
+                                          colorFilter: ColorFilter.mode(
+                                            source.product.distributorName ==
+                                                    data.name
+                                                ? productColor
+                                                : Color(0xff9BACB2),
+                                            BlendMode.srcIn,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),

@@ -16,8 +16,10 @@ import 'package:dehub/src/network_module/screens/rank_page/rank_detail_page.dart
 import 'package:dehub/src/network_module/screens/zoning_page/add_zoning.dart';
 import 'package:dehub/src/network_module/screens/zoning_page/zoning_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class InvoiceConditionPageArguments {
   ReferenceInformation data;
@@ -44,6 +46,7 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
   int limit = 10;
   Result reference = Result(rows: [], count: 0);
   bool isLoading = true;
+  RefreshController refreshController = RefreshController();
   ListenController listenController = ListenController();
 
   @override
@@ -108,8 +111,30 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
     });
   }
 
+  void _onLoading() async {
+    setState(() {
+      limit += 10;
+    });
+    await list(page, limit);
+    refreshController.loadComplete();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  void _onRefresh() async {
+    await Future.delayed(Duration(milliseconds: 1000));
+    setState(() {
+      isLoading = true;
+    });
+    await list(page, limit);
+    refreshController.refreshCompleted();
+    isLoading = false;
+  }
+
   @override
   Widget build(BuildContext context) {
+    print(widget.data.listType);
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -143,7 +168,7 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
                 Navigator.of(context).pushNamed(AddRank.routeName,
                     arguments:
                         AddRankArguments(listenController: listenController));
-              }
+              } else if (widget.data.type == "PAYMENT_TERM") {}
             },
           ),
         ],
@@ -155,87 +180,137 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
               ),
             )
           : reference.rows?.length != 0
-              ? SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: Text(
-                          "${widget.data.name}",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: Text(
+                        "${widget.data.name}",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Text(
-                          '${widget.data.description}',
-                          style: TextStyle(
-                            color: networkColor,
-                            fontWeight: FontWeight.bold,
-                          ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Text(
+                        '${widget.data.description}',
+                        style: TextStyle(
+                          color: networkColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Column(
-                        children: reference.rows!
-                            .map(
-                              (e) => InvoiceConditionCard(
-                                onClick: () {
-                                  if (widget.data.listType == "INV_NET2") {
-                                    Navigator.of(context).pushNamed(
-                                      InvoiceConditionDetailPage.routeName,
-                                      arguments:
-                                          InvoiceConditionDetailPageArguments(
-                                              id: e.id),
-                                    );
-                                  } else if (widget.data.listType == "REGION") {
-                                    Navigator.of(context).pushNamed(
-                                      ZoningDetailPage.routeName,
-                                      arguments:
-                                          ZoningDetailPageArguments(id: e.id),
-                                    );
-                                  } else if (widget.data.listType ==
-                                      'CLIENT_CATEGORY') {
-                                    Navigator.of(context).pushNamed(
-                                      CategoryDetailPage.routeName,
-                                      arguments:
-                                          CategoryDetailPageArguments(id: e.id),
-                                    );
-                                  } else if (widget.data.listType ==
-                                      "CLIENT_PRIORITY") {
-                                    Navigator.of(context).pushNamed(
-                                      RankDetailPage.routeName,
-                                      arguments: RankDetailPageArguments(
-                                        id: e.id,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Expanded(
+                      child: SmartRefresher(
+                        enablePullDown: true,
+                        enablePullUp: true,
+                        controller: refreshController,
+                        header: WaterDropHeader(
+                          waterDropColor: networkColor,
+                          refresh: SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: networkColor,
+                            ),
+                          ),
+                        ),
+                        onRefresh: _onRefresh,
+                        onLoading: _onLoading,
+                        footer: CustomFooter(
+                          builder: (context, mode) {
+                            Widget body;
+                            if (mode == LoadStatus.idle) {
+                              body = const Text("");
+                            } else if (mode == LoadStatus.loading) {
+                              body = const CupertinoActivityIndicator();
+                            } else if (mode == LoadStatus.failed) {
+                              body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
+                            } else {
+                              body = const Text("Мэдээлэл алга байна");
+                            }
+                            return SizedBox(
+                              height: 55.0,
+                              child: Center(child: body),
+                            );
+                          },
+                        ),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                children: reference.rows!
+                                    .map(
+                                      (e) => InvoiceConditionCard(
+                                        onClick: () {
+                                          if (widget.data.listType ==
+                                              "INV_NET2") {
+                                            Navigator.of(context).pushNamed(
+                                              InvoiceConditionDetailPage
+                                                  .routeName,
+                                              arguments:
+                                                  InvoiceConditionDetailPageArguments(
+                                                      id: e.id),
+                                            );
+                                          } else if (widget.data.listType ==
+                                              "REGION") {
+                                            Navigator.of(context).pushNamed(
+                                              ZoningDetailPage.routeName,
+                                              arguments:
+                                                  ZoningDetailPageArguments(
+                                                      id: e.id),
+                                            );
+                                          } else if (widget.data.listType ==
+                                              'CLIENT_CATEGORY') {
+                                            Navigator.of(context).pushNamed(
+                                              CategoryDetailPage.routeName,
+                                              arguments:
+                                                  CategoryDetailPageArguments(
+                                                      id: e.id),
+                                            );
+                                          } else if (widget.data.listType ==
+                                              "CLIENT_PRIORITY") {
+                                            Navigator.of(context).pushNamed(
+                                              RankDetailPage.routeName,
+                                              arguments:
+                                                  RankDetailPageArguments(
+                                                id: e.id,
+                                              ),
+                                            );
+                                          } else if (widget.data.listType ==
+                                              "DIRECTION") {
+                                            Navigator.of(context).pushNamed(
+                                              DirectionDetailPage.routeName,
+                                              arguments:
+                                                  DirectionDetailPageArguments(
+                                                      id: e.id),
+                                            );
+                                          }
+                                        },
+                                        data: e,
+                                        index: reference.rows!.indexOf(e),
                                       ),
-                                    );
-                                  } else if (widget.data.listType ==
-                                      "DIRECTION") {
-                                    Navigator.of(context).pushNamed(
-                                      DirectionDetailPage.routeName,
-                                      arguments: DirectionDetailPageArguments(
-                                          id: e.id),
-                                    );
-                                  }
-                                },
-                                data: e,
-                                index: reference.rows!.indexOf(e),
+                                    )
+                                    .toList(),
                               ),
-                            )
-                            .toList(),
+                              SizedBox(
+                                height: 50,
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      SizedBox(
-                        height: 50,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 )
               : Column(
                   children: [
@@ -258,37 +333,3 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
     );
   }
 }
-
-// Widget buildSheet() => DraggableScrollableSheet(
-//       initialChildSize: 1,
-//       minChildSize: 0.5,
-//       maxChildSize: 1,
-//       builder: (context, scrollController) => AddDirection(),
-//     );
-// Widget addInvoiceTerm(ListenController listenController) =>
-//     DraggableScrollableSheet(
-//       initialChildSize: 1,
-//       minChildSize: 0.5,
-//       maxChildSize: 1,
-//       builder: (context, scrollController) => NewConditionPage(
-//         listenController: listenController,
-//       ),
-//     );
-// Widget addZoning() => DraggableScrollableSheet(
-//       initialChildSize: 1,
-//       minChildSize: 0.5,
-//       maxChildSize: 1,
-//       builder: (context, scrollController) => AddZoning(),
-//     );
-// Widget addCategory() => DraggableScrollableSheet(
-//       initialChildSize: 1,
-//       minChildSize: 0.5,
-//       maxChildSize: 1,
-//       builder: (context, scrollController) => AddCategory(),
-//     );
-// Widget addRank() => DraggableScrollableSheet(
-//       initialChildSize: 1,
-//       minChildSize: 0.5,
-//       maxChildSize: 1,
-//       builder: (context, scrollController) => AddRank(),
-//     );

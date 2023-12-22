@@ -56,7 +56,7 @@ class _GroupFormState extends State<GroupForm> {
             arrowColor: productColor,
             onClick: () {
               source.product.itemTypeId == null
-                  ? snackBar()
+                  ? snackBar("Нэр төрөл сонгоно уу")
                   : showModalBottomSheet(
                       context: context,
                       useSafeArea: true,
@@ -80,8 +80,8 @@ class _GroupFormState extends State<GroupForm> {
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
-              source.product.itemTypeId == null
-                  ? snackBar()
+              source.product.classificationId == null
+                  ? snackBar("Ангилал сонгоно уу")
                   : showModalBottomSheet(
                       context: context,
                       useSafeArea: true,
@@ -105,8 +105,8 @@ class _GroupFormState extends State<GroupForm> {
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
-              source.product.itemTypeId == null
-                  ? snackBar()
+              source.product.subClassificationId == null
+                  ? snackBar("Дэд ангилал сонгоно уу")
                   : showModalBottomSheet(
                       context: context,
                       useSafeArea: true,
@@ -130,8 +130,8 @@ class _GroupFormState extends State<GroupForm> {
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
-              source.product.itemTypeId == null
-                  ? snackBar()
+              source.product.categoryId == null
+                  ? snackBar("Категори сонгоно уу")
                   : showModalBottomSheet(
                       context: context,
                       useSafeArea: true,
@@ -169,14 +169,15 @@ class _GroupFormState extends State<GroupForm> {
     );
   }
 
-  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> snackBar() {
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> snackBar(
+      String labelText) {
     return ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
+      SnackBar(
         duration: Duration(milliseconds: 150),
         backgroundColor: productColor,
         shape: StadiumBorder(),
         content: Center(
-          child: Text('Нэр төрөл сонгоно уу'),
+          child: Text('${labelText}'),
         ),
       ),
     );

@@ -34,6 +34,9 @@ import 'package:dehub/models/repayment_status.dart';
 import 'package:dehub/models/request_status.dart';
 import 'package:dehub/models/request_types.dart';
 import 'package:dehub/models/service_category_types.dart';
+import 'package:dehub/models/supp.dart';
+import 'package:dehub/models/supplier_businesses.dart';
+import 'package:dehub/models/supplier_types.dart';
 import 'package:dehub/models/types.dart';
 import 'package:dehub/models/invoice_types.dart';
 import 'package:dehub/models/bank_accounts.dart';
@@ -115,7 +118,6 @@ class General {
   List<ClientClassifications>? clientClassifications;
   List<DeliveryNoteStatus>? deliveryNoteStatus;
   List<PullSheetStatus>? pullSheetStatus;
-
   List<BankNames>? bankNames;
   List<PaymentTermConfigTypes>? paymentTermConfigTypes;
   List<PaymentTermConditions>? paymentTermConditions;
@@ -129,10 +131,15 @@ class General {
   List<ProductBuyerFeeRules>? productBuyerFeeRules;
   List<ProductSuppFeeRules>? productSuppFeeRules;
   List<Countries>? countries;
-
   List<Units>? units;
+  List<Suppliers>? suppliers;
+  List<SupplierBusinesses>? supplierBusinesses;
+  List<SupplierTypes>? supplierTypes;
 
   General({
+    this.supplierTypes,
+    this.supplierBusinesses,
+    this.suppliers,
     this.units,
     this.countries,
     this.productBuyerFeeRules,

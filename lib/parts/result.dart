@@ -50,6 +50,9 @@ Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
     if (instance.filter!.invoiceId != null) {
       params['filter']['invoiceId'] = instance.filter!.invoiceId;
     }
+    if (instance.filter!.isContracted != null) {
+      params['filter']['isContracted'] = instance.filter!.isContracted;
+    }
     if (instance.filter!.productType != null) {
       params['filter']['productType'] = instance.filter!.productType;
     }

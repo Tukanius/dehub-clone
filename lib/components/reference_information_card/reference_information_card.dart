@@ -2,7 +2,6 @@ import 'package:dehub/models/reference_information.dart';
 import 'package:dehub/src/network_module/screens/invoice_condition_page/invoice_condition_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:after_layout/after_layout.dart';
 
 class ReferenceInformationCard extends StatefulWidget {
   final ReferenceInformation? data;
@@ -20,11 +19,7 @@ class ReferenceInformationCard extends StatefulWidget {
       _ReferenceInformationCardState();
 }
 
-class _ReferenceInformationCardState extends State<ReferenceInformationCard>
-    with AfterLayoutMixin {
-  @override
-  afterFirstLayout(BuildContext context) {}
-
+class _ReferenceInformationCardState extends State<ReferenceInformationCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -56,56 +51,57 @@ class _ReferenceInformationCardState extends State<ReferenceInformationCard>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${widget.index + 1}',
-                  style: TextStyle(
-                    color: grey3,
-                    fontSize: 12,
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${widget.index + 1}',
+                    style: TextStyle(
+                      color: grey3,
+                      fontSize: 12,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 30,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${widget.data!.name}',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      'Төлбөрийн нөхцөл',
-                      style: TextStyle(
-                        color: networkColor,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      width: 170,
-                      child: Text(
-                        '${widget.data!.description}',
-                        style: TextStyle(
-                          color: grey3,
-                          fontSize: 12,
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${widget.data!.name}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          'Төлбөрийн нөхцөл',
+                          style: TextStyle(
+                            color: networkColor,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          '${widget.data!.description}',
+                          style: TextStyle(
+                            color: grey3,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,

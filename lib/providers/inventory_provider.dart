@@ -10,6 +10,39 @@ class InventoryProvider extends ChangeNotifier {
   bool categoryValidate = false;
   bool subCategoryValidate = false;
   bool tagValidate = false;
+  bool profileValidate = false;
+  bool bannerValidate = false;
+  bool fieldValidate = false;
+  List<InventoryGoods> sections = [];
+  TextEditingController nameBillController = TextEditingController();
+  TextEditingController nameAppController = TextEditingController();
+  TextEditingController nameWebController = TextEditingController();
+
+  id(String value) {
+    product.id = value;
+    notifyListeners();
+  }
+
+  proValidate() {
+    if (product.url == null) {
+      profileValidate = true;
+    }
+    notifyListeners();
+  }
+
+  banValidate() {
+    if (product.detailImages == null) {
+      bannerValidate = true;
+    }
+    notifyListeners();
+  }
+
+  nameBill(String value) {
+    nameBillController.text = value;
+    nameAppController.text = value;
+    nameWebController.text = value;
+    notifyListeners();
+  }
 
   itValidate() {
     if (product.itemTypeName == null) {
@@ -182,6 +215,50 @@ class InventoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  returnAllow(bool value) {
+    product.returnAllow = value;
+    notifyListeners();
+  }
+
+  section(InventoryGoods data) {
+    int index = sections.indexWhere((element) => element.id == data.id);
+    if (index < 0) {
+      sections.add(data);
+    }
+    product.sections = sections;
+    notifyListeners();
+  }
+
+  removeSection(int index) {
+    product.sections?.removeAt(index);
+    notifyListeners();
+  }
+
+  checkBoxField(bool value, int index, int fieldIndex) {
+    product.sections?[index].fields?[fieldIndex].checked = value;
+    notifyListeners();
+  }
+
+  fieldValue(String value, String id, int index, int fieldIndex) {
+    product.sections?[index].fields?[fieldIndex].fieldValueId = id;
+    product.sections?[index].fields?[fieldIndex].fieldValueName = value;
+    fieldValidate = false;
+    notifyListeners();
+  }
+
+  fValidate(int index, int fieldIndex) {
+    if (product.sections?[index].fields?[fieldIndex].fieldValueName == null) {
+      fieldValidate = true;
+    }
+    notifyListeners();
+  }
+
+  supplierType(String value, String id) {
+    product.supplierTypeId = id;
+    product.supplierTypeName = value;
+    notifyListeners();
+  }
+
   clearCategory() {
     product.classificationName = null;
     product.subClassificationName = null;
@@ -195,6 +272,9 @@ class InventoryProvider extends ChangeNotifier {
 
   clearData() {
     product = InventoryGoods();
+    sections = [];
+    profileValidate = false;
+    bannerValidate = false;
     itemTypeValidate = false;
     classificationValidate = false;
     subClassificationValidate = false;

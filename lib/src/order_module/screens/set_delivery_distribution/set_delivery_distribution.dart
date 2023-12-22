@@ -88,6 +88,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
     general =
         Provider.of<GeneralProvider>(context, listen: true).businessGeneral;
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: white,
         surfaceTintColor: white,

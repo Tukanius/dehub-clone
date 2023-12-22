@@ -1,10 +1,10 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/back_button/back_button.dart';
+import 'package:dehub/components/dashboard_card/dashboard_card.dart';
 import 'package:dehub/components/reference_information_card/reference_information_card.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
 
 class ReferenceInformationPage extends StatefulWidget {
@@ -71,42 +71,12 @@ class _ReferenceInformationPageState extends State<ReferenceInformationPage>
                 ),
               ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: white,
-              ),
-              padding: const EdgeInsets.only(
-                  left: 10, right: 10, top: 10, bottom: 5),
-              width: 100,
-              height: 100,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 40,
-                    width: 40,
-                    padding: const EdgeInsets.all(7),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: networkColor,
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/svg/bag.svg',
-                      colorFilter: ColorFilter.mode(white, BlendMode.srcIn),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    'Лавлах мэдээлэл',
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-                    softWrap: true,
-                  ),
-                ],
-              ),
+            DashboardCard(
+              boxColor: networkColor,
+              padding: 8,
+              labelText: 'Лавлах мэдээлэл',
+              svgColor: white,
+              svg: 'assets/svg/bag.svg',
             ),
             SizedBox(
               height: 10,

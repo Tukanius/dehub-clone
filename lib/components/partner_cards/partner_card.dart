@@ -7,14 +7,14 @@ import 'package:provider/provider.dart';
 
 class PartnerCard extends StatefulWidget {
   final Function()? onClick;
-  final BusinessNetwork? data;
+  final BusinessNetwork data;
   final int index;
   final bool? type;
   final bool startAnimation;
   PartnerCard({
     required this.index,
     required this.startAnimation,
-    this.data,
+    required this.data,
     this.type,
     Key? key,
     this.onClick,
@@ -29,7 +29,7 @@ class _PartnerCardState extends State<PartnerCard> {
 
   status() {
     final status = general.businessStatus!
-        .firstWhere((element) => element.code == widget.data?.businessStatus)
+        .firstWhere((element) => element.code == widget.data.businessStatus)
         .name;
     return status;
   }
@@ -66,7 +66,7 @@ class _PartnerCardState extends State<PartnerCard> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      widget.data?.logo == null
+                      widget.data.logo == null
                           ? CircleAvatar(
                               radius: 20,
                               backgroundColor: grey,
@@ -75,8 +75,8 @@ class _PartnerCardState extends State<PartnerCard> {
                           : CircleAvatar(
                               radius: 20,
                               backgroundColor: grey,
-                              backgroundImage: NetworkImage(
-                                  '${widget.data?.partner?.logo}')),
+                              backgroundImage:
+                                  NetworkImage('${widget.data.logo}')),
                       SizedBox(
                         width: 10,
                       ),
@@ -85,7 +85,7 @@ class _PartnerCardState extends State<PartnerCard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${widget.data!.partner?.businessName}',
+                              '${widget.data.profileName}',
                               style: TextStyle(
                                   fontSize: 12, fontWeight: FontWeight.bold),
                             ),
@@ -93,16 +93,23 @@ class _PartnerCardState extends State<PartnerCard> {
                               height: 7,
                             ),
                             Text(
-                              '${widget.data?.partnerName}',
+                              '${widget.data.partnerName}',
                               style: TextStyle(fontSize: 12, color: grey3),
                             ),
                             SizedBox(
                               height: 7,
                             ),
-                            Text(
-                              'Нэхэмжлэх - 30 хоног дараа',
-                              style: TextStyle(fontSize: 12, color: grey3),
-                            ),
+                            widget.data.paymentTerm?.description != null
+                                ? Text(
+                                    '${widget.data.paymentTerm?.description}',
+                                    style:
+                                        TextStyle(fontSize: 12, color: grey3),
+                                  )
+                                : Text(
+                                    '-',
+                                    style:
+                                        TextStyle(fontSize: 12, color: grey3),
+                                  ),
                           ],
                         ),
                       ),
@@ -119,7 +126,7 @@ class _PartnerCardState extends State<PartnerCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${widget.data!.refCode}',
+                          '${widget.data.refCode}',
                           style: TextStyle(
                             fontSize: 12,
                             color: grey3,
@@ -136,7 +143,7 @@ class _PartnerCardState extends State<PartnerCard> {
                               style: TextStyle(color: grey3, fontSize: 10),
                             ),
                             Text(
-                              '${widget.data?.regNumber}',
+                              '${widget.data.regNumber}',
                               style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w600,

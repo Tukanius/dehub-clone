@@ -58,10 +58,10 @@ class _SetPaymentTermCardState extends State<SetPaymentTermCard> {
                 Expanded(
                   child: Row(
                     children: [
-                      widget.data?.partner?.logo != null
+                      widget.data?.logo != null
                           ? CircleAvatar(
                               backgroundImage:
-                                  NetworkImage('${widget.data?.partner?.logo}'),
+                                  NetworkImage('${widget.data?.logo}'),
                               backgroundColor: grey,
                               radius: 18,
                             )
@@ -78,7 +78,7 @@ class _SetPaymentTermCardState extends State<SetPaymentTermCard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${widget.data?.partner?.businessName}',
+                              '${widget.data?.profileName}',
                               style: TextStyle(
                                 color: networkColor,
                                 fontWeight: FontWeight.bold,

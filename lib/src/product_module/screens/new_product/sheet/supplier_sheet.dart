@@ -185,8 +185,24 @@ class _SupplierSheetState extends State<SupplierSheet> with AfterLayoutMixin {
                                     width: MediaQuery.of(context).size.width,
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 15, vertical: 10),
-                                    child: Text(
-                                      data.name,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          data.name,
+                                        ),
+                                        SvgPicture.asset(
+                                          'assets/svg/double-check.svg',
+                                          colorFilter: ColorFilter.mode(
+                                            source.product.supplierName ==
+                                                    data.name
+                                                ? productColor
+                                                : Color(0xff9BACB2),
+                                            BlendMode.srcIn,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),

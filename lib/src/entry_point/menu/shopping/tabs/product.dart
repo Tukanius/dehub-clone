@@ -1,5 +1,6 @@
 import 'package:dehub/components/product_card/grid_view_product_card.dart';
 import 'package:dehub/components/product_card/product_card.dart';
+import 'package:dehub/models/inventory_goods.dart';
 import 'package:flutter/material.dart';
 
 class Product extends StatefulWidget {
@@ -22,7 +23,10 @@ class _ProductState extends State<Product> {
             scrollDirection: Axis.vertical,
             crossAxisCount: 2,
             children: <Widget>[
-              for (var i = 0; i < 4; i++) GridViewProductCard(),
+              for (var i = 0; i < 4; i++)
+                GridViewProductCard(
+                  data: InventoryGoods(),
+                ),
             ],
           )
         // ? Column(
@@ -37,7 +41,9 @@ class _ProductState extends State<Product> {
         // )
         : ListView.builder(
             itemCount: 3,
-            itemBuilder: (context, index) => ProductCard(),
+            itemBuilder: (context, index) => ProductCard(
+              data: InventoryGoods(),
+            ),
           );
   }
 }

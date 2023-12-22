@@ -145,30 +145,31 @@ class _BankAccountCardState extends State<BankAccountCard> {
               height: 36,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Оноосон нэр',
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: grey2,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Оноосон нэр',
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: grey2,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      '${widget.data?.name}',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: grey2,
+                      SizedBox(
+                        height: 5,
                       ),
-                    ),
-                  ],
+                      Text(
+                        '${widget.data?.shortName}',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: grey2,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Row(
                   children: [

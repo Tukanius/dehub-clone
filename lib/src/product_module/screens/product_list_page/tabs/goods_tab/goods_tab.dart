@@ -12,10 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 
 class GoodsTab extends StatefulWidget {
-  final String id;
   const GoodsTab({
     Key? key,
-    required this.id,
   }) : super(key: key);
 
   @override
@@ -39,7 +37,7 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
   }
 
   list(page, limit, String value) async {
-    Filter filter = Filter(itemStatus: '', supplierId: widget.id);
+    Filter filter = Filter(itemStatus: '');
     Offset offset = Offset(page: page, limit: limit);
     Result res = await InventoryApi()
         .listProduct(ResultArguments(filter: filter, offset: offset));

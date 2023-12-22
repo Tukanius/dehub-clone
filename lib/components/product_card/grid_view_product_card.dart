@@ -1,11 +1,15 @@
+import 'package:dehub/models/inventory_goods.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class GridViewProductCard extends StatefulWidget {
-  final bool? ratingBar;
+  final InventoryGoods data;
+  final Function()? buttonClick;
   const GridViewProductCard({
     Key? key,
-    this.ratingBar,
+    this.buttonClick,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -24,31 +28,29 @@ class _GridViewProductCardState extends State<GridViewProductCard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
+            alignment: Alignment.center,
             children: [
               Container(
                 color: white,
                 height: 100,
-                child: Image(
-                  image: AssetImage(
-                    'images/juice.png',
-                  ),
+                width: MediaQuery.of(context).size.width,
+                child: Image.network(
+                  '${widget.data.image}',
                   fit: BoxFit.cover,
                 ),
               ),
               Positioned(
                 right: 10,
                 top: 10,
-                child: SizedBox(
-                  height: 40,
-                  child: FloatingActionButton(
-                    backgroundColor: white,
-                    child: Icon(
-                      Icons.add_shopping_cart,
-                      color: buttonColor,
-                      size: 24,
-                    ),
-                    onPressed: () {},
+                child: FloatingActionButton.small(
+                  shape: CircleBorder(),
+                  backgroundColor: white,
+                  child: Icon(
+                    Icons.add_shopping_cart,
+                    color: buttonColor,
+                    size: 24,
                   ),
+                  onPressed: widget.buttonClick,
                 ),
               ),
             ],
@@ -56,28 +58,37 @@ class _GridViewProductCardState extends State<GridViewProductCard> {
           Column(
             children: [
               Text(
-                'Гүзээлзгэнэтэй иогурт',
+                '${widget.data.nameMon}',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
               SizedBox(
                 height: 15,
               ),
-              Text(
-                'SKU 32165456, Brand Name, 250 гр',
-                style: TextStyle(
-                  fontSize: 14,
+              RichText(
+                textAlign: TextAlign.left,
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis,
+                text: TextSpan(
+                  style: TextStyle(
+                      fontFamily: 'Montserrat', fontSize: 14, color: black),
+                  children: [
+                    TextSpan(text: '${widget.data.skuCode} '),
+                    TextSpan(text: '${widget.data.barCode} '),
+                    TextSpan(text: '${widget.data.erpCode} '),
+                  ],
                 ),
               ),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Column(
             children: [
               Text(
-                '₮ 6800.00',
+                '₮${Utils().formatCurrency(widget.data.standardPrice.toString())}',
                 style: TextStyle(
                   color: buttonColor,
                   fontWeight: FontWeight.w500,
@@ -85,7 +96,7 @@ class _GridViewProductCardState extends State<GridViewProductCard> {
                 ),
               ),
               Text(
-                '₮ 6800.00',
+                '₮${Utils().formatCurrency(widget.data.customPrice.toString())}',
                 style: TextStyle(
                   fontSize: 14,
                   color: grey3,
@@ -93,6 +104,7 @@ class _GridViewProductCardState extends State<GridViewProductCard> {
                   decoration: TextDecoration.lineThrough,
                   decorationColor: grey3,
                 ),
+                textAlign: TextAlign.end,
               ),
             ],
           )

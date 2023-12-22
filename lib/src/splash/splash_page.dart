@@ -25,7 +25,7 @@ class _SplashPageState extends State<SplashPage>
   afterFirstLayout(BuildContext context) async {
     try {
       await Provider.of<UserProvider>(context, listen: false).me(false);
-      await Provider.of<UserProvider>(context, listen: false).partnerMe(true);
+      await Provider.of<UserProvider>(context, listen: false).partnerMe(false);
       await Navigator.of(context).pushNamed(EntryPoint.routeName);
     } catch (e) {
       debugPrint('===================ERROR=================');

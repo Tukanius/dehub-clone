@@ -1,10 +1,12 @@
 import 'dart:async';
-
+import 'package:dehub/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/components/set_payment_term_card/set_payment_term_card.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/src/network_module/screens/payment_terms/set_payment_term_detail/set_payment_term_detail.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,11 +25,12 @@ class PaymentTerms extends StatefulWidget {
 class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
   bool startAnimation = false;
   int page = 1;
+  Timer? timer;
   int limit = 10;
+  User user = User();
   bool isLoading = true;
   Result network = Result(rows: [], count: 0);
   RefreshController refreshController = RefreshController();
-  Timer? timer;
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -86,6 +89,8 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).businessUser;
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -162,15 +167,19 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
                                   (data) => Column(
                                     children: [
                                       SetPaymentTermCard(
-                                        onClick: () {
-                                          Navigator.of(context).pushNamed(
-                                            SetPaymentTermDetail.routeName,
-                                            arguments:
-                                                SetPaymentTermDetailArguments(
-                                              id: data.id,
-                                            ),
-                                          );
-                                        },
+                                        onClick: user.currentBusiness?.type ==
+                                                "SUPPLIER"
+                                            ? () {
+                                                Navigator.of(context).pushNamed(
+                                                  SetPaymentTermDetail
+                                                      .routeName,
+                                                  arguments:
+                                                      SetPaymentTermDetailArguments(
+                                                    id: data.id,
+                                                  ),
+                                                );
+                                              }
+                                            : () {},
                                         index: network.rows!.indexOf(data),
                                         startAnimation: startAnimation,
                                         data: data,

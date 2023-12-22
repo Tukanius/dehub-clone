@@ -48,7 +48,7 @@ class _ClientClassificationCardState extends State<ClientClassificationCard> {
                               backgroundColor: grey,
                               radius: 18,
                               backgroundImage:
-                                  NetworkImage('${widget.data?.partner?.logo}'),
+                                  NetworkImage('${widget.data?.logo}'),
                             )
                           : CircleAvatar(
                               backgroundColor: grey,
@@ -63,7 +63,7 @@ class _ClientClassificationCardState extends State<ClientClassificationCard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${widget.data?.partner?.businessName}',
+                              '${widget.data?.profileName}',
                               style: TextStyle(
                                 color: networkColor,
                                 fontWeight: FontWeight.bold,

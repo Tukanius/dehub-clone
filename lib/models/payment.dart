@@ -29,8 +29,8 @@ class Payment {
   String? avatar;
   String? firstName;
   String? lastName;
-
-  String? type;
+  String? accountName;
+  Payment? type;
   String? transactionStatus;
   String? paymentId;
   String? paymentRefCode;
@@ -72,6 +72,7 @@ class Payment {
   List<Payment>? values;
 
   Payment({
+    this.accountName,
     this.header,
     this.values,
     this.inOutType,

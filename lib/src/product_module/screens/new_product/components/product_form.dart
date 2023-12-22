@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ProductForm extends StatefulWidget {
   const ProductForm({super.key});
@@ -95,6 +96,23 @@ class _ProductFormState extends State<ProductForm> {
                   ),
                 ],
               ),
+              suffixIcon: GestureDetector(
+                onTap: () {},
+                child: Container(
+                  color: transparent,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/svg/bar-code.svg',
+                        colorFilter:
+                            ColorFilter.mode(productColor, BlendMode.srcIn),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
             validator: FormBuilderValidators.compose([
               FormBuilderValidators.required(
@@ -172,11 +190,28 @@ class _ProductFormState extends State<ProductForm> {
                   ),
                 ],
               ),
+              suffixIcon: GestureDetector(
+                onTap: () {
+                  source.nameBill(source.product.nameMon.toString());
+                },
+                child: Container(
+                  color: transparent,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/svg/copy.svg',
+                        colorFilter:
+                            ColorFilter.mode(productColor, BlendMode.srcIn),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
             validator: FormBuilderValidators.compose([
-              (value) {
-                return validateCryllic(value.toString(), context);
-              }
+              FormBuilderValidators.required(errorText: 'Нэр оруулна уу'),
             ]),
           ),
           FormTextField(
@@ -221,7 +256,7 @@ class _ProductFormState extends State<ProductForm> {
                 source.product.padName = value;
               });
             },
-            initialValue: source.product.padName,
+            controller: source.nameBillController,
             textColor: productColor,
             textAlign: TextAlign.end,
             name: 'asdf',
@@ -257,7 +292,7 @@ class _ProductFormState extends State<ProductForm> {
                 source.product.nameApp = value;
               });
             },
-            initialValue: source.product.nameApp,
+            controller: source.nameAppController,
             textColor: productColor,
             textAlign: TextAlign.end,
             name: 'nameApp',
@@ -298,7 +333,7 @@ class _ProductFormState extends State<ProductForm> {
                 source.product.nameWeb = value;
               });
             },
-            initialValue: source.product.nameWeb,
+            controller: source.nameWebController,
             textColor: productColor,
             textAlign: TextAlign.end,
             name: 'nameWeb',
@@ -336,18 +371,5 @@ class _ProductFormState extends State<ProductForm> {
         ],
       ),
     );
-  }
-}
-
-String? validateCryllic(String value, context) {
-  RegExp isValidName = RegExp(r'(^[а-яА-ЯӨөҮүЁёӨө -]+$)');
-  if (value == '') {
-    return "Нэр оруулна уу";
-  } else {
-    if (!isValidName.hasMatch(value)) {
-      return "Зөвхөн крилл үсэг ашиглана";
-    } else {
-      return null;
-    }
   }
 }

@@ -368,6 +368,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.light(
+              secondary: paymentColor.withOpacity(0.5),
               primary: paymentColor,
               onPrimary: Colors.white,
               onSurface: paymentColor,
@@ -376,7 +377,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
           child: child!,
         );
       },
-      errorFormatText: 'Сүүлийн 6-н сар сонгоно уу!!!',
+      errorFormatText: 'Сүүлийн сар дотор сонгоно уу!!!',
       context: context,
       initialDateRange: dateTimeRange,
       firstDate: DateTime.now().subtract(Duration(days: 30)),

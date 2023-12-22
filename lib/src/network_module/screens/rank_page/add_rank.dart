@@ -1,6 +1,7 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/close_button/close_button.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/business-staffs.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/partner.dart';
@@ -18,8 +19,14 @@ import 'package:intl/intl.dart';
 import 'package:after_layout/after_layout.dart';
 
 class AddRankArguments {
+  String? parentName;
+  String? parentRefCode;
+  String? parentId;
   ListenController listenController;
   AddRankArguments({
+    this.parentRefCode,
+    this.parentName,
+    this.parentId,
     required this.listenController,
   });
 }
@@ -27,8 +34,14 @@ class AddRankArguments {
 class AddRank extends StatefulWidget {
   static const routeName = '/AddRank';
   final ListenController listenController;
+  final String? parentName;
+  final String? parentRefCode;
+  final String? parentId;
   const AddRank({
     Key? key,
+    this.parentRefCode,
+    this.parentName,
+    this.parentId,
     required this.listenController,
   }) : super(key: key);
 
@@ -50,7 +63,14 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) {
-    clientClassificationList(page, limit);
+    if (widget.parentId == null) {
+      clientClassificationList(page, limit);
+    } else {
+      setState(() {
+        parentId = widget.parentId;
+        refcode = widget.parentRefCode;
+      });
+    }
   }
 
   clientClassificationList(page, limit) async {
@@ -66,14 +86,28 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
   onSubmit() async {
     if (fbKey.currentState!.saveAndValidate()) {
       try {
+        setState(() {
+          isLoading = true;
+        });
         BusinessStaffs businessStaffs =
             BusinessStaffs.fromJson(fbKey.currentState!.value);
-        businessStaffs.parentId = parentId;
+        if (widget.parentId == null) {
+          businessStaffs.parentId = parentId;
+        } else {
+          businessStaffs.parentId = widget.parentId;
+        }
         await BusinessApi().createClientClassification(businessStaffs);
+        await Provider.of<GeneralProvider>(context, listen: false)
+            .businessInit(false);
         widget.listenController.changeVariable('createRank');
         Navigator.of(context).pop();
+        setState(() {
+          isLoading = false;
+        });
       } catch (e) {
-        debugPrint(e.toString());
+        setState(() {
+          isLoading = false;
+        });
       }
     }
   }
@@ -113,70 +147,84 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
                 ),
               ),
             ),
-            reference.rows!.isEmpty
-                ? Container(
+            widget.parentId != null
+                ? FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 15,
+                    labelText: "Ангилал нэр",
+                    secondText: widget.parentName,
                     color: white,
-                    padding: const EdgeInsets.all(15),
-                    child: Text('Бүсчлэл сонгоно уу'),
+                    secondTextColor: networkColor,
                   )
-                : DropdownButtonFormField(
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                          errorText: 'Заавал оруулна уу.')
-                    ]),
-                    icon: Container(
-                      decoration: BoxDecoration(
+                : reference.rows!.isEmpty
+                    ? Container(
                         color: white,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Сонгох',
-                            style: TextStyle(color: networkColor, fontSize: 14),
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.all(15),
+                        child: Text(
+                          'Ангилал сонгоно уу',
+                          style: TextStyle(color: red),
+                        ),
+                      )
+                    : DropdownButtonFormField(
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(
+                              errorText: 'Заавал оруулна уу.')
+                        ]),
+                        icon: Container(
+                          decoration: BoxDecoration(
+                            color: white,
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                          Icon(
-                            Icons.arrow_drop_down,
-                            color: dark,
-                          ),
-                        ],
-                      ),
-                    ),
-                    onChanged: (value) {},
-                    dropdownColor: white,
-                    elevation: 2,
-                    decoration: InputDecoration(
-                      hintText: 'Ангилал нэр',
-                      hintStyle: TextStyle(fontSize: 14, color: dark),
-                      filled: true,
-                      fillColor: white,
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 15),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                    items: reference.rows!
-                        .map(
-                          (item) => DropdownMenuItem(
-                            onTap: () {
-                              setState(() {
-                                parentId = item.id;
-                                refcode = item.refCode;
-                              });
-                            },
-                            value: item,
-                            child: Text(
-                              '${item.name}',
-                              style: TextStyle(
-                                color: dark,
-                                fontSize: 14,
+                          child: Row(
+                            children: [
+                              Text(
+                                'Сонгох',
+                                style: TextStyle(
+                                    color: networkColor, fontSize: 14),
                               ),
-                            ),
+                              Icon(
+                                Icons.arrow_drop_down,
+                                color: dark,
+                              ),
+                            ],
                           ),
-                        )
-                        .toList(),
-                  ),
+                        ),
+                        onChanged: (value) {},
+                        dropdownColor: white,
+                        elevation: 2,
+                        decoration: InputDecoration(
+                          hintText: 'Ангилал нэр',
+                          hintStyle: TextStyle(fontSize: 14, color: dark),
+                          filled: true,
+                          fillColor: white,
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 15),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+                        items: reference.rows!
+                            .map(
+                              (item) => DropdownMenuItem(
+                                onTap: () {
+                                  setState(() {
+                                    parentId = item.id;
+                                    refcode = item.refCode;
+                                  });
+                                },
+                                value: item,
+                                child: Text(
+                                  '${item.name}',
+                                  style: TextStyle(
+                                    color: dark,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
             Container(
               color: white,
               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),

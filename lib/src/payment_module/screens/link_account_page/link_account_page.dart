@@ -46,12 +46,15 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
   }
 
   checkAccount() async {
-    check = await PaymentApi().bankAccountCheck(
+    var res = await PaymentApi().bankAccountCheck(
       Payment(
         bankName: "${bankCode}",
         number: '${numberController.text}',
       ),
     );
+    setState(() {
+      check = res;
+    });
   }
 
   onSubmit() async {
@@ -65,6 +68,8 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
             isDefault: isSwitched,
           ),
         );
+        await Provider.of<GeneralProvider>(context, listen: false)
+            .businessInit(false);
         showCustomDialog(
           context,
           "Данс амжилттай нэмлээ",
@@ -238,7 +243,9 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
                             ),
                           ),
                           Text(
-                            '${user.currentBusiness?.profileName}',
+                            check.accountName != null
+                                ? "${check.accountName}"
+                                : 'Дансны нэр',
                             style: TextStyle(
                               color: grey2,
                             ),
@@ -403,46 +410,6 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
                   ),
                 ),
               ),
-              // Column(
-              //   children: general.bankNames!
-              //       .map(
-              //         (data) => GestureDetector(
-              //           onTap: () {
-              //             setState(() {
-              //               bankName = data.name!;
-              //               bankCode = data.code!;
-              //               bankValidate = false;
-              //             });
-              //             Navigator.of(context).pop();
-              //           },
-              //           child: Container(
-              //             padding: const EdgeInsets.all(15),
-              //             color: white,
-              //             child: Row(
-              //               children: [
-              //                 Container(
-              //                   height: 20,
-              //                   width: 20,
-              //                   decoration: BoxDecoration(
-              //                     borderRadius: BorderRadius.circular(10),
-              //                     image: DecorationImage(
-              //                       image: NetworkImage(
-              //                         '${data.icon}',
-              //                       ),
-              //                     ),
-              //                   ),
-              //                 ),
-              //                 SizedBox(
-              //                   width: 10,
-              //                 ),
-              //                 Text('${data.name}'),
-              //               ],
-              //             ),
-              //           ),
-              //         ),
-              //       )
-              //       .toList(),
-              // ),
               SizedBox(
                 height: 30,
               ),

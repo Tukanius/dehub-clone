@@ -23,6 +23,8 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
         ? DateTime.parse(json['deletedAt'].toString())
         : null,
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
+    accountName:
+        json['accountName'] != null ? json['accountName'] as String : null,
     businessId:
         json['businessId'] != null ? json['businessId'] as String : null,
     inOutType: json['inOutType'] != null ? json['inOutType'] as String : null,
@@ -54,7 +56,9 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
     avatar: json['avatar'] != null ? json['avatar'] as String : null,
     firstName: json['firstName'] != null ? json['firstName'] as String : null,
     lastName: json['lastName'] != null ? json['lastName'] as String : null,
-    type: json['type'] != null ? json['type'] as String : null,
+    type: json['type'] != null
+        ? Payment.fromJson(json['type'] as Map<String, dynamic>)
+        : null,
     transactionStatus: json['transactionStatus'] != null
         ? json['transactionStatus'] as String
         : null,
@@ -190,6 +194,7 @@ Map<String, dynamic> _$PaymentToJson(Payment instance) {
   if (instance.hasPaymentFee != null)
     json['hasPaymentFee'] = instance.hasPaymentFee;
   if (instance.paymentFee != null) json['paymentFee'] = instance.paymentFee;
+  if (instance.accountName != null) json['accountName'] = instance.accountName;
   if (instance.hasBankTrxFee != null)
     json['hasBankTrxFee'] = instance.hasBankTrxFee;
   if (instance.bankTrxFee != null) json['bankTrxFee'] = instance.bankTrxFee;

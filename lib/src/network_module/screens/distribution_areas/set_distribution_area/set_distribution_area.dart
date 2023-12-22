@@ -2,11 +2,14 @@ import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/close_button/close_button.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/distribution_areas.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/src/network_module/screens/direction_page/add_direction.dart';
+import 'package:dehub/src/network_module/screens/zoning_page/add_zoning.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -43,6 +46,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
   String? distributionArea;
   String? coClientStaff;
   String? areaRegionId;
+  String? areaRefCode;
   String? coClientStaffId;
   General general = General();
   List<DistributionAreas> parentList = [];
@@ -97,6 +101,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
     general =
         Provider.of<GeneralProvider>(context, listen: true).businessGeneral;
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -133,8 +138,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
                 show();
               },
               arrowColor: networkColor,
-              secondText:
-                  "${distributionArea == null ? '-' : distributionArea}",
+              secondText: distributionArea,
               secondTextColor: networkColor,
             ),
             FieldCard(
@@ -142,12 +146,14 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
               paddingHorizontal: 15,
               paddingVertical: 10,
               labelText: "Чиглэлийн нэр",
-              onClick: () {
-                dArea(false);
-                area();
-              },
+              onClick: distributionArea != null
+                  ? () {
+                      dArea(false);
+                      area();
+                    }
+                  : () {},
               arrowColor: networkColor,
-              secondText: "${coClientStaff == null ? '-' : coClientStaff}",
+              secondText: coClientStaff,
               secondTextColor: networkColor,
             ),
             Container(
@@ -217,6 +223,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
       builder: (context) {
         return SingleChildScrollView(
           child: Container(
+            width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,38 +231,63 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
                 Container(
                   margin: const EdgeInsets.only(top: 25, bottom: 20),
                   child: Text(
-                    'Хариуцсан ажилтан сонгох',
+                    'Бүс сонгох',
                     style: TextStyle(
                       color: grey2,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: parentList
-                      .map(
-                        (e) => GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              distributionArea = "${e.name}";
-                              areaRegionId = e.id.toString();
-                            });
-                            Navigator.of(context).pop();
-                          },
-                          child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              color: transparent,
-                              child: Text(
-                                '${e.name}',
-                                style: TextStyle(
-                                  color: black.withOpacity(0.7),
-                                ),
-                              )),
-                        ),
+                parentList.isNotEmpty
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: parentList
+                            .map(
+                              (e) => GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    distributionArea = e.name;
+                                    areaRegionId = e.id;
+                                    areaRefCode = e.refCode;
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                                child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    color: transparent,
+                                    child: Text(
+                                      '${e.name}',
+                                      style: TextStyle(
+                                        color: black.withOpacity(0.7),
+                                      ),
+                                    )),
+                              ),
+                            )
+                            .toList(),
                       )
-                      .toList(),
-                ),
+                    : Column(
+                        children: [
+                          NotFound(
+                            module: "NETWORK",
+                            labelText: '',
+                          ),
+                          CustomButton(
+                            onClick: () {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pushNamed(
+                                AddZoning.routeName,
+                                arguments: AddZoningArguments(
+                                  listenController: ListenController(),
+                                ),
+                              );
+                            },
+                            labelColor: networkColor,
+                            labelText: 'Бүсчлэл нэмэх',
+                          )
+                        ],
+                      ),
                 SizedBox(
                   height: 40,
                 ),
@@ -280,6 +312,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
       builder: (context) {
         return SingleChildScrollView(
           child: Container(
+            width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,39 +320,66 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
                 Container(
                   margin: const EdgeInsets.only(top: 25, bottom: 20),
                   child: Text(
-                    'Хариуцсан ажилтан сонгох',
+                    'Чиглэл сонгох',
                     style: TextStyle(
                       color: grey2,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: parentList
-                      .map(
-                        (e) => GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              coClientStaff = "${e.name}";
-                              coClientStaffId = e.id.toString();
-                            });
-                            Navigator.of(context).pop();
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            color: transparent,
-                            child: Text(
-                              '${e.name}',
-                              style: TextStyle(
-                                color: black.withOpacity(0.7),
+                parentList.isNotEmpty
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: parentList
+                            .map(
+                              (e) => GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    coClientStaff = "${e.name}";
+                                    coClientStaffId = e.id.toString();
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  color: transparent,
+                                  child: Text(
+                                    '${e.name}',
+                                    style: TextStyle(
+                                      color: black.withOpacity(0.7),
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
+                            )
+                            .toList(),
                       )
-                      .toList(),
-                ),
+                    : Column(
+                        children: [
+                          NotFound(
+                            module: "NETWORK",
+                            labelText: '',
+                          ),
+                          CustomButton(
+                            onClick: () {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pushNamed(
+                                AddDirection.routeName,
+                                arguments: AddDirectionArguments(
+                                  listenController: ListenController(),
+                                  parentId: areaRegionId,
+                                  parentName: distributionArea,
+                                  parentRefCode: areaRefCode,
+                                ),
+                              );
+                            },
+                            labelColor: networkColor,
+                            labelText: 'Чиглэл нэмэх',
+                          )
+                        ],
+                      ),
                 SizedBox(
                   height: 40,
                 ),

@@ -93,7 +93,13 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
   }
 
   api(String condition) async {
+    setState(() {
+      isLoading = true;
+    });
     paymentTerms = await BusinessApi().paymentTermSelect(condition);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -101,6 +107,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
     general =
         Provider.of<GeneralProvider>(context, listen: true).businessGeneral;
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -120,170 +127,160 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
           ),
         ],
       ),
-      body: isLoading == true
-          ? Center(
-              child: CircularProgressIndicator(
-                color: networkColor,
-              ),
-            )
-          : SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  FieldCard(
-                    color: white,
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    labelText: "Төлбөрийн хэлбэр",
-                    onClick: () {
-                      condition();
-                    },
-                    arrowColor: networkColor,
-                    secondText: "${paymentTerm == null ? '-' : paymentTerm}",
-                    secondTextColor: networkColor,
-                  ),
-                  FieldCard(
-                    color: white,
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    labelText: "Төлбөрийн нөхцөл",
-                    onClick: () {
-                      if (isLoading == false) {
-                        configType();
-                      }
-                    },
-                    arrowColor: networkColor,
-                    secondText: "${config == null ? '-' : config}",
-                    secondTextColor: networkColor,
-                  ),
-                  FieldCard(
-                    color: white,
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    labelText: "Эхлэх хугацаа",
-                    onClick: () {
-                      showCupertinoModalPopup(
-                        context: context,
-                        builder: (context) {
-                          return Container(
-                            color: white,
-                            height: MediaQuery.of(context).size.height * 0.4,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text(
-                                    'Болсон',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: black,
-                                      fontFamily: "Montserrat",
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: CupertinoDatePicker(
-                                    minimumDate:
-                                        startDate.subtract(Duration(hours: 1)),
-                                    maximumDate: endDate,
-                                    initialDateTime: startDate,
-                                    mode: CupertinoDatePickerMode.date,
-                                    use24hFormat: true,
-                                    showDayOfWeek: true,
-                                    onDateTimeChanged: (DateTime newDate) {
-                                      setState(() => startDate = newDate);
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                    },
-                    secondText:
-                        "${startDate.year} - ${startDate.month} - ${startDate.day}",
-                    arrowColor: networkColor,
-                    secondTextColor: networkColor,
-                    labelTextColor: buttonColor,
-                  ),
-                  FieldCard(
-                    arrowColor: networkColor,
-                    color: white,
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    labelText: "Дуусах хугацаа",
-                    onClick: () {
-                      showCupertinoModalPopup(
-                        context: context,
-                        builder: (context) {
-                          return Container(
-                            color: white,
-                            height: MediaQuery.of(context).size.height * 0.4,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text(
-                                    'Болсон',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: black,
-                                      fontFamily: "Montserrat",
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: CupertinoDatePicker(
-                                    minimumDate:
-                                        endDate.subtract(Duration(hours: 1)),
-                                    initialDateTime: endDate,
-                                    mode: CupertinoDatePickerMode.date,
-                                    use24hFormat: true,
-                                    showDayOfWeek: true,
-                                    onDateTimeChanged: (DateTime newDate) {
-                                      setState(() => endDate = newDate);
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                    },
-                    secondText:
-                        "${endDate.year} - ${endDate.month} - ${endDate.day}",
-                    secondTextColor: networkColor,
-                    labelTextColor: buttonColor,
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  CustomButton(
-                    labelText: "Хадгалах",
-                    labelColor: paymentTerm == null || config == null
-                        ? networkColor.withOpacity(0.3)
-                        : networkColor,
-                    isLoading: isSubmit,
-                    onClick: () {
-                      paymentTerm == null || config == null
-                          ? () {}
-                          : onSubmit();
-                    },
-                  ),
-                ],
-              ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 20,
             ),
+            FieldCard(
+              color: white,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              labelText: "Төлбөрийн хэлбэр",
+              onClick: () {
+                condition();
+              },
+              arrowColor: networkColor,
+              secondText: "${paymentTerm == null ? '-' : paymentTerm}",
+              secondTextColor: networkColor,
+            ),
+            FieldCard(
+              color: white,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              labelText: "Төлбөрийн нөхцөл",
+              onClick: () {
+                if (isLoading == false) {
+                  configType();
+                }
+              },
+              arrowColor: networkColor,
+              secondText: "${config == null ? '-' : config}",
+              secondTextColor: networkColor,
+            ),
+            FieldCard(
+              color: white,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              labelText: "Эхлэх хугацаа",
+              onClick: () {
+                showCupertinoModalPopup(
+                  context: context,
+                  builder: (context) {
+                    return Container(
+                      color: white,
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              'Болсон',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: black,
+                                fontFamily: "Montserrat",
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: CupertinoDatePicker(
+                              minimumDate:
+                                  startDate.subtract(Duration(hours: 1)),
+                              maximumDate: endDate,
+                              initialDateTime: startDate,
+                              mode: CupertinoDatePickerMode.date,
+                              use24hFormat: true,
+                              showDayOfWeek: true,
+                              onDateTimeChanged: (DateTime newDate) {
+                                setState(() => startDate = newDate);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
+              secondText:
+                  "${startDate.year} - ${startDate.month} - ${startDate.day}",
+              arrowColor: networkColor,
+              secondTextColor: networkColor,
+              labelTextColor: buttonColor,
+            ),
+            FieldCard(
+              arrowColor: networkColor,
+              color: white,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              labelText: "Дуусах хугацаа",
+              onClick: () {
+                showCupertinoModalPopup(
+                  context: context,
+                  builder: (context) {
+                    return Container(
+                      color: white,
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              'Болсон',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: black,
+                                fontFamily: "Montserrat",
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: CupertinoDatePicker(
+                              minimumDate: endDate.subtract(Duration(hours: 1)),
+                              initialDateTime: endDate,
+                              mode: CupertinoDatePickerMode.date,
+                              use24hFormat: true,
+                              showDayOfWeek: true,
+                              onDateTimeChanged: (DateTime newDate) {
+                                setState(() => endDate = newDate);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
+              secondText: "${endDate.year} - ${endDate.month} - ${endDate.day}",
+              secondTextColor: networkColor,
+              labelTextColor: buttonColor,
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            CustomButton(
+              labelText: "Хадгалах",
+              labelColor: paymentTerm == null || config == null
+                  ? networkColor.withOpacity(0.3)
+                  : networkColor,
+              isLoading: isSubmit,
+              onClick: () {
+                paymentTerm == null || config == null ? () {} : onSubmit();
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -330,6 +327,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                             Navigator.of(context).pop();
                           },
                           child: Container(
+                            width: MediaQuery.of(context).size.width,
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             color: transparent,
                             child: Text(
@@ -367,6 +365,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
       builder: (context) {
         return SingleChildScrollView(
           child: Container(
+            width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -394,6 +393,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                             Navigator.of(context).pop();
                           },
                           child: Container(
+                            width: MediaQuery.of(context).size.width,
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             color: transparent,
                             child: Text(

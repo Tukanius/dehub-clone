@@ -1,3 +1,5 @@
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/network_module/screens/reference_information_page/reference_information_page.dart';
 import 'package:dehub/src/network_module/screens/client_classifications/client_classifications.dart';
 import 'package:dehub/src/network_module/screens/distribution_areas/distribution_areas.dart';
@@ -13,6 +15,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/models/business.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DashboardTab extends StatefulWidget {
   const DashboardTab({
@@ -30,6 +33,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
   Map<String, dynamic> pieChart = {};
   Map<String, double> data = {};
   List<Business> legend = [];
+  User user = User();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -64,6 +68,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).businessUser;
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,17 +151,19 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                   svgColor: networkColor,
                   svg: 'assets/svg/map.svg',
                 ),
-                DashboardCard(
-                  onClick: () {
-                    Navigator.of(context)
-                        .pushNamed(ReferenceInformationPage.routeName);
-                  },
-                  boxColor: networkColor.withOpacity(0.1),
-                  padding: 7,
-                  labelText: 'Лавлах мэдээлэл',
-                  svgColor: networkColor,
-                  svg: 'assets/svg/bag.svg',
-                ),
+                user.currentBusiness?.type == "SUPPLIER"
+                    ? DashboardCard(
+                        onClick: () {
+                          Navigator.of(context)
+                              .pushNamed(ReferenceInformationPage.routeName);
+                        },
+                        boxColor: networkColor.withOpacity(0.1),
+                        padding: 7,
+                        labelText: 'Лавлах мэдээлэл',
+                        svgColor: networkColor,
+                        svg: 'assets/svg/bag.svg',
+                      )
+                    : SizedBox(),
               ],
             ),
           ),

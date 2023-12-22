@@ -29,16 +29,28 @@ class _CategorySheetState extends State<CategorySheet> with AfterLayoutMixin {
   bool isLoading = true;
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   Result list = Result(count: 0, rows: []);
-  InventoryGoods itemType = InventoryGoods();
+  InventoryGoods source = InventoryGoods();
 
   @override
   afterFirstLayout(BuildContext context) async {
-    itemType = Provider.of<InventoryProvider>(context, listen: false).product;
+    source = Provider.of<InventoryProvider>(context, listen: false).product;
     categoryList();
   }
 
   categoryList() async {
-    list = await InventoryApi().categoryList(widget.type, itemType.itemTypeId!);
+    if (widget.type == "SUB_CLASSIFICATION") {
+      list = await InventoryApi().categoryList(
+          widget.type, source.itemTypeId!, source.classificationId!);
+    } else if (widget.type == "CATEGORY") {
+      list = await InventoryApi().categoryList(
+          widget.type, source.itemTypeId!, source.subClassificationId!);
+    } else if (widget.type == "SUB_CATEGORY") {
+      list = await InventoryApi()
+          .categoryList(widget.type, source.itemTypeId!, source.categoryId!);
+    } else {
+      list = await InventoryApi()
+          .categoryList(widget.type, source.itemTypeId!, '');
+    }
     setState(() {
       isLoading = false;
     });
@@ -46,14 +58,20 @@ class _CategorySheetState extends State<CategorySheet> with AfterLayoutMixin {
 
   create() async {
     InventoryGoods create = InventoryGoods();
+    InventoryGoods provider =
+        Provider.of<InventoryProvider>(context, listen: false).product;
     create.name = controller.text;
     create.description = controller.text;
-    create.description = 'asdf';
-    create.itemTypeId = Provider.of<InventoryProvider>(context, listen: false)
-        .product
-        .itemTypeId;
+    create.itemTypeId = provider.itemTypeId;
+    if (widget.type == 'SUB_CLASSIFICATION') {
+      create.parentId = provider.classificationId;
+    } else if (widget.type == "CATEGORY") {
+      create.parentId = provider.subClassificationId;
+    } else if (widget.type == "SUB_CATEGORY") {
+      create.parentId = provider.categoryId;
+    }
     create.type = widget.type;
-    var res = await InventoryApi().categoryCreate(create);
+    InventoryGoods res = await InventoryApi().categoryCreate(create);
     setState(() {
       list.rows?.add(res);
     });
@@ -91,7 +109,7 @@ class _CategorySheetState extends State<CategorySheet> with AfterLayoutMixin {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Таг нэр сонгоно уу',
+                '${widget.labelText}',
                 style: TextStyle(
                   color: white,
                   fontSize: 16,

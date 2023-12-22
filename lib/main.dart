@@ -72,7 +72,7 @@ import 'package:dehub/src/network_module/screens/zoning_page/zoning_detail_page.
 import 'package:dehub/src/network_module/screens/zoning_page/zoning_page.dart';
 import 'package:dehub/src/network_module/screens/new_invitation_page/invitation_sent_page/invitation_sent_page.dart';
 import 'package:dehub/src/network_module/screens/new_invitation_page/new_invitation_page.dart';
-import 'package:dehub/src/network_module/network_page/tabs/inbox_tab/tabs/invitation_detail_page/invitation_detail_page.dart';
+import 'package:dehub/src/network_module/network_page/tabs/inbox_tab/invitation_detail_page/invitation_detail_page.dart';
 import 'package:dehub/src/invoice_module/main_page/invoice_page.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/customer_choose.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/customer_choose_tabs/gereet.dart';
@@ -132,7 +132,7 @@ import 'package:dehub/src/network_module/screens/payment_terms/payment_terms.dar
 import 'package:dehub/src/entry_point/menu/shopping/shopping_page.dart';
 import 'package:dehub/src/entry_point/menu/suppliers/suppliers_page.dart';
 import 'package:dehub/src/product_module/screens/supplier_list/supplier_list.dart';
-import 'package:dehub/src/profile/information/partner_info.dart';
+import 'package:dehub/src/product_module/screens/supplier_product/supplier_product_list.dart';
 import 'package:dehub/src/profile/profile_page.dart';
 import 'package:dehub/src/splash/splash_page.dart';
 import 'package:dehub/src/payment_module/screens/transaction_history/transaction_history.dart';
@@ -156,6 +156,7 @@ void main() async {
 GetIt locator = GetIt.instance;
 
 class MyApp extends StatelessWidget {
+  static const routeName = '/MyApp';
   const MyApp({Key? key}) : super(key: key);
   static DialogService? dialogService = locator<DialogService>();
 
@@ -243,10 +244,6 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return FundingRequestPage();
                     });
-                  case PartnerInfo1.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return PartnerInfo1();
-                    });
                   case NetworkPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return NetworkPage();
@@ -297,12 +294,8 @@ class MyApp extends StatelessWidget {
                       );
                     });
                   case PaymentTerms.routeName:
-                    // PaymentTermsArguments arguments =
-                    // settings.arguments as PaymentTermsArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return PaymentTerms(
-                          // id: arguments.id,
-                          );
+                      return PaymentTerms();
                     });
                   case ClientStaffDetail.routeName:
                     ClientStaffDetailArguments arguments =
@@ -313,12 +306,8 @@ class MyApp extends StatelessWidget {
                       );
                     });
                   case ClientStaffs.routeName:
-                    // ResponsibleStaffArguments arguments =
-                    // settings.arguments as ResponsibleStaffArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return ClientStaffs(
-                          // id: arguments.id,
-                          );
+                      return ClientStaffs();
                     });
                   case SetPaymentTermDetail.routeName:
                     SetPaymentTermDetailArguments arguments =
@@ -428,10 +417,7 @@ class MyApp extends StatelessWidget {
                         );
                       },
                     );
-                  // case Bugd.routeName:
-                  //   return MaterialPageRoute(builder: (context) {
-                  //     return Bugd();
-                  //   });
+
                   case Gereet.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return Gereet();
@@ -525,15 +511,9 @@ class MyApp extends StatelessWidget {
                       return ClientClassifications();
                     });
                   case FinancingLogin.routeName:
-                    // FinancingLoginArguments arguments =
-                    //     settings.arguments as FinancingLoginArguments;
                     return PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
-                          FinancingLogin(
-                              // listenController: arguments.listenController,
-                              // partnerListenController:
-                              //     arguments.partnerListenController,
-                              ),
+                          FinancingLogin(),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                         var begin = const Offset(1.0, 0.0);
@@ -577,12 +557,8 @@ class MyApp extends StatelessWidget {
                       );
                     });
                   case DistributionAreas.routeName:
-                    // DistributionAreasArguments arguments =
-                    // settings.arguments as DistributionAreasArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return DistributionAreas(
-                          // id: arguments.id,
-                          );
+                      return DistributionAreas();
                     });
                   case InvoiceDetailPage.routeName:
                     InvoiceDetailPageArguments arguments =
@@ -1201,6 +1177,9 @@ class MyApp extends StatelessWidget {
                     return PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
                           AddDirection(
+                        parentId: arguments.parentId,
+                        parentName: arguments.parentName,
+                        parentRefCode: arguments.parentRefCode,
                         listenController: arguments.listenController,
                       ),
                       transitionsBuilder:
@@ -1219,13 +1198,9 @@ class MyApp extends StatelessWidget {
                       },
                     );
                   case OrderPayment.routeName:
-                    // OrderPaymentArguments arguments =
-                    //     settings.arguments as OrderPaymentArguments;
                     return PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
-                          OrderPayment(
-                              // listenController: arguments.listenController,
-                              ),
+                          OrderPayment(),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                         var begin = const Offset(0.0, 1.0);
@@ -1342,6 +1317,9 @@ class MyApp extends StatelessWidget {
                     return PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
                           AddRank(
+                        parentRefCode: arguments.parentRefCode,
+                        parentId: arguments.parentId,
+                        parentName: arguments.parentName,
                         listenController: arguments.listenController,
                       ),
                       transitionsBuilder:
@@ -1408,16 +1386,20 @@ class MyApp extends StatelessWidget {
                       return RankPage();
                     });
                   case ProductListPage.routeName:
-                    ProductListPageArguments arguments =
-                        settings.arguments as ProductListPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return ProductListPage(
-                        id: arguments.id,
-                      );
+                      return ProductListPage();
                     });
                   case EntryPoint.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return EntryPoint();
+                    });
+                  case SupplierProductList.routeName:
+                    SupplierProductListArguments arguments =
+                        settings.arguments as SupplierProductListArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return SupplierProductList(
+                        id: arguments.id,
+                      );
                     });
                   case ProductDetailPage.routeName:
                     ProductDetailPageArguments arguments =

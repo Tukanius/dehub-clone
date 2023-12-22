@@ -172,32 +172,30 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
                       ),
                     ),
                   ),
-                  user.currentBusiness?.type == "SUPPLIER"
-                      ? Column(
-                          children: [
-                            FieldCard(
-                              color: white,
-                              paddingHorizontal: 15,
-                              paddingVertical: 10,
-                              labelText: "Бүсийн нэр",
-                              secondText: business.areaRegion?.name,
-                              secondTextColor: networkColor,
-                              onClick: () {},
-                              arrowColor: networkColor,
-                            ),
-                            FieldCard(
-                              color: white,
-                              paddingHorizontal: 15,
-                              paddingVertical: 10,
-                              labelText: "Чиглэл",
-                              secondText: business.areaDirection?.name,
-                              secondTextColor: networkColor,
-                              onClick: () {},
-                              arrowColor: networkColor,
-                            ),
-                          ],
-                        )
-                      : SizedBox(),
+                  Column(
+                    children: [
+                      FieldCard(
+                        color: white,
+                        paddingHorizontal: 15,
+                        paddingVertical: 10,
+                        labelText: "Бүсийн нэр",
+                        secondText: business.areaRegion?.name,
+                        secondTextColor: networkColor,
+                        onClick: () {},
+                        arrowColor: networkColor,
+                      ),
+                      FieldCard(
+                        color: white,
+                        paddingHorizontal: 15,
+                        paddingVertical: 10,
+                        labelText: "Чиглэл",
+                        secondText: business.areaDirection?.name,
+                        secondTextColor: networkColor,
+                        onClick: () {},
+                        arrowColor: networkColor,
+                      ),
+                    ],
+                  ),
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context)

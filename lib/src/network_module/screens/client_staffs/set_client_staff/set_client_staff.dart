@@ -83,6 +83,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
     general =
         Provider.of<GeneralProvider>(context, listen: true).businessGeneral;
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: false,

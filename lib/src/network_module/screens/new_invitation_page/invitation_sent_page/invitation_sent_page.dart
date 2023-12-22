@@ -143,6 +143,13 @@ class _InvitationSentPageState extends State<InvitationSentPage>
   }
 
   @override
+  void initState() {
+    controller.text =
+        'Сайн байна уу, Тантай DeHUB бизнесийн сүлжээнд холбогдож, хамтран ажиллах хүсэлтэй байна.';
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     partner = Provider.of<UserProvider>(context, listen: false).partnerUser;
     return Scaffold(
@@ -163,6 +170,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
         title: Text(
           'Урилга илгээх',
           style: TextStyle(
+            color: white,
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),
@@ -421,23 +429,30 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                         horizontal: 15, vertical: 10),
                     child: Text(
                       'Урилгын тайлбар',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, color: grey3),
+                      style: TextStyle(
+                        color: grey3,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
-                  FormTextField(
-                    controller: controller,
-                    textColor: networkColor,
-                    name: 'description',
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 15, horizontal: 15),
-                      hintText: 'Тайлбар оруулна уу',
-                      hintStyle: TextStyle(color: networkColor),
-                      fillColor: white,
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
+                  Container(
+                    color: white,
+                    padding: const EdgeInsets.all(15),
+                    child: FormTextField(
+                      controller: controller,
+                      textAlign: TextAlign.left,
+                      name: 'toMessage',
+                      maxLines: 5,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.zero,
+                          borderSide: BorderSide(color: grey),
+                        ),
+                        fillColor: white,
+                        filled: true,
+                        hintStyle: TextStyle(
+                          color: grey2,
+                        ),
                       ),
                     ),
                   ),
@@ -449,7 +464,6 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                         .map(
                           (item) => BusinessSuggestCard(
                             receiverIds: receiverIds,
-                            onClick: () {},
                             data: item,
                           ),
                         )

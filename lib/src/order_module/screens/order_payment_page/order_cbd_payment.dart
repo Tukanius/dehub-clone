@@ -48,6 +48,7 @@ class _OrderCbdPaymentState extends State<OrderCbdPayment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: orderColor,
         surfaceTintColor: orderColor,

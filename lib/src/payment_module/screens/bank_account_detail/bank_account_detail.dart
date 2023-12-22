@@ -63,6 +63,7 @@ class _BankAccountDetailState extends State<BankAccountDetail>
     general =
         Provider.of<GeneralProvider>(context, listen: false).paymentGeneral;
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: white,

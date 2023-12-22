@@ -62,7 +62,7 @@ class _AccountSettingCardState extends State<AccountSettingCard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${widget.data?.partner?.businessName}',
+                              '${widget.data?.profileName}',
                               style: TextStyle(
                                 color: networkColor,
                                 fontWeight: FontWeight.bold,

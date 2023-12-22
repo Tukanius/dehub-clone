@@ -48,7 +48,7 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                 Expanded(
                   child: Row(
                     children: [
-                      widget.data?.partner?.logo == null
+                      widget.data?.logo == null
                           ? CircleAvatar(
                               backgroundColor: grey,
                               radius: 18,
@@ -58,7 +58,7 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                               backgroundColor: grey,
                               radius: 18,
                               backgroundImage: NetworkImage(
-                                '${widget.data?.partner?.logo}',
+                                '${widget.data?.logo}',
                               ),
                             ),
                       SizedBox(
@@ -69,7 +69,7 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${widget.data?.partner?.businessName}',
+                              '${widget.data?.profileName}',
                               style: TextStyle(
                                 color: networkColor,
                                 fontWeight: FontWeight.bold,

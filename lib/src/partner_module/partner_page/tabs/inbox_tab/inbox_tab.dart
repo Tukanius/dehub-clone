@@ -1,5 +1,4 @@
-import 'package:dehub/src/network_module/network_page/tabs/inbox_tab/tabs/from_bank.dart';
-import 'package:dehub/src/network_module/network_page/tabs/inbox_tab/tabs/from_buyer.dart';
+import 'package:dehub/src/network_module/network_page/tabs/inbox_tab/invitation.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -123,8 +122,8 @@ class _InboxTabState extends State<InboxTab>
         body: TabBarView(
           controller: tabController,
           children: [
-            FromBuyer(),
-            FromBank(),
+            Invitation(),
+            Text(''),
           ],
         ),
       ),

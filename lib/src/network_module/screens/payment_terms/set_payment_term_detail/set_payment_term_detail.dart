@@ -137,7 +137,7 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                     paddingHorizontal: 15,
                     paddingVertical: 10,
                     labelText: 'Бизнесийн нэр',
-                    secondText: '${business.partner?.businessName}',
+                    secondText: '${business.profileName}',
                     secondTextColor: networkColor,
                     labelTextColor: dark,
                   ),

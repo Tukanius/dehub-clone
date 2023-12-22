@@ -162,6 +162,7 @@ class _GivePageState extends State<GivePage>
         Provider.of<GeneralProvider>(context, listen: true).invoiceGeneral;
 
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text(
           'Борлуулалтын нэхэмжлэл',
@@ -220,9 +221,9 @@ class _GivePageState extends State<GivePage>
                       : () {},
                   child: Container(
                     margin: EdgeInsets.only(right: 5, left: 5),
-                    padding: EdgeInsets.symmetric(horizontal: 18),
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
+                      borderRadius: BorderRadius.circular(24),
                       color: invoiceStatus == general.invoiceStatus?[index].code
                           ? invoiceColor
                           : Colors.grey.shade100,
