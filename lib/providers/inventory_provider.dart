@@ -13,7 +13,10 @@ class InventoryProvider extends ChangeNotifier {
   bool profileValidate = false;
   bool bannerValidate = false;
   bool fieldValidate = false;
+  List<InventoryGoods> quantityPrices = [];
   List<InventoryGoods> sections = [];
+  List<InventoryGoods> variantSuppliers = [];
+  List<InventoryGoods> values = [];
   TextEditingController nameBillController = TextEditingController();
   TextEditingController nameAppController = TextEditingController();
   TextEditingController nameWebController = TextEditingController();
@@ -31,9 +34,7 @@ class InventoryProvider extends ChangeNotifier {
   }
 
   banValidate() {
-    if (product.detailImages == null) {
-      bannerValidate = true;
-    }
+    bannerValidate = true;
     notifyListeners();
   }
 
@@ -171,6 +172,7 @@ class InventoryProvider extends ChangeNotifier {
 
   bannerImages(String value) {
     images.add(value);
+    bannerValidate = false;
     product.detailImages = images;
     notifyListeners();
   }
@@ -206,12 +208,6 @@ class InventoryProvider extends ChangeNotifier {
   returnType(String value, String id) {
     product.returnType = value;
     product.returnTypeId = id;
-    notifyListeners();
-  }
-
-  option(String value, String id) {
-    product.option = value;
-    product.optionId = id;
     notifyListeners();
   }
 
@@ -254,8 +250,53 @@ class InventoryProvider extends ChangeNotifier {
   }
 
   supplierType(String value, String id) {
-    product.supplierTypeId = id;
+    product.supplierType = id;
     product.supplierTypeName = value;
+    notifyListeners();
+  }
+
+  setPrice(double price, String endDate, String startDate) {
+    product.startDate = startDate;
+    product.endDate = endDate;
+    product.customPrice = price;
+    notifyListeners();
+  }
+
+  setQuantityPrice(InventoryGoods data) {
+    quantityPrices.add(data);
+    product.quantityPrices = quantityPrices;
+    notifyListeners();
+  }
+
+  warehouse(InventoryGoods data) {
+    product.warehouse = data;
+    notifyListeners();
+  }
+
+  merchStaff(InventoryGoods data) {
+    product.merchStaff = data;
+    notifyListeners();
+  }
+
+  buyerBusiness(InventoryGoods data) {
+    product.buyerBusiness = data;
+    notifyListeners();
+  }
+
+  supplierBusiness(InventoryGoods data) {
+    product.supplierBusiness = data;
+    notifyListeners();
+  }
+
+  partner(InventoryGoods data) {
+    product.partnerBusiness = data;
+    notifyListeners();
+  }
+
+  clearBusiness() {
+    product.buyerBusiness = null;
+    product.partnerBusiness = null;
+    product.supplierBusiness = null;
     notifyListeners();
   }
 
@@ -270,9 +311,24 @@ class InventoryProvider extends ChangeNotifier {
     product.subCategoryId = null;
   }
 
+  variantSupplier(InventoryGoods data) {
+    variantSuppliers.add(data);
+    product.variantSuppliers = variantSuppliers;
+    notifyListeners();
+  }
+
+  select(InventoryGoods data) {
+    values.add(data);
+    product.values = values;
+    notifyListeners();
+  }
+
   clearData() {
     product = InventoryGoods();
+    images = [];
     sections = [];
+    quantityPrices = [];
+    variantSuppliers = [];
     profileValidate = false;
     bannerValidate = false;
     itemTypeValidate = false;
@@ -281,6 +337,18 @@ class InventoryProvider extends ChangeNotifier {
     categoryValidate = false;
     subCategoryValidate = false;
     tagValidate = false;
+    notifyListeners();
+  }
+
+  vatType(String value, double vatValue) {
+    product.vatType = value;
+    product.vatValue = vatValue;
+    notifyListeners();
+  }
+
+  taxType(bool value, double taxValue) {
+    product.hasTax = value;
+    product.taxPercent = taxValue;
     notifyListeners();
   }
 }

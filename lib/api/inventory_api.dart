@@ -179,6 +179,12 @@ class InventoryApi extends HttpRequest {
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
   }
 
+  Future<InventoryGoods> subCategoryCreate(InventoryGoods data) async {
+    var res =
+        await post('/category/sub', "INVENTORY", true, data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
   Future<InventoryGoods> categoryDelete(String id) async {
     var res = await del('/category/$id', "INVENTORY", true);
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
@@ -271,6 +277,59 @@ class InventoryApi extends HttpRequest {
   Future<InventoryGoods> updateVariant(InventoryGoods data, String id) async {
     var res =
         await put('/goods/$id/variant', "INVENTORY", true, data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  price(InventoryGoods data) async {
+    var res = put('/goods/price', "INVENTORY", true, data: data.toJson());
+    return res;
+  }
+
+  Future<Result> warehouseSelect() async {
+    var res = await get('/goods/warehouse/select', 'INVENTORY', true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<Result> merchStaffSelect() async {
+    var res = await get('/goods/warehouse/merch_staff', "INVENTORY", true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<Result> warehouseBuyer() async {
+    var res = await get('/goods/warehouse/buyer', "INVENTORY", true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<Result> warehousePartner(String id) async {
+    var res = await get(
+        '/goods/warehouse/partner?buyerBusinessId=$id', "INVENTORY", true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<Result> warehouseSupplier(
+      {required String id, required String partnerId}) async {
+    var res = await get(
+        '/goods/warehouse/supplier?buyerBusinessId=$id&partnerId=$partnerId',
+        "INVENTORY",
+        true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<InventoryGoods> setWarehouse(InventoryGoods data) async {
+    var res = await put('/goods/warehouse', "INVENTORY", true,
+        data: data.toJson(), handler: true);
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<InventoryGoods> statusChange(InventoryGoods data, String id) async {
+    var res = await put('/goods/variant/$id/status_change', "INVENTORY", true,
+        data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<InventoryGoods> addVariant(InventoryGoods data) async {
+    var res =
+        await post('/goods/variant', "INVENTORY", true, data: data.toJson());
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
   }
 }

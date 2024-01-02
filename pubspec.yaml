@@ -109,6 +109,8 @@ flutter:
   fonts:
     - family: Montserrat
       fonts:
+        - asset: assets/fonts/Montserrat-Italic.ttf
+          weight: 100
         - asset: assets/fonts/Montserrat-Light.ttf
           weight: 300
         - asset: assets/fonts/Montserrat-Regular.ttf

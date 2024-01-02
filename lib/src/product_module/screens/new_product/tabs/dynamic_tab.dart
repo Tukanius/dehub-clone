@@ -42,38 +42,24 @@ class _DynamicTabState extends State<DynamicTab> {
         sectionIds.add(res.product.sections![i].id!);
         for (var f = 0; f < res.product.sections![i].fields!.length; f++) {
           itemFieldValues.add(
-            res.product.sections?[i].fields?[f].type == 'TEXT'
+            res.product.sections?[i].fields?[f].type == "CHECKBOX"
                 ? InventoryGoods(
                     sectionId: sectionIds[i],
                     fieldId: res.product.sections?[i].fields?[f].id,
                     fieldType: res.product.sections?[i].fields?[f].type,
-                    text: res.product.sections?[i].fields?[f].text,
+                    checked:
+                        res.product.sections?[i].fields?[f].checked ?? false,
                   )
-                : res.product.sections?[i].fields?[f].type == 'SELECT'
-                    ? InventoryGoods(
-                        sectionId: sectionIds[i],
-                        fieldId: res.product.sections?[i].fields?[f].id,
-                        fieldType: res.product.sections?[i].fields?[f].type,
-                        fieldValueId:
-                            res.product.sections?[i].fields?[f].fieldValueId,
-                      )
-                    : res.product.sections?[i].fields?[f].type == 'NUMBER'
-                        ? InventoryGoods(
-                            sectionId: sectionIds[i],
-                            fieldId: res.product.sections?[i].fields?[f].id,
-                            fieldType: res.product.sections?[i].fields?[f].type,
-                            number: res.product.sections?[i].fields?[f].number,
-                          )
-                        : InventoryGoods(
-                            sectionId: sectionIds[i],
-                            fieldId: res.product.sections?[i].fields?[f].id,
-                            fieldType: res.product.sections?[i].fields?[f].type,
-                            checked:
-                                res.product.sections?[i].fields?[f].checked ??
-                                    false,
-                          ),
+                : InventoryGoods(
+                    sectionId: sectionIds[i],
+                    fieldId: res.product.sections?[i].fields?[f].id,
+                    fieldType: res.product.sections?[i].fields?[f].type,
+                    number: res.product.sections?[i].fields?[f].number,
+                    fieldValueId:
+                        res.product.sections?[i].fields?[f].fieldValueId,
+                    text: res.product.sections?[i].fields?[f].text,
+                  ),
           );
-          print(itemFieldValues[f].toJson());
         }
       }
       await InventoryApi().additionalInfo(
@@ -81,7 +67,7 @@ class _DynamicTabState extends State<DynamicTab> {
             sectionIds: sectionIds,
             itemFieldValues: itemFieldValues,
           ),
-          '8a0c39a9-49f7-44d3-97e5-68139cd45938');
+          res.product.id!);
       Provider.of<IndexProvider>(context, listen: false)
           .newProductIndexChange(2);
       setState(() {
@@ -344,7 +330,7 @@ class _DynamicTabState extends State<DynamicTab> {
                                                 index: index,
                                                 fieldIndex: fieldIndex,
                                               );
-                              }).toList(),
+                              }).toList(), //
                             ),
                           ],
                         );
@@ -416,7 +402,6 @@ class _DynamicTabState extends State<DynamicTab> {
                       if (fbKey.currentState!.saveAndValidate() &&
                           source.fieldValidate == false) {
                         onSubmit();
-                        // tabIndex.newProductIndexChange(2);
                       }
                     },
                     labelText: 'Үргэлжлүүлэх',

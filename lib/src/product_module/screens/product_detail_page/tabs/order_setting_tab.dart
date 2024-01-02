@@ -62,7 +62,6 @@ class _OrderSettingTabState extends State<OrderSettingTab>
 
   @override
   Widget build(BuildContext context) {
-    print(itemUnits.toJson());
     general =
         Provider.of<GeneralProvider>(context, listen: true).inventoryGeneral;
     return SingleChildScrollView(

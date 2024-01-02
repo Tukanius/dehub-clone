@@ -3,7 +3,7 @@ import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/src/product_module/screens/new_product/tabs/dynamic_tab.dart';
 import 'package:dehub/src/product_module/screens/new_product/tabs/main_tab.dart';
-import 'package:dehub/src/product_module/screens/new_product/tabs/order_tab.dart';
+import 'package:dehub/src/product_module/screens/new_product/tabs/order_setting_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -24,7 +24,7 @@ class _NewProductState extends State<NewProduct>
 
   @override
   afterFirstLayout(BuildContext context) {
-    Provider.of<IndexProvider>(context, listen: false).newProductIndexChange(2);
+    Provider.of<IndexProvider>(context, listen: false).newProductIndexChange(0);
     Provider.of<InventoryProvider>(context, listen: false).clearData();
     setState(() {
       isLoading = false;
@@ -76,7 +76,7 @@ class _NewProductState extends State<NewProduct>
               text: 'Динамик мэдээлэл',
             ),
             Tab(
-              text: 'Захиалга',
+              text: 'Захиалга тохиргоо',
             ),
           ],
         ),
@@ -89,7 +89,7 @@ class _NewProductState extends State<NewProduct>
               children: [
                 MainTab(),
                 DynamicTab(),
-                OrderTab(),
+                OrderSettingTab(),
               ],
             ),
     );

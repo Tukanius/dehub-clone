@@ -1,15 +1,15 @@
-import 'package:dehub/models/inventory_goods.dart';
+import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/field_card/field_card.dart';
+import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/inventory_provider.dart';
+import 'package:dehub/src/product_module/screens/new_product/sheet/option_select.dart';
+import 'package:dehub/src/product_module/screens/new_product/sheet/version_control_sheet.dart';
+import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:dehub/api/inventory_api.dart';
-import 'package:dehub/models/result.dart';
 import 'package:provider/provider.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class OptionSheet extends StatefulWidget {
   const OptionSheet({super.key});
@@ -19,73 +19,33 @@ class OptionSheet extends StatefulWidget {
 }
 
 class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
-  TextEditingController controller = TextEditingController();
-  GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
+  Result option = Result(rows: []);
   bool isLoading = true;
-  Result option = Result(count: 0, rows: []);
 
   @override
   afterFirstLayout(BuildContext context) async {
-    optionList();
-  }
-
-  optionList() async {
     option = await InventoryApi().optionList(true, false);
     setState(() {
       isLoading = false;
     });
   }
 
-  create() async {
-    InventoryGoods create = InventoryGoods();
-    create.name = controller.text;
-    create.isGoods = true;
-    create.isService = false;
-    var res = await InventoryApi().optionCreate(create);
-    setState(() {
-      option.rows?.add(res);
-    });
-  }
-
-  update(String id) async {
-    if (fbKey.currentState!.saveAndValidate()) {
-      InventoryGoods data = InventoryGoods.fromJson(fbKey.currentState!.value);
-      data.isGoods = true;
-      data.isService = false;
-      try {
-        await InventoryApi().optionUpdate(id, data);
-        await optionList();
-        Navigator.of(context).pop();
-      } catch (e) {
-        Navigator.of(context).pop();
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final source = Provider.of<InventoryProvider>(context, listen: false);
+    final source = Provider.of<InventoryProvider>(context, listen: true);
 
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           decoration: BoxDecoration(
             color: productColor,
             borderRadius: BorderRadius.vertical(
-              top: Radius.circular(20),
+              top: Radius.circular(15),
             ),
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Хувилбар сонгоно уу',
-                style: TextStyle(
-                  color: white,
-                  fontSize: 16,
-                ),
-              ),
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).pop();
@@ -96,281 +56,193 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
                   child: SvgPicture.asset('assets/svg/square-x.svg'),
                 ),
               ),
+              Expanded(
+                child: Text(
+                  'Барааны хувилбар үүсгэх',
+                  style: TextStyle(
+                    color: white,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    useSafeArea: true,
+                    builder: (context) => VersionControlSheet(),
+                  );
+                },
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: white,
+                  ),
+                  child: Text(
+                    'Үүсгэх',
+                    style: TextStyle(
+                      color: productColor,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
         Expanded(
-          child: SingleChildScrollView(
-            child: Container(
-              child: Column(
-                children: [
-                  isLoading == true
-                      ? SizedBox()
-                      : Row(
-                          children: [
-                            Expanded(
-                              child: FormTextField(
-                                controller: controller,
-                                onChanged: (value) {
-                                  setState(() {});
-                                },
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.zero,
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 0, horizontal: 15),
-                                  isDense: false,
-                                  hintText: 'Энд бичээд нэмнэ үү',
-                                ),
-                                name: 'asdf',
-                              ),
+          child: Container(
+            color: backgroundColor,
+            child: SingleChildScrollView(
+              child: isLoading == true
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        color: productColor,
+                      ),
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Text(
+                            'Сонгосон хувилбар',
+                            style: TextStyle(
+                              color: grey2,
                             ),
-                            GestureDetector(
-                              onTap: controller.text != ''
-                                  ? () {
-                                      create();
-                                      setState(() {
-                                        controller.text = '';
-                                      });
-                                    }
-                                  : () {},
-                              child: Container(
-                                margin: const EdgeInsets.only(right: 15),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: Color(0xffEAECEE),
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.add,
-                                      color: controller.text != ''
-                                          ? productColor
-                                          : grey3.withOpacity(0.5),
-                                      size: 14,
-                                    ),
-                                    Text(
-                                      'Нэмэх',
-                                      style: TextStyle(
-                                        color: controller.text != ''
-                                            ? productColor
-                                            : grey3.withOpacity(0.5),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                  isLoading == true
-                      ? Center(
-                          child: CircularProgressIndicator(
-                            color: productColor,
                           ),
-                        )
-                      : Column(
+                        ),
+                        source.product.values?.length == 0 ||
+                                source.product.values == null
+                            ? Container(
+                                padding: const EdgeInsets.all(15),
+                                width: MediaQuery.of(context).size.width,
+                                color: white,
+                                child: Text(
+                                  'Хувилбар сонгоогүй байна',
+                                  style: TextStyle(color: grey2),
+                                ),
+                              )
+                            : Column(
+                                children: source.product.values!
+                                    .map(
+                                      (data) => Container(
+                                        color: white,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 15),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  '${data.name}',
+                                                  style: TextStyle(
+                                                      color: productColor),
+                                                ),
+                                                RichText(
+                                                  text: TextSpan(
+                                                    style: TextStyle(
+                                                      fontFamily: 'Montserrat',
+                                                      color: grey2,
+                                                    ),
+                                                    children: data.values!
+                                                        .map(
+                                                          (item) => item.id ==
+                                                                  data.values
+                                                                      ?.last.id
+                                                              ? TextSpan(
+                                                                  text:
+                                                                      "${item.name}",
+                                                                )
+                                                              : TextSpan(
+                                                                  text:
+                                                                      "${item.name}, ",
+                                                                ),
+                                                        )
+                                                        .toList(),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: productColor,
+                                              size: 18,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Text(
+                            'Хувилбараас сонгоно уу',
+                            style: TextStyle(
+                              color: grey2,
+                            ),
+                          ),
+                        ),
+                        Column(
                           children: option.rows!
                               .map(
-                                (data) => InkWell(
-                                  onLongPress: () {
-                                    show(data.id, data.name);
+                                (data) => FieldCard(
+                                  paddingHorizontal: 15,
+                                  paddingVertical: 10,
+                                  color: white,
+                                  labelText: '${data.name}',
+                                  secondText: '${data.values.length} хувилбар',
+                                  secondTextColor: productColor,
+                                  arrowColor: productColor,
+                                  onClick: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      useSafeArea: true,
+                                      builder: (context) => OptionSelectSheet(
+                                        data: data,
+                                      ),
+                                    );
                                   },
-                                  onTap: () {
-                                    source.option(data.name, data.id);
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 10),
-                                    child: Text(
-                                      data.name,
-                                    ),
-                                  ),
                                 ),
                               )
                               .toList(),
                         ),
-                  SizedBox(
-                    height: 300,
-                  ),
-                ],
-              ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Text(
+                            'Сонголт тохирохгүй бол хувилбар нэмнэ үү',
+                            style: TextStyle(
+                              color: grey2,
+                            ),
+                          ),
+                        ),
+                        CustomButton(
+                          onClick: () {},
+                          labelText: 'Хувилбар нэмэх',
+                          textColor: productColor,
+                          borderColor: grey2.withOpacity(0.5),
+                          labelColor: Color(0xffE9E9EA),
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                      ],
+                    ),
             ),
           ),
         ),
       ],
-    );
-  }
-
-  show(String id, String name) {
-    showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(20),
-        ),
-      ),
-      builder: (ctx) {
-        return Container(
-          height: 150,
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text('${name}'),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  GestureDetector(
-                    onTap: () async {
-                      Navigator.of(context).pop();
-                      changePassword(id, name);
-                    },
-                    child: Container(
-                      color: transparent,
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.edit_note_sharp,
-                            color: productColor,
-                          ),
-                          Text(
-                            'Засах',
-                            style: TextStyle(color: productColor),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () async {
-                      await InventoryApi().optionDelete(id);
-                      await optionList();
-                      Navigator.of(ctx).pop();
-                    },
-                    child: Container(
-                      color: transparent,
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.delete_outline_outlined,
-                            color: red,
-                          ),
-                          Text(
-                            'Устгах',
-                            style: TextStyle(color: red),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  changePassword(String id, String name) {
-    showDialog(
-      context: context,
-      builder: (ctx) {
-        return Container(
-          alignment: Alignment.center,
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          child: Container(
-            margin: const EdgeInsets.only(top: 75),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(
-                  'Нэр солих',
-                  style: TextStyle(
-                    color: grey3,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Material(
-                  child: FormBuilder(
-                    key: fbKey,
-                    child: FormTextField(
-                      name: 'name',
-                      decoration: InputDecoration(
-                        hintText: 'Нэр оруулна уу',
-                        fillColor: white,
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 12),
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: grey),
-                        ),
-                      ),
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(
-                            errorText: 'Нэр оруулна уу'),
-                      ]),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    TextButton(
-                      style: ButtonStyle(
-                        overlayColor:
-                            MaterialStateProperty.all(Colors.transparent),
-                      ),
-                      child: const Text(
-                        "Цуцлах",
-                        style: TextStyle(color: red),
-                      ),
-                      onPressed: () async {
-                        Navigator.of(ctx).pop();
-                      },
-                    ),
-                    TextButton(
-                        style: ButtonStyle(
-                          overlayColor:
-                              MaterialStateProperty.all(Colors.transparent),
-                        ),
-                        child: const Text(
-                          "Засах",
-                          style: TextStyle(color: dark),
-                        ),
-                        onPressed: () async {
-                          update(id);
-                          Navigator.of(ctx).pop();
-                        }),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 }

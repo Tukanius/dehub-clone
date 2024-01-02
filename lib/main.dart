@@ -114,6 +114,7 @@ import 'package:dehub/src/auth/pin_code/pin_code.dart';
 import 'package:dehub/src/auth/pin_code/pin_confirmation.dart';
 import 'package:dehub/src/order_module/screens/product_give/product_give.dart';
 import 'package:dehub/src/product_module/product_page/product_page.dart';
+import 'package:dehub/src/product_module/screens/create_sub_category/create_sub_category.dart';
 import 'package:dehub/src/product_module/screens/new_product/new_product.dart';
 import 'package:dehub/src/product_module/screens/product_detail_page/product_detail_page.dart';
 import 'package:dehub/src/product_module/screens/product_list_page/product_list_page.dart';
@@ -131,6 +132,8 @@ import 'package:dehub/src/network_module/screens/payment_terms/set_payment_term_
 import 'package:dehub/src/network_module/screens/payment_terms/payment_terms.dart';
 import 'package:dehub/src/entry_point/menu/shopping/shopping_page.dart';
 import 'package:dehub/src/entry_point/menu/suppliers/suppliers_page.dart';
+import 'package:dehub/src/product_module/screens/set_price/set_price.dart';
+import 'package:dehub/src/product_module/screens/set_warehouse/set_warehouse.dart';
 import 'package:dehub/src/product_module/screens/supplier_list/supplier_list.dart';
 import 'package:dehub/src/product_module/screens/supplier_product/supplier_product_list.dart';
 import 'package:dehub/src/profile/profile_page.dart';
@@ -231,6 +234,18 @@ class MyApp extends StatelessWidget {
                       return ProfilePage(
                         index: arguments.index,
                       );
+                    });
+                  case SetWarehouse.routeName:
+                    SetWarehouseArguments arguments =
+                        settings.arguments as SetWarehouseArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return SetWarehouse(
+                        data: arguments.data,
+                      );
+                    });
+                  case CreateSubCategory.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return CreateSubCategory();
                     });
                   case FundingRequestDetailPage.routeName:
                     FundingRequestDetailPageArguments arguments =
@@ -1355,6 +1370,14 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return CategoryDetailPage(
                         id: arguments.id,
+                      );
+                    });
+                  case SetPrice.routeName:
+                    SetPriceArguments arguments =
+                        settings.arguments as SetPriceArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return SetPrice(
+                        data: arguments.data,
                       );
                     });
                   case DirectionDetailPage.routeName:

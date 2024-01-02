@@ -248,7 +248,8 @@ class _PictureFormState extends State<PictureForm> {
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               scrollDirection: Axis.horizontal,
-              children: source.product.detailImages != null
+              children: source.product.detailImages != null &&
+                      source.product.detailImages?.length != 0
                   ? source.product.detailImages!
                       .map(
                         (data) => Stack(

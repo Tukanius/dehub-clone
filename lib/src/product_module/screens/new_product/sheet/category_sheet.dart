@@ -1,5 +1,6 @@
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/inventory_provider.dart';
+import 'package:dehub/src/product_module/screens/create_sub_category/create_sub_category.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
@@ -67,8 +68,6 @@ class _CategorySheetState extends State<CategorySheet> with AfterLayoutMixin {
       create.parentId = provider.classificationId;
     } else if (widget.type == "CATEGORY") {
       create.parentId = provider.subClassificationId;
-    } else if (widget.type == "SUB_CATEGORY") {
-      create.parentId = provider.categoryId;
     }
     create.type = widget.type;
     InventoryGoods res = await InventoryApi().categoryCreate(create);
@@ -135,68 +134,118 @@ class _CategorySheetState extends State<CategorySheet> with AfterLayoutMixin {
                 children: [
                   isLoading == true
                       ? SizedBox()
-                      : Row(
-                          children: [
-                            Expanded(
-                              child: FormTextField(
-                                controller: controller,
-                                onChanged: (value) {
-                                  setState(() {});
-                                },
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.zero,
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 0, horizontal: 15),
-                                  isDense: false,
-                                  hintText: 'Энд бичээд нэмнэ үү',
-                                ),
-                                name: 'asdf',
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: controller.text != ''
-                                  ? () {
-                                      create();
-                                      setState(() {
-                                        controller.text = '';
-                                      });
-                                    }
-                                  : () {},
-                              child: Container(
-                                margin: const EdgeInsets.only(right: 15),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: Color(0xffEAECEE),
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.add,
-                                      color: controller.text != ''
-                                          ? productColor
-                                          : grey3.withOpacity(0.5),
-                                      size: 14,
+                      : widget.type != 'SUB_CATEGORY'
+                          ? Row(
+                              children: [
+                                Expanded(
+                                  child: FormTextField(
+                                    controller: controller,
+                                    onChanged: (value) {
+                                      setState(() {});
+                                    },
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.zero,
+                                      ),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              vertical: 0, horizontal: 15),
+                                      isDense: false,
+                                      hintText: 'Энд бичээд нэмнэ үү',
                                     ),
-                                    Text(
-                                      'Нэмэх',
-                                      style: TextStyle(
-                                        color: controller.text != ''
-                                            ? productColor
-                                            : grey3.withOpacity(0.5),
+                                    name: 'create',
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: controller.text != ''
+                                      ? () {
+                                          create();
+                                          setState(() {
+                                            controller.text = '';
+                                          });
+                                        }
+                                      : () {},
+                                  child: Container(
+                                    margin: const EdgeInsets.only(right: 15),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5, vertical: 5),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Color(0xffEAECEE),
+                                    ),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.add,
+                                          color: controller.text != ''
+                                              ? productColor
+                                              : grey3.withOpacity(0.5),
+                                          size: 14,
+                                        ),
+                                        Text(
+                                          'Нэмэх',
+                                          style: TextStyle(
+                                            color: controller.text != ''
+                                                ? productColor
+                                                : grey3.withOpacity(0.5),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : GestureDetector(
+                              onTap: () async {
+                                Navigator.of(context).pop();
+                                await Navigator.of(context)
+                                    .pushNamed(CreateSubCategory.routeName);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                color: transparent,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Энд дараад нэмнэ үү',
+                                        style: TextStyle(color: grey3),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5, vertical: 5),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: Color(0xffEAECEE),
+                                      ),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.add,
+                                            color: productColor,
+                                            size: 14,
+                                          ),
+                                          Text(
+                                            'Нэмэх',
+                                            style: TextStyle(
+                                              color: productColor,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-                          ],
-                        ),
                   isLoading == true
                       ? Center(
                           child: CircularProgressIndicator(

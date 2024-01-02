@@ -50,6 +50,9 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => Currencies.fromJson(e))
             .toList()
         : null,
+    vatTypes: json['vatTypes'] != null
+        ? (json['vatTypes'] as List).map((e) => VatTypes.fromJson(e)).toList()
+        : null,
     repaymentStatus: json['repaymentStatus'] != null
         ? (json['repaymentStatus'] as List)
             .map((e) => RepaymentStatus.fromJson(e))
@@ -312,12 +315,19 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => SupplierBusinesses.fromJson(e))
             .toList()
         : null,
+    tiers: json['tiers'] != null
+        ? (json['tiers'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
   );
 }
 
 Map<String, dynamic> _$GeneralToJson(General instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.tiers != null) json['tiers'] = instance.tiers;
+  if (instance.vatTypes != null) json['vatTypes'] = instance.vatTypes;
   if (instance.suppliers != null) json['suppliers'] = instance.suppliers;
   if (instance.countries != null) json['countries'] = instance.countries;
   if (instance.supplierTypes != null)

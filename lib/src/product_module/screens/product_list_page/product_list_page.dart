@@ -18,7 +18,7 @@ class _ProductListPageState extends State<ProductListPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         backgroundColor: backgroundColor,
         appBar: AppBar(
@@ -43,10 +43,8 @@ class _ProductListPageState extends State<ProductListPage> {
             ),
           ],
           bottom: TabBar(
-            tabAlignment: TabAlignment.start,
             overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
             indicatorColor: productColor,
-            isScrollable: true,
             labelColor: productColor,
             unselectedLabelColor: grey2,
             tabs: [
@@ -55,14 +53,6 @@ class _ProductListPageState extends State<ProductListPage> {
                 child: Center(
                   child: Text(
                     'Бараа бүтээгдэхүүн',
-                  ),
-                ),
-              ),
-              Container(
-                height: 40,
-                child: Center(
-                  child: Text(
-                    'Ажил үйлчилгээ',
                   ),
                 ),
               ),
@@ -81,7 +71,6 @@ class _ProductListPageState extends State<ProductListPage> {
           physics: NeverScrollableScrollPhysics(),
           children: [
             GoodsTab(),
-            Text('1'),
             Text('1'),
           ],
         ),

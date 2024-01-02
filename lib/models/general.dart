@@ -8,6 +8,7 @@ import 'package:dehub/models/countries.dart';
 import 'package:dehub/models/delivery_note_status.dart';
 import 'package:dehub/models/distribution_areas.dart';
 import 'package:dehub/models/equity_types.dart';
+import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/invoice_over_due_status.dart';
 import 'package:dehub/models/order_status.dart';
 import 'package:dehub/models/payment_term_conditions.dart';
@@ -64,6 +65,7 @@ import 'package:dehub/models/product_category_types.dart';
 import 'package:dehub/models/reference_list_types.dart';
 import 'package:dehub/models/reference_types.dart';
 import 'package:dehub/models/units.dart';
+import 'package:dehub/models/vat_types.dart';
 import 'package:dehub/models/zip_codes.dart';
 part '../parts/general.dart';
 
@@ -135,8 +137,12 @@ class General {
   List<Suppliers>? suppliers;
   List<SupplierBusinesses>? supplierBusinesses;
   List<SupplierTypes>? supplierTypes;
+  List<VatTypes>? vatTypes;
+  List<InventoryGoods>? tiers;
 
   General({
+    this.tiers,
+    this.vatTypes,
     this.supplierTypes,
     this.supplierBusinesses,
     this.suppliers,

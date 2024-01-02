@@ -19,6 +19,7 @@ class InventoryGoods {
   String? nameBill;
   String? nameWeb;
   String? nameApp;
+  String? currency;
   String? deliveryTypeId;
   String? supplierId;
   String? brandId;
@@ -35,6 +36,7 @@ class InventoryGoods {
   String? description;
   bool? hasVariant;
   bool? hasUnit;
+  bool? confirm;
   bool? reOrder;
   String? departmentUnitId;
   String? departmentSubUnitId;
@@ -143,15 +145,117 @@ class InventoryGoods {
   String? fieldType;
   String? variantStatus;
   String? supplierTypeName;
-  String? supplierTypeId;
+  String? supplierType;
+  String? baseUnitId;
+  bool? isWarehouseSet;
+  bool? isPriceSet;
+  double? vatValue;
+  String? vatType;
+  bool? taxType;
+  int? vatPercent;
+  double? taxPercent;
+  bool? hasTax;
+  String? endDate; // Must be String
+  String? startDate; // Must be String
+  double? quantityPrice;
+  int? minQuantity;
+  bool? hasMaxLimit;
+  int? maxQuantity;
+  double? salesPrice;
+  int? tierNo;
+  bool? isSet;
+  List<InventoryGoods>? tierPrices;
+  double? price;
+  String? variantId;
+  String? firstName;
+  String? lastName;
+  InventoryGoods? warehouseUser;
+  InventoryGoods? warehouse;
+  InventoryGoods? merchStaff;
+  String? avatar;
+  String? phone;
+  String? email;
+  String? warehouseId;
+  String? quantityStartDate;
+  double? warehouseQuantity;
+  double? noticeMinQuantity;
+  double? noticeMaxQuantity;
+  double? deactivateMinQuantity;
+  double? minOrderQuantity;
+  double? reOrderQuantityLevel;
+  double? reOrderQuantity;
+  String? merchStaffId;
+  List<InventoryGoods>? variantSuppliers;
+  String? buyerBusinessId;
+  String? supplierBusinessId;
+  bool? isDefault;
+  bool? isDropshipping;
+  InventoryGoods? buyerBusiness;
+  InventoryGoods? supplierBusiness;
+  InventoryGoods? partnerBusiness;
+  bool? backorderable;
+  String? status;
+  String? inactiveTypeId;
 
   InventoryGoods({
+    this.taxPercent,
+    this.status,
+    this.inactiveTypeId,
+    this.backorderable,
+    this.partnerBusiness,
+    this.buyerBusiness,
+    this.supplierBusiness,
+    this.variantSuppliers,
+    this.buyerBusinessId,
+    this.supplierBusinessId,
+    this.isDefault,
+    this.isDropshipping,
+    this.warehouseId,
+    this.quantityStartDate,
+    this.warehouseQuantity,
+    this.noticeMinQuantity,
+    this.noticeMaxQuantity,
+    this.deactivateMinQuantity,
+    this.minOrderQuantity,
+    this.reOrderQuantityLevel,
+    this.reOrderQuantity,
+    this.merchStaffId,
+    this.email,
+    this.phone,
+    this.avatar,
+    this.lastName,
+    this.merchStaff,
+    this.firstName,
+    this.warehouse,
+    this.warehouseUser,
+    this.confirm,
+    this.variantId,
+    this.price,
+    this.tierPrices,
+    this.isSet,
+    this.tierNo,
+    this.minQuantity,
+    this.hasMaxLimit,
+    this.maxQuantity,
+    this.salesPrice,
+    this.quantityPrice,
+    this.endDate,
+    this.startDate,
+    this.hasTax,
+    this.vatPercent,
+    this.taxType,
+    this.vatValue,
+    this.vatType,
+    this.isWarehouseSet,
+    this.isPriceSet,
+    this.baseUnitId,
     this.supplierTypeName,
-    this.supplierTypeId,
+    this.supplierType,
     this.variantStatus,
     this.sectionId,
     this.fieldId,
     this.fieldType,
+    this.currency,
     this.fieldValueId,
     this.fieldValueName,
     this.number,

@@ -30,8 +30,13 @@ class _MainTabState extends State<MainTab> {
   bool isSubmit = false;
 
   validateCheck() {
-    if (data.detailImages?.length == null) {
+    if (data.detailImages == null || data.detailImages?.length == 0) {
       res.banValidate();
+      Scrollable.ensureVisible(
+        profileKey.currentContext!,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
     }
     if (data.url == null) {
       res.proValidate();

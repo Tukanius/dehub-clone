@@ -35,7 +35,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
   };
   List<Color> colorList = [
     productColor,
-    networkColor,
+    productColor,
     userColor,
     partnerColor,
   ];
@@ -134,7 +134,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                   padding: 9,
                   labelText: 'Лавлах мэдээлэл',
                   svgColor: productColor,
-                  svg: 'assets/svg/map.svg',
+                  svg: 'assets/svg/box.svg',
                 ),
               ],
             ),
@@ -175,7 +175,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                     //             Text(
                     //               "Бүгдийг",
                     //               style: TextStyle(
-                    //                 color: networkColor,
+                    //                 color: productColor,
                     //                 fontSize: 12,
                     //                 fontWeight: FontWeight.w500,
                     //               ),
@@ -185,7 +185,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                     //             ),
                     //             Icon(
                     //               Icons.arrow_forward_ios,
-                    //               color: networkColor,
+                    //               color: productColor,
                     //               size: 16,
                     //             ),
                     //             SizedBox(
@@ -233,7 +233,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                                           Text(
                                             "Бүгдийг",
                                             style: TextStyle(
-                                              color: networkColor,
+                                              color: productColor,
                                               fontSize: 12,
                                               fontWeight: FontWeight.w500,
                                             ),
@@ -243,7 +243,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                                           ),
                                           Icon(
                                             Icons.arrow_forward_ios,
-                                            color: networkColor,
+                                            color: productColor,
                                             size: 16,
                                           ),
                                           SizedBox(

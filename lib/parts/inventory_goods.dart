@@ -3,24 +3,50 @@ part of '../models/inventory_goods.dart';
 InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
   return InventoryGoods(
     count: json['count'] != null ? int.parse(json['count'].toString()) : null,
+    vatValue: json['vatValue'] != null
+        ? double.parse(json['vatValue'].toString())
+        : null,
+    taxPercent: json['taxPercent'] != null
+        ? double.parse(json['taxPercent'].toString())
+        : null,
     number:
         json['number'] != null ? int.parse(json['number'].toString()) : null,
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => InventoryGoods.fromJson(e)).toList()
         : null,
+    tierPrices: json['tierPrices'] != null
+        ? (json['tierPrices'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
     id: json['id'] != null ? json['id'] as String : null,
     createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
+    inactiveTypeId: json['inactiveTypeId'] != null
+        ? json['inactiveTypeId'] as String
+        : null,
+    firstName: json['firstName'] != null ? json['firstName'] as String : null,
+    status: json['status'] != null ? json['status'] as String : null,
+    currency: json['currency'] != null ? json['currency'] as String : null,
+    avatar: json['avatar'] != null ? json['avatar'] as String : null,
     updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
     unitName: json['unitName'] != null ? json['unitName'] as String : null,
     deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
+    variantId: json['variantId'] != null ? json['variantId'] as String : null,
+    phone: json['phone'] != null ? json['phone'] as String : null,
+    email: json['email'] != null ? json['email'] as String : null,
+    lastName: json['lastName'] != null ? json['lastName'] as String : null,
+    confirm: json['confirm'] != null ? json['confirm'] as bool : null,
+    backorderable:
+        json['backorderable'] != null ? json['backorderable'] as bool : null,
     fieldValueName: json['fieldValueName'] != null
         ? json['fieldValueName'] as String
         : null,
     fieldValueId:
         json['fieldValueId'] != null ? json['fieldValueId'] as String : null,
-    supplierTypeId: json['supplierTypeId'] != null
-        ? json['supplierTypeId'] as String
-        : null,
+    baseUnitId:
+        json['baseUnitId'] != null ? json['baseUnitId'] as String : null,
+    supplierType:
+        json['supplierType'] != null ? json['supplierType'] as String : null,
     supplierTypeName: json['supplierTypeName'] != null
         ? json['supplierTypeName'] as String
         : null,
@@ -35,11 +61,16 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     profileName:
         json['profileName'] != null ? json['profileName'] as String : null,
     skuCode: json['skuCode'] != null ? json['skuCode'] as String : null,
+    hasTax: json['hasTax'] != null ? json['hasTax'] as bool : null,
     checked: json['checked'] != null ? json['checked'] as bool : null,
+    taxType: json['taxType'] != null ? json['taxType'] as bool : null,
+    isPriceSet: json['isPriceSet'] != null ? json['isPriceSet'] as bool : null,
     barCode: json['barCode'] != null ? json['barCode'] as String : null,
     regNumber: json['regNumber'] != null ? json['regNumber'] as String : null,
     option: json['option'] != null ? json['option'] as String : null,
     optionId: json['optionId'] != null ? json['optionId'] as String : null,
+    startDate: json['startDate'] != null ? json['startDate'] as String : null,
+    endDate: json['endDate'] != null ? json['endDate'] as String : null,
     sectionName:
         json['sectionName'] != null ? json['sectionName'] as String : null,
     urls: json['urls'] != null
@@ -86,6 +117,8 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
         json['description'] != null ? json['description'] as String : null,
     hasVariant: json['hasVariant'] != null ? json['hasVariant'] as bool : null,
     reOrder: json['reOrder'] != null ? json['reOrder'] as bool : null,
+    isWarehouseSet:
+        json['isWarehouseSet'] != null ? json['isWarehouseSet'] as bool : null,
     hasUnit: json['hasUnit'] != null ? json['hasUnit'] as bool : null,
     departmentUnitId: json['departmentUnitId'] != null
         ? json['departmentUnitId'] as String
@@ -96,6 +129,16 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     unitId: json['unitId'] != null ? json['unitId'] as String : null,
     height:
         json['height'] != null ? double.parse(json['height'].toString()) : null,
+    price:
+        json['price'] != null ? double.parse(json['price'].toString()) : null,
+    quantityPrice: json['quantityPrice'] != null
+        ? double.parse(json['quantityPrice'].toString())
+        : null,
+    vatPercent: json['vatPercent'] != null
+        ? int.parse(json['vatPercent'].toString())
+        : null,
+    tierNo:
+        json['tierNo'] != null ? int.parse(json['tierNo'].toString()) : null,
     availableQuantity: json['availableQuantity'] != null
         ? double.parse(json['availableQuantity'].toString())
         : null,
@@ -119,7 +162,7 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
         json['spaceLabel'] != null ? json['spaceLabel'] as String : null,
     returnAllow:
         json['returnAllow'] != null ? json['returnAllow'] as bool : null,
-    isMain: json['isMain'] != null ? json['isMain'] as bool : null,
+    isSet: json['isSet'] != null ? json['isSet'] as bool : null,
     returnType:
         json['returnType'] != null ? json['returnType'] as String : null,
     returnTypeId:
@@ -132,6 +175,22 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     isFetch: json['isFetch'] != null ? json['isFetch'] as bool : null,
     catergory: json['catergory'] != null
         ? InventoryGoods.fromJson(json['catergory'] as Map<String, dynamic>)
+        : null,
+    merchStaff: json['merchStaff'] != null
+        ? InventoryGoods.fromJson(json['merchStaff'] as Map<String, dynamic>)
+        : null,
+    buyerBusiness: json['buyerBusiness'] != null
+        ? InventoryGoods.fromJson(json['buyerBusiness'] as Map<String, dynamic>)
+        : null,
+    supplierBusiness: json['supplierBusiness'] != null
+        ? InventoryGoods.fromJson(
+            json['supplierBusiness'] as Map<String, dynamic>)
+        : null,
+    warehouseUser: json['warehouseUser'] != null
+        ? InventoryGoods.fromJson(json['warehouseUser'] as Map<String, dynamic>)
+        : null,
+    warehouse: json['warehouse'] != null
+        ? InventoryGoods.fromJson(json['warehouse'] as Map<String, dynamic>)
         : null,
     parentId: json['parentId'] != null ? json['parentId'] as String : null,
     partnerName:
@@ -170,7 +229,6 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     importerCountry: json['importerCountry'] != null
         ? json['importerCountry'] as String
         : null,
-
     distributor: json['distributor'] != null
         ? InventoryGoods.fromJson(json['distributor'] as Map<String, dynamic>)
         : null,
@@ -202,6 +260,10 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
         : null,
     packageType: json['packageType'] != null
         ? InventoryGoods.fromJson(json['packageType'] as Map<String, dynamic>)
+        : null,
+    partnerBusiness: json['partnerBusiness'] != null
+        ? InventoryGoods.fromJson(
+            json['partnerBusiness'] as Map<String, dynamic>)
         : null,
     coverImages: json['coverImages'] != null
         ? (json['coverImages'] as List)
@@ -303,6 +365,7 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     manufacturerCountryId: json['manufacturerCountryId'] != null
         ? json['manufacturerCountryId'] as String
         : null,
+    vatType: json['vatType'] != null ? json['vatType'] as String : null,
     importerCountryName: json['importerCountryName'] != null
         ? json['importerCountryName'] as String
         : null,
@@ -338,22 +401,139 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     sectionId: json['sectionId'] != null ? json['sectionId'] as String : null,
     fieldId: json['fieldId'] != null ? json['fieldId'] as String : null,
     fieldType: json['fieldType'] != null ? json['fieldType'] as String : null,
+    minQuantity: json['minQuantity'] != null
+        ? int.parse(json['minQuantity'].toString())
+        : null,
+    hasMaxLimit:
+        json['hasMaxLimit'] != null ? json['hasMaxLimit'] as bool : null,
+    maxQuantity: json['maxQuantity'] != null
+        ? int.parse(json['maxQuantity'].toString())
+        : null,
+    salesPrice: json['salesPrice'] != null
+        ? double.parse(json['salesPrice'].toString())
+        : null,
+    warehouseId:
+        json['warehouseId'] != null ? json['warehouseId'] as String : null,
+    quantityStartDate: json['quantityStartDate'] != null
+        ? json['quantityStartDate'] as String
+        : null,
+    warehouseQuantity: json['warehouseQuantity'] != null
+        ? double.parse(json['warehouseQuantity'].toString())
+        : null,
+    noticeMinQuantity: json['noticeMinQuantity'] != null
+        ? double.parse(json['noticeMinQuantity'].toString())
+        : null,
+    noticeMaxQuantity: json['noticeMaxQuantity'] != null
+        ? double.parse(json['noticeMaxQuantity'].toString())
+        : null,
+    deactivateMinQuantity: json['deactivateMinQuantity'] != null
+        ? double.parse(json['deactivateMinQuantity'].toString())
+        : null,
+    minOrderQuantity: json['minOrderQuantity'] != null
+        ? double.parse(json['minOrderQuantity'].toString())
+        : null,
+    reOrderQuantityLevel: json['reOrderQuantityLevel'] != null
+        ? double.parse(json['reOrderQuantityLevel'].toString())
+        : null,
+    reOrderQuantity: json['reOrderQuantity'] != null
+        ? double.parse(json['reOrderQuantity'].toString())
+        : null,
+    merchStaffId:
+        json['merchStaffId'] != null ? json['merchStaffId'] as String : null,
+    variantSuppliers: json['variantSuppliers'] != null
+        ? (json['variantSuppliers'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
+    buyerBusinessId: json['buyerBusinessId'] != null
+        ? json['buyerBusinessId'] as String
+        : null,
+    supplierBusinessId: json['supplierBusinessId'] != null
+        ? json['supplierBusinessId'] as String
+        : null,
+    isDefault: json['isDefault'] != null ? json['isDefault'] as bool : null,
+    isDropshipping:
+        json['isDropshipping'] != null ? json['isDropshipping'] as bool : null,
   );
 }
 
 Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   Map<String, dynamic> json = {};
+  if (instance.variantSuppliers != null)
+    json['variantSuppliers'] = instance.variantSuppliers;
+  if (instance.taxPercent != null) json['taxPercent'] = instance.taxPercent;
+  if (instance.partnerBusiness != null)
+    json['partnerBusiness'] = instance.partnerBusiness;
+  if (instance.buyerBusinessId != null)
+    json['buyerBusinessId'] = instance.buyerBusinessId;
+  if (instance.supplierBusinessId != null)
+    json['supplierBusinessId'] = instance.supplierBusinessId;
+  if (instance.isDefault != null) json['isDefault'] = instance.isDefault;
+  if (instance.isDropshipping != null)
+    json['isDropshipping'] = instance.isDropshipping;
+  if (instance.warehouseId != null) json['warehouseId'] = instance.warehouseId;
+  if (instance.quantityStartDate != null)
+    json['quantityStartDate'] = instance.quantityStartDate;
+  if (instance.warehouseQuantity != null)
+    json['warehouseQuantity'] = instance.warehouseQuantity;
+  if (instance.noticeMinQuantity != null)
+    json['noticeMinQuantity'] = instance.noticeMinQuantity;
+  if (instance.noticeMaxQuantity != null)
+    json['noticeMaxQuantity'] = instance.noticeMaxQuantity;
+  if (instance.deactivateMinQuantity != null)
+    json['deactivateMinQuantity'] = instance.deactivateMinQuantity;
+  if (instance.minOrderQuantity != null)
+    json['minOrderQuantity'] = instance.minOrderQuantity;
+  if (instance.reOrderQuantityLevel != null)
+    json['reOrderQuantityLevel'] = instance.reOrderQuantityLevel;
+  if (instance.reOrderQuantity != null)
+    json['reOrderQuantity'] = instance.reOrderQuantity;
+  if (instance.merchStaffId != null)
+    json['merchStaffId'] = instance.merchStaffId;
   if (instance.variantStatus != null)
     json['variantStatus'] = instance.variantStatus;
+  if (instance.warehouseUser != null)
+    json['warehouseUser'] = instance.warehouseUser;
+  if (instance.supplierBusiness != null)
+    json['supplierBusiness'] = instance.supplierBusiness;
+  if (instance.buyerBusiness != null)
+    json['buyerBusiness'] = instance.buyerBusiness;
+  if (instance.inactiveTypeId != null)
+    json['inactiveTypeId'] = instance.inactiveTypeId;
+  if (instance.status != null) json['status'] = instance.status;
+  if (instance.lastName != null) json['lastName'] = instance.lastName;
+  if (instance.email != null) json['email'] = instance.email;
+  if (instance.phone != null) json['phone'] = instance.phone;
+  if (instance.avatar != null) json['avatar'] = instance.avatar;
+  if (instance.firstName != null) json['firstName'] = instance.firstName;
+  if (instance.warehouse != null) json['warehouse'] = instance.warehouse;
+  if (instance.tierNo != null) json['tierNo'] = instance.tierNo;
+  if (instance.currency != null) json['currency'] = instance.currency;
+  if (instance.confirm != null) json['confirm'] = instance.confirm;
+  if (instance.minQuantity != null) json['minQuantity'] = instance.minQuantity;
+  if (instance.merchStaff != null) json['merchStaff'] = instance.merchStaff;
+  if (instance.hasMaxLimit != null) json['hasMaxLimit'] = instance.hasMaxLimit;
+  if (instance.maxQuantity != null) json['maxQuantity'] = instance.maxQuantity;
+  if (instance.salesPrice != null) json['salesPrice'] = instance.salesPrice;
+  if (instance.hasTax != null) json['hasTax'] = instance.hasTax;
+  if (instance.vatPercent != null) json['vatPercent'] = instance.vatPercent;
+  if (instance.taxType != null) json['taxType'] = instance.taxType;
+  if (instance.baseUnitId != null) json['baseUnitId'] = instance.baseUnitId;
   if (instance.sectionId != null) json['sectionId'] = instance.sectionId;
   if (instance.fieldId != null) json['fieldId'] = instance.fieldId;
   if (instance.fieldType != null) json['fieldType'] = instance.fieldType;
+  if (instance.isPriceSet != null) json['isPriceSet'] = instance.isPriceSet;
+  if (instance.backorderable != null)
+    json['backorderable'] = instance.backorderable;
+  if (instance.tierPrices != null) json['tierPrices'] = instance.tierPrices;
+  if (instance.startDate != null) json['startDate'] = instance.startDate;
+  if (instance.endDate != null) json['endDate'] = instance.endDate;
   if (instance.fieldValueName != null)
     json['fieldValueName'] = instance.fieldValueName;
   if (instance.fieldValueId != null)
     json['fieldValueId'] = instance.fieldValueId;
-  if (instance.supplierTypeId != null)
-    json['supplierTypeId'] = instance.supplierTypeId;
+  if (instance.supplierType != null)
+    json['supplierType'] = instance.supplierType;
   if (instance.supplierTypeName != null)
     json['supplierTypeName'] = instance.supplierTypeName;
   if (instance.partnerName != null) json['partnerName'] = instance.partnerName;
@@ -363,16 +543,21 @@ Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   if (instance.standardPrice != null)
     json['standardPrice'] = instance.standardPrice;
   if (instance.customPrice != null) json['customPrice'] = instance.customPrice;
+  if (instance.variantId != null) json['variantId'] = instance.variantId;
   if (instance.regNumber != null) json['regNumber'] = instance.regNumber;
   if (instance.partner != null) json['partner'] = instance.partner;
   if (instance.unitSpaceLabel != null)
     json['unitSpaceLabel'] = instance.unitSpaceLabel;
+  if (instance.price != null) json['price'] = instance.price;
+  if (instance.vatValue != null) json['vatValue'] = instance.vatValue;
   if (instance.unitSpaceLabelId != null)
     json['unitSpaceLabelId'] = instance.unitSpaceLabelId;
   if (instance.unitWeightLabel != null)
     json['unitWeightLabel'] = instance.unitWeightLabel;
   if (instance.unitWeightLabelId != null)
     json['unitWeightLabelId'] = instance.unitWeightLabelId;
+  if (instance.quantityPrice != null)
+    json['quantityPrice'] = instance.quantityPrice;
   if (instance.sectionName != null) json['sectionName'] = instance.sectionName;
   if (instance.number != null) json['number'] = instance.number;
   if (instance.option != null) json['option'] = instance.option;
@@ -390,6 +575,8 @@ Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
     json['manufacturerCountryName'] = instance.manufacturerCountryName;
   if (instance.manufacturerCountryId != null)
     json['manufacturerCountryId'] = instance.manufacturerCountryId;
+  if (instance.isWarehouseSet != null)
+    json['isWarehouseSet'] = instance.isWarehouseSet;
   if (instance.importerCountryName != null)
     json['importerCountryName'] = instance.importerCountryName;
   if (instance.distributorName != null)
@@ -407,6 +594,7 @@ Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   if (instance.tagName != null) json['tagName'] = instance.tagName;
   if (instance.optionValues != null)
     json['optionValues'] = instance.optionValues;
+  if (instance.vatType != null) json['vatType'] = instance.vatType;
   if (instance.profileName != null) json['profileName'] = instance.profileName;
   if (instance.logo != null) json['logo'] = instance.logo;
   if (instance.isBase != null) json['isBase'] = instance.isBase;
