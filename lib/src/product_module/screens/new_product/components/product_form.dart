@@ -192,7 +192,9 @@ class _ProductFormState extends State<ProductForm> {
               ),
               suffixIcon: GestureDetector(
                 onTap: () {
-                  source.nameBill(source.product.nameMon.toString());
+                  if (source.product.nameMon != null) {
+                    source.nameBill(source.product.nameMon.toString());
+                  }
                 },
                 child: Container(
                   color: transparent,

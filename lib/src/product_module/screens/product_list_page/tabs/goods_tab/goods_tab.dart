@@ -1,5 +1,8 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
+import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/refresher/refresher.dart';
+import 'package:dehub/src/product_module/screens/set_price/set_price.dart';
+import 'package:dehub/src/product_module/screens/set_warehouse/set_warehouse.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/goods_card/goods_card.dart';
@@ -26,7 +29,7 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
   int limit = 10;
   Result inventory = Result(rows: [], count: 0);
   Timer? timer;
-  bool isSubmit = false;
+  ListenController listenController = ListenController();
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
   bool startAnimation = false;
@@ -76,14 +79,16 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
   onChange(String value) {
     if (timer != null) timer!.cancel();
     timer = Timer(const Duration(milliseconds: 500), () async {
-      setState(() {
-        isSubmit = true;
-      });
       list(page, limit, value);
-      setState(() {
-        isSubmit = false;
-      });
     });
+  }
+
+  @override
+  void initState() {
+    listenController.addListener(() {
+      list(page, limit, '');
+    });
+    super.initState();
   }
 
   @override
@@ -99,41 +104,11 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
           borderColor: productColor,
         ),
         Expanded(
-          child: SmartRefresher(
-            enablePullDown: true,
-            enablePullUp: true,
-            controller: refreshController,
-            header: WaterDropHeader(
-              waterDropColor: productColor,
-              refresh: SizedBox(
-                height: 20,
-                width: 20,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: productColor,
-                ),
-              ),
-            ),
-            onRefresh: _onRefresh,
+          child: Refresher(
+            refreshController: refreshController,
             onLoading: _onLoading,
-            footer: CustomFooter(
-              builder: (context, mode) {
-                Widget body;
-                if (mode == LoadStatus.idle) {
-                  body = const Text("");
-                } else if (mode == LoadStatus.loading) {
-                  body = const CupertinoActivityIndicator();
-                } else if (mode == LoadStatus.failed) {
-                  body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                } else {
-                  body = const Text("Мэдээлэл алга байна");
-                }
-                return SizedBox(
-                  height: 55.0,
-                  child: Center(child: body),
-                );
-              },
-            ),
+            onRefresh: _onRefresh,
+            color: productColor,
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -151,6 +126,32 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
                                       index: inventory.rows!.indexOf(item),
                                       startAnimation: startAnimation,
                                       data: item,
+                                      priceClick: item.isPriceSet == false
+                                          ? () {
+                                              Navigator.of(context).pushNamed(
+                                                SetPrice.routeName,
+                                                arguments: SetPriceArguments(
+                                                  data: item,
+                                                  listenController:
+                                                      listenController,
+                                                ),
+                                              );
+                                            }
+                                          : () {},
+                                      warehouseClick: item.isWarehouseSet ==
+                                              false
+                                          ? () {
+                                              Navigator.of(context).pushNamed(
+                                                SetWarehouse.routeName,
+                                                arguments:
+                                                    SetWarehouseArguments(
+                                                  listenController:
+                                                      listenController,
+                                                  data: item,
+                                                ),
+                                              );
+                                            }
+                                          : () {},
                                       onClick: () {
                                         Navigator.of(context).pushNamed(
                                           ProductDetailPage.routeName,

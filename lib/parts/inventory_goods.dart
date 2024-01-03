@@ -6,6 +6,15 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     vatValue: json['vatValue'] != null
         ? double.parse(json['vatValue'].toString())
         : null,
+    convertType:
+        json['convertType'] != null ? json['convertType'] as String : null,
+    convertValue: json['convertValue'] != null
+        ? double.parse(json['convertValue'].toString())
+        : null,
+    floatValue: json['floatValue'] != null
+        ? double.parse(json['floatValue'].toString())
+        : null,
+    isForLoad: json['isForLoad'] != null ? json['isForLoad'] as bool : null,
     taxPercent: json['taxPercent'] != null
         ? double.parse(json['taxPercent'].toString())
         : null,
@@ -459,6 +468,11 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   Map<String, dynamic> json = {};
+  if (instance.convertType != null) json['convertType'] = instance.convertType;
+  if (instance.convertValue != null)
+    json['convertValue'] = instance.convertValue;
+  if (instance.floatValue != null) json['floatValue'] = instance.floatValue;
+  if (instance.isForLoad != null) json['isForLoad'] = instance.isForLoad;
   if (instance.variantSuppliers != null)
     json['variantSuppliers'] = instance.variantSuppliers;
   if (instance.taxPercent != null) json['taxPercent'] = instance.taxPercent;

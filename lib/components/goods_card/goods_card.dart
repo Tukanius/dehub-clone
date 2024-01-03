@@ -1,19 +1,23 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/src/auth/pin_check/pin_check.dart';
-import 'package:dehub/src/product_module/screens/set_price/set_price.dart';
-import 'package:dehub/src/product_module/screens/set_warehouse/set_warehouse.dart';
+import 'package:dehub/src/product_module/screens/new_product/new_product.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class GoodsCard extends StatefulWidget {
   final Function()? onClick;
+  final Function()? priceClick;
+  final Function()? warehouseClick;
   final InventoryGoods data;
   final bool startAnimation;
   final int index;
   const GoodsCard({
     Key? key,
+    this.warehouseClick,
+    this.priceClick,
     required this.index,
     required this.startAnimation,
     required this.data,
@@ -32,6 +36,14 @@ class _GoodsCardState extends State<GoodsCard> {
         inactiveTypeId: widget.data.inactiveTypeId ?? 'null',
       ),
       id,
+    );
+    showCustomDialog(
+      context,
+      'Амжилттай',
+      true,
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
     );
   }
 
@@ -135,10 +147,10 @@ class _GoodsCardState extends State<GoodsCard> {
                             PinCheckScreen.routeName,
                             arguments: PinCheckScreenArguments(
                               onSubmit: () {
-                                onSubmit(widget.data.id!, "INACTIVE");
+                                onSubmit(widget.data.variantId!, "INACTIVE");
                               },
                               color: productColor,
-                              labelText: "Бараа идэвхижүүлэх",
+                              labelText: "Бараа идэвхигүй болгох",
                             ),
                           );
                         },
@@ -161,7 +173,15 @@ class _GoodsCardState extends State<GoodsCard> {
                       )
                     : widget.data.variantStatus == "DRAFT"
                         ? GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                NewProduct.routeName,
+                                arguments: NewProductArguments(
+                                  initialIndex: 1,
+                                  id: widget.data.id,
+                                ),
+                              );
+                            },
                             child: Container(
                               margin: const EdgeInsets.only(left: 10),
                               height: 36,
@@ -172,12 +192,13 @@ class _GoodsCardState extends State<GoodsCard> {
                               ),
                               child: Center(
                                 child: SvgPicture.asset(
-                                  'assets/svg/edit.svg',
+                                  'assets/svg/edit_rounded.svg',
                                   colorFilter: ColorFilter.mode(
-                                      widget.data.isWarehouseSet == false
-                                          ? productColor
-                                          : productColor.withOpacity(0.4),
-                                      BlendMode.srcIn),
+                                    widget.data.isWarehouseSet == false
+                                        ? productColor
+                                        : productColor.withOpacity(0.4),
+                                    BlendMode.srcIn,
+                                  ),
                                 ),
                               ),
                             ),
@@ -185,15 +206,7 @@ class _GoodsCardState extends State<GoodsCard> {
                         : Row(
                             children: [
                               GestureDetector(
-                                onTap: widget.data.isWarehouseSet == false
-                                    ? () {
-                                        Navigator.of(context).pushNamed(
-                                          SetWarehouse.routeName,
-                                          arguments: SetWarehouseArguments(
-                                              data: widget.data),
-                                        );
-                                      }
-                                    : () {},
+                                onTap: widget.warehouseClick,
                                 child: Container(
                                   margin: const EdgeInsets.only(left: 10),
                                   height: 36,
@@ -215,16 +228,7 @@ class _GoodsCardState extends State<GoodsCard> {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: widget.data.isPriceSet == false
-                                    ? () {
-                                        Navigator.of(context).pushNamed(
-                                          SetPrice.routeName,
-                                          arguments: SetPriceArguments(
-                                            data: widget.data,
-                                          ),
-                                        );
-                                      }
-                                    : () {},
+                                onTap: widget.priceClick,
                                 child: Container(
                                   margin: const EdgeInsets.only(left: 10),
                                   height: 36,
@@ -253,8 +257,8 @@ class _GoodsCardState extends State<GoodsCard> {
                                           PinCheckScreen.routeName,
                                           arguments: PinCheckScreenArguments(
                                             onSubmit: () {
-                                              onSubmit(
-                                                  widget.data.id!, "ACTIVE");
+                                              onSubmit(widget.data.variantId!,
+                                                  "ACTIVE");
                                             },
                                             color: productColor,
                                             labelText: "Бараа идэвхижүүлэх",

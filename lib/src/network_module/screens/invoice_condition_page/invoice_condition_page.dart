@@ -134,7 +134,6 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
 
   @override
   Widget build(BuildContext context) {
-    print(widget.data.listType);
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(

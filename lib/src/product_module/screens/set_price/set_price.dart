@@ -1,5 +1,8 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
+import 'package:dehub/components/scaffold_messenger/scaffold_messenger.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/general_provider.dart';
@@ -19,16 +22,20 @@ import 'package:after_layout/after_layout.dart';
 
 class SetPriceArguments {
   InventoryGoods data;
+  ListenController listenController;
   SetPriceArguments({
     required this.data,
+    required this.listenController,
   });
 }
 
 class SetPrice extends StatefulWidget {
-  final InventoryGoods data;
   static const routeName = '/SetPrice';
+  final InventoryGoods data;
+  final ListenController listenController;
   const SetPrice({
     Key? key,
+    required this.listenController,
     required this.data,
   }) : super(key: key);
 
@@ -67,7 +74,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
             InventoryGoods.fromJson(fbKey.currentState!.value);
         data.variantId = widget.data.variantId;
         data.vatType = res.product.vatType;
-        if (res.product.vatType == "STANDART_RATED") {
+        if (res.product.vatType == "STANDARD_RATED") {
           data.vatPercent = res.product.vatValue?.toInt();
         }
         data.currency = "MNT";
@@ -104,6 +111,15 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
         data.confirm = confirm;
         data.quantityPrices = quantityPrices;
         await InventoryApi().price(data);
+        widget.listenController.changeVariable('setPrice');
+        showCustomDialog(
+          context,
+          'Амжилттай үнэ тохирууллаа',
+          true,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        );
         setState(() {
           isSubmit = false;
         });
@@ -300,7 +316,12 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                         showModalBottomSheet(
                           context: context,
                           useSafeArea: true,
-                          builder: (context) => VatSheet(),
+                          builder: (context) => VatSheet(
+                            data: InventoryGoods(
+                              vatPercent: source.product.vatValue?.toInt(),
+                              vatType: source.product.vatType,
+                            ),
+                          ),
                         );
                       },
                       arrowColor: productColor,
@@ -551,18 +572,11 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                               int index = tiers.indexWhere(
                                   (element) => element.customPrice == null);
                               if (index > -1) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    duration: Duration(milliseconds: 800),
-                                    backgroundColor: productColor,
-                                    shape: StadiumBorder(),
-                                    content: Center(
-                                      child: Text(
-                                        'Борлуулах нэгжийн стандарт үнэ тохируулна уу',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ),
+                                CustomScaffoldMessenger(
+                                  context,
+                                  color: productColor,
+                                  labelText:
+                                      'Борлуулах нэгжийн стандарт үнэ тохируулна уу',
                                 );
                               } else {
                                 onSubmit(true);

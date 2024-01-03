@@ -132,7 +132,6 @@ class _CreateSubCategoryState extends State<CreateSubCategory> {
               child: Column(
                 children: [
                   FormTextField(
-                    inputType: TextInputType.number,
                     textColor: productColor,
                     textAlign: TextAlign.end,
                     name: 'name',

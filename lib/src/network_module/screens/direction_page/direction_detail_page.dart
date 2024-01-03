@@ -1,4 +1,5 @@
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/reference_information_get.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -27,9 +28,14 @@ class DirectionDetailPage extends StatefulWidget {
 class _DirectionDetailPageState extends State<DirectionDetailPage>
     with AfterLayoutMixin {
   ReferenceInformationGet referenceGet = ReferenceInformationGet();
+  bool isLoading = true;
+
   @override
   afterFirstLayout(BuildContext context) async {
     referenceGet = await BusinessApi().distrbutionAreaGet(widget.id);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -50,219 +56,136 @@ class _DirectionDetailPageState extends State<DirectionDetailPage>
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Тохиргоо',
-                style: TextStyle(
-                  color: grey3,
-                  fontWeight: FontWeight.w600,
-                ),
+      body: isLoading == true
+          ? Center(
+              child: CircularProgressIndicator(
+                color: networkColor,
               ),
-            ),
-            Container(
-              color: white,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            )
+          : SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Бүсийн код',
-                    style: TextStyle(color: dark),
-                  ),
-                  Text(
-                    'Бүсийн код',
-                    style: TextStyle(
-                      color: networkColor,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              color: white,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Нэр',
-                    style: TextStyle(color: dark),
-                  ),
-                  Text(
-                    'Бүсийн нэр',
-                    style: TextStyle(
-                      color: networkColor,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              color: white,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Чиглэлийн код',
-                    style: TextStyle(color: dark),
-                  ),
-                  Text(
-                    'Чиглэлийн код',
-                    style: TextStyle(
-                      color: networkColor,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              color: white,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Чиглэл нэр',
-                    style: TextStyle(color: dark),
-                  ),
-                  Text(
-                    '${referenceGet.name}',
-                    style: TextStyle(
-                      color: networkColor,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              color: white,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
                     child: Text(
-                      'Тайлбар',
-                      style: TextStyle(color: dark),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      '${referenceGet.description}',
+                      'Тохиргоо',
                       style: TextStyle(
-                        color: networkColor,
+                        color: grey3,
+                        fontWeight: FontWeight.w600,
                       ),
-                      textAlign: TextAlign.end,
                     ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Системийн мэдээлэл',
-                style: TextStyle(
-                  color: grey3,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Container(
-              color: white,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Статус',
-                    style: TextStyle(color: dark),
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    color: white,
+                    labelText: 'Бүсийн код',
+                    secondText: 'Бүсийн код',
+                    secondTextColor: networkColor,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    color: white,
+                    labelText: 'Нэр',
+                    secondText: 'Бүсийн нэр',
+                    secondTextColor: networkColor,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    color: white,
+                    labelText: 'Чиглэлийн код',
+                    secondText: 'Чиглэлийн код',
+                    secondTextColor: networkColor,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    color: white,
+                    labelText: 'Чиглэл нэр',
+                    secondText: '${referenceGet.name}',
+                    secondTextColor: networkColor,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    color: white,
+                    labelText: 'Тайлбар',
+                    secondText: '${referenceGet.description}',
+                    secondTextColor: networkColor,
                   ),
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Color(0xff01D462).withOpacity(0.1),
-                    ),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
                     child: Text(
-                      'Идэвхтэй',
+                      'Системийн мэдээлэл',
                       style: TextStyle(
-                        color: Color(0xff01D462),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
+                        color: grey3,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              color: white,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Бүртгэсэн ажилтан',
-                    style: TextStyle(color: dark),
                   ),
-                  Text(
-                    'Username',
-                    style: TextStyle(
-                      color: networkColor,
+                  Container(
+                    color: white,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Статус',
+                          style: TextStyle(color: dark),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Color(0xff01D462).withOpacity(0.1),
+                          ),
+                          child: Text(
+                            'Идэвхтэй',
+                            style: TextStyle(
+                              color: Color(0xff01D462),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              color: white,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'И-мэйл хаяг',
-                    style: TextStyle(color: dark),
                   ),
-                  Text(
-                    'MailAddress',
-                    style: TextStyle(
-                      color: networkColor,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              color: white,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Бүртгэсэн огноо',
-                    style: TextStyle(color: dark),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    color: white,
+                    labelText: 'Бүртгэсэн ажилтан',
+                    secondText: 'Username',
+                    secondTextColor: networkColor,
                   ),
-                  Text(
-                    '${DateFormat("yyyy-MM-dd").format(referenceGet.createdAt!)}',
-                    style: TextStyle(
-                      color: networkColor,
-                    ),
-                  )
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    color: white,
+                    labelText: 'И-мэйл хаяг',
+                    secondText: 'MailAddress',
+                    secondTextColor: networkColor,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    color: white,
+                    labelText: 'Бүртгэсэн огноо',
+                    secondText:
+                        '${DateFormat("yyyy-MM-dd").format(referenceGet.createdAt!)}',
+                    secondTextColor: networkColor,
+                  ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }

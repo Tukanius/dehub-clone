@@ -34,6 +34,7 @@ class _SendPageState extends State<SendPage> {
         title: Text(
           'INV - 23987 - илгээх',
           style: TextStyle(
+            color: white,
             fontWeight: FontWeight.w500,
             fontSize: 16,
           ),

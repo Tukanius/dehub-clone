@@ -19,13 +19,18 @@ class _VersionControlSheetState extends State<VersionControlSheet>
     with AfterLayoutMixin {
   List<InventoryGoods> values = [];
   bool isLoading = true;
+  List<List<InventoryGoods>> options = [];
 
   @override
   afterFirstLayout(BuildContext context) async {
     final source = Provider.of<InventoryProvider>(context, listen: false);
     for (var i = 0; i < source.product.values!.length; i++) {
-      for (var f = 0; f < source.product.values![i].values!.length; f++) {
-        print(source.product.values?[i].values?[f].toJson());
+      for (var element in source.product.values![i].values!) {
+        for (var item in source.product.values![i].values!) {
+          if (element != item) {
+            options.add([element, item]);
+          }
+        }
       }
     }
     setState(() {
@@ -35,8 +40,6 @@ class _VersionControlSheetState extends State<VersionControlSheet>
 
   @override
   Widget build(BuildContext context) {
-    final source = Provider.of<InventoryProvider>(context, listen: true);
-
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
@@ -109,98 +112,123 @@ class _VersionControlSheetState extends State<VersionControlSheet>
             ),
           ),
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Text(
-                      'Барааны хувилбарыг дараах байдлаар үүсгэх гэж байна. Хянаад “Болсон” гэдгийг сонгоно уу.',
-                      style: TextStyle(
-                        color: grey2,
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      color: white,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Бүх хувилбарыг сонгох'),
-                          SvgPicture.asset(
-                            'assets/svg/circle_minus.svg',
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Column(
-                    children: source.product.values!
-                        .map(
-                          (data) => GestureDetector(
-                            onTap: () {
-                              if (values.contains(data)) {
-                                setState(() {
-                                  values.removeWhere(
-                                      (element) => element == data);
-                                });
-                              } else {
-                                setState(() {
-                                  values.add(data);
-                                });
-                              }
-                            },
-                            child: Container(
-                              color: white,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        'assets/svg/menu_plus.svg',
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 3),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          color: productColor.withOpacity(0.05),
-                                        ),
-                                        child: Text('${data.name}'),
-                                      ),
-                                    ],
-                                  ),
-                                  values.contains(data)
-                                      ? SvgPicture.asset(
-                                          'assets/svg/circle_check.svg',
-                                        )
-                                      : SvgPicture.asset(
-                                          'assets/svg/circle_minus.svg',
-                                        ),
-                                ],
-                              ),
+            child: isLoading == true
+                ? SizedBox()
+                : SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Text(
+                            'Барааны хувилбарыг дараах байдлаар үүсгэх гэж байна. Хянаад “Болсон” гэдгийг сонгоно уу.',
+                            style: TextStyle(
+                              color: grey2,
                             ),
                           ),
-                        )
-                        .toList(),
+                        ),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            color: white,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('Бүх хувилбарыг сонгох'),
+                                SvgPicture.asset(
+                                  'assets/svg/circle_minus.svg',
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Column(
+                          children: options
+                              .map(
+                                (data) => GestureDetector(
+                                  onTap: () {
+                                    // if (values.contains(data)) {
+                                    //   setState(() {
+                                    //     values.removeWhere(
+                                    //         (element) => element == data);
+                                    //   });
+                                    // } else {
+                                    //   setState(() {
+                                    //     values.add(data);
+                                    //   });
+                                    // }
+                                  },
+                                  child: Container(
+                                    color: white,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              'assets/svg/menu_plus.svg',
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Row(
+                                              children: data
+                                                  .map(
+                                                    (e) => Container(
+                                                      margin: EdgeInsets.only(
+                                                          right: e.id ==
+                                                                  data.last.id
+                                                              ? 0
+                                                              : 5),
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 10,
+                                                          vertical: 3),
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                        color: productColor
+                                                            .withOpacity(0.05),
+                                                      ),
+                                                      child: Text(
+                                                        '${e.name}',
+                                                        style: TextStyle(
+                                                          color: grey2,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                  .toList(),
+                                            )
+                                          ],
+                                        ),
+                                        values.contains(data)
+                                            ? SvgPicture.asset(
+                                                'assets/svg/circle_check.svg',
+                                              )
+                                            : SvgPicture.asset(
+                                                'assets/svg/circle_minus.svg',
+                                              ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ),
           ),
         ],
       ),

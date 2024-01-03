@@ -54,9 +54,12 @@ class _OrderSettingTabState extends State<OrderSettingTab>
   }
 
   weightLabel() {
-    final res = general.unitWeightLabels!
-        .firstWhere((element) => element.code == itemUnits.weightLabel)
-        .name;
+    String? res = '';
+    if (itemUnits.weightLabel != null) {
+      res = general.unitWeightLabels!
+          .firstWhere((element) => element.code == itemUnits.weightLabel)
+          .name;
+    }
     return res;
   }
 
@@ -108,7 +111,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
                   labelText: 'Өндөр',
                   labelTextColor: grey2,
                   secondText: itemUnits.height != null
-                      ? '${itemUnits.height?.toInt()} ${itemUnits.spaceLabel}'
+                      ? '${itemUnits.height?.toInt()} ${itemUnits.spaceLabel != null ? itemUnits.spaceLabel : ""}'
                       : '-',
                   secondTextColor: productColor,
                 ),
@@ -119,7 +122,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
                   labelText: 'Өргөн',
                   labelTextColor: grey2,
                   secondText: itemUnits.width != null
-                      ? '${itemUnits.width?.toInt()} ${itemUnits.spaceLabel}'
+                      ? '${itemUnits.width?.toInt()} ${itemUnits.spaceLabel != null ? itemUnits.spaceLabel : ""}'
                       : '-',
                   secondTextColor: productColor,
                 ),
@@ -130,7 +133,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
                   labelText: 'Урт',
                   labelTextColor: grey2,
                   secondText: itemUnits.length != null
-                      ? '${itemUnits.length?.toInt()} ${itemUnits.spaceLabel}'
+                      ? '${itemUnits.length?.toInt()} ${itemUnits.spaceLabel != null ? itemUnits.spaceLabel : ""}'
                       : '-',
                   secondTextColor: productColor,
                 ),

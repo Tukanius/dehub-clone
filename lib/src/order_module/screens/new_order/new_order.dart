@@ -4,6 +4,7 @@ import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/order_additional_line/order_additional_line.dart';
 import 'package:dehub/components/order_product_card/order_product_card.dart';
 import 'package:dehub/components/possible-schedule/possible-schedule-card.dart';
+import 'package:dehub/components/scaffold_messenger/scaffold_messenger.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/checkout-provider.dart';
@@ -199,14 +200,10 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
     }
     if (selectedDateValidate == false && customerValidate == false) {
       if (product.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: orderColor,
-            shape: StadiumBorder(),
-            content: Center(
-              child: Text('Бараа нэмнэ үү!'),
-            ),
-          ),
+        CustomScaffoldMessenger(
+          context,
+          color: orderColor,
+          labelText: 'Бараа нэмнэ үү!',
         );
       } else {
         Navigator.of(context).pushNamed(
@@ -898,14 +895,10 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                   ),
                                 );
                               } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    backgroundColor: orderColor,
-                                    shape: StadiumBorder(),
-                                    content: Center(
-                                      child: Text('Харилцагч сонгоно уу!'),
-                                    ),
-                                  ),
+                                CustomScaffoldMessenger(
+                                  context,
+                                  color: orderColor,
+                                  labelText: 'Харилцагч сонгоно уу!',
                                 );
                               }
                             },
@@ -929,14 +922,10 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                   ),
                                 );
                               } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    backgroundColor: orderColor,
-                                    shape: StadiumBorder(),
-                                    content: Center(
-                                      child: Text('Харилцагч сонгоно уу!'),
-                                    ),
-                                  ),
+                                CustomScaffoldMessenger(
+                                  context,
+                                  color: orderColor,
+                                  labelText: 'Харилцагч сонгоно уу!',
                                 );
                               }
                             },

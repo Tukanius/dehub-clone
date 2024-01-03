@@ -56,9 +56,9 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
     avatar: json['avatar'] != null ? json['avatar'] as String : null,
     firstName: json['firstName'] != null ? json['firstName'] as String : null,
     lastName: json['lastName'] != null ? json['lastName'] as String : null,
-    type: json['type'] != null
-        ? Payment.fromJson(json['type'] as Map<String, dynamic>)
-        : null,
+    // type: json['type'] != null
+    //     ? Payment.fromJson(json['type'] as Map<String, dynamic>)
+    //     : null,
     transactionStatus: json['transactionStatus'] != null
         ? json['transactionStatus'] as String
         : null,

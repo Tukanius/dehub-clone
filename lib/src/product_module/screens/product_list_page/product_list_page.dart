@@ -38,7 +38,10 @@ class _ProductListPageState extends State<ProductListPage> {
             AddButton(
               color: productColor,
               onClick: () {
-                Navigator.of(context).pushNamed(NewProduct.routeName);
+                Navigator.of(context).pushNamed(
+                  NewProduct.routeName,
+                  arguments: NewProductArguments(initialIndex: 0),
+                );
               },
             ),
           ],

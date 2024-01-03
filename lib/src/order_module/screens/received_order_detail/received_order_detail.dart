@@ -3,6 +3,7 @@ import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/order_product_card/order_product_card.dart';
+import 'package:dehub/components/scaffold_messenger/scaffold_messenger.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/order.dart';
@@ -1252,24 +1253,16 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
         String tempPath = (await getDownloadsDirectory())!.path;
         File file = File(tempPath);
         await file.writeAsBytes(response.data, flush: true);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: orderColor,
-            shape: StadiumBorder(),
-            content: Center(
-              child: Text('Амжилттай татагдлаа'),
-            ),
-          ),
+        CustomScaffoldMessenger(
+          context,
+          color: orderColor,
+          labelText: 'Амжилттай татагдлаа',
         );
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: red,
-            shape: StadiumBorder(),
-            content: Center(
-              child: Text('Алдаа гарлаа'),
-            ),
-          ),
+        CustomScaffoldMessenger(
+          context,
+          color: red,
+          labelText: 'Алдаа гарлаа!',
         );
       }
     } else {

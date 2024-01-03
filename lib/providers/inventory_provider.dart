@@ -17,6 +17,7 @@ class InventoryProvider extends ChangeNotifier {
   List<InventoryGoods> sections = [];
   List<InventoryGoods> variantSuppliers = [];
   List<InventoryGoods> values = [];
+  List<InventoryGoods> additionalUnits = [];
   TextEditingController nameBillController = TextEditingController();
   TextEditingController nameAppController = TextEditingController();
   TextEditingController nameWebController = TextEditingController();
@@ -323,11 +324,24 @@ class InventoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  additinalUnit(InventoryGoods data) {
+    additionalUnits.add(data);
+    product.additionalUnits = additionalUnits;
+    notifyListeners();
+  }
+
+  removeAdditinoalUnit(int index) {
+    additionalUnits.removeAt(index);
+    product.additionalUnits = additionalUnits;
+    notifyListeners();
+  }
+
   clearData() {
     product = InventoryGoods();
     images = [];
     sections = [];
     quantityPrices = [];
+    additionalUnits = [];
     variantSuppliers = [];
     profileValidate = false;
     bannerValidate = false;
@@ -337,6 +351,9 @@ class InventoryProvider extends ChangeNotifier {
     categoryValidate = false;
     subCategoryValidate = false;
     tagValidate = false;
+    nameBillController.text = '';
+    nameAppController.text = '';
+    nameWebController.text = '';
     notifyListeners();
   }
 

@@ -114,7 +114,11 @@ import 'package:dehub/src/auth/pin_code/pin_code.dart';
 import 'package:dehub/src/auth/pin_code/pin_confirmation.dart';
 import 'package:dehub/src/order_module/screens/product_give/product_give.dart';
 import 'package:dehub/src/product_module/product_page/product_page.dart';
+import 'package:dehub/src/product_module/screens/brand/brand.dart';
+import 'package:dehub/src/product_module/screens/classification/inventory_classification.dart';
 import 'package:dehub/src/product_module/screens/create_sub_category/create_sub_category.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/inventory_reference.dart';
+import 'package:dehub/src/product_module/screens/item_type/inventory_item_type.dart';
 import 'package:dehub/src/product_module/screens/new_product/new_product.dart';
 import 'package:dehub/src/product_module/screens/product_detail_page/product_detail_page.dart';
 import 'package:dehub/src/product_module/screens/product_list_page/product_list_page.dart';
@@ -241,6 +245,7 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return SetWarehouse(
                         data: arguments.data,
+                        listenController: arguments.listenController,
                       );
                     });
                   case CreateSubCategory.routeName:
@@ -264,8 +269,13 @@ class MyApp extends StatelessWidget {
                       return NetworkPage();
                     });
                   case NewProduct.routeName:
+                    NewProductArguments arguments =
+                        settings.arguments as NewProductArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return NewProduct();
+                      return NewProduct(
+                        initialIndex: arguments.initialIndex,
+                        id: arguments.id,
+                      );
                     });
                   case NewInvoice.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -932,6 +942,14 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return FinancingPage();
                     });
+                  case InventoryItemType.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return InventoryItemType();
+                    });
+                  case InventoryClassification.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return InventoryClassification();
+                    });
                   case OrderShipping.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return OrderShipping();
@@ -1004,6 +1022,10 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return ShoppingPage();
                     });
+                  case InventoryBrand.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return InventoryBrand();
+                    });
                   case QpayPage.routeName:
                     QpayPageArguments arguments =
                         settings.arguments as QpayPageArguments;
@@ -1017,7 +1039,10 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return ReferenceInformationPage();
                     });
-
+                  case InventoryReferencePage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return InventoryReferencePage();
+                    });
                   case InvoiceConditionPage.routeName:
                     InvoiceConditionPageArguments arguments =
                         settings.arguments as InvoiceConditionPageArguments;
@@ -1377,6 +1402,7 @@ class MyApp extends StatelessWidget {
                         settings.arguments as SetPriceArguments;
                     return MaterialPageRoute(builder: (context) {
                       return SetPrice(
+                        listenController: arguments.listenController,
                         data: arguments.data,
                       );
                     });

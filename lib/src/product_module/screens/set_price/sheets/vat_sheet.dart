@@ -1,4 +1,6 @@
+import 'package:dehub/components/scaffold_messenger/scaffold_messenger.dart';
 import 'package:dehub/models/general.dart';
+import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -6,11 +8,12 @@ import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class VatSheet extends StatefulWidget {
+  final InventoryGoods? data;
   const VatSheet({
     super.key,
+    this.data,
   });
 
   @override
@@ -20,23 +23,32 @@ class VatSheet extends StatefulWidget {
 class _VatSheetState extends State<VatSheet> {
   General general = General();
   String? vatType;
-  GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
+  double? vatPercent;
 
   onSubmit() {
     final res = Provider.of<InventoryProvider>(context, listen: false);
-    if (vatType == "STANDART_RATED") {
-      if (fbKey.currentState!.saveAndValidate()) {
-        res.vatType(
-            vatType!,
-            double.tryParse(
-                    fbKey.currentState!.fields['vatPercent'].toString()) ??
-                0);
+    if (vatType == "STANDARD_RATED") {
+      if (vatPercent != null) {
+        res.vatType(vatType!, vatPercent!);
         Navigator.of(context).pop();
+      } else {
+        CustomScaffoldMessenger(
+          context,
+          color: productColor,
+          labelText: 'Хувь оруулна уу',
+        );
       }
     } else {
       res.vatType(vatType!, 0);
       Navigator.of(context).pop();
     }
+  }
+
+  @override
+  void initState() {
+    vatType = widget.data?.vatType;
+    vatPercent = widget.data?.vatPercent?.toDouble();
+    super.initState();
   }
 
   @override
@@ -139,31 +151,35 @@ class _VatSheetState extends State<VatSheet> {
                                   Text("${data.name}"),
                                   data.code == "STANDARD_RATED"
                                       ? Expanded(
-                                          child: FormBuilder(
-                                            key: fbKey,
-                                            child: FormTextField(
-                                              inputType: TextInputType
-                                                  .numberWithOptions(
-                                                      decimal: true),
-                                              textColor: productColor,
-                                              textAlign: TextAlign.end,
-                                              name: 'vatPercent',
-                                              decoration: InputDecoration(
-                                                hintStyle: TextStyle(
-                                                    color: productColor),
-                                                hintText: 'Хувь оруул',
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.zero,
-                                                  borderSide: BorderSide.none,
-                                                ),
-                                                contentPadding:
-                                                    const EdgeInsets.symmetric(
-                                                  vertical: 0,
-                                                  horizontal: 0,
-                                                ),
-                                                isDense: true,
+                                          child: FormTextField(
+                                            readOnly:
+                                                !(vatType == "STANDARD_RATED"),
+                                            onChanged: (value) {
+                                              setState(() {
+                                                vatPercent =
+                                                    double.tryParse(value);
+                                              });
+                                            },
+                                            initialValue:
+                                                "${vatPercent != null ? vatPercent?.toInt() : ''}",
+                                            inputType: TextInputType.number,
+                                            textColor: productColor,
+                                            textAlign: TextAlign.end,
+                                            name: 'vatPercent',
+                                            decoration: InputDecoration(
+                                              hintStyle: TextStyle(
+                                                  color: productColor),
+                                              hintText: 'Хувь оруул',
+                                              border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.zero,
+                                                borderSide: BorderSide.none,
                                               ),
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 0,
+                                                horizontal: 0,
+                                              ),
+                                              isDense: true,
                                             ),
                                           ),
                                         )

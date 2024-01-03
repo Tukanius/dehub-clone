@@ -1,7 +1,10 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/inventory_goods.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/src/product_module/screens/set_warehouse/components/recourse_info_form.dart';
 import 'package:dehub/src/product_module/screens/set_warehouse/sheets/merch_staff_sheet.dart';
@@ -21,16 +24,20 @@ import 'package:after_layout/after_layout.dart';
 
 class SetWarehouseArguments {
   InventoryGoods data;
+  ListenController listenController;
   SetWarehouseArguments({
+    required this.listenController,
     required this.data,
   });
 }
 
 class SetWarehouse extends StatefulWidget {
   static const routeName = '/SetWareHouse';
+  final ListenController listenController;
   final InventoryGoods data;
   const SetWarehouse({
     Key? key,
+    required this.listenController,
     required this.data,
   }) : super(key: key);
 
@@ -42,6 +49,7 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
   bool isLoading = true;
   DateTime startDate = DateTime.now();
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
+  General general = General();
 
   onSubmit(bool confirm) async {
     final res = Provider.of<InventoryProvider>(context, listen: false);
@@ -75,13 +83,13 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
         }
         data.variantSuppliers = variantSuppliers;
         await InventoryApi().setWarehouse(data);
-        showCustomDialog(context, 'Амжилттай', true, onPressed: () {
+        widget.listenController.changeVariable('setWarehouse');
+        showCustomDialog(context, 'Амжилттай үлдэгдэл тохирууллаа', true,
+            onPressed: () {
           Navigator.of(context).pop();
         });
       } catch (e) {
-        print('===========asdf==========');
         debugPrint(e.toString());
-        print('===========asdf==========');
       }
     }
   }
@@ -94,10 +102,18 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
     });
   }
 
+  supplierType() {
+    final res = general.supplierTypes!
+        .firstWhere((element) => element.code == widget.data.supplierType)
+        .name;
+    return res;
+  }
+
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<InventoryProvider>(context, listen: true);
-
+    general =
+        Provider.of<GeneralProvider>(context, listen: true).inventoryGeneral;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -264,7 +280,7 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                         paddingHorizontal: 15,
                         paddingVertical: 10,
                         labelText: 'Төрөл',
-                        secondText: '',
+                        secondText: '${supplierType()}',
                         secondTextColor: grey3,
                         color: white,
                       ),
@@ -488,14 +504,16 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                         secondTextColor: productColor,
                         color: white,
                       ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: Text(
-                          'Татан авалтын мэдээлэл',
-                          style: TextStyle(color: productColor),
-                        ),
-                      ),
+                      widget.data.supplierType == "RESELLER"
+                          ? Container(
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: Text(
+                                'Татан авалтын мэдээлэл',
+                                style: TextStyle(color: productColor),
+                              ),
+                            )
+                          : SizedBox(),
                       source.product.variantSuppliers?.length != 0 &&
                               source.product.variantSuppliers != null
                           ? Container(
@@ -553,19 +571,21 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                               ),
                             )
                           : SizedBox(),
-                      CustomButton(
-                        onClick: () {
-                          showModalBottomSheet(
-                            context: context,
-                            useSafeArea: true,
-                            builder: (context) => VariantSuppliersSheet(),
-                          );
-                        },
-                        borderColor: grey2.withOpacity(0.5),
-                        labelColor: Color(0xffE9E9EA),
-                        labelText: 'Мэдээлэл нэмэх',
-                        textColor: productColor,
-                      ),
+                      widget.data.supplierType == "RESELLER"
+                          ? CustomButton(
+                              onClick: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  useSafeArea: true,
+                                  builder: (context) => VariantSuppliersSheet(),
+                                );
+                              },
+                              borderColor: grey2.withOpacity(0.5),
+                              labelColor: Color(0xffE9E9EA),
+                              labelText: 'Мэдээлэл нэмэх',
+                              textColor: productColor,
+                            )
+                          : SizedBox(),
                       SizedBox(
                         height: 100,
                       ),

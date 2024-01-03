@@ -9,9 +9,24 @@ import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
 
+class NewProductArguments {
+  int initialIndex;
+  String? id;
+  NewProductArguments({
+    this.id,
+    required this.initialIndex,
+  });
+}
+
 class NewProduct extends StatefulWidget {
+  final int initialIndex;
+  final String? id;
   static const routeName = '/NewProduct';
-  const NewProduct({Key? key}) : super(key: key);
+  const NewProduct({
+    Key? key,
+    this.id,
+    required this.initialIndex,
+  }) : super(key: key);
 
   @override
   State<NewProduct> createState() => _NewProductState();
@@ -24,7 +39,8 @@ class _NewProductState extends State<NewProduct>
 
   @override
   afterFirstLayout(BuildContext context) {
-    Provider.of<IndexProvider>(context, listen: false).newProductIndexChange(0);
+    Provider.of<IndexProvider>(context, listen: false)
+        .newProductIndexChange(widget.initialIndex);
     Provider.of<InventoryProvider>(context, listen: false).clearData();
     setState(() {
       isLoading = false;
@@ -88,8 +104,12 @@ class _NewProductState extends State<NewProduct>
               controller: tabController,
               children: [
                 MainTab(),
-                DynamicTab(),
-                OrderSettingTab(),
+                DynamicTab(
+                  id: widget.id,
+                ),
+                OrderSettingTab(
+                  id: widget.id,
+                ),
               ],
             ),
     );

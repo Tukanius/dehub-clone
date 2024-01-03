@@ -38,36 +38,38 @@ class _DynamicTabState extends State<DynamicTab> {
       setState(() {
         isSubmit = true;
       });
-      for (var i = 0; i < res.product.sections!.length; i++) {
-        sectionIds.add(res.product.sections![i].id!);
-        for (var f = 0; f < res.product.sections![i].fields!.length; f++) {
-          itemFieldValues.add(
-            res.product.sections?[i].fields?[f].type == "CHECKBOX"
-                ? InventoryGoods(
-                    sectionId: sectionIds[i],
-                    fieldId: res.product.sections?[i].fields?[f].id,
-                    fieldType: res.product.sections?[i].fields?[f].type,
-                    checked:
-                        res.product.sections?[i].fields?[f].checked ?? false,
-                  )
-                : InventoryGoods(
-                    sectionId: sectionIds[i],
-                    fieldId: res.product.sections?[i].fields?[f].id,
-                    fieldType: res.product.sections?[i].fields?[f].type,
-                    number: res.product.sections?[i].fields?[f].number,
-                    fieldValueId:
-                        res.product.sections?[i].fields?[f].fieldValueId,
-                    text: res.product.sections?[i].fields?[f].text,
-                  ),
-          );
+      if (res.product.sections != null) {
+        for (var i = 0; i < res.product.sections!.length; i++) {
+          sectionIds.add(res.product.sections![i].id!);
+          for (var f = 0; f < res.product.sections![i].fields!.length; f++) {
+            itemFieldValues.add(
+              res.product.sections?[i].fields?[f].type == "CHECKBOX"
+                  ? InventoryGoods(
+                      sectionId: sectionIds[i],
+                      fieldId: res.product.sections?[i].fields?[f].id,
+                      fieldType: res.product.sections?[i].fields?[f].type,
+                      checked:
+                          res.product.sections?[i].fields?[f].checked ?? false,
+                    )
+                  : InventoryGoods(
+                      sectionId: sectionIds[i],
+                      fieldId: res.product.sections?[i].fields?[f].id,
+                      fieldType: res.product.sections?[i].fields?[f].type,
+                      number: res.product.sections?[i].fields?[f].number,
+                      fieldValueId:
+                          res.product.sections?[i].fields?[f].fieldValueId,
+                      text: res.product.sections?[i].fields?[f].text,
+                    ),
+            );
+          }
         }
+        await InventoryApi().additionalInfo(
+            InventoryGoods(
+              sectionIds: sectionIds,
+              itemFieldValues: itemFieldValues,
+            ),
+            widget.id == null ? res.product.id! : widget.id!);
       }
-      await InventoryApi().additionalInfo(
-          InventoryGoods(
-            sectionIds: sectionIds,
-            itemFieldValues: itemFieldValues,
-          ),
-          res.product.id!);
       Provider.of<IndexProvider>(context, listen: false)
           .newProductIndexChange(2);
       setState(() {
@@ -330,7 +332,7 @@ class _DynamicTabState extends State<DynamicTab> {
                                                 index: index,
                                                 fieldIndex: fieldIndex,
                                               );
-                              }).toList(), //
+                              }).toList(),
                             ),
                           ],
                         );
@@ -360,6 +362,7 @@ class _DynamicTabState extends State<DynamicTab> {
                   child: CustomButton(
                     onClick: () {
                       showModalBottomSheet(
+                        useSafeArea: true,
                         context: context,
                         builder: (context) => DynamicSheet(),
                       );

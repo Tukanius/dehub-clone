@@ -197,7 +197,16 @@ class InventoryGoods {
   String? status;
   String? inactiveTypeId;
 
+  String? convertType;
+  double? convertValue;
+  double? floatValue;
+  bool? isForLoad;
+
   InventoryGoods({
+    this.convertType,
+    this.convertValue,
+    this.floatValue,
+    this.isForLoad,
     this.taxPercent,
     this.status,
     this.inactiveTypeId,

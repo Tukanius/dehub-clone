@@ -121,7 +121,6 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                           backorderable: backorderable,
                         ),
                       );
-                      print(source.product.supplierBusiness?.merchStaff?.id);
                       Navigator.of(context).pop();
                     } else {
                       setState(() {
@@ -229,15 +228,17 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                                   ? source.product.partnerBusiness?.businessName
                                   : 'Сонгох',
                           secondTextColor: productColor,
-                          onClick: () {
-                            showModalBottomSheet(
-                              context: context,
-                              useSafeArea: true,
-                              builder: (context) => PartnerSheet(
-                                id: source.product.buyerBusiness!.id!,
-                              ),
-                            );
-                          },
+                          onClick: source.product.buyerBusiness?.id == null
+                              ? () {}
+                              : () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    useSafeArea: true,
+                                    builder: (context) => PartnerSheet(
+                                      id: source.product.buyerBusiness!.id!,
+                                    ),
+                                  );
+                                },
                           arrowColor: productColor,
                           color: white,
                         ),
@@ -251,17 +252,20 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                                   ? source.product.supplierBusiness?.profileName
                                   : 'Сонгох',
                           secondTextColor: productColor,
-                          onClick: () {
-                            showModalBottomSheet(
-                              context: context,
-                              useSafeArea: true,
-                              builder: (context) => SupplierSheet(
-                                buyerBusinessId:
-                                    source.product.buyerBusiness!.id!,
-                                partnerId: source.product.partnerBusiness!.id!,
-                              ),
-                            );
-                          },
+                          onClick: source.product.partnerBusiness?.id == null
+                              ? () {}
+                              : () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    useSafeArea: true,
+                                    builder: (context) => SupplierSheet(
+                                      buyerBusinessId:
+                                          source.product.buyerBusiness!.id!,
+                                      partnerId:
+                                          source.product.partnerBusiness!.id!,
+                                    ),
+                                  );
+                                },
                           arrowColor: productColor,
                           color: white,
                         ),

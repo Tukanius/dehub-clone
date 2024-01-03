@@ -1,61 +1,104 @@
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/field_card/field_card.dart';
+import 'package:dehub/components/scaffold_messenger/scaffold_messenger.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/inventory_provider.dart';
+import 'package:dehub/src/product_module/screens/new_product/components/additional_unit_card.dart';
+import 'package:dehub/src/product_module/screens/new_product/sheet/additional_unit_sheet.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/number_unit_sheet.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/option_sheet.dart';
-// import 'package:dehub/src/product_module/screens/new_product/sheet/option_sheet.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/return_type_sheet.dart';
+import 'package:dehub/src/product_module/screens/new_product/sheet/set_additional_unit_sheet.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/supplier_type_sheet.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/unit_sheet.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/unit_space_labels.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class OrderSettingTab extends StatefulWidget {
-  const OrderSettingTab({super.key});
+  final String? id;
+  const OrderSettingTab({
+    super.key,
+    this.id,
+  });
 
   @override
   State<OrderSettingTab> createState() => _OrderSettingTabState();
 }
 
 class _OrderSettingTabState extends State<OrderSettingTab> {
-  InventoryGoods data = InventoryGoods();
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
-  bool hasAdditionalUnit = false;
-  bool hasVariant = false;
 
   onSubmit(bool isCompleted) async {
     InventoryGoods data =
         Provider.of<InventoryProvider>(context, listen: false).product;
-    if (fbKey.currentState!.saveAndValidate()) {
-      InventoryGoods form = InventoryGoods.fromJson(fbKey.currentState!.value);
-      form.supplierType = data.supplierType;
-      form.baseUnitId = data.unitId;
-      form.weightLabel = data.unitWeightLabelId;
-      form.spaceLabel = data.unitSpaceLabelId;
-      form.returnAllow = data.returnAllow ?? false;
-      if (form.returnAllow == true) {
-        form.returnType = data.returnTypeId;
+    List<InventoryGoods> additionalUnits = [];
+    if (data.supplierTypeName != null) {
+      if (fbKey.currentState!.saveAndValidate()) {
+        InventoryGoods form =
+            InventoryGoods.fromJson(fbKey.currentState!.value);
+        form.supplierType = data.supplierType;
+        form.baseUnitId = data.unitId;
+        form.weightLabel = data.unitWeightLabelId;
+        form.spaceLabel = data.unitSpaceLabelId;
+        form.returnAllow = data.returnAllow ?? false;
+        if (form.returnAllow == true) {
+          form.returnType = data.returnTypeId;
+        }
+        form.isCompleted = isCompleted;
+        if (data.additionalUnits != null && data.additionalUnits?.length != 0) {
+          for (var i = 0; i < data.additionalUnits!.length; i++) {
+            additionalUnits.add(
+              InventoryGoods(
+                unitId: data.additionalUnits?[i].id,
+                convertType: data.additionalUnits?[i].convertType,
+                convertValue: data.additionalUnits?[i].convertValue,
+                floatValue: data.additionalUnits?[i].floatValue,
+                isForLoad: data.additionalUnits?[i].isForLoad,
+                spaceLabel: data.additionalUnits?[i].spaceLabel,
+                height: data.additionalUnits?[i].height,
+                width: data.additionalUnits?[i].width,
+                length: data.additionalUnits?[i].length,
+                weightLabel: data.additionalUnits?[i].weightLabel,
+                weight: data.additionalUnits?[i].weight,
+              ),
+            );
+          }
+        }
+        form.additionalUnits = additionalUnits;
+        form.hasAdditionalUnit = additionalUnits.length != 0 ? true : false;
+        int index = additionalUnits
+            .indexWhere((element) => element.convertType == null);
+        if (index < 0) {
+          await InventoryApi()
+              .updateVariant(form, widget.id != null ? widget.id! : data.id!);
+          showCustomDialog(
+            context,
+            "Амжилттай",
+            true,
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          );
+        } else {
+          CustomScaffoldMessenger(
+            context,
+            color: productColor,
+            labelText: 'Нэмэлт хэмжих нэгжүүд тохируулна уу!',
+          );
+        }
       }
-      form.hasVariant = hasVariant;
-      form.hasAdditionalUnit = hasAdditionalUnit;
-      form.isCompleted = isCompleted;
-      await InventoryApi().updateVariant(form, data.id!);
-      showCustomDialog(
+    } else {
+      CustomScaffoldMessenger(
         context,
-        "Амжилттай",
-        true,
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
+        color: productColor,
+        labelText: 'Ханган нийлүүлэгч сонгоно уу!',
       );
     }
   }
@@ -63,7 +106,6 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<InventoryProvider>(context, listen: true);
-    data = Provider.of<InventoryProvider>(context, listen: true).product;
 
     return SingleChildScrollView(
       child: FormBuilder(
@@ -415,28 +457,6 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                 ),
               ),
             ),
-            // Container(
-            //   padding: const EdgeInsets.only(left: 15, bottom: 3, top: 3),
-            //   color: white,
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Text('Хувилбартай эсэх'),
-            //       Transform.scale(
-            //         scale: 0.7,
-            //         child: CupertinoSwitch(
-            //           value: hasVariant,
-            //           activeColor: productColor,
-            //           onChanged: (value) {
-            //             setState(() {
-            //               hasVariant = value;
-            //             });
-            //           },
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
             FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
@@ -458,35 +478,64 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: Text(
-                'Нэмэлт хэмжих нэгжтэй',
+                'Нэмэлт хэмжих нэгж',
                 style: TextStyle(
                   color: grey3,
                   fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.only(left: 15, bottom: 3, top: 3),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Нэмэлт хэмжих нэгжтэй эсэх'),
-                  Transform.scale(
-                    scale: 0.7,
-                    child: CupertinoSwitch(
-                      value: hasAdditionalUnit,
-                      activeColor: productColor,
-                      onChanged: (value) {
-                        setState(() {
-                          hasAdditionalUnit = value;
-                        });
-                      },
+            GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  useSafeArea: true,
+                  builder: (context) => AdditionalUnitSheet(),
+                );
+              },
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                color: white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Нэмэлт хэмжих нэгж нэмэх'),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: productColor,
+                      size: 14,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
+            source.product.additionalUnits != null &&
+                    source.product.additionalUnits?.length != 0
+                ? Column(
+                    children: source.product.additionalUnits!
+                        .map(
+                          (item) => AdditionalUnitCard(
+                            onClick: () {
+                              showModalBottomSheet(
+                                context: context,
+                                useSafeArea: true,
+                                builder: (context) => SetAdditionalUnitSheet(
+                                  data: item,
+                                ),
+                              );
+                            },
+                            closeClick: () {
+                              source.removeAdditinoalUnit(source
+                                  .product.additionalUnits!
+                                  .indexOf(item));
+                            },
+                            data: item,
+                          ),
+                        )
+                        .toList(),
+                  )
+                : SizedBox(),
             SizedBox(
               height: 80,
             ),
@@ -500,8 +549,6 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                     borderColor: productColor,
                     onClick: () {
                       onSubmit(false);
-                      // Provider.of<IndexProvider>(context, listen: false)
-                      //     .newProductIndexChange(1);
                     },
                     labelText: 'Хадгалах',
                     textColor: productColor,
