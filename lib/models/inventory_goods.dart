@@ -196,13 +196,14 @@ class InventoryGoods {
   bool? backorderable;
   String? status;
   String? inactiveTypeId;
-
+  String? goodsId;
   String? convertType;
   double? convertValue;
   double? floatValue;
   bool? isForLoad;
 
   InventoryGoods({
+    this.goodsId,
     this.convertType,
     this.convertValue,
     this.floatValue,

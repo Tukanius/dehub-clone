@@ -17,22 +17,38 @@ class VersionControlSheet extends StatefulWidget {
 
 class _VersionControlSheetState extends State<VersionControlSheet>
     with AfterLayoutMixin {
-  List<InventoryGoods> values = [];
   bool isLoading = true;
   List<List<InventoryGoods>> options = [];
+  List<List<InventoryGoods>> selectedOptions = [];
+
+  generateValues() {
+    final source = Provider.of<InventoryProvider>(context, listen: false);
+    generate(int index, List<InventoryGoods> combination) {
+      if (index == source.product.values?.length) {
+        options.add(List.from(combination));
+        return;
+      }
+      for (var element in source.product.values![index].values!) {
+        combination.add(element);
+        generate(index + 1, combination);
+        combination.removeLast();
+      }
+    }
+
+    generate(0, []);
+    return options;
+  }
+
+  onSubmit() {
+    final source = Provider.of<InventoryProvider>(context, listen: false);
+    source.optionValue(selectedOptions);
+    Navigator.of(context).pop();
+    Navigator.of(context).pop();
+  }
 
   @override
   afterFirstLayout(BuildContext context) async {
-    final source = Provider.of<InventoryProvider>(context, listen: false);
-    for (var i = 0; i < source.product.values!.length; i++) {
-      for (var element in source.product.values![i].values!) {
-        for (var item in source.product.values![i].values!) {
-          if (element != item) {
-            options.add([element, item]);
-          }
-        }
-      }
-    }
+    generateValues();
     setState(() {
       isLoading = false;
     });
@@ -88,8 +104,7 @@ class _VersionControlSheetState extends State<VersionControlSheet>
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
+                    onSubmit();
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -129,7 +144,11 @@ class _VersionControlSheetState extends State<VersionControlSheet>
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            setState(() {
+                              selectedOptions = List.from(options);
+                            });
+                          },
                           child: Container(
                             color: white,
                             padding: const EdgeInsets.symmetric(
@@ -138,9 +157,13 @@ class _VersionControlSheetState extends State<VersionControlSheet>
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text('Бүх хувилбарыг сонгох'),
-                                SvgPicture.asset(
-                                  'assets/svg/circle_minus.svg',
-                                ),
+                                selectedOptions.length == options.length
+                                    ? SvgPicture.asset(
+                                        'assets/svg/circle_check.svg',
+                                      )
+                                    : SvgPicture.asset(
+                                        'assets/svg/circle_minus.svg',
+                                      )
                               ],
                             ),
                           ),
@@ -150,66 +173,74 @@ class _VersionControlSheetState extends State<VersionControlSheet>
                               .map(
                                 (data) => GestureDetector(
                                   onTap: () {
-                                    // if (values.contains(data)) {
-                                    //   setState(() {
-                                    //     values.removeWhere(
-                                    //         (element) => element == data);
-                                    //   });
-                                    // } else {
-                                    //   setState(() {
-                                    //     values.add(data);
-                                    //   });
-                                    // }
+                                    if (selectedOptions.contains(data)) {
+                                      setState(() {
+                                        selectedOptions.removeWhere(
+                                            (element) => element == data);
+                                      });
+                                    } else {
+                                      setState(() {
+                                        selectedOptions.add(data);
+                                      });
+                                    }
                                   },
                                   child: Container(
                                     color: white,
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 15, vertical: 10),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
-                                          children: [
-                                            SvgPicture.asset(
-                                              'assets/svg/menu_plus.svg',
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Row(
-                                              children: data
-                                                  .map(
-                                                    (e) => Container(
-                                                      margin: EdgeInsets.only(
-                                                          right: e.id ==
-                                                                  data.last.id
-                                                              ? 0
-                                                              : 5),
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 10,
-                                                          vertical: 3),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12),
-                                                        color: productColor
-                                                            .withOpacity(0.05),
-                                                      ),
-                                                      child: Text(
-                                                        '${e.name}',
-                                                        style: TextStyle(
-                                                          color: grey2,
+                                        Expanded(
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                'assets/svg/menu_plus.svg',
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Expanded(
+                                                child: Row(
+                                                  children: data
+                                                      .map(
+                                                        (item) => Container(
+                                                          margin: EdgeInsets.only(
+                                                              right: item.id ==
+                                                                      data.last
+                                                                          .id
+                                                                  ? 0
+                                                                  : 5),
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  horizontal:
+                                                                      10,
+                                                                  vertical: 3),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        12),
+                                                            color: productColor
+                                                                .withOpacity(
+                                                                    0.05),
+                                                          ),
+                                                          child: Text(
+                                                            '${item.name}',
+                                                            style: TextStyle(
+                                                              color: grey2,
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                  .toList(),
-                                            )
-                                          ],
+                                                      )
+                                                      .toList(),
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                        values.contains(data)
+                                        selectedOptions.contains(data)
                                             ? SvgPicture.asset(
                                                 'assets/svg/circle_check.svg',
                                               )

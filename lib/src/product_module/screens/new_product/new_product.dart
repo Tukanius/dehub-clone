@@ -1,4 +1,5 @@
 import 'package:dehub/components/back_button/back_button.dart';
+import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/src/product_module/screens/new_product/tabs/dynamic_tab.dart';
@@ -11,20 +12,20 @@ import 'package:provider/provider.dart';
 
 class NewProductArguments {
   int initialIndex;
-  String? id;
+  InventoryGoods? data;
   NewProductArguments({
-    this.id,
+    this.data,
     required this.initialIndex,
   });
 }
 
 class NewProduct extends StatefulWidget {
   final int initialIndex;
-  final String? id;
+  final InventoryGoods? data;
   static const routeName = '/NewProduct';
   const NewProduct({
     Key? key,
-    this.id,
+    this.data,
     required this.initialIndex,
   }) : super(key: key);
 
@@ -105,10 +106,10 @@ class _NewProductState extends State<NewProduct>
               children: [
                 MainTab(),
                 DynamicTab(
-                  id: widget.id,
+                  id: widget.data?.id,
                 ),
                 OrderSettingTab(
-                  id: widget.id,
+                  data: widget.data,
                 ),
               ],
             ),

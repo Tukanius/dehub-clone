@@ -332,4 +332,10 @@ class InventoryApi extends HttpRequest {
         await post('/goods/variant', "INVENTORY", true, data: data.toJson());
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
   }
+
+  Future<InventoryGoods> variant(InventoryGoods data) async {
+    var res =
+        await post('/goods/variant', "INVENTORY", true, data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
 }

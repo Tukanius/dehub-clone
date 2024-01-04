@@ -7,6 +7,7 @@ import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/src/product_module/screens/new_product/components/additional_unit_card.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/additional_unit_sheet.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/number_unit_sheet.dart';
+import 'package:dehub/src/product_module/screens/new_product/sheet/option_information_sheet.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/option_sheet.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/return_type_sheet.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/set_additional_unit_sheet.dart';
@@ -22,10 +23,10 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class OrderSettingTab extends StatefulWidget {
-  final String? id;
+  final InventoryGoods? data;
   const OrderSettingTab({
     super.key,
-    this.id,
+    this.data,
   });
 
   @override
@@ -76,8 +77,8 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
         int index = additionalUnits
             .indexWhere((element) => element.convertType == null);
         if (index < 0) {
-          await InventoryApi()
-              .updateVariant(form, widget.id != null ? widget.id! : data.id!);
+          await InventoryApi().updateVariant(
+              form, widget.data!.id != null ? widget.data!.id! : data.id!);
           showCustomDialog(
             context,
             "Амжилттай",
@@ -106,7 +107,6 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<InventoryProvider>(context, listen: true);
-
     return SingleChildScrollView(
       child: FormBuilder(
         key: fbKey,
@@ -309,7 +309,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                                 width: 15,
                               ),
                               Text(
-                                'Өндөн',
+                                'Өндөр',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w400,
@@ -457,23 +457,147 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                 ),
               ),
             ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: 'Хувилбар нэмэх',
-              secondText: '',
-              secondTextColor: productColor,
-              onClick: () {
-                showModalBottomSheet(
-                  context: context,
-                  useSafeArea: true,
-                  builder: (context) {
-                    return OptionSheet();
-                  },
-                );
-              },
-              arrowColor: productColor,
-              color: white,
+            source.product.values?.length == 0 || source.product.values == null
+                ? FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: 'Хувилбар нэмэх',
+                    secondText: '',
+                    secondTextColor: productColor,
+                    onClick: () {
+                      showModalBottomSheet(
+                        context: context,
+                        useSafeArea: true,
+                        builder: (context) {
+                          return OptionSheet();
+                        },
+                      );
+                    },
+                    arrowColor: productColor,
+                    color: white,
+                  )
+                : SizedBox(),
+            source.product.values?.length == 0 || source.product.values == null
+                ? SizedBox()
+                : Column(
+                    children: source.product.values!
+                        .map(
+                          (data) => Container(
+                            color: white,
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 15),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${data.name}',
+                                      style: TextStyle(color: productColor),
+                                    ),
+                                    RichText(
+                                      text: TextSpan(
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          color: grey2,
+                                        ),
+                                        children: data.values!
+                                            .map(
+                                              (item) => item.id ==
+                                                      data.values?.last.id
+                                                  ? TextSpan(
+                                                      text: "${item.name}",
+                                                    )
+                                                  : TextSpan(
+                                                      text: "${item.name}, ",
+                                                    ),
+                                            )
+                                            .toList(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: productColor,
+                                  size: 18,
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              child: Text(
+                'Хувилбарууд',
+                style: TextStyle(color: grey2),
+              ),
+            ),
+            Column(
+              children: source.options
+                  .map(
+                    (data) => GestureDetector(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          useSafeArea: true,
+                          builder: (context) => OptionInformationSheet(
+                            jsonData: widget.data!,
+                            arrayData: data,
+                            index: source.options.indexOf(data),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        color: white,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    style: TextStyle(
+                                        color: productColor,
+                                        fontFamily: "Montserrat"),
+                                    children: data
+                                        .map(
+                                          (e) => TextSpan(
+                                            text:
+                                                "${e.name} ${e.optionId == data.last.optionId ? "" : ","} ",
+                                          ),
+                                        )
+                                        .toList(),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 3,
+                                ),
+                                Text(
+                                  '${widget.data?.skuCode}-${source.options.indexOf(data) + 1}',
+                                  style: TextStyle(color: grey2),
+                                ),
+                              ],
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color: productColor,
+                              size: 14,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),

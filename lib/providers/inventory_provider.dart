@@ -21,6 +21,7 @@ class InventoryProvider extends ChangeNotifier {
   TextEditingController nameBillController = TextEditingController();
   TextEditingController nameAppController = TextEditingController();
   TextEditingController nameWebController = TextEditingController();
+  List<List<InventoryGoods>> options = [];
 
   id(String value) {
     product.id = value;
@@ -336,10 +337,16 @@ class InventoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  optionValue(List<List<InventoryGoods>> data) {
+    options = data;
+    notifyListeners();
+  }
+
   clearData() {
     product = InventoryGoods();
     images = [];
     sections = [];
+    values = [];
     quantityPrices = [];
     additionalUnits = [];
     variantSuppliers = [];
@@ -351,6 +358,7 @@ class InventoryProvider extends ChangeNotifier {
     categoryValidate = false;
     subCategoryValidate = false;
     tagValidate = false;
+    options = [];
     nameBillController.text = '';
     nameAppController.text = '';
     nameWebController.text = '';

@@ -34,6 +34,7 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
         ? json['inactiveTypeId'] as String
         : null,
     firstName: json['firstName'] != null ? json['firstName'] as String : null,
+    goodsId: json['goodsId'] != null ? json['goodsId'] as String : null,
     status: json['status'] != null ? json['status'] as String : null,
     currency: json['currency'] != null ? json['currency'] as String : null,
     avatar: json['avatar'] != null ? json['avatar'] as String : null,
@@ -469,6 +470,7 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   Map<String, dynamic> json = {};
   if (instance.convertType != null) json['convertType'] = instance.convertType;
+  if (instance.goodsId != null) json['goodsId'] = instance.goodsId;
   if (instance.convertValue != null)
     json['convertValue'] = instance.convertValue;
   if (instance.floatValue != null) json['floatValue'] = instance.floatValue;

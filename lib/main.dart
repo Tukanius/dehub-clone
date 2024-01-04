@@ -274,7 +274,7 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return NewProduct(
                         initialIndex: arguments.initialIndex,
-                        id: arguments.id,
+                        data: arguments.data,
                       );
                     });
                   case NewInvoice.routeName:
