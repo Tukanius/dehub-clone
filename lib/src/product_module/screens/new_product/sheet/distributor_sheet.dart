@@ -31,7 +31,7 @@ class _DistributorSheetState extends State<DistributorSheet>
   }
 
   distributorList() async {
-    distributor = await InventoryApi().distributorList();
+    distributor = await InventoryApi().distributorSelect();
     setState(() {
       isLoading = false;
     });

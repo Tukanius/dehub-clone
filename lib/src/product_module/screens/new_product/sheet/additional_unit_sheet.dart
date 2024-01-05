@@ -29,7 +29,7 @@ class _AdditionalUnitSheetState extends State<AdditionalUnitSheet>
 
   @override
   afterFirstLayout(BuildContext context) async {
-    unit = await InventoryApi().unitList();
+    unit = await InventoryApi().unitSelect();
     setState(() {
       isLoading = false;
     });

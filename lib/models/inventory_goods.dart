@@ -201,8 +201,10 @@ class InventoryGoods {
   double? convertValue;
   double? floatValue;
   bool? isForLoad;
+  List<String>? selections;
 
   InventoryGoods({
+    this.selections,
     this.goodsId,
     this.convertType,
     this.convertValue,

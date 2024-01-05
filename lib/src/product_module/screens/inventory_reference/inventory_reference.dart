@@ -1,7 +1,17 @@
 import 'package:dehub/components/inventory_reference_card/inventory_reference_card.dart';
-import 'package:dehub/src/product_module/screens/brand/brand.dart';
-import 'package:dehub/src/product_module/screens/classification/inventory_classification.dart';
-import 'package:dehub/src/product_module/screens/item_type/inventory_item_type.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/adjustment_note/adjustment_note.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/brand/brand.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/classification/inventory_classification.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/delivery_type/delivery_type.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/distributor/distributor.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/inactive_types/inactive_types.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/item_type/inventory_item_type.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/manufacturer/manufacturer.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/options/options.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/package_type/package_type.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/price_tiers/price_tiers.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/tag/tag.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/unit/unit.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -58,44 +68,73 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
               refCode: 'REF-100002',
               labelText: 'Ангилал',
               onClick: () {
-                Navigator.of(context)
-                    .pushNamed(InventoryClassification.routeName);
+                Navigator.of(context).pushNamed(
+                  InventoryClassification.routeName,
+                  arguments:
+                      InventoryClassificationArguments(type: "CLASSIFICATION"),
+                );
               },
             ),
             InventoryReferenceCard(
               refCode: 'REF-100003',
               labelText: 'Дэд ангилал',
-              onClick: () {},
+              onClick: () {
+                Navigator.of(context).pushNamed(
+                  InventoryClassification.routeName,
+                  arguments: InventoryClassificationArguments(
+                      type: "SUB_CLASSIFICATION"),
+                );
+              },
             ),
             InventoryReferenceCard(
               refCode: 'REF-100004',
               labelText: 'Категори',
-              onClick: () {},
+              onClick: () {
+                Navigator.of(context).pushNamed(
+                  InventoryClassification.routeName,
+                  arguments: InventoryClassificationArguments(type: "CATEGORY"),
+                );
+              },
             ),
             InventoryReferenceCard(
               refCode: 'REF-100005',
               labelText: 'Дэд категори',
-              onClick: () {},
+              onClick: () {
+                Navigator.of(context).pushNamed(
+                  InventoryClassification.routeName,
+                  arguments:
+                      InventoryClassificationArguments(type: "SUB_CATEGORY"),
+                );
+              },
             ),
             InventoryReferenceCard(
               refCode: 'REF-100006',
               labelText: 'Дистрибютор',
-              onClick: () {},
+              onClick: () {
+                Navigator.of(context).pushNamed(InventoryDistributor.routeName);
+              },
             ),
             InventoryReferenceCard(
               refCode: 'REF-100007',
               labelText: 'Үйлдвэрлэгч',
-              onClick: () {},
+              onClick: () {
+                Navigator.of(context)
+                    .pushNamed(InventoryManufacturer.routeName);
+              },
             ),
             InventoryReferenceCard(
               refCode: 'REF-100008',
               labelText: 'Tag',
-              onClick: () {},
+              onClick: () {
+                Navigator.of(context).pushNamed(InventoryTag.routeName);
+              },
             ),
             InventoryReferenceCard(
               refCode: 'REF-100009',
               labelText: 'Хэмжих нэгж',
-              onClick: () {},
+              onClick: () {
+                Navigator.of(context).pushNamed(InventoryUnit.routeName);
+              },
             ),
             InventoryReferenceCard(
               refCode: 'REF-100010',
@@ -105,32 +144,45 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
             InventoryReferenceCard(
               refCode: 'REF-100011',
               labelText: 'Сав баглаа боодол',
-              onClick: () {},
+              onClick: () {
+                Navigator.of(context).pushNamed(PackageType.routeName);
+              },
             ),
             InventoryReferenceCard(
               refCode: 'REF-100012',
               labelText: 'Хүргэлтийн нөхцөл',
-              onClick: () {},
+              onClick: () {
+                Navigator.of(context)
+                    .pushNamed(InventoryDeliveryType.routeName);
+              },
             ),
             InventoryReferenceCard(
               refCode: 'REF-100013',
               labelText: 'Хувилбарын төрөл',
-              onClick: () {},
+              onClick: () {
+                Navigator.of(context).pushNamed(Options.routeName);
+              },
             ),
             InventoryReferenceCard(
               refCode: 'REF-100014',
               labelText: 'Үнийн бүлэг',
-              onClick: () {},
+              onClick: () {
+                Navigator.of(context).pushNamed(InventoryPriceTiers.routeName);
+              },
             ),
             InventoryReferenceCard(
               refCode: 'REF-100015',
               labelText: 'Идэвхгүй болгох шалтгаан',
-              onClick: () {},
+              onClick: () {
+                Navigator.of(context).pushNamed(InActiveTypes.routeName);
+              },
             ),
             InventoryReferenceCard(
               refCode: 'REF-100016',
               labelText: 'Нөөцийн хөдөлгөөн тайлбар',
-              onClick: () {},
+              onClick: () {
+                Navigator.of(context).pushNamed(AdjustmentNote.routeName);
+              },
             ),
             SizedBox(
               height: 40,

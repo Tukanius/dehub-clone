@@ -40,17 +40,17 @@ class _CategorySheetState extends State<CategorySheet> with AfterLayoutMixin {
 
   categoryList() async {
     if (widget.type == "SUB_CLASSIFICATION") {
-      list = await InventoryApi().categoryList(
+      list = await InventoryApi().categorySelect(
           widget.type, source.itemTypeId!, source.classificationId!);
     } else if (widget.type == "CATEGORY") {
-      list = await InventoryApi().categoryList(
+      list = await InventoryApi().categorySelect(
           widget.type, source.itemTypeId!, source.subClassificationId!);
     } else if (widget.type == "SUB_CATEGORY") {
       list = await InventoryApi()
-          .categoryList(widget.type, source.itemTypeId!, source.categoryId!);
+          .categorySelect(widget.type, source.itemTypeId!, source.categoryId!);
     } else {
       list = await InventoryApi()
-          .categoryList(widget.type, source.itemTypeId!, '');
+          .categorySelect(widget.type, source.itemTypeId!, '');
     }
     setState(() {
       isLoading = false;

@@ -114,11 +114,21 @@ import 'package:dehub/src/auth/pin_code/pin_code.dart';
 import 'package:dehub/src/auth/pin_code/pin_confirmation.dart';
 import 'package:dehub/src/order_module/screens/product_give/product_give.dart';
 import 'package:dehub/src/product_module/product_page/product_page.dart';
-import 'package:dehub/src/product_module/screens/brand/brand.dart';
-import 'package:dehub/src/product_module/screens/classification/inventory_classification.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/adjustment_note/adjustment_note.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/brand/brand.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/classification/inventory_classification.dart';
 import 'package:dehub/src/product_module/screens/create_sub_category/create_sub_category.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/delivery_type/delivery_type.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/distributor/distributor.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/inactive_types/inactive_types.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/inventory_reference.dart';
-import 'package:dehub/src/product_module/screens/item_type/inventory_item_type.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/item_type/inventory_item_type.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/manufacturer/manufacturer.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/options/options.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/package_type/package_type.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/price_tiers/price_tiers.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/tag/tag.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/unit/unit.dart';
 import 'package:dehub/src/product_module/screens/new_product/new_product.dart';
 import 'package:dehub/src/product_module/screens/product_detail_page/product_detail_page.dart';
 import 'package:dehub/src/product_module/screens/product_list_page/product_list_page.dart';
@@ -942,13 +952,37 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return FinancingPage();
                     });
+                  case InventoryDistributor.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return InventoryDistributor();
+                    });
                   case InventoryItemType.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return InventoryItemType();
                     });
-                  case InventoryClassification.routeName:
+                  case InventoryUnit.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return InventoryClassification();
+                      return InventoryUnit();
+                    });
+                  case InventoryManufacturer.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return InventoryManufacturer();
+                    });
+                  case PackageType.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return PackageType();
+                    });
+                  case InventoryTag.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return InventoryTag();
+                    });
+                  case InventoryClassification.routeName:
+                    InventoryClassificationArguments arguments =
+                        settings.arguments as InventoryClassificationArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return InventoryClassification(
+                        type: arguments.type,
+                      );
                     });
                   case OrderShipping.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -969,6 +1003,26 @@ class MyApp extends StatelessWidget {
                   case OrderDelivery.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return OrderDelivery();
+                    });
+                  case InActiveTypes.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return InActiveTypes();
+                    });
+                  case Options.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return Options();
+                    });
+                  case AdjustmentNote.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return AdjustmentNote();
+                    });
+                  case InventoryPriceTiers.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return InventoryPriceTiers();
+                    });
+                  case InventoryDeliveryType.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return InventoryDeliveryType();
                     });
                   case OrderPage.routeName:
                     return MaterialPageRoute(builder: (context) {

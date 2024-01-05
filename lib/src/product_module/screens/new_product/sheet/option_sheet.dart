@@ -2,6 +2,7 @@ import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/inventory_provider.dart';
+import 'package:dehub/src/product_module/screens/new_product/sheet/add_option_sheet.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/option_select.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/version_control_sheet.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -24,7 +25,7 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
-    option = await InventoryApi().optionList(true, false);
+    option = await InventoryApi().optionSelect(true, false);
     setState(() {
       isLoading = false;
     });
@@ -228,7 +229,13 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
                           ),
                         ),
                         CustomButton(
-                          onClick: () {},
+                          onClick: () async {
+                            Navigator.of(context).pop();
+                            await showModalBottomSheet(
+                              context: context,
+                              builder: (context) => AddOptionSheet(),
+                            );
+                          },
                           labelText: 'Хувилбар нэмэх',
                           textColor: productColor,
                           borderColor: grey2.withOpacity(0.5),

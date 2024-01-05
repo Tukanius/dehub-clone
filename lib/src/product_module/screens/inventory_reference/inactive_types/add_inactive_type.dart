@@ -1,27 +1,48 @@
+import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
+import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class AddItemType extends StatefulWidget {
-  const AddItemType({
+class AddInActiveType extends StatefulWidget {
+  const AddInActiveType({
     super.key,
   });
 
   @override
-  State<AddItemType> createState() => _AddItemTypeState();
+  State<AddInActiveType> createState() => _AddInActiveTypeState();
 }
 
-class _AddItemTypeState extends State<AddItemType> {
+class _AddInActiveTypeState extends State<AddInActiveType> {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
-  bool isSwitched = false;
-  bool isSwitched1 = false;
+  bool isSubmit = false;
 
-  create() {
-    if (fbKey.currentState!.saveAndValidate()) {}
+  onSubmit() async {
+    try {
+      if (fbKey.currentState!.saveAndValidate()) {
+        setState(() {
+          isSubmit = true;
+        });
+        InventoryGoods data =
+            InventoryGoods.fromJson(fbKey.currentState!.value);
+        await InventoryApi().inactiveTypeCreate(data);
+        showCustomDialog(context, 'Хэмжих нэгж амжилттай нэмлээ', true,
+            onPressed: () {
+          Navigator.of(context).pop();
+        });
+        setState(() {
+          isSubmit = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isSubmit = false;
+      });
+    }
   }
 
   @override
@@ -64,7 +85,7 @@ class _AddItemTypeState extends State<AddItemType> {
                 ),
                 Expanded(
                   child: Text(
-                    'Брэндийн мэдээлэл',
+                    'Идэвхгүй - шалтгаан',
                     style: TextStyle(
                       color: productColor,
                       fontSize: 16,
@@ -73,9 +94,11 @@ class _AddItemTypeState extends State<AddItemType> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {
-                    create();
-                  },
+                  onTap: isSubmit == false
+                      ? () {
+                          onSubmit();
+                        }
+                      : () {},
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
@@ -112,29 +135,23 @@ class _AddItemTypeState extends State<AddItemType> {
                     FormTextField(
                       textColor: productColor,
                       textAlign: TextAlign.end,
-                      name: 'itemTypeName',
+                      name: 'text',
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         fillColor: white,
                         filled: true,
-                        hintText: 'Энд оруулна уу',
+                        hintText: 'Энд бичнэ үү',
                         hintStyle: TextStyle(
                           color: productColor,
                         ),
                         prefixIcon: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             SizedBox(
                               width: 15,
                             ),
-                            Text(
-                              'Нэр',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
+                            Text('Нэр'),
                           ],
                         ),
                       ),
@@ -143,86 +160,6 @@ class _AddItemTypeState extends State<AddItemType> {
                           errorText: 'Заавал оруулна',
                         ),
                       ]),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 15),
-                      color: white,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Бараанд хамаарах',
-                          ),
-                          Transform.scale(
-                            scale: 0.7,
-                            child: CupertinoSwitch(
-                              activeColor: paymentColor,
-                              value: isSwitched,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  isSwitched = value;
-                                });
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 15),
-                      color: white,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Ажилт үйлчилгээнд хамрах',
-                          ),
-                          Transform.scale(
-                            scale: 0.7,
-                            child: CupertinoSwitch(
-                              activeColor: paymentColor,
-                              value: isSwitched1,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  isSwitched1 = value;
-                                });
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin:
-                          const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-                      child: Text(
-                        'Тайлбар',
-                        style: TextStyle(
-                          color: grey3,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      color: white,
-                      padding: const EdgeInsets.all(15),
-                      child: FormTextField(
-                        readOnly: true,
-                        textAlign: TextAlign.left,
-                        name: 'description',
-                        maxLines: 5,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.zero,
-                            borderSide: BorderSide(color: grey),
-                          ),
-                          fillColor: white,
-                          filled: true,
-                          hintStyle: TextStyle(
-                            color: grey2,
-                          ),
-                        ),
-                      ),
                     ),
                     SizedBox(
                       height: 40,

@@ -1,4 +1,6 @@
-import 'package:dehub/components/field_card/field_card.dart';
+import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
+import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -6,17 +8,42 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class AddClassification extends StatefulWidget {
-  const AddClassification({
+class AddPackageType extends StatefulWidget {
+  const AddPackageType({
     super.key,
   });
 
   @override
-  State<AddClassification> createState() => _AddClassificationState();
+  State<AddPackageType> createState() => _AddPackageTypeState();
 }
 
-class _AddClassificationState extends State<AddClassification> {
+class _AddPackageTypeState extends State<AddPackageType> {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
+  bool isSubmit = false;
+
+  onSubmit() async {
+    try {
+      if (fbKey.currentState!.saveAndValidate()) {
+        setState(() {
+          isSubmit = true;
+        });
+        InventoryGoods data =
+            InventoryGoods.fromJson(fbKey.currentState!.value);
+        await InventoryApi().packageTypeCreate(data);
+        showCustomDialog(context, 'Сав баглаа боодол амжилттай нэмлээ', true,
+            onPressed: () {
+          Navigator.of(context).pop();
+        });
+        setState(() {
+          isSubmit = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isSubmit = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +85,7 @@ class _AddClassificationState extends State<AddClassification> {
                 ),
                 Expanded(
                   child: Text(
-                    'Ангилал',
+                    'Сав баглаа боодол',
                     style: TextStyle(
                       color: productColor,
                       fontSize: 16,
@@ -67,7 +94,11 @@ class _AddClassificationState extends State<AddClassification> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: isSubmit == false
+                      ? () {
+                          onSubmit();
+                        }
+                      : () {},
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
@@ -101,20 +132,10 @@ class _AddClassificationState extends State<AddClassification> {
                           horizontal: 15, vertical: 10),
                       child: Text('Энд бичээд "Хадгалах" сонгоно уу'),
                     ),
-                    FieldCard(
-                      paddingHorizontal: 15,
-                      paddingVertical: 10,
-                      color: white,
-                      labelText: 'Нэр төрөл',
-                      secondText: 'Сонгох',
-                      onClick: () {},
-                      arrowColor: productColor,
-                      secondTextColor: productColor,
-                    ),
                     FormTextField(
                       textColor: productColor,
                       textAlign: TextAlign.end,
-                      name: 'className',
+                      name: 'name',
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         fillColor: white,
@@ -126,11 +147,11 @@ class _AddClassificationState extends State<AddClassification> {
                         prefixIcon: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             SizedBox(
                               width: 15,
                             ),
-                            Text('Ангилалын нэр'),
+                            Text('Нэр'),
                           ],
                         ),
                       ),
@@ -139,38 +160,6 @@ class _AddClassificationState extends State<AddClassification> {
                           errorText: 'Заавал оруулна',
                         ),
                       ]),
-                    ),
-                    Container(
-                      margin:
-                          const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-                      child: Text(
-                        'Тайлбар',
-                        style: TextStyle(
-                          color: grey3,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      color: white,
-                      padding: const EdgeInsets.all(15),
-                      child: FormTextField(
-                        readOnly: true,
-                        textAlign: TextAlign.left,
-                        name: 'description',
-                        maxLines: 5,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.zero,
-                            borderSide: BorderSide(color: grey),
-                          ),
-                          fillColor: white,
-                          filled: true,
-                          hintStyle: TextStyle(
-                            color: grey2,
-                          ),
-                        ),
-                      ),
                     ),
                     SizedBox(
                       height: 40,

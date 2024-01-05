@@ -97,8 +97,14 @@ class InventoryApi extends HttpRequest {
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
   }
 
-  Future<Result> manufacturerList() async {
+  Future<Result> manufacturerSelect() async {
     var res = await get('/manufacturer/select', "INVENTORY", true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<Result> manufacturerList(ResultArguments resultArguments) async {
+    var res = await get('/manufacturer', "INVENTORY", true,
+        data: resultArguments.toJson());
     return Result.fromJson(res, InventoryGoods.fromJson);
   }
 
@@ -120,8 +126,14 @@ class InventoryApi extends HttpRequest {
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
   }
 
-  Future<Result> distributorList() async {
+  Future<Result> distributorSelect() async {
     var res = await get('/distributor/select', "INVENTORY", true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<Result> distributorList(ResultArguments resultArguments) async {
+    var res = await get('/distributor', "INVENTORY", true,
+        data: resultArguments.toJson());
     return Result.fromJson(res, InventoryGoods.fromJson);
   }
 
@@ -143,9 +155,15 @@ class InventoryApi extends HttpRequest {
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
   }
 
-  Future<Result> itemTypeList(bool isGoods) async {
+  Future<Result> itemTypeSelect(bool isGoods) async {
     var res =
         await get('/item_type/select?isGoods=$isGoods', "INVENTORY", true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<Result> itemTypeList(ResultArguments resultArguments) async {
+    var res = await get('/item_type', "INVENTORY", true,
+        data: resultArguments.toJson());
     return Result.fromJson(res, InventoryGoods.fromJson);
   }
 
@@ -165,12 +183,18 @@ class InventoryApi extends HttpRequest {
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
   }
 
-  Future<Result> categoryList(
+  Future<Result> categorySelect(
       String type, String itemTypeId, String parentId) async {
     var res = await get(
         '/category/select?type=$type&itemTypeId=$itemTypeId&parentId=$parentId&query&isGoods&isService&limit',
         "INVENTORY",
         true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<Result> categoryList(ResultArguments resultArguments) async {
+    var res = await get('/category', "INVENTORY", true,
+        data: resultArguments.toJson());
     return Result.fromJson(res, InventoryGoods.fromJson);
   }
 
@@ -196,8 +220,13 @@ class InventoryApi extends HttpRequest {
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
   }
 
-  Future<Result> tagList() async {
+  Future<Result> tagSelect() async {
     var res = await get('/tag/select', "INVENTORY", true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<Result> tagList(ResultArguments data) async {
+    var res = await get('/tag', "INVENTORY", true, data: data.toJson());
     return Result.fromJson(res, InventoryGoods.fromJson);
   }
 
@@ -217,8 +246,14 @@ class InventoryApi extends HttpRequest {
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
   }
 
-  Future<Result> unitList() async {
+  Future<Result> unitSelect() async {
     var res = await get('/unit/select', "INVENTORY", true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<Result> unitList(ResultArguments resultArguments) async {
+    var res =
+        await get('/unit', "INVENTORY", true, data: resultArguments.toJson());
     return Result.fromJson(res, InventoryGoods.fromJson);
   }
 
@@ -237,9 +272,14 @@ class InventoryApi extends HttpRequest {
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
   }
 
-  Future<Result> optionList(bool isGoods, bool isService) async {
+  Future<Result> optionSelect(bool isGoods, bool isService) async {
     var res = await get('/option/select?isGoods=$isGoods&isService=$isService',
         "INVENTORY", true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<Result> optionList(ResultArguments resultArguments) async {
+    var res = get('/option', "INVENTORY", true, data: resultArguments.toJson());
     return Result.fromJson(res, InventoryGoods.fromJson);
   }
 
@@ -336,6 +376,54 @@ class InventoryApi extends HttpRequest {
   Future<InventoryGoods> variant(InventoryGoods data) async {
     var res =
         await post('/goods/variant', "INVENTORY", true, data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> packageTypeList(ResultArguments resultArguments) async {
+    var res = await get('/package_type', "INVENTORY", true,
+        data: resultArguments.toJson());
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<InventoryGoods> packageTypeCreate(InventoryGoods data) async {
+    var res =
+        await post('/package_type', "INVENTORY", true, data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> deliveryTypeList(ResultArguments resultArguments) async {
+    var res = await get('/delivery_type', "INVENTORY", true,
+        data: resultArguments.toJson());
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<InventoryGoods> deliveryTypeCreate(InventoryGoods data) async {
+    var res =
+        await post('/delivery_type', "INVENTORY", true, data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> inactiveTypeList(ResultArguments resultArguments) async {
+    var res = await get('/inactive_type', "INVENTORY", true,
+        data: resultArguments.toJson());
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<InventoryGoods> inactiveTypeCreate(InventoryGoods data) async {
+    var res =
+        await post('/inactive_type', "INVENTORY", true, data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> adjustmentNoteList(ResultArguments resultArguments) async {
+    var res = await get('/adjustment_note', "INVENTORY", true,
+        data: resultArguments.toJson());
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<InventoryGoods> adjustmentNoteCreate(InventoryGoods data) async {
+    var res =
+        await post('/adjustment_note', "INVENTORY", true, data: data.toJson());
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
   }
 }

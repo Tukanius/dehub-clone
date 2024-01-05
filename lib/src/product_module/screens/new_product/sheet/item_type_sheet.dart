@@ -30,7 +30,7 @@ class _ItemTypeSheetState extends State<ItemTypeSheet> with AfterLayoutMixin {
   }
 
   itemTypeList() async {
-    itemType = await InventoryApi().itemTypeList(true);
+    itemType = await InventoryApi().itemTypeSelect(true);
     setState(() {
       isLoading = false;
     });

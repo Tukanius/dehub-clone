@@ -28,6 +28,9 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
             .map((e) => InventoryGoods.fromJson(e))
             .toList()
         : null,
+    selections: json['selections'] != null
+        ? (json['selections'] as List).map((e) => e as String).toList()
+        : null,
     id: json['id'] != null ? json['id'] as String : null,
     createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
     inactiveTypeId: json['inactiveTypeId'] != null
@@ -469,6 +472,7 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   Map<String, dynamic> json = {};
+  if (instance.selections != null) json['selections'] = instance.selections;
   if (instance.convertType != null) json['convertType'] = instance.convertType;
   if (instance.goodsId != null) json['goodsId'] = instance.goodsId;
   if (instance.convertValue != null)
@@ -618,7 +622,7 @@ Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   if (instance.additionalUnits != null)
     json['additionalUnits'] = instance.additionalUnits;
   if (instance.itemUnits != null) json['itemUnits'] = instance.itemUnits;
-  // if (instance.values != null) json['values'] = instance.values;
+  if (instance.values != null) json['values'] = instance.values;
   if (instance.hasAdditionalUnit != null)
     json['hasAdditionalUnit'] = instance.hasAdditionalUnit;
   if (instance.reOrderMinNum != null)

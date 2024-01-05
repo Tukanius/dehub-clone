@@ -31,7 +31,7 @@ class _ManufacturerSheetState extends State<ManufacturerSheet>
   }
 
   manufacturerList() async {
-    manufacturer = await InventoryApi().manufacturerList();
+    manufacturer = await InventoryApi().manufacturerSelect();
     setState(() {
       isLoading = false;
     });

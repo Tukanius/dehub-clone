@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -45,8 +46,15 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
     }
   }
 
-  create() {
-    if (fbKey.currentState!.saveAndValidate()) {}
+  create() async {
+    if (fbKey.currentState!.saveAndValidate()) {
+      InventoryGoods data = InventoryGoods.fromJson(fbKey.currentState!.value);
+      data.logo = upload.url;
+      await InventoryApi().brandCreate(data);
+      showCustomDialog(context, 'Амжилттай брэнд нэмлээ', true, onPressed: () {
+        Navigator.of(context).pop();
+      });
+    }
   }
 
   @override
@@ -137,7 +145,7 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
                     child: FormTextField(
                       textColor: productColor,
                       textAlign: TextAlign.end,
-                      name: 'brandName',
+                      name: 'name',
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         fillColor: white,

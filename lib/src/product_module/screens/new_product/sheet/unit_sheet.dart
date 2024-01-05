@@ -30,7 +30,7 @@ class _UnitSheetState extends State<UnitSheet> with AfterLayoutMixin {
   }
 
   unitList() async {
-    unit = await InventoryApi().unitList();
+    unit = await InventoryApi().unitSelect();
     setState(() {
       isLoading = false;
     });

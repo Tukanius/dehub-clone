@@ -29,7 +29,7 @@ class _TagSheetState extends State<TagSheet> with AfterLayoutMixin {
   }
 
   tagList() async {
-    list = await InventoryApi().tagList();
+    list = await InventoryApi().tagSelect();
     setState(() {
       isLoading = false;
     });
