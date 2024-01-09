@@ -1,4 +1,5 @@
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invitation_received.dart';
 import 'package:dehub/providers/general_provider.dart';
@@ -148,28 +149,13 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                       ],
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Ирсэн огноо',
-                          style: TextStyle(color: dark),
-                        ),
-                        invitation.invitedDate != null
-                            ? Text(
-                                '${DateFormat("yyyy-MM-dd").format(invitation.invitedDate!)}',
-                                style: TextStyle(color: dark),
-                              )
-                            : Text(
-                                '-',
-                                style: TextStyle(color: dark),
-                              ),
-                      ],
-                    ),
+                    labelText: 'Ирсэн огноо',
+                    secondText: DateFormat("yyyy-MM-dd")
+                        .format(invitation.invitedDate!),
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(
@@ -213,185 +199,85 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                       ),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Партнерийн нэр',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.sender?.partnerName}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
+                    labelText: 'Партнерийн нэр',
+                    secondText: invitation.sender?.partnerName,
+                    secondTextColor: networkColor,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Партнер код',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.sender?.refCode}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
+                    labelText: 'Партнер код',
+                    secondText: invitation.sender?.refCode,
+                    secondTextColor: networkColor,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Бизнесийн нэр',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.sender?.partner?.businessName}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
+                    labelText: 'Бизнесийн нэр',
+                    secondText: invitation.sender?.partner?.businessName,
+                    secondTextColor: networkColor,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Бизнес код',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.sender?.partner?.refCode}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
+                    labelText: 'Бизнес код',
+                    secondText: invitation.sender?.partner?.refCode,
+                    secondTextColor: networkColor,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Buyer роль',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          'Тийм',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
+                    labelText: 'Buyer роль',
+                    secondText: 'Тийм',
+                    secondTextColor: networkColor,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Supplier роль',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          'Үгүй',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
+                    labelText: 'Supplier роль',
+                    secondText: 'Үгүй',
+                    secondTextColor: networkColor,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Урьсан ажилтан',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.senderUser?.firstName}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
+                    labelText: 'Урьсан ажилтан',
+                    secondText: invitation.senderUser?.firstName,
+                    secondTextColor: networkColor,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Урьсан и-мэйл хаяг',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.senderUser?.email}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
+                    labelText: 'Урьсан и-мэйл хаяг',
+                    secondText: invitation.senderUser?.email,
+                    secondTextColor: networkColor,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Урьсан утас',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.senderUser?.phone}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
+                    labelText: 'Урьсан утас',
+                    secondText: invitation.senderUser?.phone,
+                    secondTextColor: networkColor,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Санхүү ажилтан',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.senderFinStaff?.firstName}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
+                    labelText: 'Санхүү ажилтан',
+                    secondText: invitation.senderFinStaff?.firstName,
+                    secondTextColor: networkColor,
                   ),
                   SizedBox(
                     height: 10,
@@ -443,95 +329,45 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                   SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Партнерийн нэр',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.receiver?.partnerName}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
+                    labelText: 'Партнерийн нэр',
+                    secondText: invitation.receiver?.partnerName,
+                    secondTextColor: networkColor,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Партнер код',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.receiver?.refCode}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
+                    labelText: 'Партнер код',
+                    secondText: invitation.receiver?.refCode,
+                    secondTextColor: networkColor,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Татвар төлөгч №',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.receiver?.regNumber}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
+                    labelText: 'Татвар төлөгч №',
+                    secondText: invitation.receiver?.regNumber,
+                    secondTextColor: networkColor,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Бизнесийн нэр',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.receiver?.partner?.businessName}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
+                    labelText: 'Бизнесийн нэр',
+                    secondText: invitation.receiver?.partner?.businessName,
+                    secondTextColor: networkColor,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Бизнес код',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${invitation.receiver?.partner?.refCode}',
-                          style: TextStyle(color: networkColor),
-                        ),
-                      ],
-                    ),
+                    labelText: 'Бизнес код',
+                    secondText: invitation.receiver?.partner?.refCode,
+                    secondTextColor: networkColor,
                   ),
                   SizedBox(
                     height: 25,

@@ -8,8 +8,12 @@ import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 
 class AddOptionSheet extends StatefulWidget {
+  final bool? isService;
+  final bool? isGoods;
   const AddOptionSheet({
     super.key,
+    this.isService,
+    this.isGoods,
   });
 
   @override
@@ -37,12 +41,19 @@ class _AddOptionSheetState extends State<AddOptionSheet> {
       showCustomDialog(context, 'Сонголтууд дор хаяж 2 байх ёстой', false);
     } else {
       await InventoryApi().optionCreate(
-        InventoryGoods(
-          name: controller.text,
-          isGoods: true,
-          isService: false,
-          selections: values,
-        ),
+        widget.isService == null
+            ? InventoryGoods(
+                name: controller.text,
+                isGoods: true,
+                isService: false,
+                selections: values,
+              )
+            : InventoryGoods(
+                name: controller.text,
+                isGoods: widget.isGoods,
+                isService: widget.isService,
+                selections: values,
+              ),
       );
       showCustomDialog(
         context,

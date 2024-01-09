@@ -13,6 +13,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/src/order_module/order_page/tabs/dashboard_tab/dashboard_tab.dart';
 import 'package:dehub/src/order_module/order_page/tabs/customer_tab/customer_tab.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:dehub/src/order_module/screens/new_order/new_order.dart';
 import 'package:provider/provider.dart';
 
 class OrderPage extends StatefulWidget {
@@ -135,6 +136,24 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
           : Container(
               child: currentPages.elementAt(index.selectedIndex),
             ),
+      floatingActionButton: index.selectedIndex == 2
+          ? FloatingActionButton(
+              shape: CircleBorder(),
+              backgroundColor: orderColor,
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                  NewOrder.routeName,
+                  arguments: NewOrderArguments(
+                    id: null,
+                  ),
+                );
+              },
+              child: Icon(
+                Icons.add,
+                color: white,
+              ),
+            )
+          : SizedBox(),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: buttonColor,
         unselectedFontSize: 12,

@@ -78,7 +78,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
             .indexWhere((element) => element.convertType == null);
         if (index < 0) {
           await InventoryApi().updateVariant(
-              form, widget.data!.id != null ? widget.data!.id! : data.id!);
+              form, widget.data?.id != null ? widget.data!.id! : data.id!);
           showCustomDialog(
             context,
             "Амжилттай",
@@ -193,7 +193,6 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
             ),
             source.product.unitWeightLabel != null
                 ? FormTextField(
-                    initialValue: source.product.skuCode,
                     textColor: productColor,
                     textAlign: TextAlign.end,
                     name: 'weight',
@@ -253,9 +252,9 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                 ? Column(
                     children: [
                       FormTextField(
-                        initialValue: source.product.skuCode,
                         textColor: productColor,
                         textAlign: TextAlign.end,
+                        inputType: TextInputType.number,
                         name: 'length',
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -289,9 +288,9 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                         ]),
                       ),
                       FormTextField(
-                        initialValue: source.product.skuCode,
                         textColor: productColor,
                         textAlign: TextAlign.end,
+                        inputType: TextInputType.number,
                         name: 'height',
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -325,9 +324,9 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                         ]),
                       ),
                       FormTextField(
-                        initialValue: source.product.skuCode,
                         textColor: productColor,
                         textAlign: TextAlign.end,
+                        inputType: TextInputType.number,
                         name: 'width',
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -546,7 +545,16 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                           context: context,
                           useSafeArea: true,
                           builder: (context) => OptionInformationSheet(
-                            jsonData: widget.data!,
+                            jsonData: widget.data != null
+                                ? widget.data!
+                                : InventoryGoods(
+                                    skuCode: source.product.skuCode,
+                                    barCode: source.product.barCode,
+                                    erpCode: source.product.erpCode,
+                                    nameApp: source.product.nameApp,
+                                    nameWeb: source.product.nameWeb,
+                                    nameBill: source.product.nameBill,
+                                  ),
                             arrayData: data,
                             index: source.options.indexOf(data),
                           ),

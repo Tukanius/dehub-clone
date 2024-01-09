@@ -149,7 +149,7 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
                           paddingHorizontal: 15,
                           paddingVertical: 10,
                           color: white,
-                          labelText: 'В2В үнийн бүлэг',
+                          labelText: '${widget.data.name}',
                           secondText: 'Тохируулаагүй',
                           secondTextColor: grey2,
                         ),

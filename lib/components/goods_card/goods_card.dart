@@ -68,32 +68,33 @@ class _GoodsCardState extends State<GoodsCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: white,
-                      boxShadow: [
-                        BoxShadow(
-                          spreadRadius: 1,
-                          blurRadius: 1,
-                          color: Colors.grey.withOpacity(0.5),
-                          offset: Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    height: 60,
-                    width: 60,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: widget.data.image != null
-                          ? Image(
-                              image: NetworkImage('${widget.data.image}'),
-                              fit: BoxFit.cover,
-                            )
-                          : Image(
-                              image: AssetImage('images/avatar.png'),
-                              fit: BoxFit.cover,
-                            ),
-                    )),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: white,
+                    boxShadow: [
+                      BoxShadow(
+                        spreadRadius: 1,
+                        blurRadius: 1,
+                        color: Colors.grey.withOpacity(0.5),
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  height: 60,
+                  width: 60,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: widget.data.image != null
+                        ? Image(
+                            image: NetworkImage('${widget.data.image}'),
+                            fit: BoxFit.cover,
+                          )
+                        : Image(
+                            image: AssetImage('images/avatar.png'),
+                            fit: BoxFit.cover,
+                          ),
+                  ),
+                ),
                 SizedBox(
                   width: 10,
                 ),
@@ -138,7 +139,6 @@ class _GoodsCardState extends State<GoodsCard> {
               margin: const EdgeInsets.symmetric(vertical: 10),
               child: Text(
                 '${widget.data.category?.name}',
-                style: TextStyle(),
               ),
             ),
             Row(

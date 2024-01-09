@@ -107,26 +107,6 @@ class _OtpPhoneVerifyState extends State<OtpPhoneVerify> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    // var text = RichText(
-    //   textAlign: TextAlign.center,
-    //   text: TextSpan(
-    //     text: 'Таны ',
-    //     style: TextStyle(color: buttonColor),
-    //     children: <TextSpan>[
-    //       TextSpan(
-    //         text: '${widget.phone} ',
-    //         style: TextStyle(
-    //           color: Colors.blue,
-    //         ),
-    //       ),
-    //       TextSpan(
-    //         text:
-    //             'дугаарт утас баталгаажуулах 4 оронтой код илгээсэн. Та түүнийг доор оруулна уу.',
-    //         style: TextStyle(color: buttonColor),
-    //       ),
-    //     ],
-    //   ),
-    // );
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -179,7 +159,7 @@ class _OtpPhoneVerifyState extends State<OtpPhoneVerify> with AfterLayoutMixin {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    length: 4,
+                    length: 6,
                     keyboardType: TextInputType.number,
                   ),
                   SizedBox(

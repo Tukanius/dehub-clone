@@ -280,7 +280,9 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                         paddingHorizontal: 15,
                         paddingVertical: 10,
                         labelText: 'Төрөл',
-                        secondText: '${supplierType()}',
+                        secondText: widget.data.supplierType != null
+                            ? '${supplierType()}'
+                            : '-',
                         secondTextColor: grey3,
                         color: white,
                       ),

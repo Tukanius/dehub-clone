@@ -60,10 +60,10 @@ class _PinConfirmationState extends State<PinConfirmation> {
       var res = await AuthApi().createPin(
         User(pin: value),
       );
+      await Provider.of<UserProvider>(context, listen: false).me(true);
       if (res == true) {
         showCustomDialog(context, 'Пин код амжилттай үүсгэлээ', true,
             onPressed: () {
-          Navigator.of(context).pop();
           Navigator.of(context).pop();
           Navigator.of(context).pop();
         });

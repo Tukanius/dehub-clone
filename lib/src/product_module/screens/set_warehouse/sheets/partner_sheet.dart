@@ -53,7 +53,7 @@ class _PartnerSheetState extends State<PartnerSheet> with AfterLayoutMixin {
             children: [
               Expanded(
                 child: Text(
-                  'Buyer бизнес сонгох',
+                  'Нийлүүлэгч партнер сонгох',
                   style: TextStyle(
                     color: white,
                     fontSize: 16,

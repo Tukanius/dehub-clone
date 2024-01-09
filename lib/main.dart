@@ -120,6 +120,7 @@ import 'package:dehub/src/product_module/screens/inventory_reference/classificat
 import 'package:dehub/src/product_module/screens/create_sub_category/create_sub_category.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/delivery_type/delivery_type.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/distributor/distributor.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/dynamic_information/dynamic_information.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/inactive_types/inactive_types.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/inventory_reference.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/item_type/inventory_item_type.dart';
@@ -1011,6 +1012,10 @@ class MyApp extends StatelessWidget {
                   case Options.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return Options();
+                    });
+                  case DynamicInformation.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return DynamicInformation();
                     });
                   case AdjustmentNote.routeName:
                     return MaterialPageRoute(builder: (context) {

@@ -255,7 +255,7 @@ class _ProductFormState extends State<ProductForm> {
           FormTextField(
             onChanged: (value) {
               setState(() {
-                source.product.padName = value;
+                source.product.nameBill = value;
               });
             },
             controller: source.nameBillController,

@@ -4,6 +4,7 @@ import 'package:dehub/src/product_module/screens/inventory_reference/brand/brand
 import 'package:dehub/src/product_module/screens/inventory_reference/classification/inventory_classification.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/delivery_type/delivery_type.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/distributor/distributor.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/dynamic_information/dynamic_information.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/inactive_types/inactive_types.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/item_type/inventory_item_type.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/manufacturer/manufacturer.dart';
@@ -139,7 +140,9 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
             InventoryReferenceCard(
               refCode: 'REF-100010',
               labelText: 'Барааны динамик мэдээлэл',
-              onClick: () {},
+              onClick: () {
+                Navigator.of(context).pushNamed(DynamicInformation.routeName);
+              },
             ),
             InventoryReferenceCard(
               refCode: 'REF-100011',

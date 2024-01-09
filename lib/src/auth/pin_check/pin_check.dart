@@ -167,8 +167,7 @@ class _PinCheckScreenState extends State<PinCheckScreen> {
                     ),
                   ),
                 ],
-              ),
-            ),
+              )),
     );
   }
 }

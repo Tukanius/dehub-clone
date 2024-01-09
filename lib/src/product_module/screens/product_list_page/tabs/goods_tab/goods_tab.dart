@@ -168,6 +168,9 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
                               module: 'INVENTORY',
                               labelText: "Бараа олдсонгүй",
                             ),
+                  SizedBox(
+                    height: 20,
+                  ),
                 ],
               ),
             ),

@@ -89,7 +89,7 @@ class _MainTabState extends State<MainTab> {
           erpCode: data.erpCode,
           nameMon: data.nameMon,
           nameEng: data.nameEng,
-          nameBill: data.padName,
+          nameBill: data.nameBill,
           nameWeb: data.nameWeb,
           nameApp: data.nameApp,
           brandId: data.brandId,

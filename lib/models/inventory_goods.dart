@@ -106,7 +106,6 @@ class InventoryGoods {
   double? availableQuantity;
   InventoryGoods? itemUnit;
   String? logo;
-  String? padName;
   String? brandName;
   String? supplierName;
   String? manufacturerName;
@@ -289,7 +288,6 @@ class InventoryGoods {
     this.unitWeightLabelId,
     this.unitName,
     this.urls,
-    this.padName,
     this.brandName,
     this.supplierName,
     this.manufacturerName,

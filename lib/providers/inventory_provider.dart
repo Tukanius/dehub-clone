@@ -28,6 +28,11 @@ class InventoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  removeOption(int index) {
+    options.removeAt(index);
+    notifyListeners();
+  }
+
   proValidate() {
     if (product.url == null) {
       profileValidate = true;
