@@ -17,6 +17,7 @@ class InventoryProvider extends ChangeNotifier {
   List<InventoryGoods> sections = [];
   List<InventoryGoods> variantSuppliers = [];
   List<InventoryGoods> values = [];
+  List<InventoryGoods> sectionFieldValues = [];
   List<InventoryGoods> additionalUnits = [];
   TextEditingController nameBillController = TextEditingController();
   TextEditingController nameAppController = TextEditingController();
@@ -223,9 +224,13 @@ class InventoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  section(InventoryGoods data) {
-    int index = sections.indexWhere((element) => element.id == data.id);
-    if (index < 0) {
+  section(InventoryGoods data, bool isDuplicate) {
+    if (isDuplicate == true) {
+      int index = sections.indexWhere((element) => element.id == data.id);
+      if (index < 0) {
+        sections.add(data);
+      }
+    } else {
       sections.add(data);
     }
     product.sections = sections;
@@ -233,7 +238,8 @@ class InventoryProvider extends ChangeNotifier {
   }
 
   removeSection(int index) {
-    product.sections?.removeAt(index);
+    sections.removeAt(index);
+    product.sections = sections;
     notifyListeners();
   }
 
@@ -355,6 +361,7 @@ class InventoryProvider extends ChangeNotifier {
     quantityPrices = [];
     additionalUnits = [];
     variantSuppliers = [];
+    sectionFieldValues = [];
     profileValidate = false;
     bannerValidate = false;
     itemTypeValidate = false;
@@ -385,6 +392,23 @@ class InventoryProvider extends ChangeNotifier {
   taxType(bool value, double taxValue) {
     product.hasTax = value;
     product.taxPercent = taxValue;
+    notifyListeners();
+  }
+
+  sectionType(int index, String value) {
+    product.sections?[index].type = value;
+    notifyListeners();
+  }
+
+  sectionValues(int index, InventoryGoods data) {
+    sectionFieldValues.add(data);
+    product.sections?[index].values = sectionFieldValues;
+    notifyListeners();
+  }
+
+  clearSectionValues(int index) {
+    sectionFieldValues = [];
+    product.sections?[index].values = sectionFieldValues;
     notifyListeners();
   }
 }

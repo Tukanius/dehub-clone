@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
@@ -29,12 +31,36 @@ class OptionInformationSheet extends StatefulWidget {
 class _OptionInformationSheetState extends State<OptionInformationSheet> {
   String name = '';
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
+  bool isFileEmpty = false;
+  final picker = ImagePicker();
+  File? image;
+  InventoryGoods upload = InventoryGoods();
+  bool isLoading = false;
 
   @override
   void initState() {
     List<String> names = widget.arrayData.map((e) => e.name!).toList();
     name = names.join(', ');
     super.initState();
+  }
+
+  getImage(ImageSource imageSource) async {
+    XFile? file = await picker.pickImage(
+        source: imageSource, imageQuality: 40, maxHeight: 1024);
+
+    if (file != null) {
+      setState(() {
+        image = File(file.path);
+        isLoading = true;
+      });
+      setState(() {
+        isFileEmpty = false;
+      });
+      upload = await InventoryApi().upload(file);
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   onSubmit() async {
@@ -55,7 +81,7 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
       data.skuCode = '${widget.jsonData.skuCode}-${widget.index + 1}';
       data.barCode = '${widget.jsonData.barCode}-${widget.index + 1}';
       data.erpCode = '${widget.jsonData.erpCode}-${widget.index + 1}';
-      data.image = widget.jsonData.image;
+      data.image = upload.url != null ? upload.url : widget.jsonData.image;
       await InventoryApi().variant(data);
       await Provider.of<InventoryProvider>(context, listen: false)
           .removeOption(widget.index);
@@ -187,6 +213,55 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
                               color: productColor,
                               size: 14,
                             )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        color: white,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Лого'),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                getImage(ImageSource.gallery);
+                              },
+                              child: Container(
+                                height: 90,
+                                width: 90,
+                                decoration: BoxDecoration(
+                                  color: Color(0xffFAFAFA),
+                                  borderRadius: BorderRadius.circular(2),
+                                  border: Border.all(
+                                    color: Color(0xffD9D9D9),
+                                  ),
+                                ),
+                                padding: EdgeInsets.all(
+                                    isLoading == true || upload.url == null
+                                        ? 35
+                                        : 0),
+                                child: isLoading == true
+                                    ? CircularProgressIndicator(
+                                        color: productColor,
+                                        strokeWidth: 0.5,
+                                      )
+                                    : upload.url == null
+                                        ? SvgPicture.asset(
+                                            'assets/svg/image_upload.svg',
+                                            colorFilter: ColorFilter.mode(
+                                                productColor, BlendMode.srcIn),
+                                          )
+                                        : Image.network(
+                                            "${upload.url}",
+                                            fit: BoxFit.cover,
+                                          ),
+                              ),
+                            ),
                           ],
                         ),
                       ),

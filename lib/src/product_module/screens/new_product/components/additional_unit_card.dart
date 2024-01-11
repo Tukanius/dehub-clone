@@ -9,8 +9,10 @@ class AdditionalUnitCard extends StatefulWidget {
   final InventoryGoods data;
   final Function() onClick;
   final Function()? closeClick;
+  final Function(bool value)? buttonClick;
   const AdditionalUnitCard({
     super.key,
+    this.buttonClick,
     required this.onClick,
     required this.data,
     this.closeClick,
@@ -42,7 +44,7 @@ class _AdditionalUnitCardState extends State<AdditionalUnitCard> {
                     child: CupertinoSwitch(
                       activeColor: paymentColor,
                       value: widget.isSwitched as bool,
-                      onChanged: (bool value) {},
+                      onChanged: widget.buttonClick,
                     ),
                   ),
                 ],

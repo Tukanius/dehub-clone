@@ -204,7 +204,11 @@ class _PictureFormState extends State<PictureForm> {
                     borderRadius: BorderRadius.circular(5),
                     color: Color(0xffEAECEE),
                   ),
-                  child: SvgPicture.asset('assets/svg/image_upload.svg'),
+                  child: SvgPicture.asset(
+                    'assets/svg/image_upload.svg',
+                    colorFilter:
+                        ColorFilter.mode(productColor, BlendMode.srcIn),
+                  ),
                 ),
               ),
             ),
@@ -224,7 +228,11 @@ class _PictureFormState extends State<PictureForm> {
                     borderRadius: BorderRadius.circular(5),
                     color: Color(0xffEAECEE),
                   ),
-                  child: SvgPicture.asset('assets/svg/camera_plus.svg'),
+                  child: SvgPicture.asset(
+                    'assets/svg/camera_plus.svg',
+                    colorFilter:
+                        ColorFilter.mode(productColor, BlendMode.srcIn),
+                  ),
                 ),
               ),
             ),
@@ -348,7 +356,11 @@ class _PictureFormState extends State<PictureForm> {
                     borderRadius: BorderRadius.circular(5),
                     color: Color(0xffEAECEE),
                   ),
-                  child: SvgPicture.asset('assets/svg/image_upload.svg'),
+                  child: SvgPicture.asset(
+                    'assets/svg/image_upload.svg',
+                    colorFilter:
+                        ColorFilter.mode(productColor, BlendMode.srcIn),
+                  ),
                 ),
               ),
             ),
@@ -368,7 +380,11 @@ class _PictureFormState extends State<PictureForm> {
                     borderRadius: BorderRadius.circular(5),
                     color: Color(0xffEAECEE),
                   ),
-                  child: SvgPicture.asset('assets/svg/camera_plus.svg'),
+                  child: SvgPicture.asset(
+                    'assets/svg/camera_plus.svg',
+                    colorFilter:
+                        ColorFilter.mode(productColor, BlendMode.srcIn),
+                  ),
                 ),
               ),
             ),

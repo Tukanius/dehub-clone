@@ -1,9 +1,6 @@
-import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/field_card/field_card.dart';
-import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/inventory_provider.dart';
-import 'package:dehub/src/product_module/screens/inventory_reference/dynamic_information/sheets/field_setting_sheet.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
@@ -11,51 +8,30 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
 
-class AddDinamycInformation extends StatefulWidget {
-  const AddDinamycInformation({super.key});
+class SelectValuesSheet extends StatefulWidget {
+  final int index;
+  const SelectValuesSheet({
+    super.key,
+    required this.index,
+  });
 
   @override
-  State<AddDinamycInformation> createState() => _AddDinamycInformationState();
+  State<SelectValuesSheet> createState() => _SelectValuesSheetState();
 }
 
-class _AddDinamycInformationState extends State<AddDinamycInformation>
+class _SelectValuesSheetState extends State<SelectValuesSheet>
     with AfterLayoutMixin {
   TextEditingController controller = TextEditingController();
+  List<InventoryGoods> fieldValues = [];
   bool isLoading = true;
-  bool isSubmit = false;
 
   @override
   afterFirstLayout(BuildContext context) async {
-    await Provider.of<InventoryProvider>(context, listen: false).sectionClear();
+    Provider.of<InventoryProvider>(context, listen: false)
+        .clearSectionValues(widget.index);
     setState(() {
       isLoading = false;
     });
-  }
-
-  onSubmit() async {
-    try {
-      setState(() {
-        isSubmit = true;
-      });
-      final source = Provider.of<InventoryProvider>(context, listen: false);
-      await InventoryApi().sectionCreate(
-        InventoryGoods(
-          sectionFields: source.product.sections,
-          name: controller.text,
-        ),
-      );
-      showCustomDialog(context, "Динамик мэдээлэл амжилттай нэмлээ", true,
-          onPressed: () {
-        Navigator.of(context).pop();
-      });
-      setState(() {
-        isSubmit = false;
-      });
-    } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
-    }
   }
 
   @override
@@ -100,7 +76,7 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
                 ),
                 Expanded(
                   child: Text(
-                    'Динамик мэдээлэл',
+                    'Сонголтод утгууд нэмэх',
                     style: TextStyle(
                       color: productColor,
                       fontSize: 16,
@@ -110,9 +86,10 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
                 ),
                 GestureDetector(
                   onTap: () {
-                    if (isSubmit == false) {
-                      onSubmit();
+                    for (var i = 0; i < fieldValues.length; i++) {
+                      source.sectionValues(widget.index, fieldValues[i]);
                     }
+                    Navigator.of(context).pop();
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -135,16 +112,21 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
             ),
           ),
           Expanded(
-            child: SingleChildScrollView(
-              child: isLoading == true
-                  ? SizedBox()
-                  : Column(
+            child: isLoading == true
+                ? SizedBox()
+                : SingleChildScrollView(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
-                          child: Text('Динамик мэдээлэл'),
+                          child: Text(
+                            'Нэр бичээд "+Нэмэх" товчийг дарж нэмнэ үү.',
+                            style: TextStyle(
+                              color: grey2,
+                            ),
+                          ),
                         ),
                         FormTextField(
                           textColor: productColor,
@@ -171,71 +153,35 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
                             ),
                           ),
                         ),
-                        source.product.sections != null &&
-                                source.product.sections?.length != 0
-                            ? Column(
-                                children: source.product.sections!
-                                    .map(
-                                      (data) => FieldCard(
-                                        paddingHorizontal: 15,
-                                        paddingVertical: 10,
-                                        color: white,
-                                        labelText: data.name,
-                                        secondText: data.type,
-                                        secondTextColor: productColor,
-                                        arrowColor: productColor,
-                                        onClick: () {
-                                          showModalBottomSheet(
-                                            context: context,
-                                            useSafeArea: true,
-                                            builder: (context) =>
-                                                FieldSettingSheet(
-                                              index: source.product.sections!
-                                                  .indexOf(data),
-                                              data: data,
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    )
-                                    .toList(),
-                              )
-                            : SizedBox(),
-                        source.product.sections != null &&
-                                source.product.sections?.length != 0
-                            ? SizedBox()
-                            : Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
-                                child: Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/svg/information-square.svg',
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      'Талбарын мэдээлэл оруулаагүй байна. Нэмнэ үү.',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: grey3,
-                                      ),
-                                    ),
-                                  ],
+                        Column(
+                          children: fieldValues
+                              .map(
+                                (data) => FieldCard(
+                                  paddingHorizontal: 15,
+                                  paddingVertical: 10,
+                                  color: white,
+                                  labelText: 'Нэр',
+                                  secondText: data.name,
+                                  secondTextColor: productColor,
                                 ),
-                              ),
+                              )
+                              .toList(),
+                        ),
                         Align(
                           alignment: Alignment.centerRight,
                           child: GestureDetector(
                             onTap: () {
-                              source.section(
-                                InventoryGoods(name: controller.text),
-                                false,
-                              );
-                              setState(() {
-                                controller.text = '';
-                              });
+                              if (controller.text != '') {
+                                setState(() {
+                                  fieldValues.add(
+                                    InventoryGoods(
+                                      name: controller.text,
+                                      isDefault: false,
+                                    ),
+                                  );
+                                  controller.text = '';
+                                });
+                              }
                             },
                             child: Container(
                               margin: const EdgeInsets.symmetric(
@@ -246,7 +192,7 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
                               ),
                               padding: const EdgeInsets.all(10),
                               child: Text(
-                                '+Талбар',
+                                '+Нэмэх',
                                 style: TextStyle(color: productColor),
                               ),
                             ),
@@ -254,7 +200,7 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
                         ),
                       ],
                     ),
-            ),
+                  ),
           ),
         ],
       ),

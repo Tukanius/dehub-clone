@@ -220,10 +220,17 @@ class _SetClientStaffState extends State<SetClientStaff> {
                       .map(
                         (e) => GestureDetector(
                           onTap: () {
-                            setState(() {
-                              clientStaff = "${e.lastName} ${e.firstName}";
-                              clientStaffId = e.id.toString();
-                            });
+                            if (e.lastName != null) {
+                              setState(() {
+                                clientStaff = "${e.lastName} ${e.firstName}";
+                                clientStaffId = e.id.toString();
+                              });
+                            } else {
+                              setState(() {
+                                clientStaff = "${e.firstName}";
+                                clientStaffId = e.id.toString();
+                              });
+                            }
                             Navigator.of(context).pop();
                           },
                           child: Container(
@@ -246,12 +253,19 @@ class _SetClientStaffState extends State<SetClientStaff> {
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Text(
-                                  '${e.lastName} ${e.firstName}',
-                                  style: TextStyle(
-                                    color: black.withOpacity(0.7),
-                                  ),
-                                )
+                                e.lastName != null
+                                    ? Text(
+                                        '${e.lastName} ${e.firstName}',
+                                        style: TextStyle(
+                                          color: black.withOpacity(0.7),
+                                        ),
+                                      )
+                                    : Text(
+                                        '${e.firstName}',
+                                        style: TextStyle(
+                                          color: black.withOpacity(0.7),
+                                        ),
+                                      ),
                               ],
                             ),
                           ),
@@ -302,10 +316,17 @@ class _SetClientStaffState extends State<SetClientStaff> {
                       .map(
                         (e) => GestureDetector(
                           onTap: () {
-                            setState(() {
-                              coClientStaff = "${e.lastName} ${e.firstName}";
-                              coClientStaffId = e.id.toString();
-                            });
+                            if (e.lastName != null) {
+                              setState(() {
+                                coClientStaff = "${e.lastName} ${e.firstName}";
+                                coClientStaffId = e.id.toString();
+                              });
+                            } else {
+                              setState(() {
+                                coClientStaff = "${e.firstName}";
+                                coClientStaffId = e.id.toString();
+                              });
+                            }
                             Navigator.of(context).pop();
                           },
                           child: Container(
@@ -328,12 +349,19 @@ class _SetClientStaffState extends State<SetClientStaff> {
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Text(
-                                  '${e.lastName} ${e.firstName}',
-                                  style: TextStyle(
-                                    color: black.withOpacity(0.7),
-                                  ),
-                                )
+                                e.lastName != null
+                                    ? Text(
+                                        '${e.lastName} ${e.firstName}',
+                                        style: TextStyle(
+                                          color: black.withOpacity(0.7),
+                                        ),
+                                      )
+                                    : Text(
+                                        '${e.firstName}',
+                                        style: TextStyle(
+                                          color: black.withOpacity(0.7),
+                                        ),
+                                      ),
                               ],
                             ),
                           ),

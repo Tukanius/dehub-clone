@@ -95,7 +95,7 @@ class _DynamicSheetState extends State<DynamicSheet> with AfterLayoutMixin {
                             .map(
                               (data) => InkWell(
                                 onTap: () {
-                                  source.section(data);
+                                  source.section(data, true);
                                   Navigator.of(context).pop();
                                 },
                                 child: Container(

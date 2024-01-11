@@ -63,8 +63,8 @@ class _ShoppingPageState extends State<ShoppingPage> {
                 ),
                 Text(
                   '+5',
-                  style: TextStyle(fontSize: 12),
-                )
+                  style: TextStyle(fontSize: 12, color: white),
+                ),
               ],
             ),
           ),
@@ -88,42 +88,59 @@ class _ShoppingPageState extends State<ShoppingPage> {
                 ),
               ),
               SliverToBoxAdapter(
-                child: Container(
-                  margin: const EdgeInsets.only(bottom: 5),
+                child: Material(
                   color: white,
-                  child: TabBar(
-                    tabAlignment: TabAlignment.start,
-                    overlayColor:
-                        MaterialStatePropertyAll(Colors.grey.shade100),
-                    isScrollable: true,
-                    labelStyle:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                    indicatorColor: buttonColor,
-                    labelColor: buttonColor,
-                    unselectedLabelColor: dark,
-                    tabs: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        child: Text(
-                          'Бараа',
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 5),
+                    child: TabBar(
+                      tabAlignment: TabAlignment.start,
+                      overlayColor:
+                          MaterialStatePropertyAll(Colors.grey.shade100),
+                      isScrollable: true,
+                      labelStyle:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                      indicatorColor: buttonColor,
+                      labelColor: buttonColor,
+                      unselectedLabelColor: dark,
+                      tabs: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: Text(
+                            'Бараа',
+                          ),
                         ),
-                      ),
-                      Text(
-                        'Нэхэмжлэх',
-                      ),
-                      Text(
-                        'Захиалга',
-                      ),
-                      Text(
-                        'Төлбөр',
-                      ),
-                      Text(
-                        'Зээл тооцоо',
-                      ),
-                      Text(
-                        'Нөхцөл',
-                      ),
-                    ],
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: Text(
+                            'Нэхэмжлэх',
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: Text(
+                            'Захиалга',
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: Text(
+                            'Төлбөр',
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: Text(
+                            'Зээл тооцоо',
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: Text(
+                            'Нөхцөл',
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

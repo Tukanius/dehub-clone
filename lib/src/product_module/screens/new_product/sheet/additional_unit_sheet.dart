@@ -106,59 +106,74 @@ class _AdditionalUnitSheetState extends State<AdditionalUnitSheet>
             ),
           ),
           Expanded(
-            child: SingleChildScrollView(
-              child: isLoading == true
-                  ? Center(
-                      child: CircularProgressIndicator(
-                        color: productColor,
+            child: Container(
+              color: backgroundColor,
+              child: SingleChildScrollView(
+                child: isLoading == true
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: productColor,
+                        ),
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: Text(
+                              'Тохирох сонголт байхгүй бол "Лавлах мэдээлэл"-ийн хэмжих нэгжид нэмнэ үү.',
+                              style: TextStyle(color: grey2),
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: Text(
+                              'Нэгжийн сонголт',
+                              style: TextStyle(color: grey2),
+                            ),
+                          ),
+                          Column(
+                            children: unit.rows!
+                                .map(
+                                  (data) => AdditionalUnitCard(
+                                    isSwitched: list.contains(data),
+                                    onClick: () {
+                                      if (list.contains(data)) {
+                                        setState(() {
+                                          list.removeWhere(
+                                              (element) => element == data);
+                                        });
+                                      } else {
+                                        setState(() {
+                                          list.add(data);
+                                        });
+                                      }
+                                    },
+                                    buttonClick: (bool value) {
+                                      if (list.contains(data)) {
+                                        setState(() {
+                                          list.removeWhere(
+                                              (element) => element == data);
+                                        });
+                                      } else {
+                                        setState(() {
+                                          list.add(data);
+                                        });
+                                      }
+                                    },
+                                    data: data,
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                        ],
                       ),
-                    )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          child: Text(
-                            'Тохирох сонголт байхгүй бол "Лавлах мэдээлэл"-ийн хэмжих нэгжид нэмнэ үү.',
-                            style: TextStyle(color: grey2),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          child: Text(
-                            'Нэгжийн сонголт',
-                            style: TextStyle(color: grey2),
-                          ),
-                        ),
-                        Column(
-                          children: unit.rows!
-                              .map(
-                                (data) => AdditionalUnitCard(
-                                  isSwitched: list.contains(data),
-                                  onClick: () {
-                                    if (list.contains(data)) {
-                                      setState(() {
-                                        list.removeWhere(
-                                            (element) => element == data);
-                                      });
-                                    } else {
-                                      setState(() {
-                                        list.add(data);
-                                      });
-                                    }
-                                  },
-                                  data: data,
-                                ),
-                              )
-                              .toList(),
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                      ],
-                    ),
+              ),
             ),
           ),
         ],

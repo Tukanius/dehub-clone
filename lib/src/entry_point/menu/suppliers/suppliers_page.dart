@@ -53,8 +53,8 @@ class _SuppliersPageState extends State<SuppliersPage> {
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
-                      Container(
-                        margin: const EdgeInsets.only(top: 10, bottom: 10),
+                      SizedBox(height: 10),
+                      Material(
                         color: white,
                         child: TabBar(
                           overlayColor:
@@ -69,14 +69,19 @@ class _SuppliersPageState extends State<SuppliersPage> {
                               child: Text('Бүгд'),
                             ),
                             Container(
+                              alignment: Alignment.center,
+                              height: 48,
                               child: Text('Гэрээт'),
                             ),
                             Container(
+                              alignment: Alignment.center,
+                              height: 48,
                               child: Text('Гэрээт биш'),
                             ),
                           ],
                         ),
                       ),
+                      SizedBox(height: 10),
                       SearchButton(
                         color: purpleButtonColor,
                       ),
