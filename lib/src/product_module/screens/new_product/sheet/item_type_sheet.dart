@@ -198,7 +198,7 @@ class _ItemTypeSheetState extends State<ItemTypeSheet> with AfterLayoutMixin {
                               .toList(),
                         ),
                   SizedBox(
-                    height: 300,
+                    height: 40,
                   ),
                 ],
               ),

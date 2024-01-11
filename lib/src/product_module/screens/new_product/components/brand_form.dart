@@ -11,7 +11,11 @@ import 'package:dehub/src/product_module/screens/new_product/sheet/brand_sheet.d
 import 'package:dehub/src/product_module/screens/new_product/sheet/supplier_sheet.dart';
 
 class BrandForm extends StatefulWidget {
-  const BrandForm({super.key});
+  final BuildContext context;
+  const BrandForm({
+    super.key,
+    required this.context,
+  });
 
   @override
   State<BrandForm> createState() => _BrandFormState();
@@ -36,6 +40,7 @@ class _BrandFormState extends State<BrandForm> {
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
+              FocusScope.of(widget.context).unfocus();
               showModalBottomSheet(
                 context: context,
                 useSafeArea: true,
@@ -55,6 +60,7 @@ class _BrandFormState extends State<BrandForm> {
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
+              FocusScope.of(widget.context).unfocus();
               showModalBottomSheet(
                 context: context,
                 useSafeArea: true,
@@ -74,6 +80,7 @@ class _BrandFormState extends State<BrandForm> {
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
+              FocusScope.of(widget.context).unfocus();
               showModalBottomSheet(
                 context: context,
                 useSafeArea: true,
@@ -93,6 +100,7 @@ class _BrandFormState extends State<BrandForm> {
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
+              FocusScope.of(widget.context).unfocus();
               showModalBottomSheet(
                 context: context,
                 useSafeArea: true,
@@ -112,6 +120,7 @@ class _BrandFormState extends State<BrandForm> {
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
+              FocusScope.of(widget.context).unfocus();
               showModalBottomSheet(
                 context: context,
                 useSafeArea: true,
@@ -131,6 +140,7 @@ class _BrandFormState extends State<BrandForm> {
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
+              FocusScope.of(widget.context).unfocus();
               showModalBottomSheet(
                 context: context,
                 useSafeArea: true,

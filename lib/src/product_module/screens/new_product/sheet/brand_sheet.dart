@@ -228,7 +228,7 @@ class _BrandSheetState extends State<BrandSheet> with AfterLayoutMixin {
                               .toList(),
                         ),
                   SizedBox(
-                    height: 300,
+                    height: 40,
                   ),
                 ],
               ),

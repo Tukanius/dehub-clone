@@ -139,8 +139,10 @@ class General {
   List<SupplierTypes>? supplierTypes;
   List<VatTypes>? vatTypes;
   List<InventoryGoods>? tiers;
+  List<String>? fieldTypes;
 
   General({
+    this.fieldTypes,
     this.tiers,
     this.vatTypes,
     this.supplierTypes,

@@ -210,7 +210,7 @@ class _SupplierSheetState extends State<SupplierSheet> with AfterLayoutMixin {
                               .toList(),
                         ),
                   SizedBox(
-                    height: 300,
+                    height: 40,
                   ),
                 ],
               ),

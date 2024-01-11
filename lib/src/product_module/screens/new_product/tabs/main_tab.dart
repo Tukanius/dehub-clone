@@ -242,7 +242,9 @@ class _MainTabState extends State<MainTab> {
                 height: 0.5,
                 color: productColor,
               ),
-              BrandForm(),
+              BrandForm(
+                context: context,
+              ),
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -259,7 +261,9 @@ class _MainTabState extends State<MainTab> {
                 height: 0.5,
                 color: productColor,
               ),
-              GroupForm(),
+              GroupForm(
+                context: context,
+              ),
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),

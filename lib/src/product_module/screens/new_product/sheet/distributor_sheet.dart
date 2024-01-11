@@ -213,7 +213,7 @@ class _DistributorSheetState extends State<DistributorSheet>
                               .toList(),
                         ),
                   SizedBox(
-                    height: 300,
+                    height: 40,
                   ),
                 ],
               ),

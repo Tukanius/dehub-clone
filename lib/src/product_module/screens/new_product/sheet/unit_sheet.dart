@@ -196,7 +196,7 @@ class _UnitSheetState extends State<UnitSheet> with AfterLayoutMixin {
                               .toList(),
                         ),
                   SizedBox(
-                    height: 300,
+                    height: 40,
                   ),
                 ],
               ),

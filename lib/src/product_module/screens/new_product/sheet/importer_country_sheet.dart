@@ -97,7 +97,7 @@ class _ImporterCountrySheetState extends State<ImporterCountrySheet> {
                       .toList(),
                 ),
                 SizedBox(
-                  height: 300,
+                  height: 40,
                 ),
               ],
             ),

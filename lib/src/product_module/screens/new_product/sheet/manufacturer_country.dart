@@ -98,7 +98,7 @@ class _ManufacturerCountrySheetState extends State<ManufacturerCountrySheet> {
                       .toList(),
                 ),
                 SizedBox(
-                  height: 300,
+                  height: 40,
                 ),
               ],
             ),

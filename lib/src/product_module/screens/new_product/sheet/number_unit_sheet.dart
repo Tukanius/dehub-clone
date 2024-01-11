@@ -82,7 +82,7 @@ class _NumberUnitSheetState extends State<NumberUnitSheet> {
                       .toList(),
                 ),
                 SizedBox(
-                  height: 300,
+                  height: 40,
                 ),
               ],
             ),

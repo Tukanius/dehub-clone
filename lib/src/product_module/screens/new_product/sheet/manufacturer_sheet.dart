@@ -211,7 +211,7 @@ class _ManufacturerSheetState extends State<ManufacturerSheet>
                               .toList(),
                         ),
                   SizedBox(
-                    height: 300,
+                    height: 40,
                   ),
                 ],
               ),

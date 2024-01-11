@@ -82,7 +82,7 @@ class ReturnTypeSheetState extends State<ReturnTypeSheet> {
                       .toList(),
                 ),
                 SizedBox(
-                  height: 300,
+                  height: 40,
                 ),
               ],
             ),

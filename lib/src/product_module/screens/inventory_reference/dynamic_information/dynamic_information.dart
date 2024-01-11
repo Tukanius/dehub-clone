@@ -5,7 +5,7 @@ import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/src/product_module/screens/inventory_reference/dynamic_information/sheets/dynamic_information_sheet.dart';
+import 'package:dehub/src/product_module/screens/inventory_reference/dynamic_information/sheets/add_dynamic_information_sheet.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -105,6 +105,21 @@ class _DynamicInformationState extends State<DynamicInformation>
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            useSafeArea: true,
+            builder: (context) => AddDinamycInformation(),
+          );
+        },
+        shape: CircleBorder(),
+        backgroundColor: productColor,
+        child: Icon(
+          Icons.add,
+          color: white,
+        ),
+      ),
       body: isLoading == true
           ? Center(
               child: CircularProgressIndicator(
@@ -139,14 +154,7 @@ class _DynamicInformationState extends State<DynamicInformation>
                                       color: white,
                                       labelText: item.name,
                                       secondText: '',
-                                      onClick: () {
-                                        showModalBottomSheet(
-                                          context: context,
-                                          useSafeArea: true,
-                                          builder: (context) =>
-                                              DynamicInformationSheet(),
-                                        );
-                                      },
+                                      onClick: () {},
                                       arrowColor: productColor,
                                       secondTextColor: productColor,
                                     ),

@@ -225,7 +225,6 @@ class _DynamicTabState extends State<DynamicTab> {
                                       )
                                     : item.type == "TEXT"
                                         ? FormTextField(
-                                            inputType: TextInputType.number,
                                             name: item.name,
                                             textAlign: TextAlign.end,
                                             textColor: productColor,

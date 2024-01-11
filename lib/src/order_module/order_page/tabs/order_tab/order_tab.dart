@@ -69,7 +69,7 @@ class _OrderTabState extends State<OrderTab>
                                   'Ирсэн(SO)',
                                   style: TextStyle(fontFamily: 'Montserrat'),
                                 ),
-                              )
+                              ),
                       ],
                     ),
                   ),

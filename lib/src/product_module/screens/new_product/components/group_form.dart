@@ -8,7 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupForm extends StatefulWidget {
-  const GroupForm({super.key});
+  final BuildContext context;
+  const GroupForm({
+    super.key,
+    required this.context,
+  });
 
   @override
   State<GroupForm> createState() => _GroupFormState();
@@ -34,6 +38,7 @@ class _GroupFormState extends State<GroupForm> {
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
+              FocusScope.of(widget.context).unfocus();
               showModalBottomSheet(
                 context: context,
                 useSafeArea: true,
@@ -55,6 +60,7 @@ class _GroupFormState extends State<GroupForm> {
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
+              FocusScope.of(widget.context).unfocus();
               source.product.itemTypeId == null
                   ? snackBar("Нэр төрөл сонгоно уу")
                   : showModalBottomSheet(
@@ -80,6 +86,7 @@ class _GroupFormState extends State<GroupForm> {
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
+              FocusScope.of(widget.context).unfocus();
               source.product.classificationId == null
                   ? snackBar("Ангилал сонгоно уу")
                   : showModalBottomSheet(
@@ -105,6 +112,7 @@ class _GroupFormState extends State<GroupForm> {
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
+              FocusScope.of(widget.context).unfocus();
               source.product.subClassificationId == null
                   ? snackBar("Дэд ангилал сонгоно уу")
                   : showModalBottomSheet(
@@ -130,6 +138,7 @@ class _GroupFormState extends State<GroupForm> {
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
+              FocusScope.of(widget.context).unfocus();
               source.product.categoryId == null
                   ? snackBar("Категори сонгоно уу")
                   : showModalBottomSheet(
@@ -155,6 +164,7 @@ class _GroupFormState extends State<GroupForm> {
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
+              FocusScope.of(widget.context).unfocus();
               showModalBottomSheet(
                 context: context,
                 useSafeArea: true,

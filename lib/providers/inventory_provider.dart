@@ -376,6 +376,12 @@ class InventoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  sectionClear() {
+    sections = [];
+    product.sections = sections;
+    notifyListeners();
+  }
+
   taxType(bool value, double taxValue) {
     product.hasTax = value;
     product.taxPercent = taxValue;

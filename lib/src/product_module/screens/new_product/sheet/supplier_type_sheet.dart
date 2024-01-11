@@ -97,7 +97,7 @@ class _SupplierTypeSheetState extends State<SupplierTypeSheet> {
                       .toList(),
                 ),
                 SizedBox(
-                  height: 300,
+                  height: 40,
                 ),
               ],
             ),

@@ -107,608 +107,631 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<InventoryProvider>(context, listen: true);
-    return SingleChildScrollView(
-      child: FormBuilder(
-        key: fbKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Ханган нийлүүлэгч',
-                style: TextStyle(
-                  color: grey3,
-                  fontSize: 12,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: SingleChildScrollView(
+        child: FormBuilder(
+          key: fbKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Text(
+                  'Ханган нийлүүлэгч',
+                  style: TextStyle(
+                    color: grey3,
+                    fontSize: 12,
+                  ),
                 ),
               ),
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: 'Ханган нийлүүлэгч',
-              secondText: source.product.supplierTypeName != null
-                  ? source.product.supplierTypeName
-                  : 'Сонгох',
-              secondTextColor: productColor,
-              arrowColor: productColor,
-              onClick: () {
-                showModalBottomSheet(
-                  context: context,
-                  useSafeArea: true,
-                  builder: (context) => SupplierTypeSheet(),
-                );
-              },
-              color: white,
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Захиалгын хэмжих нэгж',
-                style: TextStyle(
-                  color: grey3,
-                  fontWeight: FontWeight.w600,
+              FieldCard(
+                paddingHorizontal: 15,
+                paddingVertical: 10,
+                labelText: 'Ханган нийлүүлэгч',
+                secondText: source.product.supplierTypeName != null
+                    ? source.product.supplierTypeName
+                    : 'Сонгох',
+                secondTextColor: productColor,
+                arrowColor: productColor,
+                onClick: () {
+                  showModalBottomSheet(
+                    context: context,
+                    useSafeArea: true,
+                    builder: (context) => SupplierTypeSheet(),
+                  );
+                },
+                color: white,
+              ),
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Text(
+                  'Захиалгын хэмжих нэгж',
+                  style: TextStyle(
+                    color: grey3,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: 'Үндсэн нэгж',
-              secondText: source.product.unitName != null
-                  ? source.product.unitName
-                  : 'Сонгох',
-              secondTextColor: productColor,
-              onClick: () {
-                showModalBottomSheet(
-                  context: context,
-                  useSafeArea: true,
-                  builder: (context) {
-                    return UnitSheet();
-                  },
-                );
-              },
-              arrowColor: productColor,
-              color: white,
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: 'Жин',
-              secondText: source.product.unitWeightLabel != null
-                  ? source.product.unitWeightLabel
-                  : 'Сонгох',
-              secondTextColor: productColor,
-              onClick: () {
-                showModalBottomSheet(
-                  context: context,
-                  useSafeArea: true,
-                  builder: (context) {
-                    return NumberUnitSheet();
-                  },
-                );
-              },
-              arrowColor: productColor,
-              color: white,
-            ),
-            source.product.unitWeightLabel != null
-                ? FormTextField(
-                    textColor: productColor,
-                    textAlign: TextAlign.end,
-                    name: 'weight',
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      fillColor: white,
-                      filled: true,
-                      hintText: 'Энд оруулна уу',
-                      hintStyle: TextStyle(
-                        color: productColor,
-                      ),
-                      prefixIcon: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Text(
-                            'Жин',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400,
+              FieldCard(
+                paddingHorizontal: 15,
+                paddingVertical: 10,
+                labelText: 'Үндсэн нэгж',
+                secondText: source.product.unitName != null
+                    ? source.product.unitName
+                    : 'Сонгох',
+                secondTextColor: productColor,
+                onClick: () {
+                  showModalBottomSheet(
+                    context: context,
+                    useSafeArea: true,
+                    builder: (context) {
+                      return UnitSheet();
+                    },
+                  );
+                },
+                arrowColor: productColor,
+                color: white,
+              ),
+              FieldCard(
+                paddingHorizontal: 15,
+                paddingVertical: 10,
+                labelText: 'Жин',
+                secondText: source.product.unitWeightLabel != null
+                    ? source.product.unitWeightLabel
+                    : 'Сонгох',
+                secondTextColor: productColor,
+                onClick: () {
+                  showModalBottomSheet(
+                    context: context,
+                    useSafeArea: true,
+                    builder: (context) {
+                      return NumberUnitSheet();
+                    },
+                  );
+                },
+                arrowColor: productColor,
+                color: white,
+              ),
+              source.product.unitWeightLabel != null
+                  ? FormTextField(
+                      textColor: productColor,
+                      textAlign: TextAlign.end,
+                      name: 'weight',
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        fillColor: white,
+                        filled: true,
+                        hintText: 'Энд оруулна уу',
+                        hintStyle: TextStyle(
+                          color: productColor,
+                        ),
+                        prefixIcon: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            SizedBox(
+                              width: 15,
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                        errorText: 'Заавал оруулна',
-                      ),
-                    ]),
-                  )
-                : SizedBox(),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: 'Эзэлхүүн нэгж',
-              secondText: source.product.unitSpaceLabel != null
-                  ? source.product.unitSpaceLabel
-                  : 'Сонгох',
-              secondTextColor: productColor,
-              onClick: () {
-                showModalBottomSheet(
-                  context: context,
-                  useSafeArea: true,
-                  builder: (context) {
-                    return UnitSpaceLabelSheet();
-                  },
-                );
-              },
-              arrowColor: productColor,
-              color: white,
-            ),
-            source.product.unitSpaceLabel != null
-                ? Column(
-                    children: [
-                      FormTextField(
-                        textColor: productColor,
-                        textAlign: TextAlign.end,
-                        inputType: TextInputType.number,
-                        name: 'length',
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          fillColor: white,
-                          filled: true,
-                          hintText: 'Энд оруулна уу',
-                          hintStyle: TextStyle(
-                            color: productColor,
-                          ),
-                          prefixIcon: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Text(
-                                'Урт',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(
-                            errorText: 'Заавал оруулна',
-                          ),
-                        ]),
-                      ),
-                      FormTextField(
-                        textColor: productColor,
-                        textAlign: TextAlign.end,
-                        inputType: TextInputType.number,
-                        name: 'height',
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          fillColor: white,
-                          filled: true,
-                          hintText: 'Энд оруулна уу',
-                          hintStyle: TextStyle(
-                            color: productColor,
-                          ),
-                          prefixIcon: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Text(
-                                'Өндөр',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(
-                            errorText: 'Заавал оруулна',
-                          ),
-                        ]),
-                      ),
-                      FormTextField(
-                        textColor: productColor,
-                        textAlign: TextAlign.end,
-                        inputType: TextInputType.number,
-                        name: 'width',
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          fillColor: white,
-                          filled: true,
-                          hintText: 'Энд оруулна уу',
-                          hintStyle: TextStyle(
-                            color: productColor,
-                          ),
-                          prefixIcon: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Text(
-                                'Өргөн',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(
-                            errorText: 'Заавал оруулна',
-                          ),
-                        ]),
-                      ),
-                    ],
-                  )
-                : SizedBox(),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Буцаалт',
-                style: TextStyle(
-                  color: grey3,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: 'Буцаалт зөвшөөрөх',
-              secondText: source.product.returnAllow == true ? "Тийм" : "Үгүй",
-              secondTextColor: productColor,
-              onClick: () {
-                showModalBottomSheet(
-                  context: context,
-                  useSafeArea: true,
-                  backgroundColor: backgroundColor,
-                  builder: (context) {
-                    return SingleChildScrollView(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.only(bottom: 30, top: 15),
-                        child: Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                source.returnAllow(true);
-                                Navigator.of(context).pop();
-                              },
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                color: transparent,
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 15),
-                                child: Text('Тийм'),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                source.returnAllow(false);
-                                Navigator.of(context).pop();
-                              },
-                              child: Container(
-                                color: transparent,
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 15),
-                                width: MediaQuery.of(context).size.width,
-                                child: Text('Үгүй'),
+                            Text(
+                              'Жингийн нэгж',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ],
                         ),
                       ),
-                    );
-                  },
-                );
-              },
-              arrowColor: productColor,
-              color: white,
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: 'Буцаалтын төрөл',
-              secondText: source.product.returnType != null
-                  ? source.product.returnType
-                  : 'Сонгох',
-              secondTextColor: productColor,
-              onClick: () {
-                showModalBottomSheet(
-                  context: context,
-                  useSafeArea: true,
-                  builder: (context) {
-                    return ReturnTypeSheet();
-                  },
-                );
-              },
-              arrowColor: productColor,
-              color: white,
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Барааны хувилбар',
-                style: TextStyle(
-                  color: grey3,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            source.product.values?.length == 0 || source.product.values == null
-                ? FieldCard(
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    labelText: 'Хувилбар нэмэх',
-                    secondText: '',
-                    secondTextColor: productColor,
-                    onClick: () {
-                      showModalBottomSheet(
-                        context: context,
-                        useSafeArea: true,
-                        builder: (context) {
-                          return OptionSheet();
-                        },
-                      );
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(
+                          errorText: 'Заавал оруулна',
+                        ),
+                      ]),
+                    )
+                  : SizedBox(),
+              FieldCard(
+                paddingHorizontal: 15,
+                paddingVertical: 10,
+                labelText: 'Эзэлхүүн нэгж',
+                secondText: source.product.unitSpaceLabel != null
+                    ? source.product.unitSpaceLabel
+                    : 'Сонгох',
+                secondTextColor: productColor,
+                onClick: () {
+                  showModalBottomSheet(
+                    context: context,
+                    useSafeArea: true,
+                    builder: (context) {
+                      return UnitSpaceLabelSheet();
                     },
-                    arrowColor: productColor,
-                    color: white,
-                  )
-                : SizedBox(),
-            source.product.values?.length == 0 || source.product.values == null
-                ? SizedBox()
-                : Column(
-                    children: source.product.values!
-                        .map(
-                          (data) => Container(
-                            color: white,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 15),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '${data.name}',
-                                      style: TextStyle(color: productColor),
-                                    ),
-                                    RichText(
-                                      text: TextSpan(
-                                        style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          color: grey2,
-                                        ),
-                                        children: data.values!
-                                            .map(
-                                              (item) => item.id ==
-                                                      data.values?.last.id
-                                                  ? TextSpan(
-                                                      text: "${item.name}",
-                                                    )
-                                                  : TextSpan(
-                                                      text: "${item.name}, ",
-                                                    ),
-                                            )
-                                            .toList(),
-                                      ),
-                                    ),
-                                  ],
+                  );
+                },
+                arrowColor: productColor,
+                color: white,
+              ),
+              source.product.unitSpaceLabel != null
+                  ? Column(
+                      children: [
+                        FormTextField(
+                          textColor: productColor,
+                          textAlign: TextAlign.end,
+                          inputType: TextInputType.number,
+                          name: 'length',
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            fillColor: white,
+                            filled: true,
+                            hintText: 'Энд оруулна уу',
+                            hintStyle: TextStyle(
+                              color: productColor,
+                            ),
+                            prefixIcon: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                SizedBox(
+                                  width: 15,
                                 ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: productColor,
-                                  size: 18,
-                                )
+                                Text(
+                                  'Урт',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
-                        )
-                        .toList(),
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                              errorText: 'Заавал оруулна',
+                            ),
+                          ]),
+                        ),
+                        FormTextField(
+                          textColor: productColor,
+                          textAlign: TextAlign.end,
+                          inputType: TextInputType.number,
+                          name: 'height',
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            fillColor: white,
+                            filled: true,
+                            hintText: 'Энд оруулна уу',
+                            hintStyle: TextStyle(
+                              color: productColor,
+                            ),
+                            prefixIcon: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  'Өндөр',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                              errorText: 'Заавал оруулна',
+                            ),
+                          ]),
+                        ),
+                        FormTextField(
+                          textColor: productColor,
+                          textAlign: TextAlign.end,
+                          inputType: TextInputType.number,
+                          name: 'width',
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            fillColor: white,
+                            filled: true,
+                            hintText: 'Энд оруулна уу',
+                            hintStyle: TextStyle(
+                              color: productColor,
+                            ),
+                            prefixIcon: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  'Өргөн',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                              errorText: 'Заавал оруулна',
+                            ),
+                          ]),
+                        ),
+                      ],
+                    )
+                  : SizedBox(),
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Text(
+                  'Буцаалт',
+                  style: TextStyle(
+                    color: grey3,
+                    fontWeight: FontWeight.w600,
                   ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Хувилбарууд',
-                style: TextStyle(color: grey2),
+                ),
               ),
-            ),
-            Column(
-              children: source.options
-                  .map(
-                    (data) => GestureDetector(
-                      onTap: () {
+              FieldCard(
+                paddingHorizontal: 15,
+                paddingVertical: 10,
+                labelText: 'Буцаалт зөвшөөрөх',
+                secondText:
+                    source.product.returnAllow == true ? "Тийм" : "Үгүй",
+                secondTextColor: productColor,
+                onClick: () {
+                  showModalBottomSheet(
+                    context: context,
+                    useSafeArea: true,
+                    backgroundColor: backgroundColor,
+                    builder: (context) {
+                      return SingleChildScrollView(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.only(bottom: 30, top: 15),
+                          child: Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  source.returnAllow(true);
+                                  Navigator.of(context).pop();
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  color: transparent,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 15),
+                                  child: Text('Тийм'),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  source.returnAllow(false);
+                                  Navigator.of(context).pop();
+                                },
+                                child: Container(
+                                  color: transparent,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 15),
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Text('Үгүй'),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+                arrowColor: productColor,
+                color: white,
+              ),
+              FieldCard(
+                paddingHorizontal: 15,
+                paddingVertical: 10,
+                labelText: 'Буцаалтын төрөл',
+                secondText: source.product.returnType != null
+                    ? source.product.returnType
+                    : 'Сонгох',
+                secondTextColor: productColor,
+                onClick: () {
+                  showModalBottomSheet(
+                    context: context,
+                    useSafeArea: true,
+                    builder: (context) {
+                      return ReturnTypeSheet();
+                    },
+                  );
+                },
+                arrowColor: productColor,
+                color: white,
+              ),
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Text(
+                  'Барааны хувилбар',
+                  style: TextStyle(
+                    color: grey3,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              source.product.values?.length == 0 ||
+                      source.product.values == null
+                  ? FieldCard(
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
+                      labelText: 'Хувилбар нэмэх',
+                      secondText: '',
+                      secondTextColor: productColor,
+                      onClick: () {
                         showModalBottomSheet(
                           context: context,
                           useSafeArea: true,
-                          builder: (context) => OptionInformationSheet(
-                            jsonData: widget.data != null
-                                ? widget.data!
-                                : InventoryGoods(
-                                    skuCode: source.product.skuCode,
-                                    barCode: source.product.barCode,
-                                    erpCode: source.product.erpCode,
-                                    nameApp: source.product.nameApp,
-                                    nameWeb: source.product.nameWeb,
-                                    nameBill: source.product.nameBill,
-                                  ),
-                            arrayData: data,
-                            index: source.options.indexOf(data),
-                          ),
+                          builder: (context) {
+                            return OptionSheet();
+                          },
                         );
                       },
-                      child: Container(
-                        color: white,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                RichText(
-                                  text: TextSpan(
-                                    style: TextStyle(
-                                        color: productColor,
-                                        fontFamily: "Montserrat"),
-                                    children: data
-                                        .map(
-                                          (e) => TextSpan(
-                                            text:
-                                                "${e.name} ${e.optionId == data.last.optionId ? "" : ","} ",
+                      arrowColor: productColor,
+                      color: white,
+                    )
+                  : SizedBox(),
+              source.product.values?.length == 0 ||
+                      source.product.values == null
+                  ? SizedBox()
+                  : Column(
+                      children: source.product.values!
+                          .map(
+                            (data) => Container(
+                              color: white,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 15),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${data.name}',
+                                        style: TextStyle(color: productColor),
+                                      ),
+                                      RichText(
+                                        text: TextSpan(
+                                          style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            color: grey2,
                                           ),
-                                        )
-                                        .toList(),
+                                          children: data.values!
+                                              .map(
+                                                (item) => item.id ==
+                                                        data.values?.last.id
+                                                    ? TextSpan(
+                                                        text: "${item.name}",
+                                                      )
+                                                    : TextSpan(
+                                                        text: "${item.name}, ",
+                                                      ),
+                                              )
+                                              .toList(),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 3,
-                                ),
-                                Text(
-                                  '${widget.data?.skuCode}-${source.options.indexOf(data) + 1}',
-                                  style: TextStyle(color: grey2),
-                                ),
-                              ],
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: productColor,
+                                    size: 18,
+                                  )
+                                ],
+                              ),
                             ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: productColor,
-                              size: 14,
-                            )
-                          ],
+                          )
+                          .toList(),
+                    ),
+              source.options.length != 0
+                  ? Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: Text(
+                        'Хувилбарууд',
+                        style: TextStyle(color: grey2),
+                      ),
+                    )
+                  : SizedBox(),
+              Column(
+                children: source.options
+                    .map(
+                      (data) => GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            useSafeArea: true,
+                            builder: (context) => OptionInformationSheet(
+                              jsonData: widget.data != null
+                                  ? widget.data!
+                                  : InventoryGoods(
+                                      skuCode: source.product.skuCode,
+                                      barCode: source.product.barCode,
+                                      erpCode: source.product.erpCode,
+                                      nameApp: source.product.nameApp,
+                                      nameWeb: source.product.nameWeb,
+                                      nameBill: source.product.nameBill,
+                                    ),
+                              arrayData: data,
+                              index: source.options.indexOf(data),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          color: white,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  RichText(
+                                    text: TextSpan(
+                                      style: TextStyle(
+                                          color: productColor,
+                                          fontFamily: "Montserrat"),
+                                      children: data
+                                          .map(
+                                            (e) => TextSpan(
+                                              text:
+                                                  "${e.name} ${e.optionId == data.last.optionId ? "" : ","} ",
+                                            ),
+                                          )
+                                          .toList(),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  widget.data != null
+                                      ? Text(
+                                          '${widget.data?.skuCode}-${source.options.indexOf(data) + 1}',
+                                          style: TextStyle(color: grey2),
+                                        )
+                                      : Text(
+                                          '${source.product.skuCode}-${source.options.indexOf(data) + 1}',
+                                          style: TextStyle(color: grey2),
+                                        ),
+                                ],
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                color: productColor,
+                                size: 14,
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                  .toList(),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Нэмэлт хэмжих нэгж',
-                style: TextStyle(
-                  color: grey3,
-                  fontWeight: FontWeight.w600,
-                ),
+                    )
+                    .toList(),
               ),
-            ),
-            GestureDetector(
-              onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  useSafeArea: true,
-                  builder: (context) => AdditionalUnitSheet(),
-                );
-              },
-              child: Container(
-                padding:
+              Container(
+                margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                color: white,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Нэмэлт хэмжих нэгж нэмэх'),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      color: productColor,
-                      size: 14,
-                    ),
-                  ],
+                child: Text(
+                  'Нэмэлт хэмжих нэгж',
+                  style: TextStyle(
+                    color: grey3,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-            ),
-            source.product.additionalUnits != null &&
-                    source.product.additionalUnits?.length != 0
-                ? Column(
-                    children: source.product.additionalUnits!
-                        .map(
-                          (item) => AdditionalUnitCard(
-                            onClick: () {
-                              showModalBottomSheet(
-                                context: context,
-                                useSafeArea: true,
-                                builder: (context) => SetAdditionalUnitSheet(
-                                  data: item,
-                                ),
-                              );
-                            },
-                            closeClick: () {
-                              source.removeAdditinoalUnit(source
-                                  .product.additionalUnits!
-                                  .indexOf(item));
-                            },
-                            data: item,
-                          ),
-                        )
-                        .toList(),
-                  )
-                : SizedBox(),
-            SizedBox(
-              height: 80,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 25,
-                ),
-                Expanded(
-                  child: CustomButton(
-                    borderColor: productColor,
-                    onClick: () {
-                      onSubmit(false);
-                    },
-                    labelText: 'Хадгалах',
-                    textColor: productColor,
-                    labelColor: white,
+              GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    useSafeArea: true,
+                    builder: (context) => AdditionalUnitSheet(),
+                  );
+                },
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  color: white,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Нэмэлт хэмжих нэгж нэмэх'),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: productColor,
+                        size: 14,
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(
-                  width: 15,
-                ),
-                Expanded(
-                  child: CustomButton(
-                    onClick: () {
-                      onSubmit(true);
-                    },
-                    isLoading: false,
-                    labelText: 'Бүртгэл дуусгах',
-                    labelColor: productColor,
+              ),
+              source.product.additionalUnits != null &&
+                      source.product.additionalUnits?.length != 0
+                  ? Column(
+                      children: source.product.additionalUnits!
+                          .map(
+                            (item) => AdditionalUnitCard(
+                              onClick: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  useSafeArea: true,
+                                  builder: (context) => SetAdditionalUnitSheet(
+                                    data: item,
+                                  ),
+                                );
+                              },
+                              closeClick: () {
+                                source.removeAdditinoalUnit(source
+                                    .product.additionalUnits!
+                                    .indexOf(item));
+                              },
+                              data: item,
+                            ),
+                          )
+                          .toList(),
+                    )
+                  : SizedBox(),
+              SizedBox(
+                height: 80,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 25,
                   ),
-                ),
-                SizedBox(
-                  width: 25,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 80,
-            ),
-          ],
+                  Expanded(
+                    child: CustomButton(
+                      borderColor: productColor,
+                      onClick: () {
+                        onSubmit(false);
+                      },
+                      labelText: 'Хадгалах',
+                      textColor: productColor,
+                      labelColor: white,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Expanded(
+                    child: CustomButton(
+                      onClick: () {
+                        onSubmit(true);
+                      },
+                      isLoading: false,
+                      labelText: 'Бүртгэл дуусгах',
+                      labelColor: productColor,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 25,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 80,
+              ),
+            ],
+          ),
         ),
       ),
     );

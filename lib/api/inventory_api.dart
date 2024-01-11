@@ -308,6 +308,11 @@ class InventoryApi extends HttpRequest {
     return Result.fromJson(res, InventoryGoods.fromJson);
   }
 
+  Future<InventoryGoods> sectionCreate(InventoryGoods data) async {
+    var res = await post('/section', "INVENTORY", true, data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
   Future<InventoryGoods> additionalInfo(InventoryGoods data, String id) async {
     var res = await put('/goods/$id/additional_info', 'INVENTORY', true,
         data: data.toJson());

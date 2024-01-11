@@ -286,7 +286,7 @@ class _CategorySheetState extends State<CategorySheet> with AfterLayoutMixin {
                               .toList(),
                         ),
                   SizedBox(
-                    height: 300,
+                    height: 40,
                   ),
                 ],
               ),

@@ -1,3 +1,4 @@
+import 'package:dehub/components/scaffold_messenger/scaffold_messenger.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
@@ -6,7 +7,6 @@ import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class TaxSheet extends StatefulWidget {
   const TaxSheet({
@@ -19,18 +19,18 @@ class TaxSheet extends StatefulWidget {
 
 class _TaxSheetState extends State<TaxSheet> {
   General general = General();
+  double? taxPercent;
+
   bool? taxType;
-  GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
 
   onSubmit() {
     final res = Provider.of<InventoryProvider>(context, listen: false);
     if (taxType == true) {
-      if (fbKey.currentState!.saveAndValidate()) {
-        res.taxType(
-            taxType!,
-            double.tryParse(
-                    fbKey.currentState!.fields['taxPercent'].toString()) ??
-                0);
+      if (taxPercent == null) {
+        CustomScaffoldMessenger(context,
+            color: productColor, labelText: 'Хувь оруулна уу');
+      } else {
+        res.taxType(taxType!, taxPercent!);
         Navigator.of(context).pop();
       }
     } else {
@@ -71,7 +71,7 @@ class _TaxSheetState extends State<TaxSheet> {
                 ),
                 Expanded(
                   child: Text(
-                    'НӨАТ-ын төрөл сонгоно уу',
+                    'НХАТ-тай эсэх',
                     style: TextStyle(
                       color: white,
                       fontSize: 16,
@@ -139,31 +139,36 @@ class _TaxSheetState extends State<TaxSheet> {
                                   data == true ? Text("Тийм") : Text("Үгүй"),
                                   data == true
                                       ? Expanded(
-                                          child: FormBuilder(
-                                            key: fbKey,
-                                            child: FormTextField(
-                                              inputType: TextInputType
-                                                  .numberWithOptions(
-                                                      decimal: true),
-                                              textColor: productColor,
-                                              textAlign: TextAlign.end,
-                                              name: 'taxPercent',
-                                              decoration: InputDecoration(
-                                                hintStyle: TextStyle(
-                                                    color: productColor),
-                                                hintText: 'Хувь оруул',
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.zero,
-                                                  borderSide: BorderSide.none,
-                                                ),
-                                                contentPadding:
-                                                    const EdgeInsets.symmetric(
-                                                  vertical: 0,
-                                                  horizontal: 0,
-                                                ),
-                                                isDense: true,
+                                          child: FormTextField(
+                                            onChanged: (value) {
+                                              setState(() {
+                                                taxPercent =
+                                                    double.tryParse(value);
+                                              });
+                                            },
+                                            initialValue: taxPercent != null
+                                                ? taxPercent.toString()
+                                                : "",
+                                            inputType:
+                                                TextInputType.numberWithOptions(
+                                                    decimal: true),
+                                            textColor: productColor,
+                                            textAlign: TextAlign.end,
+                                            name: 'taxPercent',
+                                            decoration: InputDecoration(
+                                              hintStyle: TextStyle(
+                                                  color: productColor),
+                                              hintText: 'Хувь оруул',
+                                              border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.zero,
+                                                borderSide: BorderSide.none,
                                               ),
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 0,
+                                                horizontal: 0,
+                                              ),
+                                              isDense: true,
                                             ),
                                           ),
                                         )

@@ -82,7 +82,7 @@ class _UnitSpaceLabelSheetState extends State<UnitSpaceLabelSheet> {
                       .toList(),
                 ),
                 SizedBox(
-                  height: 300,
+                  height: 40,
                 ),
               ],
             ),

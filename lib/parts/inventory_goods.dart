@@ -23,6 +23,11 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => InventoryGoods.fromJson(e)).toList()
         : null,
+    sectionFields: json['sectionFields'] != null
+        ? (json['sectionFields'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
     tierPrices: json['tierPrices'] != null
         ? (json['tierPrices'] as List)
             .map((e) => InventoryGoods.fromJson(e))
@@ -471,6 +476,8 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   Map<String, dynamic> json = {};
+  if (instance.sectionFields != null)
+    json['sectionFields'] = instance.sectionFields;
   if (instance.selections != null) json['selections'] = instance.selections;
   if (instance.convertType != null) json['convertType'] = instance.convertType;
   if (instance.goodsId != null) json['goodsId'] = instance.goodsId;

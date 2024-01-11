@@ -177,7 +177,7 @@ class _TagSheetState extends State<TagSheet> with AfterLayoutMixin {
                               .toList(),
                         ),
                   SizedBox(
-                    height: 300,
+                    height: 40,
                   ),
                 ],
               ),
