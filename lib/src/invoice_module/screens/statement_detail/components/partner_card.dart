@@ -38,7 +38,7 @@ class _PartnerCardState extends State<PartnerCard> {
                           image: NetworkImage(
                             '${widget.data.logo}',
                           ),
-                          fit: BoxFit.contain,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     )

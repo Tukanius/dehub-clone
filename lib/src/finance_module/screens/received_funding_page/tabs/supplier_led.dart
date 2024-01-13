@@ -26,10 +26,11 @@ class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
   Result finance = Result(count: 0, rows: []);
 
   list(page, limit, String query) async {
+    final source = Provider.of<FinanceProvider>(context, listen: false);
     Offset offset = Offset(page: page, limit: limit);
     Filter filter = Filter(type: 'SUPPLIER', query: query);
-    finance = await FinanceApi()
-        .completedList(ResultArguments(filter: filter, offset: offset));
+    finance = await FinanceApi().completedList(
+        source.url, ResultArguments(filter: filter, offset: offset));
     setState(() {
       isLoading = false;
     });

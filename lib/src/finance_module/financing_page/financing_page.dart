@@ -29,7 +29,9 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
   bool isLoading = true;
 
   logout() async {
-    await Provider.of<UserProvider>(context, listen: false).financeLogout();
+    final source = Provider.of<FinanceProvider>(context, listen: false);
+    await Provider.of<UserProvider>(context, listen: false)
+        .financeLogout(source.url);
     await Navigator.of(context).pushNamed(SplashPage.routeName);
   }
 
@@ -45,9 +47,11 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
+    final source = Provider.of<FinanceProvider>(context, listen: false);
     await Provider.of<GeneralProvider>(context, listen: false)
-        .financeInit(false);
-    await Provider.of<UserProvider>(context, listen: false).financeMe();
+        .financeInit(source.url, false);
+    await Provider.of<UserProvider>(context, listen: false)
+        .financeMe(source.url);
     setState(() {
       isLoading = false;
     });

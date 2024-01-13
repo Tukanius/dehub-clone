@@ -14,13 +14,11 @@ import '../main.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class HttpRequestFinance {
-  static const host = 'http://dev-de-fi.zto.mn';
-
   static const version = '/app';
 
   Dio dio = Dio();
 
-  Future<dynamic> request(String api, String method, dynamic data,
+  Future<dynamic> request(String host, String api, String method, dynamic data,
       {bool handler = true, bool approve = false}) async {
     Response? response;
     final String uri;
@@ -33,28 +31,82 @@ class HttpRequestFinance {
     debugPrint('handler: ' + handler.toString() + ", " + uri);
     debugPrint('+++++++++++++++++++++++++++++++++++++++++++++++++++ ');
 
-    try {
-      Directory dir = await getTemporaryDirectory();
-      CookieJar cookieJar =
-          PersistCookieJar(storage: FileStorage(dir.path), ignoreExpires: true);
+    if (host == 'http://dev-de-fi-bogd.zto.mn') {
+      try {
+        Directory dir = await getTemporaryDirectory();
+        CookieJar cookieJar = PersistCookieJar(
+            storage: FileStorage(dir.path), ignoreExpires: true);
 
-      dio.interceptors.add(CookieManager(cookieJar));
+        dio.interceptors.add(CookieManager(cookieJar));
 
-      var token = await UserProvider.financeToken();
-      var deviceToken = "";
-      debugPrint('++++++++++++++++++++++token++++++++++++++++++');
-      debugPrint(token);
-      debugPrint('++++++++++++++++++++++token++++++++++++++++++');
+        var token = await UserProvider.bogdToken();
+        var deviceToken = "";
+        debugPrint('++++++++++++++++++++++token++++++++++++++++++');
+        debugPrint(token);
+        debugPrint('++++++++++++++++++++++token++++++++++++++++++');
 
-      dio.options.headers = {
-        'authorization': 'Bearer $token',
-        'device-token': '$deviceToken',
-        'device_type': 'MOS',
-        'device_imei': 'test-imei',
-        'device_info': 'iphone 13'
-      };
-    } catch (err) {
-      debugPrint(err.toString());
+        dio.options.headers = {
+          'authorization': 'Bearer $token',
+          'device-token': '$deviceToken',
+          'device_type': 'MOS',
+          'device_imei': 'test-imei',
+          'device_info': 'iphone 13'
+        };
+      } catch (err) {
+        debugPrint(err.toString());
+      }
+    }
+
+    if (host == "http://dev-de-fi-golomt.zto.mn") {
+      try {
+        Directory dir = await getTemporaryDirectory();
+        CookieJar cookieJar = PersistCookieJar(
+            storage: FileStorage(dir.path), ignoreExpires: true);
+
+        dio.interceptors.add(CookieManager(cookieJar));
+
+        var token = await UserProvider.golomtToken();
+        var deviceToken = "";
+        debugPrint('++++++++++++++++++++++token++++++++++++++++++');
+        debugPrint(token);
+        debugPrint('++++++++++++++++++++++token++++++++++++++++++');
+
+        dio.options.headers = {
+          'authorization': 'Bearer $token',
+          'device-token': '$deviceToken',
+          'device_type': 'MOS',
+          'device_imei': 'test-imei',
+          'device_info': 'iphone 13'
+        };
+      } catch (err) {
+        debugPrint(err.toString());
+      }
+    }
+
+    if (host == "http://dev-de-fi.zto.mn") {
+      try {
+        Directory dir = await getTemporaryDirectory();
+        CookieJar cookieJar = PersistCookieJar(
+            storage: FileStorage(dir.path), ignoreExpires: true);
+
+        dio.interceptors.add(CookieManager(cookieJar));
+
+        var token = await UserProvider.generalToken();
+        var deviceToken = "";
+        debugPrint('++++++++++++++++++++++token++++++++++++++++++');
+        debugPrint(token);
+        debugPrint('++++++++++++++++++++++token++++++++++++++++++');
+
+        dio.options.headers = {
+          'authorization': 'Bearer $token',
+          'device-token': '$deviceToken',
+          'device_type': 'MOS',
+          'device_imei': 'test-imei',
+          'device_info': 'iphone 13'
+        };
+      } catch (err) {
+        debugPrint(err.toString());
+      }
     }
 
     if (method != 'GET') {
@@ -112,19 +164,21 @@ class HttpRequestFinance {
     }
   }
 
-  Future<dynamic> get(String url, {dynamic data, bool handler = true}) async {
+  Future<dynamic> get(String host, String url,
+      {dynamic data, bool handler = true}) async {
     try {
-      return await request(url, 'GET', data, handler: handler);
+      return await request(host, url, 'GET', data, handler: handler);
     } catch (e) {
       debugPrint("GET =>" + e.toString());
       rethrow;
     }
   }
 
-  Future<dynamic> post(String url,
+  Future<dynamic> post(String host, String url,
       {dynamic data, bool handler = true, bool approve = false}) async {
     try {
       return await request(
+        host,
         url,
         'POST',
         data,
@@ -137,16 +191,18 @@ class HttpRequestFinance {
     }
   }
 
-  Future<dynamic> put(String url, {dynamic data, bool handler = true}) async {
+  Future<dynamic> put(String host, String url,
+      {dynamic data, bool handler = true}) async {
     try {
-      return await request(url, 'PUT', data, handler: handler);
+      return await request(host, url, 'PUT', data, handler: handler);
     } catch (e) {
       debugPrint(e.toString());
       rethrow;
     }
   }
 
-  Future<dynamic> del(String url, {dynamic data, bool handler = true}) async {
-    return await request(url, 'DELETE', data, handler: handler);
+  Future<dynamic> del(String host, String url,
+      {dynamic data, bool handler = true}) async {
+    return await request(host, url, 'DELETE', data, handler: handler);
   }
 }

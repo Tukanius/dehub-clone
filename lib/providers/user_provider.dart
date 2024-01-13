@@ -19,19 +19,71 @@ class UserProvider extends ChangeNotifier {
   User inventoryMe = User();
   User financeUser = User();
 
-  financeMe() async {
-    financeUser = await FinanceApi().financeMe();
+  financeMe(String host) async {
+    financeUser = await FinanceApi().financeMe(host);
     notifyListeners();
   }
 
-  financeSetToken(String? token) async {
+  setGeneralToken(String? token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (token != null) prefs.setString("FINANCE_TOKEN", token);
   }
 
-  financeLogin(Finance data) async {
-    financeUser = await FinanceApi().financeLogin(data);
-    financeSetToken(financeUser.accessToken);
+  clearGeneralToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove("FINANCE_TOKEN");
+  }
+
+  static Future<String?> generalToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("FINANCE_TOKEN");
+
+    return token;
+  }
+
+  setBogdToken(String? token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (token != null) prefs.setString("BOGD_TOKEN", token);
+  }
+
+  clearBogdToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove("BOGD_TOKEN");
+  }
+
+  static Future<String?> bogdToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("BOGD_TOKEN");
+    return token;
+  }
+
+  setGolomtToken(String? token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (token != null) prefs.setString("GOLOMT_TOKEN", token);
+  }
+
+  clearGolomtToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove("GOLOMT_TOKEN");
+  }
+
+  static Future<String?> golomtToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("GOLOMT_TOKEN");
+    return token;
+  }
+
+  financeLogin(String host, Finance data) async {
+    if (host == 'http://dev-de-fi-bogd.zto.mn') {
+      financeUser = await FinanceApi().financeLogin(host, data);
+      setBogdToken(financeUser.accessToken);
+    } else if (host == "http://dev-de-fi-golomt.zto.mn") {
+      financeUser = await FinanceApi().financeLogin(host, data);
+      setGolomtToken(financeUser.accessToken);
+    } else {
+      financeUser = await FinanceApi().financeLogin(host, data);
+      setGeneralToken(financeUser.accessToken);
+    }
     notifyListeners();
   }
 
@@ -93,11 +145,6 @@ class UserProvider extends ChangeNotifier {
     if (token != null) prefs.setString("ACCESS_TOKEN", token);
   }
 
-  clearFinanceToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove("FINANCE_TOKEN");
-  }
-
   clearAccessToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove("ACCESS_TOKEN");
@@ -110,16 +157,9 @@ class UserProvider extends ChangeNotifier {
     return token;
   }
 
-  static Future<String?> financeToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString("FINANCE_TOKEN");
-
-    return token;
-  }
-
-  financeLogout() async {
-    await FinanceApi().logout();
-    clearFinanceToken();
+  financeLogout(String host) async {
+    await FinanceApi().logout(host);
+    clearGeneralToken();
   }
 
   logout() async {

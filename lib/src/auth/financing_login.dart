@@ -27,6 +27,7 @@ class _FinancingLoginState extends State<FinancingLogin> {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
 
   onSubmit() async {
+    final source = Provider.of<FinanceProvider>(context, listen: false);
     if (fbKey.currentState!.saveAndValidate()) {
       try {
         setState(() {
@@ -34,9 +35,8 @@ class _FinancingLoginState extends State<FinancingLogin> {
         });
         Finance data = Finance.fromJson(fbKey.currentState!.value);
         data.businessRef = user.currentBusiness?.refCode;
-        data.partnerRef = user.currentBusiness?.partner?.refCode;
         await Provider.of<UserProvider>(context, listen: false)
-            .financeLogin(data);
+            .financeLogin(source.url, data);
         await Navigator.of(context).pushNamed(FinancingPage.routeName);
         setState(() {
           isSubmit = false;
@@ -100,7 +100,7 @@ class _FinancingLoginState extends State<FinancingLogin> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                Lottie.asset('assets/lottie/financing-login.json', height: 250),
+                Lottie.asset('assets/lottie/financing-login.json', height: 200),
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -128,7 +128,7 @@ class _FinancingLoginState extends State<FinancingLogin> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'И-мэйл',
+                          'Татвар төлөгчийн дугаар',
                           style: TextStyle(
                             color: white,
                             fontWeight: FontWeight.w500,
@@ -139,17 +139,17 @@ class _FinancingLoginState extends State<FinancingLogin> {
                           height: 8,
                         ),
                         FormTextField(
-                          inputType: TextInputType.emailAddress,
+                          inputType: TextInputType.number,
                           onComplete: () {
                             FocusScope.of(context).nextFocus();
                           },
-                          name: 'email',
+                          name: 'regNumber',
                           decoration: InputDecoration(
                             contentPadding:
                                 const EdgeInsets.symmetric(horizontal: 10),
                             fillColor: Colors.white,
                             filled: true,
-                            hintText: "И-мэйл",
+                            hintText: "Татвар төлөгчийн дугаар",
                             hintStyle: TextStyle(
                               color: grey2,
                               fontSize: 14,
@@ -172,9 +172,61 @@ class _FinancingLoginState extends State<FinancingLogin> {
                             ),
                           ),
                           validator: FormBuilderValidators.compose([
-                            (value) {
-                              return validateEmail(value.toString(), context);
-                            }
+                            FormBuilderValidators.required(
+                                errorText:
+                                    'Татвар төлөгчийн дугаар оруулна уу'),
+                          ]),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Text(
+                          'Хэрэглэгчийн нэр',
+                          style: TextStyle(
+                            color: white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        FormTextField(
+                          inputType: TextInputType.emailAddress,
+                          onComplete: () {
+                            FocusScope.of(context).nextFocus();
+                          },
+                          name: 'username',
+                          decoration: InputDecoration(
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 10),
+                            fillColor: Colors.white,
+                            filled: true,
+                            hintText: "Хэрэглэгчийн нэр",
+                            hintStyle: TextStyle(
+                              color: grey2,
+                              fontSize: 14,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0xff44566C30),
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: red),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ),
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                                errorText: 'Хэрэглэгчийн нэр оруулна уу'),
                           ]),
                         ),
                         const SizedBox(

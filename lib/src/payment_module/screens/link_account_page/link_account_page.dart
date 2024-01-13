@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LinkAccountPage extends StatefulWidget {
   static const routeName = "/LinkAccountPage";
@@ -55,6 +56,9 @@ class _LinkAccountPageState extends State<LinkAccountPage> {
     setState(() {
       check = res;
     });
+    if (check.url != null) {
+      launchUrl(check.url!);
+    }
   }
 
   onSubmit() async {

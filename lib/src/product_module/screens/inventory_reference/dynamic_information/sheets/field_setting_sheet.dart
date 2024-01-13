@@ -62,7 +62,9 @@ class _FieldSettingSheetState extends State<FieldSettingSheet> {
                 ),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 2),

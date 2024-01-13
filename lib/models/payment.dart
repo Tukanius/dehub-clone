@@ -65,13 +65,22 @@ class Payment {
   String? tranId;
   String? tranDate;
   String? tranStatus;
-
   String? inOutType;
-
   DateTime? header;
   List<Payment>? values;
 
+  String? requestId;
+  String? clientId;
+  String? responseType;
+  String? redirectUri;
+  Uri? url;
+
   Payment({
+    this.requestId,
+    this.clientId,
+    this.responseType,
+    this.redirectUri,
+    this.url,
     this.accountName,
     this.header,
     this.values,

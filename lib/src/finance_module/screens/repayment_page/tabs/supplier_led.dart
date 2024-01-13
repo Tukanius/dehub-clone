@@ -24,10 +24,11 @@ class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
   RefreshController refreshController = RefreshController();
 
   list(page, limit) async {
+    final source = Provider.of<FinanceProvider>(context, listen: true);
     Offset offset = Offset(page: page, limit: limit);
     Filter filter = Filter(productType: 'SUPPLIER_LED', isRecalled: false);
-    finance = await FinanceApi()
-        .repaymentList(ResultArguments(offset: offset, filter: filter));
+    finance = await FinanceApi().repaymentList(
+        source.url, ResultArguments(offset: offset, filter: filter));
     setState(() {
       isLoading = false;
     });

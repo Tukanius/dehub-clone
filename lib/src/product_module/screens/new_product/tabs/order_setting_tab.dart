@@ -535,7 +535,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                                     Icons.arrow_forward_ios,
                                     color: productColor,
                                     size: 18,
-                                  )
+                                  ),
                                 ],
                               ),
                             ),

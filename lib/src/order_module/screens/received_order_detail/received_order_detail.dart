@@ -1094,7 +1094,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                   );
                                                 },
                                                 child: Container(
-                                                  height: 36,
+                                                  height: 40,
                                                   child: Column(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
@@ -1127,7 +1127,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                           respond(true));
                                                 },
                                                 child: Container(
-                                                  height: 36,
+                                                  height: 40,
                                                   child: Column(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment

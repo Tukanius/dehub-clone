@@ -242,7 +242,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
                                     ? CircleAvatar(
                                         radius: 12,
                                         backgroundImage:
-                                            AssetImage('images/map.jpg'),
+                                            AssetImage('images/avatar.png'),
                                       )
                                     : CircleAvatar(
                                         backgroundColor: grey2,
@@ -338,7 +338,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
                                     ? CircleAvatar(
                                         radius: 12,
                                         backgroundImage:
-                                            AssetImage('images/map.jpg'),
+                                            AssetImage('images/avatar.png'),
                                       )
                                     : CircleAvatar(
                                         backgroundColor: grey2,

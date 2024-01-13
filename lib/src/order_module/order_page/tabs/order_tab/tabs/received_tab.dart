@@ -31,10 +31,10 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
   User user = User();
   bool startAnimation = false;
   List<Order> groupedList = [];
+  Map<DateTime, List<Order>> groupedItems = {};
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
   ListenController listenController = ListenController();
-  Map<DateTime, List<Order>> groupedItems = {};
 
   @override
   void initState() {
@@ -55,7 +55,6 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
   void _onLoading() async {
     setState(() {
       page += 1;
-      groupedItems = {};
     });
     await list(page, limit);
     refreshController.loadComplete();

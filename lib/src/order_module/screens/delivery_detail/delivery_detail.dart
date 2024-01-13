@@ -73,6 +73,7 @@ class _DeliveryDetailState extends State<DeliveryDetail> with AfterLayoutMixin {
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 16,
+                color: white,
               ),
             ),
           ),
@@ -92,9 +93,9 @@ class _DeliveryDetailState extends State<DeliveryDetail> with AfterLayoutMixin {
                 Expanded(
                   child: SingleChildScrollView(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 17,
-                      ),
+                      // padding: const EdgeInsets.symmetric(
+                      //   horizontal: 17,
+                      // ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -244,227 +245,249 @@ class _DeliveryDetailState extends State<DeliveryDetail> with AfterLayoutMixin {
                           SizedBox(
                             height: 15,
                           ),
-                          Text(
-                            'Түмэн дэлгүүр, УБ-ЧД, 4-р хороо, Сансар телевиз байр, 1 давхарт 3 тоот',
-                            style: TextStyle(
-                              color: orderColor,
-                              fontSize: 12,
+                          Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: Text(
+                              'Түмэн дэлгүүр, УБ-ЧД, 4-р хороо, Сансар телевиз байр, 1 давхарт 3 тоот',
+                              style: TextStyle(
+                                color: orderColor,
+                                fontSize: 12,
+                              ),
                             ),
                           ),
                           SizedBox(
                             height: 15,
                           ),
-                          Image(
-                            image: AssetImage('images/map.jpg'),
-                            fit: BoxFit.fill,
+                          Center(
+                            child: Image(
+                              image: AssetImage('images/map.jpg'),
+                              fit: BoxFit.fill,
+                            ),
                           ),
                           SizedBox(
                             height: 10,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Нийлүүлэгч',
-                                      style: TextStyle(
-                                        color: coolGrey,
-                                        fontSize: 12,
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Нийлүүлэгч',
+                                        style: TextStyle(
+                                          color: coolGrey,
+                                          fontSize: 12,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 7.5,
-                                    ),
-                                    Text(
-                                      '${get.supplierBusiness?.profileName}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontSize: 12,
+                                      SizedBox(
+                                        height: 7.5,
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      '${get.supplierBusiness?.partner?.businessName}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
+                                      Text(
+                                        '${get.supplierBusiness?.profileName}',
+                                        style: TextStyle(
+                                          color: black,
+                                          fontSize: 12,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      'ТТД: ${get.supplierBusiness?.regNumber}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontSize: 12,
+                                      SizedBox(
+                                        height: 4,
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      '${get.supplierBusiness?.partner?.email}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontSize: 12,
+                                      Text(
+                                        '${get.supplierBusiness?.partner?.businessName}',
+                                        style: TextStyle(
+                                          color: black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      '${get.supplierBusiness?.partner?.phone}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontSize: 12,
+                                      SizedBox(
+                                        height: 4,
                                       ),
-                                    ),
-                                  ],
+                                      Text(
+                                        'ТТД: ${get.supplierBusiness?.regNumber}',
+                                        style: TextStyle(
+                                          color: black,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        '${get.supplierBusiness?.partner?.email}',
+                                        style: TextStyle(
+                                          color: black,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        '${get.supplierBusiness?.partner?.phone}',
+                                        style: TextStyle(
+                                          color: black,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Худалдан авагч',
-                                      style: TextStyle(
-                                        color: coolGrey,
-                                        fontSize: 12,
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Худалдан авагч',
+                                        style: TextStyle(
+                                          color: coolGrey,
+                                          fontSize: 12,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 7.5,
-                                    ),
-                                    Text(
-                                      '${get.buyerBusiness?.profileName}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontSize: 12,
+                                      SizedBox(
+                                        height: 7.5,
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      '${get.buyerBusiness?.partner?.businessName}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
+                                      Text(
+                                        '${get.buyerBusiness?.profileName}',
+                                        style: TextStyle(
+                                          color: black,
+                                          fontSize: 12,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      'ТТД: ${get.buyerBusiness?.regNumber}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontSize: 12,
+                                      SizedBox(
+                                        height: 4,
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      '${get.buyerBusiness?.partner?.email}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontSize: 12,
+                                      Text(
+                                        '${get.buyerBusiness?.partner?.businessName}',
+                                        style: TextStyle(
+                                          color: black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      '${get.buyerBusiness?.partner?.phone}',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontSize: 12,
+                                      SizedBox(
+                                        height: 4,
                                       ),
-                                    ),
-                                  ],
+                                      Text(
+                                        'ТТД: ${get.buyerBusiness?.regNumber}',
+                                        style: TextStyle(
+                                          color: black,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        '${get.buyerBusiness?.partner?.email}',
+                                        style: TextStyle(
+                                          color: black,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        '${get.buyerBusiness?.partner?.phone}',
+                                        style: TextStyle(
+                                          color: black,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           OrderGoodsInfo(
                             data: get.lines,
                           ),
-                          Text(
-                            'ПАДААНЫ ДҮН',
-                            style: TextStyle(
-                              color: coolGrey,
-                              fontWeight: FontWeight.w600,
+                          Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: Text(
+                              'ПАДААНЫ ДҮН',
+                              style: TextStyle(
+                                color: coolGrey,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Нийт дүн',
-                                style: TextStyle(
-                                  color: black,
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Нийт дүн',
+                                      style: TextStyle(
+                                        color: black,
+                                      ),
+                                    ),
+                                    Text(
+                                      '351,670 ₮',
+                                      style: TextStyle(
+                                          color: orderColor,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Text(
-                                '351,670 ₮',
-                                style: TextStyle(
-                                    color: orderColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Нэр төрлийн тоо',
-                                style: TextStyle(
-                                  color: black,
+                                SizedBox(
+                                  height: 15,
                                 ),
-                              ),
-                              Text(
-                                '13',
-                                style: TextStyle(
-                                  color: orderColor,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Нэр төрлийн тоо',
+                                      style: TextStyle(
+                                        color: black,
+                                      ),
+                                    ),
+                                    Text(
+                                      '13',
+                                      style: TextStyle(
+                                        color: orderColor,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Хүлээн авах барааны тоо',
-                                style: TextStyle(
-                                  color: black,
+                                SizedBox(
+                                  height: 15,
                                 ),
-                              ),
-                              Text(
-                                '90',
-                                style: TextStyle(
-                                  color: orderColor,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Хүлээн авах барааны тоо',
+                                      style: TextStyle(
+                                        color: black,
+                                      ),
+                                    ),
+                                    Text(
+                                      '90',
+                                      style: TextStyle(
+                                        color: orderColor,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           SizedBox(
                             height: 50,

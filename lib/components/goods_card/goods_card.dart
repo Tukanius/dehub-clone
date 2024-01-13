@@ -85,8 +85,9 @@ class _GoodsCardState extends State<GoodsCard> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: widget.data.image != null
-                        ? Image(
-                            image: NetworkImage('${widget.data.image}'),
+                        ? FadeInImage.assetNetwork(
+                            placeholder: 'images/avatar.png',
+                            image: "${widget.data.image}",
                             fit: BoxFit.cover,
                           )
                         : Image(

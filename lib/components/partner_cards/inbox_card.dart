@@ -66,36 +66,35 @@ class _InboxCardState extends State<InboxCard> {
                 Expanded(
                   child: Row(
                     children: [
-                      widget.data?.type == "NETWORK"
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${widget.data?.sender?.profileName}',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  '${widget.data?.sender?.partnerName}',
-                                  style: TextStyle(fontSize: 12, color: grey3),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  '${widget.data?.sender?.staff?.firstName}, ${widget.data?.sender?.staff?.phone}',
-                                  style: TextStyle(fontSize: 12, color: grey3),
-                                ),
-                              ],
-                            )
-                          : Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: widget.data?.type == "NETWORK"
+                              ? [
+                                  Text(
+                                    '${widget.data?.sender?.profileName}',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    '${widget.data?.sender?.partnerName}',
+                                    style:
+                                        TextStyle(fontSize: 12, color: grey3),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    '${widget.data?.sender?.staff?.firstName}, ${widget.data?.sender?.staff?.phone}',
+                                    style:
+                                        TextStyle(fontSize: 12, color: grey3),
+                                  ),
+                                ]
+                              : [
                                   Text(
                                     '${widget.data?.bankName}',
                                     style: TextStyle(
@@ -119,8 +118,8 @@ class _InboxCardState extends State<InboxCard> {
                                         TextStyle(fontSize: 12, color: grey3),
                                   ),
                                 ],
-                              ),
-                            ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

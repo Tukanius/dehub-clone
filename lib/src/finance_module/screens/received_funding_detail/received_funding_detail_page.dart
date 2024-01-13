@@ -36,7 +36,8 @@ class _ReceivedFundingDetailPageState extends State<ReceivedFundingDetailPage>
 
   @override
   afterFirstLayout(BuildContext context) async {
-    get = await FinanceApi().requestGet(widget.id);
+    final source = Provider.of<FinanceProvider>(context, listen: false);
+    get = await FinanceApi().requestGet(source.url, widget.id);
     setState(() {
       isLoading = false;
     });

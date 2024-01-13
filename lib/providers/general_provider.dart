@@ -41,8 +41,8 @@ class GeneralProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  financeInit(bool handler) async {
-    financeGeneral = await FinanceApi().init(handler);
+  financeInit(String host, bool handler) async {
+    financeGeneral = await FinanceApi().init(host, handler);
     notifyListeners();
   }
 }

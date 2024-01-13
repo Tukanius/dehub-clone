@@ -66,7 +66,19 @@ class CheckOutProvider extends ChangeNotifier {
 
   clearCart() {
     invoice = [];
+    additionalRow = [];
     order = [];
+    additional = [];
+    packageProduct = [];
+    type = 'Сонгох';
+    totalAmount = 0;
+    finalAmount = 0;
+    totalVatAmount = 0;
+    totalTaxAmount = 0;
+    total = 0;
+    shippingAmount = 0;
+    discountAmount = 0;
+    additionalRowAmount = 0;
     notifyListeners();
   }
 

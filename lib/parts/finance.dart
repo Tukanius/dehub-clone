@@ -17,6 +17,7 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         ? DateTime.parse(json['deletedAt'].toString())
         : null,
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
+    username: json['username'] != null ? json['username'] as String : null,
     number: json['number'] != null ? json['number'] as String : null,
     repaymentStatus: json['repaymentStatus'] != null
         ? json['repaymentStatus'] as String
@@ -335,6 +336,7 @@ Map<String, dynamic> _$FinanceToJson(Finance instance) {
 
   if (instance.requestedBusinessAcc != null)
     json['requestedBusinessAcc'] = instance.requestedBusinessAcc;
+  if (instance.username != null) json['username'] = instance.username;
   if (instance.receiverBusinessAcc != null)
     json['receiverBusinessAcc'] = instance.receiverBusinessAcc;
   if (instance.number != null) json['number'] = instance.number;

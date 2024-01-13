@@ -94,7 +94,7 @@ class _OpenTabState extends State<OpenTab> with AfterLayoutMixin {
                             ),
                           )
                           .toList(),
-                    )
+                    ),
                   ],
                 )
               : NotFound(

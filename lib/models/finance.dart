@@ -14,7 +14,6 @@ class Finance {
   String? email;
   String? password;
   String? accessToken;
-
   String? parentRefCode;
   double? invCount;
   String? refCode;
@@ -132,7 +131,10 @@ class Finance {
   Finance? finUser;
   String? number;
 
+  String? username;
+
   Finance({
+    this.username,
     this.invReceiverBusinessAcc,
     this.finUser,
     this.requestedBusinessAcc,

@@ -34,7 +34,8 @@ class _RePaymentDetailState extends State<RePaymentDetail>
 
   @override
   afterFirstLayout(BuildContext context) async {
-    get = await FinanceApi().repaymentGet(widget.id);
+    final source = Provider.of<FinanceProvider>(context, listen: false);
+    get = await FinanceApi().repaymentGet(source.url, widget.id);
     setState(() {
       isLoading = false;
     });

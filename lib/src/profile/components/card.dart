@@ -40,7 +40,6 @@ class InformationCardState extends State<InformationCard> {
               vertical: 8,
               horizontal: 12,
             ),
-            height: 40,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),

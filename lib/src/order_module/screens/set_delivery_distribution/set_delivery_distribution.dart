@@ -77,7 +77,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
 
   @override
   afterFirstLayout(BuildContext context) async {
-    staff = await OrderApi().staffSelect(widget.data.receiverBusinessId!);
+    staff = await OrderApi().staffSelect(widget.data.businessId!);
     setState(() {
       isLoading = false;
     });

@@ -141,21 +141,22 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
                       ),
                     ),
                     Expanded(
-                      child: widget.isFinished == true
-                          ? Text(
-                              '${widget.data.staff?.lastName?[0]}. ${widget.data.staff?.firstName}',
-                              style: TextStyle(
-                                color: depBrown,
-                                fontSize: 14,
-                              ),
-                            )
-                          : Text(
-                              '-',
-                              style: TextStyle(
-                                color: depBrown,
-                                fontSize: 14,
-                              ),
-                            ),
+                      child:
+                          widget.isFinished == true && widget.data.staff != null
+                              ? Text(
+                                  '${widget.data.staff?.lastName?[0]}. ${widget.data.staff?.firstName}',
+                                  style: TextStyle(
+                                    color: depBrown,
+                                    fontSize: 14,
+                                  ),
+                                )
+                              : Text(
+                                  '-',
+                                  style: TextStyle(
+                                    color: depBrown,
+                                    fontSize: 14,
+                                  ),
+                                ),
                     ),
                   ],
                 ),

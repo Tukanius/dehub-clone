@@ -8,7 +8,7 @@ class FinanceProvider extends ChangeNotifier {
   String url = '';
   String bankName = '';
 
-  colorChange(String value) {
+  bankSelect(String value) {
     value == "Богд Банк"
         ? {
             currentColor = bogd,

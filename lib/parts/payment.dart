@@ -138,12 +138,24 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
     tranDate: json['tranDate'] != null ? json['tranDate'] as String : null,
     tranStatus:
         json['tranStatus'] != null ? json['tranStatus'] as String : null,
+    requestId: json['requestId'] != null ? json['requestId'] as String : null,
+    clientId: json['clientId'] != null ? json['clientId'] as String : null,
+    responseType:
+        json['responseType'] != null ? json['responseType'] as String : null,
+    redirectUri:
+        json['redirectUri'] != null ? json['redirectUri'] as String : null,
+    url: json['url'] != null ? Uri.parse(json['url'].toString()) : null,
   );
 }
 
 Map<String, dynamic> _$PaymentToJson(Payment instance) {
   Map<String, dynamic> json = {};
-
+  if (instance.requestId != null) json['requestId'] = instance.requestId;
+  if (instance.clientId != null) json['clientId'] = instance.clientId;
+  if (instance.responseType != null)
+    json['responseType'] = instance.responseType;
+  if (instance.redirectUri != null) json['redirectUri'] = instance.redirectUri;
+  if (instance.url != null) json['url'] = instance.url;
   if (instance.values != null) json['values'] = instance.values;
   if (instance.header != null) json['header'] = instance.header;
   if (instance.inOutType != null) json['inOutType'] = instance.inOutType;

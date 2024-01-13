@@ -5,6 +5,7 @@ import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/profile/components/card.dart';
+import 'package:dehub/src/profile/components/editing_information.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   final picker = ImagePicker();
   String? imageName;
   User result = User();
+  bool edit = false;
 
   danVerify() async {
     setState(() {
@@ -157,7 +159,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             ),
                           ),
                           Positioned(
-                            bottom: -23,
+                            bottom: -20,
                             right: -15,
                             child: Container(
                               height: 32,
@@ -222,6 +224,13 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          EditingInformation(
+                            edit: edit,
+                            name: "registerNo",
+                            paddingVertical: 5,
+                            labelText: 'Регистр №',
+                            value: user.registerNo,
+                          ),
                           InformationCard(
                             paddingVertical: 5,
                             labelText: 'Регистр №',
