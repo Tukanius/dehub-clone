@@ -210,9 +210,23 @@ class MyApp extends StatelessWidget {
               onGenerateRoute: (RouteSettings settings) {
                 switch (settings.name) {
                   case SplashPage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return const SplashPage();
-                    });
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          SplashPage(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(-1.0, 0.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
                   case NoInternetScreen.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return const NoInternetScreen();
@@ -1498,9 +1512,23 @@ class MyApp extends StatelessWidget {
                       return ProductListPage();
                     });
                   case EntryPoint.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return EntryPoint();
-                    });
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          EntryPoint(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(-1.0, 0.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
                   case SupplierProductList.routeName:
                     SupplierProductListArguments arguments =
                         settings.arguments as SupplierProductListArguments;
