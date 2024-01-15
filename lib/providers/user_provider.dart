@@ -159,7 +159,13 @@ class UserProvider extends ChangeNotifier {
 
   financeLogout(String host) async {
     await FinanceApi().logout(host);
-    clearGeneralToken();
+    if (host == 'http://dev-de-fi-bogd.zto.mn') {
+      clearBogdToken();
+    } else if (host == "http://dev-de-fi-golomt.zto.mn") {
+      clearGolomtToken();
+    } else {
+      clearGeneralToken();
+    }
   }
 
   logout() async {

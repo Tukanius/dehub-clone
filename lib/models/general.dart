@@ -28,6 +28,7 @@ import 'package:dehub/models/invoice_history_types.dart';
 import 'package:dehub/models/invoice_status.dart';
 import 'package:dehub/models/product_buyer_fee_rules.dart';
 import 'package:dehub/models/product_supp_fee_rules.dart';
+import 'package:dehub/models/program_status.dart';
 import 'package:dehub/models/pull_sheet_status.dart';
 import 'package:dehub/models/purchase_types.dart';
 import 'package:dehub/models/repayment_over_due_status.dart';
@@ -140,8 +141,10 @@ class General {
   List<VatTypes>? vatTypes;
   List<InventoryGoods>? tiers;
   List<String>? fieldTypes;
+  List<ProgramStatus>? programStatus;
 
   General({
+    this.programStatus,
     this.fieldTypes,
     this.tiers,
     this.vatTypes,

@@ -19,6 +19,11 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
     staffs: json['staffs'] != null
         ? (json['staffs'] as List).map((e) => Staffs.fromJson(e)).toList()
         : null,
+    programStatus: json['programStatus'] != null
+        ? (json['programStatus'] as List)
+            .map((e) => ProgramStatus.fromJson(e))
+            .toList()
+        : null,
     suppliers: json['suppliers'] != null
         ? (json['suppliers'] as List).map((e) => Suppliers.fromJson(e)).toList()
         : null,
@@ -329,6 +334,8 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$GeneralToJson(General instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.programStatus != null)
+    json['programStatus'] = instance.programStatus;
   if (instance.tiers != null) json['tiers'] = instance.tiers;
   if (instance.vatTypes != null) json['vatTypes'] = instance.vatTypes;
   if (instance.fieldTypes != null) json['fieldTypes'] = instance.fieldTypes;

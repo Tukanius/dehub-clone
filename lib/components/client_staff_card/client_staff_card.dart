@@ -153,7 +153,7 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                                   widget.data?.businessStaff?.lastName != null
                                       ? TextSpan(
                                           text:
-                                              '${widget.data?.businessStaff?.lastName}')
+                                              '${widget.data?.businessStaff?.lastName} ')
                                       : TextSpan(text: ''),
                                   widget.data?.businessStaff?.firstName != null
                                       ? TextSpan(
@@ -222,7 +222,7 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                                   widget.data?.businessStaff2?.lastName != null
                                       ? TextSpan(
                                           text:
-                                              '${widget.data?.businessStaff2?.lastName}')
+                                              '${widget.data?.businessStaff2?.lastName} ')
                                       : TextSpan(text: ''),
                                   widget.data?.businessStaff2?.firstName != null
                                       ? TextSpan(

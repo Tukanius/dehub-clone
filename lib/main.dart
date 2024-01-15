@@ -5,6 +5,7 @@ import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/entry_point/finance_entry/finance_entry.dart';
+import 'package:dehub/src/finance_module/screens/available_funding_page/available_funding_page.dart';
 import 'package:dehub/src/finance_module/screens/recalled_page/recalled_page.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_transaction/invoice_transaction.dart';
 import 'package:dehub/src/invoice_module/screens/statement_detail/statement_detail.dart';
@@ -39,8 +40,7 @@ import 'package:dehub/src/auth/check-biometric.dart';
 import 'package:dehub/src/auth/financing_login.dart';
 import 'package:dehub/src/auth/login_page.dart';
 import 'package:dehub/src/finance_module/screens/avaible_funding_detail/avaible_funding_detail_page.dart';
-import 'package:dehub/src/finance_module/screens/avaible_funding_page/avaible_funding_page.dart';
-import 'package:dehub/src/finance_module/screens/avaible_funding_page/request_approval_page.dart';
+import 'package:dehub/src/finance_module/screens/program_page/program_page.dart';
 import 'package:dehub/src/debt_module/debt_page/debt_page.dart';
 import 'package:dehub/src/auth/enter_phone_page/enter_phone_page.dart';
 import 'package:dehub/src/order_module/screens/expenses_page/expenses_page.dart';
@@ -210,23 +210,9 @@ class MyApp extends StatelessWidget {
               onGenerateRoute: (RouteSettings settings) {
                 switch (settings.name) {
                   case SplashPage.routeName:
-                    return PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) =>
-                          SplashPage(),
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                        var begin = const Offset(-1.0, 0.0);
-                        var end = Offset.zero;
-                        var curve = Curves.ease;
-                        var tween = Tween(begin: begin, end: end)
-                            .chain(CurveTween(curve: curve));
-
-                        return SlideTransition(
-                          position: animation.drive(tween),
-                          child: child,
-                        );
-                      },
-                    );
+                    return MaterialPageRoute(builder: (context) {
+                      return const SplashPage();
+                    });
                   case NoInternetScreen.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return const NoInternetScreen();
@@ -472,17 +458,26 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return Gereet();
                     });
-                  case AvaibleFundingPage.routeName:
+                  case ProgramPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return AvaibleFundingPage();
+                      return ProgramPage();
                     });
-                  case RequestApprovalPage.routeName:
+                  case AvailableFundingPage.routeName:
+                    AvailableFundingPageArguments arguments =
+                        settings.arguments as AvailableFundingPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return RequestApprovalPage();
+                      return AvailableFundingPage(
+                        id: arguments.id,
+                      );
                     });
                   case AvaibleFundingDetailPage.routeName:
+                    AvaibleFundingDetailPageArguments arguments =
+                        settings.arguments as AvaibleFundingDetailPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return AvaibleFundingDetailPage();
+                      return AvaibleFundingDetailPage(
+                        id: arguments.id,
+                        programId: arguments.programId,
+                      );
                     });
                   case GereetBish.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -1512,23 +1507,9 @@ class MyApp extends StatelessWidget {
                       return ProductListPage();
                     });
                   case EntryPoint.routeName:
-                    return PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) =>
-                          EntryPoint(),
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                        var begin = const Offset(-1.0, 0.0);
-                        var end = Offset.zero;
-                        var curve = Curves.ease;
-                        var tween = Tween(begin: begin, end: end)
-                            .chain(CurveTween(curve: curve));
-
-                        return SlideTransition(
-                          position: animation.drive(tween),
-                          child: child,
-                        );
-                      },
-                    );
+                    return MaterialPageRoute(builder: (context) {
+                      return EntryPoint();
+                    });
                   case SupplierProductList.routeName:
                     SupplierProductListArguments arguments =
                         settings.arguments as SupplierProductListArguments;

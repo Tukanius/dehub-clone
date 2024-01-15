@@ -1,39 +1,69 @@
+import 'package:dehub/models/finance.dart';
+import 'package:dehub/models/general.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/finance_provider.dart';
-import 'package:dehub/src/finance_module/screens/avaible_funding_detail/avaible_funding_detail_page.dart';
+import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class AvaibleFundingCard extends StatefulWidget {
   final Function()? onClick;
-  const AvaibleFundingCard({Key? key, this.onClick}) : super(key: key);
+  final Finance data;
+  const AvaibleFundingCard({
+    Key? key,
+    this.onClick,
+    required this.data,
+  }) : super(key: key);
 
   @override
   State<AvaibleFundingCard> createState() => _AvaibleFundingCardState();
 }
 
 class _AvaibleFundingCardState extends State<AvaibleFundingCard> {
+  User user = User();
+  General general = General();
+
+  invoiceStatus() {
+    final res = general.invoiceStatus!
+        .firstWhere((element) => element.code == widget.data.invoiceStatus);
+    return res.name;
+  }
+
+  overDueStatus() {
+    final res = general.invoiceOverdueStatus!
+        .firstWhere((element) => element.code == widget.data.overdueStatus);
+    return res;
+  }
+
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<FinanceProvider>(context, listen: true);
-
+    user = Provider.of<UserProvider>(context, listen: true).financeUser;
+    general =
+        Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(AvaibleFundingDetailPage.routeName);
-      },
+      onTap: widget.onClick,
       child: Container(
         padding: const EdgeInsets.all(15),
         color: white,
         child: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Buyer Business Name',
-                  style: TextStyle(
-                      color: dark, fontSize: 14, fontWeight: FontWeight.w600),
+                Expanded(
+                  child: Text(
+                    user.currentBusiness?.type == "SUPPLIER" &&
+                            widget.data.type == "SALES"
+                        ? '${widget.data.receiverBusiness?.profileName}'
+                        : "${widget.data.senderBusiness?.profileName}",
+                    style: TextStyle(
+                        color: dark, fontSize: 14, fontWeight: FontWeight.w600),
+                  ),
                 ),
                 Container(
                   padding: const EdgeInsets.all(7),
@@ -54,28 +84,30 @@ class _AvaibleFundingCardState extends State<AvaibleFundingCard> {
               height: 5,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: yellow.withOpacity(0.2),
+                    color: statusColor(true),
                   ),
                   child: Text(
-                    'Хүлээж буй',
+                    '${invoiceStatus()}',
                     style: TextStyle(
-                        color: yellow,
+                        color: statusColor(false),
                         fontSize: 12,
                         fontWeight: FontWeight.w500),
                   ),
                 ),
-                Text(
-                  '10,200,200.00 ₮',
-                  style: TextStyle(
-                    color: dark,
-                    fontWeight: FontWeight.w500,
+                Expanded(
+                  child: Text(
+                    '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
+                    style: TextStyle(
+                      color: dark,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.end,
                   ),
                 )
               ],
@@ -87,7 +119,7 @@ class _AvaibleFundingCardState extends State<AvaibleFundingCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '2021-12-01 15:05 PM',
+                  '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.confirmedDate!)}',
                   style: TextStyle(
                     color: Color(0xff555555),
                     fontSize: 12,
@@ -104,7 +136,7 @@ class _AvaibleFundingCardState extends State<AvaibleFundingCard> {
                       width: 3,
                     ),
                     Text(
-                      'INV 23897',
+                      '${widget.data.refCode}',
                       style: TextStyle(
                         color: dark,
                         fontWeight: FontWeight.w600,
@@ -121,7 +153,7 @@ class _AvaibleFundingCardState extends State<AvaibleFundingCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Төлөх: 2021-12-02',
+                  'Төлөх: ${DateFormat("yyyy-MM-dd").format(widget.data.paymentDate!)}',
                   style: TextStyle(
                     fontSize: 12,
                     color: Color(0xff555555),
@@ -137,10 +169,14 @@ class _AvaibleFundingCardState extends State<AvaibleFundingCard> {
                       ),
                     ),
                     Text(
-                      'Хэвийн',
+                      '${overDueStatus().name}',
                       style: TextStyle(
                         fontSize: 12,
-                        color: green,
+                        color: Color(
+                          int.parse(overDueStatus().color.substring(1, 7),
+                                  radix: 16) +
+                              0xff000000,
+                        ),
                       ),
                     ),
                   ],
@@ -151,5 +187,45 @@ class _AvaibleFundingCardState extends State<AvaibleFundingCard> {
         ),
       ),
     );
+  }
+
+  statusColor(bool opacity) {
+    if (opacity == false) {
+      switch (widget.data.invoiceStatus) {
+        case "DRAFT":
+          return grey;
+        case "SENT":
+          return Colors.indigo;
+        case "CONFIRMED":
+          return Colors.lightBlue;
+        case "REJECTED":
+          return red;
+        case "RETURNED":
+          return pink;
+        case "CANCELED":
+          return pink;
+        case "CLOSED":
+          return green;
+        default:
+      }
+    } else {
+      switch (widget.data.invoiceStatus) {
+        case "DRAFT":
+          return grey.withOpacity(0.2);
+        case "SENT":
+          return Colors.indigo.withOpacity(0.2);
+        case "CONFIRMED":
+          return Colors.lightBlue.withOpacity(0.2);
+        case "REJECTED":
+          return red.withOpacity(0.2);
+        case "RETURNED":
+          return pink.withOpacity(0.2);
+        case "CANCELED":
+          return pink.withOpacity(0.2);
+        case "CLOSED":
+          return green.withOpacity(0.2);
+        default:
+      }
+    }
   }
 }

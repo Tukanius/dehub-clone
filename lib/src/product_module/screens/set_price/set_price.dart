@@ -539,18 +539,11 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                               int index = tiers.indexWhere(
                                   (element) => element.customPrice == null);
                               if (index > -1) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    duration: Duration(milliseconds: 800),
-                                    backgroundColor: productColor,
-                                    shape: StadiumBorder(),
-                                    content: Center(
-                                      child: Text(
-                                        'Борлуулах нэгжийн стандарт үнэ тохируулна уу',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ),
+                                CustomScaffoldMessenger(
+                                  context,
+                                  color: productColor,
+                                  labelText:
+                                      'Борлуулах нэгжийн стандарт үнэ тохируулна уу',
                                 );
                               } else {
                                 onSubmit(false);

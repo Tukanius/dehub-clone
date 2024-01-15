@@ -1,23 +1,40 @@
 import 'package:dehub/components/back_button/back_button.dart';
-import 'package:dehub/components/dashboard_card/dashboard_card.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:dehub/components/dashboard_card/dashboard_card.dart';
 import 'package:provider/provider.dart';
+import 'package:after_layout/after_layout.dart';
 import './tabs/supplier_led.dart';
-import 'tabs/buyer_led.dart';
+import './tabs/buyer_led.dart';
 
-class FundingRequestPage extends StatefulWidget {
-  static const routeName = '/FundingRequestPage';
-  const FundingRequestPage({Key? key}) : super(key: key);
-
-  @override
-  State<FundingRequestPage> createState() => _FundingRequestPageState();
+class AvailableFundingPageArguments {
+  String id;
+  AvailableFundingPageArguments({
+    required this.id,
+  });
 }
 
-class _FundingRequestPageState extends State<FundingRequestPage> {
+class AvailableFundingPage extends StatefulWidget {
+  static const routeName = '/AvailableFundingPage';
+  final String id;
+  const AvailableFundingPage({
+    super.key,
+    required this.id,
+  });
+
+  @override
+  State<AvailableFundingPage> createState() => _AvailableFundingPageState();
+}
+
+class _AvailableFundingPageState extends State<AvailableFundingPage>
+    with AfterLayoutMixin {
+  bool isLoading = true;
   PageController pageController = PageController();
-  int currentIndex = 0;
+  int initialIndex = 0;
+
+  @override
+  afterFirstLayout(BuildContext context) {}
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +43,7 @@ class _FundingRequestPageState extends State<FundingRequestPage> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: backgroundColor,
-        surfaceTintColor: backgroundColor,
-        elevation: 0,
-        leadingWidth: 100,
+        leadingWidth: 130,
         leading: CustomBackButton(color: source.currentColor),
       ),
       body: Column(
@@ -38,20 +53,17 @@ class _FundingRequestPageState extends State<FundingRequestPage> {
             margin: const EdgeInsets.only(left: 10),
             child: DashboardCard(
               boxColor: source.currentColor,
-              padding: 8,
-              labelText: 'Санхүүжих хүсэлт',
+              padding: 10,
+              labelText: 'Боломжит нэхэмжлэх',
               svgColor: white,
-              svg: 'assets/svg/sanhuujiltS.svg',
+              svg: 'assets/svg/available_invoice.svg',
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: Text(
-              'Санхүүжих хүсэлт',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+              'Боломжит нэхэмжлэхүүд',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
           Row(
@@ -61,53 +73,55 @@ class _FundingRequestPageState extends State<FundingRequestPage> {
               ),
               GestureDetector(
                 onTap: () {
-                  pageController.animateToPage(0,
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.ease);
+                  pageController.animateToPage(
+                    0,
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.ease,
+                  );
                 },
                 child: Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
-                    color: currentIndex == 0
-                        ? source.currentColor
-                        : backgroundColor,
                     borderRadius: BorderRadius.circular(10),
+                    color:
+                        initialIndex == 0 ? source.currentColor : transparent,
                   ),
                   child: Text(
-                    'Buyer-Led',
+                    'Supplier Led',
                     style: TextStyle(
+                      color: initialIndex == 0 ? white : black,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: currentIndex == 0 ? white : black,
                     ),
                   ),
                 ),
               ),
               SizedBox(
-                width: 20,
+                width: 15,
               ),
               GestureDetector(
                 onTap: () {
-                  pageController.animateToPage(1,
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.ease);
+                  pageController.animateToPage(
+                    1,
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.ease,
+                  );
                 },
                 child: Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
-                    color: currentIndex == 1
-                        ? source.currentColor
-                        : backgroundColor,
                     borderRadius: BorderRadius.circular(10),
+                    color:
+                        initialIndex == 1 ? source.currentColor : transparent,
                   ),
                   child: Text(
-                    'Supplier-Led',
+                    'Buyer Led',
                     style: TextStyle(
+                      color: initialIndex == 1 ? white : black,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: currentIndex == 1 ? white : black,
                     ),
                   ),
                 ),
@@ -119,12 +133,16 @@ class _FundingRequestPageState extends State<FundingRequestPage> {
               controller: pageController,
               onPageChanged: (value) {
                 setState(() {
-                  currentIndex = value;
+                  initialIndex = value;
                 });
               },
               children: [
-                BuyerLed(),
-                SupplierLed(),
+                SupplierLed(
+                  id: widget.id,
+                ),
+                BuyerLed(
+                  id: widget.id,
+                ),
               ],
             ),
           ),

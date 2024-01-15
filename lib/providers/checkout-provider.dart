@@ -137,8 +137,9 @@ class CheckOutProvider extends ChangeNotifier {
 
   orderRemoveCart(Order cart) {
     int index = order.indexWhere((item) => item.id == cart.id);
-
-    order.removeAt(index);
+    if (index > -1) {
+      order.removeAt(index);
+    }
     notifyListeners();
   }
 

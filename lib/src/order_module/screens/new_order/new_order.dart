@@ -847,8 +847,11 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                                 showDayOfWeek: true,
                                                 onDateTimeChanged:
                                                     (DateTime newDate) {
-                                                  setState(
-                                                      () => dateTime = newDate);
+                                                  setState(() {
+                                                    dateTime = newDate;
+                                                    selectedDateValidate =
+                                                        false;
+                                                  });
                                                 },
                                               ),
                                             ),

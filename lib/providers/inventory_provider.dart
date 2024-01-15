@@ -406,6 +406,12 @@ class InventoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  sectionRemove(int index) {
+    sections.removeAt(index);
+    product.sections = sections;
+    notifyListeners();
+  }
+
   clearSectionValues(int index) {
     sectionFieldValues = [];
     product.sections?[index].values = sectionFieldValues;

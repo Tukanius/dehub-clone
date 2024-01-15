@@ -14,6 +14,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DeliveryPageArguments {
   Order data;
@@ -125,6 +126,16 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
     }
   }
 
+  void phoneCall() async {
+    final Uri phoneLaunch =
+        Uri(scheme: 'tel', path: "tel:${get.buyerBusiness?.partner?.phone}");
+    if (await canLaunchUrl(phoneLaunch)) {
+      await launchUrl(phoneLaunch);
+    } else {
+      print('Could not launch');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
@@ -222,6 +233,15 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           color: grey,
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                              user.currentBusiness?.type ==
+                                                      "SUPPLIER"
+                                                  ? '${get.buyerBusiness?.logo}'
+                                                  : "${get.supplierBusiness?.logo}",
+                                            ),
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
                                       SizedBox(
@@ -292,18 +312,23 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                       SizedBox(
                                         width: 10,
                                       ),
-                                      Container(
-                                        height: 36,
-                                        width: 36,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: orderColor,
-                                        ),
-                                        child: Center(
-                                          child: SvgPicture.asset(
-                                            'assets/svg/call.svg',
-                                            colorFilter: ColorFilter.mode(
-                                                white, BlendMode.srcIn),
+                                      GestureDetector(
+                                        onTap: () {
+                                          phoneCall();
+                                        },
+                                        child: Container(
+                                          height: 36,
+                                          width: 36,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: orderColor,
+                                          ),
+                                          child: Center(
+                                            child: SvgPicture.asset(
+                                              'assets/svg/call.svg',
+                                              colorFilter: ColorFilter.mode(
+                                                  white, BlendMode.srcIn),
+                                            ),
                                           ),
                                         ),
                                       ),

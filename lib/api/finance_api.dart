@@ -52,9 +52,33 @@ class FinanceApi extends HttpRequestFinance {
     return Finance.fromJson(res as Map<String, dynamic>);
   }
 
-  logout(
-    String host,
-  ) async {
+  Future<Result> financeableList(String host, ResultArguments data) async {
+    var res = await get(host, '/financeable', data: data.toJson());
+    return Result.fromJson(res, Finance.fromJson);
+  }
+
+  Future<Result> programList(String host, ResultArguments data) async {
+    var res = await get(host, '/financeable/program', data: data.toJson());
+    return Result.fromJson(res, Finance.fromJson);
+  }
+
+  Future<Finance> financeableGet(
+      String host, String id, String programId) async {
+    var res = await get(host, '/financeable/$id/program/$programId');
+    return Finance.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Finance> supplierLedCreate(String host, Finance data) async {
+    var res = await post(host, '/request/supplier_led', data: data.toJson());
+    return Finance.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Finance> buyerLedCreate(String host, Finance data) async {
+    var res = await post(host, '/request/buyer_led', data: data.toJson());
+    return Finance.fromJson(res as Map<String, dynamic>);
+  }
+
+  logout(String host) async {
     await get(host, '/auth/logout');
   }
 }

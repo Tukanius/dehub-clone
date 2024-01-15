@@ -24,7 +24,6 @@ class FieldSettingSheet extends StatefulWidget {
 
 class _FieldSettingSheetState extends State<FieldSettingSheet> {
   bool isSubmit = false;
-  InventoryGoods defaultValue = InventoryGoods();
 
   @override
   Widget build(BuildContext context) {
@@ -213,35 +212,28 @@ class _FieldSettingSheetState extends State<FieldSettingSheet> {
                                       children: source.product
                                           .sections![widget.index].values!
                                           .map(
-                                            (data) => GestureDetector(
-                                              onTap: () {
-                                                setState(() {
-                                                  defaultValue = data;
-                                                });
-                                              },
-                                              child: Container(
-                                                margin: const EdgeInsets.only(
-                                                    right: 15),
-                                                height: 30,
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                    color: data.name ==
-                                                            defaultValue.name
-                                                        ? grey2
-                                                        : transparent,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                  color: productColor
-                                                      .withOpacity(.05),
+                                            (data) => Container(
+                                              margin: const EdgeInsets.only(
+                                                  right: 15),
+                                              height: 30,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: data.isDefault == true
+                                                      ? grey2
+                                                      : transparent,
                                                 ),
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 15,
-                                                        vertical: 3),
-                                                child: Text(
-                                                  '${data.name}',
-                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                color: productColor
+                                                    .withOpacity(.05),
+                                              ),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 15,
+                                                vertical: 3,
+                                              ),
+                                              child: Text(
+                                                '${data.name}',
                                               ),
                                             ),
                                           )
@@ -249,35 +241,48 @@ class _FieldSettingSheetState extends State<FieldSettingSheet> {
                                     ),
                                   )
                                 : SizedBox(),
-                            defaultValue.name != null
-                                ? Container(
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Default утга'),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: productColor.withOpacity(0.1),
+                                    ),
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Default утга'),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            color:
-                                                productColor.withOpacity(0.1),
-                                          ),
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 15, vertical: 3),
-                                          child: Text(
-                                            '${defaultValue.name}',
+                                        horizontal: 15, vertical: 3),
+                                    child: source
+                                                    .product
+                                                    .sections?[widget.index]
+                                                    .values !=
+                                                null &&
+                                            source
+                                                    .product
+                                                    .sections?[widget.index]
+                                                    .values!
+                                                    .length !=
+                                                0
+                                        ? Text(
+                                            '${source.product.sections?[widget.index].values?.firstWhere((element) => element.isDefault == true).name}',
+                                            style: TextStyle(
+                                              color: grey2,
+                                            ),
+                                          )
+                                        : Text(
+                                            '-',
                                             style: TextStyle(
                                               color: grey2,
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                : SizedBox(),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         )
                       : SizedBox(),

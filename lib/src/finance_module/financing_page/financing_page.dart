@@ -1,7 +1,7 @@
-// import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/entry_point/entry_point.dart';
 import 'package:dehub/src/splash/splash_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +37,7 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
 
   void ontappedItem(int index) {
     if (index == 0) {
-      Navigator.of(context).pushNamed(SplashPage.routeName);
+      Navigator.of(context).pushNamed(EntryPoint.routeName);
     } else {
       setState(() {
         selectedIndex = index;
@@ -71,7 +71,7 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
           backgroundColor: backgroundColor,
           leading: GestureDetector(
             onTap: () {
-              Navigator.of(context).pushNamed(SplashPage.routeName);
+              Navigator.of(context).pushNamed(EntryPoint.routeName);
             },
             child: Container(
               color: transparent,
@@ -97,8 +97,6 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
             ),
           ),
           actions: [
-            // selectedIndex == 1
-            //     ?
             GestureDetector(
               onTap: () async {
                 logout();
@@ -131,12 +129,6 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
                 ),
               ),
             ),
-            // : selectedIndex == 3
-            //     ? AddButton(
-            //         color: white,
-            //         addColor: source.currentColor,
-            //       )
-            //     : SizedBox(),
           ],
         ),
         body: isLoading == true

@@ -1,10 +1,15 @@
+import 'package:dehub/models/finance.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LimitTab extends StatefulWidget {
-  const LimitTab({super.key});
+  final Finance data;
+  const LimitTab({
+    super.key,
+    required this.data,
+  });
 
   @override
   State<LimitTab> createState() => _LimitTabState();

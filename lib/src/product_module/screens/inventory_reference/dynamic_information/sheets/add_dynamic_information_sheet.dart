@@ -1,5 +1,4 @@
 import 'package:dehub/api/inventory_api.dart';
-import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/inventory_provider.dart';
@@ -184,15 +183,8 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
                               ? Column(
                                   children: source.product.sections!
                                       .map(
-                                        (data) => FieldCard(
-                                          paddingHorizontal: 15,
-                                          paddingVertical: 10,
-                                          color: white,
-                                          labelText: data.name,
-                                          secondText: data.type,
-                                          secondTextColor: productColor,
-                                          arrowColor: productColor,
-                                          onClick: () {
+                                        (data) => GestureDetector(
+                                          onTap: () {
                                             showModalBottomSheet(
                                               context: context,
                                               useSafeArea: true,
@@ -204,6 +196,53 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
                                               ),
                                             );
                                           },
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 15, vertical: 10),
+                                            color: white,
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text('${data.name}'),
+                                                    Text(
+                                                      data.type != null
+                                                          ? '${data.type}'
+                                                          : "-",
+                                                      style: TextStyle(
+                                                        color: productColor,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    source.sectionRemove(
+                                                      source.product.sections!
+                                                          .indexOf(data),
+                                                    );
+                                                  },
+                                                  child: SvgPicture.asset(
+                                                    'assets/svg/close.svg',
+                                                    height: 20,
+                                                    width: 20,
+                                                    colorFilter:
+                                                        ColorFilter.mode(
+                                                      productColor,
+                                                      BlendMode.srcIn,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                         ),
                                       )
                                       .toList(),

@@ -1,5 +1,6 @@
 import 'package:dehub/components/custom_switch/custom_switch.dart';
 import 'package:dehub/components/field_card/field_card.dart';
+import 'package:dehub/models/finance.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -8,7 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class RequestTab extends StatefulWidget {
-  const RequestTab({super.key});
+  final Finance data;
+  const RequestTab({
+    super.key,
+    required this.data,
+  });
 
   @override
   State<RequestTab> createState() => _RequestTabState();
@@ -30,7 +35,6 @@ class _RequestTabState extends State<RequestTab> {
               'Хүсэлтийн мэдээлэл',
               style: TextStyle(
                 color: grey3,
-                fontSize: 14,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -168,6 +172,13 @@ class _RequestTabState extends State<RequestTab> {
                 fillColor: Colors.white,
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: source.currentColor),
+                ),
+                suffixIcon: Container(
+                  padding: const EdgeInsets.all(15),
+                  child: SvgPicture.asset(
+                    'assets/svg/edit_rounded.svg',
+                    colorFilter: ColorFilter.mode(black, BlendMode.srcIn),
+                  ),
                 ),
               ),
             ),

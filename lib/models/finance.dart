@@ -56,6 +56,7 @@ class Finance {
   bool? recourseTerm;
   DateTime? recourseDate;
   DateTime? restrictDate;
+  DateTime? sentDate;
   double? penaltyPercent;
   String? penaltyType;
   String? repaymentRule;
@@ -78,6 +79,7 @@ class Finance {
   String? invReceiverBusinessId;
   String? invReceiverBusinessRegNumber;
   DateTime? invPaymentDate;
+  DateTime? paymentDate;
   String? invConfirmedUserId;
   String? fundingInstructionStatus;
   String? invStatus;
@@ -130,10 +132,47 @@ class Finance {
   Finance? receiverBusinessAcc;
   Finance? finUser;
   String? number;
-
+  String? programStatus;
   String? username;
+  double? availableAmount;
+  double? programLimit;
+  Finance? receiverBusiness;
+  Finance? senderBusiness;
+  String? invoiceStatus;
+  DateTime? confirmedDate;
+  Finance? senderUser;
+  Finance? confirmedUser;
+  double? confirmedAmount;
+  String? paymentTermDesc;
+  Finance? senderFinUser;
+  Finance? receiverFinUser;
+  Finance? senderAcc;
+  Finance? receiverAcc;
+  String? shortName;
+  String? bankName;
+  List<Finance>? invoices;
 
   Finance({
+    this.invoices,
+    this.bankName,
+    this.shortName,
+    this.senderFinUser,
+    this.receiverFinUser,
+    this.senderAcc,
+    this.receiverAcc,
+    this.paymentTermDesc,
+    this.confirmedAmount,
+    this.confirmedUser,
+    this.sentDate,
+    this.senderUser,
+    this.paymentDate,
+    this.confirmedDate,
+    this.invoiceStatus,
+    this.receiverBusiness,
+    this.senderBusiness,
+    this.availableAmount,
+    this.programLimit,
+    this.programStatus,
     this.username,
     this.invReceiverBusinessAcc,
     this.finUser,

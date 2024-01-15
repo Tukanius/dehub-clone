@@ -50,7 +50,7 @@ class _GivePageState extends State<GivePage>
   General general = General();
   String? invoiceStatus = '';
   String search = '';
-  InvoiceStatus filterAll = InvoiceStatus(code: '', name: 'Бүгд', color: null);
+  InvoiceStatus filterAll = InvoiceStatus(code: '', name: 'Бүгд');
 
   void _onLoading() async {
     setState(() {
@@ -89,7 +89,7 @@ class _GivePageState extends State<GivePage>
   }
 
   list(int page, int limit, String query, String status) async {
-    Filter filter = Filter(query: '${query}', status: "");
+    Filter filter = Filter(query: '${query}', status: status);
     Offset offset = Offset(limit: limit, page: page);
     if (user.currentBusiness?.type == "BUYER") {
       invoice = await InvoiceApi()
@@ -215,6 +215,8 @@ class _GivePageState extends State<GivePage>
                           setState(() {
                             invoiceStatus = general.invoiceStatus?[index].code;
                             isLoading = true;
+                            page = 1;
+                            groupItems = {};
                           });
                           list(page, limit, search, invoiceStatus!);
                         }
@@ -260,121 +262,121 @@ class _GivePageState extends State<GivePage>
                     color: invoiceColor,
                   ),
                 )
-              : groupedList.length == 0
-                  ? NotFound(
-                      module: "INVOICE",
-                      labelText: "Нэхэмжлэл олдсонгүй",
-                    )
-                  : Expanded(
-                      child: SmartRefresher(
-                        enablePullDown: true,
-                        enablePullUp: true,
-                        controller: _refreshController,
-                        header: WaterDropHeader(
-                          waterDropColor: invoiceColor,
-                          refresh: SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: invoiceColor,
-                            ),
-                          ),
-                        ),
-                        onRefresh: _onRefresh,
-                        onLoading: _onLoading,
-                        footer: CustomFooter(
-                          builder: (context, mode) {
-                            Widget body;
-                            if (mode == LoadStatus.idle) {
-                              body = const Text("");
-                            } else if (mode == LoadStatus.loading) {
-                              body = const CupertinoActivityIndicator();
-                            } else if (mode == LoadStatus.failed) {
-                              body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                            } else {
-                              body = const Text("Мэдээлэл алга байна");
-                            }
-                            return SizedBox(
-                              height: 55.0,
-                              child: Center(child: body),
-                            );
-                          },
-                        ),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: groupedList
-                                .map(
-                                  (item) => Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      AnimatedContainer(
-                                        duration: Duration(
-                                            milliseconds: 300 +
-                                                (groupedList.indexOf(item) *
-                                                    400)),
-                                        transform: Matrix4.translationValues(
-                                            startAnimation
-                                                ? 0
-                                                : -MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                            0,
-                                            0),
-                                        margin: const EdgeInsets.only(
-                                            left: 15, top: 10),
-                                        child: Text(
-                                          '${DateFormat('yyyy-MM-dd').format(item.header!)}',
-                                          style: TextStyle(
-                                            color: grey3,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Column(
-                                        children: item.values!
-                                            .map(
-                                              (data) => Column(
-                                                children: [
-                                                  InvoiceCard(
-                                                    isClosed: false,
-                                                    startAnimation:
-                                                        startAnimation,
-                                                    index: invoice.rows!
-                                                        .indexOf(data),
-                                                    data: data,
-                                                    onClick: () {
-                                                      Navigator.of(context)
-                                                          .pushNamed(
-                                                        InvoiceDetailPage
-                                                            .routeName,
-                                                        arguments:
-                                                            InvoiceDetailPageArguments(
-                                                          id: data.id!,
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                  SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                            .toList(),
-                                      )
-                                    ],
-                                  ),
-                                )
-                                .toList(),
-                          ),
+              : Expanded(
+                  child: SmartRefresher(
+                    enablePullDown: true,
+                    enablePullUp: true,
+                    controller: _refreshController,
+                    header: WaterDropHeader(
+                      waterDropColor: invoiceColor,
+                      refresh: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: invoiceColor,
                         ),
                       ),
                     ),
+                    onRefresh: _onRefresh,
+                    onLoading: _onLoading,
+                    footer: CustomFooter(
+                      builder: (context, mode) {
+                        Widget body;
+                        if (mode == LoadStatus.idle) {
+                          body = const Text("");
+                        } else if (mode == LoadStatus.loading) {
+                          body = const CupertinoActivityIndicator();
+                        } else if (mode == LoadStatus.failed) {
+                          body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
+                        } else {
+                          body = const Text("Мэдээлэл алга байна");
+                        }
+                        return SizedBox(
+                          height: 55.0,
+                          child: Center(child: body),
+                        );
+                      },
+                    ),
+                    child: SingleChildScrollView(
+                      child: groupedList.length == 0
+                          ? NotFound(
+                              module: "INVOICE",
+                              labelText: "Нэхэмжлэл олдсонгүй",
+                            )
+                          : Column(
+                              children: groupedList
+                                  .map(
+                                    (item) => Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        AnimatedContainer(
+                                          duration: Duration(
+                                              milliseconds: 300 +
+                                                  (groupedList.indexOf(item) *
+                                                      400)),
+                                          transform: Matrix4.translationValues(
+                                              startAnimation
+                                                  ? 0
+                                                  : -MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                              0,
+                                              0),
+                                          margin: const EdgeInsets.only(
+                                              left: 15, top: 10),
+                                          child: Text(
+                                            '${DateFormat('yyyy-MM-dd').format(item.header!)}',
+                                            style: TextStyle(
+                                              color: grey3,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Column(
+                                          children: item.values!
+                                              .map(
+                                                (data) => Column(
+                                                  children: [
+                                                    InvoiceCard(
+                                                      isClosed: false,
+                                                      startAnimation:
+                                                          startAnimation,
+                                                      index: invoice.rows!
+                                                          .indexOf(data),
+                                                      data: data,
+                                                      onClick: () {
+                                                        Navigator.of(context)
+                                                            .pushNamed(
+                                                          InvoiceDetailPage
+                                                              .routeName,
+                                                          arguments:
+                                                              InvoiceDetailPageArguments(
+                                                            id: data.id!,
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                              .toList(),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                    ),
+                  ),
+                ),
         ],
       ),
     );

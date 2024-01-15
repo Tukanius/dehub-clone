@@ -1,10 +1,10 @@
-import 'package:dehub/components/field_card/field_card.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
 
@@ -23,6 +23,7 @@ class _SelectValuesSheetState extends State<SelectValuesSheet>
     with AfterLayoutMixin {
   TextEditingController controller = TextEditingController();
   List<InventoryGoods> fieldValues = [];
+  InventoryGoods defaultValue = InventoryGoods();
   bool isLoading = true;
 
   @override
@@ -34,10 +35,36 @@ class _SelectValuesSheetState extends State<SelectValuesSheet>
     });
   }
 
+  onSubmit() {
+    final source = Provider.of<InventoryProvider>(context, listen: false);
+    int index = fieldValues.indexWhere((element) => element.isDefault == true);
+    if (index > -1) {
+      for (var i = 0; i < fieldValues.length; i++) {
+        source.sectionValues(
+          widget.index,
+          InventoryGoods(
+            name: fieldValues[i].name,
+            isDefault: defaultValue.name == fieldValues[i].name ? true : false,
+          ),
+        );
+      }
+    } else {
+      for (var i = 0; i < fieldValues.length; i++) {
+        source.sectionValues(
+          widget.index,
+          InventoryGoods(
+            name: fieldValues[i].name,
+            isDefault: i == 0 ? true : false,
+          ),
+        );
+      }
+    }
+
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final source = Provider.of<InventoryProvider>(context, listen: true);
-
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.vertical(
@@ -86,10 +113,7 @@ class _SelectValuesSheetState extends State<SelectValuesSheet>
                 ),
                 GestureDetector(
                   onTap: () {
-                    for (var i = 0; i < fieldValues.length; i++) {
-                      source.sectionValues(widget.index, fieldValues[i]);
-                    }
-                    Navigator.of(context).pop();
+                    onSubmit();
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -153,20 +177,6 @@ class _SelectValuesSheetState extends State<SelectValuesSheet>
                             ),
                           ),
                         ),
-                        Column(
-                          children: fieldValues
-                              .map(
-                                (data) => FieldCard(
-                                  paddingHorizontal: 15,
-                                  paddingVertical: 10,
-                                  color: white,
-                                  labelText: 'Нэр',
-                                  secondText: data.name,
-                                  secondTextColor: productColor,
-                                ),
-                              )
-                              .toList(),
-                        ),
                         Align(
                           alignment: Alignment.centerRight,
                           child: GestureDetector(
@@ -197,6 +207,88 @@ class _SelectValuesSheetState extends State<SelectValuesSheet>
                               ),
                             ),
                           ),
+                        ),
+                        fieldValues.length != 0
+                            ? Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                child: Text(
+                                  'Сонголтууд',
+                                  style: TextStyle(
+                                    color: grey2,
+                                  ),
+                                ),
+                              )
+                            : SizedBox(),
+                        Column(
+                          children: fieldValues
+                              .map(
+                                (data) => Container(
+                                  color: white,
+                                  padding: const EdgeInsets.only(
+                                      left: 15, right: 15, top: 10),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '${data.name}',
+                                            style:
+                                                TextStyle(color: productColor),
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Default эсэх : ',
+                                                style: TextStyle(color: grey2),
+                                              ),
+                                              Transform.scale(
+                                                scale: 0.7,
+                                                child: CupertinoSwitch(
+                                                  activeColor: paymentColor,
+                                                  value: defaultValue.name ==
+                                                      data.name,
+                                                  onChanged: (bool value) {
+                                                    setState(() {
+                                                      defaultValue = data;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            fieldValues.removeAt(
+                                              fieldValues.indexOf(data),
+                                            );
+                                          });
+                                        },
+                                        child: SvgPicture.asset(
+                                          'assets/svg/close.svg',
+                                          height: 20,
+                                          width: 20,
+                                          colorFilter: ColorFilter.mode(
+                                              productColor, BlendMode.srcIn),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                        SizedBox(
+                          height: 40,
                         ),
                       ],
                     ),

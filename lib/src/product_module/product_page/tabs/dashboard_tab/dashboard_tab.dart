@@ -129,17 +129,19 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                   svgColor: productColor,
                   svg: 'assets/svg/map.svg',
                 ),
-                DashboardCard(
-                  onClick: () {
-                    Navigator.of(context)
-                        .pushNamed(InventoryReferencePage.routeName);
-                  },
-                  boxColor: productColor.withOpacity(0.1),
-                  padding: 9,
-                  labelText: 'Лавлах мэдээлэл',
-                  svgColor: productColor,
-                  svg: 'assets/svg/box.svg',
-                ),
+                user.currentBusiness?.type == "SUPPLIER"
+                    ? DashboardCard(
+                        onClick: () {
+                          Navigator.of(context)
+                              .pushNamed(InventoryReferencePage.routeName);
+                        },
+                        boxColor: productColor.withOpacity(0.1),
+                        padding: 9,
+                        labelText: 'Лавлах мэдээлэл',
+                        svgColor: productColor,
+                        svg: 'assets/svg/box.svg',
+                      )
+                    : SizedBox(),
               ],
             ),
           ),

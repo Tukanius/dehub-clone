@@ -297,7 +297,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
                                           transform: Matrix4.translationValues(
                                               startAnimation
                                                   ? 0
-                                                  : MediaQuery.of(context)
+                                                  : -MediaQuery.of(context)
                                                       .size
                                                       .width,
                                               0,
@@ -322,11 +322,8 @@ class _TransactionHistoryState extends State<TransactionHistory>
                                               .map(
                                                 (item) =>
                                                     TransactionInformationCard(
-                                                  index: (data.values!
-                                                          .indexOf(item) +
-                                                      groupedList
-                                                          .indexOf(data) +
-                                                      1),
+                                                  index: transaction.rows!
+                                                      .indexOf(item),
                                                   startAnimation:
                                                       startAnimation,
                                                   onClick: () {
