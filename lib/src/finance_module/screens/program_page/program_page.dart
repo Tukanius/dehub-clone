@@ -59,7 +59,10 @@ class _ProgramPageState extends State<ProgramPage>
               SizedBox(
                 width: 15,
               ),
-              GestureDetector(
+              InkWell(
+                customBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 onTap: () {
                   pageController.animateToPage(
                     0,
@@ -88,7 +91,10 @@ class _ProgramPageState extends State<ProgramPage>
               SizedBox(
                 width: 15,
               ),
-              GestureDetector(
+              InkWell(
+                customBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 onTap: () {
                   pageController.animateToPage(
                     1,

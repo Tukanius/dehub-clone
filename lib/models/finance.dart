@@ -151,8 +151,10 @@ class Finance {
   String? shortName;
   String? bankName;
   List<Finance>? invoices;
+  String? contractFile;
 
   Finance({
+    this.contractFile,
     this.invoices,
     this.bankName,
     this.shortName,

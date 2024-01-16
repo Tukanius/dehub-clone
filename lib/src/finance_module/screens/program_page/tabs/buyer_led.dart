@@ -87,6 +87,7 @@ class _BuyerLedState extends State<BuyerLed> with AfterLayoutMixin {
                         .map(
                           (data) => ProgramCard(
                             onClick: () {
+                              source.productType('BUYER_LED');
                               Navigator.of(context).pushNamed(
                                 AvailableFundingPage.routeName,
                                 arguments:

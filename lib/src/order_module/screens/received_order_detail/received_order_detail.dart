@@ -891,7 +891,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                           (approve) => review(false));
                                     },
                                     child: Container(
-                                      height: 36,
+                                      height: 38,
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -919,7 +919,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                           (approve) => review(true));
                                     },
                                     child: Container(
-                                      height: 36,
+                                      height: 38,
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -956,7 +956,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                               (approve) => respond(false));
                                         },
                                         child: Container(
-                                          height: 36,
+                                          height: 38,
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
@@ -984,7 +984,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                               (approve) => respond(true));
                                         },
                                         child: Container(
-                                          height: 36,
+                                          height: 38,
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
@@ -1022,7 +1022,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                   (approve) => review(false));
                                             },
                                             child: Container(
-                                              height: 36,
+                                              height: 38,
                                               child: Column(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -1051,7 +1051,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                   (approve) => review(true));
                                             },
                                             child: Container(
-                                              height: 36,
+                                              height: 38,
                                               child: Column(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -1171,7 +1171,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                   );
                                                 },
                                                 child: Container(
-                                                  height: 36,
+                                                  height: 38,
                                                   child: Column(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment

@@ -1,4 +1,5 @@
 import 'package:dehub/api/finance_api.dart';
+import 'package:dehub/components/scaffold_messenger/scaffold_messenger.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/providers/finance_provider.dart';
@@ -65,10 +66,27 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
   }
 
   onSubmit() async {
+    final source = Provider.of<FinanceProvider>(context, listen: false);
     Finance data = Finance();
     data.programId = widget.programId;
+    if (source.finance.productType == "SUPPLIER_LED") {
+      data.invoices = [
+        Finance(
+          id: widget.id,
+          requestedAmount: source.finance.requestedAmount,
+        ),
+      ];
+      await FinanceApi().supplierLedCreate(source.url, data);
+    } else {
+      data.invId = widget.id;
+      data.requestedAmount = source.finance.requestedAmount;
+      data.contractFile = source.finance.contractFile;
+      await FinanceApi().buyerLedCreate(source.url, data);
+    }
     showCustomDialog(context, "Хүсэлт амжилттай илгээгдлээ", true,
         onPressed: () {
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
       Navigator.of(context).pop();
     });
   }
@@ -246,16 +264,27 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                           right: 20,
                           child: GestureDetector(
                             onTap: () {
-                              Navigator.of(context).pushNamed(
-                                PinCheckScreen.routeName,
-                                arguments: PinCheckScreenArguments(
-                                  onSubmit: onSubmit,
+                              if (source.finance.requestedAmount != null) {
+                                Navigator.of(context).pushNamed(
+                                  PinCheckScreen.routeName,
+                                  arguments: PinCheckScreenArguments(
+                                    onSubmit: onSubmit,
+                                    color: source.currentColor,
+                                    labelText: "SCF Хүсэлт батлах",
+                                    description:
+                                        'Та SCF хүсэлт батлах гэж байна. Та мэдээллээ сайтар шалгана уу.',
+                                  ),
+                                );
+                              } else {
+                                setState(() {
+                                  tabController.index = 1;
+                                });
+                                CustomScaffoldMessenger(
+                                  context,
                                   color: source.currentColor,
-                                  labelText: "SCF Хүсэлт батлах",
-                                  description:
-                                      'Та SCF хүсэлт батлах гэж байна. Та мэдээллээ сайтар шалгана уу.',
-                                ),
-                              );
+                                  labelText: 'Санхүүжилт хүсэх дүн оруулна уу.',
+                                );
+                              }
                             },
                             child: Container(
                               padding: const EdgeInsets.symmetric(

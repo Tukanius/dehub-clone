@@ -1,3 +1,4 @@
+import 'package:dehub/models/finance.dart';
 import 'package:flutter/material.dart';
 
 class FinanceProvider extends ChangeNotifier {
@@ -7,6 +8,7 @@ class FinanceProvider extends ChangeNotifier {
   Color currentColor = Color(0xff000000);
   String url = '';
   String bankName = '';
+  Finance finance = Finance();
 
   bankSelect(String value) {
     value == "Богд Банк"
@@ -24,6 +26,26 @@ class FinanceProvider extends ChangeNotifier {
                 url = 'http://dev-de-fi.zto.mn',
               };
     bankName = value;
+    notifyListeners();
+  }
+
+  contractFile(String url) {
+    finance.contractFile = url;
+    notifyListeners();
+  }
+
+  productType(String type) {
+    finance.productType = type;
+    notifyListeners();
+  }
+
+  requestedAmount(double? amount) {
+    finance.requestedAmount = amount;
+    notifyListeners();
+  }
+
+  contractAgreement(bool value) {
+    finance.isApproved = value;
     notifyListeners();
   }
 }

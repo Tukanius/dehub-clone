@@ -79,8 +79,7 @@ class _EntryPointState extends State<EntryPoint>
                 child: Transform.scale(
                   scale: scaleAnimation.value,
                   child: ClipRRect(
-                    borderRadius:
-                        BorderRadius.circular(isSideMenuClosed ? 0 : 24),
+                    borderRadius: BorderRadius.circular(24 * animation.value),
                     child: GestureDetector(
                       onPanUpdate: (details) {
                         onPanUpdate(details);

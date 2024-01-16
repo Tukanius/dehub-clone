@@ -207,6 +207,31 @@ class _LimitTabState extends State<LimitTab> {
               ],
             ),
           ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Text(
+              'Гэрээ баталгаажуулах',
+              style: TextStyle(
+                color: grey3,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          Container(
+            color: white,
+            child: Row(
+              children: [
+                Checkbox(
+                  activeColor: source.currentColor,
+                  value: source.finance.isApproved ?? false,
+                  onChanged: (value) {
+                    source.contractAgreement(value!);
+                  },
+                ),
+                Text('Гэрээ баталгаажуулах'),
+              ],
+            ),
+          ),
         ],
       ),
     );

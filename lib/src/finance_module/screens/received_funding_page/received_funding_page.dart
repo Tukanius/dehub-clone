@@ -62,7 +62,8 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
               SizedBox(
                 width: 15,
               ),
-              GestureDetector(
+              InkWell(
+                borderRadius: BorderRadius.circular(10),
                 onTap: () {
                   pageController.animateToPage(0,
                       duration: Duration(milliseconds: 300),
@@ -72,9 +73,8 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                   decoration: BoxDecoration(
-                    color: currentIndex == 0
-                        ? source.currentColor
-                        : backgroundColor,
+                    color:
+                        currentIndex == 0 ? source.currentColor : transparent,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
@@ -90,7 +90,8 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
               SizedBox(
                 width: 20,
               ),
-              GestureDetector(
+              InkWell(
+                borderRadius: BorderRadius.circular(10),
                 onTap: () {
                   pageController.animateToPage(1,
                       duration: Duration(milliseconds: 300),
@@ -100,9 +101,8 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                   decoration: BoxDecoration(
-                    color: currentIndex == 1
-                        ? source.currentColor
-                        : backgroundColor,
+                    color:
+                        currentIndex == 1 ? source.currentColor : transparent,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(

@@ -77,7 +77,8 @@ class _ReCalledPageState extends State<ReCalledPage>
               SizedBox(
                 width: 15,
               ),
-              GestureDetector(
+              InkWell(
+                borderRadius: BorderRadius.circular(10),
                 onTap: () {
                   pageController.animateToPage(0,
                       duration: Duration(milliseconds: 300),
@@ -88,9 +89,8 @@ class _ReCalledPageState extends State<ReCalledPage>
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    color: currentIndex == 0
-                        ? source.currentColor
-                        : backgroundColor,
+                    color:
+                        currentIndex == 0 ? source.currentColor : transparent,
                   ),
                   child: Text(
                     'Buyer-Led',
@@ -105,7 +105,8 @@ class _ReCalledPageState extends State<ReCalledPage>
               SizedBox(
                 width: 25,
               ),
-              GestureDetector(
+              InkWell(
+                borderRadius: BorderRadius.circular(10),
                 onTap: () {
                   pageController.animateToPage(1,
                       duration: Duration(milliseconds: 300),
@@ -116,9 +117,8 @@ class _ReCalledPageState extends State<ReCalledPage>
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    color: currentIndex == 1
-                        ? source.currentColor
-                        : backgroundColor,
+                    color:
+                        currentIndex == 1 ? source.currentColor : transparent,
                   ),
                   child: Text(
                     'Supplier-Led',
