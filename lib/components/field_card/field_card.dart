@@ -50,13 +50,13 @@ class _FieldCardState extends State<FieldCard> {
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
-        margin: EdgeInsets.only(
-            bottom: widget.marginBottom != null ? widget.marginBottom! : 0),
+        margin: EdgeInsets.only(bottom: widget.marginBottom ?? 0),
         key: widget.fbKey,
         decoration: BoxDecoration(
           color: widget.color,
-          border:
-              Border.all(color: widget.validate == true ? red : transparent),
+          border: Border.all(
+              color: widget.validate == true ? red : transparent,
+              width: widget.validate == true ? 1 : 0),
         ),
         padding: EdgeInsets.symmetric(
           horizontal: widget.paddingHorizontal,
@@ -81,36 +81,37 @@ class _FieldCardState extends State<FieldCard> {
               child: Row(
                 children: [
                   Expanded(
-                      child: widget.secondText != 'null' &&
-                              widget.secondText != null
-                          ? Text(
-                              '${widget.secondText}',
-                              style: TextStyle(
-                                color: widget.validate == true
-                                    ? red
-                                    : widget.secondTextColor,
-                                fontSize: widget.fontSize ?? widget.fontSize,
-                                fontWeight: widget.fontWeight != null
-                                    ? widget.fontWeight
-                                    : widget.secondTextFontWeight != null
-                                        ? widget.secondTextFontWeight
-                                        : FontWeight.normal,
+                    child:
+                        widget.secondText != 'null' && widget.secondText != null
+                            ? Text(
+                                '${widget.secondText}',
+                                style: TextStyle(
+                                  color: widget.validate == true
+                                      ? red
+                                      : widget.secondTextColor,
+                                  fontSize: widget.fontSize ?? widget.fontSize,
+                                  fontWeight: widget.fontWeight != null
+                                      ? widget.fontWeight
+                                      : widget.secondTextFontWeight != null
+                                          ? widget.secondTextFontWeight
+                                          : FontWeight.normal,
+                                ),
+                                textAlign: TextAlign.end,
+                              )
+                            : Text(
+                                '-',
+                                style: TextStyle(
+                                  color: widget.secondTextColor,
+                                  fontSize: widget.fontSize ?? widget.fontSize,
+                                  fontWeight: widget.fontWeight != null
+                                      ? widget.fontWeight
+                                      : widget.secondTextFontWeight != null
+                                          ? widget.secondTextFontWeight
+                                          : FontWeight.normal,
+                                ),
+                                textAlign: TextAlign.end,
                               ),
-                              textAlign: TextAlign.end,
-                            )
-                          : Text(
-                              '-',
-                              style: TextStyle(
-                                color: widget.secondTextColor,
-                                fontSize: widget.fontSize ?? widget.fontSize,
-                                fontWeight: widget.fontWeight != null
-                                    ? widget.fontWeight
-                                    : widget.secondTextFontWeight != null
-                                        ? widget.secondTextFontWeight
-                                        : FontWeight.normal,
-                              ),
-                              textAlign: TextAlign.end,
-                            )),
+                  ),
                   widget.thirdText != null
                       ? Text(
                           '${widget.thirdText}',

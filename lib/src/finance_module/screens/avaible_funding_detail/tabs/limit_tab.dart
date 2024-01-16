@@ -1,3 +1,4 @@
+import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -35,39 +36,21 @@ class _LimitTabState extends State<LimitTab> {
               ),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Баталсан лимит',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Дүн',
-                  style: TextStyle(color: source.currentColor),
-                ),
-              ],
-            ),
+            labelText: 'Баталсан лимит',
+            secondText: 'Дүн',
+            secondTextColor: source.currentColor,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Боломжит лимит',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Дүн',
-                  style: TextStyle(color: source.currentColor),
-                ),
-              ],
-            ),
+            labelText: 'Боломжит лимит',
+            secondText: 'Дүн',
+            secondTextColor: source.currentColor,
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -94,56 +77,29 @@ class _LimitTabState extends State<LimitTab> {
               ],
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Лимит ашигласан',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Дүн',
-                  style: TextStyle(color: source.currentColor),
-                ),
-              ],
-            ),
+            labelText: 'Лимит ашигласан',
+            secondText: 'Дүн',
+            secondTextColor: source.currentColor,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Олголт хүлээж буй',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Дүн',
-                  style: TextStyle(color: source.currentColor),
-                ),
-              ],
-            ),
+            labelText: 'Олголт хүлээж буй',
+            secondText: 'Дүн',
+            secondTextColor: source.currentColor,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Хүсэлт илгээсэн',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Дүн',
-                  style: TextStyle(color: source.currentColor),
-                ),
-              ],
-            ),
+            labelText: 'Хүсэлт илгээсэн',
+            secondText: 'Дүн',
+            secondTextColor: source.currentColor,
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
@@ -156,56 +112,29 @@ class _LimitTabState extends State<LimitTab> {
               ),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Лимит ашигласан',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Тоо',
-                  style: TextStyle(color: source.currentColor),
-                ),
-              ],
-            ),
+            labelText: 'Лимит ашигласан',
+            secondText: 'Тоо',
+            secondTextColor: source.currentColor,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Олголт хүлээж буй',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Тоо',
-                  style: TextStyle(color: source.currentColor),
-                ),
-              ],
-            ),
+            labelText: 'Олголт хүлээж буй',
+            secondText: 'Тоо',
+            secondTextColor: source.currentColor,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Хүсэлт илгээсэн',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Тоо',
-                  style: TextStyle(color: source.currentColor),
-                ),
-              ],
-            ),
+            labelText: 'Хүсэлт илгээсэн',
+            secondText: 'Тоо',
+            secondTextColor: source.currentColor,
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -228,7 +157,7 @@ class _LimitTabState extends State<LimitTab> {
                     source.contractAgreement(value!);
                   },
                 ),
-                Text('Гэрээ баталгаажуулах'),
+                Text('Зөвшөөрөх'),
               ],
             ),
           ),

@@ -67,28 +67,57 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
 
   onSubmit() async {
     final source = Provider.of<FinanceProvider>(context, listen: false);
-    Finance data = Finance();
-    data.programId = widget.programId;
-    if (source.finance.productType == "SUPPLIER_LED") {
-      data.invoices = [
-        Finance(
-          id: widget.id,
-          requestedAmount: source.finance.requestedAmount,
+    if (source.finance.requestedAmount != null &&
+        source.finance.isApproved == true) {
+      Navigator.of(context).pushNamed(
+        PinCheckScreen.routeName,
+        arguments: PinCheckScreenArguments(
+          onSubmit: () async {
+            Finance data = Finance();
+            data.programId = widget.programId;
+            if (source.finance.productType == "SUPPLIER_LED") {
+              data.invoices = [
+                Finance(
+                  id: widget.id,
+                  requestedAmount: source.finance.requestedAmount,
+                ),
+              ];
+              await FinanceApi().supplierLedCreate(source.url, data);
+            } else {
+              data.invId = widget.id;
+              data.requestedAmount = source.finance.requestedAmount;
+              data.contractFile = source.finance.contractFile;
+              await FinanceApi().buyerLedCreate(source.url, data);
+            }
+
+            showCustomDialog(context, "Хүсэлт амжилттай илгээгдлээ", true,
+                onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            });
+          },
+          color: source.currentColor,
+          labelText: "SCF Хүсэлт батлах",
+          description:
+              'Та SCF хүсэлт батлах гэж байна. Та мэдээллээ сайтар шалгана уу.',
         ),
-      ];
-      await FinanceApi().supplierLedCreate(source.url, data);
+      );
     } else {
-      data.invId = widget.id;
-      data.requestedAmount = source.finance.requestedAmount;
-      data.contractFile = source.finance.contractFile;
-      await FinanceApi().buyerLedCreate(source.url, data);
+      if (source.finance.isApproved != true) {
+        CustomScaffoldMessenger(context,
+            color: source.currentColor, labelText: 'Гэрээ баталгаажуулна уу');
+      } else {
+        setState(() {
+          tabController.index = 1;
+        });
+        CustomScaffoldMessenger(
+          context,
+          color: source.currentColor,
+          labelText: 'Санхүүжилт хүсэх дүн оруулна уу.',
+        );
+      }
     }
-    showCustomDialog(context, "Хүсэлт амжилттай илгээгдлээ", true,
-        onPressed: () {
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
-    });
   }
 
   @override
@@ -251,7 +280,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                             ),
                             backgroundColor: source.currentColor,
                           ),
-                        )
+                        ),
                       ],
                     ),
                     Stack(
@@ -264,27 +293,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                           right: 20,
                           child: GestureDetector(
                             onTap: () {
-                              if (source.finance.requestedAmount != null) {
-                                Navigator.of(context).pushNamed(
-                                  PinCheckScreen.routeName,
-                                  arguments: PinCheckScreenArguments(
-                                    onSubmit: onSubmit,
-                                    color: source.currentColor,
-                                    labelText: "SCF Хүсэлт батлах",
-                                    description:
-                                        'Та SCF хүсэлт батлах гэж байна. Та мэдээллээ сайтар шалгана уу.',
-                                  ),
-                                );
-                              } else {
-                                setState(() {
-                                  tabController.index = 1;
-                                });
-                                CustomScaffoldMessenger(
-                                  context,
-                                  color: source.currentColor,
-                                  labelText: 'Санхүүжилт хүсэх дүн оруулна уу.',
-                                );
-                              }
+                              onSubmit();
                             },
                             child: Container(
                               padding: const EdgeInsets.symmetric(
