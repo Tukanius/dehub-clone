@@ -1,5 +1,6 @@
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/refresher/refresher.dart';
+import 'package:dehub/components/update_sheet/update_sheet.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
@@ -88,6 +89,23 @@ class _InventoryItemTypeState extends State<InventoryItemType>
     list(page, limit);
   }
 
+  update(InventoryGoods data) {
+    updateSheet(context, updateClick: () {
+      Navigator.of(context).pop();
+      showModalBottomSheet(
+        useSafeArea: true,
+        context: context,
+        builder: (context) => AddItemType(
+          data: data,
+        ),
+      );
+    }, deleteClick: () async {
+      await InventoryApi().itemTypeDelete(data.id!);
+      await list(page, limit);
+      Navigator.of(context).pop();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).inventoryMe;
@@ -160,17 +178,27 @@ class _InventoryItemTypeState extends State<InventoryItemType>
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              '${data.description}',
+                                              '${data.name}',
                                               style: TextStyle(color: dark),
                                             ),
                                           ),
                                           user.currentBusinessId ==
                                                   item.businessId
-                                              ? SvgPicture.asset(
-                                                  'assets/svg/edit_rounded.svg',
-                                                  colorFilter: ColorFilter.mode(
-                                                      productColor,
-                                                      BlendMode.srcIn),
+                                              ? GestureDetector(
+                                                  onTap: () {
+                                                    update(data);
+                                                    print(data.toJson());
+                                                  },
+                                                  child: Container(
+                                                    color: transparent,
+                                                    child: SvgPicture.asset(
+                                                      'assets/svg/edit_rounded.svg',
+                                                      colorFilter:
+                                                          ColorFilter.mode(
+                                                              productColor,
+                                                              BlendMode.srcIn),
+                                                    ),
+                                                  ),
                                                 )
                                               : SizedBox(),
                                         ],

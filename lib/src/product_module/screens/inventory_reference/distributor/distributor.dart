@@ -1,6 +1,7 @@
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
+import 'package:dehub/components/update_sheet/update_sheet.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
@@ -97,6 +98,23 @@ class _InventoryDistributorState extends State<InventoryDistributor>
     list(page, limit);
   }
 
+  update(InventoryGoods data) {
+    updateSheet(context, updateClick: () {
+      Navigator.of(context).pop();
+      showModalBottomSheet(
+        context: context,
+        useSafeArea: true,
+        builder: (context) => AddDistributor(
+          name: data.name,
+          id: data.id,
+        ),
+      );
+    }, deleteClick: () async {
+      await InventoryApi().distributorDelete(data.id!);
+      Navigator.of(context).pop();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).inventoryMe;
@@ -174,11 +192,17 @@ class _InventoryDistributorState extends State<InventoryDistributor>
                                                   '${item.name}',
                                                   style: TextStyle(color: dark),
                                                 ),
-                                                SvgPicture.asset(
-                                                  'assets/svg/edit_rounded.svg',
-                                                  colorFilter: ColorFilter.mode(
-                                                    productColor,
-                                                    BlendMode.srcIn,
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    update(item);
+                                                  },
+                                                  child: SvgPicture.asset(
+                                                    'assets/svg/edit_rounded.svg',
+                                                    colorFilter:
+                                                        ColorFilter.mode(
+                                                      productColor,
+                                                      BlendMode.srcIn,
+                                                    ),
                                                   ),
                                                 ),
                                               ],

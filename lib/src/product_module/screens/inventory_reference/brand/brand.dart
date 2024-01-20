@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/update_sheet/update_sheet.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/brand/add_brand_sheet.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -23,6 +24,37 @@ class _InventoryBrandState extends State<InventoryBrand> with AfterLayoutMixin {
     brand = await InventoryApi().brandList();
     setState(() {
       isLoading = false;
+    });
+  }
+
+  update(String id, String name, String logo) {
+    updateSheet(context, updateClick: () {
+      Navigator.of(context).pop();
+      showModalBottomSheet(
+        context: context,
+        useSafeArea: true,
+        builder: (context) => AddBrandSheet(
+          id: id,
+          brandName: name,
+          brandLogo: logo,
+        ),
+      );
+    }, deleteClick: () async {
+      try {
+        setState(() {
+          isLoading = true;
+        });
+        await InventoryApi().brandDelete(id);
+        brand = await InventoryApi().brandList();
+        Navigator.of(context).pop();
+        setState(() {
+          isLoading = false;
+        });
+      } catch (e) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     });
   }
 
@@ -101,10 +133,19 @@ class _InventoryBrandState extends State<InventoryBrand> with AfterLayoutMixin {
                                     )
                                   ],
                                 ),
-                                SvgPicture.asset(
-                                  'assets/svg/edit_rounded.svg',
-                                  colorFilter: ColorFilter.mode(
-                                      productColor, BlendMode.srcIn),
+                                GestureDetector(
+                                  onTap: () {
+                                    update(data.id, data.name, data.logo);
+                                  },
+                                  child: Container(
+                                    color: transparent,
+                                    padding: const EdgeInsets.all(3),
+                                    child: SvgPicture.asset(
+                                      'assets/svg/edit_rounded.svg',
+                                      colorFilter: ColorFilter.mode(
+                                          productColor, BlendMode.srcIn),
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),

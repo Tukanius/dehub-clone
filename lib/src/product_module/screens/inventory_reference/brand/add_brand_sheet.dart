@@ -11,7 +11,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddBrandSheet extends StatefulWidget {
+  final String? brandName;
+  final String? brandLogo;
+  final String? id;
   const AddBrandSheet({
+    this.brandName,
+    this.brandLogo,
+    this.id,
     super.key,
   });
 
@@ -46,15 +52,29 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
     }
   }
 
-  create() async {
+  onSubmit() async {
     if (fbKey.currentState!.saveAndValidate()) {
       InventoryGoods data = InventoryGoods.fromJson(fbKey.currentState!.value);
       data.logo = upload.url;
-      await InventoryApi().brandCreate(data);
-      showCustomDialog(context, 'Амжилттай брэнд нэмлээ', true, onPressed: () {
-        Navigator.of(context).pop();
-      });
+      if (widget.brandName == null) {
+        await InventoryApi().brandCreate(data);
+        showCustomDialog(context, 'Амжилттай брэнд нэмлээ', true,
+            onPressed: () {
+          Navigator.of(context).pop();
+        });
+      } else {
+        await InventoryApi().brandUpdate(widget.id!, data);
+        showCustomDialog(context, 'Амжилттай заслаа', true, onPressed: () {
+          Navigator.of(context).pop();
+        });
+      }
     }
+  }
+
+  @override
+  void initState() {
+    upload.url = widget.brandLogo;
+    super.initState();
   }
 
   @override
@@ -107,7 +127,7 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    create();
+                    onSubmit();
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -146,6 +166,7 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
                       textColor: productColor,
                       textAlign: TextAlign.end,
                       name: 'name',
+                      initialValue: widget.brandName ?? widget.brandName,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         fillColor: white,

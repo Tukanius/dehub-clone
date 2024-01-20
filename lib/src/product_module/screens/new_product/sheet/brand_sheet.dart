@@ -261,7 +261,7 @@ class _BrandSheetState extends State<BrandSheet> with AfterLayoutMixin {
                   GestureDetector(
                     onTap: () async {
                       Navigator.of(context).pop();
-                      changePassword(id, name, logo);
+                      brandChange(id, name, logo);
                     },
                     child: Container(
                       color: transparent,
@@ -312,7 +312,7 @@ class _BrandSheetState extends State<BrandSheet> with AfterLayoutMixin {
     );
   }
 
-  changePassword(String id, String name, String logo) {
+  brandChange(String id, String name, String logo) {
     showDialog(
       context: context,
       builder: (ctx) {

@@ -3,6 +3,8 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/utils/http_request_finance.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:dio/dio.dart';
 
 class FinanceApi extends HttpRequestFinance {
   financeMe(String host) async {
@@ -76,6 +78,15 @@ class FinanceApi extends HttpRequestFinance {
   Future<Finance> buyerLedCreate(String host, Finance data) async {
     var res = await post(host, '/request/buyer_led', data: data.toJson());
     return Finance.fromJson(res as Map<String, dynamic>);
+  }
+
+  uploadFile(String host, PlatformFile file) async {
+    String fileName = file.path!.split('/').last;
+    FormData formData = FormData.fromMap({
+      'file': await MultipartFile.fromFile(file.path!, filename: fileName),
+    });
+    var res = await post(host, '/media/file/finance/upload', data: formData);
+    return User.fromJson(res as Map<String, dynamic>);
   }
 
   logout(String host) async {

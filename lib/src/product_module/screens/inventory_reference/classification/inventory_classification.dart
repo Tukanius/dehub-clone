@@ -168,102 +168,118 @@ class _InventoryClassificationState extends State<InventoryClassification>
         ),
         shape: CircleBorder(),
       ),
-      body: Refresher(
-        refreshController: refreshController,
-        onLoading: onLoading,
-        onRefresh: onRefresh,
-        color: productColor,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: groupList
-                .map(
-                  (item) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: item.businessId == user.currentBusinessId
-                            ? Text('Бүртгэсэн жагсаалт')
-                            : Text('Системд тохируулсан'),
-                      ),
-                      Column(
-                        children: item.values!
-                            .map(
-                              (data) => Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                                color: white,
-                                margin: const EdgeInsets.only(bottom: 5),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            '${data.name}',
-                                            style:
-                                                TextStyle(color: productColor),
-                                          ),
-                                          SizedBox(
-                                            height: 3,
-                                          ),
-                                          RichText(
-                                            text: TextSpan(
-                                              style: TextStyle(
-                                                fontFamily: 'Montserrat',
-                                                color: grey2,
+      body: isLoading == true
+          ? Center(
+              child: CircularProgressIndicator(
+                color: productColor,
+              ),
+            )
+          : Refresher(
+              refreshController: refreshController,
+              onLoading: onLoading,
+              onRefresh: onRefresh,
+              color: productColor,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: groupList
+                      .map(
+                        (item) => Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: item.businessId == user.currentBusinessId
+                                  ? Text('Бүртгэсэн жагсаалт')
+                                  : Text('Системд тохируулсан'),
+                            ),
+                            Column(
+                              children: item.values!
+                                  .map(
+                                    (data) => GestureDetector(
+                                      onTap: user.currentBusinessId ==
+                                              item.businessId
+                                          ? () {}
+                                          : () {},
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 10),
+                                        color: white,
+                                        margin:
+                                            const EdgeInsets.only(bottom: 5),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    '${data.name}',
+                                                    style: TextStyle(
+                                                        color: productColor),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 3,
+                                                  ),
+                                                  RichText(
+                                                    text: TextSpan(
+                                                      style: TextStyle(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        color: grey2,
+                                                      ),
+                                                      children: [
+                                                        type() < 4
+                                                            ? TextSpan(
+                                                                text:
+                                                                    "${data.classification?.name}, ")
+                                                            : TextSpan(),
+                                                        type() < 3
+                                                            ? TextSpan(
+                                                                text:
+                                                                    "${data.subClassification?.name}, ")
+                                                            : TextSpan(),
+                                                        type() < 2
+                                                            ? TextSpan(
+                                                                text:
+                                                                    "${data.category?.name}, ",
+                                                              )
+                                                            : TextSpan(),
+                                                        TextSpan(
+                                                          text: data
+                                                              .itemType?.name,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                              children: [
-                                                type() < 4
-                                                    ? TextSpan(
-                                                        text:
-                                                            "${data.classification?.name}, ")
-                                                    : TextSpan(),
-                                                type() < 3
-                                                    ? TextSpan(
-                                                        text:
-                                                            "${data.subClassification?.name}, ")
-                                                    : TextSpan(),
-                                                type() < 2
-                                                    ? TextSpan(
-                                                        text:
-                                                            "${data.category?.name}, ",
-                                                      )
-                                                    : TextSpan(),
-                                                TextSpan(
-                                                  text: data.itemType?.name,
-                                                ),
-                                              ],
                                             ),
-                                          ),
-                                        ],
+                                            Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: productColor,
+                                              size: 16,
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                    Icon(
-                                      Icons.arrow_forward_ios,
-                                      color: productColor,
-                                      size: 16,
-                                    ),
-                                  ],
-                                ),
-                              ),
+                                  )
+                                  .toList(),
                             )
-                            .toList(),
+                          ],
+                        ),
                       )
-                    ],
-                  ),
-                )
-                .toList(),
-          ),
-        ),
-      ),
+                      .toList(),
+                ),
+              ),
+            ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
+import 'package:dehub/components/update_sheet/update_sheet.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
@@ -97,6 +98,29 @@ class _InventoryManufacturerState extends State<InventoryManufacturer>
     list(page, limit);
   }
 
+  update(InventoryGoods data) {
+    updateSheet(context, updateClick: () {
+      Navigator.of(context).pop();
+      showModalBottomSheet(
+        context: context,
+        useSafeArea: true,
+        builder: (context) => AddManufacturerSheet(
+          id: data.id,
+          name: data.name,
+        ),
+      );
+    }, deleteClick: () async {
+      await InventoryApi().manufacturerDelete(data.id!);
+      setState(() {
+        isLoading = true;
+        groupItems = {};
+        page = 1;
+      });
+      await list(page, limit);
+      Navigator.of(context).pop();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).inventoryMe;
@@ -174,13 +198,22 @@ class _InventoryManufacturerState extends State<InventoryManufacturer>
                                                   '${item.name}',
                                                   style: TextStyle(color: dark),
                                                 ),
-                                                SvgPicture.asset(
-                                                  'assets/svg/edit_rounded.svg',
-                                                  colorFilter: ColorFilter.mode(
-                                                    productColor,
-                                                    BlendMode.srcIn,
-                                                  ),
-                                                ),
+                                                data.businessId ==
+                                                        user.currentBusinessId
+                                                    ? GestureDetector(
+                                                        onTap: () {
+                                                          update(item);
+                                                        },
+                                                        child: SvgPicture.asset(
+                                                          'assets/svg/edit_rounded.svg',
+                                                          colorFilter:
+                                                              ColorFilter.mode(
+                                                            productColor,
+                                                            BlendMode.srcIn,
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : SizedBox(),
                                               ],
                                             ),
                                           ),

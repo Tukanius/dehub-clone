@@ -1,12 +1,16 @@
+import 'dart:io';
+import 'package:dehub/api/auth_api.dart';
 import 'package:dehub/components/custom_switch/custom_switch.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/finance.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:file_picker/file_picker.dart';
 
 class RequestTab extends StatefulWidget {
   final Finance data;
@@ -21,6 +25,43 @@ class RequestTab extends StatefulWidget {
 
 class _RequestTabState extends State<RequestTab> {
   bool isSwitched = false;
+  bool isLoading = true;
+  PlatformFile? pickedFile;
+  String? fileName;
+  FilePickerResult? file;
+  File? fileToDisplay;
+  bool isFileEmpty = false;
+  User user = User();
+
+  void pickFile() async {
+    final source = Provider.of<FinanceProvider>(context, listen: false);
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      file = await FilePicker.platform.pickFiles(
+        type: FileType.any,
+        allowMultiple: false,
+      );
+      if (file != null) {
+        fileName = file!.files.first.name;
+        pickedFile = file!.files.first;
+        fileToDisplay = File(pickedFile!.path.toString());
+        setState(() {
+          isFileEmpty = false;
+        });
+        debugPrint("File name $fileName");
+        user = await AuthApi().uploadFile(pickedFile!);
+        source.contractFile(user.url.toString());
+      }
+      setState(() {
+        isLoading = false;
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<FinanceProvider>(context, listen: true);
@@ -426,12 +467,12 @@ class _RequestTabState extends State<RequestTab> {
               secondText: 'Хэвийн',
               secondTextColor: source.currentColor,
             ),
-            source.finance.productType == "BUYER_LED"
+            source.finance.productType != "BUYER_LED"
                 ? Container(
                     margin: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 15),
                     child: Text(
-                      'Гэрээ баталгаажилт',
+                      'Файл хавсаргах',
                       style: TextStyle(
                         color: grey3,
                         fontWeight: FontWeight.w600,
@@ -439,54 +480,43 @@ class _RequestTabState extends State<RequestTab> {
                     ),
                   )
                 : SizedBox(),
-            source.finance.productType == "BUYER_LED"
-                ? Container(
-                    color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            SvgPicture.asset(
-                              'assets/svg/pdf_download.svg',
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              'Гэрээг уншиж зөвшөөрөх',
-                              style: TextStyle(
-                                color: Color(0xff151357),
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
+            source.finance.productType != "BUYER_LED"
+                ? GestureDetector(
+                    onTap: () {
+                      pickFile();
+                    },
+                    child: Container(
+                      color: white,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/svg/pdf_download.svg',
                               ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Баталгаажилт',
-                              style: TextStyle(color: dark),
-                            ),
-                            Text(
-                              'Баталгаажаагүй',
-                              style: TextStyle(
-                                color: red,
-                                decoration: TextDecoration.underline,
-                                decorationColor: red,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
+                              SizedBox(
+                                width: 5,
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                              Text(
+                                'Файл хавсаргах',
+                                style: TextStyle(
+                                  color: Color(0xff151357),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            color: Color(0xff151357),
+                            size: 16,
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 : SizedBox(),

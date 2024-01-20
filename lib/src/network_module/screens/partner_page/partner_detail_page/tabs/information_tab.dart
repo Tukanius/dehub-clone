@@ -1,3 +1,4 @@
+import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/business_network.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -30,124 +31,61 @@ class _InformationTabState extends State<InformationTab> {
               ),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+          FieldCard(
+            paddingHorizontal: 10,
+            paddingVertical: 15,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Партнерийн нэр',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  '${widget.data?.partnerName}',
-                  style: TextStyle(color: networkColor),
-                ),
-              ],
-            ),
+            labelText: 'Партнерийн нэр',
+            secondText: '${widget.data?.partnerName}',
+            secondTextColor: networkColor,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+          FieldCard(
+            paddingHorizontal: 10,
+            paddingVertical: 15,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Партнерийн код',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  '${widget.data?.partner?.refCode}',
-                  style: TextStyle(color: networkColor),
-                ),
-              ],
-            ),
+            labelText: 'Партнерийн код',
+            secondText: '${widget.data?.partner?.refCode}',
+            secondTextColor: networkColor,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+          FieldCard(
+            paddingHorizontal: 10,
+            paddingVertical: 15,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Бизнесийн нэр',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  '${widget.data?.partner?.businessName}',
-                  style: TextStyle(color: networkColor),
-                ),
-              ],
-            ),
+            labelText: 'Бизнесийн нэр',
+            secondText: '${widget.data?.partner?.businessName}',
+            secondTextColor: networkColor,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+          FieldCard(
+            paddingHorizontal: 10,
+            paddingVertical: 15,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Бизнес код',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  '${widget.data?.refCode}',
-                  style: TextStyle(color: networkColor),
-                ),
-              ],
-            ),
+            labelText: 'Бизнес код',
+            secondText: '${widget.data?.refCode}',
+            secondTextColor: networkColor,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+          FieldCard(
+            paddingHorizontal: 10,
+            paddingVertical: 15,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Санхүү ажилтан',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  '${widget.data?.financeStaff?.firstName}',
-                  style: TextStyle(color: networkColor),
-                ),
-              ],
-            ),
+            labelText: 'Санхүү ажилтан',
+            secondText: '${widget.data?.financeStaff?.firstName}',
+            secondTextColor: networkColor,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+          FieldCard(
+            paddingHorizontal: 10,
+            paddingVertical: 15,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Санхүү и-мэйл',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  '${widget.data?.financeStaff?.email}',
-                  style: TextStyle(color: networkColor),
-                ),
-              ],
-            ),
+            labelText: 'Санхүү и-мэйл',
+            secondText: '${widget.data?.financeStaff?.email}',
+            secondTextColor: networkColor,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+          FieldCard(
+            paddingHorizontal: 10,
+            paddingVertical: 15,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Санхүү утас',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  '${widget.data?.financeStaff?.phone}',
-                  style: TextStyle(color: networkColor),
-                ),
-              ],
-            ),
+            labelText: 'Санхүү утас',
+            secondText: '${widget.data?.financeStaff?.phone}',
+            secondTextColor: networkColor,
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),

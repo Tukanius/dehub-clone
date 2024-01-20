@@ -48,4 +48,9 @@ class FinanceProvider extends ChangeNotifier {
     finance.isApproved = value;
     notifyListeners();
   }
+
+  clearData() {
+    finance = Finance();
+    notifyListeners();
+  }
 }

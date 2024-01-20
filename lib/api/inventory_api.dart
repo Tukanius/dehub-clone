@@ -235,6 +235,16 @@ class InventoryApi extends HttpRequest {
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
   }
 
+  Future<InventoryGoods> tagUpdate(String id, InventoryGoods data) async {
+    var res = await put('/tag/$id', 'INVENTORY', true, data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<InventoryGoods> tagDelete(String id) async {
+    var res = await del('/tag/$id', 'INVENTORY', true);
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
   upload(XFile file) async {
     String fileName = file.path.split('/').last;
     FormData formData = FormData.fromMap({

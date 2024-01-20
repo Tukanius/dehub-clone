@@ -9,7 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AddTagSheet extends StatefulWidget {
+  final String? text;
+  final String? id;
   const AddTagSheet({
+    this.id,
+    this.text,
     super.key,
   });
 
@@ -29,10 +33,19 @@ class _AddTagSheetState extends State<AddTagSheet> {
         });
         InventoryGoods data =
             InventoryGoods.fromJson(fbKey.currentState!.value);
-        await InventoryApi().tagCreate(data);
-        showCustomDialog(context, 'Таг амжилттай нэмлээ', true, onPressed: () {
-          Navigator.of(context).pop();
-        });
+        if (widget.text == null) {
+          await InventoryApi().tagCreate(data);
+          showCustomDialog(context, 'Таг амжилттай нэмлээ', true,
+              onPressed: () {
+            Navigator.of(context).pop();
+          });
+        } else {
+          await InventoryApi().tagUpdate(widget.id!, data);
+          showCustomDialog(context, 'Таг амжилттай заслаа', true,
+              onPressed: () {
+            Navigator.of(context).pop();
+          });
+        }
         setState(() {
           isSubmit = false;
         });
@@ -135,6 +148,7 @@ class _AddTagSheetState extends State<AddTagSheet> {
                       textColor: productColor,
                       textAlign: TextAlign.end,
                       name: 'text',
+                      initialValue: widget.text ?? '',
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         fillColor: white,

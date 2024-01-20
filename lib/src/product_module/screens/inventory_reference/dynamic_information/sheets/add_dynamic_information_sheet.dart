@@ -154,6 +154,9 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
                             child: Text('Динамик мэдээлэл'),
                           ),
                           FormTextField(
+                            onChanged: (value) {
+                              setState(() {});
+                            },
                             textColor: productColor,
                             textAlign: TextAlign.end,
                             controller: controller,
@@ -275,15 +278,17 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
                           Align(
                             alignment: Alignment.centerRight,
                             child: GestureDetector(
-                              onTap: () {
-                                source.section(
-                                  InventoryGoods(name: controller.text),
-                                  false,
-                                );
-                                setState(() {
-                                  controller.text = '';
-                                });
-                              },
+                              onTap: controller.text != ''
+                                  ? () {
+                                      source.section(
+                                        InventoryGoods(name: controller.text),
+                                        false,
+                                      );
+                                      setState(() {
+                                        controller.text = '';
+                                      });
+                                    }
+                                  : () {},
                               child: Container(
                                 margin: const EdgeInsets.symmetric(
                                     horizontal: 15, vertical: 10),

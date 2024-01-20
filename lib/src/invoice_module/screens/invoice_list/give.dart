@@ -36,7 +36,6 @@ class _GivePageState extends State<GivePage>
     with AfterLayoutMixin, SingleTickerProviderStateMixin {
   List<Invoice> groupedList = [];
   bool isLoading = true;
-  late TabController tabController = TabController(length: 5, vsync: this);
   int page = 1;
   Result invoice = Result(rows: [], count: 0);
   int limit = 10;
@@ -48,7 +47,7 @@ class _GivePageState extends State<GivePage>
   bool startAnimation = false;
   Map<DateTime, List<Invoice>> groupItems = {};
   General general = General();
-  String? invoiceStatus = '';
+  String? selectedStatus = '';
   String search = '';
   InvoiceStatus filterAll = InvoiceStatus(code: '', name: 'Бүгд');
 
@@ -56,7 +55,7 @@ class _GivePageState extends State<GivePage>
     setState(() {
       page += 1;
     });
-    await list(page, limit, '', invoiceStatus!);
+    await list(page, limit, '', selectedStatus!);
     _refreshController.loadComplete();
     setState(() {
       isLoading = false;
@@ -70,7 +69,7 @@ class _GivePageState extends State<GivePage>
       groupItems = {};
     });
     await Future.delayed(const Duration(milliseconds: 1000));
-    await list(page, limit, '', invoiceStatus!);
+    await list(page, limit, '', selectedStatus!);
     _refreshController.refreshCompleted();
     setState(() {
       isLoading = false;
@@ -85,7 +84,7 @@ class _GivePageState extends State<GivePage>
       general.invoiceStatus?.insert(0, filterAll);
     }
     general.invoiceStatus?.removeWhere((element) => element.code == "CLOSED");
-    await list(page, limit, '', invoiceStatus!);
+    await list(page, limit, '', selectedStatus!);
   }
 
   list(int page, int limit, String query, String status) async {
@@ -135,7 +134,7 @@ class _GivePageState extends State<GivePage>
       setState(() {
         isLoading = true;
       });
-      list(page, limit, '', invoiceStatus!);
+      list(page, limit, '', selectedStatus!);
     });
     super.initState();
   }
@@ -148,7 +147,7 @@ class _GivePageState extends State<GivePage>
         startAnimation = false;
         groupItems = {};
       });
-      await list(page, limit, query, invoiceStatus!);
+      await list(page, limit, query, selectedStatus!);
       setState(() {
         isLoading = false;
       });
@@ -210,15 +209,15 @@ class _GivePageState extends State<GivePage>
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: invoiceStatus != general.invoiceStatus?[index].code
+                  onTap: selectedStatus != general.invoiceStatus?[index].code
                       ? () {
                           setState(() {
-                            invoiceStatus = general.invoiceStatus?[index].code;
+                            selectedStatus = general.invoiceStatus?[index].code;
                             isLoading = true;
                             page = 1;
                             groupItems = {};
                           });
-                          list(page, limit, search, invoiceStatus!);
+                          list(page, limit, search, selectedStatus!);
                         }
                       : () {},
                   child: Container(
@@ -226,16 +225,17 @@ class _GivePageState extends State<GivePage>
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(24),
-                      color: invoiceStatus == general.invoiceStatus?[index].code
-                          ? invoiceColor
-                          : Colors.grey.shade100,
+                      color:
+                          selectedStatus == general.invoiceStatus?[index].code
+                              ? invoiceColor
+                              : Colors.grey.shade100,
                     ),
                     child: Center(
                       child: Text(
                         '${general.invoiceStatus?[index].name}',
                         style: TextStyle(
                           fontSize: 12,
-                          color: invoiceStatus ==
+                          color: selectedStatus ==
                                   general.invoiceStatus?[index].code
                               ? white
                               : grey2,

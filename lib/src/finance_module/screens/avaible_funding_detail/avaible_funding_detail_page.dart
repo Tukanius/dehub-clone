@@ -22,7 +22,7 @@ class AvaibleFundingDetailPageArguments {
 }
 
 class AvaibleFundingDetailPage extends StatefulWidget {
-  static const routeName = '/avaiblefundingdetailpage';
+  static const routeName = '/AvaibleFundingDetailPage';
   final String id;
   final String programId;
   const AvaibleFundingDetailPage({
@@ -58,6 +58,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
   @override
   afterFirstLayout(BuildContext context) async {
     final source = Provider.of<FinanceProvider>(context, listen: false);
+    source.clearData();
     get = await FinanceApi()
         .financeableGet(source.url, widget.id, widget.programId);
     setState(() {

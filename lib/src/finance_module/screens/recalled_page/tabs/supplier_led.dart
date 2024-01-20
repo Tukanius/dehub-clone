@@ -1,4 +1,5 @@
 import 'package:dehub/api/finance_api.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/payback_card/payback_card.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/finance_provider.dart';
@@ -105,23 +106,28 @@ class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
             SizedBox(
               height: 25,
             ),
-            Column(
-              children: finance.rows!
-                  .map(
-                    (data) => RePaymentCard(
-                      data: data,
-                      onClick: () {
-                        Navigator.of(context).pushNamed(
-                          RePaymentDetail.routeName,
-                          arguments: RePaymentDetailArguments(
-                            id: data.id,
+            finance.rows?.length != 0
+                ? Column(
+                    children: finance.rows!
+                        .map(
+                          (data) => RePaymentCard(
+                            data: data,
+                            onClick: () {
+                              Navigator.of(context).pushNamed(
+                                RePaymentDetail.routeName,
+                                arguments: RePaymentDetailArguments(
+                                  id: data.id,
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ),
+                        )
+                        .toList(),
                   )
-                  .toList(),
-            )
+                : NotFound(
+                    module: "FINANCE",
+                    labelText: 'Хоосон байна',
+                  ),
           ],
         ),
       ),

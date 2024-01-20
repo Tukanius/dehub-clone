@@ -1,4 +1,5 @@
 import 'package:dehub/components/back_button/back_button.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -123,32 +124,37 @@ class _AvailableFundingPageState extends State<AvailableFundingPage>
                           ),
                         ),
                       )
-                    : Column(
-                        children: [
-                          Column(
-                            children: finance.rows!
-                                .map(
-                                  (data) => AvaibleFundingCard(
-                                    data: data,
-                                    onClick: () {
-                                      Navigator.of(context).pushNamed(
-                                        AvaibleFundingDetailPage.routeName,
-                                        arguments:
-                                            AvaibleFundingDetailPageArguments(
-                                          programId: widget.id,
-                                          id: data.id,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                )
-                                .toList(),
+                    : finance.rows?.length != 0
+                        ? Column(
+                            children: [
+                              Column(
+                                children: finance.rows!
+                                    .map(
+                                      (data) => AvaibleFundingCard(
+                                        data: data,
+                                        onClick: () {
+                                          Navigator.of(context).pushNamed(
+                                            AvaibleFundingDetailPage.routeName,
+                                            arguments:
+                                                AvaibleFundingDetailPageArguments(
+                                              programId: widget.id,
+                                              id: data.id,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                            ],
+                          )
+                        : NotFound(
+                            module: "FINANCE",
+                            labelText: 'Хоосон байна',
                           ),
-                          SizedBox(
-                            height: 40,
-                          ),
-                        ],
-                      ),
               ),
             ),
           ),

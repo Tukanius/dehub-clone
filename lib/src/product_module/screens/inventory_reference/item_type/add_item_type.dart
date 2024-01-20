@@ -10,7 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AddItemType extends StatefulWidget {
+  final InventoryGoods? data;
   const AddItemType({
+    this.data,
     super.key,
   });
 
@@ -24,7 +26,7 @@ class _AddItemTypeState extends State<AddItemType> {
   bool isService = false;
   bool isSubmit = false;
 
-  create() async {
+  onSubmit() async {
     if (fbKey.currentState!.saveAndValidate()) {
       try {
         setState(() {
@@ -34,11 +36,19 @@ class _AddItemTypeState extends State<AddItemType> {
             InventoryGoods.fromJson(fbKey.currentState!.value);
         data.isGoods = isGoods;
         data.isService = isService;
-        await InventoryApi().itemTypeCreate(data);
-        showCustomDialog(context, 'Нэр төрөл амжилттай нэмлээ', true,
-            onPressed: () {
-          Navigator.of(context).pop();
-        });
+        if (widget.data == null) {
+          await InventoryApi().itemTypeCreate(data);
+          showCustomDialog(context, 'Нэр төрөл амжилттай нэмлээ', true,
+              onPressed: () {
+            Navigator.of(context).pop();
+          });
+        } else {
+          await InventoryApi().itemTypeUpdate(widget.data!.id!, data);
+          showCustomDialog(context, 'Нэр төрөл амжилттай заслаа', true,
+              onPressed: () {
+            Navigator.of(context).pop();
+          });
+        }
         setState(() {
           isSubmit = false;
         });
@@ -48,6 +58,15 @@ class _AddItemTypeState extends State<AddItemType> {
         });
       }
     }
+  }
+
+  @override
+  void initState() {
+    if (widget.data != null) {
+      isGoods = widget.data!.isGoods!;
+      isService = widget.data!.isService!;
+    }
+    super.initState();
   }
 
   @override
@@ -106,7 +125,7 @@ class _AddItemTypeState extends State<AddItemType> {
                     onTap: isSubmit == true
                         ? () {}
                         : () {
-                            create();
+                            onSubmit();
                           },
                     child: Container(
                       decoration: BoxDecoration(
@@ -144,6 +163,7 @@ class _AddItemTypeState extends State<AddItemType> {
                       FormTextField(
                         textColor: productColor,
                         textAlign: TextAlign.end,
+                        initialValue: widget.data?.name ?? '',
                         name: 'name',
                         decoration: InputDecoration(
                           border: InputBorder.none,

@@ -9,8 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AddManufacturerSheet extends StatefulWidget {
+  final String? name;
+  final String? id;
   const AddManufacturerSheet({
     super.key,
+    this.name,
+    this.id,
   });
 
   @override
@@ -29,11 +33,19 @@ class _AddManufacturerSheetState extends State<AddManufacturerSheet> {
         });
         InventoryGoods data =
             InventoryGoods.fromJson(fbKey.currentState!.value);
-        await InventoryApi().manufacturerCreate(data);
-        showCustomDialog(context, 'Үйлдвэрлэгч амжилттай нэмлээ', true,
-            onPressed: () {
-          Navigator.of(context).pop();
-        });
+        if (widget.name == null) {
+          await InventoryApi().manufacturerCreate(data);
+          showCustomDialog(context, 'Үйлдвэрлэгч амжилттай нэмлээ', true,
+              onPressed: () {
+            Navigator.of(context).pop();
+          });
+        } else {
+          await InventoryApi().manufacturerUpdate(widget.id!, data);
+          showCustomDialog(context, 'Үйлдвэрлэгч амжилттай заслаа', true,
+              onPressed: () {
+            Navigator.of(context).pop();
+          });
+        }
         setState(() {
           isSubmit = false;
         });
@@ -133,6 +145,7 @@ class _AddManufacturerSheetState extends State<AddManufacturerSheet> {
                       child: Text('Энд бичээд "Хадгалах" сонгоно уу'),
                     ),
                     FormTextField(
+                      initialValue: widget.name ?? '',
                       textColor: productColor,
                       textAlign: TextAlign.end,
                       name: 'name',

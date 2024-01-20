@@ -1,3 +1,4 @@
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/program_card/program_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/providers/finance_provider.dart';
@@ -82,23 +83,28 @@ class _BuyerLedState extends State<BuyerLed> with AfterLayoutMixin {
                   SizedBox(
                     height: 15,
                   ),
-                  Column(
-                    children: finance.rows!
-                        .map(
-                          (data) => ProgramCard(
-                            onClick: () {
-                              source.productType('BUYER_LED');
-                              Navigator.of(context).pushNamed(
-                                AvailableFundingPage.routeName,
-                                arguments:
-                                    AvailableFundingPageArguments(id: data.id),
-                              );
-                            },
-                            data: data,
-                          ),
+                  finance.rows?.length != 0
+                      ? Column(
+                          children: finance.rows!
+                              .map(
+                                (data) => ProgramCard(
+                                  onClick: () {
+                                    source.productType('BUYER_LED');
+                                    Navigator.of(context).pushNamed(
+                                      AvailableFundingPage.routeName,
+                                      arguments: AvailableFundingPageArguments(
+                                          id: data.id),
+                                    );
+                                  },
+                                  data: data,
+                                ),
+                              )
+                              .toList(),
                         )
-                        .toList(),
-                  ),
+                      : NotFound(
+                          module: "FINANCE",
+                          labelText: 'Хоосон байна',
+                        ),
                 ],
               ),
       ),
