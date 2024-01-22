@@ -9,7 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AddUnitSheet extends StatefulWidget {
+  final String? name;
+  final String? id;
   const AddUnitSheet({
+    this.name,
+    this.id,
     super.key,
   });
 
@@ -29,11 +33,19 @@ class _AddUnitSheetState extends State<AddUnitSheet> {
         });
         InventoryGoods data =
             InventoryGoods.fromJson(fbKey.currentState!.value);
-        await InventoryApi().unitCreate(data);
-        showCustomDialog(context, 'Хэмжих нэгж амжилттай нэмлээ', true,
-            onPressed: () {
-          Navigator.of(context).pop();
-        });
+        if (widget.name == null) {
+          await InventoryApi().unitCreate(data);
+          showCustomDialog(context, 'Хэмжих нэгж амжилттай нэмлээ', true,
+              onPressed: () {
+            Navigator.of(context).pop();
+          });
+        } else {
+          await InventoryApi().unitUpdate(widget.id!, data);
+          showCustomDialog(context, 'Хэмжих нэгж амжилттай заслаа', true,
+              onPressed: () {
+            Navigator.of(context).pop();
+          });
+        }
         setState(() {
           isSubmit = false;
         });
@@ -136,6 +148,7 @@ class _AddUnitSheetState extends State<AddUnitSheet> {
                       textColor: productColor,
                       textAlign: TextAlign.end,
                       name: 'name',
+                      initialValue: widget.name ?? '',
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         fillColor: white,

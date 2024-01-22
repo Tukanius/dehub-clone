@@ -144,7 +144,7 @@ class _AddPriceTiersState extends State<AddPriceTiers> {
                     FormTextField(
                       textColor: productColor,
                       textAlign: TextAlign.end,
-                      name: 'name',
+                      name: 'priceTier',
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         fillColor: white,

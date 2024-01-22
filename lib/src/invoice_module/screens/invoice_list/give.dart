@@ -164,7 +164,7 @@ class _GivePageState extends State<GivePage>
       backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text(
-          'Борлуулалтын нэхэмжлэл',
+          'Нээлттэй нэхэмжлэх',
           style: TextStyle(
             fontSize: 17,
             color: invoiceColor,

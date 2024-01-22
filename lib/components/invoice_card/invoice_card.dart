@@ -146,45 +146,30 @@ class _InvoiceCardState extends State<InvoiceCard> {
                         children: [
                           widget.isClosed == false
                               ? Expanded(
-                                  child:
-                                      user.currentBusiness?.type == "SUPPLIER"
-                                          ? Text(
-                                              '${widget.data?.receiverBusiness?.partner?.businessName}',
-                                              style: TextStyle(
-                                                color: black,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            )
-                                          : Text(
-                                              '${widget.data?.senderBusiness?.partner?.businessName}',
-                                              style: TextStyle(
-                                                color: black,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                )
-                              : user.currentBusiness?.type == "SUPPLIER" &&
-                                          widget.data?.type == "SALES" ||
-                                      user.currentBusiness?.type == "BUYER" &&
-                                          widget.data?.type == "PURCHASE"
-                                  ? Expanded(
-                                      child: Text(
-                                        '${widget.data?.receiverBusiness?.partner?.businessName}',
-                                        style: TextStyle(
-                                          color: black,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    )
-                                  : Expanded(
-                                      child: Text(
-                                        '${widget.data?.senderBusiness?.partner?.businessName}',
-                                        style: TextStyle(
-                                          color: black,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
+                                  child: Text(
+                                  user.currentBusiness?.type == "SUPPLIER"
+                                      ? '${widget.data?.receiverBusiness?.profileName}'
+                                      : '${widget.data?.senderBusiness?.profileName}',
+                                  style: TextStyle(
+                                    color: black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ))
+                              : Expanded(
+                                  child: Text(
+                                    user.currentBusiness?.type == "SUPPLIER" &&
+                                                widget.data?.type == "SALES" ||
+                                            user.currentBusiness?.type ==
+                                                    "BUYER" &&
+                                                widget.data?.type == "PURCHASE"
+                                        ? '${widget.data?.receiverBusiness?.profileName}'
+                                        : '${widget.data?.senderBusiness?.profileName}',
+                                    style: TextStyle(
+                                      color: black,
+                                      fontWeight: FontWeight.w500,
                                     ),
+                                  ),
+                                ),
                           Expanded(
                             child: Text(
                               '${Utils().formatCurrency(widget.data!.amountToPay.toString())}₮',

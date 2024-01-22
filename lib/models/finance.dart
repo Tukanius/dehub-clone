@@ -152,8 +152,16 @@ class Finance {
   String? bankName;
   List<Finance>? invoices;
   String? contractFile;
+  String? paymentStatus;
+  double? minInvAmount;
+  double? minOfInv;
+  double? maxOfInv;
 
   Finance({
+    this.minInvAmount,
+    this.minOfInv,
+    this.maxOfInv,
+    this.paymentStatus,
     this.contractFile,
     this.invoices,
     this.bankName,

@@ -1,16 +1,19 @@
 import 'dart:io';
-import 'package:dehub/api/auth_api.dart';
+import 'package:dehub/api/finance_api.dart';
 import 'package:dehub/components/custom_switch/custom_switch.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/finance_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:intl/intl.dart';
 
 class RequestTab extends StatefulWidget {
   final Finance data;
@@ -51,7 +54,7 @@ class _RequestTabState extends State<RequestTab> {
           isFileEmpty = false;
         });
         debugPrint("File name $fileName");
-        user = await AuthApi().uploadFile(pickedFile!);
+        user = await FinanceApi().uploadFile(source.url, pickedFile!);
         source.contractFile(user.url.toString());
       }
       setState(() {
@@ -65,6 +68,7 @@ class _RequestTabState extends State<RequestTab> {
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<FinanceProvider>(context, listen: true);
+    user = Provider.of<UserProvider>(context, listen: true).financeUser;
 
     return GestureDetector(
       onTap: () {
@@ -97,23 +101,9 @@ class _RequestTabState extends State<RequestTab> {
               paddingVertical: 10,
               color: white,
               labelText: 'Хүсэлтийн төрөл',
-              secondText: 'Эрт санхүүжилт',
-              secondTextColor: source.currentColor,
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              color: white,
-              labelText: 'Нийлүүлэгч код',
-              secondText: 'Supplier_Ref#',
-              secondTextColor: source.currentColor,
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              color: white,
-              labelText: 'Нийлүүлэгч',
-              secondText: 'Supplier_Name',
+              secondText: user.currentBusiness?.type == "SUPPLIER"
+                  ? 'Эрт санхүүжилт'
+                  : "Дараа төлөлт",
               secondTextColor: source.currentColor,
             ),
             FieldCard(
@@ -121,7 +111,8 @@ class _RequestTabState extends State<RequestTab> {
               paddingVertical: 10,
               color: white,
               labelText: 'Хүсэлт гаргасан',
-              secondText: 'UserName_Supplier',
+              secondText:
+                  '${user.currentBusiness?.profileName}, ${user.currentBusiness?.refCode}',
               secondTextColor: source.currentColor,
             ),
             FieldCard(
@@ -129,15 +120,7 @@ class _RequestTabState extends State<RequestTab> {
               paddingVertical: 10,
               color: white,
               labelText: 'Хүсэлтийн огноо',
-              secondText: 'Request_Datetime',
-              secondTextColor: source.currentColor,
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              color: white,
-              labelText: 'Хариу өгөх хугацаа',
-              secondText: 'Response_date',
+              secondText: '${DateFormat('yyyy-MM-dd').format(DateTime.now())}',
               secondTextColor: source.currentColor,
             ),
             Container(
@@ -171,7 +154,7 @@ class _RequestTabState extends State<RequestTab> {
               paddingVertical: 10,
               color: white,
               labelText: 'Хөтөлбөрийн нэр',
-              secondText: 'ProgramName',
+              secondText: '${widget.data.program?.name}',
               secondTextColor: source.currentColor,
               onClick: () {},
             ),
@@ -180,7 +163,7 @@ class _RequestTabState extends State<RequestTab> {
               paddingVertical: 10,
               color: white,
               labelText: 'Бүтээгдэхүүн',
-              secondText: 'SCF_Prod021',
+              secondText: '${widget.data.program?.product?.name}',
               secondTextColor: source.currentColor,
               onClick: () {},
             ),
@@ -254,7 +237,8 @@ class _RequestTabState extends State<RequestTab> {
               paddingVertical: 10,
               color: white,
               labelText: 'Боломжит доод дүн',
-              secondText: 'Fin_Min_Amount',
+              secondText:
+                  '${Utils().formatCurrency(((widget.data.amountToPay! * widget.data.program!.product!.minOfInv!) / 100).toString())}₮',
               secondTextColor: source.currentColor,
             ),
             FieldCard(
@@ -262,31 +246,33 @@ class _RequestTabState extends State<RequestTab> {
               paddingVertical: 10,
               color: white,
               labelText: 'Боломжит дээд дүн',
-              secondText: 'Fin_Max_Amount',
+              secondText:
+                  '${Utils().formatCurrency(((widget.data.amountToPay! * widget.data.program!.product!.maxOfInv!) / 100).toString())}₮',
               secondTextColor: source.currentColor,
             ),
             FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
-              labelText: 'Нэх доод үлдэгдэл',
-              secondText: 'Min_Inv_Balance',
+              labelText: 'Нэхэмжлэхийн доод үлдэгдэл',
+              secondText:
+                  '${Utils().formatCurrency(widget.data.program?.product?.minInvAmount.toString())}₮',
               secondTextColor: source.currentColor,
             ),
             FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
-              labelText: 'Нэх мах.тенор',
-              secondText: 'Max_Tenor',
+              labelText: 'Нэхэмжлэхийн мах.тенор',
+              secondText: '${widget.data.program?.product?.maxTenor?.toInt()}',
               secondTextColor: source.currentColor,
             ),
             FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
-              labelText: 'Нэх min.тенор',
-              secondText: 'Min_Tenor',
+              labelText: 'Нэхэмжлэхийн min.тенор',
+              secondText: '${widget.data.program?.product?.minTenor?.toInt()}',
               secondTextColor: source.currentColor,
             ),
             FieldCard(
@@ -467,7 +453,7 @@ class _RequestTabState extends State<RequestTab> {
               secondText: 'Хэвийн',
               secondTextColor: source.currentColor,
             ),
-            source.finance.productType != "BUYER_LED"
+            source.finance.productType == "BUYER_LED"
                 ? Container(
                     margin: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 15),
@@ -480,7 +466,7 @@ class _RequestTabState extends State<RequestTab> {
                     ),
                   )
                 : SizedBox(),
-            source.finance.productType != "BUYER_LED"
+            source.finance.productType == "BUYER_LED"
                 ? GestureDetector(
                     onTap: () {
                       pickFile();

@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -9,8 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AddInActiveType extends StatefulWidget {
+  final String? text;
+  final String? id;
+  final ListenController listenController;
   const AddInActiveType({
     super.key,
+    this.text,
+    this.id,
+    required this.listenController,
   });
 
   @override
@@ -29,11 +36,20 @@ class _AddInActiveTypeState extends State<AddInActiveType> {
         });
         InventoryGoods data =
             InventoryGoods.fromJson(fbKey.currentState!.value);
-        await InventoryApi().inactiveTypeCreate(data);
-        showCustomDialog(context, 'Хэмжих нэгж амжилттай нэмлээ', true,
-            onPressed: () {
-          Navigator.of(context).pop();
-        });
+        if (widget.text == null) {
+          await InventoryApi().inactiveTypeCreate(data);
+          showCustomDialog(context, 'Хэмжих нэгж амжилттай нэмлээ', true,
+              onPressed: () {
+            Navigator.of(context).pop();
+          });
+        } else {
+          await InventoryApi().inactiveTypeUpdate(widget.id!, data);
+          showCustomDialog(context, 'Хэмжих нэгж амжилттай заслаа', true,
+              onPressed: () {
+            Navigator.of(context).pop();
+          });
+        }
+        widget.listenController.changeVariable('inactiveType');
         setState(() {
           isSubmit = false;
         });
@@ -136,6 +152,7 @@ class _AddInActiveTypeState extends State<AddInActiveType> {
                       textColor: productColor,
                       textAlign: TextAlign.end,
                       name: 'text',
+                      initialValue: widget.text ?? '',
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         fillColor: white,

@@ -400,6 +400,18 @@ class InventoryApi extends HttpRequest {
     return Result.fromJson(res, InventoryGoods.fromJson);
   }
 
+  Future<InventoryGoods> packageTypeUpdate(
+      String id, InventoryGoods data) async {
+    var res =
+        await put('/package_type/$id', "INVENTORY", true, data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<InventoryGoods> packageTypeDelete(String id) async {
+    var res = await del('/package_type/$id', "INVENTORY", true);
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
   Future<InventoryGoods> packageTypeCreate(InventoryGoods data) async {
     var res =
         await post('/package_type', "INVENTORY", true, data: data.toJson());
@@ -418,10 +430,34 @@ class InventoryApi extends HttpRequest {
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
   }
 
+  Future<InventoryGoods> deliveryTypeUpdate(
+      String id, InventoryGoods data) async {
+    var res =
+        await put('/delivery_type/$id', "INVENTORY", true, data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<InventoryGoods> deliveryTypeDelete(String id) async {
+    var res = await del('/delivery_type/$id', "INVENTORY", true);
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
   Future<Result> inactiveTypeList(ResultArguments resultArguments) async {
     var res = await get('/inactive_type', "INVENTORY", true,
         data: resultArguments.toJson());
     return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<InventoryGoods> inactiveTypeUpdate(
+      String id, InventoryGoods data) async {
+    var res =
+        await put('/inactive_type/$id', "INVENTORY", true, data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<InventoryGoods> inactiveTypeDel(String id) async {
+    var res = await del('/inactive_type/$id', "INVENTORY", true);
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
   }
 
   Future<InventoryGoods> inactiveTypeCreate(InventoryGoods data) async {
@@ -439,6 +475,18 @@ class InventoryApi extends HttpRequest {
   Future<InventoryGoods> adjustmentNoteCreate(InventoryGoods data) async {
     var res =
         await post('/adjustment_note', "INVENTORY", true, data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<InventoryGoods> adjustmentNoteUpdate(
+      String id, InventoryGoods data) async {
+    var res = await put('/adjustment_note/$id', "INVENTORY", true,
+        data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<InventoryGoods> adjustmentNoteDel(String id) async {
+    var res = await del('/adjustment_note/$id', "INVENTORY", true);
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
   }
 }

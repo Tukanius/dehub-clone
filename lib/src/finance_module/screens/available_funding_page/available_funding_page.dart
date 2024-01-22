@@ -109,54 +109,55 @@ class _AvailableFundingPageState extends State<AvailableFundingPage>
             ),
           ),
           Expanded(
-            child: Refresher(
-              refreshController: refreshController,
-              onLoading: onLoading,
-              onRefresh: onRefresh,
-              color: source.currentColor,
-              child: SingleChildScrollView(
-                child: isLoading == true
-                    ? Container(
-                        margin: const EdgeInsets.only(top: 30),
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: source.currentColor,
-                          ),
-                        ),
-                      )
-                    : finance.rows?.length != 0
-                        ? Column(
-                            children: [
-                              Column(
-                                children: finance.rows!
-                                    .map(
-                                      (data) => AvaibleFundingCard(
-                                        data: data,
-                                        onClick: () {
-                                          Navigator.of(context).pushNamed(
-                                            AvaibleFundingDetailPage.routeName,
-                                            arguments:
-                                                AvaibleFundingDetailPageArguments(
-                                              programId: widget.id,
-                                              id: data.id,
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    )
-                                    .toList(),
-                              ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                            ],
-                          )
-                        : NotFound(
-                            module: "FINANCE",
-                            labelText: 'Хоосон байна',
-                          ),
-              ),
-            ),
+            child: isLoading == true
+                ? Container(
+                    margin: const EdgeInsets.only(top: 30),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: source.currentColor,
+                      ),
+                    ),
+                  )
+                : Refresher(
+                    refreshController: refreshController,
+                    onLoading: onLoading,
+                    onRefresh: onRefresh,
+                    color: source.currentColor,
+                    child: SingleChildScrollView(
+                      child: finance.rows?.length != 0
+                          ? Column(
+                              children: [
+                                Column(
+                                  children: finance.rows!
+                                      .map(
+                                        (data) => AvaibleFundingCard(
+                                          data: data,
+                                          onClick: () {
+                                            Navigator.of(context).pushNamed(
+                                              AvaibleFundingDetailPage
+                                                  .routeName,
+                                              arguments:
+                                                  AvaibleFundingDetailPageArguments(
+                                                programId: widget.id,
+                                                id: data.id,
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                                SizedBox(
+                                  height: 40,
+                                ),
+                              ],
+                            )
+                          : NotFound(
+                              module: "FINANCE",
+                              labelText: 'Хоосон байна',
+                            ),
+                    ),
+                  ),
           ),
         ],
       ),

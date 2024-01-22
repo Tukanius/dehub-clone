@@ -1,6 +1,8 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
+import 'package:dehub/components/update_sheet/update_sheet.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
@@ -31,6 +33,7 @@ class _InActiveTypesState extends State<InActiveTypes> with AfterLayoutMixin {
   Map<String, List<InventoryGoods>> groupItems = {};
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
+  ListenController listenController = ListenController();
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
@@ -96,6 +99,43 @@ class _InActiveTypesState extends State<InActiveTypes> with AfterLayoutMixin {
     list(page, limit);
   }
 
+  update(InventoryGoods data) {
+    updateSheet(context, updateClick: () {
+      Navigator.of(context).pop();
+      showModalBottomSheet(
+        context: context,
+        useSafeArea: true,
+        builder: (context) => AddInActiveType(
+          listenController: listenController,
+          id: data.id,
+          text: data.text,
+        ),
+      );
+    }, deleteClick: () async {
+      await InventoryApi().inactiveTypeDel(data.id!);
+      setState(() {
+        isLoading = true;
+        groupItems = {};
+        page = 1;
+      });
+      await list(page, limit);
+      Navigator.of(context).pop();
+    });
+  }
+
+  @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        isLoading = true;
+        groupItems = {};
+        page = 1;
+      });
+      await list(page, limit);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).inventoryMe;
@@ -119,7 +159,9 @@ class _InActiveTypesState extends State<InActiveTypes> with AfterLayoutMixin {
           showModalBottomSheet(
             context: context,
             useSafeArea: true,
-            builder: (context) => AddInActiveType(),
+            builder: (context) => AddInActiveType(
+              listenController: listenController,
+            ),
           );
         },
         shape: CircleBorder(),
@@ -178,13 +220,22 @@ class _InActiveTypesState extends State<InActiveTypes> with AfterLayoutMixin {
                                                   '${item.text}',
                                                   style: TextStyle(color: dark),
                                                 ),
-                                                SvgPicture.asset(
-                                                  'assets/svg/edit_rounded.svg',
-                                                  colorFilter: ColorFilter.mode(
-                                                    productColor,
-                                                    BlendMode.srcIn,
-                                                  ),
-                                                ),
+                                                data.businessId ==
+                                                        user.currentBusinessId
+                                                    ? GestureDetector(
+                                                        onTap: () {
+                                                          update(item);
+                                                        },
+                                                        child: SvgPicture.asset(
+                                                          'assets/svg/edit_rounded.svg',
+                                                          colorFilter:
+                                                              ColorFilter.mode(
+                                                            productColor,
+                                                            BlendMode.srcIn,
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : SizedBox(),
                                               ],
                                             ),
                                           ),

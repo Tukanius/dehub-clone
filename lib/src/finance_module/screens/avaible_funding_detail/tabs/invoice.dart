@@ -33,6 +33,26 @@ class _InvoiceTabState extends State<InvoiceTab> {
   Finance buyerFinUser = Finance();
   Finance supplierFinUser = Finance();
 
+  invoiceStatus() {
+    final res = general.invoiceStatus!
+        .firstWhere((element) => element.code == widget.data.invoiceStatus)
+        .name;
+    return res;
+  }
+
+  overdueStatus() {
+    final res = general.invoiceOverdueStatus!
+        .firstWhere((element) => element.code == widget.data.overdueStatus);
+    return res;
+  }
+
+  paymentStatus() {
+    final res = general.invoicePaymentStatus!
+        .firstWhere((element) => element.code == widget.data.paymentStatus)
+        .name;
+    return res;
+  }
+
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<FinanceProvider>(context, listen: true);
@@ -163,7 +183,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Text(
-                      'Баталсан',
+                      '${invoiceStatus()}',
                       style: TextStyle(
                         color: Color(0xff2290FF),
                       ),
@@ -190,7 +210,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Text(
-                      'Хуваан төлсөн',
+                      '${paymentStatus()}',
                       style: TextStyle(
                         color: Color(0xff4169E1),
                       ),
@@ -213,12 +233,21 @@ class _InvoiceTabState extends State<InvoiceTab> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                     decoration: BoxDecoration(
-                      color: green.withOpacity(0.2),
+                      color: Color(int.parse(
+                                  overdueStatus().color.substring(1, 7),
+                                  radix: 16) +
+                              0xff000000)
+                          .withOpacity(0.2),
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Text(
-                      'Normal',
-                      style: TextStyle(color: green),
+                      '${overdueStatus().name}',
+                      style: TextStyle(
+                        color: Color(int.parse(
+                                overdueStatus().color.substring(1, 7),
+                                radix: 16) +
+                            0xff000000),
+                      ),
                     ),
                   ),
                 ],

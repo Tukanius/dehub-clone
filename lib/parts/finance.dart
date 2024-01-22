@@ -29,6 +29,8 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         ? DateTime.parse(json['sentDate'].toString())
         : null,
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
+    paymentStatus:
+        json['paymentStatus'] != null ? json['paymentStatus'] as String : null,
     contractFile:
         json['contractFile'] != null ? json['contractFile'] as String : null,
     bankName: json['bankName'] != null ? json['bankName'] as String : null,
@@ -63,6 +65,15 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         json['parentRefCode'] != null ? json['parentRefCode'] as String : null,
     invCount: json['invCount'] != null
         ? double.parse(json['invCount'].toString())
+        : null,
+    minInvAmount: json['minInvAmount'] != null
+        ? double.parse(json['minInvAmount'].toString())
+        : null,
+    minOfInv: json['minOfInv'] != null
+        ? double.parse(json['minOfInv'].toString())
+        : null,
+    maxOfInv: json['maxOfInv'] != null
+        ? double.parse(json['maxOfInv'].toString())
         : null,
     confirmedAmount: json['confirmedAmount'] != null
         ? double.parse(json['confirmedAmount'].toString())
@@ -392,6 +403,12 @@ Map<String, dynamic> _$FinanceToJson(Finance instance) {
 
   if (instance.senderFinUser != null)
     json['senderFinUser'] = instance.senderFinUser;
+  if (instance.minOfInv != null) json['minOfInv'] = instance.minOfInv;
+  if (instance.minInvAmount != null)
+    json['minInvAmount'] = instance.minInvAmount;
+  if (instance.maxOfInv != null) json['maxOfInv'] = instance.maxOfInv;
+  if (instance.paymentStatus != null)
+    json['paymentStatus'] = instance.paymentStatus;
   if (instance.contractFile != null)
     json['contractFile'] = instance.contractFile;
   if (instance.invoices != null) json['invoices'] = instance.invoices;

@@ -4,14 +4,18 @@ import 'package:dehub/components/invoice_card/invoice_card.dart';
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/invoice_empty/invoice_empty.dart';
 import 'package:dehub/components/search_button/search_button.dart';
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
+import 'package:dehub/models/invoice_status.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class ClosedInvoicePage extends StatefulWidget {
   static const routeName = '/ClosedInvoicePage';
@@ -33,6 +37,7 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
   bool startAnimation = false;
   List<Invoice> groupedList = [];
   Map<DateTime, List<Invoice>> groupItems = {};
+  General general = General();
 
   list(page, limit, String query) async {
     Filter filter = Filter(query: '$query');
@@ -77,6 +82,13 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
   @override
   afterFirstLayout(BuildContext context) {
     list(page, limit, '');
+    int index = general.invoiceStatus!
+        .indexWhere((element) => element.code == "CLOSED");
+    if (index < 0) {
+      general.invoiceStatus?.add(
+        InvoiceStatus(code: "CLOSED", name: "Хаасан", color: "#01C129"),
+      );
+    }
   }
 
   onChange(String query) async {
@@ -119,6 +131,8 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
 
   @override
   Widget build(BuildContext context) {
+    general =
+        Provider.of<GeneralProvider>(context, listen: true).invoiceGeneral;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(

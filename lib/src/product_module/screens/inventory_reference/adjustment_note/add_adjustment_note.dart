@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -9,8 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AddAdjustmentNote extends StatefulWidget {
+  final String? name;
+  final String? id;
+  final ListenController listenController;
   const AddAdjustmentNote({
     super.key,
+    this.name,
+    this.id,
+    required this.listenController,
   });
 
   @override
@@ -29,11 +36,20 @@ class _AddAdjustmentNoteState extends State<AddAdjustmentNote> {
         });
         InventoryGoods data =
             InventoryGoods.fromJson(fbKey.currentState!.value);
-        await InventoryApi().adjustmentNoteCreate(data);
-        showCustomDialog(context, 'Хэмжих нэгж амжилттай нэмлээ', true,
-            onPressed: () {
-          Navigator.of(context).pop();
-        });
+        if (widget.name == null) {
+          await InventoryApi().adjustmentNoteCreate(data);
+          showCustomDialog(context, 'Хэмжих нэгж амжилттай нэмлээ', true,
+              onPressed: () {
+            Navigator.of(context).pop();
+          });
+        } else {
+          await InventoryApi().adjustmentNoteUpdate(widget.id!, data);
+          showCustomDialog(context, 'Хэмжих нэгж амжилттай заслаа', true,
+              onPressed: () {
+            Navigator.of(context).pop();
+          });
+        }
+        widget.listenController.changeVariable('adjustmentNote');
         setState(() {
           isSubmit = false;
         });
@@ -136,6 +152,7 @@ class _AddAdjustmentNoteState extends State<AddAdjustmentNote> {
                       textColor: productColor,
                       textAlign: TextAlign.end,
                       name: 'name',
+                      initialValue: widget.name ?? '',
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         fillColor: white,

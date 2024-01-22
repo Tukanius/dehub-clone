@@ -9,7 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AddPackageType extends StatefulWidget {
+  final String? name;
+  final String? id;
   const AddPackageType({
+    this.name,
+    this.id,
     super.key,
   });
 
@@ -29,11 +33,19 @@ class _AddPackageTypeState extends State<AddPackageType> {
         });
         InventoryGoods data =
             InventoryGoods.fromJson(fbKey.currentState!.value);
-        await InventoryApi().packageTypeCreate(data);
-        showCustomDialog(context, 'Сав баглаа боодол амжилттай нэмлээ', true,
-            onPressed: () {
-          Navigator.of(context).pop();
-        });
+        if (widget.name == null) {
+          await InventoryApi().packageTypeCreate(data);
+          showCustomDialog(context, 'Сав баглаа боодол амжилттай нэмлээ', true,
+              onPressed: () {
+            Navigator.of(context).pop();
+          });
+        } else {
+          await InventoryApi().packageTypeUpdate(widget.id!, data);
+          showCustomDialog(context, 'Сав баглаа боодол амжилттай заслаа', true,
+              onPressed: () {
+            Navigator.of(context).pop();
+          });
+        }
         setState(() {
           isSubmit = false;
         });
@@ -133,6 +145,7 @@ class _AddPackageTypeState extends State<AddPackageType> {
                       child: Text('Энд бичээд "Хадгалах" сонгоно уу'),
                     ),
                     FormTextField(
+                      initialValue: widget.name ?? '',
                       textColor: productColor,
                       textAlign: TextAlign.end,
                       name: 'name',
