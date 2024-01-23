@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 
 class InventoryReferencePage extends StatefulWidget {
   static const routeName = '/InventoryReferencePage';
-  const InventoryReferencePage({Key? key}) : super(key: key);
+  const InventoryReferencePage({super.key});
 
   @override
   State<InventoryReferencePage> createState() => InventoryReferencePageState();
@@ -32,8 +32,8 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
       appBar: AppBar(
         surfaceTintColor: white,
         backgroundColor: white,
-        iconTheme: IconThemeData(color: productColor),
-        title: Text(
+        iconTheme: const IconThemeData(color: productColor),
+        title: const Text(
           'Лавлах жагсаалт',
           style: TextStyle(
             color: productColor,
@@ -47,7 +47,7 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
           children: [
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Лавлах мэдээллийг сонгоно уу',
               ),
             ),
@@ -187,7 +187,7 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
                 Navigator.of(context).pushNamed(AdjustmentNote.routeName);
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
           ],

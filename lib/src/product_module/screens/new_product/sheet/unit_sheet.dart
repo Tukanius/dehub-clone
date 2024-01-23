@@ -68,7 +68,7 @@ class _UnitSheetState extends State<UnitSheet> with AfterLayoutMixin {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: productColor,
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(20),
@@ -77,7 +77,7 @@ class _UnitSheetState extends State<UnitSheet> with AfterLayoutMixin {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Хэмжих нэгж сонгоно уу',
                 style: TextStyle(
                   color: white,
@@ -99,107 +99,105 @@ class _UnitSheetState extends State<UnitSheet> with AfterLayoutMixin {
         ),
         Expanded(
           child: SingleChildScrollView(
-            child: Container(
-              child: Column(
-                children: [
-                  isLoading == true
-                      ? SizedBox()
-                      : Row(
-                          children: [
-                            Expanded(
-                              child: FormTextField(
-                                controller: controller,
-                                onChanged: (value) {
-                                  setState(() {});
-                                },
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.zero,
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 0, horizontal: 15),
-                                  isDense: false,
-                                  hintText: 'Энд бичээд нэмнэ үү',
+            child: Column(
+              children: [
+                isLoading == true
+                    ? const SizedBox()
+                    : Row(
+                        children: [
+                          Expanded(
+                            child: FormTextField(
+                              controller: controller,
+                              onChanged: (value) {
+                                setState(() {});
+                              },
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.zero,
                                 ),
-                                name: 'asdf',
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 15),
+                                isDense: false,
+                                hintText: 'Энд бичээд нэмнэ үү',
                               ),
+                              name: 'asdf',
                             ),
-                            GestureDetector(
-                              onTap: controller.text != ''
-                                  ? () {
-                                      create();
-                                      setState(() {
-                                        controller.text = '';
-                                      });
-                                    }
-                                  : () {},
-                              child: Container(
-                                margin: const EdgeInsets.only(right: 15),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: Color(0xffEAECEE),
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.add,
+                          ),
+                          GestureDetector(
+                            onTap: controller.text != ''
+                                ? () {
+                                    create();
+                                    setState(() {
+                                      controller.text = '';
+                                    });
+                                  }
+                                : () {},
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 15),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: const Color(0xffEAECEE),
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.add,
+                                    color: controller.text != ''
+                                        ? productColor
+                                        : grey3.withOpacity(0.5),
+                                    size: 14,
+                                  ),
+                                  Text(
+                                    'Нэмэх',
+                                    style: TextStyle(
                                       color: controller.text != ''
                                           ? productColor
                                           : grey3.withOpacity(0.5),
-                                      size: 14,
-                                    ),
-                                    Text(
-                                      'Нэмэх',
-                                      style: TextStyle(
-                                        color: controller.text != ''
-                                            ? productColor
-                                            : grey3.withOpacity(0.5),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                  isLoading == true
-                      ? Center(
-                          child: CircularProgressIndicator(
-                            color: productColor,
-                          ),
-                        )
-                      : Column(
-                          children: unit.rows!
-                              .map(
-                                (data) => InkWell(
-                                  onLongPress: () {
-                                    show(data.id, data.name);
-                                  },
-                                  onTap: () {
-                                    source.units(data.name, data.id);
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 10),
-                                    child: Text(
-                                      data.name,
                                     ),
                                   ),
-                                ),
-                              )
-                              .toList(),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                isLoading == true
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: productColor,
                         ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                ],
-              ),
+                      )
+                    : Column(
+                        children: unit.rows!
+                            .map(
+                              (data) => InkWell(
+                                onLongPress: () {
+                                  show(data.id, data.name);
+                                },
+                                onTap: () {
+                                  source.units(data.name, data.id);
+                                  Navigator.of(context).pop();
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 10),
+                                  child: Text(
+                                    data.name,
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                const SizedBox(
+                  height: 40,
+                ),
+              ],
             ),
           ),
         ),
@@ -210,7 +208,7 @@ class _UnitSheetState extends State<UnitSheet> with AfterLayoutMixin {
   show(String id, String name) {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -222,7 +220,7 @@ class _UnitSheetState extends State<UnitSheet> with AfterLayoutMixin {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text('${name}'),
+              Text(name),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -234,7 +232,7 @@ class _UnitSheetState extends State<UnitSheet> with AfterLayoutMixin {
                     child: Container(
                       color: transparent,
                       padding: const EdgeInsets.all(10),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Icon(
                             Icons.edit_note_sharp,
@@ -257,7 +255,7 @@ class _UnitSheetState extends State<UnitSheet> with AfterLayoutMixin {
                     child: Container(
                       color: transparent,
                       padding: const EdgeInsets.all(10),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Icon(
                             Icons.delete_outline_outlined,
@@ -297,14 +295,14 @@ class _UnitSheetState extends State<UnitSheet> with AfterLayoutMixin {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text(
+                const Text(
                   'Нэр солих',
                   style: TextStyle(
                     color: grey3,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Material(
@@ -312,12 +310,12 @@ class _UnitSheetState extends State<UnitSheet> with AfterLayoutMixin {
                     key: fbKey,
                     child: FormTextField(
                       name: 'name',
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Нэр оруулна уу',
                         fillColor: white,
                         isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 12),
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 12),
                         filled: true,
                         border: OutlineInputBorder(
                           borderSide: BorderSide(color: grey),
@@ -330,7 +328,7 @@ class _UnitSheetState extends State<UnitSheet> with AfterLayoutMixin {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Row(

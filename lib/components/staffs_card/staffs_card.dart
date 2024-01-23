@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 class StaffsCard extends StatefulWidget {
   final BusinessNetwork? data;
   const StaffsCard({
-    Key? key,
+    super.key,
     this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<StaffsCard> createState() => _StaffsCardState();
@@ -23,17 +23,17 @@ class _StaffsCardState extends State<StaffsCard> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             backgroundColor: grey,
             radius: 20,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Ажилтны нэр',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -43,14 +43,14 @@ class _StaffsCardState extends State<StaffsCard> {
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 5),
-                child: Text(
+                child: const Text(
                   'Ажилтны мэйл',
                   style: TextStyle(
                     color: dark,
                   ),
                 ),
               ),
-              Text(
+              const Text(
                 'Ажилтны утас',
                 style: TextStyle(
                   color: dark,

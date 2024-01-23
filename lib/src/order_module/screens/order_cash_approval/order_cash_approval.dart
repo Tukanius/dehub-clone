@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class OrderCashApproval extends StatefulWidget {
   static const routeName = '/OrderCashApproval';
-  const OrderCashApproval({Key? key}) : super(key: key);
+  const OrderCashApproval({super.key});
 
   @override
   State<OrderCashApproval> createState() => _OrderCashApprovalState();
@@ -19,7 +19,7 @@ class _OrderCashApprovalState extends State<OrderCashApproval> {
         backgroundColor: orderColor,
         surfaceTintColor: orderColor,
         elevation: 0,
-        title: Text(
+        title: const Text(
           "Бэлэн төлбөр батлах",
           style: TextStyle(
             color: white,
@@ -32,12 +32,12 @@ class _OrderCashApprovalState extends State<OrderCashApproval> {
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios_new,
             color: white,
           ),
         ),
-        actions: [
+        actions: const [
           Center(
             child: Text(
               'CN-3232',
@@ -66,7 +66,7 @@ class _OrderCashApprovalState extends State<OrderCashApproval> {
                     padding: const EdgeInsets.symmetric(
                         vertical: 15, horizontal: 25),
                     color: orderColor,
-                    child: Text(
+                    child: const Text(
                       "ОРЛОГО",
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
@@ -75,7 +75,7 @@ class _OrderCashApprovalState extends State<OrderCashApproval> {
                     ),
                   ),
                 ),
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
@@ -113,10 +113,10 @@ class _OrderCashApprovalState extends State<OrderCashApproval> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -156,18 +156,18 @@ class _OrderCashApprovalState extends State<OrderCashApproval> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             SvgPicture.asset('assets/svg/sand_time.svg'),
-            SizedBox(
+            const SizedBox(
               height: 35,
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 30),
               child: RichText(
                 textAlign: TextAlign.center,
-                text: TextSpan(
+                text: const TextSpan(
                   children: [
                     TextSpan(
                       text: 'Б.Баярбат ',

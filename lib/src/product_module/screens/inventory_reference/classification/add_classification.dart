@@ -70,7 +70,7 @@ class _AddClassificationState extends State<AddClassification> {
     InventoryGoods product =
         Provider.of<InventoryProvider>(context, listen: true).product;
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(10),
         ),
@@ -80,7 +80,7 @@ class _AddClassificationState extends State<AddClassification> {
         children: [
           Container(
             height: 50,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: white,
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(10),
@@ -101,13 +101,14 @@ class _AddClassificationState extends State<AddClassification> {
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter:
+                          const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),
                 Expanded(
                   child: widget.type == "CLASSIFICATION"
-                      ? Text(
+                      ? const Text(
                           'Ангилал',
                           style: TextStyle(
                             color: productColor,
@@ -116,7 +117,7 @@ class _AddClassificationState extends State<AddClassification> {
                           textAlign: TextAlign.center,
                         )
                       : widget.type == "SUB_CLASSIFICATION"
-                          ? Text(
+                          ? const Text(
                               'Дэд ангилал',
                               style: TextStyle(
                                 color: productColor,
@@ -125,7 +126,7 @@ class _AddClassificationState extends State<AddClassification> {
                               textAlign: TextAlign.center,
                             )
                           : widget.type == "CATEGORY"
-                              ? Text(
+                              ? const Text(
                                   'Категори',
                                   style: TextStyle(
                                     color: productColor,
@@ -133,7 +134,7 @@ class _AddClassificationState extends State<AddClassification> {
                                   ),
                                   textAlign: TextAlign.center,
                                 )
-                              : Text(
+                              : const Text(
                                   'Дэд категори',
                                   style: TextStyle(
                                     color: productColor,
@@ -147,7 +148,7 @@ class _AddClassificationState extends State<AddClassification> {
                     onSubmit();
                   },
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(10),
                       ),
@@ -155,7 +156,7 @@ class _AddClassificationState extends State<AddClassification> {
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 11),
                     height: 50,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'Хадгалах',
                         style: TextStyle(color: white),
@@ -177,101 +178,90 @@ class _AddClassificationState extends State<AddClassification> {
                       width: MediaQuery.of(context).size.width,
                       margin: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
-                      child: Text('Энд бичээд "Хадгалах" сонгоно уу'),
+                      child: const Text('Энд бичээд "Хадгалах" сонгоно уу'),
                     ),
                     FieldCard(
                       paddingHorizontal: 15,
                       paddingVertical: 10,
                       color: white,
                       labelText: 'Нэр төрөл',
-                      secondText: product.itemTypeName != null
-                          ? product.itemTypeName
-                          : 'Сонгох',
+                      secondText: product.itemTypeName ?? 'Сонгох',
                       onClick: () {
                         showModalBottomSheet(
                           useSafeArea: true,
                           context: context,
-                          builder: (context) => ItemTypeSheet(),
+                          builder: (context) => const ItemTypeSheet(),
                         );
                       },
                       arrowColor: productColor,
                       secondTextColor: productColor,
                     ),
-                    type() < 4
-                        ? FieldCard(
-                            paddingHorizontal: 15,
-                            paddingVertical: 10,
-                            color: white,
-                            labelText: 'Ангилал',
-                            secondText: product.classificationName != null
-                                ? product.classificationName
-                                : 'Сонгох',
-                            onClick: product.itemTypeName != null
-                                ? () {
-                                    showModalBottomSheet(
-                                      useSafeArea: true,
-                                      context: context,
-                                      builder: (context) => CategorySheet(
-                                        type: "CLASSIFICATION",
-                                        labelText: "Ангилал сонгоно уу",
-                                      ),
-                                    );
-                                  }
-                                : () {},
-                            arrowColor: productColor,
-                            secondTextColor: productColor,
-                          )
-                        : SizedBox(),
-                    type() < 3
-                        ? FieldCard(
-                            paddingHorizontal: 15,
-                            paddingVertical: 10,
-                            color: white,
-                            labelText: 'Дэд ангилал',
-                            secondText: product.subClassificationName != null
-                                ? product.subClassificationName
-                                : 'Сонгох',
-                            onClick: product.classificationName != null
-                                ? () {
-                                    showModalBottomSheet(
-                                      useSafeArea: true,
-                                      context: context,
-                                      builder: (context) => CategorySheet(
-                                        type: "SUB_CLASSIFICATION",
-                                        labelText: "Дэд ангилал сонгоно уу",
-                                      ),
-                                    );
-                                  }
-                                : () {},
-                            arrowColor: productColor,
-                            secondTextColor: productColor,
-                          )
-                        : SizedBox(),
-                    type() < 2
-                        ? FieldCard(
-                            paddingHorizontal: 15,
-                            paddingVertical: 10,
-                            color: white,
-                            labelText: 'Категори',
-                            secondText: product.categoryName != null
-                                ? product.categoryName
-                                : 'Сонгох',
-                            onClick: product.subClassificationName != null
-                                ? () {
-                                    showModalBottomSheet(
-                                      useSafeArea: true,
-                                      context: context,
-                                      builder: (context) => CategorySheet(
-                                        type: "CATEGORY",
-                                        labelText: "Категори сонгоно уу",
-                                      ),
-                                    );
-                                  }
-                                : () {},
-                            arrowColor: productColor,
-                            secondTextColor: productColor,
-                          )
-                        : SizedBox(),
+                    if (type() < 4)
+                      FieldCard(
+                        paddingHorizontal: 15,
+                        paddingVertical: 10,
+                        color: white,
+                        labelText: 'Ангилал',
+                        secondText: product.classificationName ?? 'Сонгох',
+                        onClick: product.itemTypeName != null
+                            ? () {
+                                showModalBottomSheet(
+                                  useSafeArea: true,
+                                  context: context,
+                                  builder: (context) => const CategorySheet(
+                                    type: "CLASSIFICATION",
+                                    labelText: "Ангилал сонгоно уу",
+                                  ),
+                                );
+                              }
+                            : () {},
+                        arrowColor: productColor,
+                        secondTextColor: productColor,
+                      ),
+                    if (type() < 3)
+                      FieldCard(
+                        paddingHorizontal: 15,
+                        paddingVertical: 10,
+                        color: white,
+                        labelText: 'Дэд ангилал',
+                        secondText: product.subClassificationName ?? 'Сонгох',
+                        onClick: product.classificationName != null
+                            ? () {
+                                showModalBottomSheet(
+                                  useSafeArea: true,
+                                  context: context,
+                                  builder: (context) => const CategorySheet(
+                                    type: "SUB_CLASSIFICATION",
+                                    labelText: "Дэд ангилал сонгоно уу",
+                                  ),
+                                );
+                              }
+                            : () {},
+                        arrowColor: productColor,
+                        secondTextColor: productColor,
+                      ),
+                    if (type() < 2)
+                      FieldCard(
+                        paddingHorizontal: 15,
+                        paddingVertical: 10,
+                        color: white,
+                        labelText: 'Категори',
+                        secondText: product.categoryName ?? 'Сонгох',
+                        onClick: product.subClassificationName != null
+                            ? () {
+                                showModalBottomSheet(
+                                  useSafeArea: true,
+                                  context: context,
+                                  builder: (context) => const CategorySheet(
+                                    type: "CATEGORY",
+                                    labelText: "Категори сонгоно уу",
+                                  ),
+                                );
+                              }
+                            : () {},
+                        arrowColor: productColor,
+                        secondTextColor: productColor,
+                      ),
                     FormTextField(
                       textColor: productColor,
                       textAlign: TextAlign.end,
@@ -281,23 +271,23 @@ class _AddClassificationState extends State<AddClassification> {
                         fillColor: white,
                         filled: true,
                         hintText: 'Энд бичнэ үү',
-                        hintStyle: TextStyle(
+                        hintStyle: const TextStyle(
                           color: productColor,
                         ),
                         prefixIcon: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
                             widget.type == "CLASSIFICATION"
-                                ? Text('Ангилалын нэр')
+                                ? const Text('Ангилалын нэр')
                                 : widget.type == "SUB_CLASSIFICATION"
-                                    ? Text('Дэд ангиллын нэр')
+                                    ? const Text('Дэд ангиллын нэр')
                                     : widget.type == "CATEGORY"
-                                        ? Text('Категори нэр')
-                                        : Text('Дэд категори нэр')
+                                        ? const Text('Категори нэр')
+                                        : const Text('Дэд категори нэр')
                           ],
                         ),
                       ),
@@ -310,7 +300,7 @@ class _AddClassificationState extends State<AddClassification> {
                     Container(
                       margin:
                           const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-                      child: Text(
+                      child: const Text(
                         'Тайлбар',
                         style: TextStyle(
                           color: grey3,
@@ -321,7 +311,7 @@ class _AddClassificationState extends State<AddClassification> {
                     Container(
                       color: white,
                       padding: const EdgeInsets.all(15),
-                      child: FormTextField(
+                      child: const FormTextField(
                         textAlign: TextAlign.left,
                         name: 'description',
                         maxLines: 5,
@@ -338,7 +328,7 @@ class _AddClassificationState extends State<AddClassification> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                   ],

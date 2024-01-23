@@ -48,8 +48,9 @@ class HttpRequest {
     if (type == "PARTNER") {
       if (isVersionTrue == false) {
         uri = '$partnerHost$api';
-      } else
+      } else {
         uri = '$partnerHost$version$api';
+      }
     } else if (type == "INVOICE") {
       uri = '$invoiceHost$version$api';
     } else if (type == "BUSINESS") {
@@ -71,7 +72,7 @@ class HttpRequest {
     debugPrint(uri);
 
     debugPrint('+++++++++++++++++++++++++++++++++++++++++++++++++++');
-    debugPrint('handler: ' + handler.toString() + ", " + uri);
+    debugPrint('handler: $handler$uri');
     debugPrint('+++++++++++++++++++++++++++++++++++++++++++++++++++ ');
 
     try {
@@ -89,7 +90,7 @@ class HttpRequest {
 
       dio.options.headers = {
         'authorization': 'Bearer $token',
-        'device-token': '$deviceToken',
+        'device-token': deviceToken,
         'device_type': 'MOS',
         'device_imei': 'test-imei',
         'device_info': 'iphone 13'
@@ -163,7 +164,7 @@ class HttpRequest {
       return await request(url, 'GET', data, type, isVersionTrue,
           handler: handler);
     } catch (e) {
-      debugPrint("GET =>" + e.toString());
+      debugPrint("GET =>$e");
       rethrow;
     }
   }
@@ -181,7 +182,7 @@ class HttpRequest {
         approve: approve,
       );
     } catch (e) {
-      debugPrint("POST =>" + e.toString());
+      debugPrint("POST =>$e");
       rethrow;
     }
   }

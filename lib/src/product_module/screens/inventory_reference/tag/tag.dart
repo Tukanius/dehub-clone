@@ -82,7 +82,7 @@ class _InventoryTagState extends State<InventoryTag> with AfterLayoutMixin {
   }
 
   onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
       groupItems = {};
@@ -129,8 +129,8 @@ class _InventoryTagState extends State<InventoryTag> with AfterLayoutMixin {
       appBar: AppBar(
         backgroundColor: white,
         surfaceTintColor: white,
-        iconTheme: IconThemeData(color: productColor),
-        title: Text(
+        iconTheme: const IconThemeData(color: productColor),
+        title: const Text(
           'Tag',
           style: TextStyle(
             color: productColor,
@@ -143,15 +143,15 @@ class _InventoryTagState extends State<InventoryTag> with AfterLayoutMixin {
           showModalBottomSheet(
             context: context,
             useSafeArea: true,
-            builder: (context) => AddTagSheet(),
+            builder: (context) => const AddTagSheet(),
           );
         },
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         backgroundColor: productColor,
-        child: Icon(Icons.add, color: white),
+        child: const Icon(Icons.add, color: white),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: productColor,
               ),
@@ -162,7 +162,7 @@ class _InventoryTagState extends State<InventoryTag> with AfterLayoutMixin {
               onLoading: onLoading,
               onRefresh: onRefresh,
               child: SingleChildScrollView(
-                child: groupList.length != 0
+                child: groupList.isNotEmpty
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: groupList
@@ -174,12 +174,14 @@ class _InventoryTagState extends State<InventoryTag> with AfterLayoutMixin {
                                       ? Container(
                                           margin: const EdgeInsets.symmetric(
                                               horizontal: 15, vertical: 10),
-                                          child: Text('Бүртгэсэн жагсаалт'),
+                                          child:
+                                              const Text('Бүртгэсэн жагсаалт'),
                                         )
                                       : Container(
                                           margin: const EdgeInsets.symmetric(
                                               horizontal: 15, vertical: 10),
-                                          child: Text('Системд зориулсан'),
+                                          child:
+                                              const Text('Системд зориулсан'),
                                         ),
                                   Column(
                                     children: data.values!
@@ -195,24 +197,25 @@ class _InventoryTagState extends State<InventoryTag> with AfterLayoutMixin {
                                               children: [
                                                 Text(
                                                   '${item.text}',
-                                                  style: TextStyle(color: dark),
+                                                  style: const TextStyle(
+                                                      color: dark),
                                                 ),
-                                                data.businessId ==
-                                                        user.currentBusinessId
-                                                    ? GestureDetector(
-                                                        onTap: () {
-                                                          update(item);
-                                                        },
-                                                        child: SvgPicture.asset(
-                                                          'assets/svg/edit_rounded.svg',
-                                                          colorFilter:
-                                                              ColorFilter.mode(
-                                                            productColor,
-                                                            BlendMode.srcIn,
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : SizedBox(),
+                                                if (data.businessId ==
+                                                    user.currentBusinessId)
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      update(item);
+                                                    },
+                                                    child: SvgPicture.asset(
+                                                      'assets/svg/edit_rounded.svg',
+                                                      colorFilter:
+                                                          const ColorFilter
+                                                              .mode(
+                                                        productColor,
+                                                        BlendMode.srcIn,
+                                                      ),
+                                                    ),
+                                                  ),
                                               ],
                                             ),
                                           ),
@@ -224,7 +227,7 @@ class _InventoryTagState extends State<InventoryTag> with AfterLayoutMixin {
                             )
                             .toList(),
                       )
-                    : NotFound(
+                    : const NotFound(
                         module: "INVENTORY",
                         labelText: 'Хоосон байна',
                       ),

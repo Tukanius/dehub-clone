@@ -17,8 +17,8 @@ class AddProduct extends StatefulWidget {
   static const routeName = '/addproduct';
   const AddProduct({
     required this.businessId,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<AddProduct> createState() => _AddProductState();
@@ -51,7 +51,7 @@ class _AddProductState extends State<AddProduct> {
                 ),
               ),
             ),
-            title: Text(
+            title: const Text(
               'Бараа сонгож нэмэх',
               style: TextStyle(
                 fontWeight: FontWeight.w500,
@@ -75,7 +75,7 @@ class _AddProductState extends State<AddProduct> {
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Material(
@@ -91,18 +91,18 @@ class _AddProductState extends State<AddProduct> {
                               color: transparent,
                               alignment: Alignment.center,
                               height: 48,
-                              child: Text('Багцаар'),
+                              child: const Text('Багцаар'),
                             ),
                             Container(
                               height: 48,
                               alignment: Alignment.center,
                               color: transparent,
-                              child: Text('Ширхэгээр'),
+                              child: const Text('Ширхэгээр'),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                     ],
@@ -111,7 +111,7 @@ class _AddProductState extends State<AddProduct> {
               ];
             },
             body: TabBarView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               children: [
                 Bagtsaar(
                   isPackage: true,

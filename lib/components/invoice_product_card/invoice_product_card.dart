@@ -1,6 +1,6 @@
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/invoice.dart';
-import 'package:dehub/providers/checkout-provider.dart';
+import 'package:dehub/providers/checkout_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -23,9 +23,9 @@ class InvoiceProductCard extends StatefulWidget {
     this.isPackage,
     this.closeClick,
     this.onClick,
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<InvoiceProductCard> createState() => _InvoiceProductCardState();
@@ -130,7 +130,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
+                SizedBox(
                   height: 56,
                   width: 56,
                   child: widget.data.image != null
@@ -144,7 +144,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                           color: grey,
                         ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Expanded(
@@ -154,79 +154,80 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                       widget.data.nameMon != null
                           ? Text(
                               '${widget.data.nameMon}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,
                               ),
                             )
                           : Text(
                               '${widget.data.name}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,
                               ),
                             ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       RichText(
                         text: TextSpan(
-                          style:
-                              TextStyle(fontFamily: 'Montserrat', color: black),
+                          style: const TextStyle(
+                              fontFamily: 'Montserrat', color: black),
                           children: [
                             widget.data.skuCode != null
                                 ? TextSpan(text: '${widget.data.skuCode} ')
-                                : TextSpan(),
+                                : const TextSpan(),
                             widget.data.barCode != null
                                 ? TextSpan(text: '${widget.data.barCode} ')
-                                : TextSpan(),
+                                : const TextSpan(),
                             widget.data.erpCode != null
                                 ? TextSpan(text: '${widget.data.erpCode} ')
-                                : TextSpan(),
+                                : const TextSpan(),
                           ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
-                widget.closeClick != null
-                    ? GestureDetector(
-                        onTap: widget.closeClick,
-                        child: SvgPicture.asset(
-                          'assets/svg/close.svg',
-                          colorFilter: ColorFilter.mode(grey3, BlendMode.srcIn),
-                          height: 20,
-                          width: 20,
-                        ),
-                      )
-                    : SizedBox(
-                        // height: 20,
-                        // width: 20,
-                        // child: Checkbox(
-                        //   side: MaterialStateBorderSide.resolveWith(
-                        //     (states) => BorderSide(
-                        //       color: invoiceColor,
-                        //       width: 2,
-                        //     ),
-                        //   ),
-                        //   shape: RoundedRectangleBorder(
-                        //     borderRadius: BorderRadius.circular(5),
-                        //   ),
-                        //   activeColor: invoiceColor,
-                        //   value: isCheck,
-                        //   onChanged: (value) {
-                        //     setState(() {
-                        //       isCheck = value!;
-                        //     });
-                        //   },
-                        // ),
-                        ),
+                if (widget.closeClick != null)
+                  GestureDetector(
+                    onTap: widget.closeClick,
+                    child: SvgPicture.asset(
+                      'assets/svg/close.svg',
+                      colorFilter:
+                          const ColorFilter.mode(grey3, BlendMode.srcIn),
+                      height: 20,
+                      width: 20,
+                    ),
+                  )
+                // : const SizedBox(
+                // height: 20,
+                // width: 20,
+                // child: Checkbox(
+                //   side: MaterialStateBorderSide.resolveWith(
+                //     (states) => BorderSide(
+                //       color: invoiceColor,
+                //       width: 2,
+                //     ),
+                //   ),
+                //   shape: RoundedRectangleBorder(
+                //     borderRadius: BorderRadius.circular(5),
+                //   ),
+                //   activeColor: invoiceColor,
+                //   value: isCheck,
+                //   onChanged: (value) {
+                //     setState(() {
+                //       isCheck = value!;
+                //     });
+                //   },
+                // ),
+                // ),
               ],
             ),
-            Divider(
+            const Divider(
               thickness: 0.5,
             ),
             Row(
@@ -237,28 +238,28 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Нэгж үнэ',
                           style: TextStyle(
                             color: Color(0xff8181A5),
                             fontSize: 14,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Text(
                           '${Utils().formatCurrency(widget.data.price.toString())}₮',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: invoiceColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
-                        Text(
+                        const Text(
                           'Ширхэг',
                           style: TextStyle(
                             color: grey2,
@@ -268,27 +269,27 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Хөнгөлөлт',
                           style: TextStyle(
                             fontSize: 13,
                             color: Color(0xff8181A5),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         widget.data.discountType == "PERCENTAGE"
                             ? Text(
                                 '${widget.data.discountValue?.toInt()}%',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: invoiceColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15,
@@ -297,13 +298,13 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                             : widget.data.discountType == "AMOUNT"
                                 ? Text(
                                     '${widget.data.discountValue?.toInt()}₮',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: invoiceColor,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15,
                                     ),
                                   )
-                                : Text(
+                                : const Text(
                                     '0₮',
                                     style: TextStyle(
                                       color: invoiceColor,
@@ -311,7 +312,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                                       fontSize: 15,
                                     ),
                                   ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Container(
@@ -322,10 +323,10 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                               color: grey3.withOpacity(0.3),
                             ),
                             borderRadius: BorderRadius.circular(5),
-                            color: Color(0xffEBFAFA),
+                            color: const Color(0xffEBFAFA),
                           ),
                           child: widget.data.discountType == "PERCENTAGE"
-                              ? Text(
+                              ? const Text(
                                   'хувиар',
                                   style: TextStyle(
                                     fontSize: 12,
@@ -333,7 +334,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                                     color: grey2,
                                   ),
                                 )
-                              : Text(
+                              : const Text(
                                   'дүнгээр',
                                   style: TextStyle(
                                     fontSize: 12,
@@ -361,14 +362,14 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                           border: Border.all(color: invoiceColor),
                           borderRadius: BorderRadius.circular(3),
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.remove,
                           color: invoiceColor,
                           size: 20,
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     SizedBox(
@@ -386,14 +387,14 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                         inputType: TextInputType.number,
                         controller: quantityController,
                         textAlign: TextAlign.end,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelStyle: TextStyle(
                             fontSize: 15,
                           ),
                           hintText: '0',
                           isDense: true,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 7, horizontal: 5),
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: 7, horizontal: 5),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.zero,
                             borderSide: BorderSide(
@@ -404,7 +405,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                         name: 'quantity',
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     GestureDetector(
@@ -421,7 +422,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                           border: Border.all(color: invoiceColor),
                           borderRadius: BorderRadius.circular(3),
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.add,
                           color: white,
                           size: 20,
@@ -432,13 +433,13 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                 )
               ],
             ),
-            Divider(
+            const Divider(
               thickness: 0.5,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Дүн:',
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
@@ -449,7 +450,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                 widget.data.quantity != null
                     ? Text(
                         '${Utils().formatCurrency((widget.data.quantity! * widget.data.price!).toString())} ₮',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
                           color: grey2,
@@ -457,7 +458,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                       )
                     : Text(
                         '${Utils().formatCurrency((double.parse(quantityController.text.toString()) * widget.data.price!).toString())} ₮',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
                           color: grey2,

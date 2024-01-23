@@ -76,7 +76,7 @@ class _AddItemTypeState extends State<AddItemType> {
         FocusScope.of(context).unfocus();
       },
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(10),
           ),
@@ -86,7 +86,7 @@ class _AddItemTypeState extends State<AddItemType> {
           children: [
             Container(
               height: 50,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: white,
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(10),
@@ -107,11 +107,11 @@ class _AddItemTypeState extends State<AddItemType> {
                       color: transparent,
                       child: SvgPicture.asset(
                         'assets/svg/square-x.svg',
-                        colorFilter: ColorFilter.mode(grey2, BlendMode.srcIn),
+                        colorFilter: const ColorFilter.mode(grey2, BlendMode.srcIn),
                       ),
                     ),
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       'Нэр төрөл',
                       style: TextStyle(
@@ -128,7 +128,7 @@ class _AddItemTypeState extends State<AddItemType> {
                             onSubmit();
                           },
                     child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topRight: Radius.circular(10),
                         ),
@@ -136,7 +136,7 @@ class _AddItemTypeState extends State<AddItemType> {
                       ),
                       padding: const EdgeInsets.symmetric(horizontal: 11),
                       height: 50,
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Хадгалах',
                           style: TextStyle(color: white),
@@ -158,14 +158,14 @@ class _AddItemTypeState extends State<AddItemType> {
                         width: MediaQuery.of(context).size.width,
                         margin: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
-                        child: Text('Энд бичээд "Хадгалах" сонгоно уу'),
+                        child: const Text('Энд бичээд "Хадгалах" сонгоно уу'),
                       ),
                       FormTextField(
                         textColor: productColor,
                         textAlign: TextAlign.end,
                         initialValue: widget.data?.name ?? '',
                         name: 'name',
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           fillColor: white,
                           filled: true,
@@ -176,7 +176,7 @@ class _AddItemTypeState extends State<AddItemType> {
                           prefixIcon: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               SizedBox(
                                 width: 15,
                               ),
@@ -202,7 +202,7 @@ class _AddItemTypeState extends State<AddItemType> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               'Бараанд хамаарах',
                             ),
                             Transform.scale(
@@ -226,7 +226,7 @@ class _AddItemTypeState extends State<AddItemType> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               'Ажилт үйлчилгээнд хамрах',
                             ),
                             Transform.scale(
@@ -247,7 +247,7 @@ class _AddItemTypeState extends State<AddItemType> {
                       Container(
                         margin: const EdgeInsets.only(
                             left: 15, top: 10, bottom: 10),
-                        child: Text(
+                        child: const Text(
                           'Тайлбар',
                           style: TextStyle(
                             color: grey3,
@@ -258,7 +258,7 @@ class _AddItemTypeState extends State<AddItemType> {
                       Container(
                         color: white,
                         padding: const EdgeInsets.all(15),
-                        child: FormTextField(
+                        child: const FormTextField(
                           textAlign: TextAlign.left,
                           name: 'description',
                           maxLines: 5,
@@ -275,7 +275,7 @@ class _AddItemTypeState extends State<AddItemType> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
                     ],

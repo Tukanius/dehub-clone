@@ -47,8 +47,8 @@ class _PictureFormState extends State<PictureForm> {
   }
 
   void getMultiplyImage() async {
-    final List<XFile>? selectedImages = await imagePicker.pickMultiImage();
-    if (selectedImages!.isNotEmpty) {
+    final List<XFile> selectedImages = await imagePicker.pickMultiImage();
+    if (selectedImages.isNotEmpty) {
       for (var i = 0; i < selectedImages.length; i++) {
         banner = await InventoryApi().upload(selectedImages[i]);
         Provider.of<InventoryProvider>(context, listen: false)
@@ -65,7 +65,7 @@ class _PictureFormState extends State<PictureForm> {
       children: [
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          child: Text(
+          child: const Text(
             'Нүүрэнд гарах зураг',
             style: TextStyle(
               color: grey3,
@@ -88,13 +88,13 @@ class _PictureFormState extends State<PictureForm> {
                   borderRadius: BorderRadius.circular(2),
                   border: Border.all(
                     color: source.profileValidate == false
-                        ? Color(0xffD9D9D9)
+                        ? const Color(0xffD9D9D9)
                         : red,
                   ),
-                  color: Color(0xffFAFAFA),
+                  color: const Color(0xffFAFAFA),
                 ),
                 child: isLoading == true
-                    ? Center(
+                    ? const Center(
                         child: CircularProgressIndicator(color: grey3),
                       )
                     : source.product.url == null
@@ -110,7 +110,7 @@ class _PictureFormState extends State<PictureForm> {
                             fit: BoxFit.cover,
                           ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Column(
@@ -123,13 +123,13 @@ class _PictureFormState extends State<PictureForm> {
                       borderRadius: BorderRadius.circular(2),
                       border: Border.all(
                         color: source.profileValidate == false
-                            ? Color(0xffD9D9D9)
+                            ? const Color(0xffD9D9D9)
                             : red,
                       ),
-                      color: Color(0xffFAFAFA),
+                      color: const Color(0xffFAFAFA),
                     ),
                     child: isLoading == true
-                        ? Center(
+                        ? const Center(
                             child: CircularProgressIndicator(color: grey3),
                           )
                         : source.product.url == null
@@ -146,7 +146,7 @@ class _PictureFormState extends State<PictureForm> {
                                 fit: BoxFit.cover,
                               ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
@@ -156,13 +156,13 @@ class _PictureFormState extends State<PictureForm> {
                       borderRadius: BorderRadius.circular(2),
                       border: Border.all(
                         color: source.profileValidate == false
-                            ? Color(0xffD9D9D9)
+                            ? const Color(0xffD9D9D9)
                             : red,
                       ),
-                      color: Color(0xffFAFAFA),
+                      color: const Color(0xffFAFAFA),
                     ),
                     child: isLoading == true
-                        ? Center(
+                        ? const Center(
                             child: CircularProgressIndicator(color: grey3),
                           )
                         : source.product.url == null
@@ -202,12 +202,12 @@ class _PictureFormState extends State<PictureForm> {
                   width: 36,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: Color(0xffEAECEE),
+                    color: const Color(0xffEAECEE),
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/image_upload.svg',
                     colorFilter:
-                        ColorFilter.mode(productColor, BlendMode.srcIn),
+                        const ColorFilter.mode(productColor, BlendMode.srcIn),
                   ),
                 ),
               ),
@@ -226,12 +226,12 @@ class _PictureFormState extends State<PictureForm> {
                   width: 36,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: Color(0xffEAECEE),
+                    color: const Color(0xffEAECEE),
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/camera_plus.svg',
                     colorFilter:
-                        ColorFilter.mode(productColor, BlendMode.srcIn),
+                        const ColorFilter.mode(productColor, BlendMode.srcIn),
                   ),
                 ),
               ),
@@ -240,7 +240,7 @@ class _PictureFormState extends State<PictureForm> {
         ),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          child: Text(
+          child: const Text(
             'Баннерт гарах зураг',
             style: TextStyle(
               color: grey3,
@@ -251,30 +251,31 @@ class _PictureFormState extends State<PictureForm> {
         Container(
           padding: const EdgeInsets.symmetric(vertical: 15),
           color: white,
-          child: Container(
+          child: SizedBox(
             height: 130,
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               scrollDirection: Axis.horizontal,
               children: source.product.detailImages != null &&
-                      source.product.detailImages?.length != 0
+                      source.product.detailImages!.isNotEmpty
                   ? source.product.detailImages!
                       .map(
                         (data) => Stack(
                           children: [
                             Container(
-                              margin: EdgeInsets.only(right: data != 3 ? 7 : 0),
+                              margin:
+                                  EdgeInsets.only(right: data != "3" ? 7 : 0),
                               height: 130,
                               width: 260,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(2),
                                 border: Border.all(
-                                  color: Color(0xffD9D9D9),
+                                  color: const Color(0xffD9D9D9),
                                 ),
-                                color: Color(0xffFAFAFA),
+                                color: const Color(0xffFAFAFA),
                               ),
                               child: Image.network(
-                                '${data}',
+                                data,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -284,7 +285,7 @@ class _PictureFormState extends State<PictureForm> {
                               child: Container(
                                 height: 30,
                                 width: 30,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     shape: BoxShape.circle, color: white),
                                 child: GestureDetector(
                                   onTap: () {
@@ -294,7 +295,7 @@ class _PictureFormState extends State<PictureForm> {
                                   },
                                   child: SvgPicture.asset(
                                     'assets/svg/close.svg',
-                                    colorFilter: ColorFilter.mode(
+                                    colorFilter: const ColorFilter.mode(
                                         productColor, BlendMode.srcIn),
                                     height: 30,
                                   ),
@@ -316,9 +317,9 @@ class _PictureFormState extends State<PictureForm> {
                             border: Border.all(
                               color: source.bannerValidate == true
                                   ? red
-                                  : Color(0xffD9D9D9),
+                                  : const Color(0xffD9D9D9),
                             ),
-                            color: Color(0xffFAFAFA),
+                            color: const Color(0xffFAFAFA),
                           ),
                           child: Center(
                             child: Icon(
@@ -334,7 +335,7 @@ class _PictureFormState extends State<PictureForm> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Row(
@@ -354,12 +355,12 @@ class _PictureFormState extends State<PictureForm> {
                   width: 36,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: Color(0xffEAECEE),
+                    color: const Color(0xffEAECEE),
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/image_upload.svg',
                     colorFilter:
-                        ColorFilter.mode(productColor, BlendMode.srcIn),
+                        const ColorFilter.mode(productColor, BlendMode.srcIn),
                   ),
                 ),
               ),
@@ -378,12 +379,12 @@ class _PictureFormState extends State<PictureForm> {
                   width: 36,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: Color(0xffEAECEE),
+                    color: const Color(0xffEAECEE),
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/camera_plus.svg',
                     colorFilter:
-                        ColorFilter.mode(productColor, BlendMode.srcIn),
+                        const ColorFilter.mode(productColor, BlendMode.srcIn),
                   ),
                 ),
               ),

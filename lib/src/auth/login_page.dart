@@ -1,7 +1,7 @@
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/src/auth/check-biometric.dart';
-import 'package:dehub/src/auth/register-page/register-page.dart';
+import 'package:dehub/src/auth/check_biometric.dart';
+import 'package:dehub/src/auth/register-page/register_page.dart';
 import 'package:dehub/src/splash/splash_page.dart';
 import 'package:dehub/utils/secure_storage.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -34,14 +34,12 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
   String fingerPrintIcon = "assets/svg/finger-print.svg";
   String faceIdIcon = "assets/svg/face-id.svg";
   bool _isVisible = true;
-  bool isCheck = false;
   bool saveCode = false;
   bool isLoading = false;
   bool isSubmit = false;
   bool activeBio = false;
   bool isBioMetric = false;
   String bioType = '';
-  bool saveEmail = false;
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -97,7 +95,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
       barrierDismissible: false,
       context: context,
       builder: (context) {
-        return Center(
+        return const Center(
           child: CupertinoActivityIndicator(
             color: mainColor,
             radius: 15,
@@ -105,7 +103,6 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
         );
       },
     );
-    Navigator.of(context).pop();
   }
 
   @override
@@ -115,6 +112,10 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
         FocusScope.of(context).unfocus();
       },
       child: PopScope(
+        canPop: false,
+        onPopInvoked: (didPop) {
+          showMyDialog();
+        },
         child: Scaffold(
           backgroundColor: backgroundColor,
           body: SingleChildScrollView(
@@ -130,10 +131,10 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 70,
                         ),
-                        Text(
+                        const Text(
                           'DeHUB',
                           style: TextStyle(
                             color: buttonColor,
@@ -141,10 +142,10 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                             fontSize: 32,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
-                        Text(
+                        const Text(
                           'Үнэ цэн нэмсэн түншлэл',
                           style: TextStyle(
                             color: buttonColor,
@@ -152,13 +153,13 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        Image(
+                        const Image(
                           image: AssetImage('images/login.png'),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         FormBuilder(
@@ -166,7 +167,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Нэвтрэх код',
                                 style: TextStyle(
                                   color: buttonColor,
@@ -174,7 +175,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                                   fontSize: 14,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 8,
                               ),
                               FormTextField(
@@ -197,22 +198,22 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                                   fillColor: Colors.white,
                                   filled: true,
                                   hintText: "Системд нэвтрэх бизнесийн код",
-                                  hintStyle: TextStyle(
+                                  hintStyle: const TextStyle(
                                     color: grey2,
                                     fontSize: 14,
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Color(0xff44566C30),
+                                      color: grey2.withOpacity(0.3),
                                     ),
                                   ),
-                                  errorBorder: OutlineInputBorder(
+                                  errorBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(color: red),
                                   ),
-                                  border: OutlineInputBorder(
+                                  border: const OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.blue),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
+                                  focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Colors.blue,
                                     ),
@@ -224,10 +225,10 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                                   ),
                                 ]),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 25,
                               ),
-                              Text(
+                              const Text(
                                 'Хэрэглэгчийн нэр',
                                 style: TextStyle(
                                   color: buttonColor,
@@ -235,7 +236,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                                   fontSize: 14,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 8,
                               ),
                               FormTextField(
@@ -250,11 +251,6 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                                 onComplete: () {
                                   FocusScope.of(context).nextFocus();
                                 },
-                                // labelStyle: TextStyle(
-                                //   color: buttonColor,
-                                //   fontWeight: FontWeight.w500,
-                                //   fontSize: 14,
-                                // ),
                                 controller: emailController,
                                 textColor: buttonColor,
                                 name: "username",
@@ -265,22 +261,22 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                                   fillColor: Colors.white,
                                   filled: true,
                                   hintText: "Хэрэглэгчийн нэрээ оруулна уу",
-                                  hintStyle: TextStyle(
+                                  hintStyle: const TextStyle(
                                     color: grey2,
                                     fontSize: 14,
                                   ),
-                                  border: OutlineInputBorder(
+                                  border: const OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.blue),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Color(0xff44566C30),
+                                      color: grey2.withOpacity(0.3),
                                     ),
                                   ),
-                                  errorBorder: OutlineInputBorder(
+                                  errorBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(color: red),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
+                                  focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Colors.blue,
                                     ),
@@ -292,10 +288,10 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                                   ),
                                 ]),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 25,
                               ),
-                              Text(
+                              const Text(
                                 'Нууц үг',
                                 style: TextStyle(
                                   color: buttonColor,
@@ -303,7 +299,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                                   fontSize: 14,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 8,
                               ),
                               FormTextField(
@@ -327,11 +323,11 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                                       });
                                     },
                                     child: _isVisible == true
-                                        ? Icon(
+                                        ? const Icon(
                                             Icons.visibility_off_outlined,
                                             color: grey2,
                                           )
-                                        : Icon(
+                                        : const Icon(
                                             Icons.visibility_outlined,
                                             color: grey2,
                                           ),
@@ -339,22 +335,22 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                                   fillColor: Colors.white,
                                   filled: true,
                                   hintText: "Нууц үгээ оруулна уу",
-                                  hintStyle: TextStyle(
+                                  hintStyle: const TextStyle(
                                     color: grey2,
                                     fontSize: 14,
                                   ),
-                                  border: OutlineInputBorder(
+                                  border: const OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.blue),
                                   ),
-                                  errorBorder: OutlineInputBorder(
+                                  errorBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(color: red),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Color(0xff44566C30),
+                                      color: grey2.withOpacity(0.3),
                                     ),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
+                                  focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Colors.blue,
                                     ),
@@ -366,12 +362,12 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                                   ),
                                 ]),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
                               Container(
                                 alignment: Alignment.centerRight,
-                                child: Text(
+                                child: const Text(
                                   'Нууц үгээ мартсан уу?',
                                   style: TextStyle(
                                     color: buttonColor,
@@ -383,34 +379,9 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
-                        // Row(
-                        //   children: [
-                        //     Checkbox(
-                        //       fillColor: MaterialStateProperty.resolveWith(
-                        //           (states) => buttonColor),
-                        //       value: saveUserName,
-                        //       onChanged: (bool? value) {
-                        //         setState(() {
-                        //           saveUserName = value!;
-                        //         });
-                        //       },
-                        //     ),
-                        //     Text(
-                        //       'Нэвтрэх мэдээлэл сануулах',
-                        //       style: TextStyle(
-                        //         color: grey2,
-                        //         fontWeight: FontWeight.w500,
-                        //         fontSize: 16,
-                        //       ),
-                        //     )
-                        //   ],
-                        // ),
-                        // SizedBox(
-                        //   height: 42,
-                        // ),
                         CustomButton(
                           isLoading: isSubmit,
                           onClick: () {
@@ -433,7 +404,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                               height: 35,
                               width: 35,
                               decoration: BoxDecoration(
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     offset: Offset(0, 2),
                                     blurRadius: 5,
@@ -447,18 +418,18 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                                 bioType == "FACE"
                                     ? faceIdIcon
                                     : fingerPrintIcon,
-                                colorFilter:
-                                    ColorFilter.mode(white, BlendMode.srcIn),
+                                colorFilter: const ColorFilter.mode(
+                                    white, BlendMode.srcIn),
                               ),
                             ),
                           ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               'Байгууллага бүртгэлгүй юу? ',
                               style: TextStyle(
                                 color: buttonColor,
@@ -470,7 +441,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                                 Navigator.of(context)
                                     .pushNamed(RegisterPage.routeName);
                               },
-                              child: Text(
+                              child: const Text(
                                 'БҮРТГҮҮЛЭХ',
                                 style: TextStyle(
                                   color: Color(0xff2E41FB),
@@ -480,7 +451,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                       ],
@@ -491,10 +462,6 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
             ),
           ),
         ),
-        canPop: false,
-        onPopInvoked: (didPop) {
-          showMyDialog();
-        },
       ),
     );
   }
@@ -502,13 +469,13 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
   Future<bool?> showMyDialog() => showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Та Апп-аас гарах гэж байна'),
+          title: const Text('Та Апп-аас гарах гэж байна'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context, false);
               },
-              child: Text('Болих'),
+              child: const Text('Болих'),
             ),
             TextButton(
               style: ButtonStyle(
@@ -519,7 +486,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
               onPressed: () {
                 Navigator.pop(context, true);
               },
-              child: Text(
+              child: const Text(
                 'Гарах',
                 style: TextStyle(color: red),
               ),

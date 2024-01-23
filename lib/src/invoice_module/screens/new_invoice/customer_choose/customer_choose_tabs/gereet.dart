@@ -12,7 +12,7 @@ class Gereet extends StatefulWidget {
 class _GereetState extends State<Gereet> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: backgroundColor,
     );
   }

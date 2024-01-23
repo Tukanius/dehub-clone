@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 class InformationTab extends StatefulWidget {
   final BusinessNetwork? data;
   const InformationTab({
-    Key? key,
+    super.key,
     this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<InformationTab> createState() => _InformationTabState();
@@ -23,7 +23,7 @@ class _InformationTabState extends State<InformationTab> {
         children: [
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+            child: const Text(
               'Ерөнхий мэдээлэл',
               style: TextStyle(
                 color: grey3,
@@ -93,7 +93,7 @@ class _InformationTabState extends State<InformationTab> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Статус',
                   style: TextStyle(color: dark),
                 ),
@@ -102,9 +102,9 @@ class _InformationTabState extends State<InformationTab> {
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Color(0xff01D462).withOpacity(0.1),
+                    color: const Color(0xff01D462).withOpacity(0.1),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Идэвхтэй',
                     style: TextStyle(
                       color: Color(0xff01D462),

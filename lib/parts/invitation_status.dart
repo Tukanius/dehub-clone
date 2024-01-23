@@ -16,8 +16,9 @@ Map<String, dynamic> _$InvitationStatusToJson(InvitationStatus instance) {
   if (instance.code != null) json['code'] = instance.code;
   if (instance.name != null) json['name'] = instance.name;
   if (instance.color != null) json['color'] = instance.color;
-  if (instance.receivedName != null)
+  if (instance.receivedName != null) {
     json['receivedName'] = instance.receivedName;
+  }
 
   return json;
 }

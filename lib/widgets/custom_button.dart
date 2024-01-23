@@ -11,7 +11,7 @@ class CustomButton extends StatefulWidget {
   final LinearGradient? gradient;
   final bool? isLoading;
   final Color? borderColor;
-  CustomButton({
+  const CustomButton({
     this.isLoading,
     this.borderColor,
     this.gradient,
@@ -21,8 +21,8 @@ class CustomButton extends StatefulWidget {
     this.labelColor,
     required this.onClick,
     this.labelText = '',
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<CustomButton> createState() => _CustomButtonState();
@@ -36,20 +36,22 @@ class _CustomButtonState extends State<CustomButton> {
     return Center(
       child: AnimatedOpacity(
         opacity: isVisible ? 1 : 0.7,
-        duration: Duration(milliseconds: 50),
+        duration: const Duration(milliseconds: 50),
         curve: Curves.slowMiddle,
         child: GestureDetector(
-          onTap: () {
-            setState(() {
-              isVisible = false;
-            });
-            Future.delayed(Duration(milliseconds: 50), () {
-              setState(() {
-                isVisible = true;
-              });
-            });
-            widget.onClick();
-          },
+          onTap: widget.isLoading == true
+              ? () {}
+              : () {
+                  setState(() {
+                    isVisible = false;
+                  });
+                  Future.delayed(const Duration(milliseconds: 50), () {
+                    setState(() {
+                      isVisible = true;
+                    });
+                  });
+                  widget.onClick();
+                },
           child: Container(
             // margin: const EdgeInsets.symmetric(horizontal: 15),
             height: 48,
@@ -63,7 +65,7 @@ class _CustomButtonState extends State<CustomButton> {
               gradient: widget.isGradient == true ? widget.gradient : null,
             ),
             child: widget.isLoading == true
-                ? Center(
+                ? const Center(
                     child: SizedBox(
                       height: 20,
                       width: 20,
@@ -76,30 +78,25 @@ class _CustomButtonState extends State<CustomButton> {
                 : widget.isGradient != true
                     ? Center(
                         child: Text(
-                          '${widget.labelText}',
+                          widget.labelText,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
-                            color: widget.textColor == null
-                                ? white
-                                : widget.textColor,
+                            color: widget.textColor ?? white,
                           ),
                         ),
                       )
-                    : widget.container != null
-                        ? widget.container
-                        : Center(
-                            child: Text(
-                              '${widget.labelText}',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                                color: widget.textColor == null
-                                    ? white
-                                    : widget.textColor,
-                              ),
+                    : widget.container ??
+                        Center(
+                          child: Text(
+                            widget.labelText,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                              color: widget.textColor ?? white,
                             ),
                           ),
+                        ),
           ),
         ),
       ),

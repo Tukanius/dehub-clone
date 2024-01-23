@@ -11,12 +11,12 @@ class DistributionAreaCard extends StatefulWidget {
   final Function()? onClick;
   final BusinessNetwork? data;
   const DistributionAreaCard({
-    Key? key,
+    super.key,
     this.onClick,
     this.data,
     required this.index,
     required this.startAnimation,
-  }) : super(key: key);
+  });
 
   @override
   State<DistributionAreaCard> createState() => _DistributionAreaCardState();
@@ -56,12 +56,12 @@ class _DistributionAreaCardState extends State<DistributionAreaCard> {
                               backgroundImage:
                                   NetworkImage('${widget.data?.logo}'),
                             )
-                          : CircleAvatar(
+                          : const CircleAvatar(
                               backgroundColor: grey,
                               radius: 18,
                               backgroundImage: AssetImage('images/avatar.png'),
                             ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Expanded(
@@ -70,17 +70,17 @@ class _DistributionAreaCardState extends State<DistributionAreaCard> {
                           children: [
                             Text(
                               '${widget.data?.profileName}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: networkColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
                               '${widget.data?.refCode}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: dark,
                                 fontSize: 12,
                               ),
@@ -91,14 +91,14 @@ class _DistributionAreaCardState extends State<DistributionAreaCard> {
                     ],
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios,
                   color: networkColor,
                   size: 18,
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -115,7 +115,7 @@ class _DistributionAreaCardState extends State<DistributionAreaCard> {
                           fontSize: 10,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Row(
@@ -123,7 +123,7 @@ class _DistributionAreaCardState extends State<DistributionAreaCard> {
                           Container(
                             height: 24,
                             width: 24,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                             ),
                             child: ClipRRect(
@@ -139,13 +139,13 @@ class _DistributionAreaCardState extends State<DistributionAreaCard> {
                                     ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Expanded(
                             child: RichText(
                               text: TextSpan(
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: grey2,
                                     fontSize: 12,
                                     fontFamily: 'Montserrat'),
@@ -154,12 +154,12 @@ class _DistributionAreaCardState extends State<DistributionAreaCard> {
                                       ? TextSpan(
                                           text:
                                               '${widget.data?.businessStaff?.lastName}')
-                                      : TextSpan(text: '-'),
+                                      : const TextSpan(text: '-'),
                                   widget.data?.businessStaff?.firstName != null
                                       ? TextSpan(
                                           text:
                                               '${widget.data?.businessStaff?.firstName}')
-                                      : TextSpan(text: '-'),
+                                      : const TextSpan(text: '-'),
                                 ],
                               ),
                             ),
@@ -169,7 +169,7 @@ class _DistributionAreaCardState extends State<DistributionAreaCard> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Expanded(
@@ -184,11 +184,11 @@ class _DistributionAreaCardState extends State<DistributionAreaCard> {
                           fontSize: 10,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       widget.data?.areaRegion?.name == null
-                          ? Text(
+                          ? const Text(
                               '-',
                               style: TextStyle(
                                 color: grey2,
@@ -197,7 +197,7 @@ class _DistributionAreaCardState extends State<DistributionAreaCard> {
                             )
                           : Text(
                               '${widget.data?.areaRegion?.name}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: grey2,
                                 fontSize: 12,
                               ),
@@ -217,11 +217,11 @@ class _DistributionAreaCardState extends State<DistributionAreaCard> {
                           fontSize: 10,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       widget.data?.areaDirection?.name == null
-                          ? Text(
+                          ? const Text(
                               '-',
                               style: TextStyle(
                                 color: grey2,
@@ -230,7 +230,7 @@ class _DistributionAreaCardState extends State<DistributionAreaCard> {
                             )
                           : Text(
                               '${widget.data?.areaDirection?.name}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: grey2,
                                 fontSize: 12,
                               ),

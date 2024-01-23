@@ -8,10 +8,10 @@ class OrderAdditionalLine extends StatefulWidget {
   final Function()? onClick;
   final Order? data;
   const OrderAdditionalLine({
-    Key? key,
+    super.key,
     this.data,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<OrderAdditionalLine> createState() => _OrderAdditionalLineState();
@@ -35,12 +35,12 @@ class _OrderAdditionalLineState extends State<OrderAdditionalLine> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('${widget.data?.name}'),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
                 '${widget.data?.quantity} ш х ${Utils().formatCurrency(widget.data?.price.toString()) + "₮"}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xff657786),
                   fontSize: 12,
                 ),
@@ -60,7 +60,7 @@ class _OrderAdditionalLineState extends State<OrderAdditionalLine> {
                   width: 30,
                   child: SvgPicture.asset(
                     'assets/svg/close.svg',
-                    colorFilter: ColorFilter.mode(grey2, BlendMode.srcIn),
+                    colorFilter: const ColorFilter.mode(grey2, BlendMode.srcIn),
                   ),
                 ),
               ),
@@ -68,11 +68,11 @@ class _OrderAdditionalLineState extends State<OrderAdditionalLine> {
                 children: [
                   Text(
                     '${Utils().formatCurrency((widget.data!.price! * widget.data!.quantity!).toString())} ₮',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: orderColor,
                     ),
                   ),
-                  Icon(
+                  const Icon(
                     Icons.arrow_forward_ios,
                     color: orderColor,
                     size: 15,

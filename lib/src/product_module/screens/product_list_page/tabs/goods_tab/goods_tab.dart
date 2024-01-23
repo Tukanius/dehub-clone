@@ -16,8 +16,8 @@ import 'package:after_layout/after_layout.dart';
 
 class GoodsTab extends StatefulWidget {
   const GoodsTab({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<GoodsTab> createState() => _GoodsTabState();
@@ -48,7 +48,7 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
       inventory = res;
       isLoading = false;
     });
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         startAnimation = true;
       });
@@ -67,7 +67,7 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
     });
@@ -104,77 +104,78 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
           borderColor: productColor,
         ),
         Expanded(
-          child: Refresher(
-            refreshController: refreshController,
-            onLoading: _onLoading,
-            onRefresh: _onRefresh,
-            color: productColor,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  isLoading == true
-                      ? Center(
-                          child: CircularProgressIndicator(
-                            color: productColor,
-                          ),
-                        )
-                      : inventory.rows!.length != 0
-                          ? Column(
-                              children: inventory.rows!
-                                  .map(
-                                    (item) => GoodsCard(
-                                      index: inventory.rows!.indexOf(item),
-                                      startAnimation: startAnimation,
-                                      data: item,
-                                      priceClick: item.isPriceSet == false
-                                          ? () {
-                                              Navigator.of(context).pushNamed(
-                                                SetPrice.routeName,
-                                                arguments: SetPriceArguments(
-                                                  data: item,
-                                                  listenController:
-                                                      listenController,
-                                                ),
-                                              );
-                                            }
-                                          : () {},
-                                      warehouseClick: item.isWarehouseSet ==
-                                              false
-                                          ? () {
-                                              Navigator.of(context).pushNamed(
-                                                SetWarehouse.routeName,
-                                                arguments:
-                                                    SetWarehouseArguments(
-                                                  listenController:
-                                                      listenController,
-                                                  data: item,
-                                                ),
-                                              );
-                                            }
-                                          : () {},
-                                      onClick: () {
-                                        Navigator.of(context).pushNamed(
-                                          ProductDetailPage.routeName,
-                                          arguments: ProductDetailPageArguments(
-                                            id: item.id,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  )
-                                  .toList(),
-                            )
-                          : NotFound(
-                              module: 'INVENTORY',
-                              labelText: "Бараа олдсонгүй",
-                            ),
-                  SizedBox(
-                    height: 20,
+          child: isLoading == true
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: productColor,
                   ),
-                ],
-              ),
-            ),
-          ),
+                )
+              : Refresher(
+                  refreshController: refreshController,
+                  onLoading: _onLoading,
+                  onRefresh: _onRefresh,
+                  color: productColor,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        inventory.rows!.isNotEmpty
+                            ? Column(
+                                children: inventory.rows!
+                                    .map(
+                                      (item) => GoodsCard(
+                                        index: inventory.rows!.indexOf(item),
+                                        startAnimation: startAnimation,
+                                        data: item,
+                                        priceClick: item.isPriceSet == false
+                                            ? () {
+                                                Navigator.of(context).pushNamed(
+                                                  SetPrice.routeName,
+                                                  arguments: SetPriceArguments(
+                                                    data: item,
+                                                    listenController:
+                                                        listenController,
+                                                  ),
+                                                );
+                                              }
+                                            : () {},
+                                        warehouseClick: item.isWarehouseSet ==
+                                                false
+                                            ? () {
+                                                Navigator.of(context).pushNamed(
+                                                  SetWarehouse.routeName,
+                                                  arguments:
+                                                      SetWarehouseArguments(
+                                                    listenController:
+                                                        listenController,
+                                                    data: item,
+                                                  ),
+                                                );
+                                              }
+                                            : () {},
+                                        onClick: () {
+                                          Navigator.of(context).pushNamed(
+                                            ProductDetailPage.routeName,
+                                            arguments:
+                                                ProductDetailPageArguments(
+                                              id: item.id,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    )
+                                    .toList(),
+                              )
+                            : const NotFound(
+                                module: 'INVENTORY',
+                                labelText: "Бараа олдсонгүй",
+                              ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
         ),
       ],
     );

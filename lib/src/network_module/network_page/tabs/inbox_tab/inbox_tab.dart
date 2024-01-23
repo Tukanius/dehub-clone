@@ -2,18 +2,19 @@ import 'package:dehub/src/network_module/network_page/tabs/inbox_tab/invitation.
 import 'package:flutter/material.dart';
 
 class InboxTab extends StatefulWidget {
-  const InboxTab({Key? key}) : super(key: key);
+  const InboxTab({super.key});
 
   @override
-  _InboxTabState createState() => _InboxTabState();
+  InboxTabState createState() => InboxTabState();
 }
 
-class _InboxTabState extends State<InboxTab>
+class InboxTabState extends State<InboxTab>
     with SingleTickerProviderStateMixin {
   int currentIndex = 0;
   late TabController tabController;
   ScrollController scrollController = ScrollController();
 
+  @override
   void dispose() {
     tabController.dispose();
     super.dispose();
@@ -25,6 +26,7 @@ class _InboxTabState extends State<InboxTab>
     });
   }
 
+  @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
     tabController.index = currentIndex;
@@ -38,12 +40,12 @@ class _InboxTabState extends State<InboxTab>
       children: [
         Container(
           margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-          child: Text(
+          child: const Text(
             'Ирсэн урилга',
             style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
           ),
         ),
-        Invitation(),
+        const Invitation(),
       ],
     );
   }

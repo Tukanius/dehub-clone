@@ -22,7 +22,7 @@ class _ZoningPageState extends State<ZoningPage> {
         surfaceTintColor: backgroundColor,
         elevation: 0,
         leadingWidth: 100,
-        leading: CustomBackButton(color: networkColor),
+        leading: const CustomBackButton(color: networkColor),
         actions: [
           AddButton(
             addColor: white,
@@ -44,7 +44,7 @@ class _ZoningPageState extends State<ZoningPage> {
           children: [
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Бүсчлэл',
                 style: TextStyle(
                   fontSize: 20,
@@ -54,7 +54,7 @@ class _ZoningPageState extends State<ZoningPage> {
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              child: Text(
+              child: const Text(
                 'Борлуулалт, түгээлт',
                 style: TextStyle(
                   color: networkColor,
@@ -62,7 +62,7 @@ class _ZoningPageState extends State<ZoningPage> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             for (var i = 0; i < 4; i++)

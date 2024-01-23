@@ -29,7 +29,7 @@ class _ManufacturerCountrySheetState extends State<ManufacturerCountrySheet> {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: productColor,
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(20),
@@ -38,7 +38,7 @@ class _ManufacturerCountrySheetState extends State<ManufacturerCountrySheet> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Үйлдвэрлэгч улс сонгоно уу',
                 style: TextStyle(
                   color: white,
@@ -86,7 +86,7 @@ class _ManufacturerCountrySheetState extends State<ManufacturerCountrySheet> {
                                     source.product.manufacturerCountryName ==
                                             data.name
                                         ? productColor
-                                        : Color(0xff9BACB2),
+                                        : const Color(0xff9BACB2),
                                     BlendMode.srcIn,
                                   ),
                                 ),
@@ -97,7 +97,7 @@ class _ManufacturerCountrySheetState extends State<ManufacturerCountrySheet> {
                       )
                       .toList(),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
               ],

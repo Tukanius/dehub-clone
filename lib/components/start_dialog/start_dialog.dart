@@ -18,7 +18,7 @@ void showStartDialog(BuildContext context) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'DeHUB платформд татай морил!',
                 style: TextStyle(
                   color: buttonColor,
@@ -26,17 +26,17 @@ void showStartDialog(BuildContext context) {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Text(
+              const Text(
                 'Та платформд бизнесээ төлөөлөх админаар бүртгүүлсэн байна. Та админ хэрэглэгчээр нэвтрэхдээ дараах мэдээллээр нэвтэрнэ. Мартуузаа',
                 style: TextStyle(color: buttonColor),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Text(
+              const Text(
                 'Нэвтрэх код',
                 style: TextStyle(
                   color: buttonColor,
@@ -53,7 +53,7 @@ void showStartDialog(BuildContext context) {
                 ),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                child: Text(
+                child: const Text(
                   'PR-2132324',
                   style: TextStyle(
                     color: buttonColor,
@@ -61,17 +61,17 @@ void showStartDialog(BuildContext context) {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Text(
+              const Text(
                 'Хэрэглэгчийн нэр',
                 style: TextStyle(
                   color: buttonColor,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
@@ -84,7 +84,7 @@ void showStartDialog(BuildContext context) {
                 ),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                child: Text(
+                child: const Text(
                   'Username',
                   style: TextStyle(
                     color: buttonColor,
@@ -92,10 +92,10 @@ void showStartDialog(BuildContext context) {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Text(
+              const Text(
                 'Та байгууллагыг төлөөлөх админ хэрэглэгчийн хувьд одоо ингэх ёстой',
                 style: TextStyle(color: buttonColor),
               ),
@@ -103,21 +103,21 @@ void showStartDialog(BuildContext context) {
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 child: SvgPicture.asset('assets/svg/blue-star.svg'),
               ),
-              Text(
+              const Text(
                 'Хэрэглэгчийн зөвлөх',
                 style: TextStyle(
                   color: buttonColor,
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Text(
+              const Text(
                 'Хэрэглэгчийн зөвлөх танд туслаад ингэнэ ингэнэ. йдыобрөйдылобрө',
                 style: TextStyle(color: buttonColor),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               CustomButton(
@@ -129,10 +129,10 @@ void showStartDialog(BuildContext context) {
                 labelText: 'Ок. Зөвлөгөө авъя.',
                 textColor: white,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              Text(
+              const Text(
                 'Гэрээлэх алхамууд',
                 style: TextStyle(
                   color: buttonColor,
@@ -140,20 +140,20 @@ void showStartDialog(BuildContext context) {
                   fontSize: 24,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Text(
+              const Text(
                 'йбдөлор йдылобөр  дйлыробөдлйы ор др йдлоырбө дл йдлыобрө',
                 style: TextStyle(color: buttonColor),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               SvgPicture.asset(
                 'assets/svg/dollar-sign.svg',
                 colorFilter:
-                    ColorFilter.mode(Color(0xff1B5EAA), BlendMode.srcIn),
+                    const ColorFilter.mode(Color(0xff1B5EAA), BlendMode.srcIn),
               ),
             ],
           ),

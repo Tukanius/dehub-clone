@@ -42,7 +42,7 @@ class _ProductTabState extends State<ProductTab> with AfterLayoutMixin {
   }
 
   onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
       groupItems = {};
@@ -89,7 +89,7 @@ class _ProductTabState extends State<ProductTab> with AfterLayoutMixin {
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).inventoryMe;
     return isLoading == true
-        ? Center(
+        ? const Center(
             child: CircularProgressIndicator(
               color: productColor,
             ),
@@ -100,7 +100,7 @@ class _ProductTabState extends State<ProductTab> with AfterLayoutMixin {
             color: productColor,
             refreshController: refreshController,
             child: SingleChildScrollView(
-              child: groupList.length != 0
+              child: groupList.isNotEmpty
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: groupList
@@ -113,8 +113,8 @@ class _ProductTabState extends State<ProductTab> with AfterLayoutMixin {
                                       horizontal: 15, vertical: 10),
                                   child:
                                       user.currentBusinessId == data.businessId
-                                          ? Text('Бүртгэсэн жагсаалт')
-                                          : Text('Системд тохируулсан'),
+                                          ? const Text('Бүртгэсэн жагсаалт')
+                                          : const Text('Системд тохируулсан'),
                                 ),
                                 Column(
                                   children: data.values!
@@ -147,7 +147,7 @@ class _ProductTabState extends State<ProductTab> with AfterLayoutMixin {
                           )
                           .toList(),
                     )
-                  : NotFound(
+                  : const NotFound(
                       module: 'INVENTORY',
                       labelText: "Хоосон байна",
                     ),

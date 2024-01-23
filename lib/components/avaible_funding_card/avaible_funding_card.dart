@@ -15,10 +15,10 @@ class AvaibleFundingCard extends StatefulWidget {
   final Function()? onClick;
   final Finance data;
   const AvaibleFundingCard({
-    Key? key,
+    super.key,
     this.onClick,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<AvaibleFundingCard> createState() => _AvaibleFundingCardState();
@@ -61,7 +61,7 @@ class _AvaibleFundingCardState extends State<AvaibleFundingCard> {
                             widget.data.type == "SALES"
                         ? '${widget.data.receiverBusiness?.profileName}'
                         : "${widget.data.senderBusiness?.profileName}",
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: dark, fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -80,7 +80,7 @@ class _AvaibleFundingCardState extends State<AvaibleFundingCard> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -103,7 +103,7 @@ class _AvaibleFundingCardState extends State<AvaibleFundingCard> {
                 Expanded(
                   child: Text(
                     '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: dark,
                       fontWeight: FontWeight.w500,
                     ),
@@ -112,15 +112,16 @@ class _AvaibleFundingCardState extends State<AvaibleFundingCard> {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.confirmedDate!)}',
-                  style: TextStyle(
+                  DateFormat("yyyy-MM-dd HH:mm")
+                      .format(widget.data.confirmedDate!),
+                  style: const TextStyle(
                     color: Color(0xff555555),
                     fontSize: 12,
                   ),
@@ -130,14 +131,14 @@ class _AvaibleFundingCardState extends State<AvaibleFundingCard> {
                     SvgPicture.asset(
                       'assets/svg/inv.svg',
                       colorFilter:
-                          ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                          const ColorFilter.mode(buttonColor, BlendMode.srcIn),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 3,
                     ),
                     Text(
                       '${widget.data.refCode}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: dark,
                         fontWeight: FontWeight.w600,
                       ),
@@ -146,7 +147,7 @@ class _AvaibleFundingCardState extends State<AvaibleFundingCard> {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -154,14 +155,14 @@ class _AvaibleFundingCardState extends State<AvaibleFundingCard> {
               children: [
                 Text(
                   'Төлөх: ${DateFormat("yyyy-MM-dd").format(widget.data.paymentDate!)}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12,
                     color: Color(0xff555555),
                   ),
                 ),
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'Хугацаа: ',
                       style: TextStyle(
                         fontSize: 12,

@@ -11,12 +11,12 @@ class ClientStaffCard extends StatefulWidget {
   final Function()? onClick;
   final BusinessNetwork? data;
   const ClientStaffCard({
-    Key? key,
+    super.key,
     this.onClick,
     this.data,
     required this.index,
     required this.startAnimation,
-  }) : super(key: key);
+  });
 
   @override
   State<ClientStaffCard> createState() => _ClientStaffCardState();
@@ -49,7 +49,7 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                   child: Row(
                     children: [
                       widget.data?.logo == null
-                          ? CircleAvatar(
+                          ? const CircleAvatar(
                               backgroundColor: grey,
                               radius: 18,
                               backgroundImage: AssetImage('images/avatar.png'),
@@ -61,7 +61,7 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                                 '${widget.data?.logo}',
                               ),
                             ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Expanded(
@@ -70,17 +70,17 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                           children: [
                             Text(
                               '${widget.data?.profileName}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: networkColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
                               '${widget.data?.refCode}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: dark,
                                 fontSize: 12,
                               ),
@@ -91,14 +91,14 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                     ],
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios,
                   color: networkColor,
                   size: 18,
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -115,7 +115,7 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                           fontSize: 10,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Row(
@@ -123,7 +123,7 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                           Container(
                             height: 24,
                             width: 24,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                             ),
                             child: ClipRRect(
@@ -139,13 +139,13 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                                     ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Expanded(
                             child: RichText(
                               text: TextSpan(
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: grey2,
                                     fontSize: 12,
                                     fontFamily: 'Montserrat'),
@@ -154,12 +154,12 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                                       ? TextSpan(
                                           text:
                                               '${widget.data?.businessStaff?.lastName} ')
-                                      : TextSpan(text: ''),
+                                      : const TextSpan(text: ''),
                                   widget.data?.businessStaff?.firstName != null
                                       ? TextSpan(
                                           text:
                                               '${widget.data?.businessStaff?.firstName}')
-                                      : TextSpan(text: '-'),
+                                      : const TextSpan(text: '-'),
                                 ],
                               ),
                             ),
@@ -169,7 +169,7 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Expanded(
@@ -184,7 +184,7 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                           fontSize: 10,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Row(
@@ -192,7 +192,7 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                           Container(
                             height: 24,
                             width: 24,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                             ),
                             child: ClipRRect(
@@ -208,13 +208,13 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                                     ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Expanded(
                             child: RichText(
                               text: TextSpan(
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: grey2,
                                     fontSize: 12,
                                     fontFamily: 'Montserrat'),
@@ -223,12 +223,12 @@ class _ClientStaffCardState extends State<ClientStaffCard> {
                                       ? TextSpan(
                                           text:
                                               '${widget.data?.businessStaff2?.lastName} ')
-                                      : TextSpan(text: ''),
+                                      : const TextSpan(text: ''),
                                   widget.data?.businessStaff2?.firstName != null
                                       ? TextSpan(
                                           text:
                                               '${widget.data?.businessStaff2?.firstName}')
-                                      : TextSpan(text: '-'),
+                                      : const TextSpan(text: '-'),
                                 ],
                               ),
                             ),

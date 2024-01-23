@@ -69,7 +69,7 @@ class _DistributorSheetState extends State<DistributorSheet>
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: productColor,
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(20),
@@ -78,7 +78,7 @@ class _DistributorSheetState extends State<DistributorSheet>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Дистрибютер сонгоно уу',
                 style: TextStyle(
                   color: white,
@@ -100,123 +100,121 @@ class _DistributorSheetState extends State<DistributorSheet>
         ),
         Expanded(
           child: SingleChildScrollView(
-            child: Container(
-              child: Column(
-                children: [
-                  isLoading == true
-                      ? SizedBox()
-                      : Row(
-                          children: [
-                            Expanded(
-                              child: FormTextField(
-                                controller: controller,
-                                onChanged: (value) {
-                                  setState(() {});
-                                },
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.zero,
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 0, horizontal: 15),
-                                  isDense: false,
-                                  hintText: 'Энд бичээд нэмнэ үү',
+            child: Column(
+              children: [
+                isLoading == true
+                    ? const SizedBox()
+                    : Row(
+                        children: [
+                          Expanded(
+                            child: FormTextField(
+                              controller: controller,
+                              onChanged: (value) {
+                                setState(() {});
+                              },
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.zero,
                                 ),
-                                name: 'asdf',
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 15),
+                                isDense: false,
+                                hintText: 'Энд бичээд нэмнэ үү',
                               ),
+                              name: 'asdf',
                             ),
-                            GestureDetector(
-                              onTap: controller.text != ''
-                                  ? () {
-                                      create();
-                                      setState(() {
-                                        controller.text = '';
-                                      });
-                                    }
-                                  : () {},
-                              child: Container(
-                                margin: const EdgeInsets.only(right: 15),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: Color(0xffEAECEE),
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.add,
+                          ),
+                          GestureDetector(
+                            onTap: controller.text != ''
+                                ? () {
+                                    create();
+                                    setState(() {
+                                      controller.text = '';
+                                    });
+                                  }
+                                : () {},
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 15),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: const Color(0xffEAECEE),
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.add,
+                                    color: controller.text != ''
+                                        ? productColor
+                                        : grey3.withOpacity(0.5),
+                                    size: 14,
+                                  ),
+                                  Text(
+                                    'Нэмэх',
+                                    style: TextStyle(
                                       color: controller.text != ''
                                           ? productColor
                                           : grey3.withOpacity(0.5),
-                                      size: 14,
-                                    ),
-                                    Text(
-                                      'Нэмэх',
-                                      style: TextStyle(
-                                        color: controller.text != ''
-                                            ? productColor
-                                            : grey3.withOpacity(0.5),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                  isLoading == true
-                      ? Center(
-                          child: CircularProgressIndicator(
-                            color: productColor,
-                          ),
-                        )
-                      : Column(
-                          children: distributor.rows!
-                              .map(
-                                (data) => InkWell(
-                                  onLongPress: () {
-                                    show(data.id, data.name);
-                                  },
-                                  onTap: () {
-                                    source.distributor(data.name, data.id);
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          data.name,
-                                        ),
-                                        SvgPicture.asset(
-                                          'assets/svg/double-check.svg',
-                                          colorFilter: ColorFilter.mode(
-                                            source.product.distributorName ==
-                                                    data.name
-                                                ? productColor
-                                                : Color(0xff9BACB2),
-                                            BlendMode.srcIn,
-                                          ),
-                                        ),
-                                      ],
                                     ),
                                   ),
-                                ),
-                              )
-                              .toList(),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                isLoading == true
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: productColor,
                         ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                ],
-              ),
+                      )
+                    : Column(
+                        children: distributor.rows!
+                            .map(
+                              (data) => InkWell(
+                                onLongPress: () {
+                                  show(data.id, data.name);
+                                },
+                                onTap: () {
+                                  source.distributor(data.name, data.id);
+                                  Navigator.of(context).pop();
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        data.name,
+                                      ),
+                                      SvgPicture.asset(
+                                        'assets/svg/double-check.svg',
+                                        colorFilter: ColorFilter.mode(
+                                          source.product.distributorName ==
+                                                  data.name
+                                              ? productColor
+                                              : const Color(0xff9BACB2),
+                                          BlendMode.srcIn,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                const SizedBox(
+                  height: 40,
+                ),
+              ],
             ),
           ),
         ),
@@ -227,7 +225,7 @@ class _DistributorSheetState extends State<DistributorSheet>
   show(String id, String name) {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -239,7 +237,7 @@ class _DistributorSheetState extends State<DistributorSheet>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text('${name}'),
+              Text(name),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -251,7 +249,7 @@ class _DistributorSheetState extends State<DistributorSheet>
                     child: Container(
                       color: transparent,
                       padding: const EdgeInsets.all(10),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Icon(
                             Icons.edit_note_sharp,
@@ -274,7 +272,7 @@ class _DistributorSheetState extends State<DistributorSheet>
                     child: Container(
                       color: transparent,
                       padding: const EdgeInsets.all(10),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Icon(
                             Icons.delete_outline_outlined,
@@ -314,14 +312,14 @@ class _DistributorSheetState extends State<DistributorSheet>
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text(
+                const Text(
                   'Нэр солих',
                   style: TextStyle(
                     color: grey3,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Material(
@@ -329,12 +327,12 @@ class _DistributorSheetState extends State<DistributorSheet>
                     key: fbKey,
                     child: FormTextField(
                       name: 'name',
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Нэр оруулна уу',
                         fillColor: white,
                         isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 12),
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 12),
                         filled: true,
                         border: OutlineInputBorder(
                           borderSide: BorderSide(color: grey),
@@ -347,7 +345,7 @@ class _DistributorSheetState extends State<DistributorSheet>
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Row(

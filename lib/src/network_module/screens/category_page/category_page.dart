@@ -29,7 +29,7 @@ class _CategoryPageState extends State<CategoryPage> {
         elevation: 0,
         backgroundColor: backgroundColor,
         surfaceTintColor: backgroundColor,
-        leading: CustomBackButton(color: networkColor),
+        leading: const CustomBackButton(color: networkColor),
         leadingWidth: 100,
         actions: [
           AddButton(
@@ -52,7 +52,7 @@ class _CategoryPageState extends State<CategoryPage> {
           children: [
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Ангилал',
                 style: TextStyle(
                   color: black,
@@ -63,7 +63,7 @@ class _CategoryPageState extends State<CategoryPage> {
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15),
-              child: Text(
+              child: const Text(
                 'Харилцагчийн анги',
                 style: TextStyle(
                   color: networkColor,
@@ -71,7 +71,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             for (var i = 0; i < data.length; i++)

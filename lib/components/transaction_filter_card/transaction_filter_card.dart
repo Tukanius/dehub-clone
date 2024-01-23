@@ -6,11 +6,11 @@ class TransactionFilterCard extends StatefulWidget {
   final bool? isTap;
   final String? text;
   const TransactionFilterCard({
-    Key? key,
+    super.key,
     this.text,
     this.isTap,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<TransactionFilterCard> createState() => _TransactionFilterCardState();
@@ -33,9 +33,9 @@ class _TransactionFilterCardState extends State<TransactionFilterCard> {
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 1,
                     blurRadius: 3,
-                    offset: Offset(0, 3),
+                    offset: const Offset(0, 3),
                   )
-                : BoxShadow(),
+                : const BoxShadow(),
           ],
         ),
         child: Center(

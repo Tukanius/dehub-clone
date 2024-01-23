@@ -19,10 +19,10 @@ class ProfilePageArguments {
 class ProfilePage extends StatefulWidget {
   final int index;
   static const routeName = '/profilepage';
-  ProfilePage({
-    Key? key,
+  const ProfilePage({
+    super.key,
     required this.index,
-  }) : super(key: key);
+  });
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -72,16 +72,16 @@ class _ProfilePageState extends State<ProfilePage>
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        backgroundColor: Color(0xffF5F5F5),
+        backgroundColor: const Color(0xffF5F5F5),
         appBar: AppBar(
           backgroundColor: grey2,
           surfaceTintColor: grey2,
-          iconTheme: IconThemeData(color: white),
+          iconTheme: const IconThemeData(color: white),
           leading: IconButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            icon: Icon(Icons.arrow_back_ios_new),
+            icon: const Icon(Icons.arrow_back_ios_new),
           ),
           elevation: 0,
           centerTitle: false,
@@ -97,7 +97,7 @@ class _ProfilePageState extends State<ProfilePage>
                   border: Border.all(color: white.withOpacity(0.3), width: 0.5),
                   shape: BoxShape.circle,
                 ),
-                child: Column(
+                child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -120,22 +120,22 @@ class _ProfilePageState extends State<ProfilePage>
             ),
           ],
           title: tabController.index == 0
-              ? Text(
+              ? const Text(
                   'Миний мэдээлэл',
                   style: TextStyle(fontSize: 15, color: white),
                 )
               : tabController.index == 1
-                  ? Text(
+                  ? const Text(
                       'Партнер мэдээлэл',
                       style: TextStyle(fontSize: 15, color: white),
                     )
-                  : Text(
+                  : const Text(
                       'Систем тохиргоо',
                       style: TextStyle(fontSize: 15, color: white),
                     ),
         ),
         body: isLoading == true
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(
                   color: grey2,
                 ),
@@ -216,7 +216,7 @@ class _ProfilePageState extends State<ProfilePage>
                       ],
                     ),
                   ),
-                  Divider(
+                  const Divider(
                     indent: 20,
                     endIndent: 20,
                   ),
@@ -224,7 +224,7 @@ class _ProfilePageState extends State<ProfilePage>
                     child: TabBarView(
                       controller: tabController,
                       physics: const NeverScrollableScrollPhysics(),
-                      children: [
+                      children: const [
                         PersonalInfo(),
                         PartnerInfo(),
                         SettingsPage(),

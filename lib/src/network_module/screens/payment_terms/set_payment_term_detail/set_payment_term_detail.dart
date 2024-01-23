@@ -25,9 +25,9 @@ class SetPaymentTermDetail extends StatefulWidget {
   final String id;
   static const routeName = '/SetPaymentTermDetail';
   const SetPaymentTermDetail({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<SetPaymentTermDetail> createState() => _SetPaymentTermDetailState();
@@ -91,11 +91,11 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
         surfaceTintColor: backgroundColor,
         elevation: 0,
         leadingWidth: 150,
-        leading: CustomBackButton(color: networkColor),
+        leading: const CustomBackButton(color: networkColor),
       ),
       body: SingleChildScrollView(
         child: isLoading == true
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(
                   color: networkColor,
                 ),
@@ -106,7 +106,7 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                   Container(
                     margin:
                         const EdgeInsets.only(left: 15, bottom: 15, top: 15),
-                    child: Text(
+                    child: const Text(
                       'Харилцагчийн мэдээлэл',
                       style: TextStyle(
                         color: grey3,
@@ -157,7 +157,7 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Статус',
                           style: TextStyle(
                             color: dark,
@@ -166,11 +166,11 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            color: Color(0xff71717A).withOpacity(0.1),
+                            color: const Color(0xff71717A).withOpacity(0.1),
                           ),
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8, vertical: 3),
-                          child: Text(
+                          child: const Text(
                             'Идэвхтэй',
                             style: TextStyle(
                               fontSize: 12,
@@ -185,7 +185,7 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                   Container(
                     margin:
                         const EdgeInsets.only(left: 15, bottom: 15, top: 15),
-                    child: Text(
+                    child: const Text(
                       'Төлбөрийн нөхцөл',
                       style: TextStyle(
                         color: grey3,
@@ -224,7 +224,7 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                     labelText: 'Эхлэл огноо',
                     secondTextColor: networkColor,
                     secondText:
-                        "${business.paymentTerm?.startDate != null ? DateFormat("yyyy-MM-dd").format(business.paymentTerm!.startDate!) : '-'}",
+                        business.paymentTerm?.startDate != null ? DateFormat("yyyy-MM-dd").format(business.paymentTerm!.startDate!) : '-',
                     labelTextColor: dark,
                   ),
                   FieldCard(
@@ -234,7 +234,7 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                     labelText: 'Дуусах огноо',
                     secondTextColor: networkColor,
                     secondText:
-                        "${business.paymentTerm?.endDate != null ? DateFormat("yyyy-MM-dd").format(business.paymentTerm!.endDate!) : '-'}",
+                        business.paymentTerm?.endDate != null ? DateFormat("yyyy-MM-dd").format(business.paymentTerm!.endDate!) : '-',
                     labelTextColor: dark,
                   ),
                   GestureDetector(
@@ -255,20 +255,20 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             'Өөрчлөх',
                             style: TextStyle(
                               color: networkColor,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           SvgPicture.asset(
                             'assets/svg/edit.svg',
                             colorFilter:
-                                ColorFilter.mode(networkColor, BlendMode.srcIn),
+                                const ColorFilter.mode(networkColor, BlendMode.srcIn),
                           ),
                         ],
                       ),

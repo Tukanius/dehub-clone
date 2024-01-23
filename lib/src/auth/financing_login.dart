@@ -17,7 +17,7 @@ import 'package:after_layout/after_layout.dart';
 
 class FinancingLogin extends StatefulWidget {
   static const routeName = 'FinancingLogin';
-  const FinancingLogin({Key? key}) : super(key: key);
+  const FinancingLogin({super.key});
 
   @override
   State<FinancingLogin> createState() => _FinancingLoginState();
@@ -83,7 +83,7 @@ class _FinancingLoginState extends State<FinancingLogin> with AfterLayoutMixin {
         backgroundColor: source.currentColor,
         body: SafeArea(
           child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
                 GestureDetector(
@@ -96,15 +96,15 @@ class _FinancingLoginState extends State<FinancingLogin> with AfterLayoutMixin {
                     alignment: Alignment.topLeft,
                     padding: const EdgeInsets.all(15),
                     color: transparent,
-                    child: Icon(
+                    child: const Icon(
                       Icons.arrow_back_ios_new,
                       color: white,
                     ),
                   ),
                 ),
                 Text(
-                  '${source.bankName}',
-                  style: TextStyle(
+                  source.bankName,
+                  style: const TextStyle(
                     color: white,
                     fontWeight: FontWeight.bold,
                     fontSize: 32,
@@ -123,248 +123,237 @@ class _FinancingLoginState extends State<FinancingLogin> with AfterLayoutMixin {
                 ),
                 Lottie.asset('assets/lottie/financing-login.json',
                     height: isLoading == true ? 300 : 200),
-                isLoading == false
-                    ? Column(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 10),
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text(
-                                  'И-мэйл: ',
-                                  style: TextStyle(
-                                      color: white,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                Text(
-                                  '${user.email}',
-                                  style: TextStyle(
-                                      color: white,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                          ),
-                          FormBuilder(
-                            key: fbKey,
-                            child: Container(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Татвар төлөгчийн дугаар',
-                                    style: TextStyle(
-                                      color: white,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  FormTextField(
-                                    inputType: TextInputType.number,
-                                    onComplete: () {
-                                      FocusScope.of(context).nextFocus();
-                                    },
-                                    name: 'regNumber',
-                                    decoration: InputDecoration(
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      hintText: "Татвар төлөгчийн дугаар",
-                                      hintStyle: TextStyle(
-                                        color: grey2,
-                                        fontSize: 14,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xff44566C30),
-                                        ),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: red),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                    ),
-                                    validator: FormBuilderValidators.compose([
-                                      FormBuilderValidators.required(
-                                          errorText:
-                                              'Татвар төлөгчийн дугаар оруулна уу'),
-                                    ]),
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  const Text(
-                                    'Хэрэглэгчийн нэр',
-                                    style: TextStyle(
-                                      color: white,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  FormTextField(
-                                    inputType: TextInputType.emailAddress,
-                                    onComplete: () {
-                                      FocusScope.of(context).nextFocus();
-                                    },
-                                    name: 'username',
-                                    decoration: InputDecoration(
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      hintText: "Хэрэглэгчийн нэр",
-                                      hintStyle: TextStyle(
-                                        color: grey2,
-                                        fontSize: 14,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xff44566C30),
-                                        ),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: red),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                    ),
-                                    validator: FormBuilderValidators.compose([
-                                      FormBuilderValidators.required(
-                                          errorText:
-                                              'Хэрэглэгчийн нэр оруулна уу'),
-                                    ]),
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  const Text(
-                                    'Нууц үг',
-                                    style: TextStyle(
-                                      color: white,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  FormTextField(
-                                    onComplete: () {
-                                      onSubmit();
-                                    },
-                                    name: 'password',
-                                    inputType: TextInputType.text,
-                                    obscureText: _isVisible,
-                                    decoration: InputDecoration(
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                      suffixIcon: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            _isVisible = !_isVisible;
-                                          });
-                                        },
-                                        child: _isVisible == true
-                                            ? Icon(
-                                                Icons.visibility_off_outlined,
-                                                color: grey2,
-                                              )
-                                            : Icon(
-                                                Icons.visibility_outlined,
-                                                color: grey2,
-                                              ),
-                                      ),
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      hintText: "Нууц үгээ оруулна уу",
-                                      hintStyle: TextStyle(
-                                        color: grey2,
-                                        fontSize: 14,
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: red),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xff44566C30),
-                                        ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                    ),
-                                    validator: FormBuilderValidators.compose([
-                                      FormBuilderValidators.required(
-                                        errorText: 'Нууц үг оруулна уу',
-                                      ),
-                                    ]),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(
-                                right: 15, top: 10, bottom: 50),
-                            alignment: Alignment.centerRight,
-                            child: const Text(
-                              'Нууц үгээ мартсан уу?',
+                if (isLoading == false)
+                  Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'И-мэйл: ',
                               style: TextStyle(
-                                color: white,
-                                fontWeight: FontWeight.w500,
-                              ),
+                                  color: white, fontWeight: FontWeight.w500),
                             ),
+                            Text(
+                              '${user.email}',
+                              style: const TextStyle(
+                                  color: white, fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                      ),
+                      FormBuilder(
+                        key: fbKey,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Татвар төлөгчийн дугаар',
+                                style: TextStyle(
+                                  color: white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              FormTextField(
+                                inputType: TextInputType.number,
+                                onComplete: () {
+                                  FocusScope.of(context).nextFocus();
+                                },
+                                name: 'regNumber',
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  hintText: "Татвар төлөгчийн дугаар",
+                                  hintStyle: const TextStyle(
+                                    color: grey2,
+                                    fontSize: 14,
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: grey2.withOpacity(0.3),
+                                    ),
+                                  ),
+                                  errorBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(color: red),
+                                  ),
+                                  border: const OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                  ),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ),
+                                validator: FormBuilderValidators.compose([
+                                  FormBuilderValidators.required(
+                                      errorText:
+                                          'Татвар төлөгчийн дугаар оруулна уу'),
+                                ]),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const Text(
+                                'Хэрэглэгчийн нэр',
+                                style: TextStyle(
+                                  color: white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              FormTextField(
+                                inputType: TextInputType.emailAddress,
+                                onComplete: () {
+                                  FocusScope.of(context).nextFocus();
+                                },
+                                name: 'username',
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  hintText: "Хэрэглэгчийн нэр",
+                                  hintStyle: const TextStyle(
+                                    color: grey2,
+                                    fontSize: 14,
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: grey2.withOpacity(0.3),
+                                    ),
+                                  ),
+                                  errorBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(color: red),
+                                  ),
+                                  border: const OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                  ),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ),
+                                validator: FormBuilderValidators.compose([
+                                  FormBuilderValidators.required(
+                                      errorText: 'Хэрэглэгчийн нэр оруулна уу'),
+                                ]),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const Text(
+                                'Нууц үг',
+                                style: TextStyle(
+                                  color: white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              FormTextField(
+                                onComplete: () {
+                                  onSubmit();
+                                },
+                                name: 'password',
+                                inputType: TextInputType.text,
+                                obscureText: _isVisible,
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _isVisible = !_isVisible;
+                                      });
+                                    },
+                                    child: _isVisible == true
+                                        ? const Icon(
+                                            Icons.visibility_off_outlined,
+                                            color: grey2,
+                                          )
+                                        : const Icon(
+                                            Icons.visibility_outlined,
+                                            color: grey2,
+                                          ),
+                                  ),
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  hintText: "Нууц үгээ оруулна уу",
+                                  hintStyle: const TextStyle(
+                                    color: grey2,
+                                    fontSize: 14,
+                                  ),
+                                  border: const OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                  ),
+                                  errorBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(color: red),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: grey2.withOpacity(0.3),
+                                    ),
+                                  ),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ),
+                                validator: FormBuilderValidators.compose([
+                                  FormBuilderValidators.required(
+                                    errorText: 'Нууц үг оруулна уу',
+                                  ),
+                                ]),
+                              ),
+                            ],
                           ),
-                          CustomButton(
-                            isLoading: isSubmit,
-                            onClick: () {
-                              onSubmit();
-                            },
-                            labelColor: white,
-                            labelText: 'Нэвтрэх',
-                            textColor: buttonColor,
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(
+                            right: 15, top: 10, bottom: 50),
+                        alignment: Alignment.centerRight,
+                        child: const Text(
+                          'Нууц үгээ мартсан уу?',
+                          style: TextStyle(
+                            color: white,
+                            fontWeight: FontWeight.w500,
                           ),
-                          SizedBox(
-                            height: 50,
-                          ),
-                        ],
-                      )
-                    : SizedBox(),
+                        ),
+                      ),
+                      CustomButton(
+                        isLoading: isSubmit,
+                        onClick: () {
+                          onSubmit();
+                        },
+                        labelColor: white,
+                        labelText: 'Нэвтрэх',
+                        textColor: buttonColor,
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                    ],
+                  ),
               ],
             ),
           ),

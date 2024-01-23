@@ -28,7 +28,7 @@ class _ImporterCountrySheetState extends State<ImporterCountrySheet> {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: productColor,
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(20),
@@ -37,7 +37,7 @@ class _ImporterCountrySheetState extends State<ImporterCountrySheet> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Импортлогч улс сонгоно уу',
                 style: TextStyle(
                   color: white,
@@ -85,7 +85,7 @@ class _ImporterCountrySheetState extends State<ImporterCountrySheet> {
                                     source.product.importerCountryName ==
                                             data.name
                                         ? productColor
-                                        : Color(0xff9BACB2),
+                                        : const Color(0xff9BACB2),
                                     BlendMode.srcIn,
                                   ),
                                 ),
@@ -96,7 +96,7 @@ class _ImporterCountrySheetState extends State<ImporterCountrySheet> {
                       )
                       .toList(),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
               ],

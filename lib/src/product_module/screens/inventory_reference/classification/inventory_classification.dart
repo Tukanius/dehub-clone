@@ -23,9 +23,9 @@ class InventoryClassification extends StatefulWidget {
   static const routeName = '/InventoryClassification';
   final String type;
   const InventoryClassification({
-    Key? key,
+    super.key,
     required this.type,
-  }) : super(key: key);
+  });
 
   @override
   State<InventoryClassification> createState() =>
@@ -67,7 +67,7 @@ class _InventoryClassificationState extends State<InventoryClassification>
   }
 
   void onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
       page = 1;
@@ -131,23 +131,23 @@ class _InventoryClassificationState extends State<InventoryClassification>
       appBar: AppBar(
           backgroundColor: white,
           surfaceTintColor: white,
-          iconTheme: IconThemeData(color: productColor),
+          iconTheme: const IconThemeData(color: productColor),
           title: widget.type == "CLASSIFICATION"
-              ? Text(
+              ? const Text(
                   'Ангилал',
                   style: TextStyle(color: productColor, fontSize: 16),
                 )
               : widget.type == "SUB_CLASSIFICATION"
-                  ? Text(
+                  ? const Text(
                       'Дэд ангилал',
                       style: TextStyle(color: productColor, fontSize: 16),
                     )
                   : widget.type == "CATEGORY"
-                      ? Text(
+                      ? const Text(
                           'Категори',
                           style: TextStyle(color: productColor, fontSize: 16),
                         )
-                      : Text(
+                      : const Text(
                           'Дэд категори',
                           style: TextStyle(color: productColor, fontSize: 16),
                         )),
@@ -162,14 +162,14 @@ class _InventoryClassificationState extends State<InventoryClassification>
           );
         },
         backgroundColor: productColor,
-        child: Icon(
+        shape: const CircleBorder(),
+        child: const Icon(
           Icons.add,
           color: white,
         ),
-        shape: CircleBorder(),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: productColor,
               ),
@@ -191,8 +191,8 @@ class _InventoryClassificationState extends State<InventoryClassification>
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 15, vertical: 10),
                               child: item.businessId == user.currentBusinessId
-                                  ? Text('Бүртгэсэн жагсаалт')
-                                  : Text('Системд тохируулсан'),
+                                  ? const Text('Бүртгэсэн жагсаалт')
+                                  : const Text('Системд тохируулсан'),
                             ),
                             Column(
                               children: item.values!
@@ -221,15 +221,15 @@ class _InventoryClassificationState extends State<InventoryClassification>
                                                 children: [
                                                   Text(
                                                     '${data.name}',
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         color: productColor),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     height: 3,
                                                   ),
                                                   RichText(
                                                     text: TextSpan(
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         fontFamily:
                                                             'Montserrat',
                                                         color: grey2,
@@ -239,18 +239,18 @@ class _InventoryClassificationState extends State<InventoryClassification>
                                                             ? TextSpan(
                                                                 text:
                                                                     "${data.classification?.name}, ")
-                                                            : TextSpan(),
+                                                            : const TextSpan(),
                                                         type() < 3
                                                             ? TextSpan(
                                                                 text:
                                                                     "${data.subClassification?.name}, ")
-                                                            : TextSpan(),
+                                                            : const TextSpan(),
                                                         type() < 2
                                                             ? TextSpan(
                                                                 text:
                                                                     "${data.category?.name}, ",
                                                               )
-                                                            : TextSpan(),
+                                                            : const TextSpan(),
                                                         TextSpan(
                                                           text: data
                                                               .itemType?.name,
@@ -261,7 +261,7 @@ class _InventoryClassificationState extends State<InventoryClassification>
                                                 ],
                                               ),
                                             ),
-                                            Icon(
+                                            const Icon(
                                               Icons.arrow_forward_ios,
                                               color: productColor,
                                               size: 16,

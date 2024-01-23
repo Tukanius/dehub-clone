@@ -3,6 +3,9 @@ part of '../models/finance.dart';
 Finance _$FinanceFromJson(Map<String, dynamic> json) {
   return Finance(
     count: json['count'] != null ? int.parse(json['count'].toString()) : null,
+    recourseDays: json['recourseDays'] != null
+        ? int.parse(json['recourseDays'].toString())
+        : null,
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => Finance.fromJson(e)).toList()
         : null,
@@ -28,11 +31,24 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
     sentDate: json['sentDate'] != null
         ? DateTime.parse(json['sentDate'].toString())
         : null,
+    suppPenaltyType: json['suppPenaltyType'] != null
+        ? json['suppPenaltyType'] as String
+        : null,
+    buyerPenaltyType: json['buyerPenaltyType'] != null
+        ? json['buyerPenaltyType'] as String
+        : null,
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
-    paymentStatus:
-        json['paymentStatus'] != null ? json['paymentStatus'] as String : null,
     contractFile:
         json['contractFile'] != null ? json['contractFile'] as String : null,
+    suppFeeRule:
+        json['suppFeeRule'] != null ? json['suppFeeRule'] as String : null,
+    buyerFeeRule:
+        json['buyerFeeRule'] != null ? json['buyerFeeRule'] as String : null,
+    paymentStatus:
+        json['paymentStatus'] != null ? json['paymentStatus'] as String : null,
+    contractFiles: json['contractFiles'] != null
+        ? (json['contractFiles'] as List).map((e) => e as String).toList()
+        : null,
     bankName: json['bankName'] != null ? json['bankName'] as String : null,
     shortName: json['shortName'] != null ? json['shortName'] as String : null,
     programStatus:
@@ -65,6 +81,24 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         json['parentRefCode'] != null ? json['parentRefCode'] as String : null,
     invCount: json['invCount'] != null
         ? double.parse(json['invCount'].toString())
+        : null,
+    suppPenaltyPercent: json['suppPenaltyPercent'] != null
+        ? double.parse(json['suppPenaltyPercent'].toString())
+        : null,
+    buyerPenaltyPercent: json['buyerPenaltyPercent'] != null
+        ? double.parse(json['buyerPenaltyPercent'].toString())
+        : null,
+    suppDisbursementFee: json['suppDisbursementFee'] != null
+        ? double.parse(json['suppDisbursementFee'].toString())
+        : null,
+    buyerDisbursementFee: json['buyerDisbursementFee'] != null
+        ? double.parse(json['buyerDisbursementFee'].toString())
+        : null,
+    suppAppFee: json['suppAppFee'] != null
+        ? double.parse(json['suppAppFee'].toString())
+        : null,
+    buyerAppFee: json['buyerAppFee'] != null
+        ? double.parse(json['buyerAppFee'].toString())
         : null,
     minInvAmount: json['minInvAmount'] != null
         ? double.parse(json['minInvAmount'].toString())
@@ -314,6 +348,30 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
     remainingDays: json['remainingDays'] != null
         ? double.parse(json['remainingDays'].toString())
         : null,
+    suppFee: json['suppFee'] != null
+        ? double.parse(json['suppFee'].toString())
+        : null,
+    buyerFee: json['buyerFee'] != null
+        ? double.parse(json['buyerFee'].toString())
+        : null,
+    suppCalculateDay: json['suppCalculateDay'] != null
+        ? double.parse(json['suppCalculateDay'].toString())
+        : null,
+    buyerCalculateDay: json['buyerCalculateDay'] != null
+        ? double.parse(json['buyerCalculateDay'].toString())
+        : null,
+    suppMinFee: json['suppMinFee'] != null
+        ? double.parse(json['suppMinFee'].toString())
+        : null,
+    buyerMinFee: json['buyerMinFee'] != null
+        ? double.parse(json['buyerMinFee'].toString())
+        : null,
+    suppMaxFee: json['suppMaxFee'] != null
+        ? double.parse(json['suppMaxFee'].toString())
+        : null,
+    buyerMaxFee: json['buyerMaxFee'] != null
+        ? double.parse(json['buyerMaxFee'].toString())
+        : null,
     program: json['program'] != null
         ? Finance.fromJson(json['program'] as Map<String, dynamic>)
         : null,
@@ -395,250 +453,428 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
     receiverAcc: json['receiverAcc'] != null
         ? Finance.fromJson(json['receiverAcc'] as Map<String, dynamic>)
         : null,
+    businessSubLimit: json['businessSubLimit'] != null
+        ? double.parse(json['businessSubLimit'].toString())
+        : null,
+    businessAvailableAmount: json['businessAvailableAmount'] != null
+        ? double.parse(json['businessAvailableAmount'].toString())
+        : null,
+    businessUtilizedAmount: json['businessUtilizedAmount'] != null
+        ? double.parse(json['businessUtilizedAmount'].toString())
+        : null,
+    businessDisbursePendingAmount: json['businessDisbursePendingAmount'] != null
+        ? double.parse(json['businessDisbursePendingAmount'].toString())
+        : null,
+    businessPendingAmount: json['businessPendingAmount'] != null
+        ? double.parse(json['businessPendingAmount'].toString())
+        : null,
+    businessUtilizedCount: json['businessUtilizedCount'] != null
+        ? double.parse(json['businessUtilizedCount'].toString())
+        : null,
+    businessDisbursePendingCount: json['businessDisbursePendingCount'] != null
+        ? double.parse(json['businessDisbursePendingCount'].toString())
+        : null,
+    businessPendingCount: json['businessPendingCount'] != null
+        ? double.parse(json['businessPendingCount'].toString())
+        : null,
   );
 }
 
 Map<String, dynamic> _$FinanceToJson(Finance instance) {
   Map<String, dynamic> json = {};
-
-  if (instance.senderFinUser != null)
-    json['senderFinUser'] = instance.senderFinUser;
-  if (instance.minOfInv != null) json['minOfInv'] = instance.minOfInv;
-  if (instance.minInvAmount != null)
-    json['minInvAmount'] = instance.minInvAmount;
-  if (instance.maxOfInv != null) json['maxOfInv'] = instance.maxOfInv;
-  if (instance.paymentStatus != null)
-    json['paymentStatus'] = instance.paymentStatus;
-  if (instance.contractFile != null)
+  if (instance.businessSubLimit != null) {
+    json['businessSubLimit'] = instance.businessSubLimit;
+  }
+  if (instance.contractFile != null) {
     json['contractFile'] = instance.contractFile;
+  }
+  if (instance.businessAvailableAmount != null) {
+    json['businessAvailableAmount'] = instance.businessAvailableAmount;
+  }
+  if (instance.businessUtilizedAmount != null) {
+    json['businessUtilizedAmount'] = instance.businessUtilizedAmount;
+  }
+  if (instance.businessDisbursePendingAmount != null) {
+    json['businessDisbursePendingAmount'] =
+        instance.businessDisbursePendingAmount;
+  }
+  if (instance.businessPendingAmount != null) {
+    json['businessPendingAmount'] = instance.businessPendingAmount;
+  }
+  if (instance.businessUtilizedCount != null) {
+    json['businessUtilizedCount'] = instance.businessUtilizedCount;
+  }
+  if (instance.businessDisbursePendingCount != null) {
+    json['businessDisbursePendingCount'] =
+        instance.businessDisbursePendingCount;
+  }
+  if (instance.businessPendingCount != null) {
+    json['businessPendingCount'] = instance.businessPendingCount;
+  }
+  if (instance.recourseDays != null) {
+    json['recourseDays'] = instance.recourseDays;
+  }
+  if (instance.suppPenaltyPercent != null) {
+    json['suppPenaltyPercent'] = instance.suppPenaltyPercent;
+  }
+  if (instance.buyerPenaltyPercent != null) {
+    json['buyerPenaltyPercent'] = instance.buyerPenaltyPercent;
+  }
+  if (instance.suppMinFee != null) json['suppMinFee'] = instance.suppMinFee;
+  if (instance.buyerMinFee != null) json['buyerMinFee'] = instance.buyerMinFee;
+  if (instance.suppMaxFee != null) json['suppMaxFee'] = instance.suppMaxFee;
+  if (instance.buyerMaxFee != null) json['buyerMaxFee'] = instance.buyerMaxFee;
+  if (instance.suppFee != null) json['suppFee'] = instance.suppFee;
+  if (instance.buyerFeeRule != null) {
+    json['buyerFeeRule'] = instance.buyerFeeRule;
+  }
+  if (instance.suppFeeRule != null) json['suppFeeRule'] = instance.suppFeeRule;
+  if (instance.buyerDisbursementFee != null) {
+    json['buyerDisbursementFee'] = instance.buyerDisbursementFee;
+  }
+  if (instance.suppDisbursementFee != null) {
+    json['suppDisbursementFee'] = instance.suppDisbursementFee;
+  }
+  if (instance.buyerFee != null) json['buyerFee'] = instance.buyerFee;
+  if (instance.suppCalculateDay != null) {
+    json['suppCalculateDay'] = instance.suppCalculateDay;
+  }
+  if (instance.buyerCalculateDay != null) {
+    json['buyerCalculateDay'] = instance.buyerCalculateDay;
+  }
+  if (instance.senderFinUser != null) {
+    json['senderFinUser'] = instance.senderFinUser;
+  }
+  if (instance.minOfInv != null) json['minOfInv'] = instance.minOfInv;
+  if (instance.minInvAmount != null) {
+    json['minInvAmount'] = instance.minInvAmount;
+  }
+  if (instance.maxOfInv != null) json['maxOfInv'] = instance.maxOfInv;
+  if (instance.paymentStatus != null) {
+    json['paymentStatus'] = instance.paymentStatus;
+  }
+  if (instance.contractFiles != null) {
+    json['contractFiles'] = instance.contractFiles;
+  }
   if (instance.invoices != null) json['invoices'] = instance.invoices;
   if (instance.bankName != null) json['bankName'] = instance.bankName;
-  if (instance.receiverFinUser != null)
+  if (instance.receiverFinUser != null) {
     json['receiverFinUser'] = instance.receiverFinUser;
+  }
   if (instance.senderAcc != null) json['senderAcc'] = instance.senderAcc;
   if (instance.receiverAcc != null) json['receiverAcc'] = instance.receiverAcc;
   if (instance.shortName != null) json['shortName'] = instance.shortName;
-  if (instance.confirmedAmount != null)
+  if (instance.confirmedAmount != null) {
     json['confirmedAmount'] = instance.confirmedAmount;
-  if (instance.paymentTermDesc != null)
+  }
+  if (instance.paymentTermDesc != null) {
     json['paymentTermDesc'] = instance.paymentTermDesc;
-  if (instance.confirmedUser != null)
+  }
+  if (instance.confirmedUser != null) {
     json['confirmedUser'] = instance.confirmedUser;
-  if (instance.invoiceStatus != null)
+  }
+  if (instance.invoiceStatus != null) {
     json['invoiceStatus'] = instance.invoiceStatus;
-  if (instance.confirmedDate != null)
+  }
+  if (instance.confirmedDate != null) {
     json['confirmedDate'] = instance.confirmedDate;
+  }
   if (instance.paymentDate != null) json['paymentDate'] = instance.paymentDate;
   if (instance.sentDate != null) json['sentDate'] = instance.sentDate;
-  if (instance.receiverBusiness != null)
+  if (instance.receiverBusiness != null) {
     json['receiverBusiness'] = instance.receiverBusiness;
-  if (instance.senderBusiness != null)
+  }
+  if (instance.senderBusiness != null) {
     json['senderBusiness'] = instance.senderBusiness;
-  if (instance.requestedBusinessAcc != null)
+  }
+  if (instance.requestedBusinessAcc != null) {
     json['requestedBusinessAcc'] = instance.requestedBusinessAcc;
-  if (instance.programStatus != null)
+  }
+  if (instance.programStatus != null) {
     json['programStatus'] = instance.programStatus;
+  }
   if (instance.username != null) json['username'] = instance.username;
-  if (instance.receiverBusinessAcc != null)
+  if (instance.receiverBusinessAcc != null) {
     json['receiverBusinessAcc'] = instance.receiverBusinessAcc;
-  if (instance.availableAmount != null)
+  }
+  if (instance.availableAmount != null) {
     json['availableAmount'] = instance.availableAmount;
-  if (instance.programLimit != null)
+  }
+  if (instance.programLimit != null) {
     json['programLimit'] = instance.programLimit;
+  }
   if (instance.senderUser != null) json['senderUser'] = instance.senderUser;
   if (instance.number != null) json['number'] = instance.number;
   if (instance.regNumber != null) json['regNumber'] = instance.regNumber;
-  if (instance.repaymentStatus != null)
+  if (instance.repaymentStatus != null) {
     json['repaymentStatus'] = instance.repaymentStatus;
+  }
   if (instance.payerAcc != null) json['payerAcc'] = instance.payerAcc;
-  if (instance.overdueStatus != null)
+  if (instance.overdueStatus != null) {
     json['overdueStatus'] = instance.overdueStatus;
-  if (instance.requestedFinUser != null)
+  }
+  if (instance.requestedFinUser != null) {
     json['requestedFinUser'] = instance.requestedFinUser;
-  if (instance.parentRefCode != null)
+  }
+  if (instance.parentRefCode != null) {
     json['parentRefCode'] = instance.parentRefCode;
-  if (instance.invSenderUser != null)
+  }
+  if (instance.invSenderUser != null) {
     json['invSenderUser'] = instance.invSenderUser;
+  }
   if (instance.invCount != null) json['invCount'] = instance.invCount;
-  if (instance.payerBusiness != null)
+  if (instance.payerBusiness != null) {
     json['payerBusiness'] = instance.payerBusiness;
+  }
   if (instance.refCode != null) json['refCode'] = instance.refCode;
   if (instance.type != null) json['type'] = instance.type;
   if (instance.invId != null) json['invId'] = instance.invId;
   if (instance.invRefCode != null) json['invRefCode'] = instance.invRefCode;
-  if (instance.requestedBusinessId != null)
+  if (instance.requestedBusinessId != null) {
     json['requestedBusinessId'] = instance.requestedBusinessId;
-  if (instance.requestedBusinessSubLimit != null)
+  }
+  if (instance.requestedBusinessSubLimit != null) {
     json['requestedBusinessSubLimit'] = instance.requestedBusinessSubLimit;
-  if (instance.requestedUserId != null)
+  }
+  if (instance.requestedUserId != null) {
     json['requestedUserId'] = instance.requestedUserId;
-  if (instance.responsePeriod != null)
+  }
+  if (instance.responsePeriod != null) {
     json['responsePeriod'] = instance.responsePeriod;
-  if (instance.responseDate != null)
+  }
+  if (instance.responseDate != null) {
     json['responseDate'] = instance.responseDate;
-  if (instance.requestStatus != null)
+  }
+  if (instance.requestStatus != null) {
     json['requestStatus'] = instance.requestStatus;
+  }
   if (instance.paidAmount != null) json['paidAmount'] = instance.paidAmount;
   if (instance.programId != null) json['programId'] = instance.programId;
   if (instance.productId != null) json['productId'] = instance.productId;
   if (instance.name != null) json['name'] = instance.name;
   if (instance.productType != null) json['productType'] = instance.productType;
-  if (instance.requestedAmount != null)
+  if (instance.requestedAmount != null) {
     json['requestedAmount'] = instance.requestedAmount;
+  }
   if (instance.currency != null) json['currency'] = instance.currency;
-  if (instance.finAmountAcceptable != null)
+  if (instance.finAmountAcceptable != null) {
     json['finAmountAcceptable'] = instance.finAmountAcceptable;
-  if (instance.finMinAmount != null)
+  }
+  if (instance.finMinAmount != null) {
     json['finMinAmount'] = instance.finMinAmount;
-  if (instance.finMaxAmount != null)
+  }
+  if (instance.finMaxAmount != null) {
     json['finMaxAmount'] = instance.finMaxAmount;
-  if (instance.balanceAcceptable != null)
+  }
+  if (instance.balanceAcceptable != null) {
     json['balanceAcceptable'] = instance.balanceAcceptable;
-  if (instance.minInvBalance != null)
+  }
+  if (instance.minInvBalance != null) {
     json['minInvBalance'] = instance.minInvBalance;
-  if (instance.tenorAcceptable != null)
+  }
+  if (instance.tenorAcceptable != null) {
     json['tenorAcceptable'] = instance.tenorAcceptable;
+  }
   if (instance.minTenor != null) json['minTenor'] = instance.minTenor;
   if (instance.maxTenor != null) json['maxTenor'] = instance.maxTenor;
-  if (instance.calculatedFeePercent != null)
+  if (instance.calculatedFeePercent != null) {
     json['calculatedFeePercent'] = instance.calculatedFeePercent;
-  if (instance.calculatedFeeAmount != null)
+  }
+  if (instance.calculatedFeeAmount != null) {
     json['calculatedFeeAmount'] = instance.calculatedFeeAmount;
+  }
   if (instance.scfFee != null) json['scfFee'] = instance.scfFee;
-  if (instance.scfFeeAmount != null)
+  if (instance.scfFeeAmount != null) {
     json['scfFeeAmount'] = instance.scfFeeAmount;
+  }
   if (instance.trxFee != null) json['trxFee'] = instance.trxFee;
   if (instance.appFee != null) json['appFee'] = instance.appFee;
-  if (instance.disbursementFee != null)
+  if (instance.disbursementFee != null) {
     json['disbursementFee'] = instance.disbursementFee;
-  if (instance.totalScfFeePercent != null)
+  }
+  if (instance.totalScfFeePercent != null) {
     json['totalScfFeePercent'] = instance.totalScfFeePercent;
-  if (instance.totalScfFeeAmount != null)
+  }
+  if (instance.totalScfFeeAmount != null) {
     json['totalScfFeeAmount'] = instance.totalScfFeeAmount;
+  }
   if (instance.feeRule != null) json['feeRule'] = instance.feeRule;
-  if (instance.feeAcceptable != null)
+  if (instance.feeAcceptable != null) {
     json['feeAcceptable'] = instance.feeAcceptable;
-  if (instance.minFeeAmount != null)
+  }
+  if (instance.minFeeAmount != null) {
     json['minFeeAmount'] = instance.minFeeAmount;
-  if (instance.maxFeeAmount != null)
+  }
+  if (instance.maxFeeAmount != null) {
     json['maxFeeAmount'] = instance.maxFeeAmount;
-  if (instance.repaymentDate != null)
+  }
+  if (instance.repaymentDate != null) {
     json['repaymentDate'] = instance.repaymentDate;
-  if (instance.recourseTerm != null)
+  }
+  if (instance.recourseTerm != null) {
     json['recourseTerm'] = instance.recourseTerm;
-  if (instance.recourseDate != null)
+  }
+  if (instance.recourseDate != null) {
     json['recourseDate'] = instance.recourseDate;
-  if (instance.restrictDate != null)
+  }
+  if (instance.restrictDate != null) {
     json['restrictDate'] = instance.restrictDate;
-  if (instance.penaltyPercent != null)
+  }
+  if (instance.penaltyPercent != null) {
     json['penaltyPercent'] = instance.penaltyPercent;
+  }
   if (instance.penaltyType != null) json['penaltyType'] = instance.penaltyType;
-  if (instance.repaymentRule != null)
+  if (instance.repaymentRule != null) {
     json['repaymentRule'] = instance.repaymentRule;
-  if (instance.invConfirmedDays != null)
+  }
+  if (instance.invConfirmedDays != null) {
     json['invConfirmedDays'] = instance.invConfirmedDays;
-  if (instance.daysAcceptable != null)
+  }
+  if (instance.daysAcceptable != null) {
     json['daysAcceptable'] = instance.daysAcceptable;
+  }
   if (instance.finUser != null) json['finUser'] = instance.finUser;
   if (instance.amountToPay != null) json['amountToPay'] = instance.amountToPay;
   if (instance.minDays != null) json['minDays'] = instance.minDays;
   if (instance.maxDays != null) json['maxDays'] = instance.maxDays;
-  if (instance.overdueStatusAcceptable != null)
+  if (instance.overdueStatusAcceptable != null) {
     json['overdueStatusAcceptable'] = instance.overdueStatusAcceptable;
-  if (instance.invOverdueStatus != null)
+  }
+  if (instance.invOverdueStatus != null) {
     json['invOverdueStatus'] = instance.invOverdueStatus;
-  if (instance.requestedBusinessAccId != null)
+  }
+  if (instance.requestedBusinessAccId != null) {
     json['requestedBusinessAccId'] = instance.requestedBusinessAccId;
-  if (instance.receiverBusinessAccId != null)
+  }
+  if (instance.receiverBusinessAccId != null) {
     json['receiverBusinessAccId'] = instance.receiverBusinessAccId;
-  if (instance.isBankApproved != null)
+  }
+  if (instance.isBankApproved != null) {
     json['isBankApproved'] = instance.isBankApproved;
-  if (instance.bankFeeAmount != null)
+  }
+  if (instance.bankFeeAmount != null) {
     json['bankFeeAmount'] = instance.bankFeeAmount;
-  if (instance.suppAcceptable != null)
+  }
+  if (instance.suppAcceptable != null) {
     json['suppAcceptable'] = instance.suppAcceptable;
-  if (instance.buyerAcceptable != null)
+  }
+  if (instance.buyerAcceptable != null) {
     json['buyerAcceptable'] = instance.buyerAcceptable;
-  if (instance.invSenderUserId != null)
+  }
+  if (instance.invSenderUserId != null) {
     json['invSenderUserId'] = instance.invSenderUserId;
-  if (instance.invConfirmedAmount != null)
+  }
+  if (instance.invConfirmedAmount != null) {
     json['invConfirmedAmount'] = instance.invConfirmedAmount;
-  if (instance.invPaidAmount != null)
+  }
+  if (instance.invPaidAmount != null) {
     json['invPaidAmount'] = instance.invPaidAmount;
-  if (instance.invAmountToPay != null)
+  }
+  if (instance.invAmountToPay != null) {
     json['invAmountToPay'] = instance.invAmountToPay;
-  if (instance.invReceiverBusinessId != null)
+  }
+  if (instance.invReceiverBusinessId != null) {
     json['invReceiverBusinessId'] = instance.invReceiverBusinessId;
-  if (instance.invReceiverBusinessRegNumber != null)
+  }
+  if (instance.invReceiverBusinessRegNumber != null) {
     json['invReceiverBusinessRegNumber'] =
         instance.invReceiverBusinessRegNumber;
-  if (instance.invPaymentDate != null)
+  }
+  if (instance.invPaymentDate != null) {
     json['invPaymentDate'] = instance.invPaymentDate;
-  if (instance.invConfirmedUserId != null)
+  }
+  if (instance.invConfirmedUserId != null) {
     json['invConfirmedUserId'] = instance.invConfirmedUserId;
-  if (instance.fundingInstructionStatus != null)
+  }
+  if (instance.fundingInstructionStatus != null) {
     json['fundingInstructionStatus'] = instance.fundingInstructionStatus;
+  }
   if (instance.invStatus != null) json['invStatus'] = instance.invStatus;
-  if (instance.invCreatedAt != null)
+  if (instance.invCreatedAt != null) {
     json['invCreatedAt'] = instance.invCreatedAt;
-  if (instance.invConfirmedDate != null)
+  }
+  if (instance.invConfirmedDate != null) {
     json['invConfirmedDate'] = instance.invConfirmedDate;
-  if (instance.invPaymentStatus != null)
+  }
+  if (instance.invPaymentStatus != null) {
     json['invPaymentStatus'] = instance.invPaymentStatus;
-  if (instance.invPaymentTermId != null)
+  }
+  if (instance.invPaymentTermId != null) {
     json['invPaymentTermId'] = instance.invPaymentTermId;
-  if (instance.invPaymentTermConfigType != null)
+  }
+  if (instance.invPaymentTermConfigType != null) {
     json['invPaymentTermConfigType'] = instance.invPaymentTermConfigType;
-  if (instance.invPaymentTermDesc != null)
+  }
+  if (instance.invPaymentTermDesc != null) {
     json['invPaymentTermDesc'] = instance.invPaymentTermDesc;
-  if (instance.respondedDate != null)
+  }
+  if (instance.respondedDate != null) {
     json['respondedDate'] = instance.respondedDate;
-  if (instance.respondedUserId != null)
+  }
+  if (instance.respondedUserId != null) {
     json['respondedUserId'] = instance.respondedUserId;
+  }
   if (instance.isDisbursed != null) json['isDisbursed'] = instance.isDisbursed;
-  if (instance.toDisburseDate != null)
+  if (instance.toDisburseDate != null) {
     json['toDisburseDate'] = instance.toDisburseDate;
-  if (instance.disbursedDate != null)
+  }
+  if (instance.disbursedDate != null) {
     json['disbursedDate'] = instance.disbursedDate;
-  if (instance.repaymentAmount != null)
+  }
+  if (instance.repaymentAmount != null) {
     json['repaymentAmount'] = instance.repaymentAmount;
-  if (instance.repaymentInvId != null)
+  }
+  if (instance.repaymentInvId != null) {
     json['repaymentInvId'] = instance.repaymentInvId;
+  }
   if (instance.isApproved != null) json['isApproved'] = instance.isApproved;
-  if (instance.approvedAmount != null)
+  if (instance.approvedAmount != null) {
     json['approvedAmount'] = instance.approvedAmount;
-  if (instance.invReceiverBusinessAcc != null)
+  }
+  if (instance.invReceiverBusinessAcc != null) {
     json['invReceiverBusinessAcc'] = instance.invReceiverBusinessAcc;
+  }
   if (instance.isResponded != null) json['isResponded'] = instance.isResponded;
   if (instance.respondDesc != null) json['respondDesc'] = instance.respondDesc;
-  if (instance.interestStartDate != null)
+  if (instance.interestStartDate != null) {
     json['interestStartDate'] = instance.interestStartDate;
-  if (instance.minAmountAcceptable != null)
+  }
+  if (instance.minAmountAcceptable != null) {
     json['minAmountAcceptable'] = instance.minAmountAcceptable;
-  if (instance.maxAmountAcceptable != null)
+  }
+  if (instance.maxAmountAcceptable != null) {
     json['maxAmountAcceptable'] = instance.maxAmountAcceptable;
-  if (instance.remainingDays != null)
+  }
+  if (instance.remainingDays != null) {
     json['remainingDays'] = instance.remainingDays;
+  }
   if (instance.program != null) json['program'] = instance.program;
-  if (instance.respondedUser != null)
+  if (instance.respondedUser != null) {
     json['respondedUser'] = instance.respondedUser;
-  if (instance.requestedBusiness != null)
+  }
+  if (instance.requestedBusiness != null) {
     json['requestedBusiness'] = instance.requestedBusiness;
+  }
   if (instance.partner != null) json['partner'] = instance.partner;
   if (instance.product != null) json['product'] = instance.product;
-  if (instance.invConfirmedUser != null)
+  if (instance.invConfirmedUser != null) {
     json['invConfirmedUser'] = instance.invConfirmedUser;
+  }
   if (instance.lastName != null) json['lastName'] = instance.lastName;
   if (instance.avatar != null) json['avatar'] = instance.avatar;
   if (instance.firstName != null) json['firstName'] = instance.firstName;
-  if (instance.businessName != null)
+  if (instance.businessName != null) {
     json['businessName'] = instance.businessName;
-  if (instance.invReceiverBusiness != null)
+  }
+  if (instance.invReceiverBusiness != null) {
     json['invReceiverBusiness'] = instance.invReceiverBusiness;
-  if (instance.requestedUser != null)
+  }
+  if (instance.requestedUser != null) {
     json['requestedUser'] = instance.requestedUser;
-  if (instance.repaymentInv != null)
+  }
+  if (instance.repaymentInv != null) {
     json['repaymentInv'] = instance.repaymentInv;
+  }
 
   if (instance.profileName != null) json['profileName'] = instance.profileName;
   if (instance.businessRef != null) json['businessRef'] = instance.businessRef;

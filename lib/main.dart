@@ -1,4 +1,4 @@
-import 'package:dehub/providers/checkout-provider.dart';
+import 'package:dehub/providers/checkout_provider.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/index_provider.dart';
@@ -36,7 +36,7 @@ import 'package:dehub/src/entry_point/entry_point.dart';
 import 'package:dehub/src/order_module/screens/order_payment_page/order_cbd_payment.dart';
 import 'package:dehub/src/auth/pin_check/pin_check.dart';
 import 'package:dehub/src/payment_module/payment_page/tabs/add_bank_account_page/add_bank_account_page.dart';
-import 'package:dehub/src/auth/check-biometric.dart';
+import 'package:dehub/src/auth/check_biometric.dart';
 import 'package:dehub/src/auth/financing_login.dart';
 import 'package:dehub/src/auth/login_page.dart';
 import 'package:dehub/src/finance_module/screens/avaible_funding_detail/avaible_funding_detail_page.dart';
@@ -50,7 +50,7 @@ import 'package:dehub/src/finance_module/screens/funding_request_detail/funding_
 import 'package:dehub/src/invoice_module/screens/closed_invoice/closed_invoice_page.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/add_product/add_product.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/add_row/invoice_add_row.dart';
-import 'package:dehub/src/invoice_module/screens/new_invoice/sector-choose/sector-choose.dart';
+import 'package:dehub/src/invoice_module/screens/new_invoice/sector-choose/sector_choose.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_list/give.dart';
 import 'package:dehub/src/network_module/screens/category_page/add_category.dart';
 import 'package:dehub/src/network_module/screens/direction_page/add_direction.dart';
@@ -105,7 +105,7 @@ import 'package:dehub/src/order_module/screens/order_payment_page/order_cod_paym
 import 'package:dehub/src/order_module/screens/order_shipment/order_shipment.dart';
 import 'package:dehub/src/order_module/screens/order_shipping/order_shipping.dart';
 import 'package:dehub/src/auth/otp_page/create_password.dart';
-import 'package:dehub/src/auth/otp_page/otp-phone-verify.dart';
+import 'package:dehub/src/auth/otp_page/otp_phone_verify.dart';
 import 'package:dehub/src/auth/otp_page/otp_page.dart';
 import 'package:dehub/src/partner_module/partner_page/partner_page.dart';
 import 'package:dehub/src/payment_module/payment_page/payment_page.dart';
@@ -138,7 +138,7 @@ import 'package:dehub/src/finance_module/screens/received_funding_detail/receive
 import 'package:dehub/src/finance_module/screens/received_funding_page/received_funding_page.dart';
 import 'package:dehub/src/order_module/screens/received_order_detail/received_order_detail.dart';
 import 'package:dehub/src/auth/receiver_otp_verify/receiver_otp_verify.dart';
-import 'package:dehub/src/auth/register-page/register-page.dart';
+import 'package:dehub/src/auth/register-page/register_page.dart';
 import 'package:dehub/src/network_module/screens/client_staffs/client_staffs.dart';
 import 'package:dehub/src/network_module/screens/client_staffs/client_staff_detail/client_staff_detail.dart';
 import 'package:dehub/src/network_module/screens/distribution_areas/set_distribution_area/set_distribution_area.dart';
@@ -175,7 +175,7 @@ GetIt locator = GetIt.instance;
 
 class MyApp extends StatelessWidget {
   static const routeName = '/MyApp';
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
   static DialogService? dialogService = locator<DialogService>();
 
   @override
@@ -261,7 +261,7 @@ class MyApp extends StatelessWidget {
                     });
                   case CreateSubCategory.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return CreateSubCategory();
+                      return const CreateSubCategory();
                     });
                   case FundingRequestDetailPage.routeName:
                     FundingRequestDetailPageArguments arguments =
@@ -273,11 +273,11 @@ class MyApp extends StatelessWidget {
                     });
                   case FundingRequestPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return FundingRequestPage();
+                      return const FundingRequestPage();
                     });
                   case NetworkPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return NetworkPage();
+                      return const NetworkPage();
                     });
                   case NewProduct.routeName:
                     NewProductArguments arguments =
@@ -290,15 +290,15 @@ class MyApp extends StatelessWidget {
                     });
                   case NewInvoice.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return NewInvoice();
+                      return const NewInvoice();
                     });
                   case AccountSetting.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return AccountSetting();
+                      return const AccountSetting();
                     });
                   case PinCode.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return PinCode();
+                      return const PinCode();
                     });
                   case NewPin.routeName:
                     NewPinArguments arguments =
@@ -310,7 +310,7 @@ class MyApp extends StatelessWidget {
                     });
                   case FinanceEntry.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return FinanceEntry();
+                      return const FinanceEntry();
                     });
                   case AccountSettingDetail.routeName:
                     AccountSettingDetailArguments arguments =
@@ -331,7 +331,7 @@ class MyApp extends StatelessWidget {
                     });
                   case PaymentTerms.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return PaymentTerms();
+                      return const PaymentTerms();
                     });
                   case ClientStaffDetail.routeName:
                     ClientStaffDetailArguments arguments =
@@ -343,7 +343,7 @@ class MyApp extends StatelessWidget {
                     });
                   case ClientStaffs.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return ClientStaffs();
+                      return const ClientStaffs();
                     });
                   case SetPaymentTermDetail.routeName:
                     SetPaymentTermDetailArguments arguments =
@@ -456,11 +456,11 @@ class MyApp extends StatelessWidget {
 
                   case Gereet.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return Gereet();
+                      return const Gereet();
                     });
                   case ProgramPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return ProgramPage();
+                      return const ProgramPage();
                     });
                   case AvailableFundingPage.routeName:
                     AvailableFundingPageArguments arguments =
@@ -481,7 +481,7 @@ class MyApp extends StatelessWidget {
                     });
                   case GereetBish.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return GereetBish();
+                      return const GereetBish();
                     });
 
                   case OtpVerifyPage.routeName:
@@ -496,7 +496,7 @@ class MyApp extends StatelessWidget {
                     });
                   case CreatePasswordPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return CreatePasswordPage();
+                      return const CreatePasswordPage();
                     });
                   case OtpPhoneVerify.routeName:
                     OtpPhoneVerifyArguments arguments =
@@ -508,19 +508,19 @@ class MyApp extends StatelessWidget {
                     });
                   case RegisterPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return RegisterPage();
+                      return const RegisterPage();
                     });
                   case NetworkPartnerPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return NetworkPartnerPage();
+                      return const NetworkPartnerPage();
                     });
                   case FirstPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return FirstPage();
+                      return const FirstPage();
                     });
                   case NewInvitationPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return NewInvitationPage();
+                      return const NewInvitationPage();
                     });
                   case Harah.routeName:
                     HarahArguments arguments =
@@ -549,16 +549,16 @@ class MyApp extends StatelessWidget {
                     });
                   case ZoningPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return ZoningPage();
+                      return const ZoningPage();
                     });
                   case ClientClassifications.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return ClientClassifications();
+                      return const ClientClassifications();
                     });
                   case FinancingLogin.routeName:
                     return PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
-                          FinancingLogin(),
+                          const FinancingLogin(),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                         var begin = const Offset(1.0, 0.0);
@@ -583,7 +583,7 @@ class MyApp extends StatelessWidget {
                     });
                   case SendPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return SendPage();
+                      return const SendPage();
                     });
                   case InvoiceDetailPage.routeName:
                     InvoiceDetailPageArguments arguments =
@@ -603,15 +603,7 @@ class MyApp extends StatelessWidget {
                     });
                   case DistributionAreas.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return DistributionAreas();
-                    });
-                  case InvoiceDetailPage.routeName:
-                    InvoiceDetailPageArguments arguments =
-                        settings.arguments as InvoiceDetailPageArguments;
-                    return MaterialPageRoute(builder: (context) {
-                      return InvoiceDetailPage(
-                        id: arguments.id,
-                      );
+                      return const DistributionAreas();
                     });
                   case PaymentApprovalPage.routeName:
                     PaymentApprovalPageArguments arguments =
@@ -654,14 +646,6 @@ class MyApp extends StatelessWidget {
                         data: arguments.data,
                       );
                     });
-                  case TransactionDetailPage.routeName:
-                    TransactionDetailPageArguments arguments =
-                        settings.arguments as TransactionDetailPageArguments;
-                    return MaterialPageRoute(builder: (context) {
-                      return TransactionDetailPage(
-                        data: arguments.data,
-                      );
-                    });
                   case InvoiceTransactionDetail.routeName:
                     InvoiceTransactionDetailArguments arguments =
                         settings.arguments as InvoiceTransactionDetailArguments;
@@ -673,7 +657,7 @@ class MyApp extends StatelessWidget {
                   case MenuPage.routeName:
                     return PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
-                          MenuPage(),
+                          const MenuPage(),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                         var begin = const Offset(-1.0, 0.0);
@@ -882,11 +866,11 @@ class MyApp extends StatelessWidget {
                     );
                   case DebtPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return DebtPage();
+                      return const DebtPage();
                     });
                   case OrderCbdPayment.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return OrderCbdPayment();
+                      return const OrderCbdPayment();
                     });
                   case NewOrder.routeName:
                     NewOrderArguments arguments =
@@ -925,7 +909,7 @@ class MyApp extends StatelessWidget {
                     // RePaymentArguments arguments =
                     // settings.arguments as RePaymentArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return RePayment(
+                      return const RePayment(
                           // id: arguments.id,
                           );
                     });
@@ -939,15 +923,15 @@ class MyApp extends StatelessWidget {
                     });
                   case ChangePassword.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return ChangePassword();
+                      return const ChangePassword();
                     });
                   case OrderCashApproval.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return OrderCashApproval();
+                      return const OrderCashApproval();
                     });
                   case ReCalledPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return ReCalledPage();
+                      return const ReCalledPage();
                     });
                   case OrderCodPayment.routeName:
                     OrderCodPaymentArguments arguments =
@@ -960,31 +944,31 @@ class MyApp extends StatelessWidget {
                     });
                   case FinancingPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return FinancingPage();
+                      return const FinancingPage();
                     });
                   case InventoryDistributor.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return InventoryDistributor();
+                      return const InventoryDistributor();
                     });
                   case InventoryItemType.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return InventoryItemType();
+                      return const InventoryItemType();
                     });
                   case InventoryUnit.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return InventoryUnit();
+                      return const InventoryUnit();
                     });
                   case InventoryManufacturer.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return InventoryManufacturer();
+                      return const InventoryManufacturer();
                     });
                   case PackageType.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return PackageType();
+                      return const PackageType();
                     });
                   case InventoryTag.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return InventoryTag();
+                      return const InventoryTag();
                     });
                   case InventoryClassification.routeName:
                     InventoryClassificationArguments arguments =
@@ -996,7 +980,7 @@ class MyApp extends StatelessWidget {
                     });
                   case OrderShipping.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return OrderShipping();
+                      return const OrderShipping();
                     });
                   case OrderShipment.routeName:
                     OrderShipmentArguments arguments =
@@ -1008,47 +992,47 @@ class MyApp extends StatelessWidget {
                     });
                   case Invoicepage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return Invoicepage();
+                      return const Invoicepage();
                     });
                   case OrderDelivery.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return OrderDelivery();
+                      return const OrderDelivery();
                     });
                   case InActiveTypes.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return InActiveTypes();
+                      return const InActiveTypes();
                     });
                   case Options.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return Options();
+                      return const Options();
                     });
                   case DynamicInformation.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return DynamicInformation();
+                      return const DynamicInformation();
                     });
                   case AdjustmentNote.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return AdjustmentNote();
+                      return const AdjustmentNote();
                     });
                   case InventoryPriceTiers.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return InventoryPriceTiers();
+                      return const InventoryPriceTiers();
                     });
                   case InventoryDeliveryType.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return InventoryDeliveryType();
+                      return const InventoryDeliveryType();
                     });
                   case OrderPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return OrderPage();
+                      return const OrderPage();
                     });
                   case PaymentPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return PaymentPage();
+                      return const PaymentPage();
                     });
                   case ProductPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return ProductPage();
+                      return const ProductPage();
                     });
                   case ReceivedFundingDetailPage.routeName:
                     ReceivedFundingDetailPageArguments arguments = settings
@@ -1060,39 +1044,39 @@ class MyApp extends StatelessWidget {
                     });
                   case UserMangementPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return UserMangementPage();
+                      return const UserMangementPage();
                     });
                   case ClosedInvoicePage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return ClosedInvoicePage();
+                      return const ClosedInvoicePage();
                     });
                   case PartnerPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return PartnerPage();
+                      return const PartnerPage();
                     });
                   case ReceivedFundingPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return ReceivedFundingPage();
+                      return const ReceivedFundingPage();
                     });
                   case AddBankAccountPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return AddBankAccountPage();
+                      return const AddBankAccountPage();
                     });
                   case LinkAccountPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return LinkAccountPage();
+                      return const LinkAccountPage();
                     });
                   case SuppliersPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return SuppliersPage();
+                      return const SuppliersPage();
                     });
                   case ShoppingPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return ShoppingPage();
+                      return const ShoppingPage();
                     });
                   case InventoryBrand.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return InventoryBrand();
+                      return const InventoryBrand();
                     });
                   case QpayPage.routeName:
                     QpayPageArguments arguments =
@@ -1105,11 +1089,11 @@ class MyApp extends StatelessWidget {
                     });
                   case ReferenceInformationPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return ReferenceInformationPage();
+                      return const ReferenceInformationPage();
                     });
                   case InventoryReferencePage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return InventoryReferencePage();
+                      return const InventoryReferencePage();
                     });
                   case InvoiceConditionPage.routeName:
                     InvoiceConditionPageArguments arguments =
@@ -1181,7 +1165,7 @@ class MyApp extends StatelessWidget {
                     });
                   case DeliveryManagement.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return DeliveryManagement();
+                      return const DeliveryManagement();
                     });
                   case ExpensesPage.routeName:
                     ExpensesPageArguments arguments =
@@ -1254,7 +1238,7 @@ class MyApp extends StatelessWidget {
                     });
                   case OrderSendCustomer.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return OrderSendCustomer();
+                      return const OrderSendCustomer();
                     });
                   case NewConditionPage.routeName:
                     NewConditionPageArguments arguments =
@@ -1308,7 +1292,7 @@ class MyApp extends StatelessWidget {
                   case OrderPayment.routeName:
                     return PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
-                          OrderPayment(),
+                          const OrderPayment(),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                         var begin = const Offset(0.0, 1.0);
@@ -1455,7 +1439,7 @@ class MyApp extends StatelessWidget {
                     });
                   case CategoryPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return CategoryPage();
+                      return const CategoryPage();
                     });
                   case CategoryDetailPage.routeName:
                     CategoryDetailPageArguments arguments =
@@ -1484,7 +1468,7 @@ class MyApp extends StatelessWidget {
                     });
                   case DirectionPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return DirectionPage();
+                      return const DirectionPage();
                     });
                   case RankDetailPage.routeName:
                     RankDetailPageArguments arguments =
@@ -1496,19 +1480,19 @@ class MyApp extends StatelessWidget {
                     });
                   case CheckBiometric.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return CheckBiometric();
+                      return const CheckBiometric();
                     });
                   case RankPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return RankPage();
+                      return const RankPage();
                     });
                   case ProductListPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return ProductListPage();
+                      return const ProductListPage();
                     });
                   case EntryPoint.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return EntryPoint();
+                      return const EntryPoint();
                     });
                   case SupplierProductList.routeName:
                     SupplierProductListArguments arguments =
@@ -1528,7 +1512,7 @@ class MyApp extends StatelessWidget {
                     });
                   case GivePage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return GivePage();
+                      return const GivePage();
                     });
                   case SectorChoose.routeName:
                     SectorChooseArguments arguments =
@@ -1556,7 +1540,7 @@ class MyApp extends StatelessWidget {
                     );
                   default:
                     return MaterialPageRoute(
-                      builder: (_) => EntryPoint(),
+                      builder: (_) => const EntryPoint(),
                     );
                 }
               },
@@ -1571,6 +1555,7 @@ class MyApp extends StatelessWidget {
     bool shouldPop = false;
 
     return PopScope(
+      canPop: shouldPop,
       child: Scaffold(
         backgroundColor: Colors.black.withOpacity(0.3),
         body: Container(
@@ -1598,7 +1583,6 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      canPop: shouldPop,
     );
   }
 }

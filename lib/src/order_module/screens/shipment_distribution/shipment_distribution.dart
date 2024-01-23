@@ -17,9 +17,9 @@ class ShipmentDistribution extends StatefulWidget {
   final String id;
   static const routeName = '/ShipmentDistribution';
   const ShipmentDistribution({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<ShipmentDistribution> createState() => _ShipmentDistributionState();
@@ -43,11 +43,11 @@ class _ShipmentDistributionState extends State<ShipmentDistribution>
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: orderColor),
+        iconTheme: const IconThemeData(color: orderColor),
         elevation: 0,
         backgroundColor: white,
         surfaceTintColor: white,
-        title: Text(
+        title: const Text(
           'Ачилт хуваарилах',
           style: TextStyle(
             color: orderColor,
@@ -56,13 +56,13 @@ class _ShipmentDistributionState extends State<ShipmentDistribution>
         ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(color: orderColor),
             )
           : SingleChildScrollView(
               child: Column(
                 children: [
-                  approve.warehouses?.length != 0
+                  approve.warehouses!.isNotEmpty
                       ? Column(
                           children: approve.warehouses!
                               .map(
@@ -74,11 +74,11 @@ class _ShipmentDistributionState extends State<ShipmentDistribution>
                               )
                               .toList(),
                         )
-                      : NotFound(
+                      : const NotFound(
                           module: "ORDER",
                           labelText: 'Ачилт хуваарилсан байна',
                         ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                 ],

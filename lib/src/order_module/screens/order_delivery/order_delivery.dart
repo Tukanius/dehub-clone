@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 class OrderDelivery extends StatefulWidget {
   static const routeName = '/OrderDelivery';
-  const OrderDelivery({Key? key}) : super(key: key);
+  const OrderDelivery({super.key});
 
   @override
   State<OrderDelivery> createState() => _OrderDeliveryState();
@@ -31,12 +31,12 @@ class _OrderDeliveryState extends State<OrderDelivery> {
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios_new,
             color: orderColor,
           ),
         ),
-        title: Text(
+        title: const Text(
           'Захиалга хүргэлт',
           style: TextStyle(
             color: buttonColor,
@@ -49,7 +49,7 @@ class _OrderDeliveryState extends State<OrderDelivery> {
             margin: const EdgeInsets.only(right: 16),
             height: 36,
             width: 36,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: grey,
             ),
@@ -70,7 +70,7 @@ class _OrderDeliveryState extends State<OrderDelivery> {
                     labelColor: orderColor,
                     indicatorColor: orderColor,
                     unselectedLabelColor: buttonColor,
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
@@ -78,11 +78,11 @@ class _OrderDeliveryState extends State<OrderDelivery> {
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         child: user.currentBusiness?.type == "SUPPLIER"
-                            ? Text(
+                            ? const Text(
                                 'Хүргэлт хийх',
                                 style: TextStyle(fontFamily: "Montserrat"),
                               )
-                            : Text(
+                            : const Text(
                                 'Хүлээн авах',
                                 style: TextStyle(fontFamily: "Montserrat"),
                               ),
@@ -90,11 +90,11 @@ class _OrderDeliveryState extends State<OrderDelivery> {
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         child: user.currentBusiness?.type == "SUPPLIER"
-                            ? Text(
+                            ? const Text(
                                 'Хүргэлт хийсэн',
                                 style: TextStyle(fontFamily: "Montserrat"),
                               )
-                            : Text(
+                            : const Text(
                                 'Хүлээн авсан',
                                 style: TextStyle(fontFamily: "Montserrat"),
                               ),
@@ -105,7 +105,7 @@ class _OrderDeliveryState extends State<OrderDelivery> {
               ),
             ];
           },
-          body: TabBarView(
+          body: const TabBarView(
             children: [
               Delivery(),
               DeliveryMade(),

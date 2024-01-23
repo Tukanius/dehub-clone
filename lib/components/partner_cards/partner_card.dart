@@ -11,20 +11,20 @@ class PartnerCard extends StatefulWidget {
   final int index;
   final bool? type;
   final bool startAnimation;
-  PartnerCard({
+  const PartnerCard({
     required this.index,
     required this.startAnimation,
     required this.data,
     this.type,
-    Key? key,
+    super.key,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
-  _PartnerCardState createState() => _PartnerCardState();
+  PartnerCardState createState() => PartnerCardState();
 }
 
-class _PartnerCardState extends State<PartnerCard> {
+class PartnerCardState extends State<PartnerCard> {
   General general = General();
 
   status() {
@@ -52,7 +52,7 @@ class _PartnerCardState extends State<PartnerCard> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: white,
-          border: Border.all(width: 0.5, color: Color(0xffF2F2F2)),
+          border: Border.all(width: 0.5, color: const Color(0xffF2F2F2)),
         ),
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         child: Column(
@@ -67,7 +67,7 @@ class _PartnerCardState extends State<PartnerCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       widget.data.logo == null
-                          ? CircleAvatar(
+                          ? const CircleAvatar(
                               radius: 20,
                               backgroundColor: grey,
                               backgroundImage: AssetImage('images/avatar.png'),
@@ -77,7 +77,7 @@ class _PartnerCardState extends State<PartnerCard> {
                               backgroundColor: grey,
                               backgroundImage:
                                   NetworkImage('${widget.data.logo}')),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Expanded(
@@ -86,26 +86,27 @@ class _PartnerCardState extends State<PartnerCard> {
                           children: [
                             Text(
                               '${widget.data.profileName}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 12, fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 7,
                             ),
                             Text(
                               '${widget.data.partnerName}',
-                              style: TextStyle(fontSize: 12, color: grey3),
+                              style:
+                                  const TextStyle(fontSize: 12, color: grey3),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 7,
                             ),
                             widget.data.paymentTerm?.description != null
                                 ? Text(
                                     '${widget.data.paymentTerm?.description}',
-                                    style:
-                                        TextStyle(fontSize: 12, color: grey3),
+                                    style: const TextStyle(
+                                        fontSize: 12, color: grey3),
                                   )
-                                : Text(
+                                : const Text(
                                     '-',
                                     style:
                                         TextStyle(fontSize: 12, color: grey3),
@@ -116,7 +117,7 @@ class _PartnerCardState extends State<PartnerCard> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Row(
@@ -127,57 +128,55 @@ class _PartnerCardState extends State<PartnerCard> {
                       children: [
                         Text(
                           '${widget.data.refCode}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
                             color: grey3,
                             decoration: TextDecoration.underline,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 6,
                         ),
                         Row(
                           children: [
-                            Text(
+                            const Text(
                               'ТТД: ',
                               style: TextStyle(color: grey3, fontSize: 10),
                             ),
                             Text(
                               '${widget.data.regNumber}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w600,
                                   color: grey3),
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 6,
                         ),
-                        widget.type == true || widget.type == null
-                            ? Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 7),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Color(0xffEDF4E9),
-                                ),
-                                child: Text(
-                                  '${status()}',
-                                  style: TextStyle(
-                                    color: Color(0xff333333),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              )
-                            : SizedBox(),
+                        if (widget.type == true || widget.type == null)
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 7),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: const Color(0xffEDF4E9),
+                            ),
+                            child: Text(
+                              '${status()}',
+                              style: const TextStyle(
+                                color: Color(0xff333333),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
-                    Icon(
+                    const Icon(
                       Icons.arrow_forward_ios,
                       size: 12,
                     ),

@@ -15,9 +15,9 @@ class InvoiceConditionDetailPage extends StatefulWidget {
   final String id;
   static const routeName = 'InvoiceConditionDetailPage';
   const InvoiceConditionDetailPage({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<InvoiceConditionDetailPage> createState() =>
@@ -45,8 +45,8 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
         backgroundColor: white,
         surfaceTintColor: white,
         elevation: 0,
-        iconTheme: IconThemeData(color: networkColor),
-        title: Text(
+        iconTheme: const IconThemeData(color: networkColor),
+        title: const Text(
           'Нэхэмжлэх нөхцөл',
           style: TextStyle(
             color: networkColor,
@@ -56,7 +56,7 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
         ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: networkColor,
               ),
@@ -68,7 +68,7 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Тохиргоо',
                       style: TextStyle(
                         color: grey3,
@@ -83,13 +83,13 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Нөхцөл нэр',
                           style: TextStyle(color: dark),
                         ),
                         Text(
                           '${referenceGet.termRule}',
-                          style: TextStyle(color: networkColor),
+                          style: const TextStyle(color: networkColor),
                         ),
                       ],
                     ),
@@ -101,13 +101,13 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Код',
                           style: TextStyle(color: dark),
                         ),
                         Text(
                           '${referenceGet.refCode}',
-                          style: TextStyle(color: networkColor),
+                          style: const TextStyle(color: networkColor),
                         ),
                       ],
                     ),
@@ -119,15 +119,15 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Тайлбар',
                           style: TextStyle(color: dark),
                         ),
-                        Container(
+                        SizedBox(
                           width: 200,
                           child: Text(
                             '${referenceGet.description}',
-                            style: TextStyle(color: networkColor),
+                            style: const TextStyle(color: networkColor),
                             textAlign: TextAlign.end,
                           ),
                         ),
@@ -141,13 +141,13 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Хоног',
                           style: TextStyle(color: dark),
                         ),
                         Text(
                           '${referenceGet.expireDayCount}',
-                          style: TextStyle(color: networkColor),
+                          style: const TextStyle(color: networkColor),
                         ),
                       ],
                     ),
@@ -159,16 +159,16 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Сар',
                           style: TextStyle(color: dark),
                         ),
                         referenceGet.month != null
                             ? Text(
                                 '${referenceGet.month}',
-                                style: TextStyle(color: networkColor),
+                                style: const TextStyle(color: networkColor),
                               )
-                            : Text(
+                            : const Text(
                                 '-',
                                 style: TextStyle(color: networkColor),
                               ),
@@ -179,7 +179,7 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -196,7 +196,7 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Системийн мэдээлэл',
                       style: TextStyle(
                         color: grey3,
@@ -211,7 +211,7 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Статус',
                           style: TextStyle(color: dark),
                         ),
@@ -220,9 +220,9 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
                               horizontal: 15, vertical: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            color: Color(0xff01D462).withOpacity(0.1),
+                            color: const Color(0xff01D462).withOpacity(0.1),
                           ),
-                          child: Text(
+                          child: const Text(
                             'Идэвхтэй',
                             style: TextStyle(
                               color: Color(0xff01D462),
@@ -236,7 +236,7 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -254,7 +254,7 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -275,7 +275,7 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Default эсэх',
                           style: TextStyle(color: dark),
                         ),
@@ -287,7 +287,7 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
                             color: networkColor,
                             // Color(0xff01D462).withOpacity(0.1),
                           ),
-                          child: Text(
+                          child: const Text(
                             'Тийм',
                             style: TextStyle(
                               color: white,
@@ -305,7 +305,7 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'DeHUB стандарт',
                           style: TextStyle(color: dark),
                         ),
@@ -317,7 +317,7 @@ class _InvoiceConditionDetailPageState extends State<InvoiceConditionDetailPage>
                             color: networkColor,
                             // Color(0xff01D462).withOpacity(0.1),
                           ),
-                          child: Text(
+                          child: const Text(
                             'Тийм',
                             style: TextStyle(
                               color: white,

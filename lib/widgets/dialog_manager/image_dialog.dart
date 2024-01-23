@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ImageDialog extends StatefulWidget {
   final String link;
-  const ImageDialog({Key? key, required this.link}) : super(key: key);
+  const ImageDialog({super.key, required this.link});
 
   @override
   State<ImageDialog> createState() => _ImageDialogState();

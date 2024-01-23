@@ -26,8 +26,8 @@ class SectorChoose extends StatefulWidget {
   static const routeName = '/SectorChoose';
   const SectorChoose({
     required this.sectorListenController,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<SectorChoose> createState() => _SectorChooseState();
@@ -75,12 +75,12 @@ class _SectorChooseState extends State<SectorChoose> with AfterLayoutMixin {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        leading: CustomCloseButton(),
+        leading: const CustomCloseButton(),
         backgroundColor: invoiceColor,
         surfaceTintColor: invoiceColor,
         elevation: 0.0,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Салбар сонгох',
           style: TextStyle(
             color: white,
@@ -90,7 +90,7 @@ class _SectorChooseState extends State<SectorChoose> with AfterLayoutMixin {
         ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: invoiceColor,
               ),
@@ -98,22 +98,22 @@ class _SectorChooseState extends State<SectorChoose> with AfterLayoutMixin {
           : SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   SearchButton(
                     color: invoiceColor,
-                    onChange: (_query) {
+                    onChange: (query) {
                       setState(() {
-                        onChange(_query);
+                        onChange(query);
                       });
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   isSubmit == false
-                      ? invoice.rows?.length != 0
+                      ? invoice.rows!.isNotEmpty
                           ? Column(
                               children: invoice.rows!
                                   .map(
@@ -128,11 +128,11 @@ class _SectorChooseState extends State<SectorChoose> with AfterLayoutMixin {
                                   )
                                   .toList(),
                             )
-                          : NotFound(
+                          : const NotFound(
                               module: "INVOICE",
                               labelText: "Мэдээлэл олдсонгүй",
                             )
-                      : Center(
+                      : const Center(
                           child: CircularProgressIndicator(
                             color: invoiceColor,
                           ),

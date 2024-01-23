@@ -5,9 +5,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 class Card extends StatefulWidget {
   final String labelText;
   const Card({
-    Key? key,
+    super.key,
     this.labelText = '',
-  }) : super(key: key);
+  });
 
   @override
   State<Card> createState() => _CardState();
@@ -27,7 +27,7 @@ class _CardState extends State<Card> {
               Text(widget.labelText),
             ],
           ),
-          Icon(
+          const Icon(
             Icons.arrow_forward_ios,
             size: 12,
           ),

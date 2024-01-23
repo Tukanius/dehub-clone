@@ -17,10 +17,10 @@ class ShipmentProductCard extends StatefulWidget {
     this.onCloseClick,
     this.lineConfirmText,
     required this.approveButtonClick,
-    Key? key,
+    super.key,
     required this.data,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<ShipmentProductCard> createState() => _ShipmentProductCardState();
@@ -89,7 +89,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                           color: black,
                         ),
                       ),
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
                 Expanded(
@@ -98,34 +98,34 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                     children: [
                       Text(
                         '${widget.data.name}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: dark,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       RichText(
                         text: TextSpan(
                           style:
-                              TextStyle(color: dark, fontFamily: "Montserrat"),
+                              const TextStyle(color: dark, fontFamily: "Montserrat"),
                           children: [
                             widget.data.skuCode != null
                                 ? TextSpan(text: "${widget.data.skuCode}, ")
-                                : TextSpan(),
+                                : const TextSpan(),
                             widget.data.brand != null
                                 ? TextSpan(text: "${widget.data.brand}, ")
-                                : TextSpan(),
+                                : const TextSpan(),
                             widget.data.category != null
                                 ? TextSpan(text: "${widget.data.category}, ")
-                                : TextSpan(),
+                                : const TextSpan(),
                             widget.data.optionValues != null
                                 ? TextSpan(
                                     text:
                                         "${widget.data.optionValues?.map((e) => e.name).join(', ')}")
-                                : TextSpan(),
+                                : const TextSpan(),
                           ],
                         ),
                       ),
@@ -134,7 +134,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                 ),
               ],
             ),
-            Divider(),
+            const Divider(),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -142,28 +142,28 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Нэгж',
                         style: TextStyle(
                           color: coolGrey,
                           fontSize: 12,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 3,
                       ),
                       Text(
                         '${widget.data.unit}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: orderColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 3,
                       ),
-                      Row(
+                      const Row(
                         children: [
                           Text(
                             'Солих',
@@ -187,20 +187,20 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'Тоо ширхэг',
                         style: TextStyle(
                           color: coolGrey,
                           fontSize: 12,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 3,
                       ),
                       widget.data.unitConvertValue != null
                           ? Text(
                               '${widget.data.quantity! * widget.data.unitConvertValue!}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: orderColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -208,7 +208,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                             )
                           : Text(
                               '${widget.data.quantity}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: orderColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -217,13 +217,13 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                       widget.data.unitConvertValue != null
                           ? Text(
                               '${widget.data.unitConvertValue} ш',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: buttonColor,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,
                               ),
                             )
-                          : Text(
+                          : const Text(
                               '1 ш',
                               style: TextStyle(
                                 color: buttonColor,
@@ -236,13 +236,13 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Нийт дүн',
                   style: TextStyle(
                     color: grey2,
@@ -253,16 +253,16 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                 widget.data.quantity != null && widget.data.price != null
                     ? Text(
                         '${Utils().formatCurrency((widget.data.price! * widget.data.quantity!).toString())}₮',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: grey2,
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
                         ),
                       )
-                    : Text(''),
+                    : const Text(''),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -287,7 +287,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                         child: SvgPicture.asset('assets/svg/minus.svg'),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     SizedBox(
@@ -305,13 +305,13 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                         fontSize: 18,
                         inputType: TextInputType.number,
                         textAlign: TextAlign.end,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelStyle: TextStyle(
                             fontSize: 15,
                           ),
                           hintText: '0',
                           isDense: true,
-                          contentPadding: const EdgeInsets.symmetric(
+                          contentPadding: EdgeInsets.symmetric(
                               vertical: 6, horizontal: 5),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -322,7 +322,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                         name: 'quantity',
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     GestureDetector(
@@ -338,7 +338,7 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                           color: orderColor,
                           borderRadius: BorderRadius.circular(2),
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.add,
                           color: white,
                         ),
@@ -373,14 +373,14 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                                   : orderColor,
                               BlendMode.srcIn),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         isSubmit == true
                             ? Container(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 30),
-                                child: Center(
+                                child: const Center(
                                   child: SizedBox(
                                     height: 20,
                                     width: 20,

@@ -49,7 +49,7 @@ class _UpdateOptionSheetState extends State<UpdateOptionSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(10),
         ),
@@ -59,7 +59,7 @@ class _UpdateOptionSheetState extends State<UpdateOptionSheet> {
         children: [
           Container(
             height: 50,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: white,
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(10),
@@ -80,11 +80,11 @@ class _UpdateOptionSheetState extends State<UpdateOptionSheet> {
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter: const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   child: Text(
                     'Хувилбарын сонголт',
                     style: TextStyle(
@@ -101,7 +101,7 @@ class _UpdateOptionSheetState extends State<UpdateOptionSheet> {
                         }
                       : () {},
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(10),
                       ),
@@ -109,7 +109,7 @@ class _UpdateOptionSheetState extends State<UpdateOptionSheet> {
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 11),
                     height: 50,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'Хадгалах',
                         style: TextStyle(color: white),
@@ -129,7 +129,7 @@ class _UpdateOptionSheetState extends State<UpdateOptionSheet> {
                     width: MediaQuery.of(context).size.width,
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Сонголт нэмэх боломжтой',
                       style: TextStyle(color: grey2),
                     ),
@@ -148,7 +148,7 @@ class _UpdateOptionSheetState extends State<UpdateOptionSheet> {
                                   children: [
                                     SvgPicture.asset(
                                         'assets/svg/menu_plus.svg'),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5,
                                     ),
                                     Container(
@@ -159,8 +159,8 @@ class _UpdateOptionSheetState extends State<UpdateOptionSheet> {
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 3, horizontal: 15),
                                       child: Text(
-                                        '${data.toUpperCase()}',
-                                        style: TextStyle(
+                                        data.toUpperCase(),
+                                        style: const TextStyle(
                                           color: grey2,
                                         ),
                                       ),
@@ -196,12 +196,12 @@ class _UpdateOptionSheetState extends State<UpdateOptionSheet> {
                       });
                     },
                     controller: controller,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Энд оруулна уу',
                       hintStyle: TextStyle(color: networkColor),
                       fillColor: white,
                       filled: true,
-                      contentPadding: const EdgeInsets.symmetric(
+                      contentPadding: EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
                       isDense: true,
                       border: OutlineInputBorder(

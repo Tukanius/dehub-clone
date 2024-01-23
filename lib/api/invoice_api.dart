@@ -38,7 +38,7 @@ class InvoiceApi extends HttpRequest {
   }
 
   Future<Result> network(String query) async {
-    var res = await get("/network/select?query=${query}", "INVOICE", true,
+    var res = await get("/network/select?query=$query", "INVOICE", true,
         handler: true);
     return Result.fromJson(res, Invoice.fromJson);
   }

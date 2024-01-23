@@ -15,9 +15,9 @@ import 'package:intl/intl.dart';
 class RequestTab extends StatefulWidget {
   final Finance data;
   const RequestTab({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<RequestTab> createState() => _RequestTabState();
@@ -28,15 +28,17 @@ class _RequestTabState extends State<RequestTab> {
   bool isSwitched = false;
   User user = User();
 
-  suppFeeRule() {
-    final res = general.productSuppFeeRules!
-        .firstWhere((element) => element.code == widget.data.feeRule);
-    return res;
-  }
-
-  buyerFeeRule() {
-    final res = general.productBuyerFeeRules!
-        .firstWhere((element) => element.code == widget.data.feeRule);
+  feeRule() {
+    final String? res;
+    if (widget.data.type == "SUPPLIER") {
+      res = general.productSuppFeeRules!
+          .firstWhere((element) => element.code == widget.data.feeRule)
+          .name;
+    } else {
+      res = general.productBuyerFeeRules!
+          .firstWhere((element) => element.code == widget.data.feeRule)
+          .name;
+    }
     return res;
   }
 
@@ -57,7 +59,7 @@ class _RequestTabState extends State<RequestTab> {
         children: [
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            child: Text(
+            child: const Text(
               'Хүсэлтийн мэдээлэл',
               style: TextStyle(
                 color: grey3,
@@ -85,22 +87,6 @@ class _RequestTabState extends State<RequestTab> {
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
-            labelText: 'Нийлүүлэгч код',
-            secondText: '${widget.data.requestedBusiness?.refCode}',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Нийлүүлэгч',
-            secondText: '${widget.data.requestedBusiness?.profileName}',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
             labelText: 'Хүсэлт гаргасан',
             secondText: '${widget.data.requestedFinUser?.firstName}',
             secondTextColor: source.currentColor,
@@ -110,17 +96,7 @@ class _RequestTabState extends State<RequestTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Хүсэлтийн огноо',
-            secondText:
-                '${DateFormat('yyyy-MM-dd').format(widget.data.createdAt!)}',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Хариу өгөх хугацаа',
-            secondText:
-                '${DateFormat('yyyy-MM-dd').format(widget.data.responseDate!)}',
+            secondText: DateFormat('yyyy-MM-dd').format(widget.data.createdAt!),
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -130,7 +106,7 @@ class _RequestTabState extends State<RequestTab> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Хүсэлтийн төлөв',
                   style: TextStyle(color: dark),
                 ),
@@ -178,8 +154,8 @@ class _RequestTabState extends State<RequestTab> {
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            child: Text(
-              'Санхүүжилт олгох дүн',
+            child: const Text(
+              'Санхүүжилт хүссэн дүн',
               style: TextStyle(
                 color: grey3,
                 fontSize: 14,
@@ -191,15 +167,13 @@ class _RequestTabState extends State<RequestTab> {
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             color: white,
             child: FormTextField(
+              readOnly: true,
               hintText: 'Finance_Amount',
-              suffixIcon: Icon(
-                Icons.edit_square,
-                color: black,
-              ),
               name: "amount",
+              initialValue: "${widget.data.requestedAmount?.toInt()}₮",
               inputType: TextInputType.number,
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 fillColor: Colors.white,
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: source.currentColor),
@@ -213,7 +187,7 @@ class _RequestTabState extends State<RequestTab> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Санхүүжилт валют',
                   style: TextStyle(color: dark),
                 ),
@@ -226,7 +200,7 @@ class _RequestTabState extends State<RequestTab> {
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            child: Text(
+            child: const Text(
               'Нөхцөл хангах байдал',
               style: TextStyle(
                 color: grey3,
@@ -282,7 +256,7 @@ class _RequestTabState extends State<RequestTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Санхүүжилт хоног',
-            secondText: '${widget.data.remainingDays?.toInt()}',
+            secondText: '${widget.data.remainingDays?.toInt()} хоног',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -290,7 +264,7 @@ class _RequestTabState extends State<RequestTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Шимтгэл тооцсон хувь',
-            secondText: '${widget.data.calculatedFeePercent?.toInt()}',
+            secondText: '${widget.data.calculatedFeePercent?.toInt()}%',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -309,15 +283,6 @@ class _RequestTabState extends State<RequestTab> {
             labelText: 'Санхүүжих шимтгэл',
             secondText:
                 '${Utils().formatCurrency(widget.data.scfFee.toString()) + symbol()}',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Гүйлгээний шимтгэл',
-            secondText:
-                '${Utils().formatCurrency(widget.data.trxFee.toString()) + symbol()}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -353,9 +318,7 @@ class _RequestTabState extends State<RequestTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Шимтгэл дүрэм',
-            secondText: widget.data.type == "SUPPLIER"
-                ? suppFeeRule().name
-                : buyerFeeRule().name,
+            secondText: feeRule(),
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -382,7 +345,7 @@ class _RequestTabState extends State<RequestTab> {
             paddingVertical: 10,
             labelText: 'Эргэн төлөх хугацаа',
             secondText: widget.data.repaymentDate != null
-                ? '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}'
+                ? DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)
                 : '-',
             secondTextColor: source.currentColor,
             color: white,
@@ -393,33 +356,33 @@ class _RequestTabState extends State<RequestTab> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Буцаан дуудах эсэх',
                   style: TextStyle(color: dark),
                 ),
                 CustomSwitch(
-                  color: Color(0xff151357),
-                  isDefault: true,
+                  color: const Color(0xff151357),
+                  isDefault: widget.data.recourseTerm,
                 ),
               ],
             ),
           ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Буцаан дуудах огноо',
-            secondText:
-                // '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}',
-                '',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
+          if (widget.data.recourseTerm == true)
+            FieldCard(
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              labelText: 'Буцаан дуудах огноо',
+              secondText:
+                  DateFormat("yyyy-MM-dd").format(widget.data.recourseDate!),
+              secondTextColor: source.currentColor,
+              color: white,
+            ),
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Ху.Хэтрэлт алданги',
             secondText:
-                '${Utils().formatCurrency(widget.data.calculatedFeeAmount.toString())}',
+                '${Utils().formatCurrency(widget.data.penaltyPercent.toString())}%',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -427,9 +390,7 @@ class _RequestTabState extends State<RequestTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Алдангийн арга',
-            secondText: widget.data.type == "SUPPLIER"
-                ? suppFeeRule().name
-                : buyerFeeRule().name,
+            secondText: feeRule(),
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -453,9 +414,7 @@ class _RequestTabState extends State<RequestTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Хугацааны Min шалгуур',
-            secondText:
-                // '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}',
-                '',
+            secondText: '${widget.data.minDays?.toInt()} хоног',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -463,9 +422,7 @@ class _RequestTabState extends State<RequestTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Хугацааны Max шалгуур',
-            secondText:
-                // '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}',
-                '',
+            secondText: '${widget.data.maxDays?.toInt()} хоног',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -479,7 +436,7 @@ class _RequestTabState extends State<RequestTab> {
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            child: Text(
+            child: const Text(
               'Санхүүжилт авах данс',
               style: TextStyle(
                 color: grey3,
@@ -508,16 +465,14 @@ class _RequestTabState extends State<RequestTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Банкны нэр',
-            secondText:
-                // '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}',
-                '',
+            secondText: '',
             secondTextColor: source.currentColor,
             color: white,
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            child: Text(
-              'Гэрээ баталгаажилт',
+            child: const Text(
+              'Хавсрагасан файл',
               style: TextStyle(
                 color: grey3,
                 fontSize: 14,
@@ -528,57 +483,28 @@ class _RequestTabState extends State<RequestTab> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             color: white,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: const Row(
               children: [
-                Row(
-                  children: [
-                    Icon(
-                      Icons.downloading_rounded,
-                      size: 26,
-                      color: Color(0xff151357),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      'Гэрээг уншиж зөвшөөрөх',
-                      style: TextStyle(
-                        color: Color(0xff151357),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ],
+                Icon(
+                  Icons.downloading_rounded,
+                  size: 26,
+                  color: Color(0xff151357),
                 ),
                 SizedBox(
-                  height: 15,
+                  width: 5,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Баталгаажилт',
-                      style: TextStyle(
-                        color: buttonColor,
-                      ),
-                    ),
-                    Text(
-                      'Баталгаажсан',
-                      style: TextStyle(
-                        color: neonGreen,
-                        decoration: TextDecoration.underline,
-                        decorationColor: neonGreen,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
+                Text(
+                  'Хавсрагасан файл',
+                  style: TextStyle(
+                    color: Color(0xff151357),
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  ),
                 ),
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 100,
           ),
         ],

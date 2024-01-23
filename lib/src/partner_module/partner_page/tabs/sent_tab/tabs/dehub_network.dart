@@ -2,22 +2,22 @@ import 'package:dehub/components/partner_cards/sent_card.dart';
 import 'package:flutter/material.dart';
 
 class DehubNetwork extends StatefulWidget {
-  const DehubNetwork({Key? key}) : super(key: key);
+  const DehubNetwork({super.key});
 
   @override
-  _DehubNetworkState createState() => _DehubNetworkState();
+  DehubNetworkState createState() => DehubNetworkState();
 }
 
-class _DehubNetworkState extends State<DehubNetwork> {
+class DehubNetworkState extends State<DehubNetwork> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             for (var i = 0; i < 10; i++)

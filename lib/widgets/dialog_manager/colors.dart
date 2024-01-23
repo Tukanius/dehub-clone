@@ -29,7 +29,7 @@ const Color blue = Color(0xff2E41FB);
 const Color textColor = Color(0xffABA5D1);
 const Color buttonColor = Color(0xff323752);
 const Color menuBack = Color.fromARGB(255, 64, 70, 102);
-Color fillColor = Color(0xff44566C).withOpacity(0.3);
+Color fillColor = const Color(0xff44566C).withOpacity(0.3);
 const Color lightYellow = Color(0xffF4BE5E);
 const Color lightRed = Color(0xffFF808B);
 const Color networkColor = Color(0xff1C5FAA);
@@ -52,10 +52,10 @@ const Color saaral = Color(0xff8181A5);
 const Color pink = Color(0xffFF808B);
 const Color chatGrey = Color(0xffE1E8ED);
 const Color cool = Color(0xff2C3D7A);
-Color networkDashboard1 = Color(0xff1B5EAA).withOpacity(0.8);
+Color networkDashboard1 = const Color(0xff1B5EAA).withOpacity(0.8);
 const Color networkDashboard2 = Color(0xff41C6F9);
 const Color networkDashboard3 = Color(0xff617EF8);
-Color networkDashboard4 = Color(0xff1B5EAA).withOpacity(0.3);
+Color networkDashboard4 = const Color(0xff1B5EAA).withOpacity(0.3);
 const Color neonGreen = Color(0xff53D66B);
 const Color brown = Color(0xffBA502E);
 const Color eggPlant = Color(0xff74052C);
@@ -79,7 +79,7 @@ const gradient = LinearGradient(
     end: Alignment.bottomRight,
     begin: Alignment.topLeft,
     colors: [
-      Color(0xffF00FFED),
+      Color(0xff00ffED),
       Color(0XFF00B8BA),
     ]);
 

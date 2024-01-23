@@ -99,7 +99,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
         children: [
           Container(
             margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-            child: Text(
+            child: const Text(
               'Нэхэмжлэх удирдлага',
               style: TextStyle(
                   color: black, fontSize: 24, fontWeight: FontWeight.bold),
@@ -117,7 +117,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
               ),
             ),
           ),
-          Container(
+          SizedBox(
             height: 100,
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -155,11 +155,11 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 25,
           ),
           isLoading == true
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(
                     color: invoiceColor,
                   ),
@@ -172,7 +172,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                       children: [
                         Container(
                           margin: const EdgeInsets.only(left: 15),
-                          child: Text(
+                          child: const Text(
                             'Хугацаа хэтрэлтийн мэдээлэл',
                             style: TextStyle(
                               color: black,
@@ -188,7 +188,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                           child: Container(
                             color: transparent,
                             padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: Row(
+                            child: const Row(
                               children: [
                                 Text(
                                   "Бүгдийг",
@@ -215,11 +215,11 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     PieChart(legend: legend, colorList: colorList, data: data),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
@@ -228,7 +228,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                         Container(
                           margin: const EdgeInsets.only(left: 15),
                           child: user.currentBusiness?.type == "SUPPLIER"
-                              ? Text(
+                              ? const Text(
                                   'Баталсан нэхэмжлэх',
                                   style: TextStyle(
                                     color: black,
@@ -236,7 +236,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                                     fontWeight: FontWeight.w500,
                                   ),
                                 )
-                              : Text(
+                              : const Text(
                                   'Танай илгээсэн',
                                   style: TextStyle(
                                     color: black,
@@ -252,7 +252,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                           child: Container(
                             color: transparent,
                             padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: Row(
+                            child: const Row(
                               children: [
                                 Text(
                                   "Бүгдийг",
@@ -279,47 +279,47 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
-                        Icon(
+                        const Icon(
                           Icons.calendar_today,
                           color: grey,
                           size: 18,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Text(
                           '${DateFormat("yyyy-MM-dd").format(DateTime.now())} - ',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: grey,
                             fontSize: 12,
                           ),
                         ),
-                        Icon(
+                        const Icon(
                           Icons.calendar_today,
                           color: grey,
                           size: 18,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Text(
-                          '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
-                          style: TextStyle(
+                          DateFormat("yyyy-MM-dd").format(DateTime.now()),
+                          style: const TextStyle(
                             color: grey,
                             fontSize: 12,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Container(
@@ -348,7 +348,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                         primaryXAxis: CategoryAxis(),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Container(
@@ -366,20 +366,20 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'Нээлттэй нэхэмжлэх',
                             style: TextStyle(
                               color: grey2,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              const Text(
                                 '2,740',
                                 style: TextStyle(
                                   color: grey2,
@@ -394,7 +394,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                                   borderRadius: BorderRadius.circular(100),
                                   color: neonGreen.withOpacity(0.2),
                                 ),
-                                child: Text(
+                                child: const Text(
                                   '+2,4%',
                                   style: TextStyle(
                                     color: neonGreen,
@@ -407,14 +407,14 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                           ),
                           Container(
                             margin: const EdgeInsets.symmetric(vertical: 5),
-                            child: Divider(
+                            child: const Divider(
                               color: grey,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 50,
                     )
                   ],

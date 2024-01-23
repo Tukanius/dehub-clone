@@ -2,10 +2,10 @@ import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/partner_cards/buyer_business_card.dart';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/network_module/screens/new_invitation_page/invitation_sent_page/invitation_sent_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -51,7 +51,7 @@ class _FromDehubTabState extends State<FromDehubTab> with AfterLayoutMixin {
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
     });
@@ -74,46 +74,16 @@ class _FromDehubTabState extends State<FromDehubTab> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     return isLoading == true
-        ? Center(
+        ? const Center(
             child: CircularProgressIndicator(
               color: networkColor,
             ),
           )
-        : SmartRefresher(
-            enablePullDown: true,
-            enablePullUp: true,
-            controller: refreshController,
-            header: WaterDropHeader(
-              waterDropColor: networkColor,
-              refresh: SizedBox(
-                height: 20,
-                width: 20,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: networkColor,
-                ),
-              ),
-            ),
-            onRefresh: _onRefresh,
+        : Refresher(
+            refreshController: refreshController,
             onLoading: _onLoading,
-            footer: CustomFooter(
-              builder: (context, mode) {
-                Widget body;
-                if (mode == LoadStatus.idle) {
-                  body = const Text("");
-                } else if (mode == LoadStatus.loading) {
-                  body = const CupertinoActivityIndicator();
-                } else if (mode == LoadStatus.failed) {
-                  body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                } else {
-                  body = const Text("Мэдээлэл алга байна");
-                }
-                return SizedBox(
-                  height: 55.0,
-                  child: Center(child: body),
-                );
-              },
-            ),
+            onRefresh: _onRefresh,
+            color: networkColor,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +91,7 @@ class _FromDehubTabState extends State<FromDehubTab> with AfterLayoutMixin {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Buyer бизнесүүд',
                       style: TextStyle(
                         fontSize: 24,
@@ -129,7 +99,7 @@ class _FromDehubTabState extends State<FromDehubTab> with AfterLayoutMixin {
                       ),
                     ),
                   ),
-                  business.rows?.length != 0
+                  business.rows!.isNotEmpty
                       ? Column(
                           children: business.rows!
                               .map(
@@ -149,7 +119,7 @@ class _FromDehubTabState extends State<FromDehubTab> with AfterLayoutMixin {
                               )
                               .toList(),
                         )
-                      : NotFound(
+                      : const NotFound(
                           module: "NETWORK",
                           labelText: "Хоосон байна",
                         ),

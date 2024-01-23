@@ -21,9 +21,9 @@ class OrderAddRow extends StatefulWidget {
 
   static const routeName = '/OrderAddRow';
   const OrderAddRow({
-    Key? key,
+    super.key,
     required this.additionalRowsListenController,
-  }) : super(key: key);
+  });
 
   @override
   State<OrderAddRow> createState() => _AddRowState();
@@ -108,12 +108,12 @@ class _AddRowState extends State<OrderAddRow> {
             onTap: () {
               Navigator.of(context).pop();
             },
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back_ios_new,
               color: orderColor,
             ),
           ),
-          title: Text(
+          title: const Text(
             'Мөр нэмэх',
             style: TextStyle(
               color: buttonColor,
@@ -128,13 +128,13 @@ class _AddRowState extends State<OrderAddRow> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 FormTextField(
                   textAlign: TextAlign.end,
                   name: 'name',
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     fillColor: white,
                     filled: true,
@@ -145,7 +145,7 @@ class _AddRowState extends State<OrderAddRow> {
                     prefixIcon: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         SizedBox(
                           width: 10,
                         ),
@@ -189,7 +189,7 @@ class _AddRowState extends State<OrderAddRow> {
                 //     ),
                 //   ),
                 // ),
-                SizedBox(
+                const SizedBox(
                   height: 3,
                 ),
                 Container(
@@ -198,7 +198,7 @@ class _AddRowState extends State<OrderAddRow> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
+                      const Expanded(
                         child: Text(
                           'Хэмжих нэгж',
                         ),
@@ -207,14 +207,13 @@ class _AddRowState extends State<OrderAddRow> {
                         child: DropdownButtonFormField(
                           onChanged: (value) {
                             setState(() {
-                              dropdownValue1 = "${value}";
+                              dropdownValue1 = "$value";
                             });
-                            ;
                           },
                           dropdownColor: white,
                           borderRadius: BorderRadius.circular(10),
                           isExpanded: false,
-                          hint: Container(
+                          hint: const SizedBox(
                             width: 135,
                             child: Text(
                               "Сонгох",
@@ -222,14 +221,14 @@ class _AddRowState extends State<OrderAddRow> {
                               textAlign: TextAlign.end,
                             ),
                           ),
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.arrow_forward_ios,
                             size: 12,
                             color: orderColor,
                           ),
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 15),
+                                EdgeInsets.symmetric(horizontal: 15),
                             hintStyle:
                                 TextStyle(color: orderColor, fontSize: 14),
                             filled: true,
@@ -246,13 +245,13 @@ class _AddRowState extends State<OrderAddRow> {
                                 (item) => DropdownMenuItem(
                                   enabled: true,
                                   value: item,
-                                  child: Container(
+                                  child: SizedBox(
                                     width: 130,
                                     child: Align(
                                       alignment: Alignment.centerRight,
                                       child: Text(
-                                        "${item}",
-                                        style: TextStyle(
+                                        item,
+                                        style: const TextStyle(
                                           color: orderColor,
                                           fontSize: 14,
                                         ),
@@ -267,7 +266,7 @@ class _AddRowState extends State<OrderAddRow> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 3,
                 ),
                 FormTextField(
@@ -277,7 +276,7 @@ class _AddRowState extends State<OrderAddRow> {
                   textAlign: TextAlign.end,
                   name: 'price',
                   inputType: TextInputType.number,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     fillColor: white,
                     filled: true,
@@ -288,7 +287,7 @@ class _AddRowState extends State<OrderAddRow> {
                     prefixIcon: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         SizedBox(
                           width: 15,
                         ),
@@ -308,7 +307,7 @@ class _AddRowState extends State<OrderAddRow> {
                     ),
                   ]),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 2,
                 ),
                 FormTextField(
@@ -316,9 +315,9 @@ class _AddRowState extends State<OrderAddRow> {
                   textColor: orderColor,
                   controller: quantityController,
                   textAlign: TextAlign.end,
-                  inputType: TextInputType.numberWithOptions(),
+                  inputType: const TextInputType.numberWithOptions(),
                   name: 'quantity',
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     fillColor: white,
                     filled: true,
@@ -329,7 +328,7 @@ class _AddRowState extends State<OrderAddRow> {
                     prefixIcon: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         SizedBox(
                           width: 15,
                         ),
@@ -349,7 +348,7 @@ class _AddRowState extends State<OrderAddRow> {
                     ),
                   ]),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 3,
                 ),
                 Container(
@@ -358,7 +357,7 @@ class _AddRowState extends State<OrderAddRow> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
+                      const Expanded(
                         child: Text(
                           'Хөнгөлөлт',
                         ),
@@ -367,14 +366,13 @@ class _AddRowState extends State<OrderAddRow> {
                         child: DropdownButtonFormField(
                           onChanged: (value) {
                             setState(() {
-                              dropdownValue = "${value}";
+                              dropdownValue = "$value";
                             });
-                            ;
                           },
                           dropdownColor: white,
                           borderRadius: BorderRadius.circular(10),
                           isExpanded: false,
-                          hint: Container(
+                          hint: const SizedBox(
                             width: 135,
                             child: Text(
                               "Сонгох",
@@ -382,14 +380,14 @@ class _AddRowState extends State<OrderAddRow> {
                               textAlign: TextAlign.end,
                             ),
                           ),
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.arrow_forward_ios,
                             size: 12,
                             color: orderColor,
                           ),
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 15),
+                                EdgeInsets.symmetric(horizontal: 15),
                             hintStyle:
                                 TextStyle(color: orderColor, fontSize: 14),
                             filled: true,
@@ -406,13 +404,13 @@ class _AddRowState extends State<OrderAddRow> {
                                 (item) => DropdownMenuItem(
                                   enabled: true,
                                   value: item,
-                                  child: Container(
+                                  child: SizedBox(
                                     width: 130,
                                     child: Align(
                                       alignment: Alignment.centerRight,
                                       child: Text(
-                                        "${item}",
-                                        style: TextStyle(
+                                        item,
+                                        style: const TextStyle(
                                           color: orderColor,
                                           fontSize: 14,
                                         ),
@@ -427,7 +425,7 @@ class _AddRowState extends State<OrderAddRow> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 3,
                 ),
                 FormTextField(
@@ -451,13 +449,13 @@ class _AddRowState extends State<OrderAddRow> {
                         left: 15,
                         top: 15,
                       ),
-                      child: Text(
+                      child: const Text(
                         'Хөнгөлөлтийн дүн',
                         style: TextStyle(color: dark),
                       ),
                     ),
                     suffixIcon: dropdownValue == 'Хувиар'
-                        ? Icon(
+                        ? const Icon(
                             Icons.percent,
                             size: 15,
                             color: orderColor,
@@ -466,7 +464,7 @@ class _AddRowState extends State<OrderAddRow> {
                             ? Container(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 15),
-                                child: Text(
+                                child: const Text(
                                   '₮',
                                   style: TextStyle(
                                     color: orderColor,
@@ -479,9 +477,9 @@ class _AddRowState extends State<OrderAddRow> {
                     filled: true,
                     contentPadding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 15),
-                    hintStyle: TextStyle(color: orderColor),
+                    hintStyle: const TextStyle(color: orderColor),
                     hintText: 'Дүн оруулна уу',
-                    border: OutlineInputBorder(
+                    border: const OutlineInputBorder(
                       borderSide: BorderSide.none,
                     ),
                   ),
@@ -489,7 +487,7 @@ class _AddRowState extends State<OrderAddRow> {
                 Container(
                   margin:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Text(
+                  child: const Text(
                     'Нийт',
                     style: TextStyle(
                       color: buttonColor,
@@ -504,15 +502,15 @@ class _AddRowState extends State<OrderAddRow> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Үнийн дүн"),
+                      const Text("Үнийн дүн"),
                       totalAmount == null
-                          ? Text(
+                          ? const Text(
                               'Үнийн дүн',
                               style: TextStyle(color: orderColor),
                             )
                           : Text(
                               '${Utils().formatCurrency(totalAmount.toString())}₮',
-                              style: TextStyle(color: orderColor),
+                              style: const TextStyle(color: orderColor),
                             )
                     ],
                   ),
@@ -522,7 +520,7 @@ class _AddRowState extends State<OrderAddRow> {
                   color: white,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
@@ -538,7 +536,7 @@ class _AddRowState extends State<OrderAddRow> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 70,
                 ),
                 Container(
@@ -552,7 +550,7 @@ class _AddRowState extends State<OrderAddRow> {
                     labelText: "Болсон. Нэмье",
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
               ],

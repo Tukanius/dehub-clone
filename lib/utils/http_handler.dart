@@ -31,11 +31,8 @@ class HttpHandler {
   handle(response) {
     debugPrint(
         '+++++++++++++++++++++++++API HANDLER++++++++++++++++++++++++++');
-    debugPrint('HttpHandler: ' +
-        response.toString() +
-        ", " +
-        statusCode.toString() +
-        ' dataType:${response?.data?.runtimeType.toString()}');
+    debugPrint(
+        'HttpHandler: $response , $statusCode, dataType: ${response?.data?.runtimeType}');
     debugPrint(
         '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
 

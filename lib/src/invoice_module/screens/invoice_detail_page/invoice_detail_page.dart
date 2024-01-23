@@ -26,11 +26,11 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
       child: Scaffold(
         backgroundColor: backgroundColor,
         appBar: AppBar(
-          iconTheme: IconThemeData(color: invoiceColor),
+          iconTheme: const IconThemeData(color: invoiceColor),
           elevation: 0,
           backgroundColor: white,
           surfaceTintColor: white,
-          title: Text(
+          title: const Text(
             'Нэхэмжлэл дэлгэрэнгүй',
             style: TextStyle(
               color: invoiceColor,
@@ -45,8 +45,8 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
             unselectedLabelColor: grey2,
             isScrollable: true,
             tabAlignment: TabAlignment.start,
-            tabs: [
-              Container(
+            tabs: const [
+              SizedBox(
                 height: 40,
                 child: Center(
                   child: Text(
@@ -54,7 +54,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 40,
                 child: Center(
                   child: Text(
@@ -62,7 +62,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 40,
                 child: Center(
                   child: Text(
@@ -78,8 +78,8 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
             BasicInformationTab(
               id: widget.id,
             ),
-            Text('1'),
-            Text('1'),
+            const Text('1'),
+            const Text('1'),
           ],
         ),
       ),

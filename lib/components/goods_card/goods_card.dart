@@ -15,14 +15,14 @@ class GoodsCard extends StatefulWidget {
   final bool startAnimation;
   final int index;
   const GoodsCard({
-    Key? key,
+    super.key,
     this.warehouseClick,
     this.priceClick,
     required this.index,
     required this.startAnimation,
     required this.data,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<GoodsCard> createState() => _GoodsCardState();
@@ -76,7 +76,7 @@ class _GoodsCardState extends State<GoodsCard> {
                         spreadRadius: 1,
                         blurRadius: 1,
                         color: Colors.grey.withOpacity(0.5),
-                        offset: Offset(0, 2),
+                        offset: const Offset(0, 2),
                       ),
                     ],
                   ),
@@ -90,13 +90,13 @@ class _GoodsCardState extends State<GoodsCard> {
                             image: "${widget.data.image}",
                             fit: BoxFit.cover,
                           )
-                        : Image(
+                        : const Image(
                             image: AssetImage('images/avatar.png'),
                             fit: BoxFit.cover,
                           ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Expanded(
@@ -107,17 +107,18 @@ class _GoodsCardState extends State<GoodsCard> {
                           Expanded(
                             child: Text(
                               '${widget.data.nameApp}',
-                              style: TextStyle(fontWeight: FontWeight.w500),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.w500),
                             ),
                           ),
-                          Icon(
+                          const Icon(
                             Icons.arrow_forward_ios,
                             color: productColor,
                             size: 18,
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Row(
@@ -125,7 +126,7 @@ class _GoodsCardState extends State<GoodsCard> {
                           Expanded(
                             child: Text(
                               '${widget.data.refCode}',
-                              style: TextStyle(color: productColor),
+                              style: const TextStyle(color: productColor),
                             ),
                           ),
                           Text('${widget.data.skuCode}')
@@ -170,7 +171,7 @@ class _GoodsCardState extends State<GoodsCard> {
                           child: Center(
                             child: SvgPicture.asset(
                               'assets/svg/stop-sign.svg',
-                              colorFilter: ColorFilter.mode(
+                              colorFilter: const ColorFilter.mode(
                                   productColor, BlendMode.srcIn),
                             ),
                           ),

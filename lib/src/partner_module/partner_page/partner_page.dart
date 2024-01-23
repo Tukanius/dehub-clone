@@ -11,13 +11,13 @@ import 'package:dehub/src/partner_module/partner_page/tabs/sent_tab/sent_tab.dar
 
 class PartnerPage extends StatefulWidget {
   static const routeName = '/PartnerPage';
-  const PartnerPage({Key? key}) : super(key: key);
+  const PartnerPage({super.key});
 
   @override
-  _PartnerPageState createState() => _PartnerPageState();
+  PartnerPageState createState() => PartnerPageState();
 }
 
-class _PartnerPageState extends State<PartnerPage> {
+class PartnerPageState extends State<PartnerPage> {
   int selectedIndex = 1;
   static const List<Widget> currentPages = [
     HomePage(),
@@ -49,23 +49,21 @@ class _PartnerPageState extends State<PartnerPage> {
           color: selectedIndex != 3 ? partnerColor : white,
         ),
         title: selectedIndex == 0
-            ? Container(
-                child: FormTextField(
-                  inputType: TextInputType.text,
-                  color: Color(0xff767680).withOpacity(0.12),
-                  name: 'search',
-                  prefixIcon: Icon(Icons.search),
-                  hintText: 'Партнер нэрээр хайх',
-                ),
+            ? FormTextField(
+                inputType: TextInputType.text,
+                color: const Color(0xff767680).withOpacity(0.12),
+                name: 'search',
+                prefixIcon: const Icon(Icons.search),
+                hintText: 'Партнер нэрээр хайх',
               )
-            : SizedBox(),
+            : const SizedBox(),
         actions: [
           selectedIndex == 0
               ? Container(
                   padding: const EdgeInsets.all(10),
                   margin: const EdgeInsets.only(right: 15, top: 9, bottom: 9),
                   decoration: BoxDecoration(
-                    color: Color(0xff767680).withOpacity(0.12),
+                    color: const Color(0xff767680).withOpacity(0.12),
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: SvgPicture.asset(
@@ -76,11 +74,11 @@ class _PartnerPageState extends State<PartnerPage> {
                   ),
                 )
               : selectedIndex == 3
-                  ? AddButton(
+                  ? const AddButton(
                       color: white,
                       addColor: partnerColor,
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
         ],
       ),
       body: Container(
@@ -118,12 +116,11 @@ class _PartnerPageState extends State<PartnerPage> {
                           BlendMode.srcIn),
                     ),
                   ),
-                  selectedIndex != 0
-                      ? Text(
-                          'Нүүр',
-                          style: TextStyle(color: partnerColor, fontSize: 12),
-                        )
-                      : SizedBox(),
+                  if (selectedIndex != 0)
+                    const Text(
+                      'Нүүр',
+                      style: TextStyle(color: partnerColor, fontSize: 12),
+                    ),
                 ],
               ),
             ),
@@ -145,12 +142,11 @@ class _PartnerPageState extends State<PartnerPage> {
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 1
-                    ? Text(
-                        'Дашбоард',
-                        style: TextStyle(color: partnerColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (selectedIndex != 1)
+                  const Text(
+                    'Дашбоард',
+                    style: TextStyle(color: partnerColor, fontSize: 12),
+                  ),
               ],
             ),
             label: '',
@@ -171,12 +167,11 @@ class _PartnerPageState extends State<PartnerPage> {
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 2
-                    ? Text(
-                        'Ирсэн',
-                        style: TextStyle(color: partnerColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (selectedIndex != 2)
+                  const Text(
+                    'Ирсэн',
+                    style: TextStyle(color: partnerColor, fontSize: 12),
+                  ),
               ],
             ),
             label: '',
@@ -197,12 +192,11 @@ class _PartnerPageState extends State<PartnerPage> {
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 3
-                    ? Text(
-                        'Илгээсэн',
-                        style: TextStyle(color: partnerColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (selectedIndex != 3)
+                  const Text(
+                    'Илгээсэн',
+                    style: TextStyle(color: partnerColor, fontSize: 12),
+                  ),
               ],
             ),
             label: '',

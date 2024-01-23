@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
   List<Widget> cards = [
     Container(
       margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -31,10 +31,11 @@ class _HomePageState extends State<HomePage> {
             ),
             child: SvgPicture.asset(
               'assets/svg/grid1.svg',
-              colorFilter: ColorFilter.mode(partnerColor, BlendMode.srcIn),
+              colorFilter:
+                  const ColorFilter.mode(partnerColor, BlendMode.srcIn),
             ),
           ),
-          Text(
+          const Text(
             'Ангилал, зэрэглэл',
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
             softWrap: true,
@@ -62,10 +63,11 @@ class _HomePageState extends State<HomePage> {
             ),
             child: SvgPicture.asset(
               'assets/svg/grid1.svg',
-              colorFilter: ColorFilter.mode(partnerColor, BlendMode.srcIn),
+              colorFilter:
+                  const ColorFilter.mode(partnerColor, BlendMode.srcIn),
             ),
           ),
-          Text(
+          const Text(
             'Ангилал, зэрэглэл',
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
             softWrap: true,
@@ -83,13 +85,13 @@ class _HomePageState extends State<HomePage> {
         children: [
           Container(
             margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-            child: Text(
+            child: const Text(
               'Партнер удирдлага',
               style: TextStyle(
                   color: black, fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ),
-          Container(
+          SizedBox(
             height: 90,
             child: ListView(
               scrollDirection: Axis.horizontal,
@@ -114,14 +116,14 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/partner.svg',
-                          colorFilter:
-                              ColorFilter.mode(partnerColor, BlendMode.srcIn),
+                          colorFilter: const ColorFilter.mode(
+                              partnerColor, BlendMode.srcIn),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 2,
                       ),
-                      Text(
+                      const Text(
                         'Худалдан авалт',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w500),
@@ -150,14 +152,14 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/push.svg',
-                          colorFilter:
-                              ColorFilter.mode(partnerColor, BlendMode.srcIn),
+                          colorFilter: const ColorFilter.mode(
+                              partnerColor, BlendMode.srcIn),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 2,
                       ),
-                      Text(
+                      const Text(
                         'Ханган нийлүүлэлт',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w500),
@@ -186,11 +188,11 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/bag.svg',
-                          colorFilter:
-                              ColorFilter.mode(partnerColor, BlendMode.srcIn),
+                          colorFilter: const ColorFilter.mode(
+                              partnerColor, BlendMode.srcIn),
                         ),
                       ),
-                      Text(
+                      const Text(
                         'Салбар   төв',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w500),
@@ -219,14 +221,14 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/map.svg',
-                          colorFilter:
-                              ColorFilter.mode(partnerColor, BlendMode.srcIn),
+                          colorFilter: const ColorFilter.mode(
+                              partnerColor, BlendMode.srcIn),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 2,
                       ),
-                      Text(
+                      const Text(
                         'Агуулах',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w500),
@@ -255,14 +257,14 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/map.svg',
-                          colorFilter:
-                              ColorFilter.mode(partnerColor, BlendMode.srcIn),
+                          colorFilter: const ColorFilter.mode(
+                              partnerColor, BlendMode.srcIn),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 2,
                       ),
-                      Text(
+                      const Text(
                         'Лавлах мэдээлэл',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w500),

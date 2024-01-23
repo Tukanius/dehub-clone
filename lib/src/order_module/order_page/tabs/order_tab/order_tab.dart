@@ -38,17 +38,17 @@ class _OrderTabState extends State<OrderTab>
                       unselectedLabelColor: buttonColor,
                       labelColor: orderColor,
                       labelStyle:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                          const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                       tabs: [
                         Container(
                           alignment: Alignment.center,
                           height: 45,
                           child: user.currentBusiness?.type == "SUPPLIER"
-                              ? Text(
+                              ? const Text(
                                   'Илгээсэн(SO)',
                                   style: TextStyle(fontFamily: 'Montserrat'),
                                 )
-                              : Text(
+                              : const Text(
                                   'Илгээсэн(PO)',
                                   style: TextStyle(fontFamily: 'Montserrat'),
                                 ),
@@ -57,7 +57,7 @@ class _OrderTabState extends State<OrderTab>
                             ? Container(
                                 alignment: Alignment.center,
                                 height: 45,
-                                child: Text(
+                                child: const Text(
                                   'Ирсэн(PO)',
                                   style: TextStyle(fontFamily: 'Montserrat'),
                                 ),
@@ -65,7 +65,7 @@ class _OrderTabState extends State<OrderTab>
                             : Container(
                                 alignment: Alignment.center,
                                 height: 45,
-                                child: Text(
+                                child: const Text(
                                   'Ирсэн(SO)',
                                   style: TextStyle(fontFamily: 'Montserrat'),
                                 ),
@@ -78,7 +78,7 @@ class _OrderTabState extends State<OrderTab>
             ),
           ];
         },
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             SalesTab(),
             ReceivedTab(),

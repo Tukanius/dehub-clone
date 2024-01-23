@@ -17,10 +17,10 @@ class ProductDetailPageArguments {
 class ProductDetailPage extends StatefulWidget {
   static const routeName = '/ProductDetailPage';
   final String id;
-  ProductDetailPage({
-    Key? key,
+  const ProductDetailPage({
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<ProductDetailPage> createState() => _ProductDetailPageState();
@@ -49,8 +49,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           elevation: 0,
           backgroundColor: white,
           surfaceTintColor: white,
-          iconTheme: IconThemeData(color: productColor),
-          title: Text(
+          iconTheme: const IconThemeData(color: productColor),
+          title: const Text(
             'Барааны дэлгэрэнгүй',
             style: TextStyle(
               color: productColor,
@@ -65,20 +65,20 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             indicatorColor: productColor,
             labelColor: productColor,
             unselectedLabelColor: grey2,
-            tabs: [
-              Container(
+            tabs: const [
+              SizedBox(
                 height: 40,
                 child: Center(
                   child: Text('Үндсэн мэдээлэл'),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 40,
                 child: Center(
                   child: Text('Нэмэлт мэдээлэл'),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 40,
                 child: Center(
                   child: Text('Захиалга тохиргоо'),
@@ -88,13 +88,13 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           ),
         ),
         body: isLoading == true
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(
                   color: productColor,
                 ),
               )
             : TabBarView(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 children: [
                   BasicInformationTab(
                     data: inventory,

@@ -24,10 +24,10 @@ class NewProduct extends StatefulWidget {
   final InventoryGoods? data;
   static const routeName = '/NewProduct';
   const NewProduct({
-    Key? key,
+    super.key,
     this.data,
     required this.initialIndex,
-  }) : super(key: key);
+  });
 
   @override
   State<NewProduct> createState() => _NewProductState();
@@ -64,7 +64,7 @@ class _NewProductState extends State<NewProduct>
       backgroundColor: backgroundColor,
       appBar: AppBar(
         leadingWidth: 130,
-        leading: CustomBackButton(color: productColor),
+        leading: const CustomBackButton(color: productColor),
         elevation: 2,
         shadowColor: grey,
         surfaceTintColor: white,
@@ -72,7 +72,7 @@ class _NewProductState extends State<NewProduct>
         foregroundColor: white,
         bottom: TabBar(
           controller: tabController,
-          overlayColor: MaterialStatePropertyAll(transparent),
+          overlayColor: const MaterialStatePropertyAll(transparent),
           labelColor: productColor,
           unselectedLabelColor: dark,
           indicatorColor: productColor,
@@ -85,7 +85,7 @@ class _NewProductState extends State<NewProduct>
               return;
             }
           },
-          tabs: [
+          tabs: const [
             Tab(
               text: 'Үндсэн мэдээлэл',
             ),
@@ -99,12 +99,12 @@ class _NewProductState extends State<NewProduct>
         ),
       ),
       body: isLoading == true
-          ? SizedBox()
+          ? const SizedBox()
           : TabBarView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               controller: tabController,
               children: [
-                MainTab(),
+                const MainTab(),
                 DynamicTab(
                   id: widget.data?.id,
                 ),

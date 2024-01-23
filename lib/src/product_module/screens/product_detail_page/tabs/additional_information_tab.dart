@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 class AdditionalInformationTab extends StatefulWidget {
   final InventoryGoods data;
   const AdditionalInformationTab({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<AdditionalInformationTab> createState() =>
@@ -23,7 +23,7 @@ class _AdditionalInformationTabState extends State<AdditionalInformationTab> {
         children: [
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+            child: const Text(
               'Категорийн мэдээлэл',
               style: TextStyle(
                 color: grey2,
@@ -34,7 +34,7 @@ class _AdditionalInformationTabState extends State<AdditionalInformationTab> {
           Container(
             color: white,
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -50,7 +50,7 @@ class _AdditionalInformationTabState extends State<AdditionalInformationTab> {
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+            child: const Text(
               'Бүтээгдэхүүний',
               style: TextStyle(
                 color: grey2,
@@ -61,7 +61,7 @@ class _AdditionalInformationTabState extends State<AdditionalInformationTab> {
           Container(
             color: white,
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(

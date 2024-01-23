@@ -38,7 +38,7 @@ class FormTextField extends StatefulWidget {
   final TextAlign? textAlign;
 
   const FormTextField(
-      {Key? key,
+      {super.key,
       this.textAlign,
       this.name,
       this.textColor,
@@ -74,10 +74,10 @@ class FormTextField extends StatefulWidget {
       this.labelText});
 
   @override
-  _FormTextFieldState createState() => _FormTextFieldState();
+  FormTextFieldState createState() => FormTextFieldState();
 }
 
-class _FormTextFieldState extends State<FormTextField> {
+class FormTextFieldState extends State<FormTextField> {
   bool isPasswordVisible = false;
 
   @override

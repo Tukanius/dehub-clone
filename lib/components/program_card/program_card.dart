@@ -63,7 +63,7 @@ class _ProgramCardState extends State<ProgramCard> {
                 Expanded(
                   child: Text(
                     '${widget.data.name}',
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                    style: const TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
                 Container(
@@ -81,7 +81,7 @@ class _ProgramCardState extends State<ProgramCard> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -111,7 +111,7 @@ class _ProgramCardState extends State<ProgramCard> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -120,13 +120,13 @@ class _ProgramCardState extends State<ProgramCard> {
                 Expanded(
                   child: RichText(
                     text: TextSpan(
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'Montserrat',
                         fontSize: 12,
                         color: grey2,
                       ),
                       children: [
-                        TextSpan(text: 'Боломжит дүн: '),
+                        const TextSpan(text: 'Боломжит дүн: '),
                         TextSpan(
                           text:
                               "${Utils().formatCurrency(widget.data.availableAmount.toString())}₮",
@@ -139,13 +139,13 @@ class _ProgramCardState extends State<ProgramCard> {
                   child: RichText(
                     textAlign: TextAlign.end,
                     text: TextSpan(
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'Montserrat',
                         fontSize: 12,
                         color: grey2,
                       ),
                       children: [
-                        TextSpan(text: 'Лимит: '),
+                        const TextSpan(text: 'Лимит: '),
                         TextSpan(
                           text:
                               "${Utils().formatCurrency(widget.data.programLimit.toString())}₮",
@@ -156,7 +156,7 @@ class _ProgramCardState extends State<ProgramCard> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -164,7 +164,7 @@ class _ProgramCardState extends State<ProgramCard> {
                 Expanded(
                   child: Text(
                     '${widget.data.product?.name}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: grey2,
                       fontSize: 12,
                     ),
@@ -172,7 +172,7 @@ class _ProgramCardState extends State<ProgramCard> {
                 ),
                 Text(
                   '${widget.data.product?.refCode}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: grey2,
                     fontSize: 12,
                   ),

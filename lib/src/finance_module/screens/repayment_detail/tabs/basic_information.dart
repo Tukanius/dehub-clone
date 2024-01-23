@@ -13,9 +13,9 @@ import 'package:intl/intl.dart';
 class BasicInformation extends StatefulWidget {
   final Finance data;
   const BasicInformation({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<BasicInformation> createState() => _BasicInformationState();
@@ -54,7 +54,7 @@ class _BasicInformationState extends State<BasicInformation> {
         children: [
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+            child: const Text(
               'Эргэн төлөлтийн нэхэмжлэх',
               style: TextStyle(
                 color: grey2,
@@ -75,7 +75,7 @@ class _BasicInformationState extends State<BasicInformation> {
             paddingVertical: 10,
             labelText: 'Үүссэн огноо, цаг',
             secondText:
-                '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.createdAt!)}',
+                DateFormat("yyyy-MM-dd HH:mm").format(widget.data.createdAt!),
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -84,7 +84,7 @@ class _BasicInformationState extends State<BasicInformation> {
             paddingVertical: 10,
             labelText: 'Эргэн төлөх огноо',
             secondText:
-                '${DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)}',
+                DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!),
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -123,7 +123,7 @@ class _BasicInformationState extends State<BasicInformation> {
             paddingVertical: 10,
             labelText: 'Санхүүжилт авсан огноо',
             secondText:
-                '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.updatedAt!)}',
+                DateFormat("yyyy-MM-dd HH:mm").format(widget.data.updatedAt!),
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -133,7 +133,7 @@ class _BasicInformationState extends State<BasicInformation> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('ЭНТ төлөлт төлөв'),
+                const Text('ЭНТ төлөлт төлөв'),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
@@ -167,7 +167,7 @@ class _BasicInformationState extends State<BasicInformation> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('ЭТН хугацаа хэтрэлт'),
+                const Text('ЭТН хугацаа хэтрэлт'),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
@@ -210,7 +210,7 @@ class _BasicInformationState extends State<BasicInformation> {
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+            child: const Text(
               'Хөтөлбөрийн мэдээлэл',
               style: TextStyle(
                 color: grey2,
@@ -237,7 +237,7 @@ class _BasicInformationState extends State<BasicInformation> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             color: white,
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Буцаан дуудах эсэх'),
@@ -286,7 +286,7 @@ class _BasicInformationState extends State<BasicInformation> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Хүсэлтийн төлөв'),
+                const Text('Хүсэлтийн төлөв'),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
@@ -294,7 +294,7 @@ class _BasicInformationState extends State<BasicInformation> {
                     borderRadius: BorderRadius.circular(5),
                     color: green.withOpacity(0.2),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Completed',
                     style: TextStyle(
                       color: green,
@@ -308,7 +308,7 @@ class _BasicInformationState extends State<BasicInformation> {
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+            child: const Text(
               'Худалдан авагч тал',
               style: TextStyle(
                 color: grey2,
@@ -348,7 +348,7 @@ class _BasicInformationState extends State<BasicInformation> {
             secondTextColor: source.currentColor,
             color: white,
           ),
-          SizedBox(
+          const SizedBox(
             height: 100,
           ),
         ],

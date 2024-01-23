@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 class CategoryCard extends StatefulWidget {
   final String? text;
   final int? index;
-  CategoryCard({
-    Key? key,
+  const CategoryCard({
+    super.key,
     this.index,
     this.text,
-  }) : super(key: key);
+  });
 
   @override
   State<CategoryCard> createState() => _CategoryCardState();
@@ -31,7 +31,7 @@ class _CategoryCardState extends State<CategoryCard> {
           color: white,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: Color(0xffF2F2F2),
+            color: const Color(0xffF2F2F2),
           ),
         ),
         child: Row(
@@ -45,7 +45,7 @@ class _CategoryCardState extends State<CategoryCard> {
                   margin: const EdgeInsets.only(right: 10),
                   child: Text(
                     '${widget.index! + 1}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: grey3,
                       fontSize: 12,
                     ),
@@ -54,7 +54,7 @@ class _CategoryCardState extends State<CategoryCard> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Ангилал нэр, код',
                       style: TextStyle(
                         color: networkColor,
@@ -62,10 +62,10 @@ class _CategoryCardState extends State<CategoryCard> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
-                    Text(
+                    const Text(
                       'Харилцагчийн ангилал',
                       style: TextStyle(
                         color: black,
@@ -73,12 +73,12 @@ class _CategoryCardState extends State<CategoryCard> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Text(
                       '${widget.text}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: grey3,
                         fontSize: 12,
                       ),
@@ -87,7 +87,7 @@ class _CategoryCardState extends State<CategoryCard> {
                 ),
               ],
             ),
-            Icon(
+            const Icon(
               Icons.arrow_forward_ios,
               size: 14,
               color: grey2,

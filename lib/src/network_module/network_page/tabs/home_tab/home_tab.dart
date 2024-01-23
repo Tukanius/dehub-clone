@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 
 class HomeTab extends StatefulWidget {
-  const HomeTab({Key? key}) : super(key: key);
+  const HomeTab({super.key});
 
   @override
-  _HomeTabState createState() => _HomeTabState();
+  HomeTabState createState() => HomeTabState();
 }
 
-class _HomeTabState extends State<HomeTab> with AfterLayoutMixin {
+class HomeTabState extends State<HomeTab> with AfterLayoutMixin {
   @override
   afterFirstLayout(BuildContext context) {
     // Navigator.of(context).pop();
@@ -17,11 +17,9 @@ class _HomeTabState extends State<HomeTab> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: NotFound(
-        module: "NETWORK",
-        labelText: "Хоосон байна",
-      ),
+    return const NotFound(
+      module: "NETWORK",
+      labelText: "Хоосон байна",
     );
   }
 }

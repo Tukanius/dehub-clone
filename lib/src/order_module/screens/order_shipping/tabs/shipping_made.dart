@@ -1,12 +1,12 @@
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/components/shipping_card/shipping_card.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/order_module/screens/order_shipment/order_shipment.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:after_layout/after_layout.dart';
@@ -44,7 +44,7 @@ class _ShippingMadeState extends State<ShippingMade> with AfterLayoutMixin {
     await groupMaker();
     setState(() {
       isLoading = false;
-      Future.delayed(Duration(milliseconds: 100), () {
+      Future.delayed(const Duration(milliseconds: 100), () {
         setState(() {
           startAnimation = true;
         });
@@ -53,7 +53,7 @@ class _ShippingMadeState extends State<ShippingMade> with AfterLayoutMixin {
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
       groupItems = {};
@@ -101,61 +101,31 @@ class _ShippingMadeState extends State<ShippingMade> with AfterLayoutMixin {
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     return isLoading == true
-        ? Center(
+        ? const Center(
             child: CircularProgressIndicator(
               color: orderColor,
             ),
           )
         : Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
-              SearchButton(
+              const SearchButton(
                 color: orderColor,
                 textColor: orderColor,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Expanded(
-                child: SmartRefresher(
-                  enablePullDown: true,
-                  enablePullUp: true,
-                  controller: refreshController,
-                  header: WaterDropHeader(
-                    waterDropColor: orderColor,
-                    refresh: SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: orderColor,
-                      ),
-                    ),
-                  ),
-                  onRefresh: _onRefresh,
+                child: Refresher(
+                  refreshController: refreshController,
                   onLoading: _onLoading,
-                  footer: CustomFooter(
-                    builder: (context, mode) {
-                      Widget body;
-                      if (mode == LoadStatus.idle) {
-                        body = const Text("");
-                      } else if (mode == LoadStatus.loading) {
-                        body = const CupertinoActivityIndicator();
-                      } else if (mode == LoadStatus.failed) {
-                        body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                      } else {
-                        body = const Text("Мэдээлэл алга байна");
-                      }
-                      return SizedBox(
-                        height: 55.0,
-                        child: Center(child: body),
-                      );
-                    },
-                  ),
+                  onRefresh: _onRefresh,
+                  color: orderColor,
                   child: SingleChildScrollView(
-                    child: groupedList.length != 0
+                    child: groupedList.isNotEmpty
                         ? Column(
                             children: groupedList
                                 .map(
@@ -176,8 +146,9 @@ class _ShippingMadeState extends State<ShippingMade> with AfterLayoutMixin {
                                             0,
                                             0),
                                         child: Text(
-                                          '${DateFormat("yyyy-MM-dd").format(data.header!)}',
-                                          style: TextStyle(
+                                          DateFormat("yyyy-MM-dd")
+                                              .format(data.header!),
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.w600,
                                             color: grey3,
                                           ),
@@ -210,7 +181,7 @@ class _ShippingMadeState extends State<ShippingMade> with AfterLayoutMixin {
                                 )
                                 .toList(),
                           )
-                        : NotFound(
+                        : const NotFound(
                             module: "ORDER",
                             labelText: "Хоосон байна",
                           ),

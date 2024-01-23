@@ -67,23 +67,21 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
           color: selectedIndex != 3 ? productColor : white,
         ),
         title: selectedIndex == 1
-            ? Container(
-                child: FormTextField(
-                  inputType: TextInputType.text,
-                  color: Color(0xff767680).withOpacity(0.12),
-                  name: 'search',
-                  prefixIcon: Icon(Icons.search),
-                  hintText: 'Партнер нэрээр хайх',
-                ),
+            ? FormTextField(
+                inputType: TextInputType.text,
+                color: const Color(0xff767680).withOpacity(0.12),
+                name: 'search',
+                prefixIcon: const Icon(Icons.search),
+                hintText: 'Партнер нэрээр хайх',
               )
-            : SizedBox(),
+            : const SizedBox(),
         actions: [
           selectedIndex == 1
               ? Container(
                   padding: const EdgeInsets.all(10),
                   margin: const EdgeInsets.only(right: 15, top: 9, bottom: 9),
                   decoration: BoxDecoration(
-                    color: Color(0xff767680).withOpacity(0.12),
+                    color: const Color(0xff767680).withOpacity(0.12),
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: SvgPicture.asset(
@@ -94,15 +92,15 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                   ),
                 )
               : selectedIndex == 3
-                  ? AddButton(
+                  ? const AddButton(
                       color: white,
                       addColor: productColor,
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
         ],
       ),
       body: isLoading == true
-          ? SizedBox()
+          ? const SizedBox()
           : Container(
               child: currentPages.elementAt(selectedIndex),
             ),
@@ -138,12 +136,11 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                           BlendMode.srcIn),
                     ),
                   ),
-                  selectedIndex != 0
-                      ? Text(
-                          'Нүүр',
-                          style: TextStyle(color: productColor, fontSize: 12),
-                        )
-                      : SizedBox(),
+                  if (selectedIndex != 0)
+                    const Text(
+                      'Нүүр',
+                      style: TextStyle(color: productColor, fontSize: 12),
+                    )
                 ],
               ),
             ),
@@ -165,12 +162,11 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 1
-                    ? Text(
-                        'Дашбоард',
-                        style: TextStyle(color: productColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (selectedIndex != 1)
+                  const Text(
+                    'Дашбоард',
+                    style: TextStyle(color: productColor, fontSize: 12),
+                  )
               ],
             ),
             label: '',
@@ -189,17 +185,16 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                     color: selectedIndex != 2 ? productColor : white,
                   ),
                 ),
-                selectedIndex != 2
-                    ? Text(
-                        'Үнэ',
-                        style: TextStyle(
-                          color: productColor,
-                          fontSize: 12,
-                        ),
-                        maxLines: 2,
-                        textAlign: TextAlign.center,
-                      )
-                    : SizedBox(),
+                if (selectedIndex != 2)
+                  const Text(
+                    'Үнэ',
+                    style: TextStyle(
+                      color: productColor,
+                      fontSize: 12,
+                    ),
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                  )
               ],
             ),
             label: '',
@@ -221,12 +216,11 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 3
-                    ? Text(
-                        'Барааны нөөц',
-                        style: TextStyle(color: productColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (selectedIndex != 3)
+                  const Text(
+                    'Барааны нөөц',
+                    style: TextStyle(color: productColor, fontSize: 12),
+                  )
               ],
             ),
             label: '',

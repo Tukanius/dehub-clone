@@ -13,7 +13,7 @@ import 'package:dehub/widgets/custom_button.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class OnboardTab extends StatefulWidget {
-  const OnboardTab({Key? key}) : super(key: key);
+  const OnboardTab({super.key});
 
   @override
   State<OnboardTab> createState() => _OnboardTabState();
@@ -61,7 +61,7 @@ class _OnboardTabState extends State<OnboardTab> {
     if (khorooName == "Сонгох") {
       Scrollable.ensureVisible(
         khorooKey.currentContext!,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.ease,
       );
       setState(() {
@@ -71,7 +71,7 @@ class _OnboardTabState extends State<OnboardTab> {
     if (districtName == "Сонгох") {
       Scrollable.ensureVisible(
         districtkey.currentContext!,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.ease,
       );
       setState(() {
@@ -81,7 +81,7 @@ class _OnboardTabState extends State<OnboardTab> {
     if (provinceName == "Сонгох") {
       Scrollable.ensureVisible(
         provinceKey.currentContext!,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.ease,
       );
       setState(() {
@@ -91,7 +91,7 @@ class _OnboardTabState extends State<OnboardTab> {
     if (equityName == "Сонгох") {
       Scrollable.ensureVisible(
         equityKey.currentContext!,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.ease,
       );
       setState(() {
@@ -101,7 +101,7 @@ class _OnboardTabState extends State<OnboardTab> {
     if (selectedCountry == "Сонгох") {
       Scrollable.ensureVisible(
         countryKey.currentContext!,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.ease,
       );
       setState(() {
@@ -111,7 +111,7 @@ class _OnboardTabState extends State<OnboardTab> {
     if (legalEntityTypeName == "Сонгох") {
       Scrollable.ensureVisible(
         legalKey.currentContext!,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.ease,
       );
       setState(() {
@@ -121,7 +121,7 @@ class _OnboardTabState extends State<OnboardTab> {
     if (type == "Сонгох") {
       Scrollable.ensureVisible(
         typeKey.currentContext!,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.ease,
       );
       setState(() {
@@ -211,7 +211,7 @@ class _OnboardTabState extends State<OnboardTab> {
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Text(
+                child: const Text(
                   'Үндсэн мэдээлэл',
                   style: TextStyle(
                     color: grey3,
@@ -232,18 +232,17 @@ class _OnboardTabState extends State<OnboardTab> {
                   show();
                 },
               ),
-              typeValidate == true
-                  ? Container(
-                      margin: const EdgeInsets.only(left: 15, top: 8),
-                      child: Text(
-                        'Заавал оруулна',
-                        style: TextStyle(
-                          color: red,
-                          fontSize: 12,
-                        ),
-                      ),
-                    )
-                  : SizedBox(),
+              if (typeValidate == true)
+                Container(
+                  margin: const EdgeInsets.only(left: 15, top: 8),
+                  child: const Text(
+                    'Заавал оруулна',
+                    style: TextStyle(
+                      color: red,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
               FormTextField(
                 fontWeight: FontWeight.w600,
                 fontSize: 18,
@@ -251,29 +250,27 @@ class _OnboardTabState extends State<OnboardTab> {
                 textColor: networkColor,
                 textAlign: TextAlign.end,
                 name: "regNumber",
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Энд оруулна уу',
                   hintStyle: TextStyle(color: networkColor),
-                  prefixIcon: Container(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Text('ТТД'),
-                        Text(
-                          '*',
-                          style: TextStyle(color: red),
-                        ),
-                      ],
-                    ),
+                  prefixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text('ТТД'),
+                      Text(
+                        '*',
+                        style: TextStyle(color: red),
+                      ),
+                    ],
                   ),
                   fillColor: white,
                   filled: true,
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   isDense: true,
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
@@ -291,29 +288,27 @@ class _OnboardTabState extends State<OnboardTab> {
                 textColor: networkColor,
                 textAlign: TextAlign.end,
                 name: "businessName",
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Энд оруулна уу',
                   hintStyle: TextStyle(color: networkColor),
-                  prefixIcon: Container(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Text('А.а.нэгжийн нэр'),
-                        Text(
-                          '*',
-                          style: TextStyle(color: red),
-                        )
-                      ],
-                    ),
+                  prefixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text('А.а.нэгжийн нэр'),
+                      Text(
+                        '*',
+                        style: TextStyle(color: red),
+                      )
+                    ],
                   ),
                   fillColor: white,
                   filled: true,
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   isDense: true,
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
@@ -331,29 +326,27 @@ class _OnboardTabState extends State<OnboardTab> {
                 textColor: networkColor,
                 textAlign: TextAlign.end,
                 name: "businessNameEng",
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Энд оруулна уу',
                   hintStyle: TextStyle(color: networkColor),
-                  prefixIcon: Container(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Text('А.а.нэгжийн нэр/Латин/'),
-                        Text(
-                          '*',
-                          style: TextStyle(color: red),
-                        )
-                      ],
-                    ),
+                  prefixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text('А.а.нэгжийн нэр/Латин/'),
+                      Text(
+                        '*',
+                        style: TextStyle(color: red),
+                      )
+                    ],
                   ),
                   fillColor: white,
                   filled: true,
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   isDense: true,
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
@@ -377,18 +370,17 @@ class _OnboardTabState extends State<OnboardTab> {
                   legalEntityType();
                 },
               ),
-              legalEntityValidate == true
-                  ? Container(
-                      margin: const EdgeInsets.only(left: 15, top: 8),
-                      child: Text(
-                        'Заавал оруулна',
-                        style: TextStyle(
-                          color: red,
-                          fontSize: 12,
-                        ),
-                      ),
-                    )
-                  : SizedBox(),
+              if (legalEntityValidate == true)
+                Container(
+                  margin: const EdgeInsets.only(left: 15, top: 8),
+                  child: const Text(
+                    'Заавал оруулна',
+                    style: TextStyle(
+                      color: red,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
               FieldCard(
                 fbKey: countryKey,
                 paddingHorizontal: 15,
@@ -402,18 +394,17 @@ class _OnboardTabState extends State<OnboardTab> {
                   country();
                 },
               ),
-              countryValidate == true
-                  ? Container(
-                      margin: const EdgeInsets.only(left: 15, top: 8),
-                      child: Text(
-                        'Заавал оруулна',
-                        style: TextStyle(
-                          color: red,
-                          fontSize: 12,
-                        ),
-                      ),
-                    )
-                  : SizedBox(),
+              if (countryValidate == true)
+                Container(
+                  margin: const EdgeInsets.only(left: 15, top: 8),
+                  child: const Text(
+                    'Заавал оруулна',
+                    style: TextStyle(
+                      color: red,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
               FieldCard(
                 fbKey: equityKey,
                 paddingHorizontal: 15,
@@ -427,22 +418,21 @@ class _OnboardTabState extends State<OnboardTab> {
                   equityType();
                 },
               ),
-              equityValidate == true
-                  ? Container(
-                      margin: const EdgeInsets.only(left: 15, top: 8),
-                      child: Text(
-                        'Заавал оруулна',
-                        style: TextStyle(
-                          color: red,
-                          fontSize: 12,
-                        ),
-                      ),
-                    )
-                  : SizedBox(),
+              if (equityValidate == true)
+                Container(
+                  margin: const EdgeInsets.only(left: 15, top: 8),
+                  child: const Text(
+                    'Заавал оруулна',
+                    style: TextStyle(
+                      color: red,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Text(
+                child: const Text(
                   'Хаягийн мэдээлэл',
                   style: TextStyle(
                     color: grey3,
@@ -464,18 +454,17 @@ class _OnboardTabState extends State<OnboardTab> {
                   province();
                 },
               ),
-              provinceValidate == true
-                  ? Container(
-                      margin: const EdgeInsets.only(left: 15, top: 8),
-                      child: Text(
-                        'Заавал оруулна',
-                        style: TextStyle(
-                          color: red,
-                          fontSize: 12,
-                        ),
-                      ),
-                    )
-                  : SizedBox(),
+              if (provinceValidate == true)
+                Container(
+                  margin: const EdgeInsets.only(left: 15, top: 8),
+                  child: const Text(
+                    'Заавал оруулна',
+                    style: TextStyle(
+                      color: red,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
               FieldCard(
                 fbKey: districtkey,
                 paddingHorizontal: 15,
@@ -490,18 +479,17 @@ class _OnboardTabState extends State<OnboardTab> {
                   district();
                 },
               ),
-              districtValidate == true
-                  ? Container(
-                      margin: const EdgeInsets.only(left: 15, top: 8),
-                      child: Text(
-                        'Заавал оруулна',
-                        style: TextStyle(
-                          color: red,
-                          fontSize: 12,
-                        ),
-                      ),
-                    )
-                  : SizedBox(),
+              if (districtValidate == true)
+                Container(
+                  margin: const EdgeInsets.only(left: 15, top: 8),
+                  child: const Text(
+                    'Заавал оруулна',
+                    style: TextStyle(
+                      color: red,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
               FieldCard(
                 fbKey: khorooKey,
                 paddingHorizontal: 15,
@@ -516,42 +504,39 @@ class _OnboardTabState extends State<OnboardTab> {
                   khoroo();
                 },
               ),
-              khorooValidate == true
-                  ? Container(
-                      margin: const EdgeInsets.only(left: 15, top: 8),
-                      child: Text(
-                        'Заавал оруулна',
-                        style: TextStyle(
-                          color: red,
-                          fontSize: 12,
-                        ),
-                      ),
-                    )
-                  : SizedBox(),
+              if (khorooValidate == true)
+                Container(
+                  margin: const EdgeInsets.only(left: 15, top: 8),
+                  child: const Text(
+                    'Заавал оруулна',
+                    style: TextStyle(
+                      color: red,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
               FormTextField(
                 inputType: TextInputType.text,
                 textColor: networkColor,
                 textAlign: TextAlign.end,
                 name: "khoroolol",
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Энд оруулна уу',
                   hintStyle: TextStyle(color: networkColor),
-                  prefixIcon: Container(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Text('Хороолол'),
-                      ],
-                    ),
+                  prefixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text('Хороолол'),
+                    ],
                   ),
                   fillColor: white,
                   filled: true,
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   isDense: true,
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
@@ -567,25 +552,23 @@ class _OnboardTabState extends State<OnboardTab> {
                 textColor: networkColor,
                 textAlign: TextAlign.end,
                 name: "khotkhonBair",
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Энд оруулна уу',
                   hintStyle: TextStyle(color: networkColor),
-                  prefixIcon: Container(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Text('Хотхон байр'),
-                      ],
-                    ),
+                  prefixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text('Хотхон байр'),
+                    ],
                   ),
                   fillColor: white,
                   filled: true,
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   isDense: true,
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
@@ -601,25 +584,23 @@ class _OnboardTabState extends State<OnboardTab> {
                 textColor: networkColor,
                 textAlign: TextAlign.end,
                 name: "khashaaDavkhar",
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Энд оруулна уу',
                   hintStyle: TextStyle(color: networkColor),
-                  prefixIcon: Container(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Text('Хашаа давхар'),
-                      ],
-                    ),
+                  prefixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text('Хашаа давхар'),
+                    ],
                   ),
                   fillColor: white,
                   filled: true,
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   isDense: true,
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
@@ -635,25 +616,23 @@ class _OnboardTabState extends State<OnboardTab> {
                 textColor: networkColor,
                 textAlign: TextAlign.end,
                 name: "khaalgaDugaar",
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Энд оруулна уу',
                   hintStyle: TextStyle(color: networkColor),
-                  prefixIcon: Container(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Text('Хаалга дугаар'),
-                      ],
-                    ),
+                  prefixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text('Хаалга дугаар'),
+                    ],
                   ),
                   fillColor: white,
                   filled: true,
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   isDense: true,
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
@@ -667,7 +646,7 @@ class _OnboardTabState extends State<OnboardTab> {
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Text(
+                child: const Text(
                   'Байршлын мэдээлэл',
                   style: TextStyle(
                     color: grey3,
@@ -680,7 +659,7 @@ class _OnboardTabState extends State<OnboardTab> {
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 width: MediaQuery.of(context).size.width,
                 color: white,
-                child: Image(
+                child: const Image(
                   image: AssetImage('images/map.jpg'),
                   fit: BoxFit.cover,
                 ),
@@ -689,7 +668,7 @@ class _OnboardTabState extends State<OnboardTab> {
                 color: white,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
@@ -707,7 +686,7 @@ class _OnboardTabState extends State<OnboardTab> {
                 color: white,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
@@ -724,7 +703,7 @@ class _OnboardTabState extends State<OnboardTab> {
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Text(
+                child: const Text(
                   'Урилга авах хүн',
                   style: TextStyle(
                     color: grey3,
@@ -737,25 +716,23 @@ class _OnboardTabState extends State<OnboardTab> {
                 textColor: networkColor,
                 textAlign: TextAlign.end,
                 name: "firstName",
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Энд оруулна уу',
                   hintStyle: TextStyle(color: networkColor),
-                  prefixIcon: Container(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Text('Урилга авах хүний нэр'),
-                      ],
-                    ),
+                  prefixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text('Урилга авах хүний нэр'),
+                    ],
                   ),
                   fillColor: white,
                   filled: true,
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   isDense: true,
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
@@ -773,25 +750,23 @@ class _OnboardTabState extends State<OnboardTab> {
                 textColor: networkColor,
                 textAlign: TextAlign.end,
                 name: "userPhone",
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Энд оруулна уу',
                   hintStyle: TextStyle(color: networkColor),
-                  prefixIcon: Container(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Text('Утасны дугаар №1'),
-                      ],
-                    ),
+                  prefixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text('Утасны дугаар №1'),
+                    ],
                   ),
                   fillColor: white,
                   filled: true,
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   isDense: true,
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
@@ -809,25 +784,23 @@ class _OnboardTabState extends State<OnboardTab> {
                 textColor: networkColor,
                 textAlign: TextAlign.end,
                 name: "userEmail",
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Энд оруулна уу',
                   hintStyle: TextStyle(color: networkColor),
-                  prefixIcon: Container(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Text('И-мэйл хаяг №1'),
-                      ],
-                    ),
+                  prefixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text('И-мэйл хаяг №1'),
+                    ],
                   ),
                   fillColor: white,
                   filled: true,
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   isDense: true,
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
@@ -843,7 +816,7 @@ class _OnboardTabState extends State<OnboardTab> {
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Text(
+                child: const Text(
                   'Урилгын тайлбар',
                   style: TextStyle(
                     color: grey3,
@@ -859,7 +832,7 @@ class _OnboardTabState extends State<OnboardTab> {
                   textAlign: TextAlign.left,
                   name: 'toMessage',
                   maxLines: 5,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.zero,
                       borderSide: BorderSide(color: grey),
@@ -872,7 +845,7 @@ class _OnboardTabState extends State<OnboardTab> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Row(
@@ -906,7 +879,7 @@ class _OnboardTabState extends State<OnboardTab> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 80,
               ),
             ],
@@ -919,7 +892,7 @@ class _OnboardTabState extends State<OnboardTab> {
   show() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -932,7 +905,8 @@ class _OnboardTabState extends State<OnboardTab> {
             children: [
               Container(
                 margin: const EdgeInsets.only(left: 15, top: 15, bottom: 10),
-                child: Text(
+                alignment: Alignment.center,
+                child: const Text(
                   'Төрөл сонгох',
                   style: TextStyle(
                     color: grey2,
@@ -940,7 +914,6 @@ class _OnboardTabState extends State<OnboardTab> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                alignment: Alignment.center,
               ),
               Column(
                 children: items
@@ -958,13 +931,13 @@ class _OnboardTabState extends State<OnboardTab> {
                           padding: const EdgeInsets.only(top: 10, bottom: 10),
                           color: transparent,
                           margin: const EdgeInsets.only(left: 15, bottom: 10),
-                          child: Text('${e}'),
+                          child: Text(e),
                         ),
                       ),
                     )
                     .toList(),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
             ],
@@ -977,7 +950,7 @@ class _OnboardTabState extends State<OnboardTab> {
   country() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -990,7 +963,8 @@ class _OnboardTabState extends State<OnboardTab> {
             children: [
               Container(
                 margin: const EdgeInsets.only(left: 15, top: 15, bottom: 10),
-                child: Text(
+                alignment: Alignment.center,
+                child: const Text(
                   'Төрөл сонгох',
                   style: TextStyle(
                     color: grey2,
@@ -998,7 +972,6 @@ class _OnboardTabState extends State<OnboardTab> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                alignment: Alignment.center,
               ),
               Column(
                 children: countries
@@ -1016,13 +989,13 @@ class _OnboardTabState extends State<OnboardTab> {
                           padding: const EdgeInsets.only(top: 10, bottom: 10),
                           color: transparent,
                           margin: const EdgeInsets.only(left: 15, bottom: 10),
-                          child: Text('${e}'),
+                          child: Text(e),
                         ),
                       ),
                     )
                     .toList(),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
             ],
@@ -1035,7 +1008,7 @@ class _OnboardTabState extends State<OnboardTab> {
   province() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -1048,7 +1021,8 @@ class _OnboardTabState extends State<OnboardTab> {
             children: [
               Container(
                 margin: const EdgeInsets.only(left: 15, top: 15, bottom: 10),
-                child: Text(
+                alignment: Alignment.center,
+                child: const Text(
                   'Аймаг/Нийслэл',
                   style: TextStyle(
                     color: grey2,
@@ -1056,7 +1030,6 @@ class _OnboardTabState extends State<OnboardTab> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                alignment: Alignment.center,
               ),
               Column(
                 children: provinces
@@ -1082,7 +1055,7 @@ class _OnboardTabState extends State<OnboardTab> {
                     )
                     .toList(),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
             ],
@@ -1095,7 +1068,7 @@ class _OnboardTabState extends State<OnboardTab> {
   legalEntityType() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -1108,7 +1081,8 @@ class _OnboardTabState extends State<OnboardTab> {
             children: [
               Container(
                 margin: const EdgeInsets.only(left: 15, top: 15, bottom: 10),
-                child: Text(
+                alignment: Alignment.center,
+                child: const Text(
                   'Аж ахуй нэгжийн хэлбэр',
                   style: TextStyle(
                     color: grey2,
@@ -1116,7 +1090,6 @@ class _OnboardTabState extends State<OnboardTab> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                alignment: Alignment.center,
               ),
               Column(
                 children: general.legalEntityTypes!
@@ -1140,7 +1113,7 @@ class _OnboardTabState extends State<OnboardTab> {
                     )
                     .toList(),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
             ],
@@ -1153,7 +1126,7 @@ class _OnboardTabState extends State<OnboardTab> {
   equityType() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -1166,7 +1139,8 @@ class _OnboardTabState extends State<OnboardTab> {
             children: [
               Container(
                 margin: const EdgeInsets.only(left: 15, top: 15, bottom: 10),
-                child: Text(
+                alignment: Alignment.center,
+                child: const Text(
                   'Өмчийн хэлбэр',
                   style: TextStyle(
                     color: grey2,
@@ -1174,7 +1148,6 @@ class _OnboardTabState extends State<OnboardTab> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                alignment: Alignment.center,
               ),
               Column(
                 children: general.equityTypes!
@@ -1198,7 +1171,7 @@ class _OnboardTabState extends State<OnboardTab> {
                     )
                     .toList(),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
             ],
@@ -1211,7 +1184,7 @@ class _OnboardTabState extends State<OnboardTab> {
   district() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -1224,7 +1197,8 @@ class _OnboardTabState extends State<OnboardTab> {
             children: [
               Container(
                 margin: const EdgeInsets.only(left: 15, top: 15, bottom: 10),
-                child: Text(
+                alignment: Alignment.center,
+                child: const Text(
                   'Сум/Дүүрэг',
                   style: TextStyle(
                     color: grey2,
@@ -1232,7 +1206,6 @@ class _OnboardTabState extends State<OnboardTab> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                alignment: Alignment.center,
               ),
               Column(
                 children: districts
@@ -1257,7 +1230,7 @@ class _OnboardTabState extends State<OnboardTab> {
                     )
                     .toList(),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
             ],
@@ -1270,7 +1243,7 @@ class _OnboardTabState extends State<OnboardTab> {
   khoroo() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -1283,7 +1256,8 @@ class _OnboardTabState extends State<OnboardTab> {
             children: [
               Container(
                 margin: const EdgeInsets.only(left: 15, top: 15, bottom: 10),
-                child: Text(
+                alignment: Alignment.center,
+                child: const Text(
                   'Хороо/Баг',
                   style: TextStyle(
                     color: grey2,
@@ -1291,7 +1265,6 @@ class _OnboardTabState extends State<OnboardTab> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                alignment: Alignment.center,
               ),
               Column(
                 children: khoroos
@@ -1315,7 +1288,7 @@ class _OnboardTabState extends State<OnboardTab> {
                     )
                     .toList(),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
             ],

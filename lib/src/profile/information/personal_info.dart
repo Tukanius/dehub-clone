@@ -16,9 +16,9 @@ import 'package:image_picker/image_picker.dart';
 class PersonalInfo extends StatefulWidget {
   static const routeName = '/personalinfo';
 
-  PersonalInfo({
-    Key? key,
-  }) : super(key: key);
+  const PersonalInfo({
+    super.key,
+  });
 
   @override
   State<PersonalInfo> createState() => _PersonalInfoState();
@@ -56,7 +56,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
         image = File(file.path);
         isLoading = true;
       });
-      result = await AuthApi().upload(file);
+      result = await AuthApi().upload(file, 'auth');
       await AuthApi().avatar(
         User(avatar: result.url.toString()),
       );
@@ -73,7 +73,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
       builder: (context) => CupertinoActionSheet(
         actions: [
           CupertinoActionSheetAction(
-            child: Text(
+            child: const Text(
               'Зургийн сангаас',
               style: TextStyle(color: grey2, fontFamily: 'Montserrat'),
             ),
@@ -83,7 +83,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
             },
           ),
           CupertinoActionSheetAction(
-            child: Text(
+            child: const Text(
               'Зураг авах',
               style: TextStyle(color: grey2, fontFamily: 'Montserrat'),
             ),
@@ -102,210 +102,206 @@ class _PersonalInfoState extends State<PersonalInfo> {
     user = Provider.of<UserProvider>(context, listen: true).user;
     partner = Provider.of<UserProvider>(context, listen: true).partnerUser;
     return isLoading == true
-        ? Center(
+        ? const Center(
             child: CircularProgressIndicator(
               color: grey2,
             ),
           )
         : SingleChildScrollView(
-            child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    children: [
-                      Stack(
-                        alignment: Alignment.center,
-                        clipBehavior: Clip.none,
-                        children: <Widget>[
-                          GestureDetector(
-                            onTap: showOptions,
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 20),
-                              height: 55,
-                              width: 55,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 5,
-                                    color: Colors.grey,
-                                    offset: Offset(0, 5),
-                                  ),
-                                  BoxShadow(
-                                    blurRadius: 5,
-                                    color: Colors.grey,
-                                    offset: Offset(5, 0),
-                                  ),
-                                ],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(4),
-                                child: user.avatar != null && image == null
-                                    ? Image.network(
-                                        '${user.avatar}',
-                                        fit: BoxFit.cover,
-                                      )
-                                    : image != null
-                                        ? Image.file(
-                                            image!,
-                                            fit: BoxFit.cover,
-                                          )
-                                        : Image.asset(
-                                            'images/avatar.png',
-                                            fit: BoxFit.cover,
-                                          ),
-                              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  children: [
+                    Stack(
+                      alignment: Alignment.center,
+                      clipBehavior: Clip.none,
+                      children: <Widget>[
+                        GestureDetector(
+                          onTap: showOptions,
+                          child: Container(
+                            margin: const EdgeInsets.only(top: 20),
+                            height: 55,
+                            width: 55,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4),
+                              boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 5,
+                                  color: Colors.grey,
+                                  offset: Offset(0, 5),
+                                ),
+                                BoxShadow(
+                                  blurRadius: 5,
+                                  color: Colors.grey,
+                                  offset: Offset(5, 0),
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(4),
+                              child: user.avatar != null && image == null
+                                  ? Image.network(
+                                      '${user.avatar}',
+                                      fit: BoxFit.cover,
+                                    )
+                                  : image != null
+                                      ? Image.file(
+                                          image!,
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Image.asset(
+                                          'images/avatar.png',
+                                          fit: BoxFit.cover,
+                                        ),
                             ),
                           ),
-                          Positioned(
-                            bottom: -20,
-                            right: -15,
-                            child: Container(
-                              height: 32,
-                              width: 32,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0xffC4C4C4),
-                              ),
-                              child: Icon(
-                                Icons.edit,
-                                color: white,
-                                size: 20,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      Text(
-                        '${partner.user?.currentBusiness?.profileNameEng}',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: grey3),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        '${user.firstName}, ${user.phone}',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: grey3,
                         ),
-                      ),
-                      Divider(
-                        indent: 20,
-                        endIndent: 20,
-                      ),
-                    ],
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 15),
-                    child: Text(
-                      'Хувийн мэдээлэл',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
+                        Positioned(
+                          bottom: -20,
+                          right: -15,
+                          child: Container(
+                            height: 32,
+                            width: 32,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xffC4C4C4),
+                            ),
+                            child: const Icon(
+                              Icons.edit,
+                              color: white,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Text(
+                      '${partner.user?.currentBusiness?.profileNameEng}',
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: grey3),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      '${user.firstName}, ${user.phone}',
+                      style: const TextStyle(
                         fontSize: 16,
                         color: grey3,
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 18),
-                    width: MediaQuery.of(context).size.width,
-                    child: Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          EditingInformation(
-                            edit: edit,
-                            name: "registerNo",
-                            paddingVertical: 5,
-                            labelText: 'Регистр №',
-                            value: user.registerNo,
-                          ),
-                          InformationCard(
-                            paddingVertical: 5,
-                            labelText: 'Регистр №',
-                            value: user.registerNo,
-                          ),
-                          InformationCard(
-                            paddingVertical: 5,
-                            labelText: "Бизнес код",
-                            value: user.currentBusiness?.refCode,
-                          ),
-                          InformationCard(
-                            paddingVertical: 5,
-                            labelText: 'Ургын овог',
-                            value: user.familyName,
-                          ),
-                          InformationCard(
-                            paddingVertical: 5,
-                            labelText: 'Эцэг/Эхийн нэр',
-                            value: user.lastName,
-                          ),
-                          InformationCard(
-                            paddingVertical: 5,
-                            labelText: 'Өөрийн нэр',
-                            value: user.firstName,
-                          ),
-                          InformationCard(
-                            paddingVertical: 5,
-                            labelText: 'Харъяалах нэгж',
-                            value: 'Борлуулалтын алба',
-                          ),
-                          InformationCard(
-                            paddingVertical: 5,
-                            labelText: 'Албан тушаал',
-                            value: 'Худалдааны төлөөлөгч',
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 15),
-                            child: Text(
-                              'Холбоо барих',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                color: grey3,
-                              ),
-                            ),
-                          ),
-                          InformationCard(
-                            paddingVertical: 5,
-                            labelText: 'Утасны дугаар №1',
-                            value: '${user.phone}',
-                          ),
-                          InformationCard(
-                            paddingVertical: 5,
-                            labelText: 'И-мэйл хаяг №1',
-                            value: '${user.email}',
-                          ),
-                          InformationCard(
-                            paddingVertical: 5,
-                            labelText: 'Утасны дугаар №2',
-                            value: '${user.phone2}',
-                          ),
-                          InformationCard(
-                            paddingVertical: 5,
-                            labelText: 'И-мэйл хаяг №2',
-                            value: '${user.email2}',
-                          ),
-                          SizedBox(
-                            height: 50,
-                          ),
-                        ],
-                      ),
+                    const Divider(
+                      indent: 20,
+                      endIndent: 20,
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 15),
+                  child: const Text(
+                    'Хувийн мэдээлэл',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      color: grey3,
                     ),
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      EditingInformation(
+                        edit: edit,
+                        name: "registerNo",
+                        paddingVertical: 5,
+                        labelText: 'Регистр №',
+                        value: user.registerNo,
+                      ),
+                      InformationCard(
+                        paddingVertical: 5,
+                        labelText: 'Регистр №',
+                        value: user.registerNo,
+                      ),
+                      InformationCard(
+                        paddingVertical: 5,
+                        labelText: "Бизнес код",
+                        value: user.currentBusiness?.refCode,
+                      ),
+                      InformationCard(
+                        paddingVertical: 5,
+                        labelText: 'Ургын овог',
+                        value: user.familyName,
+                      ),
+                      InformationCard(
+                        paddingVertical: 5,
+                        labelText: 'Эцэг/Эхийн нэр',
+                        value: user.lastName,
+                      ),
+                      InformationCard(
+                        paddingVertical: 5,
+                        labelText: 'Өөрийн нэр',
+                        value: user.firstName,
+                      ),
+                      const InformationCard(
+                        paddingVertical: 5,
+                        labelText: 'Харъяалах нэгж',
+                        value: 'Борлуулалтын алба',
+                      ),
+                      const InformationCard(
+                        paddingVertical: 5,
+                        labelText: 'Албан тушаал',
+                        value: 'Худалдааны төлөөлөгч',
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 15),
+                        child: const Text(
+                          'Холбоо барих',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: grey3,
+                          ),
+                        ),
+                      ),
+                      InformationCard(
+                        paddingVertical: 5,
+                        labelText: 'Утасны дугаар №1',
+                        value: '${user.phone}',
+                      ),
+                      InformationCard(
+                        paddingVertical: 5,
+                        labelText: 'И-мэйл хаяг №1',
+                        value: '${user.email}',
+                      ),
+                      InformationCard(
+                        paddingVertical: 5,
+                        labelText: 'Утасны дугаар №2',
+                        value: '${user.phone2}',
+                      ),
+                      InformationCard(
+                        paddingVertical: 5,
+                        labelText: 'И-мэйл хаяг №2',
+                        value: '${user.email2}',
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           );
   }

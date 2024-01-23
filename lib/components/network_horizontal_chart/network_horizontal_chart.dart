@@ -11,11 +11,11 @@ class NetworkHorizontalChart extends StatefulWidget {
   final String labelText;
   final int index;
   const NetworkHorizontalChart({
-    Key? key,
+    super.key,
     required this.index,
     required this.labelText,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<NetworkHorizontalChart> createState() => _NetworkHorizontalChartState();
@@ -33,8 +33,8 @@ class _NetworkHorizontalChartState extends State<NetworkHorizontalChart> {
             Container(
               margin: const EdgeInsets.only(left: 15),
               child: Text(
-                '${widget.labelText}',
-                style: TextStyle(
+                widget.labelText,
+                style: const TextStyle(
                   color: black,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
@@ -48,7 +48,7 @@ class _NetworkHorizontalChartState extends State<NetworkHorizontalChart> {
               child: Container(
                 color: transparent,
                 padding: const EdgeInsets.symmetric(vertical: 5),
-                child: Row(
+                child: const Row(
                   children: [
                     Text(
                       "Бүгдийг",
@@ -75,40 +75,40 @@ class _NetworkHorizontalChartState extends State<NetworkHorizontalChart> {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Row(
           children: [
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
-            Icon(
+            const Icon(
               Icons.calendar_today,
               color: grey,
               size: 18,
             ),
-            SizedBox(
+            const SizedBox(
               width: 5,
             ),
             Text(
               '${DateFormat("yyyy-MM-dd").format(widget.data.start!)} - ',
-              style: TextStyle(
+              style: const TextStyle(
                 color: grey,
                 fontSize: 12,
               ),
             ),
-            Icon(
+            const Icon(
               Icons.calendar_today,
               color: grey,
               size: 18,
             ),
-            SizedBox(
+            const SizedBox(
               width: 5,
             ),
             Text(
-              '${DateFormat("yyyy-MM-dd").format(widget.data.end!)}',
-              style: TextStyle(
+              DateFormat("yyyy-MM-dd").format(widget.data.end!),
+              style: const TextStyle(
                 color: grey,
                 fontSize: 12,
               ),

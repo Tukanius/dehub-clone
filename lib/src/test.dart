@@ -25,7 +25,7 @@ class _TestState extends State<Test> with AfterLayoutMixin {
         children: [
           AnimatedPositioned(
             curve: Curves.ease,
-            duration: Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 500),
             bottom: isExpanded ? 50 : 100,
             child: Container(
               decoration: BoxDecoration(
@@ -39,7 +39,7 @@ class _TestState extends State<Test> with AfterLayoutMixin {
           AnimatedPositioned(
             curve: Curves.ease,
             bottom: isExpanded ? 150 : 100,
-            duration: Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 500),
             child: GestureDetector(
               onTap: () {},
               onPanUpdate: onPanUpdate,

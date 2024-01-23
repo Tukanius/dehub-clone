@@ -12,7 +12,7 @@ class RegisterLetter extends StatefulWidget {
   final Radius radius;
 
   const RegisterLetter({
-    Key? key,
+    super.key,
     this.text,
     this.onPressed,
     this.color,
@@ -21,13 +21,13 @@ class RegisterLetter extends StatefulWidget {
     this.textColor = buttonColor,
     this.radius = const Radius.circular(10.0),
     this.fontSize = 16,
-  }) : super(key: key);
+  });
 
   @override
-  _RegisterItemState createState() => _RegisterItemState();
+  RegisterItemState createState() => RegisterItemState();
 }
 
-class _RegisterItemState extends State<RegisterLetter> {
+class RegisterItemState extends State<RegisterLetter> {
   @override
   void initState() {
     super.initState();

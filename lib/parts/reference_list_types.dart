@@ -40,10 +40,12 @@ Map<String, dynamic> _$ReferenceListTypesToJson(ReferenceListTypes instance) {
   if (instance.AR_NET30 != null) json['AR_NET30'] = instance.AR_NET30;
   if (instance.REGION != null) json['REGION'] = instance.REGION;
   if (instance.DIRECTION != null) json['DIRECTION'] = instance.DIRECTION;
-  if (instance.CLIENT_CATEGORY != null)
+  if (instance.CLIENT_CATEGORY != null) {
     json['CLIENT_CATEGORY'] = instance.CLIENT_CATEGORY;
-  if (instance.CLIENT_PRIORITY != null)
+  }
+  if (instance.CLIENT_PRIORITY != null) {
     json['CLIENT_PRIORITY'] = instance.CLIENT_PRIORITY;
+  }
 
   return json;
 }

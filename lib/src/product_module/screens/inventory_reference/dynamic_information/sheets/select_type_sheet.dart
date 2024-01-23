@@ -26,7 +26,7 @@ class _SelectTypeSheetState extends State<SelectTypeSheet> {
         Provider.of<GeneralProvider>(context, listen: true).inventoryGeneral;
     final source = Provider.of<InventoryProvider>(context, listen: true);
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(15),
         ),
@@ -36,7 +36,7 @@ class _SelectTypeSheetState extends State<SelectTypeSheet> {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: productColor,
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(15),
@@ -44,7 +44,7 @@ class _SelectTypeSheetState extends State<SelectTypeSheet> {
             ),
             child: Row(
               children: [
-                Expanded(
+                const Expanded(
                   child: Text(
                     'Төрөл сонгох',
                     style: TextStyle(
@@ -84,21 +84,21 @@ class _SelectTypeSheetState extends State<SelectTypeSheet> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               e == "CHECKBOX"
-                                  ? Text(
+                                  ? const Text(
                                       'Checkbox',
                                       style: TextStyle(color: dark),
                                     )
                                   : e == "NUMBER"
-                                      ? Text(
+                                      ? const Text(
                                           'Тоон утга',
                                           style: TextStyle(color: dark),
                                         )
                                       : e == "TEXT"
-                                          ? Text(
+                                          ? const Text(
                                               'Текст утга',
                                               style: TextStyle(color: dark),
                                             )
-                                          : Text(
+                                          : const Text(
                                               'Сонголтот утга',
                                               style: TextStyle(color: dark),
                                             ),

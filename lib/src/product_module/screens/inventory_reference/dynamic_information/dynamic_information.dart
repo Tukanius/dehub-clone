@@ -43,7 +43,7 @@ class _DynamicInformationState extends State<DynamicInformation>
   }
 
   onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
       groupItems = {};
@@ -96,8 +96,8 @@ class _DynamicInformationState extends State<DynamicInformation>
       appBar: AppBar(
         backgroundColor: white,
         surfaceTintColor: white,
-        iconTheme: IconThemeData(color: productColor),
-        title: Text(
+        iconTheme: const IconThemeData(color: productColor),
+        title: const Text(
           'Барааны динамик мэдээлэл',
           style: TextStyle(
             color: productColor,
@@ -110,18 +110,18 @@ class _DynamicInformationState extends State<DynamicInformation>
           showModalBottomSheet(
             context: context,
             useSafeArea: true,
-            builder: (context) => AddDinamycInformation(),
+            builder: (context) => const AddDinamycInformation(),
           );
         },
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         backgroundColor: productColor,
-        child: Icon(
+        child: const Icon(
           Icons.add,
           color: white,
         ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: productColor,
               ),
@@ -142,8 +142,8 @@ class _DynamicInformationState extends State<DynamicInformation>
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 15, vertical: 10),
                               child: data.businessId == user.currentBusinessId
-                                  ? Text('Бүртгэсэн жагсаалт')
-                                  : Text('Системд тохируулсан'),
+                                  ? const Text('Бүртгэсэн жагсаалт')
+                                  : const Text('Системд тохируулсан'),
                             ),
                             Column(
                               children: data.values!

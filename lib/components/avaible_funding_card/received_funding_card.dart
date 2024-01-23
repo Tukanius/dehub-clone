@@ -12,10 +12,10 @@ class ReceivedFundingCard extends StatefulWidget {
   final Finance data;
   final Function()? onClick;
   const ReceivedFundingCard({
-    Key? key,
+    super.key,
     this.onClick,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<ReceivedFundingCard> createState() => _ReceivedFundingCardState();
@@ -28,6 +28,12 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
     final res = general.currencies!
         .firstWhere((element) => element.code == widget.data.currency)
         .symbol;
+    return res;
+  }
+
+  requestStatus() {
+    final res = general.scfRequestStatus!
+        .firstWhere((element) => element.code == widget.data.requestStatus);
     return res;
   }
 
@@ -51,7 +57,7 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                   children: [
                     Text(
                       '${widget.data.refCode}',
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: dark,
                           fontSize: 14,
                           fontWeight: FontWeight.w600),
@@ -72,7 +78,7 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Row(
@@ -83,12 +89,19 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                           vertical: 5, horizontal: 15),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: green.withOpacity(0.2),
+                        color: Color(int.parse(
+                                    requestStatus().color.substring(1, 7),
+                                    radix: 16) +
+                                0xff000000)
+                            .withOpacity(0.2),
                       ),
                       child: Text(
-                        'Олгосон',
+                        '${requestStatus().name}',
                         style: TextStyle(
-                            color: green,
+                            color: Color(int.parse(
+                                    requestStatus().color.substring(1, 7),
+                                    radix: 16) +
+                                0xff000000),
                             fontSize: 12,
                             fontWeight: FontWeight.w500),
                       ),
@@ -102,12 +115,12 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'Хүсэлтийн дүн: ',
                       style: TextStyle(
                         color: Color(0xff555555),
@@ -116,22 +129,22 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                     ),
                     Text(
                       '${Utils().formatCurrency(widget.data.requestedAmount.toString()) + symbol()}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Нийт шимтгэл: ${Utils().formatCurrency(widget.data.calculatedFeeAmount.toString()) + symbol()}',
-                      style: TextStyle(
+                      'Нийт шимтгэл: ${Utils().formatCurrency(widget.data.totalScfFeeAmount.toString()) + symbol()}',
+                      style: const TextStyle(
                         fontSize: 12,
                         color: Color(0xff555555),
                       ),
@@ -140,15 +153,15 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                       children: [
                         SvgPicture.asset(
                           'assets/svg/inv.svg',
-                          colorFilter:
-                              ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                          colorFilter: const ColorFilter.mode(
+                              buttonColor, BlendMode.srcIn),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 3,
                         ),
                         Text(
                           '${widget.data.invRefCode}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: dark,
                             fontWeight: FontWeight.w600,
                           ),

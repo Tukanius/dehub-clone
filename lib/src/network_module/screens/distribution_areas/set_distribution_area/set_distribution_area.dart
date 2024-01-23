@@ -31,10 +31,10 @@ class SetDistributionArea extends StatefulWidget {
   final ListenController listenController;
   static const routeName = '/SetDistributionArea';
   const SetDistributionArea({
-    Key? key,
+    super.key,
     required this.id,
     required this.listenController,
-  }) : super(key: key);
+  });
 
   @override
   State<SetDistributionArea> createState() => _SetDistributionAreaState();
@@ -107,7 +107,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
         automaticallyImplyLeading: false,
         backgroundColor: networkColor,
         surfaceTintColor: networkColor,
-        title: Text(
+        title: const Text(
           'Чиглэл, бүсчлэл тохируулах',
           style: TextStyle(
             color: white,
@@ -115,7 +115,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: [
+        actions: const [
           CustomCloseButton(
             color: networkColor,
           ),
@@ -125,7 +125,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             FieldCard(
@@ -158,7 +158,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
             ),
             Container(
               margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-              child: Text(
+              child: const Text(
                 'Тайлбар',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -176,7 +176,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
                   textAlign: TextAlign.left,
                   name: 'description',
                   maxLines: 5,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Энд оруулна уу',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.zero,
@@ -191,7 +191,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             CustomButton(
@@ -213,7 +213,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
   show() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -230,7 +230,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 25, bottom: 20),
-                  child: Text(
+                  child: const Text(
                     'Бүс сонгох',
                     style: TextStyle(
                       color: grey2,
@@ -269,7 +269,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
                       )
                     : Column(
                         children: [
-                          NotFound(
+                          const NotFound(
                             module: "NETWORK",
                             labelText: '',
                           ),
@@ -288,7 +288,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
                           )
                         ],
                       ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
               ],
@@ -302,7 +302,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
   area() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -319,7 +319,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 25, bottom: 20),
-                  child: Text(
+                  child: const Text(
                     'Чиглэл сонгох',
                     style: TextStyle(
                       color: grey2,
@@ -358,7 +358,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
                       )
                     : Column(
                         children: [
-                          NotFound(
+                          const NotFound(
                             module: "NETWORK",
                             labelText: '',
                           ),
@@ -380,7 +380,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
                           )
                         ],
                       ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
               ],

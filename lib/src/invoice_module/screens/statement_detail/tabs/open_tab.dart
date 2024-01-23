@@ -34,7 +34,7 @@ class _OpenTabState extends State<OpenTab> with AfterLayoutMixin {
     setState(() {
       isLoading = false;
     });
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         startAnimation = true;
       });
@@ -50,17 +50,17 @@ class _OpenTabState extends State<OpenTab> with AfterLayoutMixin {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: invoiceColor,
               ),
             )
-          : invoice.rows?.length != 0
+          : invoice.rows!.isNotEmpty
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       curve: Curves.ease,
                       transform: Matrix4.translationValues(
                           !startAnimation
@@ -70,7 +70,7 @@ class _OpenTabState extends State<OpenTab> with AfterLayoutMixin {
                           0),
                       margin: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
-                      child: Text(
+                      child: const Text(
                         'Төлбөрийн үлдэгдэлтэй',
                         style: TextStyle(
                             color: grey3, fontWeight: FontWeight.w600),
@@ -97,7 +97,7 @@ class _OpenTabState extends State<OpenTab> with AfterLayoutMixin {
                     ),
                   ],
                 )
-              : NotFound(
+              : const NotFound(
                   module: "INVOICE",
                   labelText: "Хоосон байна",
                 ),

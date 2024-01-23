@@ -39,7 +39,7 @@ class _NetworkPartnerPageState extends State<NetworkPartnerPage>
       businessNetwork = res;
       isLoading = false;
     });
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         startAnimation = true;
       });
@@ -55,10 +55,10 @@ class _NetworkPartnerPageState extends State<NetworkPartnerPage>
         backgroundColor: backgroundColor,
         surfaceTintColor: backgroundColor,
         leadingWidth: 100,
-        leading: CustomBackButton(color: networkColor),
+        leading: const CustomBackButton(color: networkColor),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: networkColor,
               ),
@@ -71,16 +71,16 @@ class _NetworkPartnerPageState extends State<NetworkPartnerPage>
                   children: [
                     Container(
                       margin: const EdgeInsets.only(left: 15, top: 5),
-                      child: Text(
+                      child: const Text(
                         'Харилцагч',
                         style: TextStyle(
                             fontSize: 32, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    businessNetwork.rows?.length != 0
+                    businessNetwork.rows!.isNotEmpty
                         ? Column(
                             children: businessNetwork.rows!
                                 .map(
@@ -100,7 +100,7 @@ class _NetworkPartnerPageState extends State<NetworkPartnerPage>
                                 )
                                 .toList(),
                           )
-                        : NotFound(
+                        : const NotFound(
                             module: 'NETWORK',
                             labelText: "Харилцагч олдсонгүй",
                           )

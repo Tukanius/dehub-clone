@@ -2,8 +2,9 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-void showCustomDialog(BuildContext context, String labelText, bool? isSuccess,
-    {VoidCallback? onPressed}) {
+dynamic showCustomDialog(
+    BuildContext context, String labelText, bool? isSuccess,
+    {VoidCallback? onPressed}) async {
   showDialog(
     barrierDismissible: false,
     context: context,
@@ -43,7 +44,7 @@ void showCustomDialog(BuildContext context, String labelText, bool? isSuccess,
                     height: 16,
                   ),
                   Text(
-                    '${labelText}',
+                    labelText,
                     textAlign: TextAlign.center,
                   ),
                   ButtonBar(

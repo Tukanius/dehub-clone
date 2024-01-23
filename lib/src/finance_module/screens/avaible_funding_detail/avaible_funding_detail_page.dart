@@ -2,7 +2,9 @@ import 'package:dehub/api/finance_api.dart';
 import 'package:dehub/components/scaffold_messenger/scaffold_messenger.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/finance.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/finance_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/pin_check/pin_check.dart';
 import 'package:dehub/src/finance_module/screens/avaible_funding_detail/tabs/invoice.dart';
 import 'package:dehub/src/finance_module/screens/avaible_funding_detail/tabs/limit_tab.dart';
@@ -42,10 +44,13 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
   late TabController tabController;
   Finance get = Finance();
   bool isLoading = true;
+  User user = User();
 
   @override
   void initState() {
-    tabController = TabController(length: 3, vsync: this);
+    final source = Provider.of<FinanceProvider>(context, listen: false);
+    tabController =
+        TabController(length: source.type == "BUYER_LED" ? 3 : 2, vsync: this);
     super.initState();
   }
 
@@ -61,6 +66,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
     source.clearData();
     get = await FinanceApi()
         .financeableGet(source.url, widget.id, widget.programId);
+    source.requestedAmount(get.amountToPay);
     setState(() {
       isLoading = false;
     });
@@ -68,15 +74,14 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
 
   onSubmit() async {
     final source = Provider.of<FinanceProvider>(context, listen: false);
-    if (source.finance.requestedAmount != null &&
-        source.finance.isApproved == true) {
+    if (source.finance.requestedAmount != null) {
       Navigator.of(context).pushNamed(
         PinCheckScreen.routeName,
         arguments: PinCheckScreenArguments(
           onSubmit: () async {
             Finance data = Finance();
             data.programId = widget.programId;
-            if (source.finance.productType == "SUPPLIER_LED") {
+            if (source.type == "SUPPLIER_LED") {
               data.invoices = [
                 Finance(
                   id: widget.id,
@@ -87,7 +92,18 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
             } else {
               data.invId = widget.id;
               data.requestedAmount = source.finance.requestedAmount;
-              data.contractFile = source.finance.contractFile;
+              if (source.finance.contractFile != null) {
+                data.contractFiles = ['${source.finance.contractFile}'];
+              } else {
+                setState(() {
+                  tabController.index = 1;
+                });
+                customScaffoldMessenger(
+                  context,
+                  color: source.currentColor,
+                  labelText: 'Файл хавсаргана уу.',
+                );
+              }
               await FinanceApi().buyerLedCreate(source.url, data);
             }
 
@@ -105,25 +121,21 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
         ),
       );
     } else {
-      if (source.finance.isApproved != true) {
-        CustomScaffoldMessenger(context,
-            color: source.currentColor, labelText: 'Гэрээ баталгаажуулна уу');
-      } else {
-        setState(() {
-          tabController.index = 1;
-        });
-        CustomScaffoldMessenger(
-          context,
-          color: source.currentColor,
-          labelText: 'Санхүүжилт хүсэх дүн оруулна уу.',
-        );
-      }
+      setState(() {
+        tabController.index = 1;
+      });
+      customScaffoldMessenger(
+        context,
+        color: source.currentColor,
+        labelText: 'Санхүүжилт хүсэх дүн оруулна уу.',
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<FinanceProvider>(context, listen: true);
+    user = Provider.of<UserProvider>(context, listen: true).financeUser;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -143,7 +155,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                   Icons.arrow_back_ios_new,
                   color: source.currentColor,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Text(
@@ -161,7 +173,7 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
+              shape: BoxShape.circle,
               color: Colors.grey.shade200,
             ),
             width: 35,
@@ -174,170 +186,262 @@ class _AvaibleFundingDetailPageState extends State<AvaibleFundingDetailPage>
                 color: source.currentColor,
               ),
             )
-          : DefaultTabController(
-              length: 3,
-              child: NestedScrollView(
-                headerSliverBuilder:
-                    (BuildContext context, bool innerBoxIsScrolled) {
-                  return <Widget>[
-                    SliverToBoxAdapter(
-                      child: Material(
-                        color: white,
-                        elevation: 4,
-                        child: TabBar(
-                          overlayColor:
-                              MaterialStatePropertyAll(Colors.grey.shade100),
-                          controller: tabController,
-                          indicatorColor: source.currentColor,
-                          labelColor: source.currentColor,
-                          unselectedLabelColor: grey2,
-                          tabs: [
+          : Column(
+              children: [
+                Material(
+                  color: white,
+                  elevation: 4,
+                  child: TabBar(
+                    overlayColor:
+                        MaterialStatePropertyAll(Colors.grey.shade100),
+                    controller: tabController,
+                    indicatorColor: source.currentColor,
+                    labelColor: source.currentColor,
+                    unselectedLabelColor: grey2,
+                    tabs: source.type == "BUYER_LED"
+                        ? [
                             Container(
                               alignment: Alignment.center,
                               height: 40,
-                              child: Text(
-                                'Нэхэмжлэх',
-                                textAlign: TextAlign.center,
-                              ),
+                              child: const Text('Нэхэмжлэх'),
                             ),
                             Container(
                               height: 40,
                               alignment: Alignment.center,
-                              child: Text('Хүсэлт'),
+                              child: const Text('Хүсэлт'),
                             ),
                             Container(
                               height: 40,
                               alignment: Alignment.center,
-                              child: Text('Лимит'),
+                              child: const Text('Лимит'),
+                            ),
+                          ]
+                        : [
+                            Container(
+                              alignment: Alignment.center,
+                              height: 40,
+                              child: const Text('Нэхэмжлэх'),
+                            ),
+                            Container(
+                              height: 40,
+                              alignment: Alignment.center,
+                              child: const Text('Хүсэлт'),
                             ),
                           ],
-                        ),
-                      ),
-                    ),
-                  ];
-                },
-                body: TabBarView(
-                  controller: tabController,
-                  children: [
-                    Stack(
-                      children: [
-                        InvoiceTab(
-                          data: get,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 20),
-                          alignment: Alignment.bottomRight,
-                          child: FloatingActionButton.small(
-                            hoverColor: source.currentColor,
-                            shape: CircleBorder(),
-                            onPressed: () {
-                              tabController.animateTo(tabController.index + 1);
-                            },
-                            child: Icon(
-                              Icons.fast_forward_outlined,
-                              color: white,
-                            ),
-                            backgroundColor: source.currentColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Stack(
-                      children: [
-                        RequestTab(
-                          data: get,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 20),
-                          alignment: Alignment.bottomRight,
-                          child: FloatingActionButton.small(
-                            shape: CircleBorder(),
-                            hoverColor: source.currentColor,
-                            onPressed: () {
-                              tabController.animateTo(tabController.index + 1);
-                            },
-                            child: Icon(
-                              Icons.fast_forward_outlined,
-                              color: white,
-                            ),
-                            backgroundColor: source.currentColor,
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 80, vertical: 20),
-                          alignment: Alignment.bottomRight,
-                          child: FloatingActionButton.small(
-                            hoverColor: source.currentColor,
-                            shape: CircleBorder(),
-                            onPressed: () {
-                              tabController.animateTo(tabController.index - 1);
-                            },
-                            child: Icon(
-                              Icons.fast_rewind_outlined,
-                              color: white,
-                            ),
-                            backgroundColor: source.currentColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Stack(
-                      children: [
-                        LimitTab(
-                          data: get,
-                        ),
-                        Positioned(
-                          bottom: 20,
-                          right: 20,
-                          child: GestureDetector(
-                            onTap: () {
-                              onSubmit();
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              decoration: BoxDecoration(
-                                color: white,
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(color: source.currentColor),
-                              ),
-                              child: Text(
-                                'Санхүүжилт хүсэх',
-                                style: TextStyle(
-                                  color: source.currentColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              alignment: Alignment.bottomRight,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 20),
-                          alignment: Alignment.bottomLeft,
-                          child: FloatingActionButton.small(
-                            hoverColor: source.currentColor,
-                            shape: CircleBorder(),
-                            onPressed: () {
-                              tabController.animateTo(tabController.index - 1);
-                            },
-                            child: Icon(
-                              Icons.fast_rewind_outlined,
-                              color: white,
-                            ),
-                            backgroundColor: source.currentColor,
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                Expanded(
+                  child: TabBarView(
+                    controller: tabController,
+                    children: source.type == "BUYER_LED"
+                        ? [
+                            Stack(
+                              children: [
+                                InvoiceTab(
+                                  data: get,
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 20),
+                                  alignment: Alignment.bottomRight,
+                                  child: FloatingActionButton.small(
+                                    hoverColor: source.currentColor,
+                                    shape: const CircleBorder(),
+                                    onPressed: () {
+                                      tabController
+                                          .animateTo(tabController.index + 1);
+                                    },
+                                    backgroundColor: source.currentColor,
+                                    child: const Icon(
+                                      Icons.fast_forward_outlined,
+                                      color: white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Stack(
+                              children: [
+                                RequestTab(
+                                  userType: user.currentBusiness!.type!,
+                                  data: get,
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 20),
+                                  alignment: Alignment.bottomRight,
+                                  child: FloatingActionButton.small(
+                                    shape: const CircleBorder(),
+                                    hoverColor: source.currentColor,
+                                    onPressed: () {
+                                      tabController
+                                          .animateTo(tabController.index + 1);
+                                    },
+                                    backgroundColor: source.currentColor,
+                                    child: const Icon(
+                                      Icons.fast_forward_outlined,
+                                      color: white,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 80, vertical: 20),
+                                  alignment: Alignment.bottomRight,
+                                  child: FloatingActionButton.small(
+                                    hoverColor: source.currentColor,
+                                    shape: const CircleBorder(),
+                                    onPressed: () {
+                                      tabController
+                                          .animateTo(tabController.index - 1);
+                                    },
+                                    backgroundColor: source.currentColor,
+                                    child: const Icon(
+                                      Icons.fast_rewind_outlined,
+                                      color: white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Stack(
+                              children: [
+                                LimitTab(
+                                  data: get,
+                                ),
+                                Positioned(
+                                  bottom: 20,
+                                  right: 20,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      onSubmit();
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 10),
+                                      decoration: BoxDecoration(
+                                        color: white,
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(
+                                            color: source.currentColor),
+                                      ),
+                                      alignment: Alignment.bottomRight,
+                                      child: Text(
+                                        'Санхүүжилт хүсэх',
+                                        style: TextStyle(
+                                          color: source.currentColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 20),
+                                  alignment: Alignment.bottomLeft,
+                                  child: FloatingActionButton.small(
+                                    hoverColor: source.currentColor,
+                                    shape: const CircleBorder(),
+                                    onPressed: () {
+                                      tabController
+                                          .animateTo(tabController.index - 1);
+                                    },
+                                    backgroundColor: source.currentColor,
+                                    child: const Icon(
+                                      Icons.fast_rewind_outlined,
+                                      color: white,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ]
+                        : [
+                            Stack(
+                              children: [
+                                InvoiceTab(
+                                  data: get,
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 20),
+                                  alignment: Alignment.bottomRight,
+                                  child: FloatingActionButton.small(
+                                    hoverColor: source.currentColor,
+                                    shape: const CircleBorder(),
+                                    onPressed: () {
+                                      tabController
+                                          .animateTo(tabController.index + 1);
+                                    },
+                                    backgroundColor: source.currentColor,
+                                    child: const Icon(
+                                      Icons.fast_forward_outlined,
+                                      color: white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Stack(
+                              children: [
+                                RequestTab(
+                                  userType: source.type,
+                                  data: get,
+                                ),
+                                Positioned(
+                                  bottom: 20,
+                                  right: 20,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      onSubmit();
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 10),
+                                      decoration: BoxDecoration(
+                                        color: white,
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(
+                                            color: source.currentColor),
+                                      ),
+                                      alignment: Alignment.bottomRight,
+                                      child: Text(
+                                        'Санхүүжилт хүсэх',
+                                        style: TextStyle(
+                                          color: source.currentColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 20),
+                                  alignment: Alignment.bottomLeft,
+                                  child: FloatingActionButton.small(
+                                    hoverColor: source.currentColor,
+                                    shape: const CircleBorder(),
+                                    onPressed: () {
+                                      tabController
+                                          .animateTo(tabController.index - 1);
+                                    },
+                                    backgroundColor: source.currentColor,
+                                    child: const Icon(
+                                      Icons.fast_rewind_outlined,
+                                      color: white,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                  ),
+                ),
+              ],
             ),
     );
   }

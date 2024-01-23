@@ -7,15 +7,15 @@ class BusinessSuggestCard extends StatefulWidget {
   final Business? data;
   const BusinessSuggestCard({
     this.receiverIds,
-    Key? key,
+    super.key,
     this.data,
-  }) : super(key: key);
+  });
 
   @override
-  _BusinessSuggestCardState createState() => _BusinessSuggestCardState();
+  BusinessSuggestCardState createState() => BusinessSuggestCardState();
 }
 
-class _BusinessSuggestCardState extends State<BusinessSuggestCard> {
+class BusinessSuggestCardState extends State<BusinessSuggestCard> {
   bool isCheck = false;
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class _BusinessSuggestCardState extends State<BusinessSuggestCard> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: white,
-        border: Border.all(width: 0.5, color: Color(0xffF2F2F2)),
+        border: Border.all(width: 0.5, color: const Color(0xffF2F2F2)),
       ),
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
       child: Column(
@@ -35,7 +35,7 @@ class _BusinessSuggestCardState extends State<BusinessSuggestCard> {
             children: [
               Checkbox(
                 side: MaterialStateBorderSide.resolveWith(
-                  (states) => BorderSide(
+                  (states) => const BorderSide(
                     color: networkColor,
                     width: 2,
                   ),
@@ -66,12 +66,12 @@ class _BusinessSuggestCardState extends State<BusinessSuggestCard> {
                       children: [
                         Text(
                           '${widget.data?.partner?.businessName},',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           '${widget.data?.refCode}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
                             color: grey3,
                             decoration: TextDecoration.underline,
@@ -79,18 +79,18 @@ class _BusinessSuggestCardState extends State<BusinessSuggestCard> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Row(
                       children: [
                         Text(
                           '${widget.data?.partnerName},',
-                          style: TextStyle(fontSize: 12, color: grey3),
+                          style: const TextStyle(fontSize: 12, color: grey3),
                         ),
                         Text(
                           '${widget.data?.partner?.refCode}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
                             color: grey3,
                             decoration: TextDecoration.underline,
@@ -98,18 +98,18 @@ class _BusinessSuggestCardState extends State<BusinessSuggestCard> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'ТТД: ',
                           style: TextStyle(color: grey3, fontSize: 10),
                         ),
                         Text(
                           '${widget.data?.partner?.regNumber}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
                             color: grey3,
@@ -117,7 +117,7 @@ class _BusinessSuggestCardState extends State<BusinessSuggestCard> {
                         ),
                       ],
                     ),
-                    Divider(
+                    const Divider(
                       thickness: 1,
                     ),
                     Row(
@@ -126,7 +126,7 @@ class _BusinessSuggestCardState extends State<BusinessSuggestCard> {
                         Row(
                           children: [
                             widget.data?.staff?.avatar == null
-                                ? CircleAvatar(
+                                ? const CircleAvatar(
                                     radius: 12,
                                     backgroundColor: grey,
                                     backgroundImage:
@@ -137,15 +137,13 @@ class _BusinessSuggestCardState extends State<BusinessSuggestCard> {
                                     backgroundImage: NetworkImage(
                                         '${widget.data?.staff?.avatar}'),
                                   ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
-                            Container(
-                              child: Text(
-                                '${widget.data?.staff?.firstName}',
-                                style: TextStyle(
-                                  fontSize: 10,
-                                ),
+                            Text(
+                              '${widget.data?.staff?.firstName}',
+                              style: const TextStyle(
+                                fontSize: 10,
                               ),
                             ),
                           ],
@@ -155,11 +153,13 @@ class _BusinessSuggestCardState extends State<BusinessSuggestCard> {
                           children: [
                             Text(
                               '${widget.data?.staff?.email}',
-                              style: TextStyle(color: grey3, fontSize: 10),
+                              style:
+                                  const TextStyle(color: grey3, fontSize: 10),
                             ),
                             Text(
                               '${widget.data?.staff?.phone}',
-                              style: TextStyle(color: grey3, fontSize: 10),
+                              style:
+                                  const TextStyle(color: grey3, fontSize: 10),
                             ),
                           ],
                         )

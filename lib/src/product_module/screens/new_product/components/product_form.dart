@@ -31,7 +31,7 @@ class _ProductFormState extends State<ProductForm> {
             textColor: productColor,
             textAlign: TextAlign.end,
             name: 'skuCode',
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
               fillColor: white,
               filled: true,
@@ -42,7 +42,7 @@ class _ProductFormState extends State<ProductForm> {
               prefixIcon: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   SizedBox(
                     width: 15,
                   ),
@@ -77,13 +77,13 @@ class _ProductFormState extends State<ProductForm> {
               fillColor: white,
               filled: true,
               hintText: 'Энд оруулна уу',
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                 color: productColor,
               ),
-              prefixIcon: Row(
+              prefixIcon: const Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   SizedBox(
                     width: 15,
                   ),
@@ -107,7 +107,7 @@ class _ProductFormState extends State<ProductForm> {
                       SvgPicture.asset(
                         'assets/svg/bar-code.svg',
                         colorFilter:
-                            ColorFilter.mode(productColor, BlendMode.srcIn),
+                            const ColorFilter.mode(productColor, BlendMode.srcIn),
                       ),
                     ],
                   ),
@@ -130,7 +130,7 @@ class _ProductFormState extends State<ProductForm> {
             textColor: productColor,
             textAlign: TextAlign.end,
             name: 'erpCode',
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
               fillColor: white,
               filled: true,
@@ -141,7 +141,7 @@ class _ProductFormState extends State<ProductForm> {
               prefixIcon: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   SizedBox(
                     width: 15,
                   ),
@@ -171,13 +171,13 @@ class _ProductFormState extends State<ProductForm> {
               fillColor: white,
               filled: true,
               hintText: 'Энд оруулна уу',
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                 color: productColor,
               ),
-              prefixIcon: Row(
+              prefixIcon: const Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   SizedBox(
                     width: 15,
                   ),
@@ -205,7 +205,7 @@ class _ProductFormState extends State<ProductForm> {
                       SvgPicture.asset(
                         'assets/svg/copy.svg',
                         colorFilter:
-                            ColorFilter.mode(productColor, BlendMode.srcIn),
+                            const ColorFilter.mode(productColor, BlendMode.srcIn),
                       ),
                     ],
                   ),
@@ -226,7 +226,7 @@ class _ProductFormState extends State<ProductForm> {
             textColor: productColor,
             textAlign: TextAlign.end,
             name: 'nameEng',
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
               fillColor: white,
               filled: true,
@@ -237,7 +237,7 @@ class _ProductFormState extends State<ProductForm> {
               prefixIcon: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   SizedBox(
                     width: 15,
                   ),
@@ -262,7 +262,7 @@ class _ProductFormState extends State<ProductForm> {
             textColor: productColor,
             textAlign: TextAlign.end,
             name: 'asdf',
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
               fillColor: white,
               filled: true,
@@ -273,7 +273,7 @@ class _ProductFormState extends State<ProductForm> {
               prefixIcon: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   SizedBox(
                     width: 15,
                   ),
@@ -298,7 +298,7 @@ class _ProductFormState extends State<ProductForm> {
             textColor: productColor,
             textAlign: TextAlign.end,
             name: 'nameApp',
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
               fillColor: white,
               filled: true,
@@ -309,7 +309,7 @@ class _ProductFormState extends State<ProductForm> {
               prefixIcon: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   SizedBox(
                     width: 15,
                   ),
@@ -339,7 +339,7 @@ class _ProductFormState extends State<ProductForm> {
             textColor: productColor,
             textAlign: TextAlign.end,
             name: 'nameWeb',
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
               fillColor: white,
               filled: true,
@@ -350,7 +350,7 @@ class _ProductFormState extends State<ProductForm> {
               prefixIcon: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   SizedBox(
                     width: 15,
                   ),

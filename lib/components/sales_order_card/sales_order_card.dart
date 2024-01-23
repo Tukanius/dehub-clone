@@ -16,12 +16,12 @@ class SalesOrderCard extends StatefulWidget {
   final int index;
   final bool startAnimation;
   const SalesOrderCard({
-    Key? key,
+    super.key,
     required this.startAnimation,
     required this.index,
     required this.data,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<SalesOrderCard> createState() => _SalesOrderCardState();
@@ -81,21 +81,21 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                               '${widget.data.receiverBusiness?.logo}')
                           : NetworkImage('${widget.data.senderBusiness?.logo}'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     widget.data.type == "SALES" &&
                             user.currentBusiness?.type == "SUPPLIER"
                         ? Text(
                             '${widget.data.receiverBusiness?.partner?.businessName}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: buttonColor,
                               fontWeight: FontWeight.bold,
                             ),
                           )
                         : Text(
                             '${widget.data.senderBusiness?.partner?.businessName}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: buttonColor,
                               fontWeight: FontWeight.bold,
                             ),
@@ -107,15 +107,15 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                     SvgPicture.asset(
                       'assets/svg/inv.svg',
                       colorFilter:
-                          ColorFilter.mode(orderColor, BlendMode.srcIn),
+                          const ColorFilter.mode(orderColor, BlendMode.srcIn),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     widget.data.type == "SALES" && widget.data.salesCode != null
                         ? Text(
                             '${widget.data.salesCode}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: grey2,
                               fontWeight: FontWeight.w500,
                             ),
@@ -124,12 +124,12 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                                 widget.data.purchaseCode != null
                             ? Text(
                                 '${widget.data.purchaseCode}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: grey2,
                                   fontWeight: FontWeight.w500,
                                 ),
                               )
-                            : Text(
+                            : const Text(
                                 '-',
                                 style: TextStyle(
                                   color: grey2,
@@ -140,7 +140,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -149,7 +149,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
               children: [
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'Статус:  ',
                       style: TextStyle(
                         color: depBrown,
@@ -198,15 +198,15 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                   ],
                 ),
                 Text(
-                  '${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now())}',
-                  style: TextStyle(
+                  DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now()),
+                  style: const TextStyle(
                     color: grey2,
                     fontSize: 12,
                   ),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -217,7 +217,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Нөхцөл: ',
                         style: TextStyle(
                           color: grey2,
@@ -227,7 +227,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                       Expanded(
                         child: Text(
                           paymentTerm(),
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: orderColor,
                             fontSize: 12,
                           ),
@@ -238,7 +238,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                 ),
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'Хүргэх: ',
                       style: TextStyle(
                         color: grey2,
@@ -246,12 +246,12 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                         fontSize: 12,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     Text(
-                      '${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.parse(widget.data.deliveryDate.toString()))}',
-                      style: TextStyle(
+                      DateFormat("yyyy-MM-dd HH:mm").format(DateTime.parse(widget.data.deliveryDate.toString())),
+                      style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         color: grey2,
                         fontSize: 12,
@@ -261,7 +261,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -272,7 +272,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Нийт дүн: ',
                         style: TextStyle(
                           color: depBrown,
@@ -283,7 +283,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                       Expanded(
                         child: Text(
                           '${Utils().formatCurrency(widget.data.totalAmount.toString())}₮',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: orderColor,
                             fontWeight: FontWeight.w500,
                             fontSize: 12,
@@ -298,7 +298,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
+                      const Text(
                         'Төлбөл зохих: ',
                         style: TextStyle(
                           color: depBrown,
@@ -307,12 +307,12 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                         ),
                         textAlign: TextAlign.end,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
                       Text(
                         '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: orderColor,
                           fontSize: 12,
                         ),
@@ -322,7 +322,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 4,
             ),
           ],

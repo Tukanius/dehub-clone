@@ -46,7 +46,7 @@ class _SupplierSheetState extends State<SupplierSheet> with AfterLayoutMixin {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: productColor,
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(15),
@@ -54,7 +54,7 @@ class _SupplierSheetState extends State<SupplierSheet> with AfterLayoutMixin {
           ),
           child: Row(
             children: [
-              Expanded(
+              const Expanded(
                 child: Text(
                   'Buyer бизнес сонгох',
                   style: TextStyle(
@@ -79,7 +79,7 @@ class _SupplierSheetState extends State<SupplierSheet> with AfterLayoutMixin {
         Expanded(
           child: SingleChildScrollView(
             child: isLoading == true
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator(
                       color: productColor,
                     ),
@@ -104,14 +104,13 @@ class _SupplierSheetState extends State<SupplierSheet> with AfterLayoutMixin {
                                     children: [
                                       Row(
                                         children: [
-                                          data.logo != null
-                                              ? CircleAvatar(
-                                                  radius: 12,
-                                                  backgroundColor: grey,
-                                                  backgroundImage: NetworkImage(
-                                                      '${data.logo}'),
-                                                )
-                                              : SizedBox(),
+                                          if (data.logo != null)
+                                            CircleAvatar(
+                                              radius: 12,
+                                              backgroundColor: grey,
+                                              backgroundImage:
+                                                  NetworkImage('${data.logo}'),
+                                            ),
                                           Text("${data.profileName}"),
                                         ],
                                       ),

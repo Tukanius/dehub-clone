@@ -9,11 +9,11 @@ class CheckboxField extends StatefulWidget {
   final int fieldIndex;
   final InventoryGoods data;
   const CheckboxField({
-    Key? key,
+    super.key,
     required this.data,
     required this.fieldIndex,
     required this.index,
-  }) : super(key: key);
+  });
 
   @override
   State<CheckboxField> createState() => _CheckboxFieldState();

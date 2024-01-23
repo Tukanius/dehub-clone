@@ -5,7 +5,7 @@ void updateSheet(BuildContext context,
     {VoidCallback? updateClick, VoidCallback? deleteClick}) {
   showModalBottomSheet(
     context: context,
-    shape: RoundedRectangleBorder(
+    shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
         top: Radius.circular(20),
       ),
@@ -25,7 +25,7 @@ void updateSheet(BuildContext context,
                   child: Container(
                     color: transparent,
                     padding: const EdgeInsets.all(10),
-                    child: Column(
+                    child: const Column(
                       children: [
                         Icon(
                           Icons.edit_note_sharp,
@@ -44,7 +44,7 @@ void updateSheet(BuildContext context,
                   child: Container(
                     color: transparent,
                     padding: const EdgeInsets.all(10),
-                    child: Column(
+                    child: const Column(
                       children: [
                         Icon(
                           Icons.delete_outline_outlined,

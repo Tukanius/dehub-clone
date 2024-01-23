@@ -21,9 +21,9 @@ class ReceiverOtpVerify extends StatefulWidget {
   final Order data;
   static const routeName = '/ReceiverOtpVerify';
   const ReceiverOtpVerify({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<ReceiverOtpVerify> createState() => _ReceiverOtpVerifyState();
@@ -54,7 +54,7 @@ class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
     decoration: BoxDecoration(
       color: white,
       border: Border.all(
-        color: Color(0xffC6C6C8),
+        color: const Color(0xffC6C6C8),
       ),
       borderRadius: BorderRadius.circular(5),
     ),
@@ -69,22 +69,23 @@ class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
         elevation: 0,
         surfaceTintColor: white,
         leadingWidth: 150,
-        leading: CustomBackButton(color: orderColor),
+        leading: const CustomBackButton(color: orderColor),
       ),
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               SvgPicture.asset(
                 'assets/svg/lock.svg',
-                colorFilter: ColorFilter.mode(orderColor, BlendMode.srcIn),
+                colorFilter:
+                    const ColorFilter.mode(orderColor, BlendMode.srcIn),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Container(
@@ -92,7 +93,7 @@ class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
                   horizontal: 100,
                 ),
                 child: user.currentBusiness?.type == "SUPPLIER"
-                    ? Text(
+                    ? const Text(
                         'Хүлээн авагч ажилтаны утсанд ирсэн 6 оронтой кодыг оруулна уу',
                         style: TextStyle(
                           color: buttonColor,
@@ -100,7 +101,7 @@ class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
                         ),
                         textAlign: TextAlign.center,
                       )
-                    : Text(
+                    : const Text(
                         'Захиалга хүлээн авснаа баталгаажуулан ПИН кодоо оруулна уу.',
                         style: TextStyle(
                           color: buttonColor,
@@ -109,32 +110,30 @@ class _ReceiverOtpVerifyState extends State<ReceiverOtpVerify> {
                         textAlign: TextAlign.center,
                       ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 45,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Container(
-                child: Pinput(
-                  autofocus: true,
-                  keyboardType: TextInputType.number,
-                  obscureText: false,
-                  onCompleted: (value) => onSubmit(Order(code: value)),
-                  length: 6,
-                  hapticFeedbackType: HapticFeedbackType.lightImpact,
-                  defaultPinTheme: defaultPinTheme,
-                  submittedPinTheme: defaultPinTheme.copyWith(
-                    decoration: defaultPinTheme.decoration!.copyWith(
-                      color: white,
-                    ),
-                  ),
-                  errorPinTheme: defaultPinTheme.copyBorderWith(
-                    border: Border.all(color: Colors.redAccent),
+              Pinput(
+                autofocus: true,
+                keyboardType: TextInputType.number,
+                obscureText: false,
+                onCompleted: (value) => onSubmit(Order(code: value)),
+                length: 6,
+                hapticFeedbackType: HapticFeedbackType.lightImpact,
+                defaultPinTheme: defaultPinTheme,
+                submittedPinTheme: defaultPinTheme.copyWith(
+                  decoration: defaultPinTheme.decoration!.copyWith(
+                    color: white,
                   ),
                 ),
+                errorPinTheme: defaultPinTheme.copyBorderWith(
+                  border: Border.all(color: Colors.redAccent),
+                ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
             ],

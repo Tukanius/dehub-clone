@@ -9,7 +9,7 @@ import 'package:after_layout/after_layout.dart';
 
 class InventoryBrand extends StatefulWidget {
   static const routeName = '/InventoryBrand';
-  const InventoryBrand({Key? key}) : super(key: key);
+  const InventoryBrand({super.key});
 
   @override
   State<InventoryBrand> createState() => _InventoryBrandState();
@@ -44,7 +44,7 @@ class _InventoryBrandState extends State<InventoryBrand> with AfterLayoutMixin {
         setState(() {
           isLoading = true;
         });
-        await InventoryApi().brandDelete(id);
+        InventoryApi().brandDelete(id);
         brand = await InventoryApi().brandList();
         Navigator.of(context).pop();
         setState(() {
@@ -65,8 +65,8 @@ class _InventoryBrandState extends State<InventoryBrand> with AfterLayoutMixin {
       appBar: AppBar(
         surfaceTintColor: white,
         backgroundColor: white,
-        iconTheme: IconThemeData(color: productColor),
-        title: Text(
+        iconTheme: const IconThemeData(color: productColor),
+        title: const Text(
           'Брэнд',
           style: TextStyle(
             color: productColor,
@@ -76,8 +76,8 @@ class _InventoryBrandState extends State<InventoryBrand> with AfterLayoutMixin {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: productColor,
-        shape: CircleBorder(),
-        child: Icon(
+        shape: const CircleBorder(),
+        child: const Icon(
           Icons.add,
           color: white,
         ),
@@ -85,12 +85,12 @@ class _InventoryBrandState extends State<InventoryBrand> with AfterLayoutMixin {
           showModalBottomSheet(
             context: context,
             useSafeArea: true,
-            builder: (context) => AddBrandSheet(),
+            builder: (context) => const AddBrandSheet(),
           );
         },
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: productColor,
               ),
@@ -102,7 +102,7 @@ class _InventoryBrandState extends State<InventoryBrand> with AfterLayoutMixin {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Брэндийн жагсаалт нэмнэ үү',
                     ),
                   ),
@@ -124,12 +124,12 @@ class _InventoryBrandState extends State<InventoryBrand> with AfterLayoutMixin {
                                       backgroundImage:
                                           NetworkImage('${data.logo}'),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 10,
                                     ),
                                     Text(
                                       '${data.name}',
-                                      style: TextStyle(color: dark),
+                                      style: const TextStyle(color: dark),
                                     )
                                   ],
                                 ),
@@ -142,7 +142,7 @@ class _InventoryBrandState extends State<InventoryBrand> with AfterLayoutMixin {
                                     padding: const EdgeInsets.all(3),
                                     child: SvgPicture.asset(
                                       'assets/svg/edit_rounded.svg',
-                                      colorFilter: ColorFilter.mode(
+                                      colorFilter: const ColorFilter.mode(
                                           productColor, BlendMode.srcIn),
                                     ),
                                   ),

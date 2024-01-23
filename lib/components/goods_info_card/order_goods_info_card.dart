@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 class OrderGoodsInfo extends StatefulWidget {
   final List<Order>? data;
-  OrderGoodsInfo({
+  const OrderGoodsInfo({
     this.data,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<OrderGoodsInfo> createState() => _OrderGoodsInfoState();
@@ -26,7 +26,7 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
         children: [
           Container(
             margin: const EdgeInsets.only(top: 10, left: 15),
-            child: Text(
+            child: const Text(
               'Барааны мэдээлэл',
               style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -34,8 +34,8 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
               ),
             ),
           ),
-          Divider(),
-          Row(
+          const Divider(),
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
@@ -98,7 +98,7 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
               ),
             ],
           ),
-          Divider(),
+          const Divider(),
           Column(
             children: widget.data!
                 .map(
@@ -111,7 +111,7 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                             flex: 2,
                             child: Text(
                               '${widget.data!.indexOf(data) + 1} ',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: black,
                                 fontSize: 12,
                               ),
@@ -122,7 +122,7 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                             flex: 10,
                             child: RichText(
                               text: TextSpan(
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: black,
                                   fontSize: 12,
                                   fontFamily: "Montserrat",
@@ -132,7 +132,7 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                                   TextSpan(text: " ${data.skuCode} "),
                                   data.brand != null
                                       ? TextSpan(text: "${data.brand}")
-                                      : TextSpan(),
+                                      : const TextSpan(),
                                 ],
                               ),
                             ),
@@ -141,7 +141,7 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                             flex: 3,
                             child: Text(
                               '${data.unit?[0]}'.toLowerCase(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: black,
                                 fontSize: 12,
                               ),
@@ -151,11 +151,11 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                           Expanded(
                             flex: 3,
                             child: data.quantity == null
-                                ? Text('0')
+                                ? const Text('0')
                                 : data.isConfirmed == true
                                     ? Text(
                                         '${data.confirmedQuantity?.toInt()}',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: black,
                                           fontSize: 12,
                                         ),
@@ -163,7 +163,7 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                                       )
                                     : Text(
                                         '${data.quantity?.toInt()}',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: black,
                                           fontSize: 12,
                                         ),
@@ -175,13 +175,13 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                             child: data.price != null
                                 ? Text(
                                     '${Utils().formatCurrency(data.price.toString())}₮',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: black,
                                       fontSize: 12,
                                     ),
                                     textAlign: TextAlign.center,
                                   )
-                                : Text(
+                                : const Text(
                                     '-',
                                     style: TextStyle(
                                       color: black,
@@ -192,13 +192,13 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(
+                          const Text(
                             'Нийт:  ',
                             style: TextStyle(
                               color: black,
@@ -209,13 +209,13 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                           data.totalAmount != null
                               ? Text(
                                   '${Utils().formatCurrency(data.totalAmount.toString())}₮',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: black,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 )
-                              : Text(
+                              : const Text(
                                   '-',
                                   style: TextStyle(
                                     color: black,
@@ -223,12 +223,12 @@ class _OrderGoodsInfoState extends State<OrderGoodsInfo> {
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                          SizedBox(
+                          const SizedBox(
                             width: 15,
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                     ],

@@ -24,11 +24,11 @@ class PaymentApprovalPage extends StatefulWidget {
   static const routeName = '/paymentapprovalpage';
   final Invoice data;
   final double amount;
-  PaymentApprovalPage({
-    Key? key,
+  const PaymentApprovalPage({
+    super.key,
     required this.data,
     required this.amount,
-  }) : super(key: key);
+  });
 
   @override
   State<PaymentApprovalPage> createState() => _PaymentApprovalPageState();
@@ -42,7 +42,7 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage> {
     decoration: BoxDecoration(
       color: white,
       border: Border.all(
-        color: Color(0xffC6C6C8),
+        color: const Color(0xffC6C6C8),
       ),
       borderRadius: BorderRadius.circular(5),
     ),
@@ -57,13 +57,15 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage> {
 
     if (res == true) {
       try {
-        await PaymentApi().qpay(
+        await PaymentApi().pay(
           Invoice(
             method: "B2B",
             amount: widget.amount,
             invoiceId: widget.data.id,
             invoiceRefCode: widget.data.refCode,
-            receiverBusinessId: widget.data.receiverBusinessId,
+            receiverBusinessId: widget.data.type == "PURCHASE"
+                ? widget.data.receiverBusinessId
+                : widget.data.senderBusinessId,
             description: widget.data.refCode,
             creditAccountId: widget.data.receiverAcc?.id,
             creditAccountBank: widget.data.receiverAcc?.bankName,
@@ -110,7 +112,7 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: white,
           ),
@@ -136,10 +138,10 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Text(
+            const Text(
               'Нэхэмжлэх төлөх',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -150,14 +152,14 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage> {
             Text(
               'Лавлах код: 32165421',
               style: TextStyle(
-                color: Color(0xff00000000).withOpacity(0.6),
+                color: const Color(0xff000000).withOpacity(0.6),
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 150,
             ),
-            Text(
+            const Text(
               'Төлөлт батлах ПИН кодоо оруулна уу.',
               style: TextStyle(
                 color: Color(0xff657786),
@@ -165,7 +167,7 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage> {
                 fontSize: 14,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Form(

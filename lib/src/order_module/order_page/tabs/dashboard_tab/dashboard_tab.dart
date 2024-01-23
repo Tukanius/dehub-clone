@@ -15,7 +15,7 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class DashboardTab extends StatefulWidget {
-  const DashboardTab({Key? key}) : super(key: key);
+  const DashboardTab({super.key});
 
   @override
   State<DashboardTab> createState() => _DashboardTabState();
@@ -72,7 +72,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
         children: [
           Container(
             margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-            child: Text(
+            child: const Text(
               'Захиалгын дашбоард',
               style: TextStyle(
                 color: buttonColor,
@@ -81,38 +81,35 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
               ),
             ),
           ),
-          Container(
+          SizedBox(
             height: 100,
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               scrollDirection: Axis.horizontal,
               children: [
-                user.currentBusiness?.type == "SUPPLIER"
-                    ? DashboardCard(
-                        onClick: () {
-                          Navigator.of(context)
-                              .pushNamed(DeliveryManagement.routeName);
-                        },
-                        boxColor: orderColor.withOpacity(0.2),
-                        padding: 10,
-                        labelText: 'Хүргэлт удирдлага',
-                        svgColor: buttonColor,
-                        svg: 'assets/svg/push.svg',
-                      )
-                    : SizedBox(),
-                user.currentBusiness?.type == "SUPPLIER"
-                    ? DashboardCard(
-                        onClick: () {
-                          Navigator.of(context)
-                              .pushNamed(OrderShipping.routeName);
-                        },
-                        boxColor: orderColor.withOpacity(0.2),
-                        padding: 7,
-                        labelText: 'Ачилт удирдлага',
-                        svgColor: buttonColor,
-                        svg: 'assets/svg/assign.svg',
-                      )
-                    : SizedBox(),
+                if (user.currentBusiness?.type == "SUPPLIER")
+                  DashboardCard(
+                    onClick: () {
+                      Navigator.of(context)
+                          .pushNamed(DeliveryManagement.routeName);
+                    },
+                    boxColor: orderColor.withOpacity(0.2),
+                    padding: 10,
+                    labelText: 'Хүргэлт удирдлага',
+                    svgColor: buttonColor,
+                    svg: 'assets/svg/push.svg',
+                  ),
+                if (user.currentBusiness?.type == "SUPPLIER")
+                  DashboardCard(
+                    onClick: () {
+                      Navigator.of(context).pushNamed(OrderShipping.routeName);
+                    },
+                    boxColor: orderColor.withOpacity(0.2),
+                    padding: 7,
+                    labelText: 'Ачилт удирдлага',
+                    svgColor: buttonColor,
+                    svg: 'assets/svg/assign.svg',
+                  ),
                 DashboardCard(
                   onClick: () {
                     Navigator.of(context).pushNamed(OrderDelivery.routeName);
@@ -150,11 +147,11 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 25,
           ),
           isLoading == true
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(
                     color: orderColor,
                   ),
@@ -167,7 +164,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                       children: [
                         Container(
                           margin: const EdgeInsets.only(left: 15),
-                          child: Text(
+                          child: const Text(
                             'Борлуулалтын захиалга',
                             style: TextStyle(
                               color: black,
@@ -183,7 +180,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           child: Container(
                             color: transparent,
                             padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: Row(
+                            child: const Row(
                               children: [
                                 Text(
                                   "Бүгдийг",
@@ -210,11 +207,11 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     PieChart(legend: legend, colorList: colorList, data: data),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
@@ -222,7 +219,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                       children: [
                         Container(
                           margin: const EdgeInsets.only(left: 15),
-                          child: Text(
+                          child: const Text(
                             'Захиалгын дүн',
                             style: TextStyle(
                               color: black,
@@ -238,7 +235,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           child: Container(
                             color: transparent,
                             padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: Row(
+                            child: const Row(
                               children: [
                                 Text(
                                   "Бүгдийг",
@@ -265,47 +262,47 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
-                        Icon(
+                        const Icon(
                           Icons.calendar_today,
                           color: grey,
                           size: 18,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Text(
                           '${DateFormat("yyyy-MM-dd").format(DateTime.now())} - ',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: grey,
                             fontSize: 12,
                           ),
                         ),
-                        Icon(
+                        const Icon(
                           Icons.calendar_today,
                           color: grey,
                           size: 18,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Text(
-                          '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
-                          style: TextStyle(
+                          DateFormat("yyyy-MM-dd").format(DateTime.now()),
+                          style: const TextStyle(
                             color: grey,
                             fontSize: 12,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Container(
@@ -334,7 +331,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         primaryXAxis: CategoryAxis(),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                   ],

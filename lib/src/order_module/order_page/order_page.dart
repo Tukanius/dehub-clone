@@ -62,7 +62,7 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
           },
           child: Container(
             margin: const EdgeInsets.only(left: 15),
-            child: Row(
+            child: const Row(
               children: [
                 Icon(
                   Icons.arrow_back_ios_new,
@@ -73,17 +73,15 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
           ),
         ),
         title: index.selectedIndex == 0
-            ? Container(
-                child: FormTextField(
-                  inputType: TextInputType.text,
-                  color: Color(0xff767680).withOpacity(0.12),
-                  name: 'search',
-                  prefixIcon: Icon(Icons.search),
-                  hintText: 'Партнер нэрээр хайх',
-                ),
+            ? FormTextField(
+                inputType: TextInputType.text,
+                color: const Color(0xff767680).withOpacity(0.12),
+                name: 'search',
+                prefixIcon: const Icon(Icons.search),
+                hintText: 'Партнер нэрээр хайх',
               )
             : index.selectedIndex == 2
-                ? Text(
+                ? const Text(
                     'Захиалгын жагсаалт',
                     style: TextStyle(
                       color: buttonColor,
@@ -92,7 +90,7 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                     ),
                   )
                 : index.selectedIndex == 3
-                    ? Text(
+                    ? const Text(
                         'Харилцагчийн жагсаалт',
                         style: TextStyle(
                           color: buttonColor,
@@ -100,43 +98,43 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                           fontWeight: FontWeight.w500,
                         ),
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
         centerTitle: true,
         actions: [
           isLoading == true
-              ? SizedBox()
+              ? const SizedBox()
               : Container(
                   padding: const EdgeInsets.all(10),
                   margin: const EdgeInsets.only(right: 15, top: 9, bottom: 9),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: grey,
                   ),
                   child: Center(
                     child: Text(
                       '${user.currentBusiness?.profileName?[0].toUpperCase()}${user.currentBusiness?.profileName?[1].toUpperCase()}',
-                      style:
-                          TextStyle(color: black, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          color: black, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
         ],
         bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(2.0),
           child: Container(
             color: orderColor,
             height: 1.0,
           ),
-          preferredSize: Size.fromHeight(2.0),
         ),
       ),
       body: isLoading == true
-          ? SizedBox()
+          ? const SizedBox()
           : Container(
               child: currentPages.elementAt(index.selectedIndex),
             ),
       floatingActionButton: index.selectedIndex == 2
           ? FloatingActionButton(
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
               backgroundColor: orderColor,
               onPressed: () {
                 Navigator.of(context).pushNamed(
@@ -146,12 +144,12 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                   ),
                 );
               },
-              child: Icon(
+              child: const Icon(
                 Icons.add,
                 color: white,
               ),
             )
-          : SizedBox(),
+          : const SizedBox(),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: buttonColor,
         unselectedFontSize: 12,
@@ -190,12 +188,11 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                           BlendMode.srcIn),
                     ),
                   ),
-                  index.selectedIndex != 0
-                      ? Text(
-                          'Нүүр',
-                          style: TextStyle(color: orderColor, fontSize: 12),
-                        )
-                      : SizedBox(),
+                  if (index.selectedIndex != 0)
+                    const Text(
+                      'Нүүр',
+                      style: TextStyle(color: orderColor, fontSize: 12),
+                    ),
                 ],
               ),
             ),
@@ -217,12 +214,11 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                         BlendMode.srcIn),
                   ),
                 ),
-                index.selectedIndex != 1
-                    ? Text(
-                        'Дашбоард',
-                        style: TextStyle(color: orderColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (index.selectedIndex != 1)
+                  const Text(
+                    'Дашбоард',
+                    style: TextStyle(color: orderColor, fontSize: 12),
+                  ),
               ],
             ),
             label: '',
@@ -243,12 +239,11 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                         BlendMode.srcIn),
                   ),
                 ),
-                index.selectedIndex != 2
-                    ? Text(
-                        'Захиалга',
-                        style: TextStyle(color: orderColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (index.selectedIndex != 2)
+                  const Text(
+                    'Захиалга',
+                    style: TextStyle(color: orderColor, fontSize: 12),
+                  ),
               ],
             ),
             label: '',
@@ -269,12 +264,11 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                         BlendMode.srcIn),
                   ),
                 ),
-                index.selectedIndex != 3
-                    ? Text(
-                        'Харилцагч',
-                        style: TextStyle(color: orderColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (index.selectedIndex != 3)
+                  const Text(
+                    'Харилцагч',
+                    style: TextStyle(color: orderColor, fontSize: 12),
+                  ),
               ],
             ),
             label: '',

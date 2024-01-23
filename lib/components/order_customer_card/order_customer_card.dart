@@ -12,9 +12,9 @@ class OrderCustomerCard extends StatefulWidget {
     this.data,
     required this.index,
     required this.startAnimation,
-    Key? key,
+    super.key,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<OrderCustomerCard> createState() => _OrderCustomerCardState();
@@ -52,7 +52,7 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
                   Container(
                     height: 48,
                     width: 48,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: grey,
                     ),
@@ -61,11 +61,11 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
                             backgroundImage:
                                 NetworkImage('${widget.data?.logo}', scale: 1),
                           )
-                        : CircleAvatar(
+                        : const CircleAvatar(
                             backgroundImage: AssetImage('images/avatar.png'),
                           ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Expanded(
@@ -74,13 +74,13 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
                       children: [
                         Text(
                           '${widget.data?.partner?.businessName}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: buttonColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 3,
                         ),
                         RichText(
@@ -88,7 +88,7 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
                             children: [
                               TextSpan(
                                 text: '${widget.data?.partnerName} ',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: coolGrey,
                                   fontSize: 13,
                                   fontFamily: 'Montserrat',
@@ -96,7 +96,7 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
                               ),
                               TextSpan(
                                 text: 'РД${widget.data?.regNumber}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: buttonColor,
                                   fontSize: 13,
                                   fontFamily: 'Montserrat',
@@ -105,12 +105,12 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 3,
                         ),
                         Text(
                           '${widget.data?.receiverBrach?.name}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: orderColor,
                           ),
                         ),
@@ -124,12 +124,12 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios,
                   color: orderColor,
                   size: 14,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Container(
@@ -146,10 +146,10 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
                         height: 15,
                         width: 15,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 3,
                       ),
-                      Text(
+                      const Text(
                         'Шинэ',
                         style: TextStyle(
                           color: buttonColor,

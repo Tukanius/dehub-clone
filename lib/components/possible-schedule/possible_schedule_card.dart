@@ -1,6 +1,6 @@
-import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:dehub/widgets/dialog_manager/colors.dart';
 
 class PossibleScheduleCard extends StatefulWidget {
   final DateTime? data;
@@ -12,10 +12,10 @@ class PossibleScheduleCard extends StatefulWidget {
     this.formattedDate,
     this.validate,
     this.onClick,
-    Key? key,
+    super.key,
     this.isSelected,
     this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<PossibleScheduleCard> createState() => _PossibleScheduleCardState();
@@ -63,7 +63,7 @@ class _PossibleScheduleCardState extends State<PossibleScheduleCard> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              '${DateFormat("yyyy-MM-dd").format(widget.data!)}',
+              DateFormat("yyyy-MM-dd").format(widget.data!),
               style: TextStyle(
                 color: widget.isSelected == true
                     ? orderColor
@@ -73,7 +73,7 @@ class _PossibleScheduleCardState extends State<PossibleScheduleCard> {
                 fontSize: 13,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Text(

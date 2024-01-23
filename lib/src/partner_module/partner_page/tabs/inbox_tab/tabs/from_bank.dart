@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class FromBank extends StatefulWidget {
-  const FromBank({Key? key}) : super(key: key);
+  const FromBank({super.key});
 
   @override
-  _FromBankState createState() => _FromBankState();
+  FromBankState createState() => FromBankState();
 }
 
-class _FromBankState extends State<FromBank> {
+class FromBankState extends State<FromBank> {
   @override
   Widget build(BuildContext context) {
     return Container();

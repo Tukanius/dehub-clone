@@ -1,10 +1,10 @@
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/order_customer_card/order_customer_card.dart';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -20,9 +20,9 @@ class OrderCustomerChoose extends StatefulWidget {
   final ListenController customerListenController;
   static const routeName = '/OrderCustomerChoose';
   const OrderCustomerChoose({
-    Key? key,
+    super.key,
     required this.customerListenController,
-  }) : super(key: key);
+  });
 
   @override
   State<OrderCustomerChoose> createState() => _OrderCustomerChooseState();
@@ -50,7 +50,7 @@ class _OrderCustomerChooseState extends State<OrderCustomerChoose>
     setState(() {
       customer = res;
       isLoading = false;
-      Future.delayed(Duration(milliseconds: 100), () {
+      Future.delayed(const Duration(milliseconds: 100), () {
         setState(() {
           startAnimation = true;
         });
@@ -70,7 +70,7 @@ class _OrderCustomerChooseState extends State<OrderCustomerChoose>
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
     });
@@ -91,12 +91,12 @@ class _OrderCustomerChooseState extends State<OrderCustomerChoose>
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios_new,
             color: orderColor,
           ),
         ),
-        title: Text(
+        title: const Text(
           'Харилцагч сонгох',
           style: TextStyle(
             color: buttonColor,
@@ -106,53 +106,23 @@ class _OrderCustomerChooseState extends State<OrderCustomerChoose>
         ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: orderColor,
               ),
             )
           : Column(
               children: [
-                SearchButton(
+                const SearchButton(
                   color: orderColor,
                   textColor: orderColor,
                 ),
                 Expanded(
-                  child: SmartRefresher(
-                    enablePullDown: true,
-                    enablePullUp: true,
-                    controller: refreshController,
-                    header: WaterDropHeader(
-                      waterDropColor: orderColor,
-                      refresh: SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: orderColor,
-                        ),
-                      ),
-                    ),
-                    onRefresh: _onRefresh,
+                  child: Refresher(
+                    refreshController: refreshController,
                     onLoading: _onLoading,
-                    footer: CustomFooter(
-                      builder: (context, mode) {
-                        Widget body;
-                        if (mode == LoadStatus.idle) {
-                          body = const Text("");
-                        } else if (mode == LoadStatus.loading) {
-                          body = const CupertinoActivityIndicator();
-                        } else if (mode == LoadStatus.failed) {
-                          body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                        } else {
-                          body = const Text("Мэдээлэл алга байна");
-                        }
-                        return SizedBox(
-                          height: 55.0,
-                          child: Center(child: body),
-                        );
-                      },
-                    ),
+                    onRefresh: _onRefresh,
+                    color: orderColor,
                     child: SingleChildScrollView(
                       child: Column(
                         children: customer.rows!

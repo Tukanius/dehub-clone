@@ -70,7 +70,7 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
         FocusScope.of(context).unfocus();
       },
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(10),
           ),
@@ -80,7 +80,7 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
           children: [
             Container(
               height: 50,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: white,
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(10),
@@ -101,11 +101,12 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
                       color: transparent,
                       child: SvgPicture.asset(
                         'assets/svg/square-x.svg',
-                        colorFilter: ColorFilter.mode(grey2, BlendMode.srcIn),
+                        colorFilter:
+                            const ColorFilter.mode(grey2, BlendMode.srcIn),
                       ),
                     ),
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       'Динамик мэдээлэл',
                       style: TextStyle(
@@ -122,7 +123,7 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
                       }
                     },
                     child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topRight: Radius.circular(10),
                         ),
@@ -130,7 +131,7 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
                       ),
                       padding: const EdgeInsets.symmetric(horizontal: 11),
                       height: 50,
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Хадгалах',
                           style: TextStyle(color: white),
@@ -144,14 +145,14 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
             Expanded(
               child: SingleChildScrollView(
                 child: isLoading == true
-                    ? SizedBox()
+                    ? const SizedBox()
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
                             margin: const EdgeInsets.symmetric(
                                 horizontal: 15, vertical: 10),
-                            child: Text('Динамик мэдээлэл'),
+                            child: const Text('Динамик мэдээлэл'),
                           ),
                           FormTextField(
                             onChanged: (value) {
@@ -161,7 +162,7 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
                             textAlign: TextAlign.end,
                             controller: controller,
                             name: 'name',
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: InputBorder.none,
                               fillColor: white,
                               filled: true,
@@ -172,7 +173,7 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
                               prefixIcon: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   SizedBox(
                                     width: 15,
                                   ),
@@ -181,79 +182,77 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
                               ),
                             ),
                           ),
-                          source.product.sections != null &&
-                                  source.product.sections?.length != 0
-                              ? Column(
-                                  children: source.product.sections!
-                                      .map(
-                                        (data) => GestureDetector(
-                                          onTap: () {
-                                            showModalBottomSheet(
-                                              context: context,
-                                              useSafeArea: true,
-                                              builder: (context) =>
-                                                  FieldSettingSheet(
-                                                index: source.product.sections!
-                                                    .indexOf(data),
-                                                data: data,
-                                              ),
-                                            );
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 15, vertical: 10),
-                                            color: white,
-                                            child: Row(
+                          if (source.product.sections != null &&
+                              source.product.sections!.isNotEmpty)
+                            Column(
+                              children: source.product.sections!
+                                  .map(
+                                    (data) => GestureDetector(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          useSafeArea: true,
+                                          builder: (context) =>
+                                              FieldSettingSheet(
+                                            index: source.product.sections!
+                                                .indexOf(data),
+                                            data: data,
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 10),
+                                        color: white,
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
                                               children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text('${data.name}'),
-                                                    Text(
-                                                      data.type != null
-                                                          ? '${data.type}'
-                                                          : "-",
-                                                      style: TextStyle(
-                                                        color: productColor,
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    source.sectionRemove(
-                                                      source.product.sections!
-                                                          .indexOf(data),
-                                                    );
-                                                  },
-                                                  child: SvgPicture.asset(
-                                                    'assets/svg/close.svg',
-                                                    height: 20,
-                                                    width: 20,
-                                                    colorFilter:
-                                                        ColorFilter.mode(
-                                                      productColor,
-                                                      BlendMode.srcIn,
-                                                    ),
+                                                Text('${data.name}'),
+                                                Text(
+                                                  data.type != null
+                                                      ? '${data.type}'
+                                                      : "-",
+                                                  style: const TextStyle(
+                                                    color: productColor,
                                                   ),
-                                                ),
+                                                )
                                               ],
                                             ),
-                                          ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                source.sectionRemove(
+                                                  source.product.sections!
+                                                      .indexOf(data),
+                                                );
+                                              },
+                                              child: SvgPicture.asset(
+                                                'assets/svg/close.svg',
+                                                height: 20,
+                                                width: 20,
+                                                colorFilter:
+                                                    const ColorFilter.mode(
+                                                  productColor,
+                                                  BlendMode.srcIn,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      )
-                                      .toList(),
-                                )
-                              : SizedBox(),
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
                           source.product.sections != null &&
-                                  source.product.sections?.length != 0
-                              ? SizedBox()
+                                  source.product.sections!.isNotEmpty
+                              ? const SizedBox()
                               : Container(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 10),
@@ -262,10 +261,10 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
                                       SvgPicture.asset(
                                         'assets/svg/information-square.svg',
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
-                                      Text(
+                                      const Text(
                                         'Талбарын мэдээлэл оруулаагүй байна. Нэмнэ үү.',
                                         style: TextStyle(
                                           fontSize: 12,
@@ -297,7 +296,7 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                                 padding: const EdgeInsets.all(10),
-                                child: Text(
+                                child: const Text(
                                   '+Талбар',
                                   style: TextStyle(color: productColor),
                                 ),

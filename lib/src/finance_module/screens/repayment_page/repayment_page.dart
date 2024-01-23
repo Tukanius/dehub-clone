@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 class RePayment extends StatefulWidget {
   static const routeName = '/RePayment';
-  const RePayment({Key? key}) : super(key: key);
+  const RePayment({super.key});
 
   @override
   State<RePayment> createState() => _RePaymentState();
@@ -39,7 +39,7 @@ class _RePaymentState extends State<RePayment>
         backgroundColor: backgroundColor,
         surfaceTintColor: backgroundColor,
         leading: CustomBackButton(color: source.currentColor),
-        actions: [
+        actions: const [
           CircleAvatar(
             radius: 18,
             backgroundColor: grey,
@@ -64,7 +64,7 @@ class _RePaymentState extends State<RePayment>
           ),
           Container(
             margin: const EdgeInsets.only(left: 15, bottom: 10),
-            child: Text(
+            child: const Text(
               'Эргэн төлөлтүүд',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -74,14 +74,14 @@ class _RePaymentState extends State<RePayment>
           ),
           Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 15,
               ),
               InkWell(
                 borderRadius: BorderRadius.circular(10),
                 onTap: () {
                   pageController.animateToPage(0,
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       curve: Curves.ease);
                 },
                 child: Container(
@@ -102,14 +102,14 @@ class _RePaymentState extends State<RePayment>
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 25,
               ),
               InkWell(
                 borderRadius: BorderRadius.circular(10),
                 onTap: () {
                   pageController.animateToPage(1,
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       curve: Curves.ease);
                 },
                 child: Container(
@@ -140,7 +140,7 @@ class _RePaymentState extends State<RePayment>
                   currentIndex = value;
                 });
               },
-              children: [
+              children: const [
                 BuyerLed(),
                 SupplierLed(),
               ],

@@ -6,13 +6,13 @@ import './tabs/dashboard_tab/dashboard_tab.dart';
 
 class DebtPage extends StatefulWidget {
   static const routeName = '/DebtPage';
-  const DebtPage({Key? key}) : super(key: key);
+  const DebtPage({super.key});
 
   @override
-  _DebtPageState createState() => _DebtPageState();
+  DebtPageState createState() => DebtPageState();
 }
 
-class _DebtPageState extends State<DebtPage> {
+class DebtPageState extends State<DebtPage> {
   int selectedIndex = 1;
   static const List<Widget> currentPages = [
     SizedBox(),
@@ -40,18 +40,18 @@ class _DebtPageState extends State<DebtPage> {
         elevation: 0,
         surfaceTintColor: backgroundColor,
         backgroundColor: backgroundColor,
-        leading: CustomBackButton(color: debtColor),
+        leading: const CustomBackButton(color: debtColor),
         actions: [
           Container(
             padding: const EdgeInsets.all(10),
             margin: const EdgeInsets.only(right: 15, top: 9, bottom: 9),
             decoration: BoxDecoration(
-              color: Color(0xff767680).withOpacity(0.12),
+              color: const Color(0xff767680).withOpacity(0.12),
               borderRadius: BorderRadius.circular(100),
             ),
             child: SvgPicture.asset(
               'assets/svg/grid.svg',
-              colorFilter: ColorFilter.mode(debtColor, BlendMode.srcIn),
+              colorFilter: const ColorFilter.mode(debtColor, BlendMode.srcIn),
             ),
           )
         ],
@@ -91,12 +91,11 @@ class _DebtPageState extends State<DebtPage> {
                           BlendMode.srcIn),
                     ),
                   ),
-                  selectedIndex != 0
-                      ? Text(
-                          'Нүүр',
-                          style: TextStyle(color: debtColor, fontSize: 12),
-                        )
-                      : SizedBox(),
+                  if (selectedIndex != 0)
+                    const Text(
+                      'Нүүр',
+                      style: TextStyle(color: debtColor, fontSize: 12),
+                    ),
                 ],
               ),
             ),
@@ -118,12 +117,11 @@ class _DebtPageState extends State<DebtPage> {
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 1
-                    ? Text(
-                        'Дашбоард',
-                        style: TextStyle(color: debtColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (selectedIndex != 1)
+                  const Text(
+                    'Дашбоард',
+                    style: TextStyle(color: debtColor, fontSize: 12),
+                  ),
               ],
             ),
             label: '',
@@ -144,12 +142,11 @@ class _DebtPageState extends State<DebtPage> {
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 2
-                    ? Text(
-                        'Ирсэн',
-                        style: TextStyle(color: debtColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (selectedIndex != 2)
+                  const Text(
+                    'Ирсэн',
+                    style: TextStyle(color: debtColor, fontSize: 12),
+                  )
               ],
             ),
             label: '',
@@ -170,12 +167,11 @@ class _DebtPageState extends State<DebtPage> {
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 3
-                    ? Text(
-                        'Илгээсэн',
-                        style: TextStyle(color: debtColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (selectedIndex != 3)
+                  const Text(
+                    'Илгээсэн',
+                    style: TextStyle(color: debtColor, fontSize: 12),
+                  ),
               ],
             ),
             label: '',

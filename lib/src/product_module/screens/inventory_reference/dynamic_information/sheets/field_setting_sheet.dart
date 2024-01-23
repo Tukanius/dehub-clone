@@ -33,7 +33,7 @@ class _FieldSettingSheetState extends State<FieldSettingSheet> {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: productColor,
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(15),
@@ -51,7 +51,7 @@ class _FieldSettingSheetState extends State<FieldSettingSheet> {
                   child: SvgPicture.asset('assets/svg/square-x.svg'),
                 ),
               ),
-              Expanded(
+              const Expanded(
                 child: Text(
                   'Талбарын тохиргоо',
                   style: TextStyle(
@@ -71,7 +71,7 @@ class _FieldSettingSheetState extends State<FieldSettingSheet> {
                     borderRadius: BorderRadius.circular(5),
                     color: white,
                   ),
-                  child: Text(
+                  child: const Text(
                     'Хадгалах',
                     style: TextStyle(
                       color: productColor,
@@ -105,7 +105,7 @@ class _FieldSettingSheetState extends State<FieldSettingSheet> {
                       color: transparent,
                       child: Row(
                         children: [
-                          Text(
+                          const Text(
                             'Талбараас хасах бол энд дарна уу.    ',
                             style: TextStyle(
                               color: grey2,
@@ -123,7 +123,7 @@ class _FieldSettingSheetState extends State<FieldSettingSheet> {
                     secondText: widget.data.name,
                     secondTextColor: productColor,
                   ),
-                  FormTextField(
+                  const FormTextField(
                     textColor: productColor,
                     textAlign: TextAlign.end,
                     name: 'name',
@@ -140,7 +140,7 @@ class _FieldSettingSheetState extends State<FieldSettingSheet> {
                       prefixIcon: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           SizedBox(
                             width: 15,
                           ),
@@ -178,115 +178,101 @@ class _FieldSettingSheetState extends State<FieldSettingSheet> {
                       );
                     },
                   ),
-                  source.product.sections?[widget.index].type == "SELECT"
-                      ? Column(
-                          children: [
-                            FieldCard(
-                              paddingHorizontal: 15,
-                              paddingVertical: 10,
-                              color: white,
-                              labelText: "Сонголтот утгууд",
-                              secondText: 'Нэмэх',
-                              secondTextColor: productColor,
-                              onClick: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  useSafeArea: true,
-                                  builder: (context) => SelectValuesSheet(
-                                    index: widget.index,
-                                  ),
-                                );
-                              },
-                              arrowColor: productColor,
-                            ),
-                            source.product.sections?[widget.index].values !=
-                                    null
-                                ? Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    height: 50,
-                                    child: ListView(
-                                      shrinkWrap: false,
-                                      padding: const EdgeInsets.only(left: 15),
-                                      scrollDirection: Axis.horizontal,
-                                      children: source.product
-                                          .sections![widget.index].values!
-                                          .map(
-                                            (data) => Container(
-                                              margin: const EdgeInsets.only(
-                                                  right: 15),
-                                              height: 30,
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: data.isDefault == true
-                                                      ? grey2
-                                                      : transparent,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                                color: productColor
-                                                    .withOpacity(.05),
-                                              ),
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 15,
-                                                vertical: 3,
-                                              ),
-                                              child: Text(
-                                                '${data.name}',
-                                              ),
-                                            ),
-                                          )
-                                          .toList(),
+                  if (source.product.sections?[widget.index].type == "SELECT")
+                    Column(
+                      children: [
+                        FieldCard(
+                          paddingHorizontal: 15,
+                          paddingVertical: 10,
+                          color: white,
+                          labelText: "Сонголтот утгууд",
+                          secondText: 'Нэмэх',
+                          secondTextColor: productColor,
+                          onClick: () {
+                            showModalBottomSheet(
+                              context: context,
+                              useSafeArea: true,
+                              builder: (context) => SelectValuesSheet(
+                                index: widget.index,
+                              ),
+                            );
+                          },
+                          arrowColor: productColor,
+                        ),
+                        if (source.product.sections?[widget.index].values !=
+                            null)
+                          Container(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            height: 50,
+                            child: ListView(
+                              shrinkWrap: false,
+                              padding: const EdgeInsets.only(left: 15),
+                              scrollDirection: Axis.horizontal,
+                              children: source
+                                  .product.sections![widget.index].values!
+                                  .map(
+                                    (data) => Container(
+                                      margin: const EdgeInsets.only(right: 15),
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: data.isDefault == true
+                                              ? grey2
+                                              : transparent,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: productColor.withOpacity(.05),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 15,
+                                        vertical: 3,
+                                      ),
+                                      child: Text(
+                                        '${data.name}',
+                                      ),
                                     ),
                                   )
-                                : SizedBox(),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Default утга'),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: productColor.withOpacity(0.1),
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 3),
-                                    child: source
-                                                    .product
-                                                    .sections?[widget.index]
-                                                    .values !=
-                                                null &&
-                                            source
-                                                    .product
-                                                    .sections?[widget.index]
-                                                    .values!
-                                                    .length !=
-                                                0
-                                        ? Text(
-                                            '${source.product.sections?[widget.index].values?.firstWhere((element) => element.isDefault == true).name}',
-                                            style: TextStyle(
-                                              color: grey2,
-                                            ),
-                                          )
-                                        : Text(
-                                            '-',
-                                            style: TextStyle(
-                                              color: grey2,
-                                            ),
-                                          ),
-                                  ),
-                                ],
-                              ),
+                                  .toList(),
                             ),
-                          ],
-                        )
-                      : SizedBox(),
-                  FormTextField(
+                          ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text('Default утга'),
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: productColor.withOpacity(0.1),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 3),
+                                child: source.product.sections?[widget.index]
+                                                .values !=
+                                            null &&
+                                        source.product.sections![widget.index]
+                                            .values!.isNotEmpty
+                                    ? Text(
+                                        '${source.product.sections?[widget.index].values?.firstWhere((element) => element.isDefault == true).name}',
+                                        style: const TextStyle(
+                                          color: grey2,
+                                        ),
+                                      )
+                                    : const Text(
+                                        '-',
+                                        style: TextStyle(
+                                          color: grey2,
+                                        ),
+                                      ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  const FormTextField(
                     textColor: productColor,
                     textAlign: TextAlign.end,
                     name: 'numberUnit',
@@ -303,7 +289,7 @@ class _FieldSettingSheetState extends State<FieldSettingSheet> {
                       prefixIcon: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           SizedBox(
                             width: 15,
                           ),
@@ -312,7 +298,7 @@ class _FieldSettingSheetState extends State<FieldSettingSheet> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                 ],

@@ -29,10 +29,10 @@ class SetPaymentTerm extends StatefulWidget {
   final ListenController listenController;
   static const routeName = '/SetPaymentTerm';
   const SetPaymentTerm({
-    Key? key,
+    super.key,
     required this.id,
     required this.listenController,
-  }) : super(key: key);
+  });
 
   @override
   State<SetPaymentTerm> createState() => _SetPaymentTermState();
@@ -50,7 +50,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
   bool isSubmit = false;
   Result paymentTerms = Result(rows: [], count: 0);
   DateTime startDate = DateTime.now();
-  DateTime endDate = DateTime.now().add(Duration(days: 1));
+  DateTime endDate = DateTime.now().add(const Duration(days: 1));
   DateTime? expireDate;
 
   @override
@@ -113,7 +113,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
         automaticallyImplyLeading: false,
         backgroundColor: networkColor,
         surfaceTintColor: networkColor,
-        title: Text(
+        title: const Text(
           'Төлбөрийн нөхцөл',
           style: TextStyle(
             color: white,
@@ -121,7 +121,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: [
+        actions: const [
           CustomCloseButton(
             color: networkColor,
           ),
@@ -131,7 +131,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             FieldCard(
@@ -143,7 +143,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                 condition();
               },
               arrowColor: networkColor,
-              secondText: "${paymentTerm == null ? '-' : paymentTerm}",
+              secondText: paymentTerm ?? '-',
               secondTextColor: networkColor,
             ),
             FieldCard(
@@ -157,7 +157,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                 }
               },
               arrowColor: networkColor,
-              secondText: "${config == null ? '-' : config}",
+              secondText: config ?? '-',
               secondTextColor: networkColor,
             ),
             FieldCard(
@@ -179,7 +179,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            child: Text(
+                            child: const Text(
                               'Болсон',
                               style: TextStyle(
                                 fontSize: 12,
@@ -191,7 +191,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                           Expanded(
                             child: CupertinoDatePicker(
                               minimumDate:
-                                  startDate.subtract(Duration(hours: 1)),
+                                  startDate.subtract(const Duration(hours: 1)),
                               maximumDate: endDate,
                               initialDateTime: startDate,
                               mode: CupertinoDatePickerMode.date,
@@ -234,7 +234,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            child: Text(
+                            child: const Text(
                               'Болсон',
                               style: TextStyle(
                                 fontSize: 12,
@@ -245,7 +245,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                           ),
                           Expanded(
                             child: CupertinoDatePicker(
-                              minimumDate: endDate.subtract(Duration(hours: 1)),
+                              minimumDate: endDate.subtract(const Duration(hours: 1)),
                               initialDateTime: endDate,
                               mode: CupertinoDatePickerMode.date,
                               use24hFormat: true,
@@ -265,7 +265,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
               secondTextColor: networkColor,
               labelTextColor: buttonColor,
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             CustomButton(
@@ -287,7 +287,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
   condition() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -303,7 +303,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 25, bottom: 20),
-                  child: Text(
+                  child: const Text(
                     'Төлбөрийн хэлбэр сонгох',
                     style: TextStyle(
                       color: grey2,
@@ -341,7 +341,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                       )
                       .toList(),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
               ],
@@ -355,7 +355,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
   configType() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -372,7 +372,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 25, bottom: 20),
-                  child: Text(
+                  child: const Text(
                     'Төлбөрийн нөхцөл сонгох',
                     style: TextStyle(
                       color: grey2,
@@ -407,7 +407,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                       )
                       .toList(),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
               ],

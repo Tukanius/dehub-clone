@@ -14,18 +14,18 @@ class _InvoiceEmptyState extends State<InvoiceEmpty> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
-        Container(
+        SizedBox(
           height: 150,
           width: 150,
           child: Image.asset("images/invoice_empty.png"),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
-        Text(
+        const Text(
           'Нэхэмжлэх байхгүй',
           style: TextStyle(
             color: grey3,
@@ -33,12 +33,12 @@ class _InvoiceEmptyState extends State<InvoiceEmpty> {
             fontSize: 18,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 50),
-          child: Text(
+          child: const Text(
             'Танд АПП-д бүртгэж баталгаажуулсан нэхэмжлэх байхгүй байна. “+” товчийг сонгож шинэ нэхэмжлэх бүртгээрэй.',
             style: TextStyle(
               fontSize: 14,
@@ -47,10 +47,10 @@ class _InvoiceEmptyState extends State<InvoiceEmpty> {
             textAlign: TextAlign.center,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
-        Text(
+        const Text(
           'Танд амжилт хүсье',
           style: TextStyle(
             fontSize: 14,

@@ -8,7 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class PartnerInfo extends StatefulWidget {
-  const PartnerInfo({Key? key}) : super(key: key);
+  const PartnerInfo({super.key});
 
   @override
   State<PartnerInfo> createState() => _PartnerInfoState();
@@ -21,9 +21,9 @@ class _PartnerInfoState extends State<PartnerInfo> {
   pageChange() {
     switch (currentIndex) {
       case 1:
-        return Page1();
+        return const Page1();
       case 2:
-        return Page2();
+        return const Page2();
       default:
     }
   }
@@ -43,18 +43,18 @@ class _PartnerInfoState extends State<PartnerInfo> {
                   children: [
                     Text(
                       '${partner.partner?.businessName}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: grey3,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
                       '${partner.user?.currentBusiness?.profileNameEng}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         color: grey3,
                       ),
@@ -63,7 +63,7 @@ class _PartnerInfoState extends State<PartnerInfo> {
                 ),
               ),
               pageChange(),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
             ],
@@ -90,7 +90,7 @@ class _PartnerInfoState extends State<PartnerInfo> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text(
+                              const Text(
                                 'Дараах',
                                 style: TextStyle(
                                   color: buttonColor,
@@ -98,15 +98,15 @@ class _PartnerInfoState extends State<PartnerInfo> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               SvgPicture.asset(
                                 'assets/svg/arrow_forward.svg',
-                                colorFilter: ColorFilter.mode(
+                                colorFilter: const ColorFilter.mode(
                                     buttonColor, BlendMode.srcIn),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 16,
                               ),
                             ],
@@ -129,13 +129,13 @@ class _PartnerInfoState extends State<PartnerInfo> {
                             children: [
                               SvgPicture.asset(
                                 'assets/svg/arrow_back.svg',
-                                colorFilter: ColorFilter.mode(
+                                colorFilter: const ColorFilter.mode(
                                     buttonColor, BlendMode.srcIn),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
-                              Text(
+                              const Text(
                                 'Өмнөх',
                                 style: TextStyle(
                                   color: buttonColor,
@@ -143,7 +143,7 @@ class _PartnerInfoState extends State<PartnerInfo> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 16,
                               ),
                             ],

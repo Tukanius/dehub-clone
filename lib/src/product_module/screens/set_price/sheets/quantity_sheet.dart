@@ -54,7 +54,7 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
     final source = Provider.of<InventoryProvider>(context, listen: true);
 
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(10),
         ),
@@ -64,7 +64,7 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
         children: [
           Container(
             height: 50,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: white,
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(10),
@@ -85,11 +85,12 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter:
+                          const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   child: Text(
                     'Тоо ширхэг нэмэх',
                     style: TextStyle(
@@ -129,7 +130,7 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
                     }
                   },
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(10),
                       ),
@@ -137,7 +138,7 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 11),
                     height: 50,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'Болсон',
                         style: TextStyle(color: white),
@@ -150,7 +151,7 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
           ),
           Expanded(
             child: isLoading == true
-                ? SizedBox()
+                ? const SizedBox()
                 : GestureDetector(
                     onTap: () {
                       FocusScope.of(context).unfocus();
@@ -164,14 +165,14 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
                             Container(
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 15, vertical: 10),
-                              child: Text(
+                              child: const Text(
                                 "Мэдээлэл оруулна уу",
                                 style: TextStyle(
                                   color: grey2,
                                 ),
                               ),
                             ),
-                            FieldCard(
+                            const FieldCard(
                               paddingHorizontal: 15,
                               paddingVertical: 10,
                               labelText: 'Үндсэн нэгж',
@@ -184,10 +185,10 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
                               textAlign: TextAlign.end,
                               initialValue: minQuantity != null
                                   ? minQuantity.toString()
-                                  : null,
+                                  : '',
                               inputType: TextInputType.number,
                               name: 'minQuantity',
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 fillColor: white,
                                 filled: true,
@@ -195,13 +196,13 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
                                 hintStyle: TextStyle(
                                   color: productColor,
                                 ),
-                                contentPadding: const EdgeInsets.symmetric(
+                                contentPadding: EdgeInsets.symmetric(
                                     horizontal: 15, vertical: 10),
                                 isDense: true,
                                 prefixIcon: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                  children: [
                                     SizedBox(
                                       width: 15,
                                     ),
@@ -225,7 +226,7 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Мах лимиттэй эсэх'),
+                                  const Text('Мах лимиттэй эсэх'),
                                   Transform.scale(
                                     scale: 0.7,
                                     child: CupertinoSwitch(
@@ -248,10 +249,10 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
                               readOnly: !isSwitched,
                               initialValue: maxQuantity != null
                                   ? maxQuantity.toString()
-                                  : null,
+                                  : '',
                               inputType: TextInputType.number,
                               name: 'maxQuantity',
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 fillColor: white,
                                 filled: true,
@@ -259,13 +260,13 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
                                 hintStyle: TextStyle(
                                   color: productColor,
                                 ),
-                                contentPadding: const EdgeInsets.symmetric(
+                                contentPadding: EdgeInsets.symmetric(
                                     horizontal: 15, vertical: 10),
                                 isDense: true,
                                 prefixIcon: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                  children: [
                                     SizedBox(
                                       width: 15,
                                     ),
@@ -283,7 +284,7 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
                                     ])
                                   : null,
                             ),
-                            FieldCard(
+                            const FieldCard(
                               paddingHorizontal: 15,
                               paddingVertical: 10,
                               labelText: 'Валют',
@@ -294,7 +295,7 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
                             Container(
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 15, vertical: 10),
-                              child: Text(
+                              child: const Text(
                                 "Борлуулах үнийн мэдээлэл",
                                 style: TextStyle(
                                   color: grey2,
@@ -314,7 +315,7 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
                                   ? widget.data!.salesPrice!.toInt().toString()
                                   : null,
                               name: 'salesPrice',
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 fillColor: white,
                                 filled: true,
@@ -322,13 +323,13 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
                                 hintStyle: TextStyle(
                                   color: productColor,
                                 ),
-                                contentPadding: const EdgeInsets.symmetric(
+                                contentPadding: EdgeInsets.symmetric(
                                     horizontal: 15, vertical: 10),
                                 isDense: true,
                                 prefixIcon: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                  children: [
                                     SizedBox(
                                       width: 15,
                                     ),
@@ -370,7 +371,7 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
                                               }
                                               Navigator.of(context).pop();
                                             },
-                                            child: Text(
+                                            child: const Text(
                                               'Болсон',
                                               style: TextStyle(
                                                 fontSize: 12,
@@ -409,19 +410,21 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text('Эхлэх огноо'),
+                                    const Text('Эхлэх огноо'),
                                     Row(
                                       children: [
                                         Text(
-                                          '${DateFormat('yyyy-MM-dd').format(startDate)}',
-                                          style: TextStyle(color: productColor),
+                                          DateFormat('yyyy-MM-dd')
+                                              .format(startDate),
+                                          style: const TextStyle(
+                                              color: productColor),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 15,
                                         ),
                                         SvgPicture.asset(
                                           'assets/svg/dot-calendar.svg',
-                                          colorFilter: ColorFilter.mode(
+                                          colorFilter: const ColorFilter.mode(
                                             productColor,
                                             BlendMode.srcIn,
                                           ),
@@ -450,7 +453,7 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
                                             onPressed: () {
                                               Navigator.of(context).pop();
                                             },
-                                            child: Text(
+                                            child: const Text(
                                               'Болсон',
                                               style: TextStyle(
                                                 fontSize: 12,
@@ -489,19 +492,21 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text('Дуусах огноо'),
+                                    const Text('Дуусах огноо'),
                                     Row(
                                       children: [
                                         Text(
-                                          '${DateFormat('yyyy-MM-dd').format(endDate)}',
-                                          style: TextStyle(color: productColor),
+                                          DateFormat('yyyy-MM-dd')
+                                              .format(endDate),
+                                          style: const TextStyle(
+                                              color: productColor),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 15,
                                         ),
                                         SvgPicture.asset(
                                           'assets/svg/dot-calendar.svg',
-                                          colorFilter: ColorFilter.mode(
+                                          colorFilter: const ColorFilter.mode(
                                               productColor, BlendMode.srcIn),
                                         )
                                       ],
@@ -528,7 +533,7 @@ class _QuantitySheetState extends State<QuantitySheet> with AfterLayoutMixin {
                                   '${Utils().formatCurrency((source.product.standardPrice! - (double.tryParse(salesPrice.toString()) ?? 0)).toString())}₮',
                               secondTextColor: grey2,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 40,
                             ),
                           ],

@@ -8,13 +8,13 @@ class InvoiceConditionCard extends StatefulWidget {
   final int? index;
   final ReferenceInformation? listType;
   final ReferenceInformation? data;
-  InvoiceConditionCard({
+  const InvoiceConditionCard({
     this.listType,
     this.data,
-    Key? key,
+    super.key,
     this.onClick,
     this.index,
-  }) : super(key: key);
+  });
 
   @override
   State<InvoiceConditionCard> createState() => _InvoiceConditionCardState();
@@ -36,7 +36,7 @@ class _InvoiceConditionCardState extends State<InvoiceConditionCard>
           color: white,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: Color(0xffF2F2F2),
+            color: const Color(0xffF2F2F2),
           ),
         ),
         child: Row(
@@ -49,12 +49,12 @@ class _InvoiceConditionCardState extends State<InvoiceConditionCard>
                 children: [
                   Text(
                     '${widget.index! + 1}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: grey3,
                       fontSize: 12,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   Expanded(
@@ -64,7 +64,7 @@ class _InvoiceConditionCardState extends State<InvoiceConditionCard>
                         widget.data?.termRule != null
                             ? Text(
                                 '${widget.data?.termRule}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: networkColor,
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
@@ -73,31 +73,31 @@ class _InvoiceConditionCardState extends State<InvoiceConditionCard>
                             : widget.data?.name != null
                                 ? Text(
                                     '${widget.data?.name}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: networkColor,
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   )
                                 : Text('${widget.data?.description}'),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
-                        Text(
+                        const Text(
                           'Нэхэмжлэх нөхцөл',
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
-                        Container(
+                        SizedBox(
                           width: 250,
                           child: Text(
                             '${widget.data?.description}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12,
                               color: grey3,
                             ),
@@ -109,7 +109,7 @@ class _InvoiceConditionCardState extends State<InvoiceConditionCard>
                 ],
               ),
             ),
-            Icon(
+            const Icon(
               Icons.arrow_forward_ios,
               color: grey2,
               size: 14,

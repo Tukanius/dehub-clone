@@ -18,13 +18,13 @@ class _HomePageTabState extends State<HomePageTab> {
         children: [
           Container(
             margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-            child: Text(
+            child: const Text(
               'Бараа удирдлага',
               style: TextStyle(
                   color: black, fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ),
-          Container(
+          SizedBox(
             height: 100,
             child: ListView(
               scrollDirection: Axis.horizontal,
@@ -51,13 +51,13 @@ class _HomePageTabState extends State<HomePageTab> {
                         child: SvgPicture.asset(
                           'assets/svg/grid1.svg',
                           colorFilter:
-                              ColorFilter.mode(paymentColor, BlendMode.srcIn),
+                              const ColorFilter.mode(paymentColor, BlendMode.srcIn),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 2,
                       ),
-                      Text(
+                      const Text(
                         'Барааны жагсаалт',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w500),
@@ -88,13 +88,13 @@ class _HomePageTabState extends State<HomePageTab> {
                         child: SvgPicture.asset(
                           'assets/svg/push.svg',
                           colorFilter:
-                              ColorFilter.mode(paymentColor, BlendMode.srcIn),
+                              const ColorFilter.mode(paymentColor, BlendMode.srcIn),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 2,
                       ),
-                      Text(
+                      const Text(
                         'Ажил, үйлчилгээ',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w500),
@@ -125,10 +125,10 @@ class _HomePageTabState extends State<HomePageTab> {
                         child: SvgPicture.asset(
                           'assets/svg/bag.svg',
                           colorFilter:
-                              ColorFilter.mode(paymentColor, BlendMode.srcIn),
+                              const ColorFilter.mode(paymentColor, BlendMode.srcIn),
                         ),
                       ),
-                      Text(
+                      const Text(
                         'Үнийн бодлого',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w500),
@@ -159,13 +159,13 @@ class _HomePageTabState extends State<HomePageTab> {
                         child: SvgPicture.asset(
                           'assets/svg/map.svg',
                           colorFilter:
-                              ColorFilter.mode(paymentColor, BlendMode.srcIn),
+                              const ColorFilter.mode(paymentColor, BlendMode.srcIn),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 2,
                       ),
-                      Text(
+                      const Text(
                         'Хөнгөлөлт, урамшуулал',
                         style: TextStyle(
                             fontSize: 11, fontWeight: FontWeight.w500),
@@ -196,13 +196,13 @@ class _HomePageTabState extends State<HomePageTab> {
                         child: SvgPicture.asset(
                           'assets/svg/map.svg',
                           colorFilter:
-                              ColorFilter.mode(paymentColor, BlendMode.srcIn),
+                              const ColorFilter.mode(paymentColor, BlendMode.srcIn),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 2,
                       ),
-                      Text(
+                      const Text(
                         'Лавлах мэдээлэл',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w500),

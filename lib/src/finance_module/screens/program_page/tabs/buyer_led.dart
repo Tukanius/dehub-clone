@@ -46,7 +46,7 @@ class _BuyerLedState extends State<BuyerLed> with AfterLayoutMixin {
   }
 
   void onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
       limit = 10;
@@ -63,27 +63,24 @@ class _BuyerLedState extends State<BuyerLed> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<FinanceProvider>(context, listen: true);
-    return Refresher(
-      color: source.currentColor,
-      onLoading: onLoading,
-      onRefresh: onRefresh,
-      refreshController: refreshController,
-      child: SingleChildScrollView(
-        child: isLoading == true
-            ? Container(
-                margin: const EdgeInsets.only(top: 30),
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: source.currentColor,
-                  ),
-                ),
-              )
-            : Column(
+    return isLoading == true
+        ? Center(
+            child: CircularProgressIndicator(
+              color: source.currentColor,
+            ),
+          )
+        : Refresher(
+            color: source.currentColor,
+            onLoading: onLoading,
+            onRefresh: onRefresh,
+            refreshController: refreshController,
+            child: SingleChildScrollView(
+              child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
-                  finance.rows?.length != 0
+                  finance.rows!.isNotEmpty
                       ? Column(
                           children: finance.rows!
                               .map(
@@ -101,13 +98,13 @@ class _BuyerLedState extends State<BuyerLed> with AfterLayoutMixin {
                               )
                               .toList(),
                         )
-                      : NotFound(
+                      : const NotFound(
                           module: "FINANCE",
                           labelText: 'Хоосон байна',
                         ),
                 ],
               ),
-      ),
-    );
+            ),
+          );
   }
 }

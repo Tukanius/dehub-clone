@@ -30,14 +30,14 @@ class _EditingInformationState extends State<EditingInformation> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${widget.labelText}',
-            style: TextStyle(
+            widget.labelText,
+            style: const TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 14,
               color: grey3,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           // Row(
@@ -54,10 +54,10 @@ class _EditingInformationState extends State<EditingInformation> {
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               hintText: 'Регистр №',
-              hintStyle: TextStyle(color: grey3),
+              hintStyle: const TextStyle(color: grey3),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
-                borderSide: BorderSide(color: grey3),
+                borderSide: const BorderSide(color: grey3),
               ),
             ),
           ),

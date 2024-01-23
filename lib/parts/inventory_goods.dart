@@ -476,56 +476,77 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   Map<String, dynamic> json = {};
-  if (instance.sectionFields != null)
+  if (instance.sectionFields != null) {
     json['sectionFields'] = instance.sectionFields;
+  }
   if (instance.selections != null) json['selections'] = instance.selections;
   if (instance.convertType != null) json['convertType'] = instance.convertType;
   if (instance.goodsId != null) json['goodsId'] = instance.goodsId;
-  if (instance.convertValue != null)
+  if (instance.convertValue != null) {
     json['convertValue'] = instance.convertValue;
+  }
   if (instance.floatValue != null) json['floatValue'] = instance.floatValue;
   if (instance.isForLoad != null) json['isForLoad'] = instance.isForLoad;
-  if (instance.variantSuppliers != null)
+  if (instance.variantSuppliers != null) {
     json['variantSuppliers'] = instance.variantSuppliers;
+  }
   if (instance.taxPercent != null) json['taxPercent'] = instance.taxPercent;
-  if (instance.partnerBusiness != null)
+  if (instance.partnerBusiness != null) {
     json['partnerBusiness'] = instance.partnerBusiness;
-  if (instance.buyerBusinessId != null)
+  }
+  if (instance.buyerBusinessId != null) {
     json['buyerBusinessId'] = instance.buyerBusinessId;
-  if (instance.supplierBusinessId != null)
+  }
+  if (instance.supplierBusinessId != null) {
     json['supplierBusinessId'] = instance.supplierBusinessId;
+  }
   if (instance.isDefault != null) json['isDefault'] = instance.isDefault;
-  if (instance.isDropshipping != null)
+  if (instance.isDropshipping != null) {
     json['isDropshipping'] = instance.isDropshipping;
+  }
   if (instance.warehouseId != null) json['warehouseId'] = instance.warehouseId;
-  if (instance.quantityStartDate != null)
+  if (instance.quantityStartDate != null) {
     json['quantityStartDate'] = instance.quantityStartDate;
-  if (instance.warehouseQuantity != null)
+  }
+  if (instance.warehouseQuantity != null) {
     json['warehouseQuantity'] = instance.warehouseQuantity;
-  if (instance.noticeMinQuantity != null)
+  }
+  if (instance.noticeMinQuantity != null) {
     json['noticeMinQuantity'] = instance.noticeMinQuantity;
-  if (instance.noticeMaxQuantity != null)
+  }
+  if (instance.noticeMaxQuantity != null) {
     json['noticeMaxQuantity'] = instance.noticeMaxQuantity;
-  if (instance.deactivateMinQuantity != null)
+  }
+  if (instance.deactivateMinQuantity != null) {
     json['deactivateMinQuantity'] = instance.deactivateMinQuantity;
-  if (instance.minOrderQuantity != null)
+  }
+  if (instance.minOrderQuantity != null) {
     json['minOrderQuantity'] = instance.minOrderQuantity;
-  if (instance.reOrderQuantityLevel != null)
+  }
+  if (instance.reOrderQuantityLevel != null) {
     json['reOrderQuantityLevel'] = instance.reOrderQuantityLevel;
-  if (instance.reOrderQuantity != null)
+  }
+  if (instance.reOrderQuantity != null) {
     json['reOrderQuantity'] = instance.reOrderQuantity;
-  if (instance.merchStaffId != null)
+  }
+  if (instance.merchStaffId != null) {
     json['merchStaffId'] = instance.merchStaffId;
-  if (instance.variantStatus != null)
+  }
+  if (instance.variantStatus != null) {
     json['variantStatus'] = instance.variantStatus;
-  if (instance.warehouseUser != null)
+  }
+  if (instance.warehouseUser != null) {
     json['warehouseUser'] = instance.warehouseUser;
-  if (instance.supplierBusiness != null)
+  }
+  if (instance.supplierBusiness != null) {
     json['supplierBusiness'] = instance.supplierBusiness;
-  if (instance.buyerBusiness != null)
+  }
+  if (instance.buyerBusiness != null) {
     json['buyerBusiness'] = instance.buyerBusiness;
-  if (instance.inactiveTypeId != null)
+  }
+  if (instance.inactiveTypeId != null) {
     json['inactiveTypeId'] = instance.inactiveTypeId;
+  }
   if (instance.status != null) json['status'] = instance.status;
   if (instance.lastName != null) json['lastName'] = instance.lastName;
   if (instance.email != null) json['email'] = instance.email;
@@ -549,41 +570,53 @@ Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   if (instance.fieldId != null) json['fieldId'] = instance.fieldId;
   if (instance.fieldType != null) json['fieldType'] = instance.fieldType;
   if (instance.isPriceSet != null) json['isPriceSet'] = instance.isPriceSet;
-  if (instance.backorderable != null)
+  if (instance.backorderable != null) {
     json['backorderable'] = instance.backorderable;
+  }
   if (instance.tierPrices != null) json['tierPrices'] = instance.tierPrices;
   if (instance.startDate != null) json['startDate'] = instance.startDate;
   if (instance.endDate != null) json['endDate'] = instance.endDate;
-  if (instance.fieldValueName != null)
+  if (instance.fieldValueName != null) {
     json['fieldValueName'] = instance.fieldValueName;
-  if (instance.fieldValueId != null)
+  }
+  if (instance.fieldValueId != null) {
     json['fieldValueId'] = instance.fieldValueId;
-  if (instance.supplierType != null)
+  }
+  if (instance.supplierType != null) {
     json['supplierType'] = instance.supplierType;
-  if (instance.supplierTypeName != null)
+  }
+  if (instance.supplierTypeName != null) {
     json['supplierTypeName'] = instance.supplierTypeName;
+  }
   if (instance.partnerName != null) json['partnerName'] = instance.partnerName;
   if (instance.checked != null) json['checked'] = instance.checked;
-  if (instance.businessName != null)
+  if (instance.businessName != null) {
     json['businessName'] = instance.businessName;
-  if (instance.standardPrice != null)
+  }
+  if (instance.standardPrice != null) {
     json['standardPrice'] = instance.standardPrice;
+  }
   if (instance.customPrice != null) json['customPrice'] = instance.customPrice;
   if (instance.variantId != null) json['variantId'] = instance.variantId;
   if (instance.regNumber != null) json['regNumber'] = instance.regNumber;
   if (instance.partner != null) json['partner'] = instance.partner;
-  if (instance.unitSpaceLabel != null)
+  if (instance.unitSpaceLabel != null) {
     json['unitSpaceLabel'] = instance.unitSpaceLabel;
+  }
   if (instance.price != null) json['price'] = instance.price;
   if (instance.vatValue != null) json['vatValue'] = instance.vatValue;
-  if (instance.unitSpaceLabelId != null)
+  if (instance.unitSpaceLabelId != null) {
     json['unitSpaceLabelId'] = instance.unitSpaceLabelId;
-  if (instance.unitWeightLabel != null)
+  }
+  if (instance.unitWeightLabel != null) {
     json['unitWeightLabel'] = instance.unitWeightLabel;
-  if (instance.unitWeightLabelId != null)
+  }
+  if (instance.unitWeightLabelId != null) {
     json['unitWeightLabelId'] = instance.unitWeightLabelId;
-  if (instance.quantityPrice != null)
+  }
+  if (instance.quantityPrice != null) {
     json['quantityPrice'] = instance.quantityPrice;
+  }
   if (instance.sectionName != null) json['sectionName'] = instance.sectionName;
   if (instance.number != null) json['number'] = instance.number;
   if (instance.option != null) json['option'] = instance.option;
@@ -592,46 +625,62 @@ Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   if (instance.isMain != null) json['isMain'] = instance.isMain;
   if (instance.unitName != null) json['unitName'] = instance.unitName;
   if (instance.brandName != null) json['brandName'] = instance.brandName;
-  if (instance.supplierName != null)
+  if (instance.supplierName != null) {
     json['supplierName'] = instance.supplierName;
-  if (instance.manufacturerName != null)
+  }
+  if (instance.manufacturerName != null) {
     json['manufacturerName'] = instance.manufacturerName;
-  if (instance.manufacturerCountryName != null)
+  }
+  if (instance.manufacturerCountryName != null) {
     json['manufacturerCountryName'] = instance.manufacturerCountryName;
-  if (instance.manufacturerCountryId != null)
+  }
+  if (instance.manufacturerCountryId != null) {
     json['manufacturerCountryId'] = instance.manufacturerCountryId;
-  if (instance.isWarehouseSet != null)
+  }
+  if (instance.isWarehouseSet != null) {
     json['isWarehouseSet'] = instance.isWarehouseSet;
-  if (instance.importerCountryName != null)
+  }
+  if (instance.importerCountryName != null) {
     json['importerCountryName'] = instance.importerCountryName;
-  if (instance.distributorName != null)
+  }
+  if (instance.distributorName != null) {
     json['distributorName'] = instance.distributorName;
-  if (instance.itemTypeName != null)
+  }
+  if (instance.itemTypeName != null) {
     json['itemTypeName'] = instance.itemTypeName;
-  if (instance.classificationName != null)
+  }
+  if (instance.classificationName != null) {
     json['classificationName'] = instance.classificationName;
-  if (instance.subClassificationName != null)
+  }
+  if (instance.subClassificationName != null) {
     json['subClassificationName'] = instance.subClassificationName;
-  if (instance.categoryName != null)
+  }
+  if (instance.categoryName != null) {
     json['categoryName'] = instance.categoryName;
-  if (instance.subCategoryName != null)
+  }
+  if (instance.subCategoryName != null) {
     json['subCategoryName'] = instance.subCategoryName;
+  }
   if (instance.tagName != null) json['tagName'] = instance.tagName;
-  if (instance.optionValues != null)
+  if (instance.optionValues != null) {
     json['optionValues'] = instance.optionValues;
+  }
   if (instance.vatType != null) json['vatType'] = instance.vatType;
   if (instance.profileName != null) json['profileName'] = instance.profileName;
   if (instance.logo != null) json['logo'] = instance.logo;
   if (instance.isBase != null) json['isBase'] = instance.isBase;
   if (instance.variants != null) json['variants'] = instance.variants;
-  if (instance.additionalUnits != null)
+  if (instance.additionalUnits != null) {
     json['additionalUnits'] = instance.additionalUnits;
+  }
   if (instance.itemUnits != null) json['itemUnits'] = instance.itemUnits;
   if (instance.values != null) json['values'] = instance.values;
-  if (instance.hasAdditionalUnit != null)
+  if (instance.hasAdditionalUnit != null) {
     json['hasAdditionalUnit'] = instance.hasAdditionalUnit;
-  if (instance.reOrderMinNum != null)
+  }
+  if (instance.reOrderMinNum != null) {
     json['reOrderMinNum'] = instance.reOrderMinNum;
+  }
   if (instance.reOrderNum != null) json['reOrderNum'] = instance.reOrderNum;
   if (instance.reOrder != null) json['reOrder'] = instance.reOrder;
   if (instance.minOrderNum != null) json['minOrderNum'] = instance.minOrderNum;
@@ -641,35 +690,44 @@ Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   if (instance.text != null) json['text'] = instance.text;
   if (instance.brand != null) json['brand'] = instance.brand;
   if (instance.supplier != null) json['supplier'] = instance.supplier;
-  if (instance.manufacturer != null)
+  if (instance.manufacturer != null) {
     json['manufacturer'] = instance.manufacturer;
-  if (instance.originCountry != null)
+  }
+  if (instance.originCountry != null) {
     json['originCountry'] = instance.originCountry;
-  if (instance.importerCountry != null)
+  }
+  if (instance.importerCountry != null) {
     json['importerCountry'] = instance.importerCountry;
+  }
   if (instance.distributor != null) json['distributor'] = instance.distributor;
   if (instance.itemType != null) json['itemType'] = instance.itemType;
-  if (instance.classification != null)
+  if (instance.classification != null) {
     json['classification'] = instance.classification;
-  if (instance.subClassification != null)
+  }
+  if (instance.subClassification != null) {
     json['subClassification'] = instance.subClassification;
+  }
   if (instance.category != null) json['category'] = instance.category;
   if (instance.subCategory != null) json['subCategory'] = instance.subCategory;
   if (instance.tag != null) json['tag'] = instance.tag;
-  if (instance.deliveryType != null)
+  if (instance.deliveryType != null) {
     json['deliveryType'] = instance.deliveryType;
+  }
   if (instance.packageType != null) json['packageType'] = instance.packageType;
   if (instance.coverImages != null) json['coverImages'] = instance.coverImages;
-  if (instance.detailImages != null)
+  if (instance.detailImages != null) {
     json['detailImages'] = instance.detailImages;
+  }
   if (instance.sections != null) json['sections'] = instance.sections;
   if (instance.sectionIds != null) json['sectionIds'] = instance.sectionIds;
   if (instance.fields != null) json['fields'] = instance.fields;
   if (instance.itemUnit != null) json['itemUnit'] = instance.itemUnit;
-  if (instance.itemFieldValues != null)
+  if (instance.itemFieldValues != null) {
     json['itemFieldValues'] = instance.itemFieldValues;
-  if (instance.quantityPrices != null)
+  }
+  if (instance.quantityPrices != null) {
     json['quantityPrices'] = instance.quantityPrices;
+  }
   if (instance.units != null) json['units'] = instance.units;
 
   if (instance.count != null) json['count'] = instance.count;
@@ -690,34 +748,44 @@ Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   if (instance.nameBill != null) json['nameBill'] = instance.nameBill;
   if (instance.nameWeb != null) json['nameWeb'] = instance.nameWeb;
   if (instance.nameApp != null) json['nameApp'] = instance.nameApp;
-  if (instance.deliveryTypeId != null)
+  if (instance.deliveryTypeId != null) {
     json['deliveryTypeId'] = instance.deliveryTypeId;
+  }
   if (instance.supplierId != null) json['supplierId'] = instance.supplierId;
   if (instance.brandId != null) json['brandId'] = instance.brandId;
-  if (instance.manufacturerId != null)
+  if (instance.manufacturerId != null) {
     json['manufacturerId'] = instance.manufacturerId;
-  if (instance.originCountryId != null)
+  }
+  if (instance.originCountryId != null) {
     json['originCountryId'] = instance.originCountryId;
-  if (instance.importerCountryId != null)
+  }
+  if (instance.importerCountryId != null) {
     json['importerCountryId'] = instance.importerCountryId;
-  if (instance.distributorId != null)
+  }
+  if (instance.distributorId != null) {
     json['distributorId'] = instance.distributorId;
+  }
   if (instance.itemTypeId != null) json['itemTypeId'] = instance.itemTypeId;
-  if (instance.classificationId != null)
+  if (instance.classificationId != null) {
     json['classificationId'] = instance.classificationId;
-  if (instance.subClassificationId != null)
+  }
+  if (instance.subClassificationId != null) {
     json['subClassificationId'] = instance.subClassificationId;
+  }
   if (instance.categoryId != null) json['categoryId'] = instance.categoryId;
-  if (instance.subCategoryId != null)
+  if (instance.subCategoryId != null) {
     json['subCategoryId'] = instance.subCategoryId;
+  }
   if (instance.tagId != null) json['tagId'] = instance.tagId;
   if (instance.description != null) json['description'] = instance.description;
   if (instance.hasVariant != null) json['hasVariant'] = instance.hasVariant;
   if (instance.hasUnit != null) json['hasUnit'] = instance.hasUnit;
-  if (instance.departmentUnitId != null)
+  if (instance.departmentUnitId != null) {
     json['departmentUnitId'] = instance.departmentUnitId;
-  if (instance.departmentSubUnitId != null)
+  }
+  if (instance.departmentSubUnitId != null) {
     json['departmentSubUnitId'] = instance.departmentSubUnitId;
+  }
   if (instance.unitId != null) json['unitId'] = instance.unitId;
   if (instance.height != null) json['height'] = instance.height;
   if (instance.width != null) json['width'] = instance.width;
@@ -728,11 +796,13 @@ Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   if (instance.spaceLabel != null) json['spaceLabel'] = instance.spaceLabel;
   if (instance.returnAllow != null) json['returnAllow'] = instance.returnAllow;
   if (instance.returnType != null) json['returnType'] = instance.returnType;
-  if (instance.returnTypeId != null)
+  if (instance.returnTypeId != null) {
     json['returnTypeId'] = instance.returnTypeId;
+  }
   if (instance.image != null) json['image'] = instance.image;
-  if (instance.packageTypeId != null)
+  if (instance.packageTypeId != null) {
     json['packageTypeId'] = instance.packageTypeId;
+  }
   if (instance.isCompleted != null) json['isCompleted'] = instance.isCompleted;
   if (instance.isFetch != null) json['isFetch'] = instance.isFetch;
   if (instance.catergory != null) json['catergory'] = instance.catergory;

@@ -13,12 +13,12 @@ class ShippingCard extends StatefulWidget {
   final int index;
   final bool startAnimation;
   const ShippingCard({
-    Key? key,
+    super.key,
     required this.startAnimation,
     this.onClick,
     required this.index,
     this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<ShippingCard> createState() => _DeliveryCardState();
@@ -69,7 +69,7 @@ class _DeliveryCardState extends State<ShippingCard> {
               children: [
                 Text(
                   '${widget.data?.warehouse?.name}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: buttonColor,
                     fontWeight: FontWeight.bold,
                   ),
@@ -78,23 +78,23 @@ class _DeliveryCardState extends State<ShippingCard> {
                   children: [
                     SvgPicture.asset(
                       'assets/svg/inv.svg',
-                      colorFilter: ColorFilter.mode(darkGreen, BlendMode.srcIn),
+                      colorFilter: const ColorFilter.mode(darkGreen, BlendMode.srcIn),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     Text(
                       '${widget.data?.refCode}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: darkGreen,
                         fontWeight: FontWeight.w500,
                         fontSize: 12,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
-                    Icon(
+                    const Icon(
                       Icons.arrow_forward_ios,
                       color: darkGreen,
                       size: 12,
@@ -103,7 +103,7 @@ class _DeliveryCardState extends State<ShippingCard> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -111,7 +111,7 @@ class _DeliveryCardState extends State<ShippingCard> {
               children: [
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'Ачих огноо: ',
                       style: TextStyle(
                         color: buttonColor,
@@ -120,14 +120,14 @@ class _DeliveryCardState extends State<ShippingCard> {
                     ),
                     widget.data?.loadingDate != null
                         ? Text(
-                            '${DateFormat('yyyy-MM-dd').format(DateTime.parse(widget.data!.loadingDate!))}',
-                            style: TextStyle(
+                            DateFormat('yyyy-MM-dd').format(DateTime.parse(widget.data!.loadingDate!)),
+                            style: const TextStyle(
                               color: buttonColor,
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
                             ),
                           )
-                        : Text(
+                        : const Text(
                             '-',
                             style: TextStyle(
                               color: buttonColor,
@@ -138,15 +138,15 @@ class _DeliveryCardState extends State<ShippingCard> {
                   ],
                 ),
                 Text(
-                  '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data!.createdAt!)}',
-                  style: TextStyle(
+                  DateFormat("yyyy-MM-dd HH:mm").format(widget.data!.createdAt!),
+                  style: const TextStyle(
                     color: buttonColor,
                     fontSize: 12,
                   ),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -154,7 +154,7 @@ class _DeliveryCardState extends State<ShippingCard> {
               children: [
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'Эхэлсэн: ',
                       style: TextStyle(
                         color: buttonColor,
@@ -162,7 +162,7 @@ class _DeliveryCardState extends State<ShippingCard> {
                       ),
                     ),
                     widget.data?.startedDate == null
-                        ? Text(
+                        ? const Text(
                             '-',
                             style: TextStyle(
                               color: buttonColor,
@@ -171,8 +171,8 @@ class _DeliveryCardState extends State<ShippingCard> {
                             ),
                           )
                         : Text(
-                            "${DateFormat('yyyy-MM-dd').format(widget.data!.startedDate!)}",
-                            style: TextStyle(
+                            DateFormat('yyyy-MM-dd').format(widget.data!.startedDate!),
+                            style: const TextStyle(
                               color: buttonColor,
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -182,7 +182,7 @@ class _DeliveryCardState extends State<ShippingCard> {
                 ),
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'Нярав: ',
                       style: TextStyle(
                         color: depBrown,
@@ -190,12 +190,12 @@ class _DeliveryCardState extends State<ShippingCard> {
                         fontSize: 12,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     Text(
                       '${widget.data?.staff?.firstName}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: orderColor,
                         fontSize: 12,
                       ),
@@ -204,7 +204,7 @@ class _DeliveryCardState extends State<ShippingCard> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -212,7 +212,7 @@ class _DeliveryCardState extends State<ShippingCard> {
               children: [
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'Дууссан: ',
                       style: TextStyle(
                         color: buttonColor,
@@ -220,7 +220,7 @@ class _DeliveryCardState extends State<ShippingCard> {
                       ),
                     ),
                     widget.data?.endedDate == null
-                        ? Text(
+                        ? const Text(
                             '-',
                             style: TextStyle(
                               color: buttonColor,
@@ -229,8 +229,8 @@ class _DeliveryCardState extends State<ShippingCard> {
                             ),
                           )
                         : Text(
-                            "${DateFormat('yyyy-MM-dd').format(widget.data!.endedDate!)}",
-                            style: TextStyle(
+                            DateFormat('yyyy-MM-dd').format(widget.data!.endedDate!),
+                            style: const TextStyle(
                               color: buttonColor,
                               fontSize: 12,
                               fontWeight: FontWeight.w700,

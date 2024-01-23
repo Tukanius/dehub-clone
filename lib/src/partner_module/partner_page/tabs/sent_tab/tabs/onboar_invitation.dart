@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class OnboarInvitation extends StatefulWidget {
-  const OnboarInvitation({Key? key}) : super(key: key);
+  const OnboarInvitation({super.key});
 
   @override
-  _OnboarInvitationState createState() => _OnboarInvitationState();
+  OnboarInvitationState createState() => OnboarInvitationState();
 }
 
-class _OnboarInvitationState extends State<OnboarInvitation> {
+class OnboarInvitationState extends State<OnboarInvitation> {
   @override
   Widget build(BuildContext context) {
     return Container();

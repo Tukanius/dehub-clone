@@ -18,9 +18,9 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 class DynamicTab extends StatefulWidget {
   final String? id;
   const DynamicTab({
-    Key? key,
+    super.key,
     this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<DynamicTab> createState() => _DynamicTabState();
@@ -94,7 +94,7 @@ class _DynamicTabState extends State<DynamicTab> {
           children: [
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Категорийн динамик мэдээлэл',
                 style: TextStyle(color: productColor),
               ),
@@ -107,12 +107,12 @@ class _DynamicTabState extends State<DynamicTab> {
                   SvgPicture.asset(
                     'assets/svg/information-square.svg',
                     colorFilter:
-                        ColorFilter.mode(productColor, BlendMode.srcIn),
+                        const ColorFilter.mode(productColor, BlendMode.srcIn),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       'Дэд категорит хамаарах динамик мэдээлэл тохируулаагүй байна.',
                       style: TextStyle(
@@ -126,7 +126,7 @@ class _DynamicTabState extends State<DynamicTab> {
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Бүтээгдэхүүний нэмэлт мэдээлэл',
                 style: TextStyle(color: productColor),
               ),
@@ -140,13 +140,13 @@ class _DynamicTabState extends State<DynamicTab> {
                       children: [
                         SvgPicture.asset(
                           'assets/svg/information-square.svg',
-                          colorFilter:
-                              ColorFilter.mode(productColor, BlendMode.srcIn),
+                          colorFilter: const ColorFilter.mode(
+                              productColor, BlendMode.srcIn),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
-                        Expanded(
+                        const Expanded(
                           child: Text(
                             'Бүтээгдэхүүний нэмэлт мэдээлэл тохируулаагүй байна.',
                             style: TextStyle(
@@ -242,26 +242,23 @@ class _DynamicTabState extends State<DynamicTab> {
                                               )
                                             ]),
                                             decoration: InputDecoration(
-                                              prefixIcon: Container(
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    SizedBox(
-                                                      width: 15,
-                                                    ),
-                                                    Text('${item.name}')
-                                                  ],
-                                                ),
+                                              prefixIcon: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  const SizedBox(
+                                                    width: 15,
+                                                  ),
+                                                  Text('${item.name}')
+                                                ],
                                               ),
                                               hintText: "Энд оруулна уу",
-                                              hintStyle: TextStyle(
+                                              hintStyle: const TextStyle(
                                                   color: productColor),
                                               filled: true,
                                               fillColor: white,
-                                              border: OutlineInputBorder(
+                                              border: const OutlineInputBorder(
                                                 borderSide: BorderSide.none,
                                                 borderRadius: BorderRadius.zero,
                                               ),
@@ -301,19 +298,20 @@ class _DynamicTabState extends State<DynamicTab> {
                                                         MainAxisAlignment
                                                             .center,
                                                     children: [
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         width: 15,
                                                       ),
                                                       Text('${item.name}')
                                                     ],
                                                   ),
                                                   hintText: "Энд оруулна уу",
-                                                  hintStyle: TextStyle(
+                                                  hintStyle: const TextStyle(
                                                     color: productColor,
                                                   ),
                                                   filled: true,
                                                   fillColor: white,
-                                                  border: OutlineInputBorder(
+                                                  border:
+                                                      const OutlineInputBorder(
                                                     borderSide: BorderSide.none,
                                                     borderRadius:
                                                         BorderRadius.zero,
@@ -343,7 +341,7 @@ class _DynamicTabState extends State<DynamicTab> {
             ),
             Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 45,
                 ),
                 Expanded(
@@ -354,7 +352,7 @@ class _DynamicTabState extends State<DynamicTab> {
                     labelColor: productColor.withOpacity(0.2),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 25,
                 ),
                 Expanded(
@@ -363,7 +361,7 @@ class _DynamicTabState extends State<DynamicTab> {
                       showModalBottomSheet(
                         useSafeArea: true,
                         context: context,
-                        builder: (context) => DynamicSheet(),
+                        builder: (context) => const DynamicSheet(),
                       );
                     },
                     labelText: 'Сонголт хийх',
@@ -371,17 +369,17 @@ class _DynamicTabState extends State<DynamicTab> {
                     labelColor: productColor.withOpacity(0.2),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 45,
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 100,
             ),
             Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 25,
                 ),
                 Expanded(
@@ -394,7 +392,7 @@ class _DynamicTabState extends State<DynamicTab> {
                     labelColor: white,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
                 Expanded(
@@ -410,12 +408,12 @@ class _DynamicTabState extends State<DynamicTab> {
                     labelColor: productColor,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 25,
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
           ],

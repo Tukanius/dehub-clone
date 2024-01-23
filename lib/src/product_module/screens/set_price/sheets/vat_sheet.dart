@@ -32,7 +32,7 @@ class _VatSheetState extends State<VatSheet> {
         res.vatType(vatType!, vatPercent!);
         Navigator.of(context).pop();
       } else {
-        CustomScaffoldMessenger(
+        customScaffoldMessenger(
           context,
           color: productColor,
           labelText: 'Хувь оруулна уу',
@@ -63,7 +63,7 @@ class _VatSheetState extends State<VatSheet> {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: productColor,
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(15),
@@ -81,7 +81,7 @@ class _VatSheetState extends State<VatSheet> {
                     child: SvgPicture.asset('assets/svg/square-x.svg'),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   child: Text(
                     'НӨАТ-ын төрөл сонгоно уу',
                     style: TextStyle(
@@ -101,7 +101,7 @@ class _VatSheetState extends State<VatSheet> {
                       borderRadius: BorderRadius.circular(5),
                       color: white,
                     ),
-                    child: Text(
+                    child: const Text(
                       'Болсон',
                       style: TextStyle(
                         color: productColor,
@@ -119,7 +119,7 @@ class _VatSheetState extends State<VatSheet> {
                   Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Мэдээлэллийг оруулаад "болсон" сонгоно уу',
                     ),
                   ),
@@ -149,41 +149,38 @@ class _VatSheetState extends State<VatSheet> {
                                     width: 10,
                                   ),
                                   Text("${data.name}"),
-                                  data.code == "STANDARD_RATED"
-                                      ? Expanded(
-                                          child: FormTextField(
-                                            readOnly:
-                                                !(vatType == "STANDARD_RATED"),
-                                            onChanged: (value) {
-                                              setState(() {
-                                                vatPercent =
-                                                    double.tryParse(value);
-                                              });
-                                            },
-                                            initialValue:
-                                                "${vatPercent != null ? vatPercent?.toInt() : ''}",
-                                            inputType: TextInputType.number,
-                                            textColor: productColor,
-                                            textAlign: TextAlign.end,
-                                            name: 'vatPercent',
-                                            decoration: InputDecoration(
-                                              hintStyle: TextStyle(
-                                                  color: productColor),
-                                              hintText: 'Хувь оруул',
-                                              border: OutlineInputBorder(
-                                                borderRadius: BorderRadius.zero,
-                                                borderSide: BorderSide.none,
-                                              ),
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                vertical: 0,
-                                                horizontal: 0,
-                                              ),
-                                              isDense: true,
-                                            ),
+                                  if (data.code == "STANDARD_RATED")
+                                    Expanded(
+                                      child: FormTextField(
+                                        readOnly:
+                                            !(vatType == "STANDARD_RATED"),
+                                        onChanged: (value) {
+                                          setState(() {
+                                            vatPercent = double.tryParse(value);
+                                          });
+                                        },
+                                        initialValue:
+                                            "${vatPercent != null ? vatPercent?.toInt() : ''}",
+                                        inputType: TextInputType.number,
+                                        textColor: productColor,
+                                        textAlign: TextAlign.end,
+                                        name: 'vatPercent',
+                                        decoration: const InputDecoration(
+                                          hintStyle:
+                                              TextStyle(color: productColor),
+                                          hintText: 'Хувь оруул',
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.zero,
+                                            borderSide: BorderSide.none,
                                           ),
-                                        )
-                                      : SizedBox(),
+                                          contentPadding: EdgeInsets.symmetric(
+                                            vertical: 0,
+                                            horizontal: 0,
+                                          ),
+                                          isDense: true,
+                                        ),
+                                      ),
+                                    ),
                                 ],
                               ),
                             ),

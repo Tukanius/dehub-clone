@@ -1,5 +1,6 @@
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/chat_card/chat_card.dart';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
@@ -7,7 +8,6 @@ import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
@@ -27,9 +27,9 @@ class DeliveryPage extends StatefulWidget {
   final Order data;
   static const routeName = '/DeliveryPage';
   const DeliveryPage({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<DeliveryPage> createState() => _DeliveryPageState();
@@ -70,7 +70,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
     });
@@ -131,9 +131,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
         Uri(scheme: 'tel', path: "tel:${get.buyerBusiness?.partner?.phone}");
     if (await canLaunchUrl(phoneLaunch)) {
       await launchUrl(phoneLaunch);
-    } else {
-      print('Could not launch');
-    }
+    } else {}
   }
 
   @override
@@ -153,13 +151,13 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
             onTap: () {
               Navigator.of(context).pop();
             },
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back_ios_new,
               color: orderColor,
             ),
           ),
           centerTitle: true,
-          title: Text(
+          title: const Text(
             'Захиалга хүргэлт',
             style: TextStyle(
               color: buttonColor,
@@ -169,7 +167,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
           ),
         ),
         body: isLoading == true
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(
                   color: orderColor,
                 ),
@@ -177,41 +175,11 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
             : Column(
                 children: [
                   Expanded(
-                    child: SmartRefresher(
-                      enablePullDown: true,
-                      enablePullUp: true,
-                      controller: refreshController,
-                      header: WaterDropHeader(
-                        waterDropColor: orderColor,
-                        refresh: SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: orderColor,
-                          ),
-                        ),
-                      ),
-                      onRefresh: _onRefresh,
+                    child: Refresher(
+                      refreshController: refreshController,
                       onLoading: _onLoading,
-                      footer: CustomFooter(
-                        builder: (context, mode) {
-                          Widget body;
-                          if (mode == LoadStatus.idle) {
-                            body = const Text("");
-                          } else if (mode == LoadStatus.loading) {
-                            body = const CupertinoActivityIndicator();
-                          } else if (mode == LoadStatus.failed) {
-                            body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                          } else {
-                            body = const Text("Мэдээлэл алга байна");
-                          }
-                          return SizedBox(
-                            height: 55.0,
-                            child: Center(child: body),
-                          );
-                        },
-                      ),
+                      onRefresh: _onRefresh,
+                      color: orderColor,
                       child: SingleChildScrollView(
                         reverse: false,
                         child: Column(
@@ -244,7 +212,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 15,
                                       ),
                                       user.currentBusiness?.type == "SUPPLIER"
@@ -254,14 +222,14 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                               children: [
                                                 Text(
                                                   '${get.buyerBusiness?.profileName}',
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     color: black,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
                                                 Text(
                                                   '${get.buyerBusiness?.partner?.businessName}',
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     color: saaral,
                                                     fontSize: 12,
                                                     fontWeight: FontWeight.bold,
@@ -275,14 +243,14 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                               children: [
                                                 Text(
                                                   '${get.supplierBusiness?.profileName}',
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     color: black,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
                                                 Text(
                                                   '${get.supplierBusiness?.partner?.businessName}',
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     color: saaral,
                                                     fontSize: 12,
                                                     fontWeight: FontWeight.bold,
@@ -297,19 +265,19 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                       Container(
                                         height: 36,
                                         width: 36,
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                           shape: BoxShape.circle,
                                           color: orderColor,
                                         ),
                                         child: Center(
                                           child: SvgPicture.asset(
                                             'assets/svg/map.svg',
-                                            colorFilter: ColorFilter.mode(
+                                            colorFilter: const ColorFilter.mode(
                                                 white, BlendMode.srcIn),
                                           ),
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
                                       GestureDetector(
@@ -319,15 +287,16 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                         child: Container(
                                           height: 36,
                                           width: 36,
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                             shape: BoxShape.circle,
                                             color: orderColor,
                                           ),
                                           child: Center(
                                             child: SvgPicture.asset(
                                               'assets/svg/call.svg',
-                                              colorFilter: ColorFilter.mode(
-                                                  white, BlendMode.srcIn),
+                                              colorFilter:
+                                                  const ColorFilter.mode(
+                                                      white, BlendMode.srcIn),
                                             ),
                                           ),
                                         ),
@@ -353,11 +322,11 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                               backgroundImage: NetworkImage(
                                                   '${get.staff?.avatar}'),
                                             )
-                                          : CircleAvatar(
+                                          : const CircleAvatar(
                                               radius: 18,
                                               backgroundColor: grey,
                                             ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
                                       Column(
@@ -366,11 +335,11 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                         children: [
                                           Text(
                                             '${get.staff?.firstName}',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                          Text(
+                                          const Text(
                                             'Худалдагч',
                                             style: TextStyle(
                                               color: saaral,
@@ -380,7 +349,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                       ),
                                     ],
                                   ),
-                                  Divider(
+                                  const Divider(
                                     thickness: 1,
                                   ),
                                   Row(
@@ -393,15 +362,15 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                         children: [
                                           SvgPicture.asset(
                                             'assets/svg/inv.svg',
-                                            colorFilter: ColorFilter.mode(
+                                            colorFilter: const ColorFilter.mode(
                                                 darkGreen, BlendMode.srcIn),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 5,
                                           ),
                                           Text(
                                             '${widget.data.refCode}',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 12,
                                               color: orderColor,
                                               fontWeight: FontWeight.w500,
@@ -411,16 +380,16 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                       ),
                                       Text(
                                         'Захиалсан: ${DateFormat('yyyy-MM-dd').format(get.createdAt!)}',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: depBrown,
                                         ),
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
-                                  Container(
+                                  SizedBox(
                                     width: MediaQuery.of(context).size.width,
                                     height: 125,
                                     child: ListView(
@@ -461,12 +430,13 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               5),
-                                                      color: Color(0xfffdf4f6),
+                                                      color: const Color(
+                                                          0xfffdf4f6),
                                                     ),
                                                     child: Text(
                                                       '${item.quantity} ${item.unit![0]}'
                                                           .toLowerCase(),
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         color: pink,
                                                       ),
                                                     ),
@@ -478,7 +448,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                           .toList(),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                   Column(
@@ -493,7 +463,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                                   Expanded(
                                                     child: RichText(
                                                       text: TextSpan(
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           fontFamily:
                                                               "Montserrat",
                                                           color: grey3,
@@ -508,12 +478,12 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                                               ? TextSpan(
                                                                   text:
                                                                       "${item.optionValue}")
-                                                              : TextSpan(),
+                                                              : const TextSpan(),
                                                           item.optionValue !=
                                                                   null
-                                                              ? TextSpan(
+                                                              ? const TextSpan(
                                                                   text: " - ")
-                                                              : TextSpan(),
+                                                              : const TextSpan(),
                                                           TextSpan(
                                                               text:
                                                                   "${item.quantity} "),
@@ -526,7 +496,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                                   ),
                                                 ],
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 5,
                                               ),
                                             ],
@@ -534,17 +504,17 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                         )
                                         .toList(),
                                   ),
-                                  Divider(
+                                  const Divider(
                                     thickness: 1,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
+                                      const Text(
                                         'Нийт дүн',
                                         style: TextStyle(
                                           color: black,
@@ -554,7 +524,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                       ),
                                       Text(
                                         '${Utils().formatCurrency(get.lines?.map((e) => e.totalAmount).reduce((value, element) => value! + element!).toString())}₮',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: black,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18,
@@ -571,21 +541,20 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  conversationList.rows?.length != 0
-                                      ? Container(
-                                          margin: const EdgeInsets.only(
-                                              top: 15, bottom: 5),
-                                          child: Text(
-                                            'Харилцааны түүх',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        )
-                                      : SizedBox(),
+                                  if (conversationList.rows!.isNotEmpty)
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 15, bottom: 5),
+                                      child: const Text(
+                                        'Харилцааны түүх',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
                                   isSubmit == true
-                                      ? Center(
+                                      ? const Center(
                                           child: CircularProgressIndicator(
                                             color: orderColor,
                                           ),
@@ -610,7 +579,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                     ),
                   ),
                   Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: white,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
@@ -624,7 +593,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                         Row(
                           children: [
                             Expanded(
-                              child: Container(
+                              child: SizedBox(
                                 height: 40,
                                 child: FormTextField(
                                   onChanged: (value) {
@@ -637,9 +606,9 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                   name: 'chat',
                                   inputType: TextInputType.multiline,
                                   maxLines: null,
-                                  decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        horizontal: 15),
+                                  decoration: const InputDecoration(
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: 15),
                                     filled: true,
                                     hintText: 'Энд харилцана уу',
                                     fillColor: lightGrey,
@@ -667,7 +636,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                   child: chatController.text.isNotEmpty
                                       ? SvgPicture.asset(
                                           'assets/svg/send_chat.svg')
-                                      : Text(
+                                      : const Text(
                                           '👋',
                                           style: TextStyle(fontSize: 20),
                                         ),

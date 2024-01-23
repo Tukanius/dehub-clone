@@ -382,190 +382,251 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
 
   if (instance.paidDate != null) json['paidDate'] = instance.paidDate;
   if (instance.actionUser != null) json['actionUser'] = instance.actionUser;
-  if (instance.invoicesCount != null)
+  if (instance.invoicesCount != null) {
     json['invoicesCount'] = instance.invoicesCount;
-  if (instance.invoicesAmount != null)
+  }
+  if (instance.invoicesAmount != null) {
     json['invoicesAmount'] = instance.invoicesAmount;
+  }
   if (instance.trxAmount != null) json['trxAmount'] = instance.trxAmount;
-  if (instance.overdueInvoicesCount != null)
+  if (instance.overdueInvoicesCount != null) {
     json['overdueInvoicesCount'] = instance.overdueInvoicesCount;
-  if (instance.overdueInvoicesAmount != null)
+  }
+  if (instance.overdueInvoicesAmount != null) {
     json['overdueInvoicesAmount'] = instance.overdueInvoicesAmount;
+  }
   if (instance.email != null) json['email'] = instance.email;
   if (instance.business != null) json['business'] = instance.business;
   if (instance.branch != null) json['branch'] = instance.branch;
-  if (instance.confirmationDay != null)
+  if (instance.confirmationDay != null) {
     json['confirmationDay'] = instance.confirmationDay;
+  }
   if (instance.values != null) json['values'] = instance.values;
   if (instance.header != null) json['header'] = instance.header;
   if (instance.stats != null) json['stats'] = instance.stats;
   if (instance.configType != null) json['configType'] = instance.configType;
   if (instance.salesCode != null) json['salesCode'] = instance.salesCode;
-  if (instance.purchaseCode != null)
+  if (instance.purchaseCode != null) {
     json['purchaseCode'] = instance.purchaseCode;
+  }
   if (instance.urls != null) json['urls'] = instance.urls;
   if (instance.qr_image != null) json['qr_image'] = instance.qr_image;
-  if (instance.invoiceRefCode != null)
+  if (instance.invoiceRefCode != null) {
     json['invoiceRefCode'] = instance.invoiceRefCode;
-  if (instance.creditAccountBank != null)
+  }
+  if (instance.creditAccountBank != null) {
     json['creditAccountBank'] = instance.creditAccountBank;
-  if (instance.creditAccountName != null)
+  }
+  if (instance.creditAccountName != null) {
     json['creditAccountName'] = instance.creditAccountName;
-  if (instance.creditAccountNumber != null)
+  }
+  if (instance.creditAccountNumber != null) {
     json['creditAccountNumber'] = instance.creditAccountNumber;
-  if (instance.creditAccountCurrency != null)
+  }
+  if (instance.creditAccountCurrency != null) {
     json['creditAccountCurrency'] = instance.creditAccountCurrency;
-  if (instance.debitAccountId != null)
+  }
+  if (instance.debitAccountId != null) {
     json['debitAccountId'] = instance.debitAccountId;
-  if (instance.debitAccountBank != null)
+  }
+  if (instance.debitAccountBank != null) {
     json['debitAccountBank'] = instance.debitAccountBank;
-  if (instance.debitAccountName != null)
+  }
+  if (instance.debitAccountName != null) {
     json['debitAccountName'] = instance.debitAccountName;
-  if (instance.debitAccountNumber != null)
+  }
+  if (instance.debitAccountNumber != null) {
     json['debitAccountNumber'] = instance.debitAccountNumber;
-  if (instance.debitAccountCurrency != null)
+  }
+  if (instance.debitAccountCurrency != null) {
     json['debitAccountCurrency'] = instance.debitAccountCurrency;
+  }
   if (instance.category != null) json['category'] = instance.category;
   if (instance.supplier != null) json['supplier'] = instance.supplier;
   if (instance.brand != null) json['brand'] = instance.brand;
-  if (instance.optionValues != null)
+  if (instance.optionValues != null) {
     json['optionValues'] = instance.optionValues;
-  if (instance.paymentMethod != null)
+  }
+  if (instance.paymentMethod != null) {
     json['paymentMethod'] = instance.paymentMethod;
+  }
   if (instance.optionId != null) json['optionId'] = instance.optionId;
   if (instance.phone != null) json['phone'] = instance.phone;
-  if (instance.businessAddress != null)
+  if (instance.businessAddress != null) {
     json['businessAddress'] = instance.businessAddress;
+  }
   if (instance.staff != null) json['staff'] = instance.staff;
   if (instance.unitName != null) json['unitName'] = instance.unitName;
   if (instance.confirm != null) json['confirm'] = instance.confirm;
   if (instance.send != null) json['send'] = instance.send;
   if (instance.lines != null) json['lines'] = instance.lines;
   if (instance.method != null) json['method'] = instance.method;
-  if (instance.creditAccountId != null)
+  if (instance.creditAccountId != null) {
     json['creditAccountId'] = instance.creditAccountId;
+  }
   if (instance.amount != null) json['amount'] = instance.amount;
   if (instance.count != null) json['count'] = instance.count;
-  if (instance.additionalLines != null)
+  if (instance.additionalLines != null) {
     json['additionalLines'] = instance.additionalLines;
+  }
   if (instance.rows != null) json['rows'] = instance.rows;
   if (instance.id != null) json['id'] = instance.id;
   if (instance.createdAt != null) json['createdAt'] = instance.createdAt;
   if (instance.updatedAt != null) json['updatedAt'] = instance.updatedAt;
   if (instance.deletedAt != null) json['deletedAt'] = instance.deletedAt;
   if (instance.refCode != null) json['refCode'] = instance.refCode;
-  if (instance.senderUserId != null)
+  if (instance.senderUserId != null) {
     json['senderUserId'] = instance.senderUserId;
-  if (instance.senderBusinessId != null)
+  }
+  if (instance.senderBusinessId != null) {
     json['senderBusinessId'] = instance.senderBusinessId;
-  if (instance.senderFinUserId != null)
+  }
+  if (instance.senderFinUserId != null) {
     json['senderFinUserId'] = instance.senderFinUserId;
-  if (instance.senderBranchId != null)
+  }
+  if (instance.senderBranchId != null) {
     json['senderBranchId'] = instance.senderBranchId;
+  }
   if (instance.senderAccId != null) json['senderAccId'] = instance.senderAccId;
-  if (instance.salesOrderId != null)
+  if (instance.salesOrderId != null) {
     json['salesOrderId'] = instance.salesOrderId;
-  if (instance.purchaseOrderId != null)
+  }
+  if (instance.purchaseOrderId != null) {
     json['purchaseOrderId'] = instance.purchaseOrderId;
-  if (instance.paymentTermId != null)
+  }
+  if (instance.paymentTermId != null) {
     json['paymentTermId'] = instance.paymentTermId;
+  }
   if (instance.paymentDate != null) json['paymentDate'] = instance.paymentDate;
-  if (instance.receiverBusinessId != null)
+  if (instance.receiverBusinessId != null) {
     json['receiverBusinessId'] = instance.receiverBusinessId;
-  if (instance.receiverAccId != null)
+  }
+  if (instance.receiverAccId != null) {
     json['receiverAccId'] = instance.receiverAccId;
-  if (instance.receiverAddress != null)
+  }
+  if (instance.receiverAddress != null) {
     json['receiverAddress'] = instance.receiverAddress;
-  if (instance.receiverBranchId != null)
+  }
+  if (instance.receiverBranchId != null) {
     json['receiverBranchId'] = instance.receiverBranchId;
-  if (instance.receiverFinUserId != null)
+  }
+  if (instance.receiverFinUserId != null) {
     json['receiverFinUserId'] = instance.receiverFinUserId;
-  if (instance.shippingAmount != null)
+  }
+  if (instance.shippingAmount != null) {
     json['shippingAmount'] = instance.shippingAmount;
+  }
   if (instance.vatAmount != null) json['vatAmount'] = instance.vatAmount;
   if (instance.taxAmount != null) json['taxAmount'] = instance.taxAmount;
-  if (instance.discountType != null)
+  if (instance.discountType != null) {
     json['discountType'] = instance.discountType;
-  if (instance.discountValue != null)
+  }
+  if (instance.discountValue != null) {
     json['discountValue'] = instance.discountValue;
-  if (instance.discountAmount != null)
+  }
+  if (instance.discountAmount != null) {
     json['discountAmount'] = instance.discountAmount;
+  }
   if (instance.itemsTotal != null) json['itemsTotal'] = instance.itemsTotal;
   if (instance.totalAmount != null) json['totalAmount'] = instance.totalAmount;
-  if (instance.confirmedAmount != null)
+  if (instance.confirmedAmount != null) {
     json['confirmedAmount'] = instance.confirmedAmount;
+  }
   if (instance.paidAmount != null) json['paidAmount'] = instance.paidAmount;
   if (instance.amountToPay != null) json['amountToPay'] = instance.amountToPay;
-  if (instance.paymentStatus != null)
+  if (instance.paymentStatus != null) {
     json['paymentStatus'] = instance.paymentStatus;
-  if (instance.invoiceStatus != null)
+  }
+  if (instance.invoiceStatus != null) {
     json['invoiceStatus'] = instance.invoiceStatus;
-  if (instance.overdueStatus != null)
+  }
+  if (instance.overdueStatus != null) {
     json['overdueStatus'] = instance.overdueStatus;
+  }
   if (instance.sentDate != null) json['sentDate'] = instance.sentDate;
   if (instance.description != null) json['description'] = instance.description;
-  if (instance.confirmedUserId != null)
+  if (instance.confirmedUserId != null) {
     json['confirmedUserId'] = instance.confirmedUserId;
-  if (instance.confirmedDate != null)
+  }
+  if (instance.confirmedDate != null) {
     json['confirmedDate'] = instance.confirmedDate;
+  }
   if (instance.respondText != null) json['respondText'] = instance.respondText;
   if (instance.type != null) json['type'] = instance.type;
-  if (instance.receiverBusiness != null)
+  if (instance.receiverBusiness != null) {
     json['receiverBusiness'] = instance.receiverBusiness;
+  }
   if (instance.partnerId != null) json['partnerId'] = instance.partnerId;
   if (instance.regNumber != null) json['regNumber'] = instance.regNumber;
   if (instance.stateRegNum != null) json['stateRegNum'] = instance.stateRegNum;
   if (instance.partnerName != null) json['partnerName'] = instance.partnerName;
-  if (instance.partnerNameEng != null)
+  if (instance.partnerNameEng != null) {
     json['partnerNameEng'] = instance.partnerNameEng;
+  }
   if (instance.isVatPayer != null) json['isVatPayer'] = instance.isVatPayer;
-  if (instance.partnerEmail != null)
+  if (instance.partnerEmail != null) {
     json['partnerEmail'] = instance.partnerEmail;
-  if (instance.partnerPhone != null)
+  }
+  if (instance.partnerPhone != null) {
     json['partnerPhone'] = instance.partnerPhone;
+  }
   if (instance.profileName != null) json['profileName'] = instance.profileName;
-  if (instance.profileNameEng != null)
+  if (instance.profileNameEng != null) {
     json['profileNameEng'] = instance.profileNameEng;
+  }
   if (instance.logo != null) json['logo'] = instance.logo;
   if (instance.profileInfo != null) json['profileInfo'] = instance.profileInfo;
   if (instance.partner != null) json['partner'] = instance.partner;
-  if (instance.businessName != null)
+  if (instance.businessName != null) {
     json['businessName'] = instance.businessName;
-  if (instance.businessNameEng != null)
+  }
+  if (instance.businessNameEng != null) {
     json['businessNameEng'] = instance.businessNameEng;
+  }
   if (instance.senderUser != null) json['senderUser'] = instance.senderUser;
   if (instance.lastName != null) json['lastName'] = instance.lastName;
   if (instance.firstName != null) json['firstName'] = instance.firstName;
   if (instance.avatar != null) json['avatar'] = instance.avatar;
-  if (instance.confirmedUser != null)
+  if (instance.confirmedUser != null) {
     json['confirmedUser'] = instance.confirmedUser;
+  }
   if (instance.salesOrder != null) json['salesOrder'] = instance.salesOrder;
-  if (instance.purchaseOrder != null)
+  if (instance.purchaseOrder != null) {
     json['purchaseOrder'] = instance.purchaseOrder;
-  if (instance.remainingDays != null)
+  }
+  if (instance.remainingDays != null) {
     json['remainingDays'] = instance.remainingDays;
-  if (instance.senderBusiness != null)
+  }
+  if (instance.senderBusiness != null) {
     json['senderBusiness'] = instance.senderBusiness;
-  if (instance.senderFinUser != null)
+  }
+  if (instance.senderFinUser != null) {
     json['senderFinUser'] = instance.senderFinUser;
-  if (instance.senderBranch != null)
+  }
+  if (instance.senderBranch != null) {
     json['senderBranch'] = instance.senderBranch;
+  }
   if (instance.name != null) json['name'] = instance.name;
   if (instance.nameEng != null) json['nameEng'] = instance.nameEng;
-  if (instance.branchStatus != null)
+  if (instance.branchStatus != null) {
     json['branchStatus'] = instance.branchStatus;
+  }
   if (instance.provinceId != null) json['provinceId'] = instance.provinceId;
   if (instance.districtId != null) json['districtId'] = instance.districtId;
   if (instance.khorooId != null) json['khorooId'] = instance.khorooId;
   if (instance.khoroolol != null) json['khoroolol'] = instance.khoroolol;
-  if (instance.khotkhonBair != null)
+  if (instance.khotkhonBair != null) {
     json['khotkhonBair'] = instance.khotkhonBair;
-  if (instance.khashaaDavkhar != null)
+  }
+  if (instance.khashaaDavkhar != null) {
     json['khashaaDavkhar'] = instance.khashaaDavkhar;
-  if (instance.khaalgaDugaar != null)
+  }
+  if (instance.khaalgaDugaar != null) {
     json['khaalgaDugaar'] = instance.khaalgaDugaar;
-  if (instance.branchAddress != null)
+  }
+  if (instance.branchAddress != null) {
     json['branchAddress'] = instance.branchAddress;
+  }
   if (instance.locationLat != null) json['locationLat'] = instance.locationLat;
   if (instance.locationLng != null) json['locationLng'] = instance.locationLng;
   if (instance.senderAcc != null) json['senderAcc'] = instance.senderAcc;
@@ -574,25 +635,31 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   if (instance.currency != null) json['currency'] = instance.currency;
   if (instance.icon != null) json['icon'] = instance.icon;
   if (instance.paymentTerm != null) json['paymentTerm'] = instance.paymentTerm;
-  if (instance.modifiedUserId != null)
+  if (instance.modifiedUserId != null) {
     json['modifiedUserId'] = instance.modifiedUserId;
+  }
   if (instance.termRule != null) json['termRule'] = instance.termRule;
-  if (instance.orderConfirmTerm != null)
+  if (instance.orderConfirmTerm != null) {
     json['orderConfirmTerm'] = instance.orderConfirmTerm;
-  if (instance.expireDayCount != null)
+  }
+  if (instance.expireDayCount != null) {
     json['expireDayCount'] = instance.expireDayCount;
+  }
   if (instance.month != null) json['month'] = instance.month;
   if (instance.paymentDay != null) json['paymentDay'] = instance.paymentDay;
   if (instance.isMain != null) json['isMain'] = instance.isMain;
   if (instance.isActive != null) json['isActive'] = instance.isActive;
   if (instance.isOpen != null) json['isOpen'] = instance.isOpen;
-  if (instance.receiverFinUser != null)
+  if (instance.receiverFinUser != null) {
     json['receiverFinUser'] = instance.receiverFinUser;
-  if (instance.receiverBranch != null)
+  }
+  if (instance.receiverBranch != null) {
     json['receiverBranch'] = instance.receiverBranch;
+  }
   if (instance.receiverAcc != null) json['receiverAcc'] = instance.receiverAcc;
-  if (instance.invoiceLines != null)
+  if (instance.invoiceLines != null) {
     json['invoiceLines'] = instance.invoiceLines;
+  }
   if (instance.invoiceId != null) json['invoiceId'] = instance.invoiceId;
   if (instance.variantId != null) json['variantId'] = instance.variantId;
   if (instance.price != null) json['price'] = instance.price;
@@ -601,8 +668,9 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   if (instance.vatPercent != null) json['vatPercent'] = instance.vatPercent;
   if (instance.hasTax != null) json['hasTax'] = instance.hasTax;
   if (instance.taxPercent != null) json['taxPercent'] = instance.taxPercent;
-  if (instance.lineTotalAmount != null)
+  if (instance.lineTotalAmount != null) {
     json['lineTotalAmount'] = instance.lineTotalAmount;
+  }
   if (instance.skuCode != null) json['skuCode'] = instance.skuCode;
   if (instance.barCode != null) json['barCode'] = instance.barCode;
   if (instance.erpCode != null) json['erpCode'] = instance.erpCode;
@@ -611,12 +679,14 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   if (instance.nameWeb != null) json['nameWeb'] = instance.nameWeb;
   if (instance.nameApp != null) json['nameApp'] = instance.nameApp;
   if (instance.image != null) json['image'] = instance.image;
-  if (instance.priceStartDate != null)
+  if (instance.priceStartDate != null) {
     json['priceStartDate'] = instance.priceStartDate;
+  }
   if (instance.unit != null) json['unit'] = instance.unit;
   if (instance.convertType != null) json['convertType'] = instance.convertType;
-  if (instance.convertValue != null)
+  if (instance.convertValue != null) {
     json['convertValue'] = instance.convertValue;
+  }
   if (instance.attachments != null) json['attachments'] = instance.attachments;
 
   return json;

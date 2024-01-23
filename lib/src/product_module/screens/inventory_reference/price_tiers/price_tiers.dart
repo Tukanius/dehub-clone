@@ -26,8 +26,8 @@ class InventoryPriceTiersState extends State<InventoryPriceTiers> {
       appBar: AppBar(
         backgroundColor: white,
         surfaceTintColor: white,
-        iconTheme: IconThemeData(color: productColor),
-        title: Text(
+        iconTheme: const IconThemeData(color: productColor),
+        title: const Text(
           'Үнийн бүлэг',
           style: TextStyle(
             color: productColor,
@@ -41,7 +41,7 @@ class InventoryPriceTiersState extends State<InventoryPriceTiers> {
           children: [
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text('Бүртгэсэн жагсаалт'),
+              child: const Text('Бүртгэсэн жагсаалт'),
             ),
             Column(
               children: general.tiers!
@@ -60,18 +60,18 @@ class InventoryPriceTiersState extends State<InventoryPriceTiers> {
                               data.name != null
                                   ? Text(
                                       '${data.name}',
-                                      style: TextStyle(color: productColor),
+                                      style: const TextStyle(color: productColor),
                                     )
-                                  : Text(
+                                  : const Text(
                                       '.....',
                                       style: TextStyle(color: productColor),
                                     ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 3,
                               ),
                               Text(
                                 'Price Tier ${general.tiers?.indexOf(data)}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: grey2,
                                 ),
                               ),
@@ -92,7 +92,7 @@ class InventoryPriceTiersState extends State<InventoryPriceTiers> {
                               padding: const EdgeInsets.all(5),
                               child: SvgPicture.asset(
                                 'assets/svg/edit_rounded.svg',
-                                colorFilter: ColorFilter.mode(
+                                colorFilter: const ColorFilter.mode(
                                     productColor, BlendMode.srcIn),
                               ),
                             ),

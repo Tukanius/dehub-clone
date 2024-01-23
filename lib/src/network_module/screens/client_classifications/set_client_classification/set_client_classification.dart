@@ -30,10 +30,10 @@ class SetClientClassification extends StatefulWidget {
   final String id;
   static const routeName = '/SetClientClassification';
   const SetClientClassification({
-    Key? key,
+    super.key,
     required this.id,
     required this.listenController,
-  }) : super(key: key);
+  });
 
   @override
   State<SetClientClassification> createState() =>
@@ -108,7 +108,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
         automaticallyImplyLeading: false,
         backgroundColor: networkColor,
         surfaceTintColor: networkColor,
-        title: Text(
+        title: const Text(
           'Ангилал, зэрэглэл тохируулах',
           style: TextStyle(
             color: white,
@@ -116,7 +116,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
             fontWeight: FontWeight.w600,
           ),
         ),
-        actions: [
+        actions: const [
           CustomCloseButton(),
         ],
       ),
@@ -124,7 +124,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             FieldCard(
@@ -157,7 +157,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
             ),
             Container(
               margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-              child: Text(
+              child: const Text(
                 'Тайлбар',
                 style: TextStyle(
                   color: grey3,
@@ -173,7 +173,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
                 textAlign: TextAlign.left,
                 name: 'description',
                 maxLines: 5,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.zero,
                     borderSide: BorderSide(
@@ -188,7 +188,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             CustomButton(
@@ -211,7 +211,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
   classification() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -228,7 +228,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 25, bottom: 20),
-                  child: Text(
+                  child: const Text(
                     'Ангилал',
                     style: TextStyle(
                       color: grey2,
@@ -268,7 +268,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
                       )
                     : Column(
                         children: [
-                          NotFound(
+                          const NotFound(
                             module: "NETWORK",
                             labelText: '',
                           ),
@@ -287,7 +287,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
                           )
                         ],
                       ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
               ],
@@ -301,7 +301,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
   rank() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -318,7 +318,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 25, bottom: 20),
-                  child: Text(
+                  child: const Text(
                     'Зэрэглэл',
                     style: TextStyle(
                       color: grey2,
@@ -357,7 +357,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
                       )
                     : Column(
                         children: [
-                          NotFound(
+                          const NotFound(
                             module: "NETWORK",
                             labelText: '',
                           ),
@@ -379,7 +379,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
                           )
                         ],
                       ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
               ],

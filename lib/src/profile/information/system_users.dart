@@ -15,7 +15,7 @@ class _SystemUsersPageState extends State<SystemUsersPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       child: Column(
         children: [
           for (var i = 0; i < 10; i++)
@@ -37,19 +37,19 @@ class _SystemUsersPageState extends State<SystemUsersPage> {
                             width: 40,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(100),
-                              child: Image(
+                              child: const Image(
                                 image: AssetImage('images/map.jpg'),
                                 fit: BoxFit.cover,
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 16,
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
+                              SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.75,
                                 child: Row(
                                   mainAxisAlignment:
@@ -57,7 +57,7 @@ class _SystemUsersPageState extends State<SystemUsersPage> {
                                   children: [
                                     Container(
                                       margin: const EdgeInsets.only(top: 16),
-                                      child: Text(
+                                      child: const Text(
                                         'Bolormaa.Ch',
                                         style: TextStyle(
                                           fontWeight: FontWeight.w600,
@@ -69,7 +69,7 @@ class _SystemUsersPageState extends State<SystemUsersPage> {
                                     Container(
                                       alignment: Alignment.centerLeft,
                                       margin: const EdgeInsets.only(top: 16),
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.arrow_forward_ios,
                                         size: 12,
                                         color: grey3,
@@ -83,12 +83,12 @@ class _SystemUsersPageState extends State<SystemUsersPage> {
                                   Container(
                                     margin:
                                         const EdgeInsets.symmetric(vertical: 5),
-                                    child: Text(
+                                    child: const Text(
                                       'System admin',
                                       style: TextStyle(color: dark),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Container(
@@ -98,12 +98,13 @@ class _SystemUsersPageState extends State<SystemUsersPage> {
                                     width: 60,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
-                                      color: Color(0xff33A853).withOpacity(0.4),
+                                      color: const Color(0xff33A853)
+                                          .withOpacity(0.4),
                                       border: Border.all(
                                         color: grey3.withOpacity(0.4),
                                       ),
                                     ),
-                                    child: Text(
+                                    child: const Text(
                                       'Идэвхтэй',
                                       style:
                                           TextStyle(color: green, fontSize: 10),
@@ -111,14 +112,12 @@ class _SystemUsersPageState extends State<SystemUsersPage> {
                                   ),
                                 ],
                               ),
-                              Container(
-                                child: Text(
-                                  '9999-9999, bolormaa@gmail.com',
-                                  style: TextStyle(
-                                    color: grey3,
-                                  ),
+                              const Text(
+                                '9999-9999, bolormaa@gmail.com',
+                                style: TextStyle(
+                                  color: grey3,
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ],
@@ -126,7 +125,7 @@ class _SystemUsersPageState extends State<SystemUsersPage> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
               ],

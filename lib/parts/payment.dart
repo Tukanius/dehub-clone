@@ -152,63 +152,83 @@ Map<String, dynamic> _$PaymentToJson(Payment instance) {
   Map<String, dynamic> json = {};
   if (instance.requestId != null) json['requestId'] = instance.requestId;
   if (instance.clientId != null) json['clientId'] = instance.clientId;
-  if (instance.responseType != null)
+  if (instance.responseType != null) {
     json['responseType'] = instance.responseType;
+  }
   if (instance.redirectUri != null) json['redirectUri'] = instance.redirectUri;
   if (instance.url != null) json['url'] = instance.url;
   if (instance.values != null) json['values'] = instance.values;
   if (instance.header != null) json['header'] = instance.header;
   if (instance.inOutType != null) json['inOutType'] = instance.inOutType;
   if (instance.type != null) json['type'] = instance.type;
-  if (instance.transactionStatus != null)
+  if (instance.transactionStatus != null) {
     json['transactionStatus'] = instance.transactionStatus;
+  }
   if (instance.paymentId != null) json['paymentId'] = instance.paymentId;
-  if (instance.paymentRefCode != null)
+  if (instance.paymentRefCode != null) {
     json['paymentRefCode'] = instance.paymentRefCode;
-  if (instance.paymentMethod != null)
+  }
+  if (instance.paymentMethod != null) {
     json['paymentMethod'] = instance.paymentMethod;
+  }
   if (instance.objectType != null) json['objectType'] = instance.objectType;
   if (instance.objectId != null) json['objectId'] = instance.objectId;
-  if (instance.invoiceRefCode != null)
+  if (instance.invoiceRefCode != null) {
     json['invoiceRefCode'] = instance.invoiceRefCode;
+  }
   if (instance.payerUserId != null) json['payerUserId'] = instance.payerUserId;
-  if (instance.payerBusinessId != null)
+  if (instance.payerBusinessId != null) {
     json['payerBusinessId'] = instance.payerBusinessId;
-  if (instance.typayerBusinessRegNumbere != null)
+  }
+  if (instance.typayerBusinessRegNumbere != null) {
     json['typayerBusinessRegNumbere'] = instance.typayerBusinessRegNumbere;
-  if (instance.creditAccountId != null)
+  }
+  if (instance.creditAccountId != null) {
     json['creditAccountId'] = instance.creditAccountId;
-  if (instance.creditAccountBank != null)
+  }
+  if (instance.creditAccountBank != null) {
     json['creditAccountBank'] = instance.creditAccountBank;
-  if (instance.creditAccountName != null)
+  }
+  if (instance.creditAccountName != null) {
     json['creditAccountName'] = instance.creditAccountName;
-  if (instance.creditAccountNumber != null)
+  }
+  if (instance.creditAccountNumber != null) {
     json['creditAccountNumber'] = instance.creditAccountNumber;
-  if (instance.creditAccountCurrency != null)
+  }
+  if (instance.creditAccountCurrency != null) {
     json['creditAccountCurrency'] = instance.creditAccountCurrency;
-  if (instance.debitAccountId != null)
+  }
+  if (instance.debitAccountId != null) {
     json['debitAccountId'] = instance.debitAccountId;
-  if (instance.receiverBusinessId != null)
+  }
+  if (instance.receiverBusinessId != null) {
     json['receiverBusinessId'] = instance.receiverBusinessId;
-  if (instance.debitAccountBank != null)
+  }
+  if (instance.debitAccountBank != null) {
     json['debitAccountBank'] = instance.debitAccountBank;
-  if (instance.debitAccountName != null)
+  }
+  if (instance.debitAccountName != null) {
     json['debitAccountName'] = instance.debitAccountName;
-  if (instance.debitAccountNumber != null)
+  }
+  if (instance.debitAccountNumber != null) {
     json['debitAccountNumber'] = instance.debitAccountNumber;
-  if (instance.debitAccountCurrency != null)
+  }
+  if (instance.debitAccountCurrency != null) {
     json['debitAccountCurrency'] = instance.debitAccountCurrency;
+  }
   if (instance.description != null) json['description'] = instance.description;
   if (instance.addInfo != null) json['addInfo'] = instance.addInfo;
   if (instance.amount != null) json['amount'] = instance.amount;
   if (instance.hasTrxFee != null) json['hasTrxFee'] = instance.hasTrxFee;
   if (instance.trxFee != null) json['trxFee'] = instance.trxFee;
-  if (instance.hasPaymentFee != null)
+  if (instance.hasPaymentFee != null) {
     json['hasPaymentFee'] = instance.hasPaymentFee;
+  }
   if (instance.paymentFee != null) json['paymentFee'] = instance.paymentFee;
   if (instance.accountName != null) json['accountName'] = instance.accountName;
-  if (instance.hasBankTrxFee != null)
+  if (instance.hasBankTrxFee != null) {
     json['hasBankTrxFee'] = instance.hasBankTrxFee;
+  }
   if (instance.bankTrxFee != null) json['bankTrxFee'] = instance.bankTrxFee;
   if (instance.totalAmount != null) json['totalAmount'] = instance.totalAmount;
   if (instance.tranId != null) json['tranId'] = instance.tranId;
@@ -237,8 +257,9 @@ Map<String, dynamic> _$PaymentToJson(Payment instance) {
   if (instance.refCode != null) json['refCode'] = instance.refCode;
   if (instance.profileName != null) json['profileName'] = instance.profileName;
   if (instance.partner != null) json['partner'] = instance.partner;
-  if (instance.businessName != null)
+  if (instance.businessName != null) {
     json['businessName'] = instance.businessName;
+  }
   if (instance.regUser != null) json['regUser'] = instance.regUser;
   if (instance.avatar != null) json['avatar'] = instance.avatar;
   if (instance.firstName != null) json['firstName'] = instance.firstName;

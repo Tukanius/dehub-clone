@@ -32,11 +32,11 @@ class InvitationSentPage extends StatefulWidget {
   final String invitationType;
   static const routeName = '/InvitationSentPage';
   const InvitationSentPage({
-    Key? key,
+    super.key,
     required this.listenController,
     required this.invitationType,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<InvitationSentPage> createState() => _InvitationSentPageState();
@@ -98,7 +98,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
             Container(
               margin: const EdgeInsets.only(right: 15, bottom: 5),
               child: GestureDetector(
-                child: Text(
+                child: const Text(
                   'Ойлголоо',
                   style: TextStyle(color: red),
                 ),
@@ -167,7 +167,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
             child: SvgPicture.asset('assets/svg/close.svg'),
           ),
         ),
-        title: Text(
+        title: const Text(
           'Урилга илгээх',
           style: TextStyle(
             color: white,
@@ -177,7 +177,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
         ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: networkColor,
               ),
@@ -189,7 +189,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Урилга мэдээлэл',
                       style:
                           TextStyle(fontWeight: FontWeight.w600, color: grey3),
@@ -198,7 +198,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                   Container(
                     padding: const EdgeInsets.all(10),
                     color: white,
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -222,13 +222,13 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Илгээсэн огноо, цаг',
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
-                          style: TextStyle(
+                          DateFormat("yyyy-MM-dd").format(DateTime.now()),
+                          style: const TextStyle(
                             color: dark,
                           ),
                         )
@@ -241,7 +241,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Урилга төлөв',
                           style: TextStyle(color: dark),
                         ),
@@ -252,7 +252,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                             borderRadius: BorderRadius.circular(20),
                             color: grey2.withOpacity(0.1),
                           ),
-                          child: Text(
+                          child: const Text(
                             'Түр төлөв',
                             style: TextStyle(
                               color: grey2,
@@ -266,7 +266,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Урилга илгээгч',
                       style:
                           TextStyle(fontWeight: FontWeight.w600, color: grey3),
@@ -278,13 +278,13 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Партнер нэр',
                           style: TextStyle(color: dark),
                         ),
                         Text(
                           '${partner.user?.currentBusiness?.partnerName}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: networkColor,
                           ),
                         )
@@ -297,13 +297,13 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Партнер код',
                           style: TextStyle(color: dark),
                         ),
                         Text(
                           '${partner.partner?.refCode}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: networkColor,
                           ),
                         )
@@ -316,13 +316,13 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Татвар төлөгч №',
                           style: TextStyle(color: dark),
                         ),
                         Text(
                           '${partner.partner?.regNumber}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: networkColor,
                           ),
                         )
@@ -335,13 +335,13 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Бизнесийн нэр',
                           style: TextStyle(color: dark),
                         ),
                         Text(
                           '${partner.partner?.businessName}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: networkColor,
                           ),
                         )
@@ -354,13 +354,13 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Бизнес код',
                           style: TextStyle(color: dark),
                         ),
                         Text(
                           '${partner.user?.currentBusiness?.refCode}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: networkColor,
                           ),
                         )
@@ -373,13 +373,13 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Илгээсэн ажилтан',
                           style: TextStyle(color: dark),
                         ),
                         Text(
                           '${partner.user?.firstName}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: networkColor,
                           ),
                         )
@@ -389,7 +389,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                   Container(
                     padding: const EdgeInsets.all(10),
                     color: white,
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -411,13 +411,13 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Урилга төрөл',
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          '${widget.invitationType}',
-                          style: TextStyle(
+                          widget.invitationType,
+                          style: const TextStyle(
                             color: networkColor,
                           ),
                         )
@@ -427,7 +427,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Урилгын тайлбар',
                       style: TextStyle(
                         color: grey3,
@@ -443,7 +443,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                       textAlign: TextAlign.left,
                       name: 'toMessage',
                       maxLines: 5,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.zero,
                           borderSide: BorderSide(color: grey),
@@ -456,7 +456,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Column(
@@ -469,17 +469,16 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                         )
                         .toList(),
                   ),
-                  isLineEmpty == true
-                      ? Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 15),
-                          child: Text(
-                            'Харилцагч сонгоно уу!',
-                            style: TextStyle(color: red),
-                          ),
-                        )
-                      : SizedBox(),
-                  SizedBox(
+                  if (isLineEmpty == true)
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 15),
+                      child: const Text(
+                        'Харилцагч сонгоно уу!',
+                        style: TextStyle(color: red),
+                      ),
+                    ),
+                  const SizedBox(
                     height: 40,
                   ),
                   Row(
@@ -512,7 +511,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                 ],

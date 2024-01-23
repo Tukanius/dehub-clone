@@ -5,10 +5,10 @@ class ScheduleCard extends StatefulWidget {
   final String labelText;
   final int count;
   const ScheduleCard({
-    Key? key,
+    super.key,
     required this.count,
     required this.labelText,
-  }) : super(key: key);
+  });
 
   @override
   State<ScheduleCard> createState() => _ScheduleCardState();
@@ -25,7 +25,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
       elevation: 5,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: white,
         ),
         height: 100,
@@ -36,18 +36,18 @@ class _ScheduleCardState extends State<ScheduleCard> {
           children: [
             Text(
               '${widget.count}',
-              style: TextStyle(
+              style: const TextStyle(
                 color: buttonColor,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              '${widget.labelText}',
-              style: TextStyle(color: buttonColor),
+              widget.labelText,
+              style: const TextStyle(color: buttonColor),
               textAlign: TextAlign.center,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Stack(
@@ -57,7 +57,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                   width: width,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Color(0xffF6F6F6),
+                    color: const Color(0xffF6F6F6),
                   ),
                 ),
                 Container(

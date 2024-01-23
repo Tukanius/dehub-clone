@@ -24,20 +24,18 @@ class _Page2State extends State<Page2> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
-          Container(
-            child: Text(
-              'Холбоо барих мэдээлэл',
-              style: TextStyle(
-                color: grey3,
-                fontWeight: FontWeight.w500,
-                fontSize: 16,
-              ),
+          const Text(
+            'Холбоо барих мэдээлэл',
+            style: TextStyle(
+              color: grey3,
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           InformationCard(
@@ -70,10 +68,10 @@ class _Page2State extends State<Page2> {
             value: partnerUser.partner?.phone2,
             paddingVertical: 5,
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
-          Text(
+          const Text(
             'Байршлын мэдээлэл',
             style: TextStyle(
               fontWeight: FontWeight.w500,
@@ -81,15 +79,15 @@ class _Page2State extends State<Page2> {
               color: grey3,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
-          Image(
+          const Image(
             image: AssetImage(
               'images/map.jpg',
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 90,
           )
         ],

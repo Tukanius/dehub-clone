@@ -5,10 +5,10 @@ class DialogWrapper extends StatefulWidget {
   // ignore: use_key_in_widget_constructors
   const DialogWrapper({this.child});
   @override
-  _DialogWrapperState createState() => _DialogWrapperState();
+  DialogWrapperState createState() => DialogWrapperState();
 }
 
-class _DialogWrapperState extends State<DialogWrapper>
+class DialogWrapperState extends State<DialogWrapper>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
   late Animation<double> scaleAnimation;

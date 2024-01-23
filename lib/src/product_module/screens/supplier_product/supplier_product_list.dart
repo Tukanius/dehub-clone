@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:dehub/components/product_card/grid_view_product_card.dart';
 import 'package:dehub/components/product_card/product_card.dart';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/inventory_goods.dart';
@@ -8,7 +9,6 @@ import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
@@ -28,9 +28,9 @@ class SupplierProductList extends StatefulWidget {
   static const routeName = '/SupplierProductList';
   final String id;
   const SupplierProductList({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<SupplierProductList> createState() => _SupplierProductListState();
@@ -64,7 +64,7 @@ class _SupplierProductListState extends State<SupplierProductList>
       inventory = res;
       isLoading = false;
     });
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         startAnimation = true;
       });
@@ -83,7 +83,7 @@ class _SupplierProductListState extends State<SupplierProductList>
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
     });
@@ -120,6 +120,11 @@ class _SupplierProductListState extends State<SupplierProductList>
     }
   }
 
+  void onButtonTapped(BuildContext context) async {
+    await Future.delayed(const Duration(seconds: 1));
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     general =
@@ -129,8 +134,8 @@ class _SupplierProductListState extends State<SupplierProductList>
       appBar: AppBar(
         backgroundColor: white,
         surfaceTintColor: white,
-        iconTheme: IconThemeData(color: productColor),
-        title: Text(
+        iconTheme: const IconThemeData(color: productColor),
+        title: const Text(
           'Барааны жагсаалт',
           style: TextStyle(
             color: productColor,
@@ -160,7 +165,7 @@ class _SupplierProductListState extends State<SupplierProductList>
                     child: SvgPicture.asset(
                       'assets/svg/yuluur.svg',
                       colorFilter:
-                          ColorFilter.mode(productColor, BlendMode.srcIn),
+                          const ColorFilter.mode(productColor, BlendMode.srcIn),
                     ),
                   ),
                 ),
@@ -173,12 +178,12 @@ class _SupplierProductListState extends State<SupplierProductList>
                       name: 'query',
                       onChanged: (value) {},
                       decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
+                        focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
                             color: productColor,
                           ),
                         ),
-                        enabledBorder: OutlineInputBorder(
+                        enabledBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
                             color: productColor,
                           ),
@@ -187,7 +192,7 @@ class _SupplierProductListState extends State<SupplierProductList>
                           padding: const EdgeInsets.symmetric(vertical: 7),
                           child: SvgPicture.asset('assets/svg/search.svg'),
                         ),
-                        border: OutlineInputBorder(
+                        border: const OutlineInputBorder(
                           borderSide: BorderSide(
                             color: grey,
                           ),
@@ -220,8 +225,8 @@ class _SupplierProductListState extends State<SupplierProductList>
                           horizontal: 5, vertical: 5),
                       child: SvgPicture.asset(
                         'assets/svg/filter.svg',
-                        colorFilter:
-                            ColorFilter.mode(productColor, BlendMode.srcIn),
+                        colorFilter: const ColorFilter.mode(
+                            productColor, BlendMode.srcIn),
                       ),
                     ),
                   ),
@@ -229,80 +234,50 @@ class _SupplierProductListState extends State<SupplierProductList>
               ],
             ),
           ),
-          Expanded(
-            child: SmartRefresher(
-              enablePullDown: true,
-              enablePullUp: true,
-              controller: refreshController,
-              header: WaterDropHeader(
-                waterDropColor: productColor,
-                refresh: SizedBox(
-                  height: 20,
-                  width: 20,
+          isLoading == true
+              ? const Center(
                   child: CircularProgressIndicator(
-                    strokeWidth: 2,
                     color: productColor,
                   ),
+                )
+              : Expanded(
+                  child: Refresher(
+                    refreshController: refreshController,
+                    onLoading: _onLoading,
+                    onRefresh: _onRefresh,
+                    color: productColor,
+                    child: inventory.rows!.isNotEmpty
+                        ? gridview == true
+                            ? GridView.count(
+                                childAspectRatio: 2 / 3,
+                                scrollDirection: Axis.vertical,
+                                crossAxisCount: 2,
+                                children: inventory.rows!
+                                    .map(
+                                      (data) => GridViewProductCard(
+                                        data: data,
+                                        buttonClick: () {
+                                          fetch(data.id);
+                                        },
+                                      ),
+                                    )
+                                    .toList(),
+                              )
+                            : ListView.builder(
+                                itemCount: inventory.rows?.length,
+                                itemBuilder: (context, index) => ProductCard(
+                                  data: inventory.rows![index],
+                                  buttonClick: () {
+                                    fetch(inventory.rows?[index].id);
+                                  },
+                                ),
+                              )
+                        : const NotFound(
+                            module: 'INVENTORY',
+                            labelText: "Бараа олдсонгүй",
+                          ),
+                  ),
                 ),
-              ),
-              onRefresh: _onRefresh,
-              onLoading: _onLoading,
-              footer: CustomFooter(
-                builder: (context, mode) {
-                  Widget body;
-                  if (mode == LoadStatus.idle) {
-                    body = const Text("");
-                  } else if (mode == LoadStatus.loading) {
-                    body = const CupertinoActivityIndicator();
-                  } else if (mode == LoadStatus.failed) {
-                    body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                  } else {
-                    body = const Text("Мэдээлэл алга байна");
-                  }
-                  return SizedBox(
-                    height: 55.0,
-                    child: Center(child: body),
-                  );
-                },
-              ),
-              child: isLoading == true
-                  ? Center(
-                      child: CircularProgressIndicator(
-                        color: productColor,
-                      ),
-                    )
-                  : inventory.rows!.length != 0
-                      ? gridview == true
-                          ? GridView.count(
-                              childAspectRatio: 2 / 3,
-                              scrollDirection: Axis.vertical,
-                              crossAxisCount: 2,
-                              children: inventory.rows!
-                                  .map(
-                                    (data) => GridViewProductCard(
-                                      data: data,
-                                      buttonClick: () {
-                                        fetch(data.id);
-                                      },
-                                    ),
-                                  )
-                                  .toList(),
-                            )
-                          : ListView.builder(
-                              itemCount: inventory.rows?.length,
-                              itemBuilder: (context, index) => ProductCard(
-                                data: inventory.rows![index],
-                                buttonClick: () {
-                                  fetch(inventory.rows?[index].id);
-                                },
-                              ),
-                            )
-                      : NotFound(
-                          module: 'INVENTORY',
-                          labelText: "Бараа олдсонгүй",
-                        ),
-            ),
-          ),
         ],
       ),
     );

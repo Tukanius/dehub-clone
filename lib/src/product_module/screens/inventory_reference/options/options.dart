@@ -30,8 +30,8 @@ class _OptionsState extends State<Options> with SingleTickerProviderStateMixin {
         surfaceTintColor: white,
         elevation: 3,
         shadowColor: Colors.grey.shade300,
-        iconTheme: IconThemeData(color: productColor),
-        title: Text(
+        iconTheme: const IconThemeData(color: productColor),
+        title: const Text(
           'Хувилбарын төрөл',
           style: TextStyle(
             color: productColor,
@@ -43,7 +43,7 @@ class _OptionsState extends State<Options> with SingleTickerProviderStateMixin {
           overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
           indicatorColor: productColor,
           labelColor: productColor,
-          tabs: [
+          tabs: const [
             Tab(
               text: 'Бараа бүтээгдэхүүн',
             ),
@@ -64,12 +64,12 @@ class _OptionsState extends State<Options> with SingleTickerProviderStateMixin {
           );
         },
         backgroundColor: productColor,
-        shape: CircleBorder(),
-        child: Icon(Icons.add, color: white),
+        shape: const CircleBorder(),
+        child: const Icon(Icons.add, color: white),
       ),
       body: TabBarView(
         controller: tabController,
-        children: [
+        children: const [
           ProductTab(),
           WorkServiceTab(),
         ],

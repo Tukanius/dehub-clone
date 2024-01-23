@@ -25,10 +25,10 @@ class OrderSendPage extends StatefulWidget {
   final Function() onSubmit;
   static const routeName = '/OrderSendPage';
   const OrderSendPage({
-    Key? key,
+    super.key,
     required this.data,
     required this.onSubmit,
-  }) : super(key: key);
+  });
 
   @override
   State<OrderSendPage> createState() => _OrderSendPageState();
@@ -42,7 +42,7 @@ class _OrderSendPageState extends State<OrderSendPage> {
     decoration: BoxDecoration(
       color: white,
       border: Border.all(
-        color: Color(0xffC6C6C8),
+        color: const Color(0xffC6C6C8),
       ),
       borderRadius: BorderRadius.circular(5),
     ),
@@ -59,33 +59,33 @@ class _OrderSendPageState extends State<OrderSendPage> {
         surfaceTintColor: white,
         elevation: 0,
         leadingWidth: 150,
-        leading: CustomBackButton(color: orderColor),
+        leading: const CustomBackButton(color: orderColor),
       ),
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               SvgPicture.asset(
                 '${widget.data.image}',
-                colorFilter: ColorFilter.mode(orderColor, BlendMode.srcIn),
+                colorFilter: const ColorFilter.mode(orderColor, BlendMode.srcIn),
                 height: 40,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Text(
                 '${widget.data.name}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: buttonColor,
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 45,
               ),
               Container(
@@ -94,13 +94,13 @@ class _OrderSendPageState extends State<OrderSendPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Захиалга бүртгэсэн',
                       style: TextStyle(color: buttonColor),
                     ),
                     Text(
                       '${user.lastName?[0]}.${user.firstName}',
-                      style: TextStyle(color: orderColor),
+                      style: const TextStyle(color: orderColor),
                     ),
                   ],
                 ),
@@ -111,13 +111,13 @@ class _OrderSendPageState extends State<OrderSendPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Харилцагч',
                       style: TextStyle(color: buttonColor),
                     ),
                     Text(
                       '${widget.data.partnerName}',
-                      style: TextStyle(color: orderColor),
+                      style: const TextStyle(color: orderColor),
                     ),
                   ],
                 ),
@@ -128,13 +128,13 @@ class _OrderSendPageState extends State<OrderSendPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Захиалгын дүн',
                       style: TextStyle(color: buttonColor),
                     ),
                     Text(
                       '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
-                      style: TextStyle(color: orderColor),
+                      style: const TextStyle(color: orderColor),
                     ),
                   ],
                 ),
@@ -145,25 +145,25 @@ class _OrderSendPageState extends State<OrderSendPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Хүргэх огноо',
                       style: TextStyle(color: buttonColor),
                     ),
                     Text(
-                      '${DateFormat("yyyy-MM-dd").format(DateTime.parse(widget.data.deliveryDate.toString()))}',
-                      style: TextStyle(color: orderColor),
+                      DateFormat("yyyy-MM-dd").format(DateTime.parse(widget.data.deliveryDate.toString())),
+                      style: const TextStyle(color: orderColor),
                     ),
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Text(
+              const Text(
                 'Та ПИН кодоо оруулна уу',
                 style: TextStyle(color: buttonColor),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 35,
               ),
               Pinput(
@@ -194,7 +194,7 @@ class _OrderSendPageState extends State<OrderSendPage> {
                   border: Border.all(color: Colors.redAccent),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 100,
               ),
             ],

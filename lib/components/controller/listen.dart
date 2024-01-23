@@ -26,62 +26,62 @@ class ListenController extends ChangeNotifier {
   }
 
   refreshList(String value) {
-    this.listValue = value;
+    listValue = value;
     notifyListeners();
   }
 
   invoiceChange(Invoice value) {
-    this.invoice = value;
+    invoice = value;
     notifyListeners();
   }
 
   partnerInvoiceChange(Invoice value) {
-    this.partnerInvoice = value;
+    partnerInvoice = value;
     notifyListeners();
   }
 
   sectorInvoiceChange(Invoice value) {
-    this.sectorInvoice = value;
+    sectorInvoice = value;
     notifyListeners();
   }
 
   customerOrderChange(Order value) {
-    this.customerOrder = value;
+    customerOrder = value;
     notifyListeners();
   }
 
   goodsInvoiceChange(Invoice value) {
-    this.goodsInvoice = value;
+    goodsInvoice = value;
     notifyListeners();
   }
 
   productOrderChange(Order value) {
-    this.productOrder = value;
+    productOrder = value;
     notifyListeners();
   }
 
   additionalRowsChange(Order value) {
-    this.additionalRows = value;
+    additionalRows = value;
     notifyListeners();
   }
 
   invoiceAddRow(Invoice value) {
-    this.invoiceAdditionalRow = value;
+    invoiceAdditionalRow = value;
     notifyListeners();
   }
 
   receiverBranchChange(Order value) {
-    this.receiverBranch = value;
+    receiverBranch = value;
     notifyListeners();
   }
 
   filPickerChange(Order value) {
-    this.file = value;
+    file = value;
     notifyListeners();
   }
 
   orderPackageProduct(List<Order> value) {
-    this.productInPackage = value;
+    productInPackage = value;
     notifyListeners();
   }
 
@@ -91,7 +91,7 @@ class ListenController extends ChangeNotifier {
   }
 
   chooseProduct(Order value) {
-    this.productChoose = value;
+    productChoose = value;
     notifyListeners();
   }
 }

@@ -32,7 +32,7 @@ class RegisterLetters extends StatefulWidget {
   final Function()? onIconPressed;
 
   const RegisterLetters({
-    Key? key,
+    super.key,
     this.length,
     this.width,
     this.height,
@@ -60,13 +60,13 @@ class RegisterLetters extends StatefulWidget {
     this.isDismissible = true,
     this.hideOnPressed = false,
     this.onIconPressed,
-  }) : super(key: key);
+  });
 
   @override
-  _RegisterLettersState createState() => _RegisterLettersState();
+  RegisterLettersState createState() => RegisterLettersState();
 }
 
-class _RegisterLettersState extends State<RegisterLetters> {
+class RegisterLettersState extends State<RegisterLetters> {
   void _onButtonPressed() {
     showModalBottomSheet(
       backgroundColor: widget.backgroundColor,
@@ -79,7 +79,7 @@ class _RegisterLettersState extends State<RegisterLetters> {
       builder: (context) {
         return Container(
           height: widget.height ?? DeviceSize.height(100, context) * 1.2,
-          width: widget.width ?? DeviceSize.width(10, context),
+          width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.only(
               top: 10,
               left: 10,
@@ -87,13 +87,13 @@ class _RegisterLettersState extends State<RegisterLetters> {
               bottom: MediaQuery.of(context).viewInsets.bottom + 10),
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 height: 60,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
+                    const SizedBox(
                       width: 30,
                       height: 30,
                     ),
@@ -101,7 +101,7 @@ class _RegisterLettersState extends State<RegisterLetters> {
                         child: Text(
                       widget.oneTitle ?? "Title",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: black, fontSize: 16),
+                      style: const TextStyle(color: black, fontSize: 16),
                     )),
                     widget.isShowIcon
                         ? GestureDetector(
@@ -109,7 +109,7 @@ class _RegisterLettersState extends State<RegisterLetters> {
                                 () {
                                   Navigator.pop(context);
                                 },
-                            child: Container(
+                            child: const SizedBox(
                               width: 30,
                               height: 30,
                               child: Icon(
@@ -129,7 +129,7 @@ class _RegisterLettersState extends State<RegisterLetters> {
                     )
                   : Expanded(
                       child: GridView.builder(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       padding: const EdgeInsets.all(20),
                       itemCount: widget.length,
                       itemBuilder: widget.itemBuilder!,
@@ -158,12 +158,12 @@ class _RegisterLettersState extends State<RegisterLetters> {
             Radius.circular(5.0),
           ),
           border: Border.all(
-            color: Color(0xff44566C30),
+            color: grey2.withOpacity(0.3),
           ),
           color: white,
         ),
         child: Center(
-          child: Container(
+          child: SizedBox(
             width: widget.rightWidth ?? DeviceSize.width(5, context),
             child: Text(
               widget.title.toString(),
@@ -184,9 +184,9 @@ class _RegisterLettersState extends State<RegisterLetters> {
   }
 }
 
-const CYRILLIC_ALPHABETS_RAW =
+const cryillicAphabetsRaw =
     '''["А","Б","В","Г","Д","Е","Ё","Ж","З","И","Й","К","Л","М","Н","О","Ө","П","Р","С","Т","У","Ү","Ф","Х","Ц","Ч","Ш","Щ","Ъ","Ь","Ы","Э","Ю","Я"]''';
-const CYRILLIC_ALPHABETS_LIST = [
+const cryilliAlphabetsList = [
   "А",
   "Б",
   "В",

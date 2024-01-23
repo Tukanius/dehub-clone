@@ -12,7 +12,7 @@ import 'package:lottie/lottie.dart';
 
 class CreatePasswordPage extends StatefulWidget {
   static const routeName = '/CreatePasswordPage';
-  const CreatePasswordPage({Key? key}) : super(key: key);
+  const CreatePasswordPage({super.key});
 
   @override
   State<CreatePasswordPage> createState() => _CreatePasswordPageState();
@@ -25,7 +25,7 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
   bool isVisible1 = true;
   User user = User();
 
-  show(ctx) async {
+  dynamic show(ctx) async {
     showDialog(
         barrierDismissible: false,
         context: context,
@@ -93,8 +93,8 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
   onSubmit() async {
     if (fbKey.currentState!.saveAndValidate()) {
       user = User.fromJson(fbKey.currentState!.value);
-      await AuthApi().createPassword(user);
-      await show(context);
+      AuthApi().createPassword(user);
+      show(context);
     }
   }
 
@@ -107,7 +107,7 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
         surfaceTintColor: backgroundColor,
         backgroundColor: backgroundColor,
         leadingWidth: 150,
-        leading: CustomBackButton(color: buttonColor),
+        leading: const CustomBackButton(color: buttonColor),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -121,14 +121,14 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                 child: SvgPicture.asset('assets/svg/create-password.svg'),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               'Та аппд нэвтрэх нууц үгээ үүсгэнэ үү.',
               style: TextStyle(color: buttonColor),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             FormBuilder(
@@ -136,14 +136,14 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Нууц үг',
                     style: TextStyle(
                       color: buttonColor,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   FormTextField(
@@ -158,11 +158,11 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                           });
                         },
                         icon: isVisible == true
-                            ? Icon(
+                            ? const Icon(
                                 Icons.visibility_off,
                                 color: buttonColor,
                               )
-                            : Icon(
+                            : const Icon(
                                 Icons.visibility,
                                 color: buttonColor,
                               ),
@@ -172,22 +172,22 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                       fillColor: Colors.white,
                       filled: true,
                       hintText: "Системд нэвтрэх бизнесийн код",
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         color: grey2,
                         fontSize: 14,
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color(0xff44566C30),
+                          color: grey2.withOpacity(0.3),
                         ),
                       ),
-                      errorBorder: OutlineInputBorder(
+                      errorBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: red),
                       ),
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue),
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Colors.blue,
                         ),
@@ -199,17 +199,17 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                       }
                     ]),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Text(
+                  const Text(
                     'Дахин оруулна уу',
                     style: TextStyle(
                       color: buttonColor,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   FormTextField(
@@ -224,11 +224,11 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                           });
                         },
                         icon: isVisible1 == true
-                            ? Icon(
+                            ? const Icon(
                                 Icons.visibility_off,
                                 color: buttonColor,
                               )
-                            : Icon(
+                            : const Icon(
                                 Icons.visibility,
                                 color: buttonColor,
                               ),
@@ -238,22 +238,22 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                       fillColor: Colors.white,
                       filled: true,
                       hintText: "Нууц үг давтан оруулна уу",
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         color: grey2,
                         fontSize: 14,
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color(0xff44566C30),
+                          color: grey2.withOpacity(0.3),
                         ),
                       ),
-                      errorBorder: OutlineInputBorder(
+                      errorBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: red),
                       ),
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue),
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Colors.blue,
                         ),
@@ -275,10 +275,10 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             CustomButton(

@@ -20,10 +20,10 @@ class ChangeBranchNamePage extends StatefulWidget {
   final List<Order> data;
   static const routeName = '/ChangeBranchNamePage';
   const ChangeBranchNamePage({
-    Key? key,
+    super.key,
     required this.receiverBranchController,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<ChangeBranchNamePage> createState() => _ChangeBranchNamePageState();
@@ -43,12 +43,12 @@ class _ChangeBranchNamePageState extends State<ChangeBranchNamePage> {
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios_new,
             color: orderColor,
           ),
         ),
-        title: Text(
+        title: const Text(
           "Хүлээн авах хаяг солих",
           style: TextStyle(
             color: dark,
@@ -79,7 +79,7 @@ class _ChangeBranchNamePageState extends State<ChangeBranchNamePage> {
                   )
                   .toList(),
             ),
-            SizedBox(
+            const SizedBox(
               height: 70,
             ),
             // CustomButton(

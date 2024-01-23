@@ -11,19 +11,17 @@ class HomePageTab extends StatefulWidget {
 class _HomePageTabState extends State<HomePageTab> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-            child: Text(
-              'Хэрэглэгч удирдлага',
-              style: TextStyle(
-                  color: userColor, fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-          )
-        ],
-      ),
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
+          child: const Text(
+            'Хэрэглэгч удирдлага',
+            style: TextStyle(
+                color: userColor, fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+        )
+      ],
     );
   }
 }

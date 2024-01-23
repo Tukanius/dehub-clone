@@ -1,8 +1,10 @@
 import 'package:dehub/models/inventory_goods.dart';
+import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class AdditionalUnitCard extends StatefulWidget {
   final bool? isSwitched;
@@ -10,8 +12,10 @@ class AdditionalUnitCard extends StatefulWidget {
   final Function() onClick;
   final Function()? closeClick;
   final Function(bool value)? buttonClick;
+  final int index;
   const AdditionalUnitCard({
     super.key,
+    required this.index,
     this.buttonClick,
     required this.onClick,
     required this.data,
@@ -26,6 +30,8 @@ class AdditionalUnitCard extends StatefulWidget {
 class _AdditionalUnitCardState extends State<AdditionalUnitCard> {
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<InventoryProvider>(context, listen: true);
+
     return GestureDetector(
       onTap: widget.onClick,
       child: widget.isSwitched != null
@@ -37,7 +43,7 @@ class _AdditionalUnitCardState extends State<AdditionalUnitCard> {
                 children: [
                   Text(
                     '${widget.data.name}',
-                    style: TextStyle(fontSize: 14, color: grey2),
+                    style: const TextStyle(fontSize: 14, color: grey2),
                   ),
                   Transform.scale(
                     scale: 0.7,
@@ -66,30 +72,32 @@ class _AdditionalUnitCardState extends State<AdditionalUnitCard> {
                               dark.withOpacity(0.5), BlendMode.srcIn),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
                       Text(
                         '${widget.data.name}',
-                        style: TextStyle(color: dark),
+                        style: const TextStyle(color: dark),
                       )
                     ],
                   ),
                   Row(
                     children: [
-                      widget.data.convertValue == null
-                          ? Text(
+                      source.product.additionalUnits?[widget.index]
+                                  .convertValue ==
+                              null
+                          ? const Text(
                               'Тохируулах',
                               style: TextStyle(color: productColor),
                             )
-                          : Text(
+                          : const Text(
                               'Тохируулсан',
                               style: TextStyle(color: productColor),
                             ),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
-                      Icon(
+                      const Icon(
                         Icons.arrow_forward_ios,
                         color: productColor,
                         size: 14,

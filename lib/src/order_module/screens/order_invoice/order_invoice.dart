@@ -21,10 +21,10 @@ class OrderInvoice extends StatefulWidget {
   final Invoice data;
   static const routeName = '/OrderInvoice';
   const OrderInvoice({
-    Key? key,
+    super.key,
     required this.lines,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<OrderInvoice> createState() => _OrderInvoiceState();
@@ -41,7 +41,7 @@ class _OrderInvoiceState extends State<OrderInvoice> {
         surfaceTintColor: orderColor,
         centerTitle: true,
         automaticallyImplyLeading: false,
-        title: Text(
+        title: const Text(
           'Нэхэмжлэх',
           style: TextStyle(
             color: white,
@@ -49,14 +49,14 @@ class _OrderInvoiceState extends State<OrderInvoice> {
             fontWeight: FontWeight.w600,
           ),
         ),
-        leading: CustomCloseButton(),
+        leading: const CustomCloseButton(),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-              child: Text(
+              child: const Text(
                 'Нэхэмжлэхийн хугацаанаас нь өмнө төлөөрэй. Хамтын ажиллагаанд баярлалаа',
                 style: TextStyle(
                   color: grey2,
@@ -68,7 +68,7 @@ class _OrderInvoiceState extends State<OrderInvoice> {
               lines: widget.lines,
               data: widget.data,
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             // Image(
@@ -85,7 +85,7 @@ class _OrderInvoiceState extends State<OrderInvoice> {
                     border: Border.all(color: grey2),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.share_outlined,
                     color: grey2,
                   ),
@@ -105,7 +105,7 @@ class _OrderInvoiceState extends State<OrderInvoice> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             CustomButton(

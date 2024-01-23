@@ -54,7 +54,7 @@ class _EntryPointState extends State<EntryPoint>
         body: Stack(
           children: [
             AnimatedPositioned(
-              duration: Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 200),
               curve: Curves.ease,
               height: MediaQuery.of(context).size.height,
               left: isSideMenuClosed ? -288 * animation.value : 0,
@@ -63,7 +63,7 @@ class _EntryPointState extends State<EntryPoint>
                 onPanUpdate: (details) {
                   onPanUpdate(details);
                 },
-                child: MenuPage(),
+                child: const MenuPage(),
               ),
             ),
             Transform(
@@ -90,14 +90,14 @@ class _EntryPointState extends State<EntryPoint>
                           animationController.reverse();
                         });
                       },
-                      child: FirstPage(),
+                      child: const FirstPage(),
                     ),
                   ),
                 ),
               ),
             ),
             AnimatedPositioned(
-              duration: Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 200),
               left: isSideMenuClosed ? 0 : 220,
               top: MediaQuery.of(context).size.height /
                       MediaQuery.of(context).size.width +
@@ -127,9 +127,9 @@ class _EntryPointState extends State<EntryPoint>
                       ? SvgPicture.asset(
                           'assets/svg/menu.svg',
                           colorFilter:
-                              ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                              const ColorFilter.mode(buttonColor, BlendMode.srcIn),
                         )
-                      : Center(
+                      : const Center(
                           child: Icon(
                             Icons.arrow_forward_ios,
                             color: white,

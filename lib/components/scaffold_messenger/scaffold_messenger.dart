@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-void CustomScaffoldMessenger(BuildContext context,
+void customScaffoldMessenger(BuildContext context,
     {required Color color, required String labelText}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       backgroundColor: color,
-      shape: StadiumBorder(),
+      shape: const StadiumBorder(),
       content: Center(
-        child: Text('${labelText}'),
+        child: Text(labelText),
       ),
     ),
   );

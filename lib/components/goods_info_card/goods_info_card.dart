@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 class GoodsInfoCard extends StatefulWidget {
   final List<Invoice> data;
-  GoodsInfoCard({
+  const GoodsInfoCard({
     required this.data,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<GoodsInfoCard> createState() => _GoodsInfoCardState();
@@ -24,7 +24,7 @@ class _GoodsInfoCardState extends State<GoodsInfoCard> {
         children: [
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+            child: const Text(
               'Барааны мэдээлэл',
               style: TextStyle(
                 color: grey3,
@@ -36,8 +36,8 @@ class _GoodsInfoCardState extends State<GoodsInfoCard> {
             margin: const EdgeInsets.symmetric(horizontal: 5),
             child: Column(
               children: [
-                Divider(),
-                Row(
+                const Divider(),
+                const Row(
                   children: [
                     Expanded(
                       flex: 1,
@@ -104,7 +104,7 @@ class _GoodsInfoCardState extends State<GoodsInfoCard> {
                     ),
                   ],
                 ),
-                Divider(),
+                const Divider(),
                 Column(
                   children: widget.data
                       .map(
@@ -118,7 +118,7 @@ class _GoodsInfoCardState extends State<GoodsInfoCard> {
                                   flex: 1,
                                   child: Text(
                                     '${widget.data.indexOf(data) + 1} ',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: black,
                                       fontSize: 12,
                                     ),
@@ -128,13 +128,13 @@ class _GoodsInfoCardState extends State<GoodsInfoCard> {
                                   flex: 10,
                                   child: Text(
                                     '${data.nameMon} SKU ${data.skuCode}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: black,
                                       fontSize: 12,
                                     ),
                                   ),
                                 ),
-                                Expanded(
+                                const Expanded(
                                   flex: 3,
                                   child: Align(
                                     alignment: Alignment.center,
@@ -150,12 +150,12 @@ class _GoodsInfoCardState extends State<GoodsInfoCard> {
                                 Expanded(
                                   flex: 3,
                                   child: data.quantity == null
-                                      ? Text('0')
+                                      ? const Text('0')
                                       : Align(
                                           alignment: Alignment.center,
                                           child: Text(
                                             '${data.quantity?.toInt()}',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               color: black,
                                               fontSize: 12,
                                             ),
@@ -168,7 +168,7 @@ class _GoodsInfoCardState extends State<GoodsInfoCard> {
                                     alignment: Alignment.center,
                                     child: Text(
                                       '${Utils().formatCurrency(data.price.toString())}₮',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: black,
                                         fontSize: 12,
                                       ),
@@ -177,13 +177,13 @@ class _GoodsInfoCardState extends State<GoodsInfoCard> {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Text(
+                                const Text(
                                   'Нийт',
                                   style: TextStyle(
                                     color: black,
@@ -191,23 +191,23 @@ class _GoodsInfoCardState extends State<GoodsInfoCard> {
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 20,
                                 ),
                                 Text(
                                   '${Utils().formatCurrency("${double.parse(data.price.toString()) * double.parse(data.quantity!.toString())}")}₮',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: black,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 15,
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 15,
                             ),
                           ],

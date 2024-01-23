@@ -7,8 +7,8 @@ class Product extends StatefulWidget {
   final bool? gridview;
   const Product({
     this.gridview,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<Product> createState() => _ProductState();

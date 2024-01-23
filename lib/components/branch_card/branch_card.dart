@@ -7,9 +7,9 @@ class BranchCard extends StatefulWidget {
   final BusinessNetwork? data;
   const BranchCard({
     this.data,
-    Key? key,
+    super.key,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<BranchCard> createState() => _BranchCardState();
@@ -37,57 +37,51 @@ class _BranchCardState extends State<BranchCard> {
                         backgroundColor: grey,
                         backgroundImage: NetworkImage('${widget.data?.logo}'),
                       )
-                    : CircleAvatar(
+                    : const CircleAvatar(
                         radius: 20,
                         backgroundImage: AssetImage('images/avatar.png'),
                       ),
-                SizedBox(
+                const SizedBox(
                   width: 16,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: Text(
-                              '${widget.data?.name}',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                color: dark,
-                              ),
-                            ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${widget.data?.name}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: dark,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     Row(
                       children: [
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 5),
-                          child: Text(
+                          child: const Text(
                             'Дэлгэр сайхан ХХК  ТТД: 315466',
                             style: TextStyle(
                               color: dark,
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                       ],
                     ),
-                    Container(
-                      child: Text(
-                        '+976 - 9999 9999',
-                        style: TextStyle(
-                          color: dark,
-                        ),
+                    const Text(
+                      '+976 - 9999 9999',
+                      style: TextStyle(
+                        color: dark,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ],

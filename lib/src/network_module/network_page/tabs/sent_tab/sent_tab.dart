@@ -4,13 +4,13 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class SentTab extends StatefulWidget {
-  const SentTab({Key? key}) : super(key: key);
+  const SentTab({super.key});
 
   @override
-  _SentTabState createState() => _SentTabState();
+  SentTabState createState() => SentTabState();
 }
 
-class _SentTabState extends State<SentTab> {
+class SentTabState extends State<SentTab> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -27,8 +27,8 @@ class _SentTabState extends State<SentTab> {
                   labelColor: networkColor,
                   unselectedLabelColor: dark,
                   indicatorColor: networkColor,
-                  tabs: [
-                    Container(
+                  tabs: const [
+                    SizedBox(
                       height: 40,
                       child: Center(
                         child: Text(
@@ -40,7 +40,7 @@ class _SentTabState extends State<SentTab> {
                         ),
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       height: 40,
                       child: Center(
                         child: Text(
@@ -58,7 +58,7 @@ class _SentTabState extends State<SentTab> {
             )
           ];
         },
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             DehubNetwork(),
             OnboarInvitation(),

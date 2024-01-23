@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 class DirectionCard extends StatefulWidget {
   final int? index;
-  DirectionCard({
-    Key? key,
+  const DirectionCard({
+    super.key,
     this.index,
-  }) : super(key: key);
+  });
 
   @override
   State<DirectionCard> createState() => _DirectionCardState();
@@ -27,7 +27,7 @@ class _DirectionCardState extends State<DirectionCard> {
           borderRadius: BorderRadius.circular(10),
           color: white,
           border: Border.all(
-            color: Color(0xffF2F2F2),
+            color: const Color(0xffF2F2F2),
           ),
         ),
         child: Row(
@@ -39,15 +39,15 @@ class _DirectionCardState extends State<DirectionCard> {
               children: [
                 Text(
                   '${widget.index! + 1}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: grey3,
                     fontSize: 12,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -81,7 +81,7 @@ class _DirectionCardState extends State<DirectionCard> {
                     SizedBox(
                       height: 5,
                     ),
-                    Container(
+                    SizedBox(
                       width: 270,
                       child: Text(
                         'Товч тайлбар тайлбар тайлбар тайлбар тайлбар тайлбар тайлбар тайлбар тайлбар тайлбар тайлбар тайлбар тайлбар тайлбар тайлбар',
@@ -95,7 +95,7 @@ class _DirectionCardState extends State<DirectionCard> {
                 ),
               ],
             ),
-            Icon(
+            const Icon(
               Icons.arrow_forward_ios,
               color: grey2,
               size: 14,

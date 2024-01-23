@@ -1,4 +1,4 @@
-part '../parts/qpay-urls.dart';
+part '../parts/qpay_urls.dart';
 
 class Urls {
   String? name;

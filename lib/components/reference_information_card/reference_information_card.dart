@@ -7,12 +7,12 @@ class ReferenceInformationCard extends StatefulWidget {
   final ReferenceInformation? data;
   final int index;
   final bool startAnimation;
-  ReferenceInformationCard({
-    Key? key,
+  const ReferenceInformationCard({
+    super.key,
     required this.startAnimation,
     required this.index,
     this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<ReferenceInformationCard> createState() =>
@@ -42,7 +42,7 @@ class _ReferenceInformationCardState extends State<ReferenceInformationCard> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: Color(0xffF2F2F2),
+            color: const Color(0xffF2F2F2),
           ),
           color: white,
         ),
@@ -57,12 +57,12 @@ class _ReferenceInformationCardState extends State<ReferenceInformationCard> {
                 children: [
                   Text(
                     '${widget.index + 1}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: grey3,
                       fontSize: 12,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 30,
                   ),
                   Expanded(
@@ -71,15 +71,15 @@ class _ReferenceInformationCardState extends State<ReferenceInformationCard> {
                       children: [
                         Text(
                           '${widget.data!.name}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
-                        Text(
+                        const Text(
                           'Төлбөрийн нөхцөл',
                           style: TextStyle(
                             color: networkColor,
@@ -87,12 +87,12 @@ class _ReferenceInformationCardState extends State<ReferenceInformationCard> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Text(
                           '${widget.data!.description}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: grey3,
                             fontSize: 12,
                           ),
@@ -110,17 +110,17 @@ class _ReferenceInformationCardState extends State<ReferenceInformationCard> {
                   children: [
                     Text(
                       '${widget.data!.refCode}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
                         decoration: TextDecoration.underline,
                         color: grey3,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
-                    Text(
+                    const Text(
                       'Огноо, цаг',
                       style: TextStyle(
                         fontSize: 10,
@@ -129,12 +129,12 @@ class _ReferenceInformationCardState extends State<ReferenceInformationCard> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 5),
-                  child: Icon(
+                  child: const Icon(
                     Icons.arrow_forward_ios,
                     color: grey3,
                     size: 14,

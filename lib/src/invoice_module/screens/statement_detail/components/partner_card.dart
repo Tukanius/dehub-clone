@@ -48,7 +48,7 @@ class _PartnerCardState extends State<PartnerCard> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         color: grey,
-                        image: DecorationImage(
+                        image: const DecorationImage(
                           image: AssetImage(
                             'images/avatar.png',
                           ),
@@ -56,25 +56,25 @@ class _PartnerCardState extends State<PartnerCard> {
                         ),
                       ),
                     ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Expanded(
                   child: Text(
                 '${widget.data.profileName}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: grey2,
                   fontWeight: FontWeight.w500,
                 ),
               )),
-              Icon(
+              const Icon(
                 Icons.arrow_forward_ios,
                 color: grey3,
                 size: 18,
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Row(
@@ -82,13 +82,13 @@ class _PartnerCardState extends State<PartnerCard> {
             children: [
               Text(
                 '${widget.data.partner?.refCode}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: grey2,
                 ),
               ),
               Text(
                 '${widget.data.refCode}',
-                style: TextStyle(color: invoiceColor),
+                style: const TextStyle(color: invoiceColor),
               )
             ],
           )

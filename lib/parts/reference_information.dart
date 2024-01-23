@@ -96,35 +96,42 @@ Map<String, dynamic> _$ReferenceInformationToJson(
   if (instance.type != null) json['type'] = instance.type;
   if (instance.listType != null) json['listType'] = instance.listType;
   if (instance.description != null) json['description'] = instance.description;
-  if (instance.modifiedUserId != null)
+  if (instance.modifiedUserId != null) {
     json['modifiedUserId'] = instance.modifiedUserId;
+  }
   if (instance.termRule != null) json['termRule'] = instance.termRule;
-  if (instance.orderConfirmTerm != null)
+  if (instance.orderConfirmTerm != null) {
     json['orderConfirmTerm'] = instance.orderConfirmTerm;
-  if (instance.expireDayCount != null)
+  }
+  if (instance.expireDayCount != null) {
     json['expireDayCount'] = instance.expireDayCount;
+  }
   if (instance.month != null) json['month'] = instance.month;
   if (instance.paymentDay != null) json['paymentDay'] = instance.paymentDay;
   if (instance.isMain != null) json['isMain'] = instance.isMain;
   if (instance.isActive != null) json['isActive'] = instance.isActive;
   if (instance.isOpen != null) json['isOpen'] = instance.isOpen;
-  if (instance.modifiedUser != null)
+  if (instance.modifiedUser != null) {
     json['modifiedUser'] = instance.modifiedUser;
+  }
   if (instance.sessionId != null) json['sessionId'] = instance.sessionId;
   if (instance.username != null) json['username'] = instance.username;
   if (instance.partnerId != null) json['partnerId'] = instance.partnerId;
-  if (instance.currentBusinessId != null)
+  if (instance.currentBusinessId != null) {
     json['currentBusinessId'] = instance.currentBusinessId;
-  if (instance.employeeUnitId != null)
+  }
+  if (instance.employeeUnitId != null) {
     json['employeeUnitId'] = instance.employeeUnitId;
+  }
   if (instance.firstName != null) json['firstName'] = instance.firstName;
   if (instance.lastName != null) json['lastName'] = instance.lastName;
   if (instance.phone != null) json['phone'] = instance.phone;
   if (instance.email != null) json['email'] = instance.email;
   if (instance.avatar != null) json['avatar'] = instance.avatar;
   if (instance.userStatus != null) json['userStatus'] = instance.userStatus;
-  if (instance.registerStatus != null)
+  if (instance.registerStatus != null) {
     json['registerStatus'] = instance.registerStatus;
+  }
   if (instance.loginType != null) json['loginType'] = instance.loginType;
   if (instance.isSysUser != null) json['isSysUser'] = instance.isSysUser;
   if (instance.isAppUser != null) json['isAppUser'] = instance.isAppUser;

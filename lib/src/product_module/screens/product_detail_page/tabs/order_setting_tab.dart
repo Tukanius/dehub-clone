@@ -13,9 +13,9 @@ import 'package:provider/provider.dart';
 class OrderSettingTab extends StatefulWidget {
   final InventoryGoods data;
   const OrderSettingTab({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<OrderSettingTab> createState() => _OrderSettingTabState();
@@ -31,7 +31,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
 
   @override
   afterFirstLayout(BuildContext context) async {
-    if (widget.data.itemUnits?.length != 0) {
+    if (widget.data.itemUnits!.isNotEmpty) {
       itemUnits = widget.data.itemUnits!.firstWhere(
         (element) => element.isBase == true,
       );
@@ -69,14 +69,14 @@ class _OrderSettingTabState extends State<OrderSettingTab>
         Provider.of<GeneralProvider>(context, listen: true).inventoryGeneral;
     return SingleChildScrollView(
       child: isLoading == true
-          ? SizedBox()
+          ? const SizedBox()
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   margin:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Text(
+                  child: const Text(
                     'Хэмжих нэгж',
                     style: TextStyle(
                       color: grey2,
@@ -100,7 +100,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
                   labelText: 'Жин',
                   labelTextColor: grey2,
                   secondText: itemUnits.weight != null
-                      ? '${itemUnits.weight.toString() + weightLabel()}'
+                      ? itemUnits.weight.toString() + weightLabel()
                       : '-',
                   secondTextColor: productColor,
                 ),
@@ -111,7 +111,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
                   labelText: 'Өндөр',
                   labelTextColor: grey2,
                   secondText: itemUnits.height != null
-                      ? '${itemUnits.height?.toInt()} ${itemUnits.spaceLabel != null ? itemUnits.spaceLabel : ""}'
+                      ? '${itemUnits.height?.toInt()} ${itemUnits.spaceLabel ?? ""}'
                       : '-',
                   secondTextColor: productColor,
                 ),
@@ -122,7 +122,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
                   labelText: 'Өргөн',
                   labelTextColor: grey2,
                   secondText: itemUnits.width != null
-                      ? '${itemUnits.width?.toInt()} ${itemUnits.spaceLabel != null ? itemUnits.spaceLabel : ""}'
+                      ? '${itemUnits.width?.toInt()} ${itemUnits.spaceLabel ?? ""}'
                       : '-',
                   secondTextColor: productColor,
                 ),
@@ -133,7 +133,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
                   labelText: 'Урт',
                   labelTextColor: grey2,
                   secondText: itemUnits.length != null
-                      ? '${itemUnits.length?.toInt()} ${itemUnits.spaceLabel != null ? itemUnits.spaceLabel : ""}'
+                      ? '${itemUnits.length?.toInt()} ${itemUnits.spaceLabel ?? ""}'
                       : '-',
                   secondTextColor: productColor,
                 ),
@@ -143,7 +143,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
                     Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
-                      child: Text(
+                      child: const Text(
                         'Нэмэлт хэмжих нэгж',
                         style: TextStyle(
                           color: grey2,
@@ -166,17 +166,17 @@ class _OrderSettingTabState extends State<OrderSettingTab>
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
+                                const Text(
                                   '1. Хэмжих нэгж нэр',
                                   style: TextStyle(color: grey2),
                                 ),
                                 isVisible == false
-                                    ? Icon(
+                                    ? const Icon(
                                         Icons.arrow_forward_ios,
                                         color: grey2,
                                         size: 14,
                                       )
-                                    : Icon(
+                                    : const Icon(
                                         Icons.keyboard_arrow_down,
                                         color: grey2,
                                         size: 22,
@@ -195,7 +195,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
                       color: white,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -215,7 +215,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
                 Container(
                   margin:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Text(
+                  child: const Text(
                     'Түгээлт, хүргэлт',
                     style: TextStyle(
                       color: grey2,
@@ -223,7 +223,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
                     ),
                   ),
                 ),
-                FieldCard(
+                const FieldCard(
                   paddingHorizontal: 15,
                   paddingVertical: 10,
                   color: white,
@@ -232,7 +232,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
                   secondText: 'Нэгжийн нэр',
                   secondTextColor: productColor,
                 ),
-                FieldCard(
+                const FieldCard(
                   paddingHorizontal: 15,
                   paddingVertical: 10,
                   color: white,
@@ -256,7 +256,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'Буцаалт зөвшөөрөх эсэх',
                         style: TextStyle(color: grey2),
                       ),
@@ -280,7 +280,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
                   secondText: returnType().toString(),
                   secondTextColor: productColor,
                 ),
-                FieldCard(
+                const FieldCard(
                   paddingHorizontal: 15,
                   paddingVertical: 10,
                   color: white,
@@ -292,7 +292,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
                 Container(
                   margin:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Text(
+                  child: const Text(
                     'Түгээлт, хүргэлт',
                     style: TextStyle(
                       color: grey2,
@@ -358,7 +358,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
                   secondText: '${inventory.reOrderMinNum}',
                   secondTextColor: productColor,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
               ],
@@ -368,7 +368,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
 
   Widget visiblityWidget = Column(
     children: [
-      FieldCard(
+      const FieldCard(
         paddingHorizontal: 15,
         paddingVertical: 10,
         color: white,
@@ -377,7 +377,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
         secondText: '1',
         secondTextColor: productColor,
       ),
-      FieldCard(
+      const FieldCard(
         paddingHorizontal: 15,
         paddingVertical: 10,
         color: white,
@@ -386,7 +386,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
         secondText: 'хайрцаг',
         secondTextColor: productColor,
       ),
-      FieldCard(
+      const FieldCard(
         paddingHorizontal: 15,
         paddingVertical: 10,
         color: white,
@@ -395,7 +395,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
         secondText: 'Арга',
         secondTextColor: productColor,
       ),
-      FieldCard(
+      const FieldCard(
         paddingHorizontal: 15,
         paddingVertical: 10,
         color: white,
@@ -407,7 +407,7 @@ class _OrderSettingTabState extends State<OrderSettingTab>
       Container(
         color: white,
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        child: Row(
+        child: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(

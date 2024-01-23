@@ -4,28 +4,28 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class InvoiceStatusCard extends StatefulWidget {
   final String title;
-  InvoiceStatusCard({
+  const InvoiceStatusCard({
     required this.title,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
-  _InvoiceStatusCardState createState() => _InvoiceStatusCardState();
+  InvoiceStatusCardState createState() => InvoiceStatusCardState();
 }
 
-class _InvoiceStatusCardState extends State<InvoiceStatusCard> {
+class InvoiceStatusCardState extends State<InvoiceStatusCard> {
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '${widget.title}',
+          widget.title,
           style: TextStyle(
             color: black.withOpacity(0.7),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Container(
@@ -45,21 +45,21 @@ class _InvoiceStatusCardState extends State<InvoiceStatusCard> {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(left: 10),
-                      child: Text(
+                      child: const Text(
                         'Бүгд: 417000₮',
                         style: TextStyle(fontSize: 10, color: grey),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     LinearPercentIndicator(
                       lineHeight: 10,
                       percent: 0.3,
-                      backgroundColor: Color(0xffEBCA6F),
-                      progressColor: Color(0xff75cccd),
+                      backgroundColor: const Color(0xffEBCA6F),
+                      progressColor: const Color(0xff75cccd),
                     ),
-                    Divider(
+                    const Divider(
                       thickness: 0.1,
                       color: grey,
                     ),
@@ -70,7 +70,7 @@ class _InvoiceStatusCardState extends State<InvoiceStatusCard> {
                           children: [
                             Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: Text(
+                              child: const Text(
                                 'Хугацаа хэвийн',
                                 style: TextStyle(
                                   fontSize: 10,
@@ -87,7 +87,7 @@ class _InvoiceStatusCardState extends State<InvoiceStatusCard> {
                             )
                           ],
                         ),
-                        Container(
+                        const SizedBox(
                           height: 20,
                           child: VerticalDivider(),
                         ),
@@ -95,7 +95,7 @@ class _InvoiceStatusCardState extends State<InvoiceStatusCard> {
                           children: [
                             Container(
                               margin: const EdgeInsets.only(right: 10),
-                              child: Text(
+                              child: const Text(
                                 'Хугацаа хэтэрсэн',
                                 style: TextStyle(
                                   fontSize: 10,

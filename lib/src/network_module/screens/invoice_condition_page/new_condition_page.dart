@@ -1,7 +1,7 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
-import 'package:dehub/models/business-staffs.dart';
+import 'package:dehub/models/business_staffs.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -22,8 +22,7 @@ class NewConditionPage extends StatefulWidget {
   final ListenController listenController;
 
   static const routeName = '/NewConditionPage';
-  const NewConditionPage({required this.listenController, Key? key})
-      : super(key: key);
+  const NewConditionPage({required this.listenController, super.key});
 
   @override
   State<NewConditionPage> createState() => _NewConditionPageState();
@@ -76,8 +75,8 @@ class _NewConditionPageState extends State<NewConditionPage> {
         elevation: 0,
         backgroundColor: white,
         surfaceTintColor: white,
-        iconTheme: IconThemeData(color: networkColor),
-        title: Text(
+        iconTheme: const IconThemeData(color: networkColor),
+        title: const Text(
           'Нэхэмжлэх - шинэ нөхцөл',
           style: TextStyle(
             color: networkColor,
@@ -92,7 +91,7 @@ class _NewConditionPageState extends State<NewConditionPage> {
           children: [
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Нөхцөлийг сонгоно уу',
                 style: TextStyle(
                   color: grey3,
@@ -108,7 +107,7 @@ class _NewConditionPageState extends State<NewConditionPage> {
                       child: RadioListTile(
                         title: Text(
                           '${e.text}',
-                          style: TextStyle(color: dark, fontSize: 14),
+                          style: const TextStyle(color: dark, fontSize: 14),
                         ),
                         fillColor: MaterialStateColor.resolveWith(
                             (states) => networkColor),
@@ -123,104 +122,103 @@ class _NewConditionPageState extends State<NewConditionPage> {
                   )
                   .toList(),
             ),
-            currentOption == "INV_NET_X"
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: Text(
-                          'Нэмэлт тохиргоо',
-                          style: TextStyle(
-                            color: grey3,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+            if (currentOption == "INV_NET_X")
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    child: const Text(
+                      'Нэмэлт тохиргоо',
+                      style: TextStyle(
+                        color: grey3,
+                        fontWeight: FontWeight.w600,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          showCupertinoModalPopup(
-                            context: context,
-                            builder: (context) {
-                              return Container(
-                                color: white,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.4,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text(
-                                        'Болсон',
-                                        style: TextStyle(color: networkColor),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: CupertinoPicker(
-                                        itemExtent: 30,
-                                        onSelectedItemChanged: (index) {
-                                          setState(() {
-                                            this.index = index;
-                                          });
-                                        },
-                                        children: [
-                                          for (var i = 0; i < 31; i++)
-                                            Center(
-                                              child: Text('${i}'),
-                                            ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      showCupertinoModalPopup(
+                        context: context,
+                        builder: (context) {
+                          return Container(
+                            color: white,
+                            height: MediaQuery.of(context).size.height * 0.4,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text(
+                                    'Болсон',
+                                    style: TextStyle(color: networkColor),
+                                  ),
                                 ),
-                              );
-                            },
+                                Expanded(
+                                  child: CupertinoPicker(
+                                    itemExtent: 30,
+                                    onSelectedItemChanged: (index) {
+                                      setState(() {
+                                        this.index = index;
+                                      });
+                                    },
+                                    children: [
+                                      for (var i = 0; i < 31; i++)
+                                        Center(
+                                          child: Text('$i'),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           );
                         },
-                        child: Container(
-                          color: white,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      );
+                    },
+                    child: Container(
+                      color: white,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Хоногийн тоо',
+                            style: TextStyle(color: dark),
+                          ),
+                          Row(
                             children: [
-                              Text(
-                                'Хоногийн тоо',
-                                style: TextStyle(color: dark),
+                              index == null
+                                  ? const Text(
+                                      '0',
+                                      style: TextStyle(color: networkColor),
+                                    )
+                                  : Text(
+                                      '$index',
+                                      style:
+                                          const TextStyle(color: networkColor),
+                                    ),
+                              const SizedBox(
+                                width: 5,
                               ),
-                              Row(
-                                children: [
-                                  this.index == null
-                                      ? Text(
-                                          '0',
-                                          style: TextStyle(color: networkColor),
-                                        )
-                                      : Text(
-                                          '${this.index}',
-                                          style: TextStyle(color: networkColor),
-                                        ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  SvgPicture.asset(
-                                    'assets/svg/edit.svg',
-                                    colorFilter: ColorFilter.mode(
-                                        networkColor, BlendMode.srcIn),
-                                  ),
-                                ],
+                              SvgPicture.asset(
+                                'assets/svg/edit.svg',
+                                colorFilter: const ColorFilter.mode(
+                                    networkColor, BlendMode.srcIn),
                               ),
                             ],
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  )
-                : SizedBox(),
-            SizedBox(
+                    ),
+                  ),
+                ],
+              ),
+            const SizedBox(
               height: 50,
             ),
             Row(
@@ -253,7 +251,7 @@ class _NewConditionPageState extends State<NewConditionPage> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
           ],

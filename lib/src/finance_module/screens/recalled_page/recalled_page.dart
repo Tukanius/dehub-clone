@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 class ReCalledPage extends StatefulWidget {
   static const routeName = '/ReCalledPage';
-  const ReCalledPage({Key? key}) : super(key: key);
+  const ReCalledPage({super.key});
 
   @override
   State<ReCalledPage> createState() => _ReCalledPageState();
@@ -39,7 +39,7 @@ class _ReCalledPageState extends State<ReCalledPage>
         backgroundColor: backgroundColor,
         surfaceTintColor: backgroundColor,
         leading: CustomBackButton(color: source.currentColor),
-        actions: [
+        actions: const [
           CircleAvatar(
             radius: 18,
             backgroundColor: grey,
@@ -64,7 +64,7 @@ class _ReCalledPageState extends State<ReCalledPage>
           ),
           Container(
             margin: const EdgeInsets.only(left: 15, bottom: 10),
-            child: Text(
+            child: const Text(
               'Буцаан дуудсан',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -74,14 +74,14 @@ class _ReCalledPageState extends State<ReCalledPage>
           ),
           Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 15,
               ),
               InkWell(
                 borderRadius: BorderRadius.circular(10),
                 onTap: () {
                   pageController.animateToPage(0,
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       curve: Curves.ease);
                 },
                 child: Container(
@@ -102,14 +102,14 @@ class _ReCalledPageState extends State<ReCalledPage>
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 25,
               ),
               InkWell(
                 borderRadius: BorderRadius.circular(10),
                 onTap: () {
                   pageController.animateToPage(1,
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       curve: Curves.ease);
                 },
                 child: Container(
@@ -140,7 +140,7 @@ class _ReCalledPageState extends State<ReCalledPage>
                   currentIndex = value;
                 });
               },
-              children: [
+              children: const [
                 BuyerLed(),
                 SupplierLed(),
               ],

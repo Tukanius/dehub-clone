@@ -8,9 +8,9 @@ class ChatCard extends StatefulWidget {
   final bool? isOwnChat;
   const ChatCard({
     this.isOwnChat,
-    Key? key,
+    super.key,
     this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<ChatCard> createState() => _ChatCardState();
@@ -38,7 +38,7 @@ class _ChatCardState extends State<ChatCard> {
                           margin: const EdgeInsets.only(right: 5),
                           height: 36,
                           width: 36,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: grey,
                             image: DecorationImage(
@@ -58,15 +58,15 @@ class _ChatCardState extends State<ChatCard> {
                             ),
                           ),
                         )
-                  : SizedBox(),
+                  : const SizedBox(),
               Container(
                 constraints: BoxConstraints(
                     maxWidth: MediaQuery.of(context).size.width * 0.5),
                 decoration: BoxDecoration(
                   color: chatGrey,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
+                    topLeft: const Radius.circular(20),
+                    topRight: const Radius.circular(20),
                     bottomRight:
                         Radius.circular(widget.isOwnChat == true ? 0 : 20),
                     bottomLeft:
@@ -90,7 +90,7 @@ class _ChatCardState extends State<ChatCard> {
                           margin: const EdgeInsets.only(left: 5),
                           height: 36,
                           width: 36,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: grey,
                             image: DecorationImage(
@@ -113,7 +113,7 @@ class _ChatCardState extends State<ChatCard> {
                             ),
                           ),
                         )
-                  : SizedBox(),
+                  : const SizedBox(),
             ],
           ),
           Container(
@@ -121,12 +121,12 @@ class _ChatCardState extends State<ChatCard> {
                 left: widget.isOwnChat == false ? 40 : 0,
                 right: widget.isOwnChat == true ? 40 : 0),
             child: Text(
-              '${DateFormat('yyyy-MM-dd HH:mm').format(widget.data!.createdAt!)}',
-              style: TextStyle(
+              DateFormat('yyyy-MM-dd HH:mm').format(widget.data!.createdAt!),
+              style: const TextStyle(
                   color: saaral, fontSize: 12, fontWeight: FontWeight.bold),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
         ],

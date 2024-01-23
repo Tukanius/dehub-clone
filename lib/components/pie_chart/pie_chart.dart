@@ -1,6 +1,6 @@
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:pie_chart/pie_chart.dart' as Chart;
+import 'package:pie_chart/pie_chart.dart' as chart;
 
 class PieChart extends StatefulWidget {
   final Map<String, double> data;
@@ -30,30 +30,30 @@ class PieChartState extends State<PieChart> {
       ),
       child: Column(
         children: [
-          Chart.PieChart(
+          chart.PieChart(
             dataMap: widget.data,
             animationDuration: const Duration(milliseconds: 800),
             chartLegendSpacing: 35,
             chartRadius: 220,
             colorList: widget.colorList,
             initialAngleInDegree: 0,
-            chartType: Chart.ChartType.ring,
+            chartType: chart.ChartType.ring,
             ringStrokeWidth: 50,
-            legendOptions: const Chart.LegendOptions(
+            legendOptions: const chart.LegendOptions(
               showLegendsInRow: false,
-              legendPosition: Chart.LegendPosition.bottom,
+              legendPosition: chart.LegendPosition.bottom,
               showLegends: false,
               legendShape: BoxShape.circle,
               legendTextStyle: TextStyle(fontSize: 10),
             ),
-            chartValuesOptions: const Chart.ChartValuesOptions(
+            chartValuesOptions: const chart.ChartValuesOptions(
               showChartValueBackground: false,
               showChartValues: false,
               showChartValuesInPercentage: false,
               showChartValuesOutside: false,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 37,
           ),
           Column(
@@ -73,14 +73,14 @@ class PieChartState extends State<PieChart> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Expanded(
                           flex: 4,
                           child: Text(
                             '${data.count}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -89,21 +89,21 @@ class PieChartState extends State<PieChart> {
                           flex: 3,
                           child: Text(
                             '${(100 * data.count / widget.legend.fold(0, (previousValue, element) => previousValue + element.count!)).toStringAsFixed(0)}%',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: grey,
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 15,
                         ),
                         Expanded(
                           flex: 11,
                           child: Text(
                             '${data.profileName}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12,
                               color: grey2,
                             ),
@@ -115,7 +115,7 @@ class PieChartState extends State<PieChart> {
                 )
                 .toList(),
           ),
-          SizedBox(
+          const SizedBox(
             width: 15,
           ),
         ],

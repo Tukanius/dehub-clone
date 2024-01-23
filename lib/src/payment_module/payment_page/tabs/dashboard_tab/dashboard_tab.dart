@@ -12,7 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class DashboardTab extends StatefulWidget {
-  const DashboardTab({Key? key}) : super(key: key);
+  const DashboardTab({super.key});
 
   @override
   State<DashboardTab> createState() => _DashboardTabState();
@@ -91,7 +91,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           isLoading == true
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(
                     color: paymentColor,
                   ),
@@ -102,7 +102,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                     Container(
                       margin:
                           const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-                      child: Text(
+                      child: const Text(
                         'Төлбөр тооцоо удирдлага',
                         style: TextStyle(
                             color: black,
@@ -127,7 +127,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                       children: [
                         Container(
                           margin: const EdgeInsets.only(left: 15),
-                          child: Text(
+                          child: const Text(
                             'Орлогын бүтэц',
                             style: TextStyle(
                               color: black,
@@ -141,7 +141,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           child: Container(
                             color: transparent,
                             padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: Row(
+                            child: const Row(
                               children: [
                                 Text(
                                   "Бүгдийг",
@@ -168,11 +168,11 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     PieChart(legend: legend, colorList: colorList, data: data),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
@@ -181,7 +181,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         Container(
                           width: MediaQuery.of(context).size.width / 2,
                           margin: const EdgeInsets.only(left: 15),
-                          child: Text(
+                          child: const Text(
                             'Орлогын гүйлгээ',
                             style: TextStyle(
                               color: black,
@@ -195,7 +195,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           child: Container(
                             color: transparent,
                             padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: Row(
+                            child: const Row(
                               children: [
                                 Text(
                                   "Бүгдийг",
@@ -222,47 +222,47 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
-                        Icon(
+                        const Icon(
                           Icons.calendar_today,
                           color: grey,
                           size: 18,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Text(
                           '${DateFormat("yyyy-MM-dd").format(DateTime.now())} - ',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: grey,
                             fontSize: 12,
                           ),
                         ),
-                        Icon(
+                        const Icon(
                           Icons.calendar_today,
                           color: grey,
                           size: 18,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Text(
-                          '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
-                          style: TextStyle(
+                          DateFormat("yyyy-MM-dd").format(DateTime.now()),
+                          style: const TextStyle(
                             color: grey,
                             fontSize: 12,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Container(
@@ -291,7 +291,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         primaryXAxis: CategoryAxis(),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                   ],

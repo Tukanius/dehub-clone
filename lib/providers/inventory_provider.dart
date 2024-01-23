@@ -342,6 +342,20 @@ class InventoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  setAdditionalUnit(InventoryGoods data, int index) {
+    product.additionalUnits?[index].convertValue = data.convertValue;
+    product.additionalUnits?[index].floatValue = data.floatValue;
+    product.additionalUnits?[index].height = data.height;
+    product.additionalUnits?[index].width = data.width;
+    product.additionalUnits?[index].length = data.length;
+    product.additionalUnits?[index].weight = data.weight;
+    product.additionalUnits?[index].isForLoad = data.isForLoad;
+    product.additionalUnits?[index].spaceLabel = data.spaceLabel;
+    product.additionalUnits?[index].weightLabel = data.weightLabel;
+    product.additionalUnits?[index].convertType = data.convertType;
+    notifyListeners();
+  }
+
   removeAdditinoalUnit(int index) {
     additionalUnits.removeAt(index);
     product.additionalUnits = additionalUnits;
@@ -354,7 +368,8 @@ class InventoryProvider extends ChangeNotifier {
   }
 
   clearData() {
-    product = InventoryGoods();
+    product =
+        InventoryGoods(values: [], variantSuppliers: [], quantityPrices: []);
     images = [];
     sections = [];
     values = [];

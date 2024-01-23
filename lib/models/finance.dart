@@ -55,6 +55,7 @@ class Finance {
   DateTime? repaymentDate;
   bool? recourseTerm;
   DateTime? recourseDate;
+  int? recourseDays;
   DateTime? restrictDate;
   DateTime? sentDate;
   double? penaltyPercent;
@@ -151,18 +152,75 @@ class Finance {
   String? shortName;
   String? bankName;
   List<Finance>? invoices;
-  String? contractFile;
+  List<String>? contractFiles;
   String? paymentStatus;
   double? minInvAmount;
   double? minOfInv;
   double? maxOfInv;
+  double? suppFee;
+  double? buyerFee;
+  double? suppCalculateDay;
+  double? buyerCalculateDay;
+  double? suppAppFee;
+  double? buyerAppFee;
+  double? suppDisbursementFee;
+  double? buyerDisbursementFee;
+  String? suppFeeRule;
+  String? buyerFeeRule;
+  String? contractFile;
+  double? suppMinFee;
+  double? buyerMinFee;
+  double? suppMaxFee;
+  double? buyerMaxFee;
+
+  double? suppPenaltyPercent;
+  double? buyerPenaltyPercent;
+  String? buyerPenaltyType;
+  String? suppPenaltyType;
+
+  double? businessSubLimit;
+  double? businessAvailableAmount;
+  double? businessUtilizedAmount;
+  double? businessDisbursePendingAmount;
+  double? businessPendingAmount;
+  double? businessUtilizedCount;
+  double? businessDisbursePendingCount;
+  double? businessPendingCount;
 
   Finance({
+    this.contractFile,
+    this.businessPendingCount,
+    this.businessDisbursePendingCount,
+    this.businessUtilizedCount,
+    this.businessPendingAmount,
+    this.businessDisbursePendingAmount,
+    this.businessUtilizedAmount,
+    this.businessAvailableAmount,
+    this.businessSubLimit,
+    this.suppPenaltyType,
+    this.buyerPenaltyType,
+    this.suppPenaltyPercent,
+    this.buyerPenaltyPercent,
+    this.recourseDays,
+    this.suppMinFee,
+    this.buyerMinFee,
+    this.suppMaxFee,
+    this.buyerMaxFee,
+    this.suppFeeRule,
+    this.buyerFeeRule,
+    this.buyerDisbursementFee,
+    this.suppDisbursementFee,
+    this.suppAppFee,
+    this.buyerAppFee,
+    this.suppFee,
+    this.buyerFee,
+    this.suppCalculateDay,
+    this.buyerCalculateDay,
     this.minInvAmount,
     this.minOfInv,
     this.maxOfInv,
     this.paymentStatus,
-    this.contractFile,
+    this.contractFiles,
     this.invoices,
     this.bankName,
     this.shortName,

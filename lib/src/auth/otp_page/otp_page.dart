@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/src/auth/otp_page/otp-phone-verify.dart';
+import 'package:dehub/src/auth/otp_page/otp_phone_verify.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -27,11 +27,11 @@ class OtpVerifyPage extends StatefulWidget {
   final String email;
   static const routeName = '/OtpVerifyPage';
   const OtpVerifyPage({
-    Key? key,
+    super.key,
     required this.phone,
     required this.email,
     required this.verifyId,
-  }) : super(key: key);
+  });
 
   @override
   State<OtpVerifyPage> createState() => _OtpVerifyPageState();
@@ -55,8 +55,8 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> with AfterLayoutMixin {
     try {
       user.otpCode = value;
       user.verifyId = widget.verifyId;
-      await Provider.of<UserProvider>(context, listen: false).mailOtp(user);
-      await Navigator.of(context).pushNamed(
+      Provider.of<UserProvider>(context, listen: false).mailOtp(user);
+      Navigator.of(context).pushNamed(
         OtpPhoneVerify.routeName,
         arguments: OtpPhoneVerifyArguments(phone: widget.phone),
       );
@@ -118,18 +118,17 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> with AfterLayoutMixin {
       textAlign: TextAlign.center,
       text: TextSpan(
         text: 'Таны ',
-        style: TextStyle(color: buttonColor),
+        style: const TextStyle(color: buttonColor, fontFamily: 'Montserrat'),
         children: <TextSpan>[
           TextSpan(
             text: '${widget.email} ',
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.blue,
             ),
           ),
-          TextSpan(
+          const TextSpan(
             text:
                 'хаягт и-мэйл баталгаажуулах 6 оронтой код илгээсэн. Та түүнийг доор оруулна уу',
-            style: TextStyle(color: buttonColor),
           ),
         ],
       ),
@@ -141,7 +140,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> with AfterLayoutMixin {
         surfaceTintColor: backgroundColor,
         backgroundColor: backgroundColor,
         leadingWidth: 150,
-        leading: CustomBackButton(color: buttonColor),
+        leading: const CustomBackButton(color: buttonColor),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -153,11 +152,11 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> with AfterLayoutMixin {
               margin: const EdgeInsets.only(top: 20, bottom: 20),
               child: SvgPicture.asset('assets/svg/otp-verify.svg'),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             text,
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Pinput(
@@ -175,7 +174,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> with AfterLayoutMixin {
               length: 6,
               keyboardType: TextInputType.number,
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             if (isGetCode == false)
@@ -213,8 +212,8 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> with AfterLayoutMixin {
                       });
                       _startTimer();
                     },
-                    child: Column(
-                      children: const [
+                    child: const Column(
+                      children: [
                         Icon(
                           Icons.refresh,
                           color: buttonColor,
@@ -228,7 +227,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> with AfterLayoutMixin {
                   ),
                 ],
               ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             // CustomButton(

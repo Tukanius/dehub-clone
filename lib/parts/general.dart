@@ -328,124 +328,184 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => InventoryGoods.fromJson(e))
             .toList()
         : null,
+    productSuppPenaltyTypes: json['productSuppPenaltyTypes'] != null
+        ? (json['productSuppPenaltyTypes'] as List)
+            .map((e) => ProductSuppPenaltyTypes.fromJson(e))
+            .toList()
+        : null,
+    productBuyerPenaltyTypes: json['productBuyerPenaltyTypes'] != null
+        ? (json['productBuyerPenaltyTypes'] as List)
+            .map((e) => ProductBuyerPenaltyTypes.fromJson(e))
+            .toList()
+        : null,
   );
 }
 
 Map<String, dynamic> _$GeneralToJson(General instance) {
   Map<String, dynamic> json = {};
 
-  if (instance.programStatus != null)
+  if (instance.productSuppPenaltyTypes != null) {
+    json['productSuppPenaltyTypes'] = instance.productSuppPenaltyTypes;
+  }
+  if (instance.productBuyerPenaltyTypes != null) {
+    json['productBuyerPenaltyTypes'] = instance.productBuyerPenaltyTypes;
+  }
+  if (instance.programStatus != null) {
     json['programStatus'] = instance.programStatus;
+  }
   if (instance.tiers != null) json['tiers'] = instance.tiers;
   if (instance.vatTypes != null) json['vatTypes'] = instance.vatTypes;
   if (instance.fieldTypes != null) json['fieldTypes'] = instance.fieldTypes;
   if (instance.suppliers != null) json['suppliers'] = instance.suppliers;
   if (instance.countries != null) json['countries'] = instance.countries;
-  if (instance.supplierTypes != null)
+  if (instance.supplierTypes != null) {
     json['supplierTypes'] = instance.supplierTypes;
-  if (instance.scfRequestTypes != null)
+  }
+  if (instance.scfRequestTypes != null) {
     json['scfRequestTypes'] = instance.scfRequestTypes;
-  if (instance.invoiceOverdueStatus != null)
+  }
+  if (instance.invoiceOverdueStatus != null) {
     json['invoiceOverdueStatus'] = instance.invoiceOverdueStatus;
-  if (instance.supplierBusinesses != null)
+  }
+  if (instance.supplierBusinesses != null) {
     json['supplierBusinesses'] = instance.supplierBusinesses;
+  }
   if (instance.zipCodes != null) json['zipCodes'] = instance.zipCodes;
-  if (instance.scfRequestStatus != null)
+  if (instance.scfRequestStatus != null) {
     json['scfRequestStatus'] = instance.scfRequestStatus;
-  if (instance.paymentTermConditions != null)
+  }
+  if (instance.paymentTermConditions != null) {
     json['paymentTermConditions'] = instance.paymentTermConditions;
-  if (instance.repaymentStatus != null)
+  }
+  if (instance.repaymentStatus != null) {
     json['repaymentStatus'] = instance.repaymentStatus;
-  if (instance.paymentTermConfigTypes != null)
+  }
+  if (instance.paymentTermConfigTypes != null) {
     json['paymentTermConfigTypes'] = instance.paymentTermConfigTypes;
+  }
   if (instance.bankNames != null) json['bankNames'] = instance.bankNames;
-  if (instance.pullSheetStatus != null)
+  if (instance.pullSheetStatus != null) {
     json['pullSheetStatus'] = instance.pullSheetStatus;
+  }
   if (instance.units != null) json['units'] = instance.units;
   if (instance.orderStatus != null) json['orderStatus'] = instance.orderStatus;
-  if (instance.deliveryNoteStatus != null)
+  if (instance.deliveryNoteStatus != null) {
     json['deliveryNoteStatus'] = instance.deliveryNoteStatus;
-  if (instance.distributionAreas != null)
+  }
+  if (instance.distributionAreas != null) {
     json['distributionAreas'] = instance.distributionAreas;
-  if (instance.branchStatus != null)
+  }
+  if (instance.branchStatus != null) {
     json['branchStatus'] = instance.branchStatus;
+  }
   if (instance.branchTypes != null) json['branchTypes'] = instance.branchTypes;
-  if (instance.businessSectors != null)
+  if (instance.businessSectors != null) {
     json['businessSectors'] = instance.businessSectors;
-  if (instance.businessStaffRoles != null)
+  }
+  if (instance.businessStaffRoles != null) {
     json['businessStaffRoles'] = instance.businessStaffRoles;
-  if (instance.businessStatus != null)
+  }
+  if (instance.businessStatus != null) {
     json['businessStatus'] = instance.businessStatus;
-  if (instance.contractDocTypes != null)
+  }
+  if (instance.contractDocTypes != null) {
     json['contractDocTypes'] = instance.contractDocTypes;
+  }
   if (instance.equityTypes != null) json['equityTypes'] = instance.equityTypes;
-  if (instance.invitationStatus != null)
+  if (instance.invitationStatus != null) {
     json['invitationStatus'] = instance.invitationStatus;
-  if (instance.invitationTypes != null)
+  }
+  if (instance.invitationTypes != null) {
     json['invitationTypes'] = instance.invitationTypes;
-  if (instance.legalEntityTypes != null)
+  }
+  if (instance.legalEntityTypes != null) {
     json['legalEntityTypes'] = instance.legalEntityTypes;
-  if (instance.partnerClassifications != null)
+  }
+  if (instance.partnerClassifications != null) {
     json['partnerClassifications'] = instance.partnerClassifications;
-  if (instance.partnerRegisterStatus != null)
+  }
+  if (instance.partnerRegisterStatus != null) {
     json['partnerRegisterStatus'] = instance.partnerRegisterStatus;
-  if (instance.partnerTypes != null)
+  }
+  if (instance.partnerTypes != null) {
     json['partnerTypes'] = instance.partnerTypes;
+  }
   if (instance.permissions != null) json['permissions'] = instance.permissions;
-  if (instance.productCategoryTypes != null)
+  if (instance.productCategoryTypes != null) {
     json['productCategoryTypes'] = instance.productCategoryTypes;
-  if (instance.purchaseTypes != null)
+  }
+  if (instance.purchaseTypes != null) {
     json['purchaseTypes'] = instance.purchaseTypes;
-  if (instance.referenceListTypes != null)
+  }
+  if (instance.referenceListTypes != null) {
     json['referenceListTypes'] = instance.referenceListTypes;
-  if (instance.referenceTypes != null)
+  }
+  if (instance.referenceTypes != null) {
     json['referenceTypes'] = instance.referenceTypes;
-  if (instance.serviceCategoryTypes != null)
+  }
+  if (instance.serviceCategoryTypes != null) {
     json['serviceCategoryTypes'] = instance.serviceCategoryTypes;
+  }
 
-  if (instance.priceEndTypes != null)
+  if (instance.priceEndTypes != null) {
     json['priceEndTypes'] = instance.priceEndTypes;
+  }
   if (instance.provinces != null) json['provinces'] = instance.provinces;
   if (instance.districts != null) json['districts'] = instance.districts;
   if (instance.khoroos != null) json['khoroos'] = instance.khoroos;
-  if (instance.bankAccounts != null)
+  if (instance.bankAccounts != null) {
     json['bankAccounts'] = instance.bankAccounts;
+  }
   if (instance.staffs != null) json['staffs'] = instance.staffs;
   // if (instance.networks != null) json['networks'] = instance.networks;
   if (instance.currencies != null) json['currencies'] = instance.currencies;
-  if (instance.discountTypes != null)
+  if (instance.discountTypes != null) {
     json['discountTypes'] = instance.discountTypes;
-  if (instance.invoiceHistoryTypes != null)
+  }
+  if (instance.invoiceHistoryTypes != null) {
     json['invoiceHistoryTypes'] = instance.invoiceHistoryTypes;
-  if (instance.invoiceTypes != null)
+  }
+  if (instance.invoiceTypes != null) {
     json['invoiceTypes'] = instance.invoiceTypes;
-  if (instance.invoicePaymentStatus != null)
+  }
+  if (instance.invoicePaymentStatus != null) {
     json['invoicePaymentStatus'] = instance.invoicePaymentStatus;
-  if (instance.invoiceStatus != null)
+  }
+  if (instance.invoiceStatus != null) {
     json['invoiceStatus'] = instance.invoiceStatus;
+  }
   if (instance.itemStatus != null) json['itemStatus'] = instance.itemStatus;
   if (instance.types != null) json['types'] = instance.types;
   if (instance.numberUnits != null) json['numberUnits'] = instance.numberUnits;
-  if (instance.orderConfirmTerms != null)
+  if (instance.orderConfirmTerms != null) {
     json['orderConfirmTerms'] = instance.orderConfirmTerms;
-  if (instance.overdueStatus != null)
+  }
+  if (instance.overdueStatus != null) {
     json['overdueStatus'] = instance.overdueStatus;
-  if (instance.paymentMethod != null)
+  }
+  if (instance.paymentMethod != null) {
     json['paymentMethod'] = instance.paymentMethod;
-  if (instance.paymentTermRules != null)
+  }
+  if (instance.paymentTermRules != null) {
     json['paymentTermRules'] = instance.paymentTermRules;
+  }
   if (instance.perTypes != null) json['perTypes'] = instance.perTypes;
-  if (instance.priceChangeTypes != null)
+  if (instance.priceChangeTypes != null) {
     json['priceChangeTypes'] = instance.priceChangeTypes;
+  }
   if (instance.returnTypes != null) json['returnTypes'] = instance.returnTypes;
-  if (instance.transactionTypes != null)
+  if (instance.transactionTypes != null) {
     json['transactionTypes'] = instance.transactionTypes;
-  if (instance.unitConvertTypes != null)
+  }
+  if (instance.unitConvertTypes != null) {
     json['unitConvertTypes'] = instance.unitConvertTypes;
-  if (instance.unitSpaceLabels != null)
+  }
+  if (instance.unitSpaceLabels != null) {
     json['unitSpaceLabels'] = instance.unitSpaceLabels;
-  if (instance.unitWeightLabels != null)
+  }
+  if (instance.unitWeightLabels != null) {
     json['unitWeightLabels'] = instance.unitWeightLabels;
+  }
 
   return json;
 }

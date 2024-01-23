@@ -38,7 +38,7 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
         children: [
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+            child: const Text(
               'Үндсэн мэдээлэл',
               style: TextStyle(
                 color: grey2,
@@ -46,7 +46,7 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
               ),
             ),
           ),
-          FieldCard(
+          const FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
             color: white,
@@ -61,7 +61,7 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Бүртгэлийн статус',
                   style: TextStyle(color: grey2),
                 ),
@@ -69,7 +69,7 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                   decoration: BoxDecoration(
-                    color: Color(0xffAAB8C2).withOpacity(0.3),
+                    color: const Color(0xffAAB8C2).withOpacity(0.3),
                     border: Border.all(
                       color: grey2.withOpacity(0.4),
                     ),
@@ -77,7 +77,7 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
                   ),
                   child: Text(
                     itemStatus().toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: grey2,
                       fontSize: 12,
                     ),
@@ -160,7 +160,7 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+            child: const Text(
               'Гарал үүсэл',
               style: TextStyle(
                 color: grey2,
@@ -269,7 +269,7 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+            child: const Text(
               'Тайлбар',
               style: TextStyle(
                 color: grey2,
@@ -293,7 +293,7 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+            child: const Text(
               'Нүүрэнд гарах зураг',
               style: TextStyle(
                 color: grey2,
@@ -311,7 +311,7 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+            child: const Text(
               'Нэмэлт зураг',
               style: TextStyle(
                 color: grey2,
@@ -319,55 +319,54 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
               ),
             ),
           ),
-          widget.data.detailImages != null
-              ? Container(
-                  height: 200,
-                  child: ListView(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    children: widget.data.detailImages!
-                        .map(
-                          (e) => Container(
-                            margin: const EdgeInsets.only(
-                                left: 5, right: 5, bottom: 5),
-                            height: 200,
-                            width: 330,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: white,
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: Offset(0, 3),
-                                  blurRadius: 3,
-                                  color: Colors.grey,
-                                )
-                              ],
-                            ),
-                            child: GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                  barrierDismissible: true,
-                                  context: context,
-                                  builder: (context) {
-                                    return ImageDialog(link: e);
-                                  },
-                                );
+          if (widget.data.detailImages != null)
+            SizedBox(
+              height: 200,
+              child: ListView(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                children: widget.data.detailImages!
+                    .map(
+                      (e) => Container(
+                        margin:
+                            const EdgeInsets.only(left: 5, right: 5, bottom: 5),
+                        height: 200,
+                        width: 330,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: white,
+                          boxShadow: const [
+                            BoxShadow(
+                              offset: Offset(0, 3),
+                              blurRadius: 3,
+                              color: Colors.grey,
+                            )
+                          ],
+                        ),
+                        child: GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              barrierDismissible: true,
+                              context: context,
+                              builder: (context) {
+                                return ImageDialog(link: e);
                               },
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image(
-                                  image: NetworkImage('${e}'),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                            );
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image(
+                              image: NetworkImage(e),
+                              fit: BoxFit.cover,
                             ),
                           ),
-                        )
-                        .toList(),
-                  ),
-                )
-              : SizedBox(),
-          SizedBox(
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+          const SizedBox(
             height: 100,
           ),
         ],

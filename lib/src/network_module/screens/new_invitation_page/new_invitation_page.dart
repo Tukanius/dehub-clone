@@ -26,12 +26,12 @@ class _NewInvitationPageState extends State<NewInvitationPage> {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_ios_new,
               color: networkColor,
             ),
           ),
-          title: Text(
+          title: const Text(
             'Худалдан авагч урих',
             style: TextStyle(
               color: networkColor,
@@ -44,13 +44,13 @@ class _NewInvitationPageState extends State<NewInvitationPage> {
             labelColor: networkColor,
             indicatorColor: networkColor,
             unselectedLabelColor: dark,
-            labelStyle: TextStyle(
+            labelStyle: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
               fontFamily: "Montserrat",
             ),
-            tabs: [
-              Container(
+            tabs: const [
+              SizedBox(
                 height: 40,
                 child: Center(
                   child: Text(
@@ -59,7 +59,7 @@ class _NewInvitationPageState extends State<NewInvitationPage> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 40,
                 child: Center(
                   child: Text(
@@ -71,7 +71,7 @@ class _NewInvitationPageState extends State<NewInvitationPage> {
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             FromDehubTab(),
             OnboardTab(),

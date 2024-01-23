@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 class InboxCard extends StatefulWidget {
   final Function()? onClick;
   final Invitation? data;
-  InboxCard({
+  const InboxCard({
     this.data,
     this.onClick,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
-  _InboxCardState createState() => _InboxCardState();
+  InboxCardState createState() => InboxCardState();
 }
 
-class _InboxCardState extends State<InboxCard> {
+class InboxCardState extends State<InboxCard> {
   invitationStatus() {
     switch (widget.data?.invitationStatus) {
       case "DRAFT":
@@ -53,7 +53,7 @@ class _InboxCardState extends State<InboxCard> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: white,
-          border: Border.all(width: 0.5, color: Color(0xffF2F2F2)),
+          border: Border.all(width: 0.5, color: const Color(0xffF2F2F2)),
         ),
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         child: Column(
@@ -73,49 +73,49 @@ class _InboxCardState extends State<InboxCard> {
                               ? [
                                   Text(
                                     '${widget.data?.sender?.profileName}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Text(
                                     '${widget.data?.sender?.partnerName}',
-                                    style:
-                                        TextStyle(fontSize: 12, color: grey3),
+                                    style: const TextStyle(
+                                        fontSize: 12, color: grey3),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Text(
                                     '${widget.data?.sender?.staff?.firstName}, ${widget.data?.sender?.staff?.phone}',
-                                    style:
-                                        TextStyle(fontSize: 12, color: grey3),
+                                    style: const TextStyle(
+                                        fontSize: 12, color: grey3),
                                   ),
                                 ]
                               : [
                                   Text(
                                     '${widget.data?.bankName}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Text(
                                     '${widget.data?.senderUserName}',
-                                    style:
-                                        TextStyle(fontSize: 12, color: grey3),
+                                    style: const TextStyle(
+                                        fontSize: 12, color: grey3),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Text(
                                     '${widget.data?.toMessage}',
-                                    style:
-                                        TextStyle(fontSize: 12, color: grey3),
+                                    style: const TextStyle(
+                                        fontSize: 12, color: grey3),
                                   ),
                                 ],
                         ),
@@ -131,31 +131,31 @@ class _InboxCardState extends State<InboxCard> {
                       children: [
                         Text(
                           '${widget.data?.sender?.refCode}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
                             color: grey3,
                             decoration: TextDecoration.underline,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 6,
                         ),
                         Row(
                           children: [
-                            Text(
+                            const Text(
                               'Урилга №: ',
                               style: TextStyle(color: grey3, fontSize: 10),
                             ),
                             Text(
                               '${widget.data?.refCode}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w600,
                                   color: grey3),
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 6,
                         ),
                         Container(
@@ -175,10 +175,10 @@ class _InboxCardState extends State<InboxCard> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
-                    Icon(
+                    const Icon(
                       Icons.arrow_forward_ios,
                       size: 12,
                     ),

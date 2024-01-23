@@ -4,9 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 class CustomCloseButton extends StatefulWidget {
   final Color? color;
   const CustomCloseButton({
-    Key? key,
+    super.key,
     this.color,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomCloseButton> createState() => _CustomCloseButtonState();

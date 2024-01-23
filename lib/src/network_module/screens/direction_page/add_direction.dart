@@ -3,7 +3,7 @@ import 'package:dehub/components/close_button/close_button.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
-import 'package:dehub/models/business-staffs.dart';
+import 'package:dehub/models/business_staffs.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
@@ -38,12 +38,12 @@ class AddDirection extends StatefulWidget {
   final String? parentRefCode;
   static const routeName = '/AddDirection';
   const AddDirection({
-    Key? key,
+    super.key,
     this.parentId,
     this.parentName,
     this.parentRefCode,
     required this.listenController,
-  }) : super(key: key);
+  });
 
   @override
   State<AddDirection> createState() => _AddDirectionState();
@@ -126,8 +126,9 @@ class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
         backgroundColor: networkColor,
         surfaceTintColor: networkColor,
         elevation: 0,
-        leading: isSubmit == true ? SizedBox() : CustomCloseButton(),
-        title: Text(
+        leading:
+            isSubmit == true ? const SizedBox() : const CustomCloseButton(),
+        title: const Text(
           'Чиглэл',
           style: TextStyle(
             color: white,
@@ -137,7 +138,7 @@ class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
         ),
       ),
       body: isSubmit == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: networkColor,
               ),
@@ -149,7 +150,7 @@ class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Мэдээлэл',
                       style: TextStyle(
                         color: grey3,
@@ -161,7 +162,7 @@ class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         vertical: 15, horizontal: 15),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -181,285 +182,282 @@ class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
                   ),
                   FormBuilder(
                     key: fbKey,
-                    child: Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          FormTextField(
-                            textColor: networkColor,
-                            textAlign: TextAlign.end,
-                            name: 'name',
-                            inputType: TextInputType.text,
-                            decoration: InputDecoration(
-                              prefixIcon: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 15),
-                                child: Text(
-                                  'Чиглэлийн нэр',
-                                  style: TextStyle(color: dark),
-                                ),
-                              ),
-                              fillColor: white,
-                              filled: true,
-                              contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 15),
-                              hintStyle: TextStyle(color: networkColor),
-                              hintText: 'Чиглэлийн нэр',
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        FormTextField(
+                          textColor: networkColor,
+                          textAlign: TextAlign.end,
+                          name: 'name',
+                          inputType: TextInputType.text,
+                          decoration: InputDecoration(
+                            prefixIcon: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 15),
+                              child: const Text(
+                                'Чиглэлийн нэр',
+                                style: TextStyle(color: dark),
                               ),
                             ),
-                            validators: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(
-                                  errorText: 'Чиглэлийн нэр оруулна уу'),
-                            ]),
+                            fillColor: white,
+                            filled: true,
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 15),
+                            hintStyle: const TextStyle(color: networkColor),
+                            hintText: 'Чиглэлийн нэр',
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            ),
                           ),
-                          widget.parentId != null
-                              ? FieldCard(
-                                  paddingHorizontal: 15,
-                                  paddingVertical: 15,
-                                  labelText: 'Бүсийн нэр',
-                                  secondText: widget.parentName,
-                                  secondTextColor: networkColor,
-                                  color: white,
-                                )
-                              : distributionArea.rows!.isEmpty
-                                  ? Container(
-                                      color: white,
-                                      width: MediaQuery.of(context).size.width,
-                                      padding: const EdgeInsets.all(15),
-                                      child: Text('Бүсчлэл сонгоно уу'),
-                                    )
-                                  : DropdownButtonFormField(
-                                      validator: FormBuilderValidators.compose([
-                                        FormBuilderValidators.required(
-                                            errorText: 'Заавал оруулна уу.')
-                                      ]),
-                                      icon: Container(
-                                        decoration: BoxDecoration(
-                                          color: white,
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              'Сонгох',
-                                              style: TextStyle(
-                                                  color: networkColor,
-                                                  fontSize: 14),
-                                            ),
-                                            Icon(
-                                              Icons.arrow_drop_down,
-                                              color: dark,
-                                            ),
-                                          ],
-                                        ),
+                          validators: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                                errorText: 'Чиглэлийн нэр оруулна уу'),
+                          ]),
+                        ),
+                        widget.parentId != null
+                            ? FieldCard(
+                                paddingHorizontal: 15,
+                                paddingVertical: 15,
+                                labelText: 'Бүсийн нэр',
+                                secondText: widget.parentName,
+                                secondTextColor: networkColor,
+                                color: white,
+                              )
+                            : distributionArea.rows!.isEmpty
+                                ? Container(
+                                    color: white,
+                                    width: MediaQuery.of(context).size.width,
+                                    padding: const EdgeInsets.all(15),
+                                    child: const Text('Бүсчлэл сонгоно уу'),
+                                  )
+                                : DropdownButtonFormField(
+                                    validator: FormBuilderValidators.compose([
+                                      FormBuilderValidators.required(
+                                          errorText: 'Заавал оруулна уу.')
+                                    ]),
+                                    icon: Container(
+                                      decoration: BoxDecoration(
+                                        color: white,
+                                        borderRadius: BorderRadius.circular(15),
                                       ),
-                                      onChanged: (value) {
-                                        setState(() {});
-                                      },
-                                      dropdownColor: white,
-                                      elevation: 2,
-                                      decoration: InputDecoration(
-                                        hintText: 'Бүсийн нэр',
-                                        hintStyle: TextStyle(
-                                            fontSize: 14, color: dark),
-                                        filled: true,
-                                        fillColor: white,
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                vertical: 10, horizontal: 15),
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
-                                        ),
+                                      child: const Row(
+                                        children: [
+                                          Text(
+                                            'Сонгох',
+                                            style: TextStyle(
+                                                color: networkColor,
+                                                fontSize: 14),
+                                          ),
+                                          Icon(
+                                            Icons.arrow_drop_down,
+                                            color: dark,
+                                          ),
+                                        ],
                                       ),
-                                      items: distributionArea.rows!
-                                          .map(
-                                            (item) => DropdownMenuItem(
-                                              onTap: () {
-                                                selectedValue = item.id;
-                                                refcode = item.refCode;
-                                              },
-                                              value: item,
-                                              child: Text(
-                                                '${item.name}',
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                ),
+                                    ),
+                                    onChanged: (value) {
+                                      setState(() {});
+                                    },
+                                    dropdownColor: white,
+                                    elevation: 2,
+                                    decoration: const InputDecoration(
+                                      hintText: 'Бүсийн нэр',
+                                      hintStyle:
+                                          TextStyle(fontSize: 14, color: dark),
+                                      filled: true,
+                                      fillColor: white,
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 15),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                      ),
+                                    ),
+                                    items: distributionArea.rows!
+                                        .map(
+                                          (item) => DropdownMenuItem(
+                                            onTap: () {
+                                              selectedValue = item.id;
+                                              refcode = item.refCode;
+                                            },
+                                            value: item,
+                                            child: Text(
+                                              '${item.name}',
+                                              style: const TextStyle(
+                                                fontSize: 14,
                                               ),
                                             ),
-                                          )
-                                          .toList(),
-                                    ),
-                          Container(
-                            color: white,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Бүсийн код',
-                                  style: TextStyle(color: dark),
-                                ),
-                                refcode == null
-                                    ? Text(
-                                        'Авто гарах',
-                                        style: TextStyle(
-                                          color: networkColor,
-                                        ),
-                                      )
-                                    : Text(
-                                        '${refcode}',
-                                        style: TextStyle(color: networkColor),
-                                      )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 10),
-                            child: Text(
-                              'Тайлбар',
-                              style: TextStyle(
-                                color: grey3,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            color: white,
-                            child: Column(
-                              children: [
-                                FormTextField(
-                                  textColor: networkColor,
-                                  name: 'description',
-                                  inputType: TextInputType.text,
-                                  decoration: InputDecoration(
-                                    fillColor: white,
-                                    filled: true,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 15),
-                                    hintStyle: TextStyle(color: networkColor),
-                                    hintText: 'Тайлбар оруулна уу',
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 15, horizontal: 15),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Бүртгэсэн огноо, цаг',
-                                        style: TextStyle(color: dark),
-                                      ),
-                                      Text(
-                                        '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
-                                        style: TextStyle(
-                                          color: dark,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 15, horizontal: 15),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Бүртгэсэн ажилтан',
-                                        style: TextStyle(color: dark),
-                                      ),
-                                      Text(
-                                        '',
-                                        style: TextStyle(
-                                          color: networkColor,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 15, horizontal: 15),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Статус',
-                                        style: TextStyle(color: dark),
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 5),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          color: grey2.withOpacity(0.1),
-                                        ),
-                                        child: Text(
-                                          'Түр төлөв',
-                                          style: TextStyle(
-                                            color: grey2,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
                                           ),
-                                        ),
-                                      )
-                                    ],
+                                        )
+                                        .toList(),
                                   ),
-                                ),
-                              ],
+                        Container(
+                          color: white,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Бүсийн код',
+                                style: TextStyle(color: dark),
+                              ),
+                              refcode == null
+                                  ? const Text(
+                                      'Авто гарах',
+                                      style: TextStyle(
+                                        color: networkColor,
+                                      ),
+                                    )
+                                  : Text(
+                                      '$refcode',
+                                      style:
+                                          const TextStyle(color: networkColor),
+                                    )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: const Text(
+                            'Тайлбар',
+                            style: TextStyle(
+                              color: grey3,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                          SizedBox(
-                            height: 50,
-                          ),
-                          Row(
+                        ),
+                        Container(
+                          color: white,
+                          child: Column(
                             children: [
-                              Expanded(
-                                child: Container(
-                                  margin: const EdgeInsets.only(
-                                      left: 10, right: 2.5),
-                                  child: CustomButton(
-                                    borderColor: networkColor,
-                                    labelColor: backgroundColor,
-                                    textColor: networkColor,
-                                    onClick: () {},
-                                    labelText: "Буцах",
+                              const FormTextField(
+                                textColor: networkColor,
+                                name: 'description',
+                                inputType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  fillColor: white,
+                                  filled: true,
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 15),
+                                  hintStyle: TextStyle(color: networkColor),
+                                  hintText: 'Тайлбар оруулна уу',
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
                                   ),
                                 ),
                               ),
-                              Expanded(
-                                child: Container(
-                                  margin: const EdgeInsets.only(
-                                      left: 2.5, right: 10),
-                                  child: CustomButton(
-                                    labelColor: networkColor,
-                                    labelText: 'Хадгалах',
-                                    onClick: () {
-                                      onSubmit();
-                                    },
-                                  ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 15, horizontal: 15),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text(
+                                      'Бүртгэсэн огноо, цаг',
+                                      style: TextStyle(color: dark),
+                                    ),
+                                    Text(
+                                      DateFormat("yyyy-MM-dd")
+                                          .format(DateTime.now()),
+                                      style: const TextStyle(
+                                        color: dark,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 15, horizontal: 15),
+                                child: const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Бүртгэсэн ажилтан',
+                                      style: TextStyle(color: dark),
+                                    ),
+                                    Text(
+                                      '',
+                                      style: TextStyle(
+                                        color: networkColor,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 15, horizontal: 15),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text(
+                                      'Статус',
+                                      style: TextStyle(color: dark),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 5),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        color: grey2.withOpacity(0.1),
+                                      ),
+                                      child: const Text(
+                                        'Түр төлөв',
+                                        style: TextStyle(
+                                          color: grey2,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 50,
-                          ),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.only(left: 10, right: 2.5),
+                                child: CustomButton(
+                                  borderColor: networkColor,
+                                  labelColor: backgroundColor,
+                                  textColor: networkColor,
+                                  onClick: () {},
+                                  labelText: "Буцах",
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.only(left: 2.5, right: 10),
+                                child: CustomButton(
+                                  labelColor: networkColor,
+                                  labelText: 'Хадгалах',
+                                  onClick: () {
+                                    onSubmit();
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                      ],
                     ),
                   ),
                 ],

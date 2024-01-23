@@ -22,9 +22,9 @@ class OrderCashPayment extends StatefulWidget {
   final Invoice data;
   static const routeName = '/OrderCashPayment';
   const OrderCashPayment({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<OrderCashPayment> createState() => _OrderCashPaymentState();
@@ -67,7 +67,7 @@ class _OrderCashPaymentState extends State<OrderCashPayment>
       Invoice(
         firstName: "Төлөх огноо, цаг",
         lastName:
-            "${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.paymentDate!)}",
+            DateFormat("yyyy-MM-dd HH:mm").format(widget.data.paymentDate!),
       ),
     ];
     updateAmount();
@@ -92,22 +92,23 @@ class _OrderCashPaymentState extends State<OrderCashPayment>
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        leading: CustomCloseButton(),
+        leading: const CustomCloseButton(),
         backgroundColor: orderColor,
         surfaceTintColor: orderColor,
         centerTitle: true,
         automaticallyImplyLeading: false,
         elevation: 0,
-        title: Text(
+        title: const Text(
           'Захиалгын төлбөр төлөх',
           style: TextStyle(
             fontSize: 16,
+            color: white,
             fontWeight: FontWeight.bold,
           ),
         ),
       ),
       body: isLoading == true
-          ? SizedBox()
+          ? const SizedBox()
           : SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,7 +116,7 @@ class _OrderCashPaymentState extends State<OrderCashPayment>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Төлбөрийн мэдээлэл',
                       style: TextStyle(
                         color: grey2,
@@ -141,7 +142,7 @@ class _OrderCashPaymentState extends State<OrderCashPayment>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Төлбөрийн хэлбэр',
                       style: TextStyle(
                         color: grey2,
@@ -156,14 +157,14 @@ class _OrderCashPaymentState extends State<OrderCashPayment>
                       children: [
                         SvgPicture.asset(
                           'assets/svg/sanhuujilt.svg',
-                          colorFilter:
-                              ColorFilter.mode(orderColor, BlendMode.srcIn),
+                          colorFilter: const ColorFilter.mode(
+                              orderColor, BlendMode.srcIn),
                           height: 20,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 15,
                         ),
-                        Text(
+                        const Text(
                           'Бэлэн мөнгөөр',
                           style: TextStyle(color: orderColor),
                         ),
@@ -173,7 +174,7 @@ class _OrderCashPaymentState extends State<OrderCashPayment>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Бэлэн тооцоо',
                       style: TextStyle(
                         color: grey2,
@@ -185,7 +186,7 @@ class _OrderCashPaymentState extends State<OrderCashPayment>
                     color: white,
                     child: Row(
                       children: [
-                        Expanded(
+                        const Expanded(
                           child: Text(
                             "Олгосон мөнгөн дүн",
                             style: TextStyle(
@@ -208,7 +209,7 @@ class _OrderCashPaymentState extends State<OrderCashPayment>
                             inputType: TextInputType.number,
                             textColor: orderColor,
                             textAlign: TextAlign.center,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.zero,
                                 borderSide: BorderSide.none,
@@ -227,7 +228,7 @@ class _OrderCashPaymentState extends State<OrderCashPayment>
                     color: white,
                     child: Row(
                       children: [
-                        Expanded(
+                        const Expanded(
                           child: Text(
                             "Авсан хариулт",
                             style: TextStyle(
@@ -247,7 +248,7 @@ class _OrderCashPaymentState extends State<OrderCashPayment>
                             inputType: TextInputType.number,
                             textColor: orderColor,
                             textAlign: TextAlign.center,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.zero,
                                 borderSide: BorderSide.none,
@@ -266,7 +267,7 @@ class _OrderCashPaymentState extends State<OrderCashPayment>
                     color: white,
                     child: Row(
                       children: [
-                        Expanded(
+                        const Expanded(
                           child: Text(
                             "Төлсөн дүн",
                             style: TextStyle(
@@ -283,7 +284,7 @@ class _OrderCashPaymentState extends State<OrderCashPayment>
                             textColor: orderColor,
                             textAlign: TextAlign.center,
                             name: "paidAmount",
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintStyle: TextStyle(color: orderColor),
                               hintText: "0",
                               isDense: true,
@@ -301,7 +302,7 @@ class _OrderCashPaymentState extends State<OrderCashPayment>
                     color: white,
                     child: Row(
                       children: [
-                        Expanded(
+                        const Expanded(
                           child: Text(
                             "Зөрүү",
                             style: TextStyle(
@@ -319,7 +320,7 @@ class _OrderCashPaymentState extends State<OrderCashPayment>
                             inputType: TextInputType.number,
                             textColor: orderColor,
                             textAlign: TextAlign.center,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.zero,
                                 borderSide: BorderSide.none,
@@ -334,7 +335,7 @@ class _OrderCashPaymentState extends State<OrderCashPayment>
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 55,
                   ),
                   CustomButton(

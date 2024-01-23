@@ -1,10 +1,10 @@
 import 'package:dehub/api/finance_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/payback_card/payback_card.dart';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/src/finance_module/screens/repayment_detail/repayment_detail.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -47,7 +47,7 @@ class _BuyerLedState extends State<BuyerLed> with AfterLayoutMixin {
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000), () async {
+    await Future.delayed(const Duration(milliseconds: 1000), () async {
       setState(() {
         isLoading = true;
       });
@@ -74,48 +74,18 @@ class _BuyerLedState extends State<BuyerLed> with AfterLayoutMixin {
               color: source.currentColor,
             ),
           )
-        : SmartRefresher(
-            enablePullDown: true,
-            enablePullUp: true,
-            controller: refreshController,
-            header: WaterDropHeader(
-              waterDropColor: source.currentColor,
-              refresh: SizedBox(
-                height: 20,
-                width: 20,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: source.currentColor,
-                ),
-              ),
-            ),
-            onRefresh: _onRefresh,
+        : Refresher(
+            refreshController: refreshController,
             onLoading: _onLoading,
-            footer: CustomFooter(
-              builder: (context, mode) {
-                Widget body;
-                if (mode == LoadStatus.idle) {
-                  body = const Text("");
-                } else if (mode == LoadStatus.loading) {
-                  body = const CupertinoActivityIndicator();
-                } else if (mode == LoadStatus.failed) {
-                  body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                } else {
-                  body = const Text("Мэдээлэл алга байна");
-                }
-                return SizedBox(
-                  height: 55.0,
-                  child: Center(child: body),
-                );
-              },
-            ),
+            onRefresh: _onRefresh,
+            color: source.currentColor,
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
-                  finance.rows?.length != 0
+                  finance.rows!.isNotEmpty
                       ? Column(
                           children: finance.rows!
                               .map(
@@ -133,7 +103,7 @@ class _BuyerLedState extends State<BuyerLed> with AfterLayoutMixin {
                               )
                               .toList(),
                         )
-                      : NotFound(
+                      : const NotFound(
                           module: "FINANCE",
                           labelText: 'Хоосон байна',
                         ),

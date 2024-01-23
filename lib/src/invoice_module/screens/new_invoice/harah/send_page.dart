@@ -31,7 +31,7 @@ class _SendPageState extends State<SendPage> {
             ),
           ),
         ),
-        title: Text(
+        title: const Text(
           'INV - 23987 - илгээх',
           style: TextStyle(
             color: white,
@@ -48,7 +48,7 @@ class _SendPageState extends State<SendPage> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, bottom: 10),
-                  child: Text(
+                  child: const Text(
                     'ХҮЛЭЭН АВАГЧ',
                     style: TextStyle(
                       color: grey3,
@@ -64,31 +64,29 @@ class _SendPageState extends State<SendPage> {
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 15, top: 10, bottom: 10, right: 10),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('Buyer нэр'),
-                        Container(
-                          child: Row(
-                            children: [
-                              Text(
-                                'Bolor Store',
-                                style: TextStyle(
-                                  color: invoiceColor,
-                                ),
+                        Row(
+                          children: [
+                            Text(
+                              'Bolor Store',
+                              style: TextStyle(
+                                color: invoiceColor,
                               ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 12,
-                                color: grey2,
-                              )
-                            ],
-                          ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              size: 12,
+                              color: grey2,
+                            )
+                          ],
                         ),
                       ],
                     ),
@@ -101,31 +99,29 @@ class _SendPageState extends State<SendPage> {
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 15, top: 10, bottom: 10, right: 10),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('И-мэйл хаяг'),
-                        Container(
-                          child: Row(
-                            children: [
-                              Text(
-                                'bolor@gmail.com',
-                                style: TextStyle(
-                                  color: invoiceColor,
-                                ),
+                        Row(
+                          children: [
+                            Text(
+                              'bolor@gmail.com',
+                              style: TextStyle(
+                                color: invoiceColor,
                               ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 12,
-                                color: grey2,
-                              )
-                            ],
-                          ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              size: 12,
+                              color: grey2,
+                            )
+                          ],
                         ),
                       ],
                     ),
@@ -138,31 +134,29 @@ class _SendPageState extends State<SendPage> {
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 15, top: 10, bottom: 10, right: 10),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('Нэхэмжлэх дүн'),
-                        Container(
-                          child: Row(
-                            children: [
-                              Text(
-                                '417,450.00 ₮',
-                                style: TextStyle(
-                                  color: invoiceColor,
-                                ),
+                        Row(
+                          children: [
+                            Text(
+                              '417,450.00 ₮',
+                              style: TextStyle(
+                                color: invoiceColor,
                               ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 12,
-                                color: grey2,
-                              )
-                            ],
-                          ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              size: 12,
+                              color: grey2,
+                            )
+                          ],
                         ),
                       ],
                     ),
@@ -175,31 +169,29 @@ class _SendPageState extends State<SendPage> {
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 15, top: 10, bottom: 10, right: 10),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('Хавсралт'),
-                        Container(
-                          child: Row(
-                            children: [
-                              Text(
-                                'Invoice-23987.PDF',
-                                style: TextStyle(
-                                  color: invoiceColor,
-                                ),
+                        Row(
+                          children: [
+                            Text(
+                              'Invoice-23987.PDF',
+                              style: TextStyle(
+                                color: invoiceColor,
                               ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 12,
-                                color: grey2,
-                              )
-                            ],
-                          ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              size: 12,
+                              color: grey2,
+                            )
+                          ],
                         ),
                       ],
                     ),
@@ -207,14 +199,14 @@ class _SendPageState extends State<SendPage> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Row(
               children: [
                 Container(
                   margin: const EdgeInsets.only(left: 15),
-                  child: Text(
+                  child: const Text(
                     'ИЛГЭЭГЧ',
                     style: TextStyle(
                       color: grey3,
@@ -225,7 +217,7 @@ class _SendPageState extends State<SendPage> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Container(
@@ -238,13 +230,11 @@ class _SendPageState extends State<SendPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
+                      const Row(
                         children: [
-                          Container(
-                            child: Icon(
-                              Icons.perm_contact_cal_outlined,
-                              color: invoiceColor,
-                            ),
+                          Icon(
+                            Icons.perm_contact_cal_outlined,
+                            color: invoiceColor,
                           ),
                           SizedBox(
                             width: 10,
@@ -257,7 +247,7 @@ class _SendPageState extends State<SendPage> {
                       ),
                       IconButton(
                         onPressed: () {},
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.arrow_forward_ios,
                           size: 12,
                           color: grey3,
@@ -268,20 +258,18 @@ class _SendPageState extends State<SendPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        child: Text(
-                          'Партнерийн нэр',
-                        ),
+                      const Text(
+                        'Партнерийн нэр',
                       ),
                       Row(
                         children: [
-                          Text(
+                          const Text(
                             'Партнер нэр',
                             style: TextStyle(color: invoiceColor),
                           ),
                           IconButton(
                             onPressed: () {},
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.arrow_forward_ios,
                               size: 12,
                               color: grey3,
@@ -294,20 +282,18 @@ class _SendPageState extends State<SendPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        child: Text(
-                          'Салбарын нэр',
-                        ),
+                      const Text(
+                        'Салбарын нэр',
                       ),
                       Row(
                         children: [
-                          Text(
+                          const Text(
                             'Салбарын нэр',
                             style: TextStyle(color: invoiceColor),
                           ),
                           IconButton(
                             onPressed: () {},
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.arrow_forward_ios,
                               size: 12,
                               color: grey3,
@@ -320,21 +306,21 @@ class _SendPageState extends State<SendPage> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Row(
               children: [
                 Container(
                   margin: const EdgeInsets.only(left: 15),
-                  child: Text(
+                  child: const Text(
                     'Нэмж бичих зүйлс',
                     style: TextStyle(color: black),
                   ),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Container(
@@ -346,7 +332,7 @@ class _SendPageState extends State<SendPage> {
                 border: Border.all(color: grey3),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Container(

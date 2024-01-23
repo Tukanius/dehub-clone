@@ -6,13 +6,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class UserMangementPage extends StatefulWidget {
   static const routeName = '/UserMangementPage';
-  const UserMangementPage({Key? key}) : super(key: key);
+  const UserMangementPage({super.key});
 
   @override
-  _UserMangementPageState createState() => _UserMangementPageState();
+  UserMangementPageState createState() => UserMangementPageState();
 }
 
-class _UserMangementPageState extends State<UserMangementPage> {
+class UserMangementPageState extends State<UserMangementPage> {
   int selectedIndex = 1;
   static const List<Widget> currentPages = [
     HomePageTab(),
@@ -40,18 +40,18 @@ class _UserMangementPageState extends State<UserMangementPage> {
         elevation: 0,
         backgroundColor: backgroundColor,
         surfaceTintColor: backgroundColor,
-        leading: CustomBackButton(color: userColor),
+        leading: const CustomBackButton(color: userColor),
         actions: [
           Container(
             padding: const EdgeInsets.all(10),
             margin: const EdgeInsets.only(right: 15, top: 9, bottom: 9),
             decoration: BoxDecoration(
-              color: Color(0xff767680).withOpacity(0.12),
+              color: const Color(0xff767680).withOpacity(0.12),
               borderRadius: BorderRadius.circular(100),
             ),
             child: SvgPicture.asset(
               'assets/svg/grid.svg',
-              colorFilter: ColorFilter.mode(userColor, BlendMode.srcIn),
+              colorFilter: const ColorFilter.mode(userColor, BlendMode.srcIn),
             ),
           )
         ],
@@ -91,12 +91,11 @@ class _UserMangementPageState extends State<UserMangementPage> {
                           BlendMode.srcIn),
                     ),
                   ),
-                  selectedIndex != 0
-                      ? Text(
-                          'Нүүр',
-                          style: TextStyle(color: userColor, fontSize: 12),
-                        )
-                      : SizedBox(),
+                  if (selectedIndex != 0)
+                    const Text(
+                      'Нүүр',
+                      style: TextStyle(color: userColor, fontSize: 12),
+                    )
                 ],
               ),
             ),
@@ -118,12 +117,11 @@ class _UserMangementPageState extends State<UserMangementPage> {
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 1
-                    ? Text(
-                        'Дашбоард',
-                        style: TextStyle(color: userColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (selectedIndex != 1)
+                  const Text(
+                    'Дашбоард',
+                    style: TextStyle(color: userColor, fontSize: 12),
+                  )
               ],
             ),
             label: '',
@@ -144,12 +142,11 @@ class _UserMangementPageState extends State<UserMangementPage> {
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 2
-                    ? Text(
-                        'Ирсэн',
-                        style: TextStyle(color: userColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (selectedIndex != 2)
+                  const Text(
+                    'Ирсэн',
+                    style: TextStyle(color: userColor, fontSize: 12),
+                  )
               ],
             ),
             label: '',
@@ -170,12 +167,11 @@ class _UserMangementPageState extends State<UserMangementPage> {
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 3
-                    ? Text(
-                        'Илгээсэн',
-                        style: TextStyle(color: userColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (selectedIndex != 3)
+                  const Text(
+                    'Илгээсэн',
+                    style: TextStyle(color: userColor, fontSize: 12),
+                  )
               ],
             ),
             label: '',

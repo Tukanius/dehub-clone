@@ -24,9 +24,9 @@ class ProductGive extends StatefulWidget {
   final Order data;
   static const routeName = '/ProductGive';
   const ProductGive({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<ProductGive> createState() => _ProductGiveState();
@@ -34,7 +34,7 @@ class ProductGive extends StatefulWidget {
 
 class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
   bool isStart = false;
-  Duration duration = Duration();
+  Duration duration = const Duration();
   bool isLoading = true;
   Order shipment = Order();
   User user = User();
@@ -43,9 +43,9 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
   bool startShipment = false;
   bool isSubmit = false;
   Order endResponse = Order();
-  Duration resume = Duration();
-  Duration difference = Duration();
-  Duration difference1 = Duration();
+  Duration resume = const Duration();
+  Duration difference = const Duration();
+  Duration difference1 = const Duration();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -73,14 +73,14 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
 
   void addTimer() {
     if (shipment.dispatchedDate == null) {
-      final addSeconds = 1;
+      const addSeconds = 1;
 
       setState(() {
         final seconds = duration.inSeconds + addSeconds;
         duration = Duration(seconds: seconds);
       });
     } else {
-      final addSeconds = 1;
+      const addSeconds = 1;
       setState(() {
         final seconds = resume.inSeconds + addSeconds;
         resume = Duration(seconds: seconds);
@@ -90,9 +90,9 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
 
   void reset() {
     if (isCountDown) {
-      setState(() => duration = Duration());
+      setState(() => duration = const Duration());
     } else {
-      setState(() => duration = Duration());
+      setState(() => duration = const Duration());
     }
   }
 
@@ -103,7 +103,8 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
           startShipment = true;
         });
         await OrderApi().deliveryNoteStart(widget.data.id!);
-        timer = Timer.periodic(Duration(seconds: 1), (timer) => addTimer());
+        timer =
+            Timer.periodic(const Duration(seconds: 1), (timer) => addTimer());
         shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
         setState(() {
           isStart = true;
@@ -120,7 +121,8 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
         if (isProceed == true) {
           await OrderApi().deliveryNoteProceed(widget.data.id!);
         }
-        timer = Timer.periodic(Duration(seconds: 1), (timer) => addTimer());
+        timer =
+            Timer.periodic(const Duration(seconds: 1), (timer) => addTimer());
         shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
         setState(() {
           isStart = true;
@@ -220,12 +222,12 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
               stopTimer();
             }
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios_new,
             color: orderColor,
           ),
         ),
-        title: Text(
+        title: const Text(
           'Захиалга хүлээлцэх',
           style: TextStyle(
             color: buttonColor,
@@ -235,7 +237,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
         ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: orderColor,
               ),
@@ -247,178 +249,172 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        user.currentBusiness?.type == "SUPPLIER"
-                            ? Container(
-                                padding: const EdgeInsets.all(15),
-                                color: white,
-                                margin: const EdgeInsets.symmetric(vertical: 5),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        if (startShipment == false &&
-                                            shipment.deliveredDate == null) {
-                                          startTimer(true);
-                                        }
-                                      },
-                                      child: Container(
-                                        height: 60,
-                                        width: 75,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: isStart == true
-                                              ? orderColor
-                                              : lightGrey,
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            SvgPicture.asset(
-                                              'assets/svg/bx_timer.svg',
-                                              colorFilter: ColorFilter.mode(
-                                                  isStart == true
-                                                      ? white
-                                                      : buttonColor,
-                                                  BlendMode.srcIn),
-                                            ),
-                                            shipment.dispatchedDate == null
-                                                ? Text(
-                                                    'Эхлэх',
-                                                    style: TextStyle(
-                                                      color: isStart == true
-                                                          ? white
-                                                          : buttonColor,
-                                                    ),
-                                                  )
-                                                : Text(
-                                                    'Үргэлжлүүлэх',
-                                                    style: TextStyle(
-                                                      fontSize: 9,
-                                                      color: isStart == true
-                                                          ? white
-                                                          : buttonColor,
-                                                    ),
-                                                  ),
-                                          ],
-                                        ),
-                                      ),
+                        if (user.currentBusiness?.type == "SUPPLIER")
+                          Container(
+                            padding: const EdgeInsets.all(15),
+                            color: white,
+                            margin: const EdgeInsets.symmetric(vertical: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    if (startShipment == false &&
+                                        shipment.deliveredDate == null) {
+                                      startTimer(true);
+                                    }
+                                  },
+                                  child: Container(
+                                    height: 60,
+                                    width: 75,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: isStart == true
+                                          ? orderColor
+                                          : lightGrey,
                                     ),
-                                    Container(
-                                      height: 60,
-                                      width: 75,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: lightGrey,
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/svg/timer.svg',
-                                            colorFilter: ColorFilter.mode(
-                                                buttonColor, BlendMode.srcIn),
-                                          ),
-                                          buildTime()
-                                        ],
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        if (shipment.isPaused == false &&
-                                            shipment.deliveredDate == null) {
-                                          stopTimer(resets: false);
-                                        }
-                                      },
-                                      child: Container(
-                                        height: 60,
-                                        width: 75,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: shipment.isPaused == true
-                                              ? orderColor
-                                              : lightGrey,
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.pause_circle,
-                                              color: shipment.isPaused == true
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                          'assets/svg/bx_timer.svg',
+                                          colorFilter: ColorFilter.mode(
+                                              isStart == true
                                                   ? white
                                                   : buttonColor,
-                                            ),
-                                            Text(
-                                              'Зогсоох',
-                                              style: TextStyle(
-                                                fontSize: 13,
-                                                color: shipment.isPaused == true
-                                                    ? white
-                                                    : buttonColor,
-                                              ),
-                                            ),
-                                          ],
+                                              BlendMode.srcIn),
                                         ),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        end();
-                                      },
-                                      child: Container(
-                                        height: 60,
-                                        width: 75,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: shipment.isEnded == false
-                                              ? lightGrey
-                                              : orderColor,
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            SvgPicture.asset(
-                                              'assets/svg/check_underline.svg',
-                                              colorFilter: ColorFilter.mode(
-                                                  shipment.isEnded == true
+                                        shipment.dispatchedDate == null
+                                            ? Text(
+                                                'Эхлэх',
+                                                style: TextStyle(
+                                                  color: isStart == true
                                                       ? white
                                                       : buttonColor,
-                                                  BlendMode.srcIn),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            shipment.isEnded == false
-                                                ? Text(
-                                                    'Дуусгах',
-                                                    style: TextStyle(
-                                                      color: buttonColor,
-                                                      fontSize: 13,
-                                                    ),
-                                                  )
-                                                : Text(
-                                                    'Дууссан',
-                                                    style: TextStyle(
-                                                      color: white,
-                                                      fontSize: 13,
-                                                    ),
-                                                  ),
-                                          ],
-                                        ),
-                                      ),
+                                                ),
+                                              )
+                                            : Text(
+                                                'Үргэлжлүүлэх',
+                                                style: TextStyle(
+                                                  fontSize: 9,
+                                                  color: isStart == true
+                                                      ? white
+                                                      : buttonColor,
+                                                ),
+                                              ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              )
-                            : SizedBox(),
+                                Container(
+                                  height: 60,
+                                  width: 75,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: lightGrey,
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/svg/timer.svg',
+                                        colorFilter: const ColorFilter.mode(
+                                            buttonColor, BlendMode.srcIn),
+                                      ),
+                                      buildTime()
+                                    ],
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    if (shipment.isPaused == false &&
+                                        shipment.deliveredDate == null) {
+                                      stopTimer(resets: false);
+                                    }
+                                  },
+                                  child: Container(
+                                    height: 60,
+                                    width: 75,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: shipment.isPaused == true
+                                          ? orderColor
+                                          : lightGrey,
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.pause_circle,
+                                          color: shipment.isPaused == true
+                                              ? white
+                                              : buttonColor,
+                                        ),
+                                        Text(
+                                          'Зогсоох',
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            color: shipment.isPaused == true
+                                                ? white
+                                                : buttonColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    end();
+                                  },
+                                  child: Container(
+                                    height: 60,
+                                    width: 75,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: shipment.isEnded == false
+                                          ? lightGrey
+                                          : orderColor,
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                          'assets/svg/check_underline.svg',
+                                          colorFilter: ColorFilter.mode(
+                                              shipment.isEnded == true
+                                                  ? white
+                                                  : buttonColor,
+                                              BlendMode.srcIn),
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        shipment.isEnded == false
+                                            ? const Text(
+                                                'Дуусгах',
+                                                style: TextStyle(
+                                                  color: buttonColor,
+                                                  fontSize: 13,
+                                                ),
+                                              )
+                                            : const Text(
+                                                'Дууссан',
+                                                style: TextStyle(
+                                                  color: white,
+                                                  fontSize: 13,
+                                                ),
+                                              ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         Column(
                           children: shipment.lines!
                               .map(
@@ -437,7 +433,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                               : "Авсан",
                                       data: item,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 5,
                                     ),
                                   ],
@@ -448,7 +444,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                         Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
-                          child: Text(
+                          child: const Text(
                             'ПАДААНЫ ДҮН',
                             style: TextStyle(
                               color: buttonColor,
@@ -463,7 +459,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              const Text(
                                 'Нийт дүн',
                                 style: TextStyle(
                                   color: buttonColor,
@@ -471,7 +467,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                               ),
                               Text(
                                 "${Utils().formatCurrency(shipment.lines?.map((e) => e.totalAmount).reduce((value, element) => value! + element!).toString())} ₮",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: orderColor,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -486,7 +482,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              const Text(
                                 'Нэр төрлийн тоо',
                                 style: TextStyle(
                                   color: buttonColor,
@@ -494,7 +490,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                               ),
                               Text(
                                 "${shipment.lines?.length}",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: orderColor,
                                 ),
                               ),
@@ -508,7 +504,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              const Text(
                                 'Хүлээн авах барааны тоо',
                                 style: TextStyle(
                                   color: buttonColor,
@@ -516,7 +512,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                               ),
                               Text(
                                 "${shipment.lines?.fold(0, (previousValue, element) => previousValue + element.quantity!)}",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: orderColor,
                                 ),
                               ),
@@ -526,7 +522,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                         Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
-                          child: Text(
+                          child: const Text(
                             'Хасагдсан',
                             style: TextStyle(
                               color: buttonColor,
@@ -558,39 +554,38 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                                         '${e.quantity! - e.confirmedQuantity!}'),
                                                   ],
                                                 ))
-                                            : SizedBox()
-                                        : SizedBox(),
+                                            : const SizedBox()
+                                        : const SizedBox(),
                                   ],
                                 ),
                               )
                               .toList(),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 100,
                         ),
                       ],
                     ),
                   ),
                 ),
-                user.currentBusiness?.type == "BUYER"
-                    ? Container(
-                        decoration: BoxDecoration(
-                          color: white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          ),
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 25),
-                        child: CustomButton(
-                          onClick: () {
-                            end();
-                          },
-                          labelText: "Шалгаж хүлээн авлаа",
-                          labelColor: orderColor,
-                        ),
-                      )
-                    : SizedBox(),
+                if (user.currentBusiness?.type == "BUYER")
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 25),
+                    child: CustomButton(
+                      onClick: () {
+                        end();
+                      },
+                      labelText: "Шалгаж хүлээн авлаа",
+                      labelColor: orderColor,
+                    ),
+                  ),
               ],
             ),
     );

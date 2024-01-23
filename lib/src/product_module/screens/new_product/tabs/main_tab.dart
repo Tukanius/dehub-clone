@@ -26,15 +26,15 @@ class _MainTabState extends State<MainTab> {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   InventoryGoods data = InventoryGoods();
   var profileKey = GlobalKey();
-  var res;
+  dynamic res;
   bool isSubmit = false;
 
   validateCheck() {
-    if (data.detailImages == null || data.detailImages?.length == 0) {
+    if (data.detailImages == null || data.detailImages!.isEmpty) {
       res.banValidate();
       Scrollable.ensureVisible(
         profileKey.currentContext!,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.ease,
       );
     }
@@ -42,7 +42,7 @@ class _MainTabState extends State<MainTab> {
       res.proValidate();
       Scrollable.ensureVisible(
         profileKey.currentContext!,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.ease,
       );
     }
@@ -149,7 +149,7 @@ class _MainTabState extends State<MainTab> {
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Text(
+                child: const Text(
                   'Бүртгэлийн мэдээлэл',
                   style: TextStyle(
                     color: productColor,
@@ -162,7 +162,7 @@ class _MainTabState extends State<MainTab> {
                 height: 0.5,
                 color: productColor,
               ),
-              FieldCard(
+              const FieldCard(
                 paddingHorizontal: 15,
                 paddingVertical: 10,
                 labelText: "DeHUB код",
@@ -178,7 +178,7 @@ class _MainTabState extends State<MainTab> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Бүртгэлийн статус',
                       style: TextStyle(
                         color: dark,
@@ -192,7 +192,7 @@ class _MainTabState extends State<MainTab> {
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(color: grey3),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Түр төлөв',
                         style: TextStyle(fontSize: 14, color: grey3),
                       ),
@@ -200,7 +200,7 @@ class _MainTabState extends State<MainTab> {
                   ],
                 ),
               ),
-              FieldCard(
+              const FieldCard(
                 paddingHorizontal: 15,
                 paddingVertical: 10,
                 labelText: "Бүртгэсэн ажилтан",
@@ -212,7 +212,7 @@ class _MainTabState extends State<MainTab> {
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Text(
+                child: const Text(
                   'Барааны нэр код',
                   style: TextStyle(
                     color: productColor,
@@ -225,11 +225,11 @@ class _MainTabState extends State<MainTab> {
                 height: 0.5,
                 color: productColor,
               ),
-              ProductForm(),
+              const ProductForm(),
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Text(
+                child: const Text(
                   'Бүртгэлийн мэдээлэл',
                   style: TextStyle(
                     color: productColor,
@@ -248,7 +248,7 @@ class _MainTabState extends State<MainTab> {
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Text(
+                child: const Text(
                   'Бараа хамаарах бүлэг',
                   style: TextStyle(
                     color: productColor,
@@ -267,7 +267,7 @@ class _MainTabState extends State<MainTab> {
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Text(
+                child: const Text(
                   'Тайлбар',
                   style: TextStyle(
                     color: grey3,
@@ -287,7 +287,7 @@ class _MainTabState extends State<MainTab> {
                   textAlign: TextAlign.left,
                   name: 'description',
                   maxLines: 5,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.zero,
                       borderSide: BorderSide(color: grey3),
@@ -304,7 +304,7 @@ class _MainTabState extends State<MainTab> {
                   ]),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 100,
               ),
               CustomButton(
@@ -315,7 +315,7 @@ class _MainTabState extends State<MainTab> {
                 labelColor: productColor,
                 labelText: "Үргэлжлүүлэх",
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
             ],

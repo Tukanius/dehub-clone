@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 class SectorTab extends StatefulWidget {
   final List? data;
   const SectorTab({
-    Key? key,
+    super.key,
     this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<SectorTab> createState() => _SectorTabState();
@@ -18,7 +18,7 @@ class _SectorTabState extends State<SectorTab> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: widget.data?.length == 0
+      child: widget.data!.isNotEmpty
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -41,7 +41,7 @@ class _SectorTabState extends State<SectorTab> {
                 ),
               ],
             )
-          : NotFound(
+          : const NotFound(
               module: "NETWORK",
               labelText: "Салбар тохируулаагүй байна",
             ),

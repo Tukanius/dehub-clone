@@ -69,28 +69,26 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
                 },
                 child: Container(
                   color: transparent,
-                  child: Icon(
+                  child: const Icon(
                     Icons.arrow_back_ios_new,
                     color: invoiceColor,
                   ),
                 ),
               )
-            : CustomBackButton(
+            : const CustomBackButton(
                 color: invoiceColor,
               ),
         title: selectedIndex == 0
-            ? Container(
-                child: FormTextField(
-                  inputType: TextInputType.text,
-                  color: Color(0xff767680).withOpacity(0.12),
-                  name: 'search',
-                  prefixIcon: Icon(Icons.search),
-                  hintText: 'Партнер нэрээр хайх',
-                ),
+            ? FormTextField(
+                inputType: TextInputType.text,
+                color: const Color(0xff767680).withOpacity(0.12),
+                name: 'search',
+                prefixIcon: const Icon(Icons.search),
+                hintText: 'Партнер нэрээр хайх',
               )
             : selectedIndex == 2
                 ? user.currentBusiness?.type == "SUPPLIER"
-                    ? Text(
+                    ? const Text(
                         'Харилцагчийн тооцоо',
                         style: TextStyle(
                           color: invoiceColor,
@@ -98,7 +96,7 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
                           fontWeight: FontWeight.w400,
                         ),
                       )
-                    : Text(
+                    : const Text(
                         'Нийлүүлэгчийн тооцоо',
                         style: TextStyle(
                           color: invoiceColor,
@@ -106,14 +104,14 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
                           fontWeight: FontWeight.w400,
                         ),
                       )
-                : SizedBox(),
+                : const SizedBox(),
         actions: [
           selectedIndex == 0
               ? Container(
                   padding: const EdgeInsets.all(10),
                   margin: const EdgeInsets.only(right: 15, top: 9, bottom: 9),
                   decoration: BoxDecoration(
-                    color: Color(0xff767680).withOpacity(0.12),
+                    color: const Color(0xff767680).withOpacity(0.12),
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: SvgPicture.asset(
@@ -124,15 +122,15 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
                   ),
                 )
               : selectedIndex == 3
-                  ? AddButton(
+                  ? const AddButton(
                       color: white,
                       addColor: invoiceColor,
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
         ],
       ),
       body: isLoading == true
-          ? SizedBox()
+          ? const SizedBox()
           : Container(
               child: currentPages.elementAt(selectedIndex),
             ),
@@ -168,12 +166,11 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
                           BlendMode.srcIn),
                     ),
                   ),
-                  selectedIndex != 0
-                      ? Text(
-                          'Нүүр',
-                          style: TextStyle(color: invoiceColor, fontSize: 12),
-                        )
-                      : SizedBox(),
+                  if (selectedIndex != 0)
+                    const Text(
+                      'Нүүр',
+                      style: TextStyle(color: invoiceColor, fontSize: 12),
+                    ),
                 ],
               ),
             ),
@@ -195,12 +192,11 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 1
-                    ? Text(
-                        'Дашбоард',
-                        style: TextStyle(color: invoiceColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (selectedIndex != 1)
+                  const Text(
+                    'Дашбоард',
+                    style: TextStyle(color: invoiceColor, fontSize: 12),
+                  ),
               ],
             ),
             label: '',
@@ -221,12 +217,11 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 2
-                    ? Text(
-                        'Тооцоо',
-                        style: TextStyle(color: invoiceColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (selectedIndex != 2)
+                  const Text(
+                    'Тооцоо',
+                    style: TextStyle(color: invoiceColor, fontSize: 12),
+                  ),
               ],
             ),
             label: '',
@@ -247,12 +242,11 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 3
-                    ? Text(
-                        'Баримт',
-                        style: TextStyle(color: invoiceColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (selectedIndex != 3)
+                  const Text(
+                    'Баримт',
+                    style: TextStyle(color: invoiceColor, fontSize: 12),
+                  ),
               ],
             ),
             label: '',

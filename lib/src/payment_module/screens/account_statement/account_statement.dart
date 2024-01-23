@@ -21,18 +21,18 @@ class AccountStatement extends StatefulWidget {
   final Payment data;
   static const routeName = '/AccountStatement';
   const AccountStatement({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
-  _AccountStatementState createState() => _AccountStatementState();
+  AccountStatementState createState() => AccountStatementState();
 }
 
-class _AccountStatementState extends State<AccountStatement>
+class AccountStatementState extends State<AccountStatement>
     with SingleTickerProviderStateMixin, AfterLayoutMixin {
   DateTimeRange dateTimeRange = DateTimeRange(
-    start: DateTime.now().subtract(Duration(days: 1)),
+    start: DateTime.now().subtract(const Duration(days: 1)),
     end: DateTime.now(),
   );
   int currentIndex = 0;
@@ -47,7 +47,7 @@ class _AccountStatementState extends State<AccountStatement>
   list(String inOutType, String startDate, String endDate) async {
     Offset offset = Offset(page: 0, limit: 0);
     Filter filter = Filter(
-      inOutType: "${inOutType}",
+      inOutType: inOutType,
       accountId: widget.data.id,
       startDate: startDate,
       endDate: endDate,
@@ -75,12 +75,12 @@ class _AccountStatementState extends State<AccountStatement>
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_new,
             color: paymentColor,
           ),
         ),
-        title: Text(
+        title: const Text(
           'Дансны хуулга',
           style: TextStyle(color: paymentColor, fontSize: 18),
         ),
@@ -88,28 +88,28 @@ class _AccountStatementState extends State<AccountStatement>
       ),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Center(
             child: Text(
               '${widget.data.number}',
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: paymentColor),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Center(
             child: Text(
               '${widget.data.bankName}',
-              style: TextStyle(fontSize: 15, color: grey2),
+              style: const TextStyle(fontSize: 15, color: grey2),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           GestureDetector(
@@ -128,35 +128,35 @@ class _AccountStatementState extends State<AccountStatement>
                 children: [
                   Text(
                     '${start.year} - ${start.month} - ${start.day}',
-                    style: TextStyle(color: grey2),
+                    style: const TextStyle(color: grey2),
                   ),
-                  Icon(
+                  const Icon(
                     Icons.arrow_forward,
                     size: 15,
                     color: paymentColor,
                   ),
                   Text(
                     '${end.year} - ${end.month} - ${end.day}',
-                    style: TextStyle(color: grey2),
+                    style: const TextStyle(color: grey2),
                   ),
                   SvgPicture.asset('assets/svg/calendar.svg')
                 ],
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           isLoading == true
               ? Container(
                   margin: const EdgeInsets.only(top: 50),
-                  child: Center(
+                  child: const Center(
                     child: CircularProgressIndicator(
                       color: paymentColor,
                     ),
                   ),
                 )
-              : transaction.rows?.length != 0
+              : transaction.rows!.isNotEmpty
                   ? SingleChildScrollView(
                       child: Column(
                         children: transaction.rows!
@@ -167,8 +167,8 @@ class _AccountStatementState extends State<AccountStatement>
                                   Container(
                                     margin: const EdgeInsets.symmetric(
                                         horizontal: 15, vertical: 10),
-                                    child: Text(
-                                        '${DateFormat("yyyy-MM-dd").format(data.createdAt)}'),
+                                    child: Text(DateFormat("yyyy-MM-dd")
+                                        .format(data.createdAt)),
                                   ),
                                   TransactionInformationCard(
                                     startAnimation: true,
@@ -190,7 +190,7 @@ class _AccountStatementState extends State<AccountStatement>
                             .toList(),
                       ),
                     )
-                  : NotFound(
+                  : const NotFound(
                       module: "PAYMENT",
                       labelText: "Дансны хуулга хоосон байна",
                     ),
@@ -206,6 +206,7 @@ class _AccountStatementState extends State<AccountStatement>
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.light(
+              secondary: paymentColor.withOpacity(0.5),
               primary: paymentColor,
               onPrimary: Colors.white,
               onSurface: paymentColor,
@@ -217,7 +218,7 @@ class _AccountStatementState extends State<AccountStatement>
       errorFormatText: 'Сүүлийн 6-н сар сонгоно уу!!!',
       context: context,
       initialDateRange: dateTimeRange,
-      firstDate: DateTime.now().subtract(Duration(days: 30)),
+      firstDate: DateTime.now().subtract(const Duration(days: 30)),
       lastDate: DateTime.now(),
     );
 

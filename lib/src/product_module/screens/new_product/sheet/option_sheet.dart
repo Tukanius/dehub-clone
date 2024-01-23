@@ -39,7 +39,7 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: productColor,
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(15),
@@ -57,7 +57,7 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
                   child: SvgPicture.asset('assets/svg/square-x.svg'),
                 ),
               ),
-              Expanded(
+              const Expanded(
                 child: Text(
                   'Барааны хувилбар үүсгэх',
                   style: TextStyle(
@@ -71,7 +71,7 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
                   showModalBottomSheet(
                     context: context,
                     useSafeArea: true,
-                    builder: (context) => VersionControlSheet(),
+                    builder: (context) => const VersionControlSheet(),
                   );
                 },
                 child: Container(
@@ -81,7 +81,7 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
                     borderRadius: BorderRadius.circular(5),
                     color: white,
                   ),
-                  child: Text(
+                  child: const Text(
                     'Үүсгэх',
                     style: TextStyle(
                       color: productColor,
@@ -97,7 +97,7 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
             color: backgroundColor,
             child: SingleChildScrollView(
               child: isLoading == true
-                  ? Center(
+                  ? const Center(
                       child: CircularProgressIndicator(
                         color: productColor,
                       ),
@@ -108,20 +108,20 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
                         Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
-                          child: Text(
+                          child: const Text(
                             'Сонгосон хувилбар',
                             style: TextStyle(
                               color: grey2,
                             ),
                           ),
                         ),
-                        source.product.values?.length == 0 ||
+                        source.product.values!.isEmpty ||
                                 source.product.values == null
                             ? Container(
                                 padding: const EdgeInsets.all(15),
                                 width: MediaQuery.of(context).size.width,
                                 color: white,
-                                child: Text(
+                                child: const Text(
                                   'Хувилбар сонгоогүй байна',
                                   style: TextStyle(color: grey2),
                                 ),
@@ -145,12 +145,12 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
                                               children: [
                                                 Text(
                                                   '${data.name}',
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: productColor),
                                                 ),
                                                 RichText(
                                                   text: TextSpan(
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontFamily: 'Montserrat',
                                                       color: grey2,
                                                     ),
@@ -173,7 +173,7 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
                                                 ),
                                               ],
                                             ),
-                                            Icon(
+                                            const Icon(
                                               Icons.arrow_forward_ios,
                                               color: productColor,
                                               size: 18,
@@ -187,7 +187,7 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
                         Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
-                          child: Text(
+                          child: const Text(
                             'Хувилбараас сонгоно уу',
                             style: TextStyle(
                               color: grey2,
@@ -221,7 +221,7 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
                         Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
-                          child: Text(
+                          child: const Text(
                             'Сонголт тохирохгүй бол хувилбар нэмнэ үү',
                             style: TextStyle(
                               color: grey2,
@@ -233,15 +233,15 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
                             Navigator.of(context).pop();
                             await showModalBottomSheet(
                               context: context,
-                              builder: (context) => AddOptionSheet(),
+                              builder: (context) => const AddOptionSheet(),
                             );
                           },
                           labelText: 'Хувилбар нэмэх',
                           textColor: productColor,
                           borderColor: grey2.withOpacity(0.5),
-                          labelColor: Color(0xffE9E9EA),
+                          labelColor: const Color(0xffE9E9EA),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 40,
                         ),
                       ],

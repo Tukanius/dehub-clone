@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 class InvitationDetailPage extends StatefulWidget {
   static const routeName = '/invitationdetailpage';
-  const InvitationDetailPage({Key? key}) : super(key: key);
+  const InvitationDetailPage({super.key});
 
   @override
-  _InvitationDetailPageState createState() => _InvitationDetailPageState();
+  InvitationDetailPageState createState() => InvitationDetailPageState();
 }
 
-class _InvitationDetailPageState extends State<InvitationDetailPage> {
+class InvitationDetailPageState extends State<InvitationDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,9 +22,9 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: Icon(Icons.arrow_back_ios_new),
+          child: const Icon(Icons.arrow_back_ios_new),
         ),
-        title: Text(
+        title: const Text(
           'Ирсэн урилга',
           style: TextStyle(
             fontSize: 18,
@@ -33,11 +33,11 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
         ),
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Row(
@@ -50,12 +50,12 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                       children: [
                         Container(
                           margin: const EdgeInsets.only(left: 15),
-                          child: Text(
+                          child: const Text(
                             'Урилга №: ',
                             style: TextStyle(color: dark),
                           ),
                         ),
-                        Text(
+                        const Text(
                           'INV-100459',
                           style: TextStyle(
                             color: dark,
@@ -64,10 +64,10 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
-                    Text(
+                    const Text(
                       '2023-04-08 16:24 PM',
                       style: TextStyle(color: dark),
                     )
@@ -78,7 +78,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
+                      const Text(
                         'DeHUB Network',
                         style: TextStyle(
                           color: networkColor,
@@ -86,16 +86,16 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                           fontSize: 16,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Color(0xff71717A).withOpacity(0.1),
+                          color: const Color(0xff71717A).withOpacity(0.1),
                         ),
-                        child: Text(
+                        child: const Text(
                           'Илгээсэн',
                           style: TextStyle(
                             color: dark,
@@ -111,7 +111,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
             ),
             Container(
               margin: const EdgeInsets.only(left: 15, bottom: 15, top: 20),
-              child: Text(
+              child: const Text(
                 'УРИЛГА ИЛГЭЭГЧ',
                 style: TextStyle(
                   color: grey3,
@@ -123,7 +123,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               color: white,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -140,7 +140,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               color: white,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -157,7 +157,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               color: white,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -174,7 +174,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               color: white,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -191,7 +191,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               color: white,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -208,7 +208,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               color: white,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -225,7 +225,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               color: white,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -242,7 +242,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               color: white,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -259,7 +259,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               color: white,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -276,7 +276,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               color: white,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -290,12 +290,12 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Container(
               margin: const EdgeInsets.only(left: 15),
-              child: Text(
+              child: const Text(
                 'Урилгын тайлбар',
                 style: TextStyle(
                   color: grey3,
@@ -304,7 +304,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Container(
@@ -319,15 +319,15 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                     color: grey3.withOpacity(0.3),
                   ),
                 ),
-                child: Text(''),
+                child: const Text(''),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Container(
               margin: const EdgeInsets.only(left: 15),
-              child: Text(
+              child: const Text(
                 'УРИЛГА ХҮЛЭЭН АВАГЧ',
                 style: TextStyle(
                   color: grey3,
@@ -336,13 +336,13 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               color: white,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -359,7 +359,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               color: white,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -376,7 +376,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               color: white,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -393,7 +393,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               color: white,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -410,7 +410,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               color: white,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -427,7 +427,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               color: white,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -444,7 +444,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               color: white,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -458,7 +458,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             Container(
@@ -475,7 +475,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                         ),
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 12),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Татгалзах',
                           style: TextStyle(
@@ -487,7 +487,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   Expanded(
@@ -498,7 +498,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage> {
                         color: networkColor,
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 12),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Батлах',
                           style: TextStyle(

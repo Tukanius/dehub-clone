@@ -15,8 +15,8 @@ import 'package:provider/provider.dart';
 class MenuPage extends StatefulWidget {
   static const routeName = '/menupage';
   const MenuPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<MenuPage> createState() => _MenuPageState();
@@ -50,7 +50,7 @@ class _MenuPageState extends State<MenuPage> {
           color: menuBack,
           child: SafeArea(
             child: isLoading == true
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator(
                       color: white,
                     ),
@@ -73,13 +73,13 @@ class _MenuPageState extends State<MenuPage> {
                                             NetworkImage('${user.avatar}'),
                                         backgroundColor: grey,
                                       )
-                                    : CircleAvatar(
+                                    : const CircleAvatar(
                                         radius: 17,
                                         backgroundImage:
                                             AssetImage('images/avatar.png'),
                                         backgroundColor: grey,
                                       ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 5,
                                 ),
                                 Column(
@@ -88,7 +88,7 @@ class _MenuPageState extends State<MenuPage> {
                                     partner.user?.lastName != null
                                         ? Text(
                                             '${partner.user?.lastName?[0]}. ${partner.user?.firstName}',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               color: white,
                                               fontSize: 12,
                                               fontWeight: FontWeight.w500,
@@ -96,7 +96,7 @@ class _MenuPageState extends State<MenuPage> {
                                           )
                                         : Text(
                                             '${partner.user?.firstName}',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               color: white,
                                               fontSize: 12,
                                               fontWeight: FontWeight.w500,
@@ -104,7 +104,7 @@ class _MenuPageState extends State<MenuPage> {
                                           ),
                                     Text(
                                       '${partner.user?.currentBusiness?.type}',
-                                      style: TextStyle(color: white),
+                                      style: const TextStyle(color: white),
                                     ),
                                   ],
                                 )
@@ -113,14 +113,14 @@ class _MenuPageState extends State<MenuPage> {
                           ),
                           Container(
                             margin: const EdgeInsets.only(top: 50, left: 15),
-                            child: Text(
+                            child: const Text(
                               'Захиалга',
                               style: TextStyle(
                                 color: white,
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Container(
@@ -133,20 +133,20 @@ class _MenuPageState extends State<MenuPage> {
                                   children: [
                                     SvgPicture.asset(
                                       'assets/svg/pie.svg',
-                                      colorFilter: ColorFilter.mode(
+                                      colorFilter: const ColorFilter.mode(
                                           white, BlendMode.srcIn),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 10,
                                     ),
-                                    Text(
+                                    const Text(
                                       'Тайлан, дашбоард',
                                       style:
                                           TextStyle(fontSize: 14, color: white),
                                     ),
                                   ],
                                 ),
-                                Icon(
+                                const Icon(
                                   Icons.arrow_forward_ios,
                                   size: 16,
                                   color: white,
@@ -170,27 +170,27 @@ class _MenuPageState extends State<MenuPage> {
                                     children: [
                                       SvgPicture.asset(
                                         'assets/svg/apartment.svg',
-                                        colorFilter: ColorFilter.mode(
+                                        colorFilter: const ColorFilter.mode(
                                             white, BlendMode.srcIn),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
                                       partner.user?.currentBusiness?.type ==
                                               "BUYER"
-                                          ? Text(
+                                          ? const Text(
                                               'Ханган нийлүүлэгчид',
                                               style: TextStyle(
                                                   fontSize: 14, color: white),
                                             )
-                                          : Text(
+                                          : const Text(
                                               'Худалдан авагчид',
                                               style: TextStyle(
                                                   fontSize: 14, color: white),
                                             )
                                     ],
                                   ),
-                                  Icon(
+                                  const Icon(
                                     Icons.arrow_forward_ios,
                                     size: 16,
                                     color: white,
@@ -208,22 +208,22 @@ class _MenuPageState extends State<MenuPage> {
                                 Expanded(
                                   child: Row(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.add_shopping_cart,
                                         color: white,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
                                       Expanded(
                                         child: user.currentBusiness?.type ==
                                                 "SUPPLIER"
-                                            ? Text(
+                                            ? const Text(
                                                 'Борлуулалтын захиалга',
                                                 style: TextStyle(
                                                     fontSize: 14, color: white),
                                               )
-                                            : Text(
+                                            : const Text(
                                                 'Худалдан авалтын захиалга',
                                                 style: TextStyle(
                                                     fontSize: 14, color: white),
@@ -232,7 +232,7 @@ class _MenuPageState extends State<MenuPage> {
                                     ],
                                   ),
                                 ),
-                                Icon(
+                                const Icon(
                                   Icons.arrow_forward_ios,
                                   size: 16,
                                   color: white,
@@ -250,20 +250,20 @@ class _MenuPageState extends State<MenuPage> {
                                   children: [
                                     SvgPicture.asset(
                                       'assets/svg/huleen_avsan.svg',
-                                      colorFilter: ColorFilter.mode(
+                                      colorFilter: const ColorFilter.mode(
                                           white, BlendMode.srcIn),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 10,
                                     ),
-                                    Text(
+                                    const Text(
                                       'Хүлээн авсан захиалгууд',
                                       style:
                                           TextStyle(fontSize: 14, color: white),
                                     ),
                                   ],
                                 ),
-                                Icon(
+                                const Icon(
                                   Icons.arrow_forward_ios,
                                   size: 16,
                                   color: white,
@@ -293,21 +293,21 @@ class _MenuPageState extends State<MenuPage> {
                                   left: 15, bottom: 10, top: 10),
                               child: Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     CupertinoIcons.lock_circle_fill,
                                     color: white,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   user.hasPin == false
-                                      ? Text(
+                                      ? const Text(
                                           'Пин код үүсгэх',
                                           style: TextStyle(
                                             color: white,
                                           ),
                                         )
-                                      : Text(
+                                      : const Text(
                                           'Пин код солих',
                                           style: TextStyle(
                                             color: white,
@@ -326,7 +326,7 @@ class _MenuPageState extends State<MenuPage> {
                               color: transparent,
                               padding: const EdgeInsets.only(
                                   left: 15, bottom: 10, top: 10),
-                              child: Row(
+                              child: const Row(
                                 children: [
                                   Icon(
                                     CupertinoIcons.lock_rotation,
@@ -343,7 +343,7 @@ class _MenuPageState extends State<MenuPage> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           GestureDetector(
@@ -354,7 +354,7 @@ class _MenuPageState extends State<MenuPage> {
                               color: transparent,
                               padding: const EdgeInsets.only(
                                   left: 15, bottom: 25, top: 10),
-                              child: Row(
+                              child: const Row(
                                 children: [
                                   Icon(
                                     CupertinoIcons.power,

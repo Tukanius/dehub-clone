@@ -209,8 +209,9 @@ User _$UserFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$UserToJson(User instance) {
   Map<String, dynamic> json = {};
 
-  if (instance.businessName != null)
+  if (instance.businessName != null) {
     json["businessName"] = instance.businessName;
+  }
   if (instance.urls != null) json["urls"] = instance.urls;
   if (instance.businessRef != null) json["businessRef"] = instance.businessRef;
   if (instance.partnerRef != null) json["partnerRef"] = instance.partnerRef;
@@ -224,10 +225,12 @@ Map<String, dynamic> _$UserToJson(User instance) {
   if (instance.otpCharset != null) json["otpCharset"] = instance.otpCharset;
   if (instance.otpMethod != null) json["otpMethod"] = instance.otpMethod;
   if (instance.oldPassword != null) json["oldPassword"] = instance.oldPassword;
-  if (instance.roleDisableDate != null)
+  if (instance.roleDisableDate != null) {
     json["roleDisableDate"] = instance.roleDisableDate;
-  if (instance.emailVerifiedDate != null)
+  }
+  if (instance.emailVerifiedDate != null) {
     json["emailVerifiedDate"] = instance.emailVerifiedDate;
+  }
   if (instance.code != null) json['code'] = instance.code;
   if (instance.password != null) json['password'] = instance.password;
   if (instance.regUserId != null) json['regUserId'] = instance.regUserId;
@@ -235,62 +238,83 @@ Map<String, dynamic> _$UserToJson(User instance) {
   if (instance.registerNo != null) json['registerNo'] = instance.registerNo;
   if (instance.familyName != null) json['familyName'] = instance.familyName;
   if (instance.roleId != null) json['roleId'] = instance.roleId;
-  if (instance.departmentUnitId != null)
+  if (instance.departmentUnitId != null) {
     json['departmentUnitId'] = instance.departmentUnitId;
-  if (instance.departmentSubUnitId != null)
+  }
+  if (instance.departmentSubUnitId != null) {
     json['departmentSubUnitId'] = instance.departmentSubUnitId;
-  if (instance.employeeUnitId != null)
+  }
+  if (instance.employeeUnitId != null) {
     json['employeeUnitId'] = instance.employeeUnitId;
-  if (instance.roleEnableDate != null)
+  }
+  if (instance.roleEnableDate != null) {
     json['roleEnableDate'] = instance.roleEnableDate;
+  }
   if (instance.phone2 != null) json['phone2'] = instance.phone2;
   if (instance.email2 != null) json['email2'] = instance.email2;
-  if (instance.isDanVerified != null)
+  if (instance.isDanVerified != null) {
     json['isDanVerified'] = instance.isDanVerified;
+  }
   if (instance.hasPassword != null) json['hasPassword'] = instance.hasPassword;
-  if (instance.currentBusiness != null)
+  if (instance.currentBusiness != null) {
     json['currentBusiness'] = instance.currentBusiness;
+  }
   if (instance.partner != null) json['partner'] = instance.partner;
   if (instance.regNumber != null) json['regNumber'] = instance.regNumber;
   if (instance.stateRegNum != null) json['stateRegNum'] = instance.stateRegNum;
-  if (instance.legalEntityType != null)
+  if (instance.legalEntityType != null) {
     json['legalEntityType'] = instance.legalEntityType;
+  }
   if (instance.partnerName != null) json['partnerName'] = instance.partnerName;
-  if (instance.partnerNameEng != null)
+  if (instance.partnerNameEng != null) {
     json['partnerNameEng'] = instance.partnerNameEng;
+  }
   if (instance.refCode != null) json['refCode'] = instance.refCode;
-  if (instance.businessSectorId != null)
+  if (instance.businessSectorId != null) {
     json['businessSectorId'] = instance.businessSectorId;
-  if (instance.businessSubSectorId != null)
+  }
+  if (instance.businessSubSectorId != null) {
     json['businessSubSectorId'] = instance.businessSubSectorId;
-  if (instance.purchaseType != null)
+  }
+  if (instance.purchaseType != null) {
     json['purchaseType'] = instance.purchaseType;
-  if (instance.productCategoryType != null)
+  }
+  if (instance.productCategoryType != null) {
     json['productCategoryType'] = instance.productCategoryType;
-  if (instance.serviceCategoryType != null)
+  }
+  if (instance.serviceCategoryType != null) {
     json['serviceCategoryType'] = instance.serviceCategoryType;
-  if (instance.businessStatus != null)
+  }
+  if (instance.businessStatus != null) {
     json['businessStatus'] = instance.businessStatus;
+  }
   if (instance.isDefault != null) json['isDefault'] = instance.isDefault;
-  if (instance.businessStaffs != null)
+  if (instance.businessStaffs != null) {
     json['businessStaffs'] = instance.businessStaffs;
+  }
   if (instance.isVatPayer != null) json['isVatPayer'] = instance.isVatPayer;
-  if (instance.partnerEmail != null)
+  if (instance.partnerEmail != null) {
     json['partnerEmail'] = instance.partnerEmail;
-  if (instance.partnerEmail2 != null)
+  }
+  if (instance.partnerEmail2 != null) {
     json['partnerEmail2'] = instance.partnerEmail2;
-  if (instance.partnerPhone != null)
+  }
+  if (instance.partnerPhone != null) {
     json['partnerPhone'] = instance.partnerPhone;
-  if (instance.partnerPhone2 != null)
+  }
+  if (instance.partnerPhone2 != null) {
     json['partnerPhone2'] = instance.partnerPhone2;
+  }
   if (instance.profileName != null) json['profileName'] = instance.profileName;
-  if (instance.profileNameEng != null)
+  if (instance.profileNameEng != null) {
     json['profileNameEng'] = instance.profileNameEng;
+  }
   if (instance.logo != null) json['logo'] = instance.logo;
   if (instance.profileInfo != null) json['profileInfo'] = instance.profileInfo;
   if (instance.isConfirmed != null) json['isConfirmed'] = instance.isConfirmed;
-  if (instance.isAnchorBusiness != null)
+  if (instance.isAnchorBusiness != null) {
     json['isAnchorBusiness'] = instance.isAnchorBusiness;
+  }
   if (instance.id != null) json['id'] = instance.id;
   if (instance.pin != null) json['pin'] = instance.pin;
   if (instance.createdAt != null) json['createdAt'] = instance.createdAt;
@@ -301,54 +325,70 @@ Map<String, dynamic> _$UserToJson(User instance) {
   if (instance.isActive != null) json['isActive'] = instance.isActive;
   if (instance.email != null) json['email'] = instance.email;
   if (instance.username != null) json['username'] = instance.username;
-  if (instance.isEmailVerified != null)
+  if (instance.isEmailVerified != null) {
     json['isEmailVerified'] = instance.isEmailVerified;
+  }
   if (instance.phone != null) json['phone'] = instance.phone;
-  if (instance.isPhoneVerified != null)
+  if (instance.isPhoneVerified != null) {
     json['isPhoneVerified'] = instance.isPhoneVerified;
-  if (instance.phoneVerifiedDate != null)
+  }
+  if (instance.phoneVerifiedDate != null) {
     json['phoneVerifiedDate'] = instance.phoneVerifiedDate;
+  }
   if (instance.lastName != null) json['lastName'] = instance.lastName;
   if (instance.firstName != null) json['firstName'] = instance.firstName;
   if (instance.avatar != null) json['avatar'] = instance.avatar;
-  if (instance.sessionScope != null)
+  if (instance.sessionScope != null) {
     json['sessionScope'] = instance.sessionScope;
+  }
   if (instance.expiryHours != null) json['expiryHours'] = instance.expiryHours;
-  if (instance.userSuspended != null)
+  if (instance.userSuspended != null) {
     json['userSuspended'] = instance.userSuspended;
-  if (instance.passwordExpired != null)
+  }
+  if (instance.passwordExpired != null) {
     json['passwordExpired'] = instance.passwordExpired;
-  if (instance.passwordNeedChange != null)
+  }
+  if (instance.passwordNeedChange != null) {
     json['passwordNeedChange'] = instance.passwordNeedChange;
-  if (instance.userTerminated != null)
+  }
+  if (instance.userTerminated != null) {
     json['userTerminated'] = instance.userTerminated;
+  }
   if (instance.expiryDate != null) json['expiryDate'] = instance.expiryDate;
   if (instance.userStatus != null) json['userStatus'] = instance.userStatus;
-  if (instance.registerStatus != null)
+  if (instance.registerStatus != null) {
     json['registerStatus'] = instance.registerStatus;
-  if (instance.userStatusDate != null)
+  }
+  if (instance.userStatusDate != null) {
     json['userStatusDate'] = instance.userStatusDate;
+  }
   if (instance.partnerId != null) json['partnerId'] = instance.partnerId;
-  if (instance.verifyExpiryDate != null)
+  if (instance.verifyExpiryDate != null) {
     json['verifyExpiryDate'] = instance.verifyExpiryDate;
+  }
   if (instance.hasPin != null) json['hasPin'] = instance.hasPin;
-  if (instance.currentBusinessId != null)
+  if (instance.currentBusinessId != null) {
     json['currentBusinessId'] = instance.currentBusinessId;
+  }
   if (instance.loginType != null) json['loginType'] = instance.loginType;
-  if (instance.identityCardFront != null)
+  if (instance.identityCardFront != null) {
     json['identityCardFront'] = instance.identityCardFront;
-  if (instance.identityCardBack != null)
+  }
+  if (instance.identityCardBack != null) {
     json['identityCardBack'] = instance.identityCardBack;
+  }
   if (instance.isSysUser != null) json['isSysUser'] = instance.isSysUser;
   if (instance.isAppUser != null) json['isAppUser'] = instance.isAppUser;
   // if (instance.partner != null) json['partner'] = instance.partner;
   if (instance.userId != null) json['userId'] = instance.userId;
   if (instance.tokenType != null) json['tokenType'] = instance.tokenType;
   if (instance.accessToken != null) json['accessToken'] = instance.accessToken;
-  if (instance.refreshToken != null)
+  if (instance.refreshToken != null) {
     json['refreshToken'] = instance.refreshToken;
-  if (instance.sessionState != null)
+  }
+  if (instance.sessionState != null) {
     json['sessionState'] = instance.sessionState;
+  }
   if (instance.user != null) json['user'] = instance.user;
 
   return json;

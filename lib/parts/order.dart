@@ -461,58 +461,80 @@ Map<String, dynamic> _$OrderToJson(Order instance) {
   if (instance.values != null) json['values'] = instance.values;
   if (instance.header != null) json['header'] = instance.header;
   if (instance.receipt != null) json['receipt'] = instance.receipt;
-  if (instance.deliveryNote != null)
+  if (instance.deliveryNote != null) {
     json['deliveryNote'] = instance.deliveryNote;
+  }
   if (instance.order != null) json['order'] = instance.order;
-  if (instance.advancePercent != null)
+  if (instance.advancePercent != null) {
     json['advancePercent'] = instance.advancePercent;
+  }
   if (instance.business != null) json['business'] = instance.business;
-  if (instance.isBuyerConfirmed != null)
+  if (instance.isBuyerConfirmed != null) {
     json['isBuyerConfirmed'] = instance.isBuyerConfirmed;
-  if (instance.isSupplierConfirmed != null)
+  }
+  if (instance.isSupplierConfirmed != null) {
     json['isSupplierConfirmed'] = instance.isSupplierConfirmed;
-  if (instance.respondedUser != null)
+  }
+  if (instance.respondedUser != null) {
     json['respondedUser'] = instance.respondedUser;
+  }
   if (instance.isEnded != null) json['isEnded'] = instance.isEnded;
-  if (instance.deliveredDate != null)
+  if (instance.deliveredDate != null) {
     json['deliveredDate'] = instance.deliveredDate;
+  }
   if (instance.configType != null) json['configType'] = instance.configType;
   if (instance.code != null) json['code'] = instance.code;
   if (instance.startDate != null) json['startDate'] = instance.startDate;
-  if (instance.deliveryStaff != null)
+  if (instance.deliveryStaff != null) {
     json['deliveryStaff'] = instance.deliveryStaff;
-  if (instance.supplierBusiness != null)
+  }
+  if (instance.supplierBusiness != null) {
     json['supplierBusiness'] = instance.supplierBusiness;
-  if (instance.buyerBusiness != null)
+  }
+  if (instance.buyerBusiness != null) {
     json['buyerBusiness'] = instance.buyerBusiness;
-  if (instance.receiptLines != null)
+  }
+  if (instance.receiptLines != null) {
     json['receiptLines'] = instance.receiptLines;
-  if (instance.supplierStaff != null)
+  }
+  if (instance.supplierStaff != null) {
     json['supplierStaff'] = instance.supplierStaff;
+  }
   if (instance.lineId != null) json['lineId'] = instance.lineId;
   if (instance.buyerStaff != null) json['buyerStaff'] = instance.buyerStaff;
-  if (instance.confirmedQuantity != null)
+  if (instance.confirmedQuantity != null) {
     json['confirmedQuantity'] = instance.confirmedQuantity;
-  if (instance.pullSheetLineId != null)
+  }
+  if (instance.pullSheetLineId != null) {
     json['pullSheetLineId'] = instance.pullSheetLineId;
-  if (instance.totalLineQuantity != null)
+  }
+  if (instance.totalLineQuantity != null) {
     json['totalLineQuantity'] = instance.totalLineQuantity;
-  if (instance.totalLineType != null)
+  }
+  if (instance.totalLineType != null) {
     json['totalLineType'] = instance.totalLineType;
-  if (instance.deliveryNoteId != null)
+  }
+  if (instance.deliveryNoteId != null) {
     json['deliveryNoteId'] = instance.deliveryNoteId;
-  if (instance.additionalUnitQuantity != null)
+  }
+  if (instance.additionalUnitQuantity != null) {
     json['additionalUnitQuantity'] = instance.additionalUnitQuantity;
-  if (instance.additionalUnit != null)
+  }
+  if (instance.additionalUnit != null) {
     json['additionalUnit'] = instance.additionalUnit;
-  if (instance.hasAdditionalUnit != null)
+  }
+  if (instance.hasAdditionalUnit != null) {
     json['hasAdditionalUnit'] = instance.hasAdditionalUnit;
-  if (instance.baseUnitQuantity != null)
+  }
+  if (instance.baseUnitQuantity != null) {
     json['baseUnitQuantity'] = instance.baseUnitQuantity;
-  if (instance.unitConvertValue != null)
+  }
+  if (instance.unitConvertValue != null) {
     json['unitConvertValue'] = instance.unitConvertValue;
-  if (instance.unitConvertType != null)
+  }
+  if (instance.unitConvertType != null) {
     json['unitConvertType'] = instance.unitConvertType;
+  }
   if (instance.condition != null) json['condition'] = instance.condition;
   if (instance.unitId != null) json['unitId'] = instance.unitId;
   if (instance.isConfirmed != null) json['isConfirmed'] = instance.isConfirmed;
@@ -520,103 +542,138 @@ Map<String, dynamic> _$OrderToJson(Order instance) {
   if (instance.baseUnitId != null) json['baseUnitId'] = instance.baseUnitId;
   if (instance.text != null) json['text'] = instance.text;
   if (instance.optionValue != null) json['optionValue'] = instance.optionValue;
-  if (instance.variantParentId != null)
+  if (instance.variantParentId != null) {
     json['variantParentId'] = instance.variantParentId;
+  }
   if (instance.pullSheetId != null) json['pullSheetId'] = instance.pullSheetId;
   if (instance.orderId != null) json['orderId'] = instance.orderId;
-  if (instance.pullSheetLines != null)
+  if (instance.pullSheetLines != null) {
     json['pullSheetLines'] = instance.pullSheetLines;
-  if (instance.deliveryNotes != null)
+  }
+  if (instance.deliveryNotes != null) {
     json['deliveryNotes'] = instance.deliveryNotes;
-  if (instance.warehouseStatus != null)
+  }
+  if (instance.warehouseStatus != null) {
     json['warehouseStatus'] = instance.warehouseStatus;
+  }
   if (instance.regUser != null) json['regUser'] = instance.regUser;
   if (instance.warehouseId != null) json['warehouseId'] = instance.warehouseId;
   if (instance.staffId != null) json['staffId'] = instance.staffId;
   if (instance.loadingDate != null) json['loadingDate'] = instance.loadingDate;
-  if (instance.pullSheetStatus != null)
+  if (instance.pullSheetStatus != null) {
     json['pullSheetStatus'] = instance.pullSheetStatus;
+  }
   if (instance.startedDate != null) json['startedDate'] = instance.startedDate;
   if (instance.isPaused != null) json['isPaused'] = instance.isPaused;
   if (instance.pausedDate != null) json['pausedDate'] = instance.pausedDate;
-  if (instance.proceededDate != null)
+  if (instance.proceededDate != null) {
     json['proceededDate'] = instance.proceededDate;
-  if (instance.pausedDuration != null)
+  }
+  if (instance.pausedDuration != null) {
     json['pausedDuration'] = instance.pausedDuration;
+  }
   if (instance.endedDate != null) json['endedDate'] = instance.endedDate;
-  if (instance.dispatchedDate != null)
+  if (instance.dispatchedDate != null) {
     json['dispatchedDate'] = instance.dispatchedDate;
+  }
   if (instance.warehouse != null) json['warehouse'] = instance.warehouse;
-  if (instance.warehouseUserId != null)
+  if (instance.warehouseUserId != null) {
     json['warehouseUserId'] = instance.warehouseUserId;
-  if (instance.warehouseUser != null)
+  }
+  if (instance.warehouseUser != null) {
     json['warehouseUser'] = instance.warehouseUser;
+  }
   if (instance.regUserId != null) json['regUserId'] = instance.regUserId;
-  if (instance.receiverBranches != null)
+  if (instance.receiverBranches != null) {
     json['receiverBranches'] = instance.receiverBranches;
+  }
   if (instance.locationLat != null) json['locationLat'] = instance.locationLat;
   if (instance.locationLng != null) json['locationLng'] = instance.locationLng;
   if (instance.isVatPayer != null) json['isVatPayer'] = instance.isVatPayer;
   if (instance.paymentTerm != null) json['paymentTerm'] = instance.paymentTerm;
   if (instance.review != null) json['review'] = instance.review;
-  if (instance.reviewedUser != null)
+  if (instance.reviewedUser != null) {
     json['reviewedUser'] = instance.reviewedUser;
-  if (instance.onDeliveryQuantity != null)
+  }
+  if (instance.onDeliveryQuantity != null) {
     json['onDeliveryQuantity'] = instance.onDeliveryQuantity;
-  if (instance.warehouseQuantity != null)
+  }
+  if (instance.warehouseQuantity != null) {
     json['warehouseQuantity'] = instance.warehouseQuantity;
+  }
   if (instance.approve != null) json['approve'] = instance.approve;
   if (instance.orderedUser != null) json['orderedUser'] = instance.orderedUser;
-  if (instance.senderBusiness != null)
+  if (instance.senderBusiness != null) {
     json['senderBusiness'] = instance.senderBusiness;
-  if (instance.receiverBusiness != null)
+  }
+  if (instance.receiverBusiness != null) {
     json['receiverBusiness'] = instance.receiverBusiness;
+  }
   if (instance.invoiceId != null) json['invoiceId'] = instance.invoiceId;
-  if (instance.respondedDate != null)
+  if (instance.respondedDate != null) {
     json['respondedDate'] = instance.respondedDate;
-  if (instance.respondedUserId != null)
+  }
+  if (instance.respondedUserId != null) {
     json['respondedUserId'] = instance.respondedUserId;
-  if (instance.canceledDate != null)
+  }
+  if (instance.canceledDate != null) {
     json['canceledDate'] = instance.canceledDate;
-  if (instance.canceledUserId != null)
+  }
+  if (instance.canceledUserId != null) {
     json['canceledUserId'] = instance.canceledUserId;
-  if (instance.reviewedDate != null)
+  }
+  if (instance.reviewedDate != null) {
     json['reviewedDate'] = instance.reviewedDate;
-  if (instance.reviewedUserId != null)
+  }
+  if (instance.reviewedUserId != null) {
     json['reviewedUserId'] = instance.reviewedUserId;
-  if (instance.paymentStatus != null)
+  }
+  if (instance.paymentStatus != null) {
     json['paymentStatus'] = instance.paymentStatus;
+  }
   if (instance.amountToPay != null) json['amountToPay'] = instance.amountToPay;
   if (instance.paidAmount != null) json['paidAmount'] = instance.paidAmount;
   if (instance.totalAmount != null) json['totalAmount'] = instance.totalAmount;
   if (instance.orderAmount != null) json['orderAmount'] = instance.orderAmount;
-  if (instance.lineTotalDiscountAmount != null)
+  if (instance.lineTotalDiscountAmount != null) {
     json['lineTotalDiscountAmount'] = instance.lineTotalDiscountAmount;
-  if (instance.lineTaxAmount != null)
+  }
+  if (instance.lineTaxAmount != null) {
     json['lineTaxAmount'] = instance.lineTaxAmount;
-  if (instance.lineVatAmount != null)
+  }
+  if (instance.lineVatAmount != null) {
     json['lineVatAmount'] = instance.lineVatAmount;
-  if (instance.lineTotalAmount != null)
+  }
+  if (instance.lineTotalAmount != null) {
     json['lineTotalAmount'] = instance.lineTotalAmount;
-  if (instance.totalItemCount != null)
+  }
+  if (instance.totalItemCount != null) {
     json['totalItemCount'] = instance.totalItemCount;
-  if (instance.itemTypeCount != null)
+  }
+  if (instance.itemTypeCount != null) {
     json['itemTypeCount'] = instance.itemTypeCount;
+  }
   if (instance.createdType != null) json['createdType'] = instance.createdType;
-  if (instance.paymentTermId != null)
+  if (instance.paymentTermId != null) {
     json['paymentTermId'] = instance.paymentTermId;
-  if (instance.receiverBusinessId != null)
+  }
+  if (instance.receiverBusinessId != null) {
     json['receiverBusinessId'] = instance.receiverBusinessId;
-  if (instance.senderBusinessId != null)
+  }
+  if (instance.senderBusinessId != null) {
     json['senderBusinessId'] = instance.senderBusinessId;
-  if (instance.orderedUserId != null)
+  }
+  if (instance.orderedUserId != null) {
     json['orderedUserId'] = instance.orderedUserId;
-  if (instance.deliveryNoteStatus != null)
+  }
+  if (instance.deliveryNoteStatus != null) {
     json['deliveryNoteStatus'] = instance.deliveryNoteStatus;
+  }
   if (instance.orderStatus != null) json['orderStatus'] = instance.orderStatus;
   if (instance.salesCode != null) json['salesCode'] = instance.salesCode;
-  if (instance.purchaseCode != null)
+  if (instance.purchaseCode != null) {
     json['purchaseCode'] = instance.purchaseCode;
+  }
   if (instance.skuCode != null) json['skuCode'] = instance.skuCode;
   if (instance.barCode != null) json['barCode'] = instance.barCode;
   if (instance.erpCode != null) json['erpCode'] = instance.erpCode;
@@ -627,63 +684,79 @@ Map<String, dynamic> _$OrderToJson(Order instance) {
   if (instance.image != null) json['image'] = instance.image;
   if (instance.supplier != null) json['supplier'] = instance.supplier;
   if (instance.brand != null) json['brand'] = instance.brand;
-  if (instance.priceStartDate != null)
+  if (instance.priceStartDate != null) {
     json['priceStartDate'] = instance.priceStartDate;
+  }
   if (instance.hasVat != null) json['hasVat'] = instance.hasVat;
   if (instance.hasTax != null) json['hasTax'] = instance.hasTax;
   if (instance.vatAmount != null) json['vatAmount'] = instance.vatAmount;
   if (instance.taxAmount != null) json['taxAmount'] = instance.taxAmount;
-  if (instance.optionValues != null)
+  if (instance.optionValues != null) {
     json['optionValues'] = instance.optionValues;
+  }
   if (instance.packageType != null) json['packageType'] = instance.packageType;
 
   if (instance.businessId != null) json['businessId'] = instance.businessId;
-  if (instance.receiverBranchId != null)
+  if (instance.receiverBranchId != null) {
     json['receiverBranchId'] = instance.receiverBranchId;
-  if (instance.deliveryType != null)
+  }
+  if (instance.deliveryType != null) {
     json['deliveryType'] = instance.deliveryType;
-  if (instance.receiverStaffId != null)
+  }
+  if (instance.receiverStaffId != null) {
     json['receiverStaffId'] = instance.receiverStaffId;
+  }
   if (instance.lines != null) json['lines'] = instance.lines;
   if (instance.attachments != null) json['attachments'] = instance.attachments;
-  if (instance.additionalLines != null)
+  if (instance.additionalLines != null) {
     json['additionalLines'] = instance.additionalLines;
+  }
   if (instance.variantId != null) json['variantId'] = instance.variantId;
-  if (instance.discountType != null)
+  if (instance.discountType != null) {
     json['discountType'] = instance.discountType;
-  if (instance.discountValue != null)
+  }
+  if (instance.discountValue != null) {
     json['discountValue'] = instance.discountValue;
+  }
   if (instance.quantity != null) json['quantity'] = instance.quantity;
   if (instance.unit != null) json['unit'] = instance.unit;
   if (instance.price != null) json['price'] = instance.price;
   if (instance.senderNote != null) json['senderNote'] = instance.senderNote;
-  if (instance.senderAdditionalNote != null)
+  if (instance.senderAdditionalNote != null) {
     json['senderAdditionalNote'] = instance.senderAdditionalNote;
-  if (instance.shippingAmount != null)
+  }
+  if (instance.shippingAmount != null) {
     json['shippingAmount'] = instance.shippingAmount;
+  }
   if (instance.url != null) json['url'] = instance.url;
   if (instance.description != null) json['description'] = instance.description;
   if (instance.toReview != null) json['toReview'] = instance.toReview;
   if (instance.send != null) json['send'] = instance.send;
-  if (instance.branchStatus != null)
+  if (instance.branchStatus != null) {
     json['branchStatus'] = instance.branchStatus;
+  }
   if (instance.user != null) json['user'] = instance.user;
   if (instance.isBuyer != null) json['isBuyer'] = instance.isBuyer;
   if (instance.isSupplier != null) json['isSupplier'] = instance.isSupplier;
-  if (instance.deliveryDate != null)
+  if (instance.deliveryDate != null) {
     json['deliveryDate'] = instance.deliveryDate;
+  }
   if (instance.province != null) json['province'] = instance.province;
   if (instance.district != null) json['district'] = instance.district;
   if (instance.khoroo != null) json['khoroo'] = instance.khoroo;
   if (instance.khoroolol != null) json['khoroolol'] = instance.khoroolol;
-  if (instance.khotkhonBair != null)
+  if (instance.khotkhonBair != null) {
     json['khotkhonBair'] = instance.khotkhonBair;
-  if (instance.khashaaDavkhar != null)
+  }
+  if (instance.khashaaDavkhar != null) {
     json['khashaaDavkhar'] = instance.khashaaDavkhar;
-  if (instance.khaalgaDugaar != null)
+  }
+  if (instance.khaalgaDugaar != null) {
     json['khaalgaDugaar'] = instance.khaalgaDugaar;
-  if (instance.branchAddress != null)
+  }
+  if (instance.branchAddress != null) {
     json['branchAddress'] = instance.branchAddress;
+  }
   if (instance.count != null) json['count'] = instance.count;
   if (instance.rows != null) json['rows'] = instance.rows;
   if (instance.id != null) json['id'] = instance.id;
@@ -693,43 +766,57 @@ Map<String, dynamic> _$OrderToJson(Order instance) {
   if (instance.refCode != null) json['refCode'] = instance.refCode;
   if (instance.type != null) json['type'] = instance.type;
   if (instance.isDefault != null) json['isDefault'] = instance.isDefault;
-  if (instance.businessStatus != null)
+  if (instance.businessStatus != null) {
     json['businessStatus'] = instance.businessStatus;
+  }
   if (instance.profileName != null) json['profileName'] = instance.profileName;
-  if (instance.profileNameEng != null)
+  if (instance.profileNameEng != null) {
     json['profileNameEng'] = instance.profileNameEng;
+  }
   if (instance.logo != null) json['logo'] = instance.logo;
   if (instance.profileInfo != null) json['profileInfo'] = instance.profileInfo;
-  if (instance.isAnchorBusiness != null)
+  if (instance.isAnchorBusiness != null) {
     json['isAnchorBusiness'] = instance.isAnchorBusiness;
+  }
   if (instance.partnerId != null) json['partnerId'] = instance.partnerId;
   if (instance.regNumber != null) json['regNumber'] = instance.regNumber;
   if (instance.partnerName != null) json['partnerName'] = instance.partnerName;
-  if (instance.partnerNameEng != null)
+  if (instance.partnerNameEng != null) {
     json['partnerNameEng'] = instance.partnerNameEng;
-  if (instance.partnerEmail != null)
+  }
+  if (instance.partnerEmail != null) {
     json['partnerEmail'] = instance.partnerEmail;
-  if (instance.partnerEmail2 != null)
+  }
+  if (instance.partnerEmail2 != null) {
     json['partnerEmail2'] = instance.partnerEmail2;
-  if (instance.partnerPhone != null)
+  }
+  if (instance.partnerPhone != null) {
     json['partnerPhone'] = instance.partnerPhone;
-  if (instance.partnerPhone2 != null)
+  }
+  if (instance.partnerPhone2 != null) {
     json['partnerPhone2'] = instance.partnerPhone2;
-  if (instance.legalEntityType != null)
+  }
+  if (instance.legalEntityType != null) {
     json['legalEntityType'] = instance.legalEntityType;
+  }
   if (instance.partner != null) json['partner'] = instance.partner;
-  if (instance.businessName != null)
+  if (instance.businessName != null) {
     json['businessName'] = instance.businessName;
-  if (instance.receiverBrach != null)
+  }
+  if (instance.receiverBrach != null) {
     json['receiverBrach'] = instance.receiverBrach;
-  if (instance.receiverBranch != null)
+  }
+  if (instance.receiverBranch != null) {
     json['receiverBranch'] = instance.receiverBranch;
+  }
   if (instance.nameEng != null) json['nameEng'] = instance.nameEng;
   if (instance.name != null) json['name'] = instance.name;
-  if (instance.receiverStaff != null)
+  if (instance.receiverStaff != null) {
     json['receiverStaff'] = instance.receiverStaff;
-  if (instance.receiverFinStaff != null)
+  }
+  if (instance.receiverFinStaff != null) {
     json['receiverFinStaff'] = instance.receiverFinStaff;
+  }
   if (instance.avatar != null) json['avatar'] = instance.avatar;
   if (instance.lastName != null) json['lastName'] = instance.lastName;
   if (instance.firstName != null) json['firstName'] = instance.firstName;
@@ -740,8 +827,9 @@ Map<String, dynamic> _$OrderToJson(Order instance) {
   if (instance.category != null) json['category'] = instance.category;
   if (instance.priority != null) json['priority'] = instance.priority;
   if (instance.staff != null) json['staff'] = instance.staff;
-  if (instance.networkStatus != null)
+  if (instance.networkStatus != null) {
     json['networkStatus'] = instance.networkStatus;
+  }
 
   return json;
 }

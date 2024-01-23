@@ -26,9 +26,9 @@ class ExpensesPage extends StatefulWidget {
   final String id;
   static const routeName = '/ExpensesPage';
   const ExpensesPage({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<ExpensesPage> createState() => _ExpensesPageState();
@@ -52,7 +52,7 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
       await OrderApi().receiptConfirm('${receipt.id}', Order());
       showCustomDialog(
         context,
-        'Амжилттай баталгаажууллаа',
+        'Баталгаажуулах хүсэлт амжилттай илгээгдлээ',
         true,
         onPressed: () {
           Navigator.of(context).pop();
@@ -65,7 +65,7 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
   }
 
   confirm(String id) async {
-    await OrderApi().receiptConfirm('${id}', Order());
+    await OrderApi().receiptConfirm(id, Order());
     showCustomDialog(
       context,
       'Амжилттай баталгаажууллаа',
@@ -90,7 +90,7 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios_new,
             color: white,
           ),
@@ -113,8 +113,8 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-        actions: [
-          const Center(
+        actions: const [
+          Center(
             child: Text(
               "№97278",
               style: TextStyle(
@@ -124,13 +124,13 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
               ),
             ),
           ),
-          const SizedBox(
+          SizedBox(
             width: 15,
           ),
         ],
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: orderColor,
               ),
@@ -153,7 +153,7 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                           margin: const EdgeInsets.only(top: 28, bottom: 10),
                           child: Text(
                             '${receipt.purchaseCode}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: white,
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -163,7 +163,7 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                       ),
                       Row(
                         children: [
-                          Column(
+                          const Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
@@ -192,35 +192,38 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${DateFormat("yyyy-MM-dd hh:mm").format(DateTime.parse(receipt.deliveryNote!.startDate!))}',
-                                style: TextStyle(
+                                DateFormat("yyyy-MM-dd hh:mm").format(
+                                    DateTime.parse(
+                                        receipt.deliveryNote!.startDate!)),
+                                style: const TextStyle(
                                   fontSize: 12,
                                   color: orderColor,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 '${receipt.deliveryStaff?.firstName}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 12,
                                   color: orderColor,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
-                                '${DateFormat("yyyy-MM-dd hh:mm").format(receipt.deliveredDate!)}',
-                                style: TextStyle(
+                                DateFormat("yyyy-MM-dd hh:mm")
+                                    .format(receipt.deliveredDate!),
+                                style: const TextStyle(
                                   fontSize: 12,
                                   color: orderColor,
                                 ),
@@ -232,7 +235,7 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Expanded(
@@ -252,7 +255,7 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                             ],
                           ),
                         ),
-                        Divider(
+                        const Divider(
                           color: orderColor,
                           thickness: 1,
                         ),
@@ -262,7 +265,7 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                         Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
-                          child: Text(
+                          child: const Text(
                             'ПАДААНЫ ДҮН',
                             style: TextStyle(
                               color: coolGrey,
@@ -278,7 +281,7 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Нийт дүн',
                                     style: TextStyle(
                                       color: black,
@@ -286,14 +289,14 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                                   ),
                                   Text(
                                     '${Utils().formatCurrency(receipt.totalAmount.toString())} ₮',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: orderColor,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 15,
                               ),
                               Row(
@@ -314,7 +317,7 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 15,
                               ),
                               Row(
@@ -358,95 +361,93 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
-                            receipt.isBuyerConfirmed == false
-                                ? Expanded(
-                                    child: Container(
-                                      child: CustomButton(
-                                        borderColor: orderColor,
-                                        isGradient: true,
-                                        onClick: () {
-                                          Navigator.of(context).pushNamed(
-                                            EnterPhonePage.routeName,
-                                            arguments: EnterPhonePageArguments(
-                                                data: receipt),
-                                          );
-                                        },
-                                        gradient: const LinearGradient(
-                                          colors: [white, white],
+                            if (receipt.isBuyerConfirmed == false)
+                              Expanded(
+                                child: CustomButton(
+                                  borderColor: orderColor,
+                                  isGradient: true,
+                                  onClick: () {
+                                    Navigator.of(context).pushNamed(
+                                      EnterPhonePage.routeName,
+                                      arguments: EnterPhonePageArguments(
+                                          data: receipt),
+                                    );
+                                  },
+                                  gradient: const LinearGradient(
+                                    colors: [white, white],
+                                  ),
+                                  container: Container(
+                                    color: transparent,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                          'assets/svg/lock.svg',
+                                          height: 16,
+                                          width: 16,
                                         ),
-                                        container: Container(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              SvgPicture.asset(
-                                                'assets/svg/lock.svg',
-                                                height: 16,
-                                                width: 16,
-                                              ),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              const Text(
-                                                'Код илгээх',
-                                                style: TextStyle(
-                                                  color: orderColor,
-                                                  fontSize: 18,
-                                                ),
-                                              ),
-                                            ],
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        const Text(
+                                          'Код илгээх',
+                                          style: TextStyle(
+                                            color: orderColor,
+                                            fontSize: 18,
                                           ),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                  )
-                                : SizedBox(),
+                                  ),
+                                ),
+                              ),
                             SizedBox(
                               width: receipt.isBuyerConfirmed == false &&
                                       receipt.isSupplierConfirmed == false
                                   ? 10
                                   : 0,
                             ),
-                            receipt.isSupplierConfirmed == false
-                                ? Expanded(
-                                    child: CustomButton(
-                                      isGradient: true,
-                                      onClick: () {
-                                        onSubmit();
-                                      },
-                                      gradient: const LinearGradient(
-                                        colors: [orderColor, orderColor],
-                                      ),
-                                      container: Container(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            SvgPicture.asset(
-                                              'assets/svg/mobile_message.svg',
-                                              height: 16,
-                                              width: 16,
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            const Text(
-                                              'Батлуулах',
-                                              style: TextStyle(
-                                                color: white,
-                                                fontSize: 18,
-                                              ),
-                                            )
-                                          ],
+                            if (receipt.isSupplierConfirmed == false)
+                              Expanded(
+                                child: CustomButton(
+                                  isGradient: true,
+                                  onClick: () {
+                                    onSubmit();
+                                  },
+                                  gradient: const LinearGradient(
+                                    colors: [orderColor, orderColor],
+                                  ),
+                                  container: Container(
+                                    color: transparent,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                          'assets/svg/mobile_message.svg',
+                                          height: 16,
+                                          width: 16,
                                         ),
-                                      ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        const Text(
+                                          'Батлуулах',
+                                          style: TextStyle(
+                                            color: white,
+                                            fontSize: 18,
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                  )
-                                : SizedBox(),
-                            SizedBox(
+                                  ),
+                                ),
+                              ),
+                            const SizedBox(
                               width: 15,
                             ),
                           ],
@@ -455,9 +456,9 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                     : user.currentBusiness?.type == "BUYER" &&
                             receipt.isBuyerConfirmed == false
                         ? Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: white,
-                              borderRadius: const BorderRadius.only(
+                              borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(20),
                                 topRight: Radius.circular(20),
                               ),
@@ -485,7 +486,7 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                               ),
                             ),
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
               ],
             ),
     );
@@ -497,59 +498,59 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${labeltext}',
-            style: TextStyle(
+            labeltext,
+            style: const TextStyle(
               color: coolGrey,
               fontSize: 12,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 7.5,
           ),
           Text(
             '${data?.profileName}',
-            style: TextStyle(
+            style: const TextStyle(
               color: black,
               fontSize: 12,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 4,
           ),
           Text(
             '${data?.partnerName}',
-            style: TextStyle(
+            style: const TextStyle(
               color: black,
               fontWeight: FontWeight.bold,
               fontSize: 12,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 4,
           ),
           Text(
             'ТТД: ${data?.regNumber}',
-            style: TextStyle(
+            style: const TextStyle(
               color: black,
               fontSize: 12,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 4,
           ),
           Text(
             '${data?.partnerEmail}',
-            style: TextStyle(
+            style: const TextStyle(
               color: black,
               fontSize: 12,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 4,
           ),
           Text(
             '${data?.partnerPhone}',
-            style: TextStyle(
+            style: const TextStyle(
               color: black,
               fontSize: 12,
             ),

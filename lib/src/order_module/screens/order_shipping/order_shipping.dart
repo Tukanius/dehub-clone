@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class OrderShipping extends StatefulWidget {
   static const routeName = '/OrderShipping';
-  const OrderShipping({Key? key}) : super(key: key);
+  const OrderShipping({super.key});
 
   @override
   State<OrderShipping> createState() => _OrderDeliveryState();
@@ -24,12 +24,12 @@ class _OrderDeliveryState extends State<OrderShipping> {
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios_new,
             color: orderColor,
           ),
         ),
-        title: Text(
+        title: const Text(
           'Ачилт удирдлага',
           style: TextStyle(
             color: buttonColor,
@@ -42,7 +42,7 @@ class _OrderDeliveryState extends State<OrderShipping> {
             margin: const EdgeInsets.only(right: 16),
             height: 36,
             width: 36,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: grey,
             ),
@@ -63,21 +63,21 @@ class _OrderDeliveryState extends State<OrderShipping> {
                     labelColor: orderColor,
                     indicatorColor: orderColor,
                     unselectedLabelColor: buttonColor,
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
                     tabs: [
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: Text(
+                        child: const Text(
                           'Ачилт хийх',
                           style: TextStyle(fontFamily: 'Montserrat'),
                         ),
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: Text(
+                        child: const Text(
                           'Ачилт дууссан',
                           style: TextStyle(fontFamily: 'Montserrat'),
                         ),
@@ -88,7 +88,7 @@ class _OrderDeliveryState extends State<OrderShipping> {
               ),
             ];
           },
-          body: TabBarView(
+          body: const TabBarView(
             children: [
               Shipping(),
               ShippingMade(),

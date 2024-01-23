@@ -31,12 +31,12 @@ class _SuppliersPageState extends State<SuppliersPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back_ios,
                 color: white,
               ),
             ),
-            title: Text(
+            title: const Text(
               'Нийлүүлэгчид',
               style: TextStyle(
                 fontWeight: FontWeight.w500,
@@ -53,7 +53,7 @@ class _SuppliersPageState extends State<SuppliersPage> {
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Material(
                         color: white,
                         child: TabBar(
@@ -66,23 +66,23 @@ class _SuppliersPageState extends State<SuppliersPage> {
                             Container(
                               alignment: Alignment.center,
                               height: 48,
-                              child: Text('Бүгд'),
+                              child: const Text('Бүгд'),
                             ),
                             Container(
                               alignment: Alignment.center,
                               height: 48,
-                              child: Text('Гэрээт'),
+                              child: const Text('Гэрээт'),
                             ),
                             Container(
                               alignment: Alignment.center,
                               height: 48,
-                              child: Text('Гэрээт биш'),
+                              child: const Text('Гэрээт биш'),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(height: 10),
-                      SearchButton(
+                      const SizedBox(height: 10),
+                      const SearchButton(
                         color: purpleButtonColor,
                       ),
                     ],
@@ -90,7 +90,7 @@ class _SuppliersPageState extends State<SuppliersPage> {
                 ),
               ];
             },
-            body: TabBarView(
+            body: const TabBarView(
               children: [
                 All(),
                 Contractual(),

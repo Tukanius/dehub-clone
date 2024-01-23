@@ -49,14 +49,14 @@ class _ProgramPageState extends State<ProgramPage>
         children: [
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+            child: const Text(
               'Хөтөлбөрүүд',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
           Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 15,
               ),
               InkWell(
@@ -66,7 +66,7 @@ class _ProgramPageState extends State<ProgramPage>
                 onTap: () {
                   pageController.animateToPage(
                     0,
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
                     curve: Curves.ease,
                   );
                 },
@@ -88,7 +88,7 @@ class _ProgramPageState extends State<ProgramPage>
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 15,
               ),
               InkWell(
@@ -98,7 +98,7 @@ class _ProgramPageState extends State<ProgramPage>
                 onTap: () {
                   pageController.animateToPage(
                     1,
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
                     curve: Curves.ease,
                   );
                 },
@@ -130,7 +130,7 @@ class _ProgramPageState extends State<ProgramPage>
                   initialIndex = value;
                 });
               },
-              children: [
+              children: const [
                 SupplierLed(),
                 BuyerLed(),
               ],

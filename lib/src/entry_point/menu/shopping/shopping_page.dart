@@ -29,12 +29,12 @@ class _ShoppingPageState extends State<ShoppingPage> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: black,
           ),
         ),
-        title: Text(
+        title: const Text(
           'АПУ ХК',
           style: TextStyle(
             color: black,
@@ -51,7 +51,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
             ),
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 21),
-            child: Row(
+            child: const Row(
               children: [
                 Icon(
                   Icons.add_shopping_cart_outlined,
@@ -81,7 +81,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
                   child: SvgPicture.asset('assets/svg/banner.svg'),
                 ),
               ),
-              SliverToBoxAdapter(
+              const SliverToBoxAdapter(
                 child: SupplierCard(
                   boxShadow: true,
                   shoppingCard: true,
@@ -97,45 +97,45 @@ class _ShoppingPageState extends State<ShoppingPage> {
                       overlayColor:
                           MaterialStatePropertyAll(Colors.grey.shade100),
                       isScrollable: true,
-                      labelStyle:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                      labelStyle: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w500),
                       indicatorColor: buttonColor,
                       labelColor: buttonColor,
                       unselectedLabelColor: dark,
                       tabs: [
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Text(
+                          child: const Text(
                             'Бараа',
                           ),
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Text(
+                          child: const Text(
                             'Нэхэмжлэх',
                           ),
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Text(
+                          child: const Text(
                             'Захиалга',
                           ),
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Text(
+                          child: const Text(
                             'Төлбөр',
                           ),
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Text(
+                          child: const Text(
                             'Зээл тооцоо',
                           ),
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Text(
+                          child: const Text(
                             'Нөхцөл',
                           ),
                         ),
@@ -145,18 +145,36 @@ class _ShoppingPageState extends State<ShoppingPage> {
                 ),
               ),
               SliverToBoxAdapter(
-                child: Container(
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 10),
-                        color: white,
-                        height: 50,
-                        padding: const EdgeInsets.only(
-                            left: 16, top: 10, bottom: 10),
-                        child: Row(
-                          children: [
-                            Container(
+                child: Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      color: white,
+                      height: 50,
+                      padding:
+                          const EdgeInsets.only(left: 16, top: 10, bottom: 10),
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(right: 10),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: grey3.withOpacity(0.3),
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 5),
+                              child: SvgPicture.asset(
+                                'assets/svg/yuluur.svg',
+                                colorFilter: const ColorFilter.mode(
+                                    grey2, BlendMode.srcIn),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
                               margin: const EdgeInsets.only(right: 10),
                               decoration: BoxDecoration(
                                 border: Border.all(
@@ -164,80 +182,60 @@ class _ShoppingPageState extends State<ShoppingPage> {
                                 ),
                                 borderRadius: BorderRadius.circular(5),
                               ),
+                              child: Container(
+                                margin: const EdgeInsets.only(left: 10),
+                                alignment: Alignment.centerLeft,
+                                child: const Icon(
+                                  Icons.search,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(right: 10),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: grey3.withOpacity(0.3),
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  gridview = !gridview;
+                                });
+                              },
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 5, vertical: 5),
                                 child: SvgPicture.asset(
-                                  'assets/svg/yuluur.svg',
-                                  colorFilter:
-                                      ColorFilter.mode(grey2, BlendMode.srcIn),
+                                  'assets/svg/filter.svg',
+                                  colorFilter: const ColorFilter.mode(
+                                      grey2, BlendMode.srcIn),
                                 ),
                               ),
                             ),
-                            Expanded(
-                              child: Container(
-                                margin: const EdgeInsets.only(right: 10),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: grey3.withOpacity(0.3),
-                                  ),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Container(
-                                  margin: const EdgeInsets.only(left: 10),
-                                  alignment: Alignment.centerLeft,
-                                  child: Icon(
-                                    Icons.search,
-                                    size: 20,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(right: 10),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: grey3.withOpacity(0.3),
-                                ),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    gridview = !gridview;
-                                  });
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 5, vertical: 5),
-                                  child: SvgPicture.asset(
-                                    'assets/svg/filter.svg',
-                                    colorFilter: ColorFilter.mode(
-                                        grey2, BlendMode.srcIn),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ];
           },
           body: TabBarView(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             children: [
               Product(
                 gridview: gridview,
               ),
-              Invoice(),
-              Order(),
-              ShoppingPayment(),
-              Text('Зээл тооцоо'),
-              Text('Нөхцөл'),
+              const Invoice(),
+              const Order(),
+              const ShoppingPayment(),
+              const Text('Зээл тооцоо'),
+              const Text('Нөхцөл'),
             ],
           ),
         ),

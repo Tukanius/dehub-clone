@@ -25,7 +25,7 @@ class _StatsCardState extends State<StatsCard> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: Color(0xffDFE4EC),
+          color: const Color(0xffDFE4EC),
         ),
         color: white,
       ),
@@ -37,14 +37,14 @@ class _StatsCardState extends State<StatsCard> {
             children: [
               SvgPicture.asset(
                 '${widget.data.image}',
-                colorFilter: ColorFilter.mode(grey, BlendMode.srcIn),
+                colorFilter: const ColorFilter.mode(grey, BlendMode.srcIn),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 5,
               ),
               Text(
                 '${widget.data.name}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: grey,
                   fontWeight: FontWeight.w600,
                   fontSize: 12,
@@ -54,7 +54,7 @@ class _StatsCardState extends State<StatsCard> {
           ),
           Text(
             '${Utils().formatCurrency(widget.data.amount.toString())}₮',
-            style: TextStyle(
+            style: const TextStyle(
               color: dark,
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -63,14 +63,14 @@ class _StatsCardState extends State<StatsCard> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(
+              const Text(
                 'Өмнөх өдрөөс',
                 style: TextStyle(
                   fontSize: 10,
                   color: grey,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Container(
@@ -87,17 +87,17 @@ class _StatsCardState extends State<StatsCard> {
                 child: Row(
                   children: [
                     widget.data.percent! > 0
-                        ? Icon(
+                        ? const Icon(
                             Icons.arrow_upward,
                             color: neonGreen,
                             size: 10,
                           )
-                        : Icon(
+                        : const Icon(
                             Icons.arrow_downward,
                             color: red,
                             size: 10,
                           ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     Text(

@@ -18,9 +18,9 @@ class StatementDetail extends StatefulWidget {
   static const routeName = '/StatementDetail';
   final Invoice data;
   const StatementDetail({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<StatementDetail> createState() => _StatementDetailState();
@@ -37,13 +37,13 @@ class _StatementDetailState extends State<StatementDetail> {
           elevation: 3,
           backgroundColor: white,
           surfaceTintColor: white,
-          leading: CustomBackButton(
+          leading: const CustomBackButton(
             color: invoiceColor,
           ),
           leadingWidth: 130,
         ),
         body: NestedScrollView(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
               SliverToBoxAdapter(
@@ -55,12 +55,12 @@ class _StatementDetailState extends State<StatementDetail> {
                       child: TabBar(
                         overlayColor:
                             MaterialStatePropertyAll(Colors.grey.shade100),
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           fontFamily: "Montserrat",
                         ),
-                        unselectedLabelStyle: TextStyle(
+                        unselectedLabelStyle: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           fontFamily: "Montserrat",
@@ -71,15 +71,15 @@ class _StatementDetailState extends State<StatementDetail> {
                         tabs: [
                           Container(
                             padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text('Нээлттэй'),
+                            child: const Text('Нээлттэй'),
                           ),
                           Container(
                             padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text('Батлах'),
+                            child: const Text('Батлах'),
                           ),
                           Container(
                             padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text('Хаагдсан'),
+                            child: const Text('Хаагдсан'),
                           ),
                         ],
                       ),
@@ -87,7 +87,7 @@ class _StatementDetailState extends State<StatementDetail> {
                     Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
-                      child: Text(
+                      child: const Text(
                         'Харилцагч',
                         style: TextStyle(
                             color: grey3, fontWeight: FontWeight.w600),

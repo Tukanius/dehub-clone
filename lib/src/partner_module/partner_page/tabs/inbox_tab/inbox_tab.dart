@@ -3,24 +3,26 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class InboxTab extends StatefulWidget {
-  const InboxTab({Key? key}) : super(key: key);
+  const InboxTab({super.key});
 
   @override
-  _InboxTabState createState() => _InboxTabState();
+  InboxTabState createState() => InboxTabState();
 }
 
-class _InboxTabState extends State<InboxTab>
+class InboxTabState extends State<InboxTab>
     with SingleTickerProviderStateMixin {
   int currentIndex = 0;
   late TabController tabController;
   ScrollController scrollController = ScrollController();
 
+  @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
     tabController.index = currentIndex;
     super.initState();
   }
 
+  @override
   void dispose() {
     tabController.dispose();
     super.dispose();
@@ -47,7 +49,7 @@ class _InboxTabState extends State<InboxTab>
                   Container(
                     margin:
                         const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-                    child: Text(
+                    child: const Text(
                       'Ирсэн урилга',
                       style:
                           TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
@@ -81,7 +83,7 @@ class _InboxTabState extends State<InboxTab>
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 30,
                       ),
                       GestureDetector(
@@ -111,7 +113,7 @@ class _InboxTabState extends State<InboxTab>
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   )
                 ],
@@ -121,7 +123,7 @@ class _InboxTabState extends State<InboxTab>
         },
         body: TabBarView(
           controller: tabController,
-          children: [
+          children: const [
             Invitation(),
             Text(''),
           ],

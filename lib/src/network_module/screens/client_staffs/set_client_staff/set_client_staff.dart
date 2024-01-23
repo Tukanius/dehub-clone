@@ -27,10 +27,10 @@ class SetClientStaff extends StatefulWidget {
   final ListenController listenController;
   static const routeName = '/SetClientStaff';
   const SetClientStaff({
-    Key? key,
+    super.key,
     required this.id,
     required this.listenController,
-  }) : super(key: key);
+  });
 
   @override
   State<SetClientStaff> createState() => _SetClientStaffState();
@@ -89,7 +89,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
         automaticallyImplyLeading: false,
         backgroundColor: networkColor,
         surfaceTintColor: networkColor,
-        title: Text(
+        title: const Text(
           'Ажилтан хариуцуулах',
           style: TextStyle(
             color: white,
@@ -97,7 +97,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: [
+        actions: const [
           CustomCloseButton(
             color: networkColor,
           ),
@@ -107,7 +107,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             FieldCard(
@@ -119,7 +119,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
                 show();
               },
               arrowColor: networkColor,
-              secondText: "${clientStaff == null ? '-' : clientStaff}",
+              secondText: clientStaff ?? '-',
               secondTextColor: networkColor,
             ),
             FieldCard(
@@ -131,12 +131,12 @@ class _SetClientStaffState extends State<SetClientStaff> {
                 coStaff();
               },
               arrowColor: networkColor,
-              secondText: "${coClientStaff == null ? '-' : coClientStaff}",
+              secondText: coClientStaff ?? '-',
               secondTextColor: networkColor,
             ),
             Container(
               margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-              child: Text(
+              child: const Text(
                 'Тайлбар',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -154,7 +154,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
                   textAlign: TextAlign.left,
                   name: 'description',
                   maxLines: 5,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Энд оруулна уу',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.zero,
@@ -169,7 +169,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             CustomButton(
@@ -191,7 +191,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
   show() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -207,7 +207,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 25, bottom: 20),
-                  child: Text(
+                  child: const Text(
                     'Хариуцсан ажилтан сонгох',
                     style: TextStyle(
                       color: grey2,
@@ -239,7 +239,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
                             child: Row(
                               children: [
                                 e.avatar == null
-                                    ? CircleAvatar(
+                                    ? const CircleAvatar(
                                         radius: 12,
                                         backgroundImage:
                                             AssetImage('images/avatar.png'),
@@ -250,7 +250,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
                                         backgroundImage:
                                             NetworkImage('${e.avatar}'),
                                       ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 e.lastName != null
@@ -273,7 +273,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
                       )
                       .toList(),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
               ],
@@ -287,7 +287,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
   coStaff() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -303,7 +303,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 25, bottom: 20),
-                  child: Text(
+                  child: const Text(
                     'Орлох ажилтан сонгох',
                     style: TextStyle(
                       color: grey2,
@@ -335,7 +335,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
                             child: Row(
                               children: [
                                 e.avatar == null
-                                    ? CircleAvatar(
+                                    ? const CircleAvatar(
                                         radius: 12,
                                         backgroundImage:
                                             AssetImage('images/avatar.png'),
@@ -346,7 +346,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
                                         backgroundImage:
                                             NetworkImage('${e.avatar}'),
                                       ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 e.lastName != null
@@ -369,7 +369,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
                       )
                       .toList(),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
               ],

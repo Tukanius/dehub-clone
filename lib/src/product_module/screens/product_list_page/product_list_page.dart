@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 class ProductListPage extends StatefulWidget {
   static const routeName = '/ProductListPage';
   const ProductListPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<ProductListPage> createState() => _ProductListPageState();
@@ -25,8 +25,8 @@ class _ProductListPageState extends State<ProductListPage> {
           elevation: 0,
           backgroundColor: white,
           surfaceTintColor: white,
-          iconTheme: IconThemeData(color: productColor),
-          title: Text(
+          iconTheme: const IconThemeData(color: productColor),
+          title: const Text(
             'Барааны жагсаалт',
             style: TextStyle(
               color: productColor,
@@ -50,8 +50,8 @@ class _ProductListPageState extends State<ProductListPage> {
             indicatorColor: productColor,
             labelColor: productColor,
             unselectedLabelColor: grey2,
-            tabs: [
-              Container(
+            tabs: const [
+              SizedBox(
                 height: 40,
                 child: Center(
                   child: Text(
@@ -59,7 +59,7 @@ class _ProductListPageState extends State<ProductListPage> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 40,
                 child: Center(
                   child: Text(
@@ -70,7 +70,7 @@ class _ProductListPageState extends State<ProductListPage> {
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
             GoodsTab(),

@@ -2,12 +2,12 @@ import 'dart:async';
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/providers/checkout-provider.dart';
+import 'package:dehub/providers/checkout_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -16,11 +16,11 @@ class Shirhegeer extends StatefulWidget {
   final String businessId;
   final bool isPackage;
   static const routeName = '/Shirhegeer';
-  Shirhegeer({
+  const Shirhegeer({
     required this.isPackage,
     required this.businessId,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<Shirhegeer> createState() => _ShirhegeerState();
@@ -65,7 +65,7 @@ class _ShirhegeerState extends State<Shirhegeer> with AfterLayoutMixin {
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000), () async {
+    await Future.delayed(const Duration(milliseconds: 1000), () async {
       setState(() {
         isLoading = true;
       });
@@ -79,7 +79,7 @@ class _ShirhegeerState extends State<Shirhegeer> with AfterLayoutMixin {
 
   list(page, limit, String value) async {
     Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(query: '${value}', businessId: widget.businessId);
+    Filter filter = Filter(query: value, businessId: widget.businessId);
 
     inventory = await InventoryApi()
         .listGoods(ResultArguments(filter: filter, offset: offset));
@@ -95,60 +95,30 @@ class _ShirhegeerState extends State<Shirhegeer> with AfterLayoutMixin {
         SearchButton(
           borderColor: invoiceColor,
           textColor: invoiceColor,
-          onChange: (_query) {
-            onChange(_query);
+          onChange: (query) {
+            onChange(query);
           },
           color: invoiceColor,
         ),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
         isLoading == true
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(
                   color: invoiceColor,
                 ),
               )
             : Expanded(
-                child: SmartRefresher(
-                  enablePullDown: true,
-                  enablePullUp: true,
-                  controller: refreshController,
-                  header: WaterDropHeader(
-                    waterDropColor: invoiceColor,
-                    refresh: SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: invoiceColor,
-                      ),
-                    ),
-                  ),
-                  onRefresh: _onRefresh,
+                child: Refresher(
+                  refreshController: refreshController,
                   onLoading: _onLoading,
-                  footer: CustomFooter(
-                    builder: (context, mode) {
-                      Widget body;
-                      if (mode == LoadStatus.idle) {
-                        body = const Text("");
-                      } else if (mode == LoadStatus.loading) {
-                        body = const CupertinoActivityIndicator();
-                      } else if (mode == LoadStatus.failed) {
-                        body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                      } else {
-                        body = const Text("Мэдээлэл алга байна");
-                      }
-                      return SizedBox(
-                        height: 55.0,
-                        child: Center(child: body),
-                      );
-                    },
-                  ),
+                  onRefresh: _onRefresh,
+                  color: invoiceColor,
                   child: SingleChildScrollView(
                     child: isSubmit == false
-                        ? inventory.rows?.length == 0
-                            ? NotFound(
+                        ? inventory.rows!.isEmpty
+                            ? const NotFound(
                                 module: "INVOICE",
                                 labelText: "Хоосон байна!",
                               )
@@ -175,12 +145,12 @@ class _ShirhegeerState extends State<Shirhegeer> with AfterLayoutMixin {
                                         )
                                         .toList(),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 50,
                                   ),
                                 ],
                               )
-                        : Center(
+                        : const Center(
                             child: CircularProgressIndicator(
                               color: invoiceColor,
                             ),

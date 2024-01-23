@@ -5,7 +5,7 @@ import 'package:lottie/lottie.dart';
 
 class NoInternetScreen extends StatefulWidget {
   static const routeName = '/NoInternetScreen';
-  const NoInternetScreen({Key? key}) : super(key: key);
+  const NoInternetScreen({super.key});
 
   @override
   State<NoInternetScreen> createState() => _NoInternetScreenState();
@@ -15,7 +15,7 @@ class _NoInternetScreenState extends State<NoInternetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff161616),
+      backgroundColor: const Color(0xff161616),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -30,7 +30,7 @@ class _NoInternetScreenState extends State<NoInternetScreen> {
                 color: grey,
               ),
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Дахин ачааллуулах',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,

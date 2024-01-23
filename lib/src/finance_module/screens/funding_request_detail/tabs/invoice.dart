@@ -13,9 +13,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 class InvoiceTab extends StatefulWidget {
   final Finance data;
   const InvoiceTab({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<InvoiceTab> createState() => _InvoiceTabState();
@@ -54,662 +54,660 @@ class _InvoiceTabState extends State<InvoiceTab> {
     general =
         Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
     return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              child: Text(
-                'Нэхэмжлэхийн мэдээлэл',
-                style: TextStyle(
-                  color: grey3,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
+      physics: const BouncingScrollPhysics(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            child: const Text(
+              'Нэхэмжлэхийн мэдээлэл',
+              style: TextStyle(
+                color: grey3,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            labelText: 'Нэхэмжлэх дугаар',
+            secondText: '${widget.data.invRefCode}',
+            secondTextColor: source.currentColor,
+            color: white,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            labelText: 'Илгээсэн ажилтан',
+            secondText: '${widget.data.invSenderUser?.firstName}',
+            secondTextColor: source.currentColor,
+            color: white,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            labelText: 'Илгээсэн огноо, цаг',
+            secondText: DateFormat("yyyy-MM-dd HH:mm")
+                .format(widget.data.invCreatedAt!),
+            color: white,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            labelText: 'Баталсан ажилтан',
+            secondText: '${widget.data.invConfirmedUser?.firstName}',
+            secondTextColor: source.currentColor,
+            color: white,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            labelText: 'Баталсан огноо, цаг',
+            secondText: DateFormat('yyyy-MM-dd HH:mm')
+                .format(widget.data.invConfirmedDate!),
+            color: white,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            labelText: 'Баталсан дүн',
+            secondText:
+                '${Utils().formatCurrency(widget.data.invConfirmedAmount.toString())}',
+            color: white,
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            labelText: 'Төлсөн дүн',
+            secondText:
+                '${Utils().formatCurrency(widget.data.invPaidAmount.toString()) + currency()}',
+            color: white,
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            labelText: 'Үлдэгдэл төлбөр',
+            secondText:
+                '${Utils().formatCurrency(widget.data.invAmountToPay.toString()) + currency()}',
+            color: white,
+            secondTextColor: source.currentColor,
+            secondTextFontWeight: FontWeight.w500,
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Нэхэмжлэх төлөв',
+                  style: TextStyle(color: dark),
                 ),
-              ),
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: 'Нэхэмжлэх дугаар',
-              secondText: '${widget.data.invRefCode}',
-              secondTextColor: source.currentColor,
-              color: white,
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: 'Илгээсэн ажилтан',
-              secondText: '${widget.data.invSenderUser?.firstName}',
-              secondTextColor: source.currentColor,
-              color: white,
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: 'Илгээсэн огноо, цаг',
-              secondText:
-                  '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.invCreatedAt!)}',
-              color: white,
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: 'Баталсан ажилтан',
-              secondText: '${widget.data.invConfirmedUser?.firstName}',
-              secondTextColor: source.currentColor,
-              color: white,
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: 'Баталсан огноо, цаг',
-              secondText:
-                  '${DateFormat('yyyy-MM-dd HH:mm').format(widget.data.invConfirmedDate!)}',
-              color: white,
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: 'Баталсан дүн',
-              secondText:
-                  '${Utils().formatCurrency(widget.data.invConfirmedAmount.toString())}',
-              color: white,
-              secondTextColor: source.currentColor,
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: 'Төлсөн дүн',
-              secondText:
-                  '${Utils().formatCurrency(widget.data.invPaidAmount.toString()) + currency()}',
-              color: white,
-              secondTextColor: source.currentColor,
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: 'Үлдэгдэл төлбөр',
-              secondText:
-                  '${Utils().formatCurrency(widget.data.invAmountToPay.toString()) + currency()}',
-              color: white,
-              secondTextColor: source.currentColor,
-              secondTextFontWeight: FontWeight.w500,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Нэхэмжлэх төлөв',
-                    style: TextStyle(color: dark),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: invoiceStatusColor(true),
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                    decoration: BoxDecoration(
-                      color: invoiceStatusColor(true),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Text(
-                      '${invoiceStatus().name}',
-                      style: TextStyle(
-                        color: invoiceStatusColor(false),
-                      ),
+                  child: Text(
+                    '${invoiceStatus().name}',
+                    style: TextStyle(
+                      color: invoiceStatusColor(false),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Төлбөрийн төлөв',
-                    style: TextStyle(color: dark),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Төлбөрийн төлөв',
+                  style: TextStyle(color: dark),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: invoicePaymentStatusColor(true),
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                    decoration: BoxDecoration(
-                      color: invoicePaymentStatusColor(true),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Text(
-                      '${invoicePaymentStatus()}',
-                      style: TextStyle(
-                        color: invoicePaymentStatusColor(false),
-                      ),
+                  child: Text(
+                    '${invoicePaymentStatus()}',
+                    style: TextStyle(
+                      color: invoicePaymentStatusColor(false),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Хугацаа хэтрэлт',
-                    style: TextStyle(color: dark),
-                  ),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                    decoration: BoxDecoration(
-                      color: Color(int.parse(
-                                  invoiceOverdueStatus().color.substring(1, 7),
-                                  radix: 16) +
-                              0xff000000)
-                          .withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Text(
-                      '${invoiceOverdueStatus().name}',
-                      style: TextStyle(
-                        color: Color(int.parse(
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Хугацаа хэтрэлт',
+                  style: TextStyle(color: dark),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: Color(int.parse(
                                 invoiceOverdueStatus().color.substring(1, 7),
                                 radix: 16) +
-                            0xff000000),
-                      ),
-                    ),
+                            0xff000000)
+                        .withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                ],
-              ),
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: 'Төлбөрийн нөхцөл',
-              secondText: '${widget.data.invPaymentTermDesc}',
-              color: white,
-              secondTextColor: source.currentColor,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Нэхэмжлэх төлөх огноо',
-                    style: TextStyle(color: dark),
-                  ),
-                  Text(
-                    '${DateFormat("yyyy-MM-dd").format(widget.data.invPaymentDate!)}',
-                    style: TextStyle(color: source.currentColor, fontSize: 18),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Нэхэмжлэлийн баримт',
-                style: TextStyle(color: grey3, fontWeight: FontWeight.w600),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              color: white,
-              child: Row(
-                children: [
-                  Icon(Icons.downloading_rounded),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    'INV_32093282.PDF',
+                  child: Text(
+                    '${invoiceOverdueStatus().name}',
                     style: TextStyle(
-                      fontSize: 20,
-                      color: Color(0xff151357),
-                      fontWeight: FontWeight.w500,
+                      color: Color(int.parse(
+                              invoiceOverdueStatus().color.substring(1, 7),
+                              radix: 16) +
+                          0xff000000),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Худалдан авагч тал',
-                style: TextStyle(color: grey3, fontWeight: FontWeight.w600),
-              ),
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            labelText: 'Төлбөрийн нөхцөл',
+            secondText: '${widget.data.invPaymentTermDesc}',
+            color: white,
+            secondTextColor: source.currentColor,
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Нэхэмжлэх төлөх огноо',
+                  style: TextStyle(color: dark),
+                ),
+                Text(
+                  DateFormat("yyyy-MM-dd").format(widget.data.invPaymentDate!),
+                  style: TextStyle(color: source.currentColor, fontSize: 18),
+                ),
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'ХА Захиалга №',
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: const Text(
+              'Нэхэмжлэлийн баримт',
+              style: TextStyle(color: grey3, fontWeight: FontWeight.w600),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            color: white,
+            child: const Row(
+              children: [
+                Icon(Icons.downloading_rounded),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  'INV_32093282.PDF',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xff151357),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: const Text(
+              'Худалдан авагч тал',
+              style: TextStyle(color: grey3, fontWeight: FontWeight.w600),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'ХА Захиалга №',
+                  style: TextStyle(color: dark),
+                ),
+                Text(
+                  '-',
+                  style: TextStyle(color: source.currentColor, fontSize: 20),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Expanded(
+                  flex: 3,
+                  child: Text(
+                    'Партнер',
                     style: TextStyle(color: dark),
                   ),
-                  Text(
-                    '-',
-                    style: TextStyle(color: source.currentColor, fontSize: 20),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      'Партнер',
-                      style: TextStyle(color: dark),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 7,
-                    child: RichText(
-                      textAlign: TextAlign.end,
-                      text: TextSpan(
-                        style: TextStyle(fontFamily: 'Montserrat'),
-                        children: [
-                          TextSpan(
-                            text: "${buyer.partner?.refCode}, ",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                              color: source.currentColor,
-                            ),
+                ),
+                Expanded(
+                  flex: 7,
+                  child: RichText(
+                    textAlign: TextAlign.end,
+                    text: TextSpan(
+                      style: const TextStyle(fontFamily: 'Montserrat'),
+                      children: [
+                        TextSpan(
+                          text: "${buyer.partner?.refCode}, ",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: source.currentColor,
                           ),
-                          TextSpan(
-                            text: "${buyer.partner?.businessName}",
-                            style: TextStyle(color: grey2, fontSize: 18),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'ТТД',
-                    style: TextStyle(color: dark),
-                  ),
-                  Text(
-                    '${buyer.regNumber}',
-                    style: TextStyle(color: source.currentColor, fontSize: 18),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SvgPicture.asset(
-                    'assets/svg/contact.svg',
-                    colorFilter:
-                        ColorFilter.mode(source.currentColor, BlendMode.srcIn),
-                  ),
-                  SizedBox(
-                    width: 12,
-                  ),
-                  Expanded(
-                    child: RichText(
-                      text: TextSpan(
-                        style: TextStyle(
-                          fontFamily: "Montserrat",
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
                         ),
-                        children: [
-                          TextSpan(
-                            text: '${buyer.refCode}, ',
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              color: source.currentColor,
-                            ),
-                          ),
-                          TextSpan(
-                            text: buyer.profileName,
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              color: grey2,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: grey3,
-                    size: 18,
-                  )
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Дансны дугаар',
-                    style: TextStyle(color: dark),
-                  ),
-                  Text(
-                    '${buyerAcc.number}',
-                    style: TextStyle(color: source.currentColor),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Дансны нэр',
-                    style: TextStyle(color: dark),
-                  ),
-                  Text(
-                    '${buyerAcc.name}',
-                    style: TextStyle(color: source.currentColor),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Банкны нэр',
-                    style: TextStyle(color: dark),
-                  ),
-                  Text(
-                    'Банкны нэр',
-                    style: TextStyle(color: dark),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Санхүү ажилтан нэр',
-                    style: TextStyle(color: dark),
-                  ),
-                  Text(
-                    '${buyerUser.firstName}',
-                    style: TextStyle(color: source.currentColor),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Санхүү ажилтан утас',
-                    style: TextStyle(color: dark),
-                  ),
-                  Text(
-                    'Phone_Number',
-                    style: TextStyle(color: source.currentColor),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
-                'Нийлүүлэгч тал',
-                style: TextStyle(color: grey3, fontWeight: FontWeight.w600),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Бор Захиалга №',
-                    style: TextStyle(color: dark),
-                  ),
-                  Text(
-                    '-',
-                    style: TextStyle(color: source.currentColor, fontSize: 20),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      'Партнер',
-                      style: TextStyle(color: dark),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 7,
-                    child: RichText(
-                      textAlign: TextAlign.end,
-                      text: TextSpan(
-                        style: TextStyle(fontFamily: 'Montserrat'),
-                        children: [
-                          TextSpan(
-                            text: "${supplier.partner?.refCode}, ",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                              color: source.currentColor,
-                            ),
-                          ),
-                          TextSpan(
-                            text: "${supplier.partner?.businessName}",
-                            style: TextStyle(color: grey2, fontSize: 18),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'ТТД',
-                    style: TextStyle(color: dark),
-                  ),
-                  Text(
-                    '${supplier.regNumber}',
-                    style: TextStyle(color: source.currentColor, fontSize: 18),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/svg/contact.svg',
-                    colorFilter:
-                        ColorFilter.mode(source.currentColor, BlendMode.srcIn),
-                  ),
-                  SizedBox(
-                    width: 12,
-                  ),
-                  Expanded(
-                    child: RichText(
-                      text: TextSpan(
-                        style: TextStyle(
-                          fontFamily: "Montserrat",
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
+                        TextSpan(
+                          text: "${buyer.partner?.businessName}",
+                          style: const TextStyle(color: grey2, fontSize: 18),
                         ),
-                        children: [
-                          TextSpan(
-                            text: '${supplier.refCode}, ',
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              color: source.currentColor,
-                            ),
-                          ),
-                          TextSpan(
-                            text: supplier.profileName,
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              color: grey2,
-                            ),
-                          )
-                        ],
-                      ),
+                      ],
                     ),
                   ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: grey3,
-                    size: 18,
-                  )
-                ],
-              ),
+                ),
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Дансны дугаар',
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'ТТД',
+                  style: TextStyle(color: dark),
+                ),
+                Text(
+                  '${buyer.regNumber}',
+                  style: TextStyle(color: source.currentColor, fontSize: 18),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SvgPicture.asset(
+                  'assets/svg/contact.svg',
+                  colorFilter:
+                      ColorFilter.mode(source.currentColor, BlendMode.srcIn),
+                ),
+                const SizedBox(
+                  width: 12,
+                ),
+                Expanded(
+                  child: RichText(
+                    text: TextSpan(
+                      style: const TextStyle(
+                        fontFamily: "Montserrat",
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: '${buyer.refCode}, ',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: source.currentColor,
+                          ),
+                        ),
+                        TextSpan(
+                          text: buyer.profileName,
+                          style: const TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: grey2,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                const Icon(
+                  Icons.arrow_forward_ios,
+                  color: grey3,
+                  size: 18,
+                )
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Дансны дугаар',
+                  style: TextStyle(color: dark),
+                ),
+                Text(
+                  '${buyerAcc.number}',
+                  style: TextStyle(color: source.currentColor),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Дансны нэр',
+                  style: TextStyle(color: dark),
+                ),
+                Text(
+                  '${buyerAcc.name}',
+                  style: TextStyle(color: source.currentColor),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Банкны нэр',
+                  style: TextStyle(color: dark),
+                ),
+                Text(
+                  'Банкны нэр',
+                  style: TextStyle(color: dark),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Санхүү ажилтан нэр',
+                  style: TextStyle(color: dark),
+                ),
+                Text(
+                  '${buyerUser.firstName}',
+                  style: TextStyle(color: source.currentColor),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Санхүү ажилтан утас',
+                  style: TextStyle(color: dark),
+                ),
+                Text(
+                  'Phone_Number',
+                  style: TextStyle(color: source.currentColor),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: const Text(
+              'Нийлүүлэгч тал',
+              style: TextStyle(color: grey3, fontWeight: FontWeight.w600),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Бор Захиалга №',
+                  style: TextStyle(color: dark),
+                ),
+                Text(
+                  '-',
+                  style: TextStyle(color: source.currentColor, fontSize: 20),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Expanded(
+                  flex: 3,
+                  child: Text(
+                    'Партнер',
                     style: TextStyle(color: dark),
                   ),
-                  Text(
-                    '${supplierAcc.number}',
-                    style: TextStyle(color: source.currentColor),
+                ),
+                Expanded(
+                  flex: 7,
+                  child: RichText(
+                    textAlign: TextAlign.end,
+                    text: TextSpan(
+                      style: const TextStyle(fontFamily: 'Montserrat'),
+                      children: [
+                        TextSpan(
+                          text: "${supplier.partner?.refCode}, ",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: source.currentColor,
+                          ),
+                        ),
+                        TextSpan(
+                          text: "${supplier.partner?.businessName}",
+                          style: const TextStyle(color: grey2, fontSize: 18),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Дансны нэр',
-                    style: TextStyle(color: dark),
-                  ),
-                  Text(
-                    '${supplierAcc.name}',
-                    style: TextStyle(color: source.currentColor),
-                  ),
-                ],
-              ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'ТТД',
+                  style: TextStyle(color: dark),
+                ),
+                Text(
+                  '${supplier.regNumber}',
+                  style: TextStyle(color: source.currentColor, fontSize: 18),
+                ),
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Банкны нэр',
-                    style: TextStyle(color: dark),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/svg/contact.svg',
+                  colorFilter:
+                      ColorFilter.mode(source.currentColor, BlendMode.srcIn),
+                ),
+                const SizedBox(
+                  width: 12,
+                ),
+                Expanded(
+                  child: RichText(
+                    text: TextSpan(
+                      style: const TextStyle(
+                        fontFamily: "Montserrat",
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: '${supplier.refCode}, ',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: source.currentColor,
+                          ),
+                        ),
+                        TextSpan(
+                          text: supplier.profileName,
+                          style: const TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: grey2,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                  Text(
-                    'Банкны нэр',
-                    style: TextStyle(color: dark),
-                  ),
-                ],
-              ),
+                ),
+                const Icon(
+                  Icons.arrow_forward_ios,
+                  color: grey3,
+                  size: 18,
+                )
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Санхүү ажилтан нэр',
-                    style: TextStyle(color: dark),
-                  ),
-                  Text(
-                    '${supplierUser.firstName}',
-                    style: TextStyle(color: source.currentColor),
-                  ),
-                ],
-              ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Дансны дугаар',
+                  style: TextStyle(color: dark),
+                ),
+                Text(
+                  '${supplierAcc.number}',
+                  style: TextStyle(color: source.currentColor),
+                ),
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Санхүү ажилтан утас',
-                    style: TextStyle(color: dark),
-                  ),
-                  Text(
-                    'Phone_Number',
-                    style: TextStyle(color: source.currentColor),
-                  ),
-                ],
-              ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Дансны нэр',
+                  style: TextStyle(color: dark),
+                ),
+                Text(
+                  '${supplierAcc.name}',
+                  style: TextStyle(color: source.currentColor),
+                ),
+              ],
             ),
-            SizedBox(
-              height: 100,
-            )
-          ],
-        ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Банкны нэр',
+                  style: TextStyle(color: dark),
+                ),
+                Text(
+                  'Банкны нэр',
+                  style: TextStyle(color: dark),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Санхүү ажилтан нэр',
+                  style: TextStyle(color: dark),
+                ),
+                Text(
+                  '${supplierUser.firstName}',
+                  style: TextStyle(color: source.currentColor),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Санхүү ажилтан утас',
+                  style: TextStyle(color: dark),
+                ),
+                Text(
+                  'Phone_Number',
+                  style: TextStyle(color: source.currentColor),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 100,
+          )
+        ],
       ),
     );
   }

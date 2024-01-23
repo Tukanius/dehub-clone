@@ -1,4 +1,4 @@
-import 'package:dehub/models/business-staffs.dart';
+import 'package:dehub/models/business_staffs.dart';
 import 'package:dehub/models/business.dart';
 import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/invitation_received.dart';

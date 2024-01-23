@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:dehub/src/splash/splash_page.dart';
 import 'package:dehub/utils/secure_storage.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -12,13 +11,13 @@ import 'package:after_layout/after_layout.dart';
 class CheckBiometric extends StatefulWidget {
   static const routeName = 'biocheck';
 
-  const CheckBiometric({Key? key}) : super(key: key);
+  const CheckBiometric({super.key});
 
   @override
-  _CheckBiometricState createState() => _CheckBiometricState();
+  CheckBiometricState createState() => CheckBiometricState();
 }
 
-class _CheckBiometricState extends State<CheckBiometric> with AfterLayoutMixin {
+class CheckBiometricState extends State<CheckBiometric> with AfterLayoutMixin {
   bool isLoading = false;
   final LocalAuthentication auth = LocalAuthentication();
   final SecureStorage secureStorage = SecureStorage();
@@ -62,12 +61,12 @@ class _CheckBiometricState extends State<CheckBiometric> with AfterLayoutMixin {
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-                margin: EdgeInsets.only(top: 80),
+                margin: const EdgeInsets.only(top: 80),
                 height: 110,
                 width: 110,
                 decoration: BoxDecoration(
@@ -78,31 +77,31 @@ class _CheckBiometricState extends State<CheckBiometric> with AfterLayoutMixin {
                 child: bioType == "FACE"
                     ? SvgPicture.asset(
                         faceIdIcon,
-                        colorFilter:
-                            ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                        colorFilter: const ColorFilter.mode(
+                            buttonColor, BlendMode.srcIn),
                         height: 50,
                         width: 50,
                         fit: BoxFit.cover,
                       )
                     : SvgPicture.asset(
                         fingerPrintIcon,
-                        colorFilter:
-                            ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                        colorFilter: const ColorFilter.mode(
+                            buttonColor, BlendMode.srcIn),
                         height: 50,
                         width: 50,
                         fit: BoxFit.cover,
                       )),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Text(
+            const Text(
               "Та тохиргоог идэвхжүүлснээр цаашид апп руу нэвтрэхэд нэвтрэх нэр нууц үг хийх шаардлагагүй.",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: buttonColor,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             CustomButton(
@@ -114,7 +113,7 @@ class _CheckBiometricState extends State<CheckBiometric> with AfterLayoutMixin {
                 _authenticate();
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
             CustomButton(
@@ -145,11 +144,6 @@ class _CheckBiometricState extends State<CheckBiometric> with AfterLayoutMixin {
     if (availableBiometrics.contains(BiometricType.fingerprint)) {
       setState(() {
         bioType = "FINGER_PRINT";
-      });
-    }
-    if (availableBiometrics.contains(BiometricType.values)) {
-      setState(() {
-        bioType = "VALUES";
       });
     }
     if (availableBiometrics.contains(BiometricType.iris)) {

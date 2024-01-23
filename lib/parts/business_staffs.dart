@@ -1,4 +1,4 @@
-part of '../models/business-staffs.dart';
+part of '../models/business_staffs.dart';
 
 BusinessStaffs _$BusinessStaffsFromJson(Map<String, dynamic> json) {
   return BusinessStaffs(
@@ -39,10 +39,12 @@ Map<String, dynamic> _$BusinessStaffsToJson(BusinessStaffs instance) {
   if (instance.parentId != null) json['parentId'] = instance.parentId;
   if (instance.description != null) json['description'] = instance.description;
   if (instance.termRule != null) json['termRule'] = instance.termRule;
-  if (instance.orderConfirmTerm != null)
+  if (instance.orderConfirmTerm != null) {
     json['orderConfirmTerm'] = instance.orderConfirmTerm;
-  if (instance.expireDayCount != null)
+  }
+  if (instance.expireDayCount != null) {
     json['expireDayCount'] = instance.expireDayCount;
+  }
   if (instance.month != null) json['month'] = instance.month;
   if (instance.paymentDay != null) json['paymentDay'] = instance.paymentDay;
   if (instance.id != null) json['id'] = instance.id;

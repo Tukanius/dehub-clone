@@ -28,7 +28,7 @@ class _SupplierTypeSheetState extends State<SupplierTypeSheet> {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: productColor,
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(20),
@@ -37,7 +37,7 @@ class _SupplierTypeSheetState extends State<SupplierTypeSheet> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Ханган нийлүүлэгч сонгоно уу',
                 style: TextStyle(
                   color: white,
@@ -85,7 +85,7 @@ class _SupplierTypeSheetState extends State<SupplierTypeSheet> {
                                     source.product.manufacturerCountryName ==
                                             data.name
                                         ? productColor
-                                        : Color(0xff9BACB2),
+                                        : const Color(0xff9BACB2),
                                     BlendMode.srcIn,
                                   ),
                                 ),
@@ -96,7 +96,7 @@ class _SupplierTypeSheetState extends State<SupplierTypeSheet> {
                       )
                       .toList(),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
               ],

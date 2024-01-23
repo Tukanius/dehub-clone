@@ -22,9 +22,9 @@ class OrderShipment extends StatefulWidget {
   final Order data;
   static const routeName = '/OrderShipment';
   const OrderShipment({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<OrderShipment> createState() => _OrderShipmentState();
@@ -32,15 +32,15 @@ class OrderShipment extends StatefulWidget {
 
 class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
   bool isStart = false;
-  Duration duration = Duration();
+  Duration duration = const Duration();
   bool isLoading = true;
   Order shipment = Order();
   Timer? timer;
   bool startShipment = false;
-  Duration resume = Duration();
-  Duration difference1 = Duration();
-  Duration difference2 = Duration();
-  Duration difference = Duration();
+  Duration resume = const Duration();
+  Duration difference1 = const Duration();
+  Duration difference2 = const Duration();
+  Duration difference = const Duration();
   bool isSubmit = false;
   String? lineId;
 
@@ -70,14 +70,14 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
 
   void addTimer() {
     if (shipment.startedDate == null) {
-      final addSeconds = 1;
+      const addSeconds = 1;
 
       setState(() {
         final seconds = duration.inSeconds + addSeconds;
         duration = Duration(seconds: seconds);
       });
     } else {
-      final addSeconds = 1;
+      const addSeconds = 1;
 
       setState(() {
         final seconds = resume.inSeconds + addSeconds;
@@ -93,7 +93,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
           startShipment = true;
         });
         await OrderApi().pullSheetStart(widget.data.id!);
-        timer = Timer.periodic(Duration(seconds: 1), (timer) => addTimer());
+        timer = Timer.periodic(const Duration(seconds: 1), (timer) => addTimer());
         shipment = await OrderApi().pullSheetGet(widget.data.id!);
         setState(() {
           isStart = true;
@@ -110,7 +110,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
         if (isProceed == true) {
           await OrderApi().pullSheetProceed(widget.data.id!);
         }
-        timer = Timer.periodic(Duration(seconds: 1), (timer) => addTimer());
+        timer = Timer.periodic(const Duration(seconds: 1), (timer) => addTimer());
         shipment = await OrderApi().pullSheetGet(widget.data.id!);
         setState(() {
           isStart = true;
@@ -133,7 +133,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
       final seconds = twoDigits(duration.inSeconds.remainder(60));
       return Text(
         '$hours:$minutes:$seconds',
-        style: TextStyle(fontSize: 13),
+        style: const TextStyle(fontSize: 13),
       );
     } else {
       String twoDigits(int n) => n.toString().padLeft(2, "0");
@@ -142,7 +142,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
       final seconds = twoDigits(resume.inSeconds.remainder(60));
       return Text(
         '$hours:$minutes:$seconds',
-        style: TextStyle(fontSize: 13),
+        style: const TextStyle(fontSize: 13),
       );
     }
   }
@@ -186,12 +186,12 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios_new,
             color: orderColor,
           ),
         ),
-        title: Text(
+        title: const Text(
           'Ачилт хийх',
           style: TextStyle(
             color: buttonColor,
@@ -201,7 +201,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
         ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: orderColor,
               ),
@@ -274,7 +274,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                             children: [
                               SvgPicture.asset(
                                 'assets/svg/timer.svg',
-                                colorFilter: ColorFilter.mode(
+                                colorFilter: const ColorFilter.mode(
                                     buttonColor, BlendMode.srcIn),
                               ),
                               buildTime()
@@ -343,18 +343,18 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                                           : buttonColor,
                                       BlendMode.srcIn),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 5,
                                 ),
                                 widget.data.endedDate == null
-                                    ? Text(
+                                    ? const Text(
                                         'Дуусгах',
                                         style: TextStyle(
                                           color: buttonColor,
                                           fontSize: 13,
                                         ),
                                       )
-                                    : Text(
+                                    : const Text(
                                         'Дууссан',
                                         style: TextStyle(
                                           color: white,
@@ -379,7 +379,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                             OrderGoodsInfo(
                               data: shipment.pullSheetLines,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                           ],
@@ -416,7 +416,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                                       },
                                       data: e,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 5,
                                     ),
                                   ],
@@ -427,7 +427,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'ПАДААНЫ ДҮН',
                       style: TextStyle(
                         color: buttonColor,
@@ -450,7 +450,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Хүлээн авах барааны тоо',
                           style: TextStyle(
                             color: buttonColor,
@@ -458,14 +458,14 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                         ),
                         Text(
                           "${shipment.pullSheetLines?.fold(0, (previousValue, element) => previousValue + element.quantity!)}",
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: orderColor,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 100,
                   ),
                 ],

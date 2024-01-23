@@ -7,7 +7,7 @@ import 'package:pinput/pinput.dart';
 
 class PinCode extends StatefulWidget {
   static const routeName = "/PinCode";
-  const PinCode({Key? key}) : super(key: key);
+  const PinCode({super.key});
 
   @override
   State<PinCode> createState() => _PinCodeState();
@@ -18,7 +18,7 @@ class _PinCodeState extends State<PinCode> {
 
   onSubmit(String value) async {
     try {
-      var res = await AuthApi().checkPin(
+      var res = AuthApi().checkPin(
         User(pin: value),
       );
       if (res == true) {
@@ -43,9 +43,9 @@ class _PinCodeState extends State<PinCode> {
         backgroundColor: backgroundColor,
         elevation: 0,
         surfaceTintColor: backgroundColor,
-        iconTheme: IconThemeData(color: buttonColor),
+        iconTheme: const IconThemeData(color: buttonColor),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Пин код солих',
           style: TextStyle(
             color: buttonColor,
@@ -53,22 +53,22 @@ class _PinCodeState extends State<PinCode> {
           ),
         ),
       ),
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 60,
             ),
-            Text(
+            const Text(
               'Хуучин пин код оруулна уу',
               style: TextStyle(
                 color: grey2,
                 fontSize: 16,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             Pinput(
@@ -82,7 +82,7 @@ class _PinCodeState extends State<PinCode> {
                 decoration: BoxDecoration(
                   color: white,
                   border: Border.all(
-                    color: Color(0xffC6C6C8),
+                    color: const Color(0xffC6C6C8),
                   ),
                   borderRadius: BorderRadius.circular(5),
                 ),

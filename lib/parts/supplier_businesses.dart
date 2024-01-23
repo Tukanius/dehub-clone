@@ -38,16 +38,20 @@ Map<String, dynamic> _$SupplierBusinessesToJson(SupplierBusinesses instance) {
   if (instance.type != null) json['type'] = instance.type;
   if (instance.regNumber != null) json['regNumber'] = instance.regNumber;
   if (instance.refCode != null) json['refCode'] = instance.refCode;
-  if (instance.purchaseType != null)
+  if (instance.purchaseType != null) {
     json['purchaseType'] = instance.purchaseType;
-  if (instance.profileNameEng != null)
+  }
+  if (instance.profileNameEng != null) {
     json['profileNameEng'] = instance.profileNameEng;
+  }
   if (instance.profileName != null) json['profileName'] = instance.profileName;
-  if (instance.productCategoryType != null)
+  if (instance.productCategoryType != null) {
     json['productCategoryType'] = instance.productCategoryType;
+  }
   if (instance.logo != null) json['logo'] = instance.logo;
-  if (instance.businessStatus != null)
+  if (instance.businessStatus != null) {
     json['businessStatus'] = instance.businessStatus;
+  }
 
   return json;
 }

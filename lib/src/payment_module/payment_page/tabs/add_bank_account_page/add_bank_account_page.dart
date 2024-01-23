@@ -2,6 +2,7 @@ import 'package:dehub/api/payment_api.dart';
 import 'package:dehub/components/bank_account_card/bank_account_card.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
@@ -9,7 +10,6 @@ import 'package:dehub/src/payment_module/screens/account_statement/account_state
 import 'package:dehub/src/payment_module/screens/bank_account_detail/bank_account_detail.dart';
 import 'package:dehub/src/payment_module/screens/transaction_history/transaction_history.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
@@ -17,15 +17,15 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class AddBankAccountPage extends StatefulWidget {
   static const routeName = '/addbankaccountpage';
-  const AddBankAccountPage({Key? key}) : super(key: key);
+  const AddBankAccountPage({super.key});
 
   @override
-  _AddBankAccountPageState createState() => _AddBankAccountPageState();
+  AddBankAccountPageState createState() => AddBankAccountPageState();
 }
 
 User user = User();
 
-class _AddBankAccountPageState extends State<AddBankAccountPage>
+class AddBankAccountPageState extends State<AddBankAccountPage>
     with AfterLayoutMixin {
   int page = 1;
   int limit = 10;
@@ -52,7 +52,7 @@ class _AddBankAccountPageState extends State<AddBankAccountPage>
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
     });
@@ -70,7 +70,7 @@ class _AddBankAccountPageState extends State<AddBankAccountPage>
   }
 
   void _onLoading() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       limit += 10;
     });
@@ -84,45 +84,15 @@ class _AddBankAccountPageState extends State<AddBankAccountPage>
     return Scaffold(
       backgroundColor: backgroundColor,
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(color: paymentColor),
             )
-          : SmartRefresher(
-              enablePullDown: true,
-              enablePullUp: true,
-              controller: refreshController,
-              header: WaterDropHeader(
-                waterDropColor: paymentColor,
-                refresh: SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: paymentColor,
-                  ),
-                ),
-              ),
-              onRefresh: _onRefresh,
+          : Refresher(
+              refreshController: refreshController,
               onLoading: _onLoading,
-              footer: CustomFooter(
-                builder: (context, mode) {
-                  Widget body;
-                  if (mode == LoadStatus.idle) {
-                    body = const Text("");
-                  } else if (mode == LoadStatus.loading) {
-                    body = const CupertinoActivityIndicator();
-                  } else if (mode == LoadStatus.failed) {
-                    body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                  } else {
-                    body = const Text("Мэдээлэл алга байна");
-                  }
-                  return SizedBox(
-                    height: 55.0,
-                    child: Center(child: body),
-                  );
-                },
-              ),
-              child: payment.rows?.length != 0
+              onRefresh: _onRefresh,
+              color: paymentColor,
+              child: payment.rows!.isNotEmpty
                   ? SingleChildScrollView(
                       child: Column(
                         children: [
@@ -134,7 +104,7 @@ class _AddBankAccountPageState extends State<AddBankAccountPage>
                                 Container(
                                   margin:
                                       const EdgeInsets.symmetric(vertical: 15),
-                                  child: Text(
+                                  child: const Text(
                                     'Холбосон данснууд',
                                     style: TextStyle(
                                         fontSize: 16,
@@ -176,7 +146,7 @@ class _AddBankAccountPageState extends State<AddBankAccountPage>
                                                 );
                                               },
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 10,
                                             ),
                                           ],
@@ -184,7 +154,7 @@ class _AddBankAccountPageState extends State<AddBankAccountPage>
                                       )
                                       .toList(),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 15,
                                 )
                               ],
@@ -193,7 +163,7 @@ class _AddBankAccountPageState extends State<AddBankAccountPage>
                         ],
                       ),
                     )
-                  : NotFound(
+                  : const NotFound(
                       module: "PAYMENT",
                       labelText:
                           'Та данс холбоогүй байна. "+" сонгож дансаа холбоно уу',

@@ -41,7 +41,7 @@ class _WarehouseSheetState extends State<WarehouseSheet> with AfterLayoutMixin {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: productColor,
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(15),
@@ -49,7 +49,7 @@ class _WarehouseSheetState extends State<WarehouseSheet> with AfterLayoutMixin {
           ),
           child: Row(
             children: [
-              Expanded(
+              const Expanded(
                 child: Text(
                   'Агуулах сонгох',
                   style: TextStyle(
@@ -74,7 +74,7 @@ class _WarehouseSheetState extends State<WarehouseSheet> with AfterLayoutMixin {
         Expanded(
           child: SingleChildScrollView(
             child: isLoading == true
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator(
                       color: productColor,
                     ),

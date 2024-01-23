@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class DeliveryManagement extends StatefulWidget {
   static const routeName = '/DeliveryManagement';
-  const DeliveryManagement({Key? key}) : super(key: key);
+  const DeliveryManagement({super.key});
 
   @override
   State<DeliveryManagement> createState() => _DeliveryManagementState();
@@ -22,8 +22,8 @@ class _DeliveryManagementState extends State<DeliveryManagement> {
           backgroundColor: white,
           surfaceTintColor: white,
           elevation: 0,
-          iconTheme: IconThemeData(color: orderColor),
-          title: Text(
+          iconTheme: const IconThemeData(color: orderColor),
+          title: const Text(
             'Хүргэлт удирдлага',
             style: TextStyle(
               color: orderColor,
@@ -40,7 +40,7 @@ class _DeliveryManagementState extends State<DeliveryManagement> {
             tabs: [
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 15),
-                child: Center(
+                child: const Center(
                   child: Text(
                     'Хүргэлт хуваарилах',
                   ),
@@ -48,7 +48,7 @@ class _DeliveryManagementState extends State<DeliveryManagement> {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 15),
-                child: Center(
+                child: const Center(
                   child: Text(
                     'Хүргэлт хуваарилсан',
                   ),
@@ -57,7 +57,7 @@ class _DeliveryManagementState extends State<DeliveryManagement> {
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             DistributionTab(),
             DistributionMadeTab(),

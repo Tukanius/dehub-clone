@@ -60,7 +60,7 @@ class _AddUnitSheetState extends State<AddUnitSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(10),
         ),
@@ -70,7 +70,7 @@ class _AddUnitSheetState extends State<AddUnitSheet> {
         children: [
           Container(
             height: 50,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: white,
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(10),
@@ -91,11 +91,11 @@ class _AddUnitSheetState extends State<AddUnitSheet> {
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter: const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   child: Text(
                     'Хэмжих нэгж',
                     style: TextStyle(
@@ -112,7 +112,7 @@ class _AddUnitSheetState extends State<AddUnitSheet> {
                         }
                       : () {},
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(10),
                       ),
@@ -120,7 +120,7 @@ class _AddUnitSheetState extends State<AddUnitSheet> {
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 11),
                     height: 50,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'Хадгалах',
                         style: TextStyle(color: white),
@@ -142,14 +142,14 @@ class _AddUnitSheetState extends State<AddUnitSheet> {
                       width: MediaQuery.of(context).size.width,
                       margin: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
-                      child: Text('Энд бичээд "Хадгалах" сонгоно уу'),
+                      child: const Text('Энд бичээд "Хадгалах" сонгоно уу'),
                     ),
                     FormTextField(
                       textColor: productColor,
                       textAlign: TextAlign.end,
                       name: 'name',
                       initialValue: widget.name ?? '',
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         fillColor: white,
                         filled: true,
@@ -174,7 +174,7 @@ class _AddUnitSheetState extends State<AddUnitSheet> {
                         ),
                       ]),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                   ],

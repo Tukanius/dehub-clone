@@ -8,11 +8,11 @@ class DeliveryManagementCard extends StatefulWidget {
   final bool isFinished;
   final Order data;
   const DeliveryManagementCard({
-    Key? key,
+    super.key,
     required this.data,
     required this.isFinished,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<DeliveryManagementCard> createState() => _DeliveryManagementCardState();
@@ -34,14 +34,15 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
                 children: [
                   SvgPicture.asset(
                     'assets/svg/order_note.svg',
-                    colorFilter: ColorFilter.mode(orderColor, BlendMode.srcIn),
+                    colorFilter:
+                        const ColorFilter.mode(orderColor, BlendMode.srcIn),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   Text(
                     '${widget.data.refCode}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: orderColor,
                       fontSize: 14,
                     ),
@@ -50,7 +51,7 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(
@@ -61,7 +62,7 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
                 child: Row(
                   children: [
                     widget.data.order?.receiverBranch?.logo == null
-                        ? CircleAvatar(
+                        ? const CircleAvatar(
                             radius: 16,
                             backgroundImage: AssetImage('images/avatar.png'),
                           )
@@ -71,7 +72,7 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
                             backgroundImage: NetworkImage(
                                 '${widget.data.order?.receiverBranch?.logo}'),
                           ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     Expanded(
@@ -80,14 +81,14 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
                         children: [
                           Text(
                             "${widget.data.receiverBusiness?.profileName}",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
                             ),
                           ),
                           Text(
                             '${widget.data.receiverBusiness?.refCode}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: grey2,
                               fontSize: 11,
                             ),
@@ -100,7 +101,7 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
               ),
               Row(
                 children: [
-                  Text(
+                  const Text(
                     'Статус:  ',
                     style: TextStyle(fontSize: 14, color: grey2),
                   ),
@@ -110,7 +111,7 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(color: grey2)),
-                    child: Text(
+                    child: const Text(
                       'ДРАФТ',
                       style: TextStyle(
                         fontSize: 10,
@@ -123,7 +124,7 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(
@@ -133,7 +134,7 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
               Expanded(
                 child: Row(
                   children: [
-                    Text(
+                    const Text(
                       'Хүргэлт: ',
                       style: TextStyle(
                         color: grey2,
@@ -145,12 +146,12 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
                           widget.isFinished == true && widget.data.staff != null
                               ? Text(
                                   '${widget.data.staff?.lastName?[0]}. ${widget.data.staff?.firstName}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: depBrown,
                                     fontSize: 14,
                                   ),
                                 )
-                              : Text(
+                              : const Text(
                                   '-',
                                   style: TextStyle(
                                     color: depBrown,
@@ -170,7 +171,7 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
                     color: orderColor,
                   ),
                   child: widget.isFinished == true
-                      ? Row(
+                      ? const Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Icon(
@@ -192,14 +193,14 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
                           children: [
                             SvgPicture.asset(
                               'assets/svg/zahialga.svg',
-                              colorFilter:
-                                  ColorFilter.mode(white, BlendMode.srcIn),
+                              colorFilter: const ColorFilter.mode(
+                                  white, BlendMode.srcIn),
                               height: 14,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
-                            Text(
+                            const Text(
                               'Хүргэлт хуваарилах',
                               style: TextStyle(
                                 color: white,

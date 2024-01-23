@@ -8,8 +8,8 @@ import 'package:after_layout/after_layout.dart';
 
 class Page1 extends StatefulWidget {
   const Page1({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<Page1> createState() => _Page1State();
@@ -26,24 +26,22 @@ class _Page1State extends State<Page1> with AfterLayoutMixin {
     partnerUser = Provider.of<UserProvider>(context, listen: false).partnerUser;
 
     return SingleChildScrollView(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 18),
         width: MediaQuery.of(context).size.width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
-            Container(
-              child: Text(
-                'ЕРӨНХИЙ МЭДЭЭЛЭЛ',
-                style: TextStyle(
-                  color: grey3,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                ),
+            const Text(
+              'ЕРӨНХИЙ МЭДЭЭЛЭЛ',
+              style: TextStyle(
+                color: grey3,
+                fontWeight: FontWeight.w500,
+                fontSize: 16,
               ),
             ),
             InformationCard(
@@ -96,7 +94,7 @@ class _Page1State extends State<Page1> with AfterLayoutMixin {
               value: partnerUser.partner?.isVatPayer == true ? "Тийм" : "Үгүй",
               paddingVertical: 5,
             ),
-            SizedBox(
+            const SizedBox(
               height: 80,
             ),
           ],

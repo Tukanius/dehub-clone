@@ -92,24 +92,24 @@ class AuthApi extends HttpRequest {
     return User.fromJson(res as Map<String, dynamic>);
   }
 
-  upload(XFile file) async {
+  upload(XFile file, String type) async {
     String fileName = file.path.split('/').last;
     FormData formData = FormData.fromMap({
       'file': await MultipartFile.fromFile(file.path, filename: fileName),
     });
     var res =
-        await post('/media/file/auth/upload', "MEDIA", true, data: formData);
+        await post('/media/file/$type/upload', "MEDIA", true, data: formData);
 
     return User.fromJson(res as Map<String, dynamic>);
   }
 
-  uploadFile(PlatformFile file) async {
+  uploadFile(PlatformFile file, String type) async {
     String fileName = file.path!.split('/').last;
     FormData formData = FormData.fromMap({
       'file': await MultipartFile.fromFile(file.path!, filename: fileName),
     });
     var res =
-        await post('/media/file/auth/upload', "MEDIA", true, data: formData);
+        await post('/media/file/$type/upload', "MEDIA", true, data: formData);
 
     return User.fromJson(res as Map<String, dynamic>);
   }

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class All extends StatefulWidget {
   static const routeName = '/All';
-  const All({Key? key}) : super(key: key);
+  const All({super.key});
 
   @override
   State<All> createState() => _AllState();

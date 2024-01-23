@@ -24,14 +24,14 @@ import 'package:skeletons/skeletons.dart';
 class FirstPage extends StatefulWidget {
   static const routeName = '/firstpage';
   const FirstPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
-  _FirstPageState createState() => _FirstPageState();
+  FirstPageState createState() => FirstPageState();
 }
 
-class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
+class FirstPageState extends State<FirstPage> with AfterLayoutMixin {
   bool isNew = false;
   Partner partnerUser = Partner();
   Result invoice = Result(count: 0, rows: []);
@@ -55,7 +55,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
       invoice = res;
       isLoading = false;
     });
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         startAnimation = true;
       });
@@ -67,6 +67,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
     // showStartDialog(context);
     await Provider.of<GeneralProvider>(context, listen: false)
         .invoiceInit(false);
+    await Provider.of<UserProvider>(context, listen: false).invoice(false);
     await list(page, limit);
     for (var i = 0; i < invoice.rows!.length; i++) {}
   }
@@ -75,10 +76,14 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).user;
     return PopScope(
+      canPop: false,
+      onPopInvoked: (shouldPop) async {
+        await showMyDialog();
+      },
       child: Scaffold(
         backgroundColor: backgroundColor,
         body: SingleChildScrollView(
-          physics: ClampingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -87,7 +92,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                   Container(
                     padding: const EdgeInsets.only(bottom: 50, top: 30),
                     width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(15),
                         bottomRight: Radius.circular(15),
@@ -108,7 +113,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                   SvgPicture.asset(
                                     'assets/svg/notification.svg',
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 15,
                                   ),
                                   Container(
@@ -123,10 +128,10 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                         );
                                       },
                                       child: Container(
-                                        decoration: BoxDecoration(),
+                                        decoration: const BoxDecoration(),
                                         child: user.avatar == null ||
                                                 user.avatar == ''
-                                            ? CircleAvatar(
+                                            ? const CircleAvatar(
                                                 backgroundColor: grey,
                                                 radius: 14,
                                                 backgroundImage: AssetImage(
@@ -148,13 +153,13 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                         ),
                         Text(
                           '${user.currentBusiness?.partner?.businessName}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: white,
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Row(
@@ -162,14 +167,14 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                           children: [
                             Text(
                               "${user.currentBusiness?.type}: ",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xffFEBC11),
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                             Text(
                               "${user.currentBusiness?.profileName}",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: white,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -190,7 +195,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         filtered.isEmpty
-                            ? SizedBox()
+                            ? const SizedBox()
                             : Container(
                                 width: MediaQuery.of(context).size.width,
                                 padding:
@@ -204,7 +209,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                             horizontal: 15),
                                         child: user.currentBusiness?.type ==
                                                 "SUPPLIER"
-                                            ? Text(
+                                            ? const Text(
                                                 "Өнөөдөр хүлээлгэн өгөх",
                                                 style: TextStyle(
                                                   color: buttonColor,
@@ -212,7 +217,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                               )
-                                            : Text(
+                                            : const Text(
                                                 "Өнөөдөр хүлээн авах",
                                                 style: TextStyle(
                                                   color: buttonColor,
@@ -220,14 +225,14 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                               )),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 15,
                                     ),
                                     SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
                                       child: Row(
                                         children: [
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 10,
                                           ),
                                           isLoading == true
@@ -258,7 +263,8 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                               : Row(
                                                   children: filtered
                                                       .map(
-                                                        (e) => TakeGiveCard(),
+                                                        (e) =>
+                                                            const TakeGiveCard(),
                                                       )
                                                       .toList(),
                                                 ),
@@ -268,7 +274,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                   ],
                                 ),
                               ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Container(
@@ -283,10 +289,10 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                   children: [
                                     SvgPicture.asset(
                                         'assets/svg/dot-calendar.svg'),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5,
                                     ),
-                                    Text(
+                                    const Text(
                                       '2023-03-23',
                                       style: TextStyle(
                                         color: buttonColor,
@@ -297,10 +303,10 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 12,
                               ),
-                              Row(
+                              const Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
@@ -321,36 +327,36 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                             ],
                           ),
                         ),
-                        invoice.rows?.length != 0
-                            ? Column(
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        vertical: 15, horizontal: 15),
-                                    child: Text(
-                                      'Батлах хүлээж буй',
-                                      style: TextStyle(
-                                        color: buttonColor,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
+                        if (invoice.rows!.isNotEmpty)
+                          Column(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 15, horizontal: 15),
+                                child: const Text(
+                                  'Батлах хүлээж буй',
+                                  style: TextStyle(
+                                    color: buttonColor,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
                                   ),
-                                  Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 15),
-                                    child: Text(
-                                      '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
-                                      style: TextStyle(
-                                        color: blue,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
+                                ),
+                              ),
+                              Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: Text(
+                                  DateFormat("yyyy-MM-dd")
+                                      .format(DateTime.now()),
+                                  style: const TextStyle(
+                                    color: blue,
+                                    fontWeight: FontWeight.w600,
                                   ),
-                                ],
-                              )
-                            : SizedBox(),
-                        SizedBox(
+                                ),
+                              ),
+                            ],
+                          ),
+                        const SizedBox(
                           height: 15,
                         ),
                         isLoading == true
@@ -372,7 +378,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                     )
                                     .toList(),
                               ),
-                        SizedBox(
+                        const SizedBox(
                           height: 50,
                         ),
                       ],
@@ -382,31 +388,31 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: Column(
                         children: [
-                          Text(
+                          const Text(
                             'DeHUB платформд тавтай морил!',
                             style: TextStyle(
                               color: buttonColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           SvgPicture.asset('assets/svg/new-player.svg'),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
-                          Text(
+                          const Text(
                             'Та партнерийн тохиргоогоо бүрэн гүйцэт хийнэ үү',
                             style: TextStyle(color: buttonColor),
                             textAlign: TextAlign.center,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
-                          Container(
+                          SizedBox(
                             width: MediaQuery.of(context).size.width,
-                            child: Text(
+                            child: const Text(
                               'Заавартай танилцах',
                               style: TextStyle(
                                 color: buttonColor,
@@ -416,11 +422,11 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                               textAlign: TextAlign.left,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
-                          TutorialCard(),
-                          SizedBox(
+                          const TutorialCard(),
+                          const SizedBox(
                             height: 50,
                           ),
                         ],
@@ -430,23 +436,19 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
           ),
         ),
       ),
-      canPop: false,
-      onPopInvoked: (shouldPop) async {
-        await showMyDialog();
-      },
     );
   }
 
   Future<bool?> showMyDialog() => showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Та Апп-аас гарах гэж байна'),
+          title: const Text('Та Апп-аас гарах гэж байна'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context, false);
               },
-              child: Text('Болих'),
+              child: const Text('Болих'),
             ),
             TextButton(
               style: ButtonStyle(
@@ -458,7 +460,7 @@ class _FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                 Navigator.pop(context, true);
                 Navigator.pop(context, true);
               },
-              child: Text(
+              child: const Text(
                 'Гарах',
                 style: TextStyle(color: red),
               ),

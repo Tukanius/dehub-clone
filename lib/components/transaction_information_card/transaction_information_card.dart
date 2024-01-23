@@ -13,24 +13,24 @@ class TransactionInformationCard extends StatefulWidget {
   final int index;
   final Payment? data;
   const TransactionInformationCard({
-    Key? key,
+    super.key,
     required this.index,
     required this.startAnimation,
     this.onClick,
     this.data,
-  }) : super(key: key);
+  });
 
   @override
-  _TransactionInformationCardState createState() =>
-      _TransactionInformationCardState();
+  TransactionInformationCardState createState() =>
+      TransactionInformationCardState();
 }
 
-class _TransactionInformationCardState
+class TransactionInformationCardState
     extends State<TransactionInformationCard> {
   General general = General();
 
   getCurrency() {
-    var res;
+    String? res;
     if (widget.data?.creditAccountCurrency != null) {
       res = general.currencies!
           .firstWhere(
@@ -70,28 +70,30 @@ class _TransactionInformationCardState
                 Expanded(
                   child: Text(
                     '${widget.data?.description}',
-                    style: TextStyle(color: grey2, fontWeight: FontWeight.w600),
+                    style: const TextStyle(
+                        color: grey2, fontWeight: FontWeight.w600),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios,
                   size: 14,
                   color: Color(0xff545454),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data!.createdAt!)}',
-                  style: TextStyle(
+                  DateFormat("yyyy-MM-dd HH:mm")
+                      .format(widget.data!.createdAt!),
+                  style: const TextStyle(
                     fontSize: 12,
                     color: Color(0xff555555),
                   ),

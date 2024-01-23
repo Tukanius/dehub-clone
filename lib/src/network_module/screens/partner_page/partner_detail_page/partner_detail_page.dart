@@ -19,9 +19,9 @@ class PartnerDetailPage extends StatefulWidget {
   final String id;
   static const routeName = '/PartnerDetailPage';
   const PartnerDetailPage({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<PartnerDetailPage> createState() => _PartnerDetailPageState();
@@ -52,12 +52,12 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_new,
             color: networkColor,
           ),
         ),
-        title: Text(
+        title: const Text(
           'Харилцагч бизнес',
           style: TextStyle(
             color: networkColor,
@@ -67,7 +67,7 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
         ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: networkColor,
               ),
@@ -81,41 +81,37 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
                     SliverToBoxAdapter(
                       child: Column(
                         children: [
-                          businessNetwork.profileBanners?.length != 0
-                              ? CarouselSlider(
-                                  items: businessNetwork.profileBanners!
-                                      .map(
-                                        (data) => Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: white,
-                                            image: DecorationImage(
-                                              image: NetworkImage(
-                                                '${data.url}',
-                                              ),
-                                              fit: BoxFit.cover,
-                                            ),
+                          if (businessNetwork.profileBanners!.isNotEmpty)
+                            CarouselSlider(
+                              items: businessNetwork.profileBanners!
+                                  .map(
+                                    (data) => Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: white,
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                            '${data.url}',
                                           ),
+                                          fit: BoxFit.cover,
                                         ),
-                                      )
-                                      .toList(),
-                                  options: CarouselOptions(
-                                    enlargeCenterPage: businessNetwork
-                                                .profileBanners?.length ==
-                                            1
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                              options: CarouselOptions(
+                                enlargeCenterPage:
+                                    businessNetwork.profileBanners?.length == 1
                                         ? false
                                         : true,
-                                    autoPlayCurve: Curves.ease,
-                                    height: 200,
-                                    autoPlay: true,
-                                    enableInfiniteScroll: true,
-                                  ),
-                                )
-                              : SizedBox(),
-                          SizedBox(
+                                autoPlayCurve: Curves.ease,
+                                height: 200,
+                                autoPlay: true,
+                                enableInfiniteScroll: true,
+                              ),
+                            ),
+                          const SizedBox(
                             height: 5,
                           ),
                           Material(
@@ -126,20 +122,20 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
                               indicatorColor: networkColor,
                               labelColor: networkColor,
                               unselectedLabelColor: dark,
-                              tabs: [
-                                Container(
+                              tabs: const [
+                                SizedBox(
                                   height: 40,
                                   child: Center(
                                     child: Text('Мэдээлэл'),
                                   ),
                                 ),
-                                Container(
+                                SizedBox(
                                   height: 40,
                                   child: Center(
                                     child: Text('Ажилтан'),
                                   ),
                                 ),
-                                Container(
+                                SizedBox(
                                   height: 40,
                                   child: Center(
                                     child: Text('Салбар'),
@@ -154,7 +150,7 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
                   ];
                 },
                 body: TabBarView(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     InformationTab(
                       data: businessNetwork,

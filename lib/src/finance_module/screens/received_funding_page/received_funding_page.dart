@@ -49,7 +49,7 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
           ),
           Container(
             margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-            child: Text(
+            child: const Text(
               'Авсан санхүүжилт',
               style: TextStyle(
                 fontSize: 16,
@@ -59,14 +59,14 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
           ),
           Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 15,
               ),
               InkWell(
                 borderRadius: BorderRadius.circular(10),
                 onTap: () {
                   pageController.animateToPage(0,
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       curve: Curves.ease);
                 },
                 child: Container(
@@ -87,14 +87,14 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 20,
               ),
               InkWell(
                 borderRadius: BorderRadius.circular(10),
                 onTap: () {
                   pageController.animateToPage(1,
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       curve: Curves.ease);
                 },
                 child: Container(
@@ -117,7 +117,7 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Expanded(
@@ -128,7 +128,7 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
                   currentIndex = value;
                 });
               },
-              children: [
+              children: const [
                 BuyerLed(),
                 SupplierLed(),
               ],

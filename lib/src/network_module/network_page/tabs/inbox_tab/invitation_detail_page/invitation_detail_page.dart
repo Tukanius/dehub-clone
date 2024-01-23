@@ -24,16 +24,16 @@ class InvitationDetailPage extends StatefulWidget {
   final ListenController listenController;
   static const routeName = '/invitationdetailpage';
   const InvitationDetailPage({
-    Key? key,
+    super.key,
     required this.listenController,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
-  _InvitationDetailPageState createState() => _InvitationDetailPageState();
+  InvitationDetailPageState createState() => InvitationDetailPageState();
 }
 
-class _InvitationDetailPageState extends State<InvitationDetailPage>
+class InvitationDetailPageState extends State<InvitationDetailPage>
     with AfterLayoutMixin {
   bool isLoading = true;
   Invitation invitation = Invitation();
@@ -111,12 +111,12 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios_new,
             color: networkColor,
           ),
         ),
-        title: Text(
+        title: const Text(
           'Ирсэн урилга',
           style: TextStyle(
             fontSize: 18,
@@ -126,20 +126,20 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
         ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: networkColor,
               ),
             )
           : SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     margin:
                         const EdgeInsets.only(left: 15, bottom: 15, top: 20),
-                    child: Text(
+                    child: const Text(
                       'Урилга мэдээлэл',
                       style: TextStyle(
                         color: grey3,
@@ -155,15 +155,13 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          child: Text(
-                            'Урилга №: ',
-                            style: TextStyle(color: dark),
-                          ),
+                        const Text(
+                          'Урилга №: ',
+                          style: TextStyle(color: dark),
                         ),
                         Text(
                           '${invitation.refCode}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: networkColor,
                             fontWeight: FontWeight.w600,
                             fontSize: 18,
@@ -179,13 +177,14 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Ирсэн огноо',
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          '${DateFormat("yyyy-MM-dd hh:MM").format(invitation.createdAt!)}',
-                          style: TextStyle(color: dark),
+                          DateFormat("yyyy-MM-dd hh:MM")
+                              .format(invitation.createdAt!),
+                          style: const TextStyle(color: dark),
                         ),
                       ],
                     ),
@@ -197,7 +196,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Статус',
                           style: TextStyle(color: dark),
                         ),
@@ -206,11 +205,11 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                               horizontal: 10, vertical: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xff71717A).withOpacity(0.1),
+                            color: const Color(0xff71717A).withOpacity(0.1),
                           ),
                           child: Text(
                             invitationStatus(),
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: dark,
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
@@ -223,7 +222,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                   Container(
                     margin:
                         const EdgeInsets.only(left: 15, bottom: 15, top: 20),
-                    child: Text(
+                    child: const Text(
                       'УРИЛГА ИЛГЭЭГЧ',
                       style: TextStyle(
                         color: grey3,
@@ -322,12 +321,12 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                     secondTextColor: networkColor,
                     color: white,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
                     margin: const EdgeInsets.only(left: 15),
-                    child: Text(
+                    child: const Text(
                       'Урилгын тайлбар',
                       style: TextStyle(
                         color: grey3,
@@ -336,7 +335,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
@@ -355,12 +354,12 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                       child: Text('${invitation.toMessage}'),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
                     margin: const EdgeInsets.only(left: 15),
-                    child: Text(
+                    child: const Text(
                       'УРИЛГА ХҮЛЭЭН АВАГЧ',
                       style: TextStyle(
                         color: grey3,
@@ -369,7 +368,7 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   FieldCard(
@@ -412,57 +411,56 @@ class _InvitationDetailPageState extends State<InvitationDetailPage>
                     secondTextColor: networkColor,
                     color: white,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
-                  invitation.invitationStatus == "SENT"
-                      ? Container(
-                          margin: const EdgeInsets.only(bottom: 50),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  margin: const EdgeInsets.only(left: 10),
-                                  child: CustomButton(
-                                    borderColor: networkColor,
-                                    labelColor: backgroundColor,
-                                    labelText: "Татгалзах",
-                                    onClick: () {
-                                      // onSubmit(false);
-                                    },
-                                    textColor: networkColor,
-                                  ),
-                                ),
+                  if (invitation.invitationStatus == "SENT")
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 50),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              child: CustomButton(
+                                borderColor: networkColor,
+                                labelColor: backgroundColor,
+                                labelText: "Татгалзах",
+                                onClick: () {
+                                  // onSubmit(false);
+                                },
+                                textColor: networkColor,
                               ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Expanded(
-                                child: Container(
-                                  margin: const EdgeInsets.only(right: 10),
-                                  child: CustomButton(
-                                    textColor: white,
-                                    labelColor: networkColor,
-                                    onClick: () {
-                                      Navigator.of(context).pushNamed(
-                                        PinCheckScreen.routeName,
-                                        arguments: PinCheckScreenArguments(
-                                          onSubmit: () {
-                                            onSubmit();
-                                          },
-                                          color: networkColor,
-                                          labelText: 'Урилга баталгаажуулалт',
-                                        ),
-                                      );
-                                    },
-                                    labelText: "Зөвшөөрөх",
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        )
-                      : SizedBox(),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 10),
+                              child: CustomButton(
+                                textColor: white,
+                                labelColor: networkColor,
+                                onClick: () {
+                                  Navigator.of(context).pushNamed(
+                                    PinCheckScreen.routeName,
+                                    arguments: PinCheckScreenArguments(
+                                      onSubmit: () {
+                                        onSubmit();
+                                      },
+                                      color: networkColor,
+                                      labelText: 'Урилга баталгаажуулалт',
+                                    ),
+                                  );
+                                },
+                                labelText: "Зөвшөөрөх",
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                 ],
               ),
             ),

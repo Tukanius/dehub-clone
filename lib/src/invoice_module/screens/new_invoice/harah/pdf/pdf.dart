@@ -10,10 +10,10 @@ class INVOICEPDF extends StatefulWidget {
   final Invoice data;
   final List<Invoice> lines;
   const INVOICEPDF({
-    Key? key,
+    super.key,
     required this.lines,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<INVOICEPDF> createState() => _INVOICEPDFState();
@@ -57,7 +57,7 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
         color: white,
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 5),
+            offset: const Offset(0, 5),
             color: Colors.grey.shade400,
             blurRadius: 3,
             spreadRadius: 3,
@@ -79,7 +79,7 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                       child: Container(
                         color: invoiceColor,
                         padding: const EdgeInsets.all(10),
-                        child: Text(
+                        child: const Text(
                           'Төлбөр хүлээж буй',
                           style: TextStyle(
                             color: white,
@@ -88,7 +88,7 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Expanded(
@@ -97,7 +97,7 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                         children: [
                           Row(
                             children: [
-                              Expanded(
+                              const Expanded(
                                 child: Text(
                                   'Нэхэмжлэх №',
                                   style: TextStyle(
@@ -108,7 +108,7 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               Expanded(
                                 child: Text(
                                   '${widget.data.refCode}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: invoiceColor,
                                     fontSize: 7,
                                   ),
@@ -116,10 +116,10 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               )
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
-                          Row(
+                          const Row(
                             children: [
                               Expanded(
                                 child: Text(
@@ -140,12 +140,12 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               )
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Row(
                             children: [
-                              Expanded(
+                              const Expanded(
                                 child: Text(
                                   'Худалдан авагч',
                                   style: TextStyle(
@@ -156,7 +156,7 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               Expanded(
                                 child: Text(
                                   '${buyerBusiness.profileName}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: invoiceColor,
                                     fontSize: 7,
                                   ),
@@ -164,12 +164,12 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               )
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Row(
                             children: [
-                              Expanded(
+                              const Expanded(
                                 child: Text(
                                   'Нийлүүлэгч',
                                   style: TextStyle(
@@ -180,7 +180,7 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               Expanded(
                                 child: Text(
                                   '${supplierBusiness.profileName}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: invoiceColor,
                                     fontSize: 7,
                                   ),
@@ -198,7 +198,7 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                 flex: 4,
                 child: Container(
                   margin: const EdgeInsets.only(top: 25),
-                  child: Text(
+                  child: const Text(
                     'Сангийн сайдын 2017 оны 347 дугаар тушаалын хавсралт №',
                     style: TextStyle(
                       fontSize: 6,
@@ -209,7 +209,7 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
               ),
             ],
           ),
-          Align(
+          const Align(
             alignment: Alignment.center,
             child: Text(
               'НЭХЭМЖЛЭХ',
@@ -219,14 +219,14 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Text(
+          const Text(
             'ДДТД: Энд ебаримт холбогдохоор код гарах байх',
             style: TextStyle(fontSize: 7),
           ),
-          SizedBox(
+          const SizedBox(
             height: 2,
           ),
           Row(
@@ -236,12 +236,12 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Нэхэмжлэгч',
                       style:
                           TextStyle(fontSize: 7, fontWeight: FontWeight.w600),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Container(
@@ -252,7 +252,7 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'ТТД: ',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -262,20 +262,20 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               Expanded(
                                 child: Text(
                                   '${supplierBusiness.regNumber}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 7,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 2,
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Нэр: ',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -285,20 +285,20 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               Expanded(
                                 child: Text(
                                   '${supplierBusiness.partner?.businessName}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 7,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 2,
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Хаяг: ',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -308,20 +308,20 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               Expanded(
                                 child: Text(
                                   '${supplierBusiness.partner?.businessAddress}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 7,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 2,
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Утас: ',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -331,20 +331,20 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               Expanded(
                                 child: Text(
                                   '${supplierBusiness.partner?.phone}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 7,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 2,
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Э-шуудан: ',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -354,20 +354,20 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               Expanded(
                                 child: Text(
                                   '${supplierBusiness.partner?.email}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 7,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 2,
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Банкны нэр: ',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -377,20 +377,20 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               Expanded(
                                 child: Text(
                                   '${supplierAcc.bankName}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 7,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 2,
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Банкны дансны дугаар: ',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -400,7 +400,7 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               Expanded(
                                 child: Text(
                                   '${supplierAcc.number}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 7,
                                   ),
                                 ),
@@ -418,12 +418,12 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Хариуцагч',
                       style:
                           TextStyle(fontSize: 7, fontWeight: FontWeight.w600),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Container(
@@ -434,7 +434,7 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'ТТД: ',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -444,20 +444,20 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               Expanded(
                                 child: Text(
                                   '${buyerBusiness.regNumber}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 7,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 2,
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Нэр: ',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -467,20 +467,20 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               Expanded(
                                 child: Text(
                                   '${buyerBusiness.partner?.businessName}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 7,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 2,
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Хаяг: ',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -490,20 +490,20 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               Expanded(
                                 child: Text(
                                   '${buyerBusiness.partner?.businessAddress}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 7,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 2,
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Утас: ',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -513,20 +513,20 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               Expanded(
                                 child: Text(
                                   '${buyerBusiness.partner?.phone}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 7,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 2,
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Э-шуудан: ',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -536,20 +536,20 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               Expanded(
                                 child: Text(
                                   '${buyerBusiness.partner?.email}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 7,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 2,
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Банкны нэр: ',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -559,20 +559,20 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               Expanded(
                                 child: Text(
                                   '${buyerAcc.bankName}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 7,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 2,
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Банкны дансны дугаар: ',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -582,7 +582,7 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               Expanded(
                                 child: Text(
                                   '${buyerAcc.number}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 7,
                                   ),
                                 ),
@@ -597,12 +597,12 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
               ),
             ],
           ),
-          Divider(
+          const Divider(
             color: invoiceColor,
             thickness: 1,
           ),
           Table(
-            border: TableBorder(
+            border: const TableBorder(
               horizontalInside: BorderSide(
                 color: Color(0xffb9b9b9),
                 width: 0.5,
@@ -621,7 +621,7 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
               ),
             ),
             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-            columnWidths: {
+            columnWidths: const {
               0: FractionColumnWidth(0.05),
               1: FractionColumnWidth(0.3),
               2: FractionColumnWidth(0.105),
@@ -715,13 +715,13 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
               ...List.generate(
                 widget.lines.length,
                 (index) => TableRow(
-                  decoration: BoxDecoration(color: white),
+                  decoration: const BoxDecoration(color: white),
                   children: [
                     TableCell(
                       child: Center(
                         child: Text(
                           '${index + 1}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 5,
                           ),
                         ),
@@ -729,10 +729,10 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                     ),
                     TableCell(
                       child: Padding(
-                        padding: EdgeInsets.all(3.0),
+                        padding: const EdgeInsets.all(3.0),
                         child: Text(
                           '${widget.lines[index].name}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 5,
                           ),
                         ),
@@ -740,10 +740,10 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                     ),
                     TableCell(
                       child: Padding(
-                        padding: EdgeInsets.all(3.0),
+                        padding: const EdgeInsets.all(3.0),
                         child: Text(
                           '${widget.lines[index].skuCode}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 5,
                           ),
                         ),
@@ -751,10 +751,10 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                     ),
                     TableCell(
                       child: Padding(
-                        padding: EdgeInsets.all(3.0),
+                        padding: const EdgeInsets.all(3.0),
                         child: Text(
                           '${widget.lines[index].unit?.toLowerCase()}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 5,
                           ),
                         ),
@@ -762,10 +762,10 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                     ),
                     TableCell(
                       child: Padding(
-                        padding: EdgeInsets.all(3.0),
+                        padding: const EdgeInsets.all(3.0),
                         child: Text(
                           '${Utils().formatCurrency(widget.lines[index].quantity.toString())}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 5,
                           ),
                         ),
@@ -773,10 +773,10 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                     ),
                     TableCell(
                       child: Padding(
-                        padding: EdgeInsets.all(3.0),
+                        padding: const EdgeInsets.all(3.0),
                         child: Text(
                           '${Utils().formatCurrency(widget.lines[index].price.toString())}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 5,
                           ),
                         ),
@@ -784,10 +784,10 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                     ),
                     TableCell(
                       child: Padding(
-                        padding: EdgeInsets.all(3.0),
+                        padding: const EdgeInsets.all(3.0),
                         child: Text(
                           '${Utils().formatCurrency((widget.lines[index].quantity! * widget.lines[index].price!).toString())}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 5,
                           ),
                         ),
@@ -798,14 +798,14 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
               ),
             ],
           ),
-          Divider(
+          const Divider(
             color: invoiceColor,
             thickness: 1,
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Row(
+              const Row(
                 children: [
                   Expanded(
                     flex: 7,
@@ -829,10 +829,10 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 7,
               ),
-              Row(
+              const Row(
                 children: [
                   Expanded(
                     flex: 7,
@@ -856,10 +856,10 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 7,
               ),
-              Row(
+              const Row(
                 children: [
                   Expanded(
                     flex: 7,
@@ -883,13 +883,13 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 7,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
+                  const Text(
                     'Total:',
                     style: TextStyle(
                       fontSize: 14,
@@ -899,7 +899,7 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                   ),
                   Text(
                     '         ${Utils().formatCurrency(widget.data.totalAmount.toString())}₮',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
                     ),
@@ -907,10 +907,10 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 7,
               ),
-              Text(
+              const Text(
                 'ЗАХИАЛГА БАТАЛГААЖУУЛАХ',
                 style: TextStyle(
                   color: invoiceColor,
@@ -920,30 +920,30 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Text(
             '${widget.data.description}',
-            style: TextStyle(
+            style: const TextStyle(
               color: invoiceColor,
               fontSize: 11,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width * 0.4,
-            child: Text(
+            child: const Text(
               'Дансаар төлөх бол гүйлгээний утгад НЭХЭМЖЛЭХ ДУГААР-г бичнэ үү',
               style: TextStyle(
                 fontSize: 8,
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
         ],

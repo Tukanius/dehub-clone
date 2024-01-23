@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 
 class Utils {
   formatCurrency(String? value) {
-    var result;
+    String result;
     if (value == '0.00' || value == '0' || value == "0.0") {
       return result = '0';
     }

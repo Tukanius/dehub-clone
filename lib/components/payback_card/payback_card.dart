@@ -13,10 +13,10 @@ class RePaymentCard extends StatefulWidget {
   final Function()? onClick;
   final Finance data;
   const RePaymentCard({
-    Key? key,
+    super.key,
     required this.data,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<RePaymentCard> createState() => RePaymentCardState();
@@ -51,7 +51,7 @@ class RePaymentCardState extends State<RePaymentCard> {
               children: [
                 Text(
                   '${widget.data.refCode}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: black,
                     fontWeight: FontWeight.w600,
                   ),
@@ -73,7 +73,7 @@ class RePaymentCardState extends State<RePaymentCard> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -105,12 +105,12 @@ class RePaymentCardState extends State<RePaymentCard> {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
               children: [
-                Text(
+                const Text(
                   'Төлбөрийн үлдэгдэл: ',
                   style: TextStyle(
                     color: grey2,
@@ -119,14 +119,14 @@ class RePaymentCardState extends State<RePaymentCard> {
                 ),
                 Text(
                   '${Utils().formatCurrency(widget.data.amountToPay.toString()) + symbol()}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: black,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -136,7 +136,7 @@ class RePaymentCardState extends State<RePaymentCard> {
                   flex: 3,
                   child: Text(
                     'Эргэн төлөх огноо: ${DateFormat('yyyy-MM-dd').format(widget.data.repaymentDate!)} ',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: depBrown,
                       fontSize: 12,
                     ),
@@ -147,12 +147,12 @@ class RePaymentCardState extends State<RePaymentCard> {
                   child: RichText(
                     textAlign: TextAlign.end,
                     text: TextSpan(
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
                         fontFamily: "Montserrat",
                       ),
                       children: [
-                        TextSpan(
+                        const TextSpan(
                           text: 'Хугацаа: ',
                           style: TextStyle(color: depBrown),
                         ),
@@ -190,25 +190,25 @@ class RePaymentCardState extends State<RePaymentCard> {
     if (opacity == false) {
       switch (widget.data.repaymentStatus) {
         case "CREATED":
-          return Color(0xffFF9900);
+          return const Color(0xffFF9900);
         case "APPROVED":
-          return Color(0xff4169E1);
+          return const Color(0xff4169E1);
         case "RECOURSED":
-          return Color(0xffFF540D);
+          return const Color(0xffFF540D);
         case "CLOSED":
-          return Color(0xff25B475);
+          return const Color(0xff25B475);
         default:
       }
     } else {
       switch (widget.data.repaymentStatus) {
         case "CREATED":
-          return Color(0xffFF9900).withOpacity(0.2);
+          return const Color(0xffFF9900).withOpacity(0.2);
         case "APPROVED":
-          return Color(0xff4169E1).withOpacity(0.2);
+          return const Color(0xff4169E1).withOpacity(0.2);
         case "RECOURSED":
-          return Color(0xffFF540D).withOpacity(0.2);
+          return const Color(0xffFF540D).withOpacity(0.2);
         case "CLOSED":
-          return Color(0xff25B475).withOpacity(0.2);
+          return const Color(0xff25B475).withOpacity(0.2);
         default:
       }
     }
@@ -217,17 +217,17 @@ class RePaymentCardState extends State<RePaymentCard> {
   overdueStatusColor() {
     switch (widget.data.overdueStatus) {
       case "NORMAL":
-        return Color(0xff25B475);
+        return const Color(0xff25B475);
       case "ONE_TO_THREE":
-        return Color(0xffFF9900);
+        return const Color(0xffFF9900);
       case "FOUR_THIRTY":
-        return Color(0xffFF76A1);
+        return const Color(0xffFF76A1);
       case "THIRTY_ONE_SIXTY":
-        return Color(0xffFF540D);
+        return const Color(0xffFF540D);
       case "SIXTY_ONE_NINETY":
-        return Color(0xffEB0404);
+        return const Color(0xffEB0404);
       case "OVER_NINETY":
-        return Color(0xff890E34);
+        return const Color(0xff890E34);
       default:
     }
   }

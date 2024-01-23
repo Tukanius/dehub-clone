@@ -56,7 +56,7 @@ class _AdditionalUnitSheetState extends State<AdditionalUnitSheet>
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: productColor,
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(15),
@@ -74,7 +74,7 @@ class _AdditionalUnitSheetState extends State<AdditionalUnitSheet>
                     child: SvgPicture.asset('assets/svg/square-x.svg'),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   child: Text(
                     'Хэмжих нэгж сонгох',
                     style: TextStyle(
@@ -94,7 +94,7 @@ class _AdditionalUnitSheetState extends State<AdditionalUnitSheet>
                       borderRadius: BorderRadius.circular(5),
                       color: white,
                     ),
-                    child: Text(
+                    child: const Text(
                       'Болсон',
                       style: TextStyle(
                         color: productColor,
@@ -110,7 +110,7 @@ class _AdditionalUnitSheetState extends State<AdditionalUnitSheet>
               color: backgroundColor,
               child: SingleChildScrollView(
                 child: isLoading == true
-                    ? Center(
+                    ? const Center(
                         child: CircularProgressIndicator(
                           color: productColor,
                         ),
@@ -121,7 +121,7 @@ class _AdditionalUnitSheetState extends State<AdditionalUnitSheet>
                           Container(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 15, vertical: 10),
-                            child: Text(
+                            child: const Text(
                               'Тохирох сонголт байхгүй бол "Лавлах мэдээлэл"-ийн хэмжих нэгжид нэмнэ үү.',
                               style: TextStyle(color: grey2),
                             ),
@@ -129,7 +129,7 @@ class _AdditionalUnitSheetState extends State<AdditionalUnitSheet>
                           Container(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 15, vertical: 10),
-                            child: Text(
+                            child: const Text(
                               'Нэгжийн сонголт',
                               style: TextStyle(color: grey2),
                             ),
@@ -138,6 +138,7 @@ class _AdditionalUnitSheetState extends State<AdditionalUnitSheet>
                             children: unit.rows!
                                 .map(
                                   (data) => AdditionalUnitCard(
+                                    index: unit.rows!.indexOf(data),
                                     isSwitched: list.contains(data),
                                     onClick: () {
                                       if (list.contains(data)) {
@@ -168,7 +169,7 @@ class _AdditionalUnitSheetState extends State<AdditionalUnitSheet>
                                 )
                                 .toList(),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 40,
                           ),
                         ],

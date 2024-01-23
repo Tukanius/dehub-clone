@@ -29,10 +29,10 @@ class SetAccount extends StatefulWidget {
   final ListenController listenController;
   static const routeName = '/SetAccount';
   const SetAccount({
-    Key? key,
+    super.key,
     required this.id,
     required this.listenController,
-  }) : super(key: key);
+  });
 
   @override
   State<SetAccount> createState() => _SetAccountState();
@@ -90,7 +90,7 @@ class _SetAccountState extends State<SetAccount> {
         automaticallyImplyLeading: false,
         backgroundColor: networkColor,
         surfaceTintColor: networkColor,
-        title: Text(
+        title: const Text(
           'Данс тохируулах',
           style: TextStyle(
             color: white,
@@ -98,7 +98,7 @@ class _SetAccountState extends State<SetAccount> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: [
+        actions: const [
           CustomCloseButton(
             color: networkColor,
           ),
@@ -108,7 +108,7 @@ class _SetAccountState extends State<SetAccount> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             FieldCard(
@@ -120,7 +120,7 @@ class _SetAccountState extends State<SetAccount> {
                 inAcc();
               },
               arrowColor: networkColor,
-              secondText: "${inAccName == null ? '-' : inAccName}",
+              secondText: inAccName ?? '-',
               secondTextColor: networkColor,
             ),
             FieldCard(
@@ -132,12 +132,12 @@ class _SetAccountState extends State<SetAccount> {
                 outAcc();
               },
               arrowColor: networkColor,
-              secondText: "${outAccName == null ? '-' : outAccName}",
+              secondText: outAccName ?? '-',
               secondTextColor: networkColor,
             ),
             Container(
               margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-              child: Text(
+              child: const Text(
                 'Тайлбар',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -153,7 +153,7 @@ class _SetAccountState extends State<SetAccount> {
                 textAlign: TextAlign.left,
                 name: 'description',
                 maxLines: 5,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Энд оруулна уу',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.zero,
@@ -167,7 +167,7 @@ class _SetAccountState extends State<SetAccount> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             CustomButton(
@@ -189,7 +189,7 @@ class _SetAccountState extends State<SetAccount> {
   inAcc() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -206,7 +206,7 @@ class _SetAccountState extends State<SetAccount> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 25, bottom: 20),
-                  child: Text(
+                  child: const Text(
                     'Орлогын данс сонгох',
                     style: TextStyle(
                       color: grey2,
@@ -214,7 +214,7 @@ class _SetAccountState extends State<SetAccount> {
                     ),
                   ),
                 ),
-                general.bankAccounts?.length != 0
+                general.bankAccounts!.isNotEmpty
                     ? Column(
                         children: general.bankAccounts!
                             .map(
@@ -234,7 +234,7 @@ class _SetAccountState extends State<SetAccount> {
                                   child: Row(
                                     children: [
                                       e.icon == null
-                                          ? CircleAvatar(
+                                          ? const CircleAvatar(
                                               radius: 12,
                                               backgroundImage:
                                                   AssetImage('images/map.jpg'),
@@ -245,7 +245,7 @@ class _SetAccountState extends State<SetAccount> {
                                               backgroundImage:
                                                   NetworkImage('${e.icon}'),
                                             ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
                                       Text(
@@ -263,7 +263,7 @@ class _SetAccountState extends State<SetAccount> {
                       )
                     : Column(
                         children: [
-                          NotFound(
+                          const NotFound(
                             module: "NETWORK",
                             labelText: '',
                           ),
@@ -278,7 +278,7 @@ class _SetAccountState extends State<SetAccount> {
                           ),
                         ],
                       ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
               ],
@@ -292,7 +292,7 @@ class _SetAccountState extends State<SetAccount> {
   outAcc() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -309,7 +309,7 @@ class _SetAccountState extends State<SetAccount> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 25, bottom: 20),
-                  child: Text(
+                  child: const Text(
                     'Зарлагын данс сонгох',
                     style: TextStyle(
                       color: grey2,
@@ -317,7 +317,7 @@ class _SetAccountState extends State<SetAccount> {
                     ),
                   ),
                 ),
-                general.bankAccounts != 0
+                general.bankAccounts!.isNotEmpty
                     ? Column(
                         children: general.bankAccounts!
                             .map(
@@ -337,7 +337,7 @@ class _SetAccountState extends State<SetAccount> {
                                   child: Row(
                                     children: [
                                       e.icon == null
-                                          ? CircleAvatar(
+                                          ? const CircleAvatar(
                                               radius: 12,
                                               backgroundImage:
                                                   AssetImage('images/map.jpg'),
@@ -348,7 +348,7 @@ class _SetAccountState extends State<SetAccount> {
                                               backgroundImage:
                                                   NetworkImage('${e.icon}'),
                                             ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
                                       Text(
@@ -366,7 +366,7 @@ class _SetAccountState extends State<SetAccount> {
                       )
                     : Column(
                         children: [
-                          NotFound(
+                          const NotFound(
                             module: "NETWORK",
                             labelText: '',
                           ),
@@ -381,7 +381,7 @@ class _SetAccountState extends State<SetAccount> {
                           ),
                         ],
                       ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
               ],

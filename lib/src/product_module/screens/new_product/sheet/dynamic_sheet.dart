@@ -37,7 +37,7 @@ class _DynamicSheetState extends State<DynamicSheet> with AfterLayoutMixin {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: productColor,
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(20),
@@ -46,7 +46,7 @@ class _DynamicSheetState extends State<DynamicSheet> with AfterLayoutMixin {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Сонголт хийнэ үү',
                 style: TextStyle(
                   color: white,
@@ -72,11 +72,11 @@ class _DynamicSheetState extends State<DynamicSheet> with AfterLayoutMixin {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 isLoading == true
-                    ? SizedBox()
+                    ? const SizedBox()
                     : Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
-                        child: Text(
+                        child: const Text(
                           'Бүртгэлтэй динамик мэдээлэл',
                           style: TextStyle(
                             color: grey3,
@@ -85,7 +85,7 @@ class _DynamicSheetState extends State<DynamicSheet> with AfterLayoutMixin {
                         ),
                       ),
                 isLoading == true
-                    ? Center(
+                    ? const Center(
                         child: CircularProgressIndicator(
                           color: productColor,
                         ),
@@ -125,7 +125,7 @@ class _DynamicSheetState extends State<DynamicSheet> with AfterLayoutMixin {
                 Container(
                   padding: const EdgeInsets.only(
                       left: 15, right: 15, top: 20, bottom: 40),
-                  child: Text(
+                  child: const Text(
                     'Жагсаалтад тохирох өгөгдөл олдохгүй бол та шинээр нэмсний дараа сонголт хийнэ үү.',
                     style: TextStyle(
                       fontSize: 12,

@@ -15,9 +15,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 class ModulesCard extends StatefulWidget {
   final User? user;
   const ModulesCard({
-    Key? key,
+    super.key,
     this.user,
-  }) : super(key: key);
+  });
 
   @override
   State<ModulesCard> createState() => _ModulesCardState();
@@ -36,7 +36,7 @@ class _ModulesCardState extends State<ModulesCard> {
       child: GridView.count(
         padding: const EdgeInsets.all(0),
         childAspectRatio: 1 / .75,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         crossAxisCount: 3,
         children: [
@@ -64,13 +64,13 @@ class _ModulesCardState extends State<ModulesCard> {
                     child: SvgPicture.asset(
                       'assets/svg/nehemjleh.svg',
                       colorFilter:
-                          ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                          const ColorFilter.mode(buttonColor, BlendMode.srcIn),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  Text(
+                  const Text(
                     'Нэхэмжлэх',
                     style: TextStyle(
                       fontSize: 12,
@@ -104,15 +104,15 @@ class _ModulesCardState extends State<ModulesCard> {
                     child: SvgPicture.asset(
                       'assets/svg/zahialga.svg',
                       colorFilter:
-                          ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                          const ColorFilter.mode(buttonColor, BlendMode.srcIn),
                       height: 24,
                       width: 24,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  Text(
+                  const Text(
                     'Захиалга',
                     style: TextStyle(
                       fontSize: 12,
@@ -148,13 +148,13 @@ class _ModulesCardState extends State<ModulesCard> {
                     child: SvgPicture.asset(
                       'assets/svg/tolbor_tootsoo.svg',
                       colorFilter:
-                          ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                          const ColorFilter.mode(buttonColor, BlendMode.srcIn),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  Text(
+                  const Text(
                     'Төлбөр тооцоо',
                     style: TextStyle(
                       fontSize: 12,
@@ -188,13 +188,13 @@ class _ModulesCardState extends State<ModulesCard> {
                     child: SvgPicture.asset(
                       'assets/svg/sanhuujilt.svg',
                       colorFilter:
-                          ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                          const ColorFilter.mode(buttonColor, BlendMode.srcIn),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  Text(
+                  const Text(
                     'Санхүүжилт',
                     style: TextStyle(
                       fontSize: 12,
@@ -228,13 +228,13 @@ class _ModulesCardState extends State<ModulesCard> {
                     child: SvgPicture.asset(
                       'assets/svg/network.svg',
                       colorFilter:
-                          ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                          const ColorFilter.mode(buttonColor, BlendMode.srcIn),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  Text(
+                  const Text(
                     'Бизнес нетворк',
                     style: TextStyle(
                       fontSize: 12,
@@ -268,13 +268,13 @@ class _ModulesCardState extends State<ModulesCard> {
                     child: SvgPicture.asset(
                       'assets/svg/baraa.svg',
                       colorFilter:
-                          ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                          const ColorFilter.mode(buttonColor, BlendMode.srcIn),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  Text(
+                  const Text(
                     'Бараа, ажил',
                     style: TextStyle(fontSize: 12),
                   ),
@@ -309,7 +309,7 @@ class _ModulesCardState extends State<ModulesCard> {
                           buttonColor.withOpacity(0.3), BlendMode.srcIn),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Text(
@@ -358,7 +358,7 @@ class _ModulesCardState extends State<ModulesCard> {
                           BlendMode.srcIn),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Text(
@@ -407,7 +407,7 @@ class _ModulesCardState extends State<ModulesCard> {
                           BlendMode.srcIn),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Text(

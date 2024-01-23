@@ -22,8 +22,8 @@ class _SupplierListState extends State<SupplierList> {
           surfaceTintColor: white,
           backgroundColor: white,
           elevation: 0,
-          iconTheme: IconThemeData(color: productColor),
-          title: Text(
+          iconTheme: const IconThemeData(color: productColor),
+          title: const Text(
             'Нийлүүлэгчид',
             style: TextStyle(
                 color: productColor, fontSize: 17, fontWeight: FontWeight.w600),
@@ -36,16 +36,16 @@ class _SupplierListState extends State<SupplierList> {
             tabs: [
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Text('Гэрээт'),
+                child: const Text('Гэрээт'),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Text('Гэрээт биш'),
+                child: const Text('Гэрээт биш'),
               ),
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             ContractedTab(),
             NonContractedTab(),

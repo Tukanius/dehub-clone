@@ -28,7 +28,7 @@ class _UnitSpaceLabelSheetState extends State<UnitSpaceLabelSheet> {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: productColor,
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(20),
@@ -37,7 +37,7 @@ class _UnitSpaceLabelSheetState extends State<UnitSpaceLabelSheet> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Эзэлхүүн нэр сонгоно уу',
                 style: TextStyle(
                   color: white,
@@ -81,7 +81,7 @@ class _UnitSpaceLabelSheetState extends State<UnitSpaceLabelSheet> {
                       )
                       .toList(),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
               ],

@@ -15,9 +15,9 @@ class ZoningDetailPage extends StatefulWidget {
   final String id;
   static const routeName = '/ZoningDetailPage';
   const ZoningDetailPage({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<ZoningDetailPage> createState() => _ZoningDetailPageState();
@@ -43,8 +43,8 @@ class _ZoningDetailPageState extends State<ZoningDetailPage>
         elevation: 0,
         backgroundColor: white,
         surfaceTintColor: white,
-        iconTheme: IconThemeData(color: networkColor),
-        title: Text(
+        iconTheme: const IconThemeData(color: networkColor),
+        title: const Text(
           'Бүсчлэл',
           style: TextStyle(
             color: networkColor,
@@ -54,7 +54,7 @@ class _ZoningDetailPageState extends State<ZoningDetailPage>
         ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: networkColor,
               ),
@@ -66,7 +66,7 @@ class _ZoningDetailPageState extends State<ZoningDetailPage>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Тохиргоо',
                       style: TextStyle(
                         color: grey3,
@@ -81,13 +81,13 @@ class _ZoningDetailPageState extends State<ZoningDetailPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Бүсийн код',
                           style: TextStyle(color: dark),
                         ),
                         Text(
                           '${reference.refCode}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: networkColor,
                           ),
                         )
@@ -101,13 +101,13 @@ class _ZoningDetailPageState extends State<ZoningDetailPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Нэр',
                           style: TextStyle(color: dark),
                         ),
                         Text(
                           '${reference.name}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: networkColor,
                           ),
                         )
@@ -121,15 +121,15 @@ class _ZoningDetailPageState extends State<ZoningDetailPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Тайлбар',
                           style: TextStyle(color: dark),
                         ),
-                        Container(
+                        SizedBox(
                           width: 200,
                           child: Text(
                             '${reference.description}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: networkColor,
                             ),
                             textAlign: TextAlign.end,
@@ -141,7 +141,7 @@ class _ZoningDetailPageState extends State<ZoningDetailPage>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Системийн мэдээлэл',
                       style: TextStyle(
                         color: grey3,
@@ -156,7 +156,7 @@ class _ZoningDetailPageState extends State<ZoningDetailPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Статус',
                           style: TextStyle(color: dark),
                         ),
@@ -165,9 +165,9 @@ class _ZoningDetailPageState extends State<ZoningDetailPage>
                               horizontal: 10, vertical: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            color: Color(0xff01D462).withOpacity(0.1),
+                            color: const Color(0xff01D462).withOpacity(0.1),
                           ),
-                          child: Text(
+                          child: const Text(
                             'Идэвхтэй',
                             style: TextStyle(
                               color: Color(0xff01D462),
@@ -183,7 +183,7 @@ class _ZoningDetailPageState extends State<ZoningDetailPage>
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 15),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -203,7 +203,7 @@ class _ZoningDetailPageState extends State<ZoningDetailPage>
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 15),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -223,7 +223,7 @@ class _ZoningDetailPageState extends State<ZoningDetailPage>
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 15),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(

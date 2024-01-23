@@ -10,6 +10,6 @@ class HomePageTab extends StatefulWidget {
 class _HomePageTabState extends State<HomePageTab> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView();
+    return const SingleChildScrollView();
   }
 }

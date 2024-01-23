@@ -11,20 +11,20 @@ class InventorySupplierCard extends StatefulWidget {
   final int index;
   final bool? type;
   final bool startAnimation;
-  InventorySupplierCard({
+  const InventorySupplierCard({
     required this.index,
     required this.startAnimation,
     this.data,
     this.type,
-    Key? key,
+    super.key,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
-  _InventorySupplierCardState createState() => _InventorySupplierCardState();
+  InventorySupplierCardState createState() => InventorySupplierCardState();
 }
 
-class _InventorySupplierCardState extends State<InventorySupplierCard> {
+class InventorySupplierCardState extends State<InventorySupplierCard> {
   General general = General();
 
   @override
@@ -46,7 +46,7 @@ class _InventorySupplierCardState extends State<InventorySupplierCard> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: white,
-          border: Border.all(width: 0.5, color: Color(0xffF2F2F2)),
+          border: Border.all(width: 0.5, color: const Color(0xffF2F2F2)),
         ),
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         child: Row(
@@ -58,7 +58,7 @@ class _InventorySupplierCardState extends State<InventorySupplierCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   widget.data?.logo == null
-                      ? CircleAvatar(
+                      ? const CircleAvatar(
                           radius: 20,
                           backgroundColor: grey,
                           backgroundImage: AssetImage('images/avatar.png'),
@@ -70,7 +70,7 @@ class _InventorySupplierCardState extends State<InventorySupplierCard> {
                             '${widget.data?.logo}',
                           ),
                         ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Expanded(
@@ -79,15 +79,15 @@ class _InventorySupplierCardState extends State<InventorySupplierCard> {
                       children: [
                         Text(
                           '${widget.data?.profileName}',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Text(
                           '${widget.data?.partner?.businessName}',
-                          style: TextStyle(fontSize: 12, color: grey3),
+                          style: const TextStyle(fontSize: 12, color: grey3),
                         ),
                       ],
                     ),
@@ -103,24 +103,24 @@ class _InventorySupplierCardState extends State<InventorySupplierCard> {
                   children: [
                     Text(
                       '${widget.data!.refCode}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
                         color: grey3,
                         decoration: TextDecoration.underline,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'ТТД: ',
                           style: TextStyle(color: grey3, fontSize: 10),
                         ),
                         Text(
                           '${widget.data?.regNumber}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
                             color: grey3,
@@ -128,15 +128,15 @@ class _InventorySupplierCardState extends State<InventorySupplierCard> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 6,
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios,
                   size: 12,
                 ),

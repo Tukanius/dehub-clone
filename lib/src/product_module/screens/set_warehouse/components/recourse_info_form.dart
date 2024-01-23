@@ -20,7 +20,7 @@ class _RecourseInfoFormState extends State<RecourseInfoForm> {
           textColor: productColor,
           textAlign: TextAlign.end,
           name: 'minQuantity',
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: InputBorder.none,
             fillColor: white,
             filled: true,
@@ -31,7 +31,7 @@ class _RecourseInfoFormState extends State<RecourseInfoForm> {
             prefixIcon: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 SizedBox(
                   width: 15,
                 ),
@@ -56,7 +56,7 @@ class _RecourseInfoFormState extends State<RecourseInfoForm> {
           textColor: productColor,
           textAlign: TextAlign.end,
           name: 'noticeMinQuantity',
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: InputBorder.none,
             fillColor: white,
             filled: true,
@@ -67,7 +67,7 @@ class _RecourseInfoFormState extends State<RecourseInfoForm> {
             prefixIcon: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 SizedBox(
                   width: 15,
                 ),
@@ -87,7 +87,7 @@ class _RecourseInfoFormState extends State<RecourseInfoForm> {
             ),
           ]),
         ),
-        FormTextField(
+        const FormTextField(
           inputType: TextInputType.number,
           textColor: productColor,
           textAlign: TextAlign.end,
@@ -103,7 +103,7 @@ class _RecourseInfoFormState extends State<RecourseInfoForm> {
             prefixIcon: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 SizedBox(
                   width: 15,
                 ),
@@ -118,7 +118,7 @@ class _RecourseInfoFormState extends State<RecourseInfoForm> {
             ),
           ),
         ),
-        FormTextField(
+        const FormTextField(
           inputType: TextInputType.number,
           textColor: productColor,
           textAlign: TextAlign.end,
@@ -134,7 +134,7 @@ class _RecourseInfoFormState extends State<RecourseInfoForm> {
             prefixIcon: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 SizedBox(
                   width: 15,
                 ),
@@ -149,7 +149,7 @@ class _RecourseInfoFormState extends State<RecourseInfoForm> {
             ),
           ),
         ),
-        FormTextField(
+        const FormTextField(
           inputType: TextInputType.number,
           textColor: productColor,
           textAlign: TextAlign.end,
@@ -165,7 +165,7 @@ class _RecourseInfoFormState extends State<RecourseInfoForm> {
             prefixIcon: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 SizedBox(
                   width: 15,
                 ),
@@ -180,7 +180,7 @@ class _RecourseInfoFormState extends State<RecourseInfoForm> {
             ),
           ),
         ),
-        FormTextField(
+        const FormTextField(
           inputType: TextInputType.number,
           textColor: productColor,
           textAlign: TextAlign.end,
@@ -196,7 +196,7 @@ class _RecourseInfoFormState extends State<RecourseInfoForm> {
             prefixIcon: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 SizedBox(
                   width: 15,
                 ),
@@ -211,7 +211,7 @@ class _RecourseInfoFormState extends State<RecourseInfoForm> {
             ),
           ),
         ),
-        FormTextField(
+        const FormTextField(
           inputType: TextInputType.number,
           textColor: productColor,
           textAlign: TextAlign.end,
@@ -227,7 +227,7 @@ class _RecourseInfoFormState extends State<RecourseInfoForm> {
             prefixIcon: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 SizedBox(
                   width: 15,
                 ),

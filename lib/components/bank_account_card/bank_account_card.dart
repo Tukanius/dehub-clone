@@ -14,18 +14,18 @@ class BankAccountCard extends StatefulWidget {
   final Function()? statementClick;
   final Payment? data;
   const BankAccountCard({
-    Key? key,
+    super.key,
     this.statementClick,
     this.transactionClick,
     this.data,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
-  _BankAccountCardState createState() => _BankAccountCardState();
+  BankAccountCardState createState() => BankAccountCardState();
 }
 
-class _BankAccountCardState extends State<BankAccountCard> {
+class BankAccountCardState extends State<BankAccountCard> {
   General general = General();
   User user = User();
 
@@ -72,7 +72,7 @@ class _BankAccountCardState extends State<BankAccountCard> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     Column(
@@ -80,7 +80,7 @@ class _BankAccountCardState extends State<BankAccountCard> {
                       children: [
                         Text(
                           "${widget.data?.number}",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 12,
                             color: grey2,
@@ -88,7 +88,7 @@ class _BankAccountCardState extends State<BankAccountCard> {
                         ),
                         Text(
                           '${user.currentBusiness?.profileName}',
-                          style: TextStyle(color: grey2, fontSize: 10),
+                          style: const TextStyle(color: grey2, fontSize: 10),
                         )
                       ],
                     ),
@@ -96,14 +96,14 @@ class _BankAccountCardState extends State<BankAccountCard> {
                 ),
                 Column(
                   children: [
-                    Text(
+                    const Text(
                       'Үндсэн',
                       style: TextStyle(
                         fontSize: 10,
                         color: grey2,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     widget.data?.isDefault == true
@@ -113,7 +113,7 @@ class _BankAccountCardState extends State<BankAccountCard> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
                                 color: networkColor),
-                            child: Text(
+                            child: const Text(
                               'Тийм',
                               style: TextStyle(
                                 fontSize: 10,
@@ -128,7 +128,7 @@ class _BankAccountCardState extends State<BankAccountCard> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
                                 color: grey),
-                            child: Text(
+                            child: const Text(
                               'Үгүй',
                               style: TextStyle(
                                 fontSize: 10,
@@ -141,7 +141,7 @@ class _BankAccountCardState extends State<BankAccountCard> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 36,
             ),
             Row(
@@ -150,19 +150,19 @@ class _BankAccountCardState extends State<BankAccountCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Оноосон нэр',
                         style: TextStyle(
                           fontSize: 10,
                           color: grey2,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
                         '${widget.data?.shortName}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                           color: grey2,
@@ -191,23 +191,22 @@ class _BankAccountCardState extends State<BankAccountCard> {
                     SizedBox(
                       width: widget.data?.bankName == "GOLOMT" ? 10 : 0,
                     ),
-                    widget.data?.bankName == "GOLOMT"
-                        ? GestureDetector(
-                            onTap: widget.statementClick,
-                            child: Container(
-                              height: 36,
-                              width: 36,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                color: networkColor.withOpacity(0.1),
-                              ),
-                              child: Center(
-                                child: SvgPicture.asset(
-                                    'assets/svg/dansnii-huulga.svg'),
-                              ),
-                            ),
-                          )
-                        : SizedBox(),
+                    if (widget.data?.bankName == "GOLOMT")
+                      GestureDetector(
+                        onTap: widget.statementClick,
+                        child: Container(
+                          height: 36,
+                          width: 36,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            color: networkColor.withOpacity(0.1),
+                          ),
+                          child: Center(
+                            child: SvgPicture.asset(
+                                'assets/svg/dansnii-huulga.svg'),
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ],

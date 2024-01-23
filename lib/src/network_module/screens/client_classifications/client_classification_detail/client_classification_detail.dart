@@ -21,9 +21,9 @@ class ClientClassificationDetail extends StatefulWidget {
   final String id;
   static const routeName = '/ClientClassificationDetail';
   const ClientClassificationDetail({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<ClientClassificationDetail> createState() =>
@@ -68,10 +68,10 @@ class _ClientClassificationDetailState extends State<ClientClassificationDetail>
         elevation: 0,
         backgroundColor: backgroundColor,
         surfaceTintColor: backgroundColor,
-        leading: CustomBackButton(color: networkColor),
+        leading: const CustomBackButton(color: networkColor),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: networkColor,
               ),
@@ -83,7 +83,7 @@ class _ClientClassificationDetailState extends State<ClientClassificationDetail>
                   Container(
                     margin:
                         const EdgeInsets.only(left: 15, bottom: 10, top: 25),
-                    child: Text(
+                    child: const Text(
                       'Харилцагчийн мэдээлэл',
                       style: TextStyle(
                         color: grey3,
@@ -126,7 +126,7 @@ class _ClientClassificationDetailState extends State<ClientClassificationDetail>
                   Container(
                     margin:
                         const EdgeInsets.only(left: 15, bottom: 10, top: 10),
-                    child: Text(
+                    child: const Text(
                       'Мэдээлэл',
                       style: TextStyle(
                         color: grey3,
@@ -170,10 +170,10 @@ class _ClientClassificationDetailState extends State<ClientClassificationDetail>
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           SvgPicture.asset('assets/svg/person-check.svg'),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
-                          Text(
+                          const Text(
                             'Өөрчлөх',
                             style: TextStyle(
                               color: networkColor,
@@ -187,7 +187,7 @@ class _ClientClassificationDetailState extends State<ClientClassificationDetail>
                   Container(
                     margin:
                         const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-                    child: Text(
+                    child: const Text(
                       'Тайлбар',
                       style: TextStyle(
                         color: grey3,
@@ -204,7 +204,7 @@ class _ClientClassificationDetailState extends State<ClientClassificationDetail>
                       textAlign: TextAlign.left,
                       name: 'description',
                       maxLines: 5,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.zero,
                           borderSide: BorderSide(

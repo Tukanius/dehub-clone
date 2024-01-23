@@ -20,7 +20,7 @@ class FieldCard extends StatefulWidget {
   final GlobalKey? fbKey;
   final FontWeight? secondTextFontWeight;
   const FieldCard({
-    Key? key,
+    super.key,
     this.marginBottom,
     this.secondTextFontWeight,
     this.fbKey,
@@ -38,7 +38,7 @@ class FieldCard extends StatefulWidget {
     required this.paddingHorizontal,
     required this.paddingVertical,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<FieldCard> createState() => _FieldCardState();
@@ -90,11 +90,9 @@ class _FieldCardState extends State<FieldCard> {
                                       ? red
                                       : widget.secondTextColor,
                                   fontSize: widget.fontSize ?? widget.fontSize,
-                                  fontWeight: widget.fontWeight != null
-                                      ? widget.fontWeight
-                                      : widget.secondTextFontWeight != null
-                                          ? widget.secondTextFontWeight
-                                          : FontWeight.normal,
+                                  fontWeight: widget.fontWeight ??
+                                      (widget.secondTextFontWeight ??
+                                          FontWeight.normal),
                                 ),
                                 textAlign: TextAlign.end,
                               )
@@ -103,35 +101,30 @@ class _FieldCardState extends State<FieldCard> {
                                 style: TextStyle(
                                   color: widget.secondTextColor,
                                   fontSize: widget.fontSize ?? widget.fontSize,
-                                  fontWeight: widget.fontWeight != null
-                                      ? widget.fontWeight
-                                      : widget.secondTextFontWeight != null
-                                          ? widget.secondTextFontWeight
-                                          : FontWeight.normal,
+                                  fontWeight: widget.fontWeight ??
+                                      (widget.secondTextFontWeight ??
+                                          FontWeight.normal),
                                 ),
                                 textAlign: TextAlign.end,
                               ),
                   ),
-                  widget.thirdText != null
-                      ? Text(
-                          '${widget.thirdText}',
-                          style: TextStyle(
-                              color: widget.thirdTextColor,
-                              fontWeight: widget.secondTextFontWeight ??
-                                  widget.secondTextFontWeight),
-                        )
-                      : SizedBox(),
+                  if (widget.thirdText != null)
+                    Text(
+                      '${widget.thirdText}',
+                      style: TextStyle(
+                          color: widget.thirdTextColor,
+                          fontWeight: widget.secondTextFontWeight ??
+                              widget.secondTextFontWeight),
+                    ),
                   SizedBox(
                     width: widget.onClick == null ? 0 : 10,
                   ),
-                  widget.onClick != null
-                      ? Icon(
-                          Icons.arrow_forward_ios,
-                          color:
-                              widget.validate == true ? red : widget.arrowColor,
-                          size: 14,
-                        )
-                      : SizedBox(),
+                  if (widget.onClick != null)
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: widget.validate == true ? red : widget.arrowColor,
+                      size: 14,
+                    ),
                 ],
               ),
             ),

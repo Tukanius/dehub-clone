@@ -27,7 +27,9 @@ import 'package:dehub/models/invoice_payment_status.dart';
 import 'package:dehub/models/invoice_history_types.dart';
 import 'package:dehub/models/invoice_status.dart';
 import 'package:dehub/models/product_buyer_fee_rules.dart';
+import 'package:dehub/models/product_buyer_penalty_types.dart';
 import 'package:dehub/models/product_supp_fee_rules.dart';
+import 'package:dehub/models/product_supp_penalty_types.dart';
 import 'package:dehub/models/program_status.dart';
 import 'package:dehub/models/pull_sheet_status.dart';
 import 'package:dehub/models/purchase_types.dart';
@@ -142,8 +144,12 @@ class General {
   List<InventoryGoods>? tiers;
   List<String>? fieldTypes;
   List<ProgramStatus>? programStatus;
+  List<ProductSuppPenaltyTypes>? productSuppPenaltyTypes;
+  List<ProductBuyerPenaltyTypes>? productBuyerPenaltyTypes;
 
   General({
+    this.productSuppPenaltyTypes,
+    this.productBuyerPenaltyTypes,
     this.programStatus,
     this.fieldTypes,
     this.tiers,

@@ -1,22 +1,22 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/partner_cards/sent_card.dart';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/network_module/screens/invitation_detail_page/invitation_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class OnboarInvitation extends StatefulWidget {
-  const OnboarInvitation({Key? key}) : super(key: key);
+  const OnboarInvitation({super.key});
 
   @override
-  _OnboarInvitationState createState() => _OnboarInvitationState();
+  OnboarInvitationState createState() => OnboarInvitationState();
 }
 
-class _OnboarInvitationState extends State<OnboarInvitation>
+class OnboarInvitationState extends State<OnboarInvitation>
     with AfterLayoutMixin {
   int page = 1;
   int limit = 10;
@@ -35,7 +35,7 @@ class _OnboarInvitationState extends State<OnboarInvitation>
     setState(() {
       isLoading = false;
     });
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         startAnimation = true;
       });
@@ -54,7 +54,7 @@ class _OnboarInvitationState extends State<OnboarInvitation>
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
     });
@@ -71,56 +71,26 @@ class _OnboarInvitationState extends State<OnboarInvitation>
   @override
   Widget build(BuildContext context) {
     return isLoading == true
-        ? Center(
+        ? const Center(
             child: CircularProgressIndicator(
               color: networkColor,
             ),
           )
-        : SmartRefresher(
-            enablePullDown: true,
-            enablePullUp: true,
-            controller: refreshController,
-            header: WaterDropHeader(
-              waterDropColor: networkColor,
-              refresh: SizedBox(
-                height: 20,
-                width: 20,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: networkColor,
-                ),
-              ),
-            ),
-            onRefresh: _onRefresh,
+        : Refresher(
+            refreshController: refreshController,
             onLoading: _onLoading,
-            footer: CustomFooter(
-              builder: (context, mode) {
-                Widget body;
-                if (mode == LoadStatus.idle) {
-                  body = const Text("");
-                } else if (mode == LoadStatus.loading) {
-                  body = const CupertinoActivityIndicator();
-                } else if (mode == LoadStatus.failed) {
-                  body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                } else {
-                  body = const Text("Мэдээлэл алга байна");
-                }
-                return SizedBox(
-                  height: 55.0,
-                  child: Center(child: body),
-                );
-              },
-            ),
+            onRefresh: _onRefresh,
+            color: networkColor,
             child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
-                    invitation.rows?.length != 0
+                    invitation.rows!.isNotEmpty
                         ? Column(
                             children: invitation.rows!
                                 .map(
@@ -140,7 +110,7 @@ class _OnboarInvitationState extends State<OnboarInvitation>
                                 )
                                 .toList(),
                           )
-                        : NotFound(
+                        : const NotFound(
                             module: 'NETWORK',
                             labelText: "Урилга олдсонгүй",
                           ),

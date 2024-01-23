@@ -1,13 +1,13 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/client_classification_card/client_classification_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/network_module/screens/client_classifications/client_classification_detail/client_classification_detail.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 
 class ClientClassifications extends StatefulWidget {
   static const routeName = '/ClientClassifications';
-  const ClientClassifications({Key? key}) : super(key: key);
+  const ClientClassifications({super.key});
 
   @override
   State<ClientClassifications> createState() => _ClientClassificationsState();
@@ -33,14 +33,14 @@ class _ClientClassificationsState extends State<ClientClassifications>
 
   list(page, limit, String value) async {
     Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(query: '${value}');
+    Filter filter = Filter(query: value);
     var res = await BusinessApi()
         .networkList(ResultArguments(offset: offset, filter: filter));
     setState(() {
       business = res;
       isLoading = false;
     });
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         startAnimation = true;
       });
@@ -64,7 +64,7 @@ class _ClientClassificationsState extends State<ClientClassifications>
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
     });
@@ -87,12 +87,12 @@ class _ClientClassificationsState extends State<ClientClassifications>
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios_new,
             color: white,
           ),
         ),
-        title: Text(
+        title: const Text(
           'Ангилал, зэрэглэл',
           style: TextStyle(
             color: white,
@@ -102,54 +102,24 @@ class _ClientClassificationsState extends State<ClientClassifications>
         ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: networkColor,
               ),
             )
           : Column(
               children: [
-                SearchButton(
+                const SearchButton(
                   color: networkColor,
                 ),
                 Expanded(
-                  child: SmartRefresher(
-                    enablePullDown: true,
-                    enablePullUp: true,
-                    controller: refreshController,
-                    header: WaterDropHeader(
-                      waterDropColor: networkColor,
-                      refresh: SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: networkColor,
-                        ),
-                      ),
-                    ),
-                    onRefresh: _onRefresh,
+                  child: Refresher(
+                    refreshController: refreshController,
                     onLoading: _onLoading,
-                    footer: CustomFooter(
-                      builder: (context, mode) {
-                        Widget body;
-                        if (mode == LoadStatus.idle) {
-                          body = const Text("");
-                        } else if (mode == LoadStatus.loading) {
-                          body = const CupertinoActivityIndicator();
-                        } else if (mode == LoadStatus.failed) {
-                          body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                        } else {
-                          body = const Text("Мэдээлэл алга байна");
-                        }
-                        return SizedBox(
-                          height: 55.0,
-                          child: Center(child: body),
-                        );
-                      },
-                    ),
+                    onRefresh: _onRefresh,
+                    color: networkColor,
                     child: SingleChildScrollView(
-                      child: business.rows?.length != 0
+                      child: business.rows!.isNotEmpty
                           ? Column(
                               children: business.rows!
                                   .map(
@@ -174,7 +144,7 @@ class _ClientClassificationsState extends State<ClientClassifications>
                                   )
                                   .toList(),
                             )
-                          : NotFound(
+                          : const NotFound(
                               module: "NETWORK",
                               labelText: 'Хоосон байна',
                             ),

@@ -14,8 +14,8 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 class CreateSubCategory extends StatefulWidget {
   static const routeName = '/CreateSubCategory';
   const CreateSubCategory({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<CreateSubCategory> createState() => _CreateSubCategoryState();
@@ -65,8 +65,8 @@ class _CreateSubCategoryState extends State<CreateSubCategory> {
       appBar: AppBar(
         backgroundColor: white,
         surfaceTintColor: white,
-        iconTheme: IconThemeData(color: productColor),
-        title: Text(
+        iconTheme: const IconThemeData(color: productColor),
+        title: const Text(
           'Дэд категори нэмэх',
           style: TextStyle(
             color: productColor,
@@ -80,7 +80,7 @@ class _CreateSubCategoryState extends State<CreateSubCategory> {
           children: [
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Энгийн болон динамик талбартай дэд категори нэмэх',
                 style: TextStyle(
                   color: grey3,
@@ -122,7 +122,7 @@ class _CreateSubCategoryState extends State<CreateSubCategory> {
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Дэд категори',
                 style: TextStyle(color: grey3, fontWeight: FontWeight.w600),
               ),
@@ -139,7 +139,7 @@ class _CreateSubCategoryState extends State<CreateSubCategory> {
                       source.product.standardPrice =
                           double.tryParse(value) ?? 0;
                     },
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       fillColor: white,
                       filled: true,
@@ -150,7 +150,7 @@ class _CreateSubCategoryState extends State<CreateSubCategory> {
                       prefixIcon: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           SizedBox(
                             width: 15,
                           ),
@@ -175,7 +175,7 @@ class _CreateSubCategoryState extends State<CreateSubCategory> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
                     color: white,
-                    child: Text(
+                    child: const Text(
                       'Тайлбар',
                       style: TextStyle(
                         color: grey3,
@@ -186,7 +186,7 @@ class _CreateSubCategoryState extends State<CreateSubCategory> {
                   Container(
                     color: white,
                     padding: const EdgeInsets.all(15),
-                    child: FormTextField(
+                    child: const FormTextField(
                       textAlign: TextAlign.left,
                       name: 'description',
                       maxLines: 5,
@@ -208,7 +208,7 @@ class _CreateSubCategoryState extends State<CreateSubCategory> {
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Динамик талбар',
                 style: TextStyle(
                   color: grey3,
@@ -226,7 +226,7 @@ class _CreateSubCategoryState extends State<CreateSubCategory> {
                     color: productColor.withOpacity(0.2),
                   ),
                   padding: const EdgeInsets.all(10),
-                  child: Text(
+                  child: const Text(
                     '+Шинэ талбар',
                     style: TextStyle(
                       color: productColor,
@@ -237,12 +237,12 @@ class _CreateSubCategoryState extends State<CreateSubCategory> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 100,
             ),
             Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 25,
                 ),
                 Expanded(
@@ -257,7 +257,7 @@ class _CreateSubCategoryState extends State<CreateSubCategory> {
                     textColor: productColor,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Expanded(
@@ -271,12 +271,12 @@ class _CreateSubCategoryState extends State<CreateSubCategory> {
                     textColor: white,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 25,
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
           ],

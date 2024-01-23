@@ -11,12 +11,12 @@ class InvoiceStatementCard extends StatefulWidget {
   final bool startAnimation;
   final Invoice data;
   const InvoiceStatementCard({
-    Key? key,
+    super.key,
     required this.index,
     required this.startAnimation,
     required this.data,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<InvoiceStatementCard> createState() => _InvoiceStatementCardState();
@@ -47,12 +47,12 @@ class _InvoiceStatementCardState extends State<InvoiceStatementCard> {
                     backgroundColor: grey,
                     backgroundImage: NetworkImage('${widget.data.logo}'),
                   )
-                : CircleAvatar(
+                : const CircleAvatar(
                     radius: 20,
                     backgroundColor: grey,
                     backgroundImage: AssetImage('images/avatar.png'),
                   ),
-            SizedBox(
+            const SizedBox(
               width: 15,
             ),
             Expanded(
@@ -61,7 +61,7 @@ class _InvoiceStatementCardState extends State<InvoiceStatementCard> {
                 children: [
                   RichText(
                     text: TextSpan(
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: "Montserrat",
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
@@ -69,23 +69,23 @@ class _InvoiceStatementCardState extends State<InvoiceStatementCard> {
                       children: [
                         TextSpan(
                           text: '${widget.data.profileName}, ',
-                          style: TextStyle(color: buttonColor),
+                          style: const TextStyle(color: buttonColor),
                         ),
                         TextSpan(
                           text: '${widget.data.refCode}',
-                          style: TextStyle(color: invoiceColor),
+                          style: const TextStyle(color: invoiceColor),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Text(
                     '${widget.data.partner?.businessName}',
-                    style: TextStyle(color: grey2, fontWeight: FontWeight.w600),
+                    style: const TextStyle(color: grey2, fontWeight: FontWeight.w600),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Row(
@@ -93,25 +93,25 @@ class _InvoiceStatementCardState extends State<InvoiceStatementCard> {
                       SvgPicture.asset(
                         'assets/svg/inv.svg',
                         colorFilter:
-                            ColorFilter.mode(invoiceColor, BlendMode.srcIn),
+                            const ColorFilter.mode(invoiceColor, BlendMode.srcIn),
                       ),
                       Text(
                         '  ${widget.data.invoicesCount} ш,  ',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: buttonColor,
                           fontSize: 12,
                         ),
                       ),
                       Text(
                         '${Utils().formatCurrency(widget.data.invoicesAmount.toString())}₮',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: invoiceColor,
                           fontSize: 12,
                         ),
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Row(
@@ -121,14 +121,14 @@ class _InvoiceStatementCardState extends State<InvoiceStatementCard> {
                       ),
                       Text(
                         '   ${widget.data.overdueInvoicesCount} ш,  ',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: buttonColor,
                           fontSize: 12,
                         ),
                       ),
                       Text(
                         '${Utils().formatCurrency(widget.data.overdueInvoicesAmount.toString())}₮',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: invoiceColor,
                           fontSize: 12,
                         ),
@@ -138,7 +138,7 @@ class _InvoiceStatementCardState extends State<InvoiceStatementCard> {
                 ],
               ),
             ),
-            Icon(
+            const Icon(
               Icons.arrow_forward_ios,
               color: grey2,
               size: 18,

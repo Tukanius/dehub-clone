@@ -1,4 +1,6 @@
-import 'package:dehub/models/qpay-urls.dart';
+// ignore_for_file: non_constant_identifier_names
+
+import 'package:dehub/models/qpay_urls.dart';
 part '../parts/invoice.dart';
 
 class Invoice {

@@ -2,7 +2,7 @@ import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/close_button/close_button.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
-import 'package:dehub/models/business-staffs.dart';
+import 'package:dehub/models/business_staffs.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/result.dart';
@@ -38,12 +38,12 @@ class AddRank extends StatefulWidget {
   final String? parentRefCode;
   final String? parentId;
   const AddRank({
-    Key? key,
+    super.key,
     this.parentRefCode,
     this.parentName,
     this.parentId,
     required this.listenController,
-  }) : super(key: key);
+  });
 
   @override
   State<AddRank> createState() => _AddRankState();
@@ -123,8 +123,8 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
         backgroundColor: networkColor,
         surfaceTintColor: networkColor,
         elevation: 0,
-        leading: CustomCloseButton(),
-        title: Text(
+        leading: const CustomCloseButton(),
+        title: const Text(
           'Харилцагчийн зэрэглэл',
           style: TextStyle(
             color: white,
@@ -139,7 +139,7 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
           children: [
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Мэдээлэл',
                 style: TextStyle(
                   color: grey3,
@@ -161,7 +161,7 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
                         color: white,
                         width: MediaQuery.of(context).size.width,
                         padding: const EdgeInsets.all(15),
-                        child: Text(
+                        child: const Text(
                           'Ангилал сонгоно уу',
                           style: TextStyle(color: red),
                         ),
@@ -176,7 +176,7 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
                             color: white,
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          child: Row(
+                          child: const Row(
                             children: [
                               Text(
                                 'Сонгох',
@@ -193,12 +193,12 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
                         onChanged: (value) {},
                         dropdownColor: white,
                         elevation: 2,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'Ангилал нэр',
                           hintStyle: TextStyle(fontSize: 14, color: dark),
                           filled: true,
                           fillColor: white,
-                          contentPadding: const EdgeInsets.symmetric(
+                          contentPadding: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 15),
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
@@ -216,7 +216,7 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
                                 value: item,
                                 child: Text(
                                   '${item.name}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: dark,
                                     fontSize: 14,
                                   ),
@@ -231,18 +231,18 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Ангилал код',
                     style: TextStyle(color: dark),
                   ),
                   refcode == null
-                      ? Text(
+                      ? const Text(
                           'Ангилал код',
                           style: TextStyle(color: networkColor),
                         )
                       : Text(
-                          '${refcode}',
-                          style: TextStyle(
+                          '$refcode',
+                          style: const TextStyle(
                             color: networkColor,
                           ),
                         )
@@ -252,7 +252,7 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
             Container(
               color: white,
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -282,7 +282,7 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
                     decoration: InputDecoration(
                       hintText: 'Зэрэглэл нэр оруулах',
                       fillColor: white,
-                      hintStyle: TextStyle(color: networkColor),
+                      hintStyle: const TextStyle(color: networkColor),
                       filled: true,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 15, horizontal: 15),
@@ -293,7 +293,7 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
                       prefixIcon: Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 15, horizontal: 15),
-                        child: Text(
+                        child: const Text(
                           'Зэрэглэл нэр',
                           style: TextStyle(color: dark),
                         ),
@@ -307,7 +307,7 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Тайлбар',
                       style: TextStyle(
                         color: grey3,
@@ -321,7 +321,7 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
                     decoration: InputDecoration(
                       hintText: 'Тайлбар оруулах',
                       fillColor: white,
-                      hintStyle: TextStyle(color: networkColor),
+                      hintStyle: const TextStyle(color: networkColor),
                       filled: true,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 15, horizontal: 15),
@@ -340,13 +340,13 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Бүртгэсэн огноо, цаг',
                     style: TextStyle(color: dark),
                   ),
                   Text(
-                    '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
-                    style: TextStyle(
+                    DateFormat("yyyy-MM-dd").format(DateTime.now()),
+                    style: const TextStyle(
                       color: dark,
                     ),
                   )
@@ -359,13 +359,13 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Бүртгэсэн ажилтан',
                     style: TextStyle(color: dark),
                   ),
                   Text(
                     '${partner.user?.firstName}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: networkColor,
                     ),
                   )
@@ -378,7 +378,7 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Статус',
                     style: TextStyle(color: dark),
                   ),
@@ -389,7 +389,7 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
                       borderRadius: BorderRadius.circular(15),
                       color: grey2.withOpacity(0.1),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Түр төлөв',
                       style: TextStyle(
                         color: grey2,
@@ -401,7 +401,7 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             Row(
@@ -434,7 +434,7 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
           ],
@@ -447,7 +447,7 @@ class _AddRankState extends State<AddRank> with AfterLayoutMixin {
         value: item,
         child: Text(
           item,
-          style: TextStyle(
+          style: const TextStyle(
             color: networkColor,
             fontSize: 14,
           ),

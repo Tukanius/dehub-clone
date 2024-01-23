@@ -20,10 +20,10 @@ import 'package:intl/intl.dart';
 
 class BasicInformationTab extends StatefulWidget {
   final String id;
-  BasicInformationTab({
-    Key? key,
+  const BasicInformationTab({
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<BasicInformationTab> createState() => _BasicInformationTabState();
@@ -72,12 +72,12 @@ class _BasicInformationTabState extends State<BasicInformationTab>
     general = Provider.of<GeneralProvider>(context, listen: false).general;
     user = Provider.of<UserProvider>(context, listen: false).invoiceMe;
     return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       child: Container(
         child: isLoading == true
             ? Container(
                 margin: const EdgeInsets.only(top: 20),
-                child: Center(
+                child: const Center(
                   child: CircularProgressIndicator(
                     color: invoiceColor,
                   ),
@@ -89,7 +89,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Нэхэмжлэх',
                       style: TextStyle(
                         color: grey3,
@@ -186,7 +186,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Худалдан авагч тал',
                       style: TextStyle(
                         color: grey3,
@@ -278,7 +278,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Нийлүүлэгч тал',
                       style: TextStyle(
                         color: grey3,
@@ -370,19 +370,18 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      invoice.lines!.isNotEmpty
-                          ? Container(
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Text(
-                                'БАРАА, ҮЙЛЧИЛГЭЭ',
-                                style: TextStyle(
-                                  color: grey3,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            )
-                          : SizedBox(),
+                      if (invoice.lines!.isNotEmpty)
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: const Text(
+                            'БАРАА, ҮЙЛЧИЛГЭЭ',
+                            style: TextStyle(
+                              color: grey3,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
                       Column(
                         children: invoice.lines!
                             .map(
@@ -396,7 +395,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                       Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
-                        child: Text(
+                        child: const Text(
                           'Нэмэлт Тэмдэглэл',
                           style: TextStyle(
                             color: grey3,
@@ -468,20 +467,19 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                     secondText:
                         Utils().formatCurrency(invoice.totalAmount.toString()),
                   ),
-                  invoice.additionalLines!.isNotEmpty
-                      ? Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          child: Text(
-                            'НЭМЭЛТЭЭР',
-                            style: TextStyle(
-                              color: grey3,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        )
-                      : SizedBox(),
+                  if (invoice.additionalLines!.isNotEmpty)
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: const Text(
+                        'НЭМЭЛТЭЭР',
+                        style: TextStyle(
+                          color: grey3,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
                   Column(
                     children: invoice.additionalLines!
                         .map(
@@ -491,27 +489,26 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         )
                         .toList(),
                   ),
-                  invoice.attachments!.isNotEmpty
-                      ? Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          child: Text(
-                            'Хавсралт файл',
-                            style: TextStyle(
-                              color: grey3,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        )
-                      : SizedBox(),
+                  if (invoice.attachments!.isNotEmpty)
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: const Text(
+                        'Хавсралт файл',
+                        style: TextStyle(
+                          color: grey3,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
                   Column(
                     children: invoice.attachments!
                         .map(
                           (e) => Container(
                             color: white,
                             padding: const EdgeInsets.all(15),
-                            child: Row(
+                            child: const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
@@ -529,7 +526,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         )
                         .toList(),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 70,
                   ),
                   user.currentBusiness?.type == "BUYER"
@@ -555,7 +552,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                                     ),
                                   );
                                 },
-                                child: Column(
+                                child: const Column(
                                   children: [
                                     Icon(
                                       Icons.visibility_outlined,
@@ -586,17 +583,17 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                                       },
                                       child: Column(
                                         children: [
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 3,
                                           ),
                                           SvgPicture.asset(
                                             'assets/svg/tuloh.svg',
                                             height: 14,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 3,
                                           ),
-                                          Text(
+                                          const Text(
                                             'Төлөх',
                                             style: TextStyle(
                                               color: white,
@@ -610,7 +607,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                                       onTap: () {
                                         approve(true);
                                       },
-                                      child: Column(
+                                      child: const Column(
                                         children: [
                                           SizedBox(
                                             height: 3,
@@ -643,7 +640,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                                       height: 17,
                                       width: 17,
                                     ),
-                                    Text(
+                                    const Text(
                                       'Цуцлах',
                                       style: TextStyle(
                                         color: white,
@@ -663,7 +660,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                                       height: 17,
                                       width: 17,
                                     ),
-                                    Text(
+                                    const Text(
                                       'Цуцлах',
                                       style: TextStyle(
                                         color: white,
@@ -696,7 +693,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                                 color: black,
                                 borderRadius: BorderRadius.circular(5),
                               ),
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -716,7 +713,7 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                             ),
                           ),
                         ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                 ],

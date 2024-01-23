@@ -32,21 +32,21 @@ class _InventoryReferenceCardState extends State<InventoryReferenceCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${widget.labelText}',
-                  style: TextStyle(color: productColor),
+                  widget.labelText,
+                  style: const TextStyle(color: productColor),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 3,
                 ),
                 Text(
-                  '${widget.refCode}',
-                  style: TextStyle(
+                  widget.refCode,
+                  style: const TextStyle(
                     color: grey2,
                   ),
                 )
               ],
             ),
-            Icon(
+            const Icon(
               Icons.arrow_forward_ios,
               color: productColor,
               size: 16,

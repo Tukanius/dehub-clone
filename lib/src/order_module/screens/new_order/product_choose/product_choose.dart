@@ -10,7 +10,7 @@ import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
-import 'package:dehub/providers/checkout-provider.dart';
+import 'package:dehub/providers/checkout_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -36,11 +36,11 @@ class ProductChoose extends StatefulWidget {
   final String businessId;
   static const routeName = '/ProductChoose';
   const ProductChoose({
-    Key? key,
+    super.key,
     required this.listenController,
     required this.isPackage,
     required this.businessId,
-  }) : super(key: key);
+  });
 
   @override
   State<ProductChoose> createState() => _ProductChooseState();
@@ -64,14 +64,14 @@ class _ProductChooseState extends State<ProductChoose>
   afterFirstLayout(BuildContext context) async {
     order = await OrderApi().variantSelect(
         user.currentBusiness?.type == "SUPPLIER" ? "SALES" : "PURCHASE",
-        '${widget.businessId}',
+        widget.businessId,
         query,
         '',
         '',
         '');
     category = await InventoryApi().category(
         user.currentBusiness?.type == "SUPPLIER" ? "SALES" : "PURCHASE",
-        "${widget.businessId}");
+        widget.businessId);
     setState(() {
       category.rows?.add(
         Order(id: '', name: 'Бүгд'),
@@ -92,7 +92,7 @@ class _ProductChooseState extends State<ProductChoose>
           'a',
           value,
           "",
-          '${type}',
+          type,
           '');
       setState(() {
         isSubmit = false;
@@ -119,8 +119,8 @@ class _ProductChooseState extends State<ProductChoose>
         backgroundColor: orderColor,
         surfaceTintColor: orderColor,
         elevation: 0,
-        leading: CustomCloseButton(),
-        title: Text(
+        leading: const CustomCloseButton(),
+        title: const Text(
           'Бараа сонгож нэмэх',
           style: TextStyle(
             fontWeight: FontWeight.w600,
@@ -130,7 +130,7 @@ class _ProductChooseState extends State<ProductChoose>
         ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: orderColor,
               ),
@@ -172,7 +172,7 @@ class _ProductChooseState extends State<ProductChoose>
                                                     "SUPPLIER"
                                                 ? "SALES"
                                                 : "PURCHASE",
-                                            '${widget.businessId}',
+                                            widget.businessId,
                                             query,
                                             '',
                                             '${e.id}',
@@ -205,17 +205,17 @@ class _ProductChooseState extends State<ProductChoose>
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         isSubmit == true
-                            ? Center(
+                            ? const Center(
                                 child: CircularProgressIndicator(
                                   color: orderColor,
                                 ),
                               )
-                            : order.rows?.length == 0
-                                ? NotFound(
+                            : order.rows!.isEmpty
+                                ? const NotFound(
                                     module: "ORDER",
                                     labelText: "Бараа олдсонгүй",
                                   )
@@ -246,7 +246,7 @@ class _ProductChooseState extends State<ProductChoose>
                                                   } else if (widget.isPackage ==
                                                           false &&
                                                       item.quantity == 0) {
-                                                    CustomScaffoldMessenger(
+                                                    customScaffoldMessenger(
                                                       context,
                                                       color: orderColor,
                                                       labelText:
@@ -256,7 +256,7 @@ class _ProductChooseState extends State<ProductChoose>
                                                 },
                                                 data: item,
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 5,
                                               ),
                                             ],
@@ -264,40 +264,38 @@ class _ProductChooseState extends State<ProductChoose>
                                         )
                                         .toList(),
                                   ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                       ],
                     ),
                   ),
                 ),
-                packageProduct.isNotEmpty && widget.isPackage == true
-                    ? Container(
-                        decoration: BoxDecoration(
-                          color: white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          ),
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 25),
-                        child: CustomButton(
-                          onClick: () {
-                            for (var i = 0; i < packageProduct.length; i++) {
-                              Provider.of<CheckOutProvider>(context,
-                                      listen: false)
-                                  .orderCart(packageProduct[i],
-                                      packageProduct[i].quantity!);
-                            }
-                            Navigator.of(context).pop();
-                            widget.listenController.changeVariable('addList');
-                          },
-                          labelText:
-                              "${packageProduct.fold(0, (previousValue, element) => previousValue + element.quantity!)} бараа = ${Utils().formatCurrency(packageProduct.fold(0.0, (previousValue, element) => previousValue + (element.quantity!.toDouble() * element.price!)).toString())} ₮",
-                          labelColor: orderColor,
-                        ),
-                      )
-                    : SizedBox(),
+                if (packageProduct.isNotEmpty && widget.isPackage == true)
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 25),
+                    child: CustomButton(
+                      onClick: () {
+                        for (var i = 0; i < packageProduct.length; i++) {
+                          Provider.of<CheckOutProvider>(context, listen: false)
+                              .orderCart(packageProduct[i],
+                                  packageProduct[i].quantity!);
+                        }
+                        Navigator.of(context).pop();
+                        widget.listenController.changeVariable('addList');
+                      },
+                      labelText:
+                          "${packageProduct.fold(0, (previousValue, element) => previousValue + element.quantity!)} бараа = ${Utils().formatCurrency(packageProduct.fold(0.0, (previousValue, element) => previousValue + (element.quantity!.toDouble() * element.price!)).toString())} ₮",
+                      labelColor: orderColor,
+                    ),
+                  ),
               ],
             ),
     );

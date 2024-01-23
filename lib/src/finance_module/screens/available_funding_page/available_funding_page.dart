@@ -63,7 +63,7 @@ class _AvailableFundingPageState extends State<AvailableFundingPage>
   }
 
   onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       limit = 10;
       isLoading = true;
@@ -103,7 +103,7 @@ class _AvailableFundingPageState extends State<AvailableFundingPage>
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+            child: const Text(
               'Боломжит нэхэмжлэхүүд',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
@@ -124,7 +124,7 @@ class _AvailableFundingPageState extends State<AvailableFundingPage>
                     onRefresh: onRefresh,
                     color: source.currentColor,
                     child: SingleChildScrollView(
-                      child: finance.rows?.length != 0
+                      child: finance.rows!.isNotEmpty
                           ? Column(
                               children: [
                                 Column(
@@ -147,12 +147,12 @@ class _AvailableFundingPageState extends State<AvailableFundingPage>
                                       )
                                       .toList(),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 40,
                                 ),
                               ],
                             )
-                          : NotFound(
+                          : const NotFound(
                               module: "FINANCE",
                               labelText: 'Хоосон байна',
                             ),

@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 class FinanceEntry extends StatefulWidget {
   static const routeName = '/FinanceEntry';
-  const FinanceEntry({Key? key}) : super(key: key);
+  const FinanceEntry({super.key});
 
   @override
   State<FinanceEntry> createState() => _FinanceEntryState();
@@ -23,7 +23,7 @@ class _FinanceEntryState extends State<FinanceEntry> {
       appBar: AppBar(
         backgroundColor: white,
         surfaceTintColor: white,
-        title: Text(
+        title: const Text(
           'Санхүүжилт модуль',
           style: TextStyle(
             fontSize: 17,
@@ -33,7 +33,7 @@ class _FinanceEntryState extends State<FinanceEntry> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             GridView.count(
@@ -56,7 +56,7 @@ class _FinanceEntryState extends State<FinanceEntry> {
                       border: Border.all(
                         color: grey,
                       ),
-                      image: DecorationImage(
+                      image: const DecorationImage(
                         image: AssetImage('images/golomt.png'),
                         fit: BoxFit.cover,
                       ),
@@ -106,10 +106,10 @@ class _FinanceEntryState extends State<FinanceEntry> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
-            Text(
+            const Text(
               'Санхүүжилтийн хөтөлбөрт хамрагдах банкаа сонгоно уу.',
               style: TextStyle(),
               textAlign: TextAlign.center,

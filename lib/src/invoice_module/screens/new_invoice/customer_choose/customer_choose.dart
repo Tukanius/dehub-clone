@@ -22,10 +22,10 @@ class CustomerChoose extends StatefulWidget {
 
   static const routeName = '/customerchoose';
   const CustomerChoose({
-    Key? key,
+    super.key,
     required this.partnerListenController,
     required this.listenController,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomerChoose> createState() => _CustomerChooseState();
@@ -64,7 +64,7 @@ class _CustomerChooseState extends State<CustomerChoose> {
                 ),
               ),
             ),
-            title: Text(
+            title: const Text(
               'Харилцагч сонгох',
               style: TextStyle(
                   fontWeight: FontWeight.w500, fontSize: 16, color: white),
@@ -97,17 +97,17 @@ class _CustomerChooseState extends State<CustomerChoose> {
                             Container(
                               alignment: Alignment.center,
                               height: 48,
-                              child: Text('Бүгд'),
+                              child: const Text('Бүгд'),
                             ),
                             Container(
                               alignment: Alignment.center,
                               height: 48,
-                              child: Text('Гэрээт'),
+                              child: const Text('Гэрээт'),
                             ),
                             Container(
                               alignment: Alignment.center,
                               height: 48,
-                              child: Text('Гэрээт биш'),
+                              child: const Text('Гэрээт биш'),
                             ),
                           ],
                         ),
@@ -123,8 +123,8 @@ class _CustomerChooseState extends State<CustomerChoose> {
                   listenController: widget.listenController,
                   partnerListenController: widget.partnerListenController,
                 ),
-                Gereet(),
-                GereetBish(),
+                const Gereet(),
+                const GereetBish(),
               ],
             ),
           ),

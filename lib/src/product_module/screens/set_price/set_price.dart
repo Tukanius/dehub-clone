@@ -34,10 +34,10 @@ class SetPrice extends StatefulWidget {
   final InventoryGoods data;
   final ListenController listenController;
   const SetPrice({
-    Key? key,
+    super.key,
     required this.listenController,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<SetPrice> createState() => _SetPriceState();
@@ -93,7 +93,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
           );
         }
         data.tierPrices = tierPrices;
-        if (res.product.quantityPrices?.length != 0 &&
+        if (res.product.quantityPrices!.isNotEmpty &&
             res.product.quantityPrices != null) {
           for (var i = 0; i < res.product.quantityPrices!.length; i++) {
             quantityPrices.add(
@@ -150,14 +150,14 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
         surfaceTintColor: white,
         elevation: 0,
         backgroundColor: white,
-        iconTheme: IconThemeData(color: productColor),
-        title: Text(
+        iconTheme: const IconThemeData(color: productColor),
+        title: const Text(
           'Барааны үнэ тохиргоо',
           style: TextStyle(color: productColor, fontSize: 16),
         ),
       ),
       body: isLoading == true
-          ? SizedBox()
+          ? const SizedBox()
           : GestureDetector(
               onTap: () {
                 FocusScope.of(context).unfocus();
@@ -169,7 +169,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                     Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
-                      child: Text(
+                      child: const Text(
                         "Ерөнхий мэдээлэл",
                         style: TextStyle(color: productColor),
                       ),
@@ -190,7 +190,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
                                   color: grey,
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       offset: Offset(0, 2),
                                       color: grey,
@@ -206,7 +206,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               Column(
@@ -216,52 +216,56 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text("Нэр: "),
+                                      const Text("Нэр: "),
                                       Text(
                                         '${widget.data.nameMon}',
-                                        style: TextStyle(color: productColor),
+                                        style: const TextStyle(
+                                            color: productColor),
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text("DeHUB код: "),
+                                      const Text("DeHUB код: "),
                                       Text(
                                         '${widget.data.refCode}',
-                                        style: TextStyle(color: productColor),
+                                        style: const TextStyle(
+                                            color: productColor),
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text("SKU код: "),
+                                      const Text("SKU код: "),
                                       Text(
                                         '${widget.data.skuCode}',
-                                        style: TextStyle(color: productColor),
+                                        style: const TextStyle(
+                                            color: productColor),
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text("Bar код: "),
+                                      const Text("Bar код: "),
                                       Text(
                                         '${widget.data.barCode}',
-                                        style: TextStyle(color: productColor),
+                                        style: const TextStyle(
+                                            color: productColor),
                                       ),
                                     ],
                                   ),
@@ -269,10 +273,10 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
-                          FieldCard(
+                          const FieldCard(
                             paddingHorizontal: 0,
                             paddingVertical: 10,
                             labelText: 'Үнэ тохируулах тоо',
@@ -280,14 +284,14 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                             secondTextColor: grey2,
                             secondTextFontWeight: FontWeight.w600,
                           ),
-                          FieldCard(
+                          const FieldCard(
                             paddingHorizontal: 0,
                             paddingVertical: 10,
                             labelText: 'Үндсэн нэгж',
                             secondText: 'ширхэг',
                             secondTextColor: grey2,
                           ),
-                          FieldCard(
+                          const FieldCard(
                             paddingHorizontal: 0,
                             paddingVertical: 10,
                             labelText: 'Үнэ тооцох валют',
@@ -300,7 +304,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                     Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
-                      child: Text(
+                      child: const Text(
                         "Татварын төрөл",
                         style: TextStyle(color: productColor),
                       ),
@@ -338,7 +342,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                         showModalBottomSheet(
                           context: context,
                           useSafeArea: true,
-                          builder: (context) => TaxSheet(),
+                          builder: (context) => const TaxSheet(),
                         );
                       },
                       arrowColor: productColor,
@@ -347,7 +351,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                     Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
-                      child: Text(
+                      child: const Text(
                         "Борлуулах нэгж стандарт үнэ",
                         style: TextStyle(color: productColor),
                       ),
@@ -363,7 +367,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                           source.product.standardPrice =
                               double.tryParse(value) ?? 0;
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           fillColor: white,
                           filled: true,
@@ -374,7 +378,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                           prefixIcon: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               SizedBox(
                                 width: 15,
                               ),
@@ -398,7 +402,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                     Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
-                      child: Text(
+                      child: const Text(
                         "Үнийн бүлэг",
                         style: TextStyle(color: productColor),
                       ),
@@ -406,7 +410,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                     Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
-                      child: Text(
+                      child: const Text(
                         "Үнийн бүлэг нэмсний дараа энэ жагсаалтад орж ирэхийг анхаарна уу. ",
                         style: TextStyle(
                           color: grey3,
@@ -445,44 +449,43 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                     Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
-                      child: Text(
+                      child: const Text(
                         "Тооноос хамаарах үнэ",
                         style: TextStyle(color: productColor),
                       ),
                     ),
-                    source.product.quantityPrices?.length != 0 &&
-                            source.product.quantityPrices != null
-                        ? Column(
-                            children: source.product.quantityPrices!
-                                .map(
-                                  (data) => FieldCard(
-                                    paddingHorizontal: 15,
-                                    paddingVertical: 10,
-                                    labelText: 'Тооны бүлэг',
-                                    color: white,
-                                    secondText: data.hasMaxLimit != false
-                                        ? "${data.minQuantity} - ${data.maxQuantity}"
-                                        : "> ${data.minQuantity}",
-                                    secondTextColor: productColor,
-                                    onClick: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        useSafeArea: true,
-                                        builder: (context) => QuantitySheet(
-                                          data: data,
-                                        ),
-                                      );
-                                    },
-                                    arrowColor: productColor,
-                                  ),
-                                )
-                                .toList(),
-                          )
-                        : SizedBox(),
+                    if (source.product.quantityPrices!.isNotEmpty &&
+                        source.product.quantityPrices != null)
+                      Column(
+                        children: source.product.quantityPrices!
+                            .map(
+                              (data) => FieldCard(
+                                paddingHorizontal: 15,
+                                paddingVertical: 10,
+                                labelText: 'Тооны бүлэг',
+                                color: white,
+                                secondText: data.hasMaxLimit != false
+                                    ? "${data.minQuantity} - ${data.maxQuantity}"
+                                    : "> ${data.minQuantity}",
+                                secondTextColor: productColor,
+                                onClick: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    useSafeArea: true,
+                                    builder: (context) => QuantitySheet(
+                                      data: data,
+                                    ),
+                                  );
+                                },
+                                arrowColor: productColor,
+                              ),
+                            )
+                            .toList(),
+                      ),
                     Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 15),
-                      child: Text(
+                      child: const Text(
                         "Тооноос хамаарах үнийг энд тохируулна уу.",
                         style: TextStyle(
                           color: grey3,
@@ -496,11 +499,11 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                           showModalBottomSheet(
                             context: context,
                             useSafeArea: true,
-                            builder: (context) => QuantitySheet(),
+                            builder: (context) => const QuantitySheet(),
                           );
                         }
                       },
-                      labelColor: Color(0xffE9E9EA),
+                      labelColor: const Color(0xffE9E9EA),
                       borderColor: grey2.withOpacity(0.5),
                       textColor: productColor,
                       labelText: 'Тооны интервал нэмэх',
@@ -508,7 +511,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                     Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 15),
-                      child: Text(
+                      child: const Text(
                         "Нэмэлт хэмжих нэгж",
                         style: TextStyle(color: productColor),
                       ),
@@ -516,7 +519,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                     Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
-                      child: Text(
+                      child: const Text(
                         "Таны сонгосон бараанд нэмэлт хэмжих нэгж байхгүй байна",
                         style: TextStyle(
                           color: grey3,
@@ -524,12 +527,12 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 60,
                     ),
                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 25,
                         ),
                         Expanded(
@@ -539,7 +542,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                               int index = tiers.indexWhere(
                                   (element) => element.customPrice == null);
                               if (index > -1) {
-                                CustomScaffoldMessenger(
+                                customScaffoldMessenger(
                                   context,
                                   color: productColor,
                                   labelText:
@@ -555,7 +558,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                             textColor: productColor,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
                         Expanded(
@@ -565,7 +568,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                               int index = tiers.indexWhere(
                                   (element) => element.customPrice == null);
                               if (index > -1) {
-                                CustomScaffoldMessenger(
+                                customScaffoldMessenger(
                                   context,
                                   color: productColor,
                                   labelText:
@@ -580,12 +583,12 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                             textColor: white,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 25,
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                   ],

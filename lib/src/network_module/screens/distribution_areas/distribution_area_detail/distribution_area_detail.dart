@@ -25,9 +25,9 @@ class DistributionAreaDetail extends StatefulWidget {
   final String id;
   static const routeName = '/DistributionAreaDetail';
   const DistributionAreaDetail({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<DistributionAreaDetail> createState() => _DistributionAreaDetailState();
@@ -74,10 +74,10 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
         backgroundColor: backgroundColor,
         surfaceTintColor: backgroundColor,
         leadingWidth: 150,
-        leading: CustomBackButton(color: networkColor),
+        leading: const CustomBackButton(color: networkColor),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: networkColor,
               ),
@@ -89,7 +89,7 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
                   Container(
                     margin:
                         const EdgeInsets.only(left: 15, top: 15, bottom: 20),
-                    child: Text(
+                    child: const Text(
                       'Харилцагчийн мэдээлэл',
                       style: TextStyle(
                         color: grey3,
@@ -136,7 +136,7 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Статус',
                           style: TextStyle(
                             color: dark,
@@ -145,11 +145,11 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            color: Color(0xff71717A).withOpacity(0.1),
+                            color: const Color(0xff71717A).withOpacity(0.1),
                           ),
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8, vertical: 3),
-                          child: Text(
+                          child: const Text(
                             'Идэвхтэй',
                             style: TextStyle(
                               fontSize: 12,
@@ -164,7 +164,7 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
                   Container(
                     margin:
                         const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-                    child: Text(
+                    child: const Text(
                       'Бүс, чиглэл тохируулах',
                       style: TextStyle(
                         color: grey3,
@@ -215,10 +215,10 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           SvgPicture.asset('assets/svg/person-check.svg'),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
-                          Text(
+                          const Text(
                             'Өөрчлөх',
                             style: TextStyle(
                               color: networkColor,
@@ -232,7 +232,7 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
                   Container(
                     margin:
                         const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-                    child: Text(
+                    child: const Text(
                       'Тайлбар',
                       style: TextStyle(
                         color: grey3,
@@ -251,7 +251,7 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
                         textAlign: TextAlign.left,
                         name: 'description',
                         maxLines: 5,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.zero,
                             borderSide: BorderSide(color: grey),
@@ -265,7 +265,7 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 60,
                   ),
                 ],

@@ -2,6 +2,7 @@ import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,8 +14,10 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 
 class SetAdditionalUnitSheet extends StatefulWidget {
   final InventoryGoods data;
+  final int index;
   const SetAdditionalUnitSheet({
     super.key,
+    required this.index,
     required this.data,
   });
 
@@ -37,19 +40,20 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
   double? weight;
 
   onSubmit() {
+    final source = Provider.of<InventoryProvider>(context, listen: false);
     if (fbKey.currentState!.saveAndValidate()) {
-      setState(() {
-        widget.data.convertValue = convertValue;
-        widget.data.floatValue = floatValue;
-        widget.data.height = height;
-        widget.data.width = width;
-        widget.data.length = length;
-        widget.data.weight = weight;
-        widget.data.isForLoad = isSwitched;
-        widget.data.spaceLabel = spaceLabelCode;
-        widget.data.weightLabel = weightlabelCode;
-        widget.data.convertType = convertTypeCode;
-      });
+      InventoryGoods data = InventoryGoods();
+      data.convertValue = convertValue;
+      data.floatValue = floatValue;
+      data.height = height;
+      data.width = width;
+      data.length = length;
+      data.weight = weight;
+      data.isForLoad = isSwitched;
+      data.spaceLabel = spaceLabelCode;
+      data.weightLabel = weightlabelCode;
+      data.convertType = convertTypeCode;
+      source.setAdditionalUnit(data, widget.index);
       Navigator.of(context).pop();
     }
   }
@@ -104,7 +108,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
         FocusScope.of(context).unfocus();
       },
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(10),
           ),
@@ -115,7 +119,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
           children: [
             Container(
               height: 50,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: white,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(10),
@@ -136,11 +140,12 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                       color: transparent,
                       child: SvgPicture.asset(
                         'assets/svg/square-x.svg',
-                        colorFilter: ColorFilter.mode(grey2, BlendMode.srcIn),
+                        colorFilter:
+                            const ColorFilter.mode(grey2, BlendMode.srcIn),
                       ),
                     ),
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       'Татан авалтын мэдээлэл',
                       style: TextStyle(
@@ -155,7 +160,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                       onSubmit();
                     },
                     child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topRight: Radius.circular(10),
                         ),
@@ -163,7 +168,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                       ),
                       padding: const EdgeInsets.symmetric(horizontal: 11),
                       height: 50,
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Болсон',
                           style: TextStyle(color: white),
@@ -184,7 +189,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                       Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
-                        child: Text(
+                        child: const Text(
                           'Тохиргоо хийх',
                           style: TextStyle(
                             color: grey2,
@@ -225,7 +230,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                           });
                         },
                         name: 'convertValue',
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           fillColor: white,
                           filled: true,
@@ -236,7 +241,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                           prefixIcon: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               SizedBox(
                                 width: 15,
                               ),
@@ -254,8 +259,8 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                         textAlign: TextAlign.end,
                         initialValue:
                             "${floatValue != null ? floatValue?.toInt() : ''}",
-                        inputType:
-                            TextInputType.numberWithOptions(decimal: true),
+                        inputType: const TextInputType.numberWithOptions(
+                            decimal: true),
                         readOnly: convertTypeCode == null,
                         name: 'floatValue',
                         onChanged: (value) {
@@ -263,7 +268,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                             floatValue = double.tryParse(value);
                           });
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           fillColor: white,
                           filled: true,
@@ -274,7 +279,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                           prefixIcon: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               SizedBox(
                                 width: 15,
                               ),
@@ -294,7 +299,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Ачилт'),
+                            const Text('Ачилт'),
                             Transform.scale(
                               scale: 0.7,
                               child: CupertinoSwitch(
@@ -334,7 +339,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                         onChanged: (value) {
                           length = double.tryParse(value);
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           fillColor: white,
                           filled: true,
@@ -345,7 +350,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                           prefixIcon: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               SizedBox(
                                 width: 15,
                               ),
@@ -368,7 +373,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                         onChanged: (value) {
                           height = double.tryParse(value);
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           fillColor: white,
                           filled: true,
@@ -379,7 +384,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                           prefixIcon: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               SizedBox(
                                 width: 15,
                               ),
@@ -401,7 +406,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                         onChanged: (value) {
                           width = double.tryParse(value);
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           fillColor: white,
                           filled: true,
@@ -412,7 +417,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                           prefixIcon: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               SizedBox(
                                 width: 15,
                               ),
@@ -449,7 +454,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                         onChanged: (value) {
                           weight = double.tryParse(value);
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           fillColor: white,
                           filled: true,
@@ -460,7 +465,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                           prefixIcon: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               SizedBox(
                                 width: 15,
                               ),
@@ -473,7 +478,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                               errorText: 'Заавал оруулна уу'),
                         ]),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
                     ],
@@ -512,7 +517,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                       color: transparent,
                       child: Text(
                         '${e.name}',
-                        style: TextStyle(color: dark),
+                        style: const TextStyle(color: dark),
                       ),
                     ),
                   ),
@@ -549,7 +554,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                       color: transparent,
                       child: Text(
                         '${e.name}',
-                        style: TextStyle(color: dark),
+                        style: const TextStyle(color: dark),
                       ),
                     ),
                   ),
@@ -586,7 +591,7 @@ class _SetAdditionalUnitSheetState extends State<SetAdditionalUnitSheet> {
                       color: transparent,
                       child: Text(
                         '${e.name}',
-                        style: TextStyle(color: dark),
+                        style: const TextStyle(color: dark),
                       ),
                     ),
                   ),

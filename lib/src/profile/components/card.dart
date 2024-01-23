@@ -6,11 +6,11 @@ class InformationCard extends StatefulWidget {
   final double paddingVertical;
   final String? value;
   const InformationCard({
-    Key? key,
+    super.key,
     this.value,
     required this.paddingVertical,
     required this.labelText,
-  }) : super(key: key);
+  });
 
   @override
   State<InformationCard> createState() => InformationCardState();
@@ -25,14 +25,14 @@ class InformationCardState extends State<InformationCard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${widget.labelText}',
-            style: TextStyle(
+            widget.labelText,
+            style: const TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 14,
               color: grey3,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Container(
@@ -48,12 +48,12 @@ class InformationCardState extends State<InformationCard> {
             child: widget.value != null && widget.value != 'null'
                 ? Text(
                     '${widget.value}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       color: grey3,
                     ),
                   )
-                : Text(
+                : const Text(
                     '-',
                     style: TextStyle(
                       fontSize: 14,

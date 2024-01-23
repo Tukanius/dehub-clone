@@ -56,7 +56,7 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
     final source = Provider.of<InventoryProvider>(context, listen: true);
 
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(10),
         ),
@@ -67,7 +67,7 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
         children: [
           Container(
             height: 50,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: white,
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(10),
@@ -88,11 +88,11 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter: const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   child: Text(
                     'Татан авалтын мэдээлэл',
                     style: TextStyle(
@@ -142,7 +142,7 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                     }
                   },
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(10),
                       ),
@@ -150,7 +150,7 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 11),
                     height: 50,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'Болсон',
                         style: TextStyle(color: white),
@@ -163,7 +163,7 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
           ),
           Expanded(
             child: isLoading == true
-                ? SizedBox()
+                ? const SizedBox()
                 : SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,7 +171,7 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                         Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
-                          child: Text(
+                          child: const Text(
                             'Тохиргоо хийх',
                             style: TextStyle(color: grey2),
                           ),
@@ -183,7 +183,7 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Default эсэх'),
+                              const Text('Default эсэх'),
                               Transform.scale(
                                 scale: 0.7,
                                 child: CupertinoSwitch(
@@ -204,15 +204,13 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                           paddingVertical: 10,
                           labelText: "Манай Buyer бизнес",
                           secondText:
-                              source.product.buyerBusiness?.profileName != null
-                                  ? source.product.buyerBusiness?.profileName
-                                  : 'Сонгох',
+                              source.product.buyerBusiness?.profileName ?? 'Сонгох',
                           secondTextColor: productColor,
                           onClick: () {
                             showModalBottomSheet(
                               context: context,
                               useSafeArea: true,
-                              builder: (context) => BuyerSheet(),
+                              builder: (context) => const BuyerSheet(),
                             );
                           },
                           arrowColor: productColor,
@@ -223,10 +221,7 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                           paddingVertical: 10,
                           labelText: "Нийлүүлэгч партнер",
                           secondText:
-                              source.product.partnerBusiness?.businessName !=
-                                      null
-                                  ? source.product.partnerBusiness?.businessName
-                                  : 'Сонгох',
+                              source.product.partnerBusiness?.businessName ?? 'Сонгох',
                           secondTextColor: productColor,
                           onClick: source.product.buyerBusiness?.id == null
                               ? () {}
@@ -247,10 +242,7 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                           paddingVertical: 10,
                           labelText: "Нийлүүлэгч бизнес",
                           secondText:
-                              source.product.supplierBusiness?.profileName !=
-                                      null
-                                  ? source.product.supplierBusiness?.profileName
-                                  : 'Сонгох',
+                              source.product.supplierBusiness?.profileName ?? 'Сонгох',
                           secondTextColor: productColor,
                           onClick: source.product.partnerBusiness?.id == null
                               ? () {}
@@ -273,19 +265,15 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                           paddingHorizontal: 15,
                           paddingVertical: 10,
                           labelText: "Хариуцсан ажилтан",
-                          secondText: source.product.supplierBusiness
-                                      ?.merchStaff?.firstName !=
-                                  null
-                              ? source.product.supplierBusiness?.merchStaff
-                                  ?.firstName
-                              : 'Авто гарах',
+                          secondText: source.product.supplierBusiness?.merchStaff
+                                  ?.firstName ?? 'Авто гарах',
                           secondTextColor: productColor,
                           color: white,
                         ),
                         Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
-                          child: Text(
+                          child: const Text(
                             'Борлуулах үнийн мэдээлэл',
                             style: TextStyle(color: grey2),
                           ),
@@ -297,7 +285,7 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Backorder хийх эсэх'),
+                              const Text('Backorder хийх эсэх'),
                               Transform.scale(
                                 scale: 0.7,
                                 child: CupertinoSwitch(
@@ -320,7 +308,7 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Dropship хийх эсэх'),
+                              const Text('Dropship хийх эсэх'),
                               Transform.scale(
                                 scale: 0.7,
                                 child: CupertinoSwitch(
@@ -336,7 +324,7 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 40,
                         ),
                       ],

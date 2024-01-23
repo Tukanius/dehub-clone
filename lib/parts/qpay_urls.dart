@@ -1,4 +1,4 @@
-part of '../models/qpay-urls.dart';
+part of '../models/qpay_urls.dart';
 
 Urls _$UrlsFromJson(Map<String, dynamic> json) {
   return Urls(

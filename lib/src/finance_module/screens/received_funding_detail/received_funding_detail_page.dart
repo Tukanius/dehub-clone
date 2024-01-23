@@ -20,9 +20,9 @@ class ReceivedFundingDetailPage extends StatefulWidget {
   final String id;
   static const routeName = '/ReceivedFundingDetailPage';
   const ReceivedFundingDetailPage({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<ReceivedFundingDetailPage> createState() =>
@@ -73,14 +73,14 @@ class _ReceivedFundingDetailPageState extends State<ReceivedFundingDetailPage>
                     indicatorColor: source.currentColor,
                     labelColor: source.currentColor,
                     unselectedLabelColor: grey2,
-                    tabs: [
-                      Container(
+                    tabs: const [
+                      SizedBox(
                         height: 40,
                         child: Center(
                           child: Text('Үндсэн мэдээлэл'),
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         height: 40,
                         child: Center(
                           child: Text('Банкны шийдвэр'),

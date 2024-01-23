@@ -21,15 +21,15 @@ class BankAccountDetail extends StatefulWidget {
   static const routeName = "/BankAccountDetail";
   final String id;
   const BankAccountDetail({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
-  _BankAccountDetailState createState() => _BankAccountDetailState();
+  BankAccountDetailState createState() => BankAccountDetailState();
 }
 
-class _BankAccountDetailState extends State<BankAccountDetail>
+class BankAccountDetailState extends State<BankAccountDetail>
     with AfterLayoutMixin {
   bool isSwitch = false;
   Payment get = Payment();
@@ -72,197 +72,193 @@ class _BankAccountDetailState extends State<BankAccountDetail>
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_new,
             color: black,
           ),
         ),
-        title: Text(
+        title: const Text(
           'Дансны мэдээлэл',
           style: TextStyle(color: paymentColor, fontSize: 18),
         ),
         centerTitle: true,
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(color: paymentColor),
             )
           : SingleChildScrollView(
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 15,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Center(
+                    child: Text(
+                      '${get.number}',
+                      style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: paymentColor),
                     ),
-                    Center(
-                      child: Text(
-                        '${get.number}',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: paymentColor),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Center(
+                    child: Text(
+                      '${get.name}',
+                      style: const TextStyle(fontSize: 15, color: grey2),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 5, left: 15, bottom: 10),
+                    child: const Text(
+                      'Ерөнхий мэдээлэл',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: grey3,
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Center(
-                      child: Text(
-                        '${get.name}',
-                        style: TextStyle(fontSize: 15, color: grey2),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      margin:
-                          const EdgeInsets.only(top: 5, left: 15, bottom: 10),
-                      child: Text(
-                        'Ерөнхий мэдээлэл',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: grey3,
+                  ),
+                  Container(
+                    color: white,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 12),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Дансны товч нэр',
+                          style: TextStyle(color: dark),
                         ),
-                      ),
+                        Row(
+                          children: [
+                            Text(
+                              '${get.shortName}',
+                              style: const TextStyle(color: paymentColor),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            SvgPicture.asset('assets/svg/edit.svg'),
+                          ],
+                        ),
+                      ],
                     ),
-                    Container(
-                      color: white,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Дансны товч нэр',
-                            style: TextStyle(color: dark),
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                '${get.shortName}',
-                                style: TextStyle(color: paymentColor),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              SvgPicture.asset('assets/svg/edit.svg'),
-                            ],
-                          ),
-                        ],
-                      ),
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: 'Банкны нэр',
+                    secondText: "${get.bankName}",
+                    secondTextColor: paymentColor,
+                    color: white,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: 'Дансны нэр',
+                    secondText: "${get.name}",
+                    secondTextColor: paymentColor,
+                    color: white,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: 'Дансны дугаар',
+                    secondText: "${get.number}",
+                    secondTextColor: paymentColor,
+                    color: white,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: 'Дансны валют',
+                    secondText: "${getCurrency()}",
+                    secondTextColor: paymentColor,
+                    color: white,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: 'Үндсэн эсэх',
+                    secondText: get.isDefault == true ? "Тийм" : "Үгүй",
+                    secondTextColor: paymentColor,
+                    color: white,
+                  ),
+                  Container(
+                    margin:
+                        const EdgeInsets.only(left: 15, top: 10, bottom: 10),
+                    child: const Text(
+                      'Бүртгэлийн мэдээлэл',
+                      style:
+                          TextStyle(color: grey3, fontWeight: FontWeight.w600),
                     ),
-                    FieldCard(
-                      paddingHorizontal: 15,
-                      paddingVertical: 10,
-                      labelText: 'Банкны нэр',
-                      secondText: "${get.bankName}",
-                      secondTextColor: paymentColor,
-                      color: white,
-                    ),
-                    FieldCard(
-                      paddingHorizontal: 15,
-                      paddingVertical: 10,
-                      labelText: 'Дансны нэр',
-                      secondText: "${get.name}",
-                      secondTextColor: paymentColor,
-                      color: white,
-                    ),
-                    FieldCard(
-                      paddingHorizontal: 15,
-                      paddingVertical: 10,
-                      labelText: 'Дансны дугаар',
-                      secondText: "${get.number}",
-                      secondTextColor: paymentColor,
-                      color: white,
-                    ),
-                    FieldCard(
-                      paddingHorizontal: 15,
-                      paddingVertical: 10,
-                      labelText: 'Дансны валют',
-                      secondText: "${getCurrency()}",
-                      secondTextColor: paymentColor,
-                      color: white,
-                    ),
-                    FieldCard(
-                      paddingHorizontal: 15,
-                      paddingVertical: 10,
-                      labelText: 'Үндсэн эсэх',
-                      secondText: "${get.isDefault == true ? "Тийм" : "Үгүй"}",
-                      secondTextColor: paymentColor,
-                      color: white,
-                    ),
-                    Container(
-                      margin:
-                          const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-                      child: Text(
-                        'Бүртгэлийн мэдээлэл',
-                        style: TextStyle(
-                            color: grey3, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    FieldCard(
-                      paddingHorizontal: 15,
-                      paddingVertical: 10,
-                      labelText: 'Партнер нэр',
-                      secondText: "${get.business?.partner?.businessName}",
-                      secondTextColor: paymentColor,
-                      color: white,
-                    ),
-                    FieldCard(
-                      paddingHorizontal: 15,
-                      paddingVertical: 10,
-                      labelText: 'Партнер код',
-                      secondText: "${get.business?.partner?.refCode}",
-                      secondTextColor: paymentColor,
-                      color: white,
-                    ),
-                    FieldCard(
-                      paddingHorizontal: 15,
-                      paddingVertical: 10,
-                      labelText: 'ТТД',
-                      secondText: "${get.business?.regNumber}",
-                      secondTextColor: paymentColor,
-                      color: white,
-                    ),
-                    FieldCard(
-                      paddingHorizontal: 15,
-                      paddingVertical: 10,
-                      labelText: 'Бизнесийн нэр',
-                      secondText: "${get.business?.profileName}",
-                      secondTextColor: paymentColor,
-                      color: white,
-                    ),
-                    FieldCard(
-                      paddingHorizontal: 15,
-                      paddingVertical: 10,
-                      labelText: 'Бизнесийн код',
-                      secondText: "${get.business?.refCode}",
-                      secondTextColor: paymentColor,
-                      color: white,
-                    ),
-                    FieldCard(
-                      paddingHorizontal: 15,
-                      paddingVertical: 10,
-                      labelText: 'Бүртгэсэн хэрэглэгч',
-                      secondText:
-                          "${get.regUser?.lastName?[0]}. ${get.regUser?.firstName}",
-                      secondTextColor: paymentColor,
-                      color: white,
-                    ),
-                    FieldCard(
-                      paddingHorizontal: 15,
-                      paddingVertical: 10,
-                      labelText: 'Бүртгэсэн огноо',
-                      secondText:
-                          "${DateFormat("yyyy-MM-dd").format(get.createdAt!)}",
-                      secondTextColor: paymentColor,
-                      color: white,
-                    ),
-                  ],
-                ),
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: 'Партнер нэр',
+                    secondText: "${get.business?.partner?.businessName}",
+                    secondTextColor: paymentColor,
+                    color: white,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: 'Партнер код',
+                    secondText: "${get.business?.partner?.refCode}",
+                    secondTextColor: paymentColor,
+                    color: white,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: 'ТТД',
+                    secondText: "${get.business?.regNumber}",
+                    secondTextColor: paymentColor,
+                    color: white,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: 'Бизнесийн нэр',
+                    secondText: "${get.business?.profileName}",
+                    secondTextColor: paymentColor,
+                    color: white,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: 'Бизнесийн код',
+                    secondText: "${get.business?.refCode}",
+                    secondTextColor: paymentColor,
+                    color: white,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: 'Бүртгэсэн хэрэглэгч',
+                    secondText:
+                        "${get.regUser?.lastName?[0]}. ${get.regUser?.firstName}",
+                    secondTextColor: paymentColor,
+                    color: white,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: 'Бүртгэсэн огноо',
+                    secondText: DateFormat("yyyy-MM-dd").format(get.createdAt!),
+                    secondTextColor: paymentColor,
+                    color: white,
+                  ),
+                ],
               ),
             ),
     );

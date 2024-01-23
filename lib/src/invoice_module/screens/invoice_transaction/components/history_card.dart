@@ -8,10 +8,10 @@ class HistoryCard extends StatefulWidget {
   final Function()? onClick;
   final Invoice data;
   const HistoryCard({
-    Key? key,
+    super.key,
     required this.data,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<HistoryCard> createState() => _HistoryCardState();
@@ -32,7 +32,7 @@ class _HistoryCardState extends State<HistoryCard> {
           children: [
             Checkbox(
               side: MaterialStateBorderSide.resolveWith(
-                (states) => BorderSide(
+                (states) => const BorderSide(
                   color: invoiceColor,
                   width: 2,
                 ),
@@ -52,10 +52,10 @@ class _HistoryCardState extends State<HistoryCard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 12,
                   ),
-                  Row(
+                  const Row(
                     children: [
                       Expanded(
                         child: Text(
@@ -73,15 +73,15 @@ class _HistoryCardState extends State<HistoryCard> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Row(
                     children: [
                       Expanded(
                         child: Text(
-                          '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.createdAt!)}',
-                          style: TextStyle(
+                          DateFormat("yyyy-MM-dd HH:mm").format(widget.data.createdAt!),
+                          style: const TextStyle(
                             color: grey2,
                             fontSize: 12,
                           ),
@@ -90,7 +90,7 @@ class _HistoryCardState extends State<HistoryCard> {
                       Expanded(
                         child: Text(
                           '${Utils().formatCurrency(widget.data.trxAmount.toString())}₮',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: grey2,
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -100,7 +100,7 @@ class _HistoryCardState extends State<HistoryCard> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Row(
@@ -108,7 +108,7 @@ class _HistoryCardState extends State<HistoryCard> {
                       Expanded(
                         child: Text(
                           '${widget.data.description}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: invoiceColor,
                             fontSize: 12,
                           ),
@@ -117,7 +117,7 @@ class _HistoryCardState extends State<HistoryCard> {
                       Expanded(
                         child: Text(
                           '${widget.data.actionUser?.firstName}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: grey2,
                           ),
                           textAlign: TextAlign.end,
@@ -125,12 +125,12 @@ class _HistoryCardState extends State<HistoryCard> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Text(
                     '${widget.data.paymentMethod}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: invoiceColor,
                       fontSize: 12,
                     ),

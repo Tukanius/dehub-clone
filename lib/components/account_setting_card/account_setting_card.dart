@@ -8,12 +8,12 @@ class AccountSettingCard extends StatefulWidget {
   final int index;
   final BusinessNetwork? data;
   const AccountSettingCard({
-    Key? key,
+    super.key,
     this.data,
     required this.index,
     required this.startAnimation,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<AccountSettingCard> createState() => _AccountSettingCardState();
@@ -49,12 +49,12 @@ class _AccountSettingCardState extends State<AccountSettingCard> {
                               backgroundImage:
                                   NetworkImage('${widget.data?.logo}'),
                             )
-                          : CircleAvatar(
+                          : const CircleAvatar(
                               backgroundColor: grey,
                               radius: 18,
                               backgroundImage: AssetImage('images/avatar.png'),
                             ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Expanded(
@@ -63,17 +63,17 @@ class _AccountSettingCardState extends State<AccountSettingCard> {
                           children: [
                             Text(
                               '${widget.data?.profileName}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: networkColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
                               '${widget.data?.refCode}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: dark,
                                 fontSize: 12,
                               ),
@@ -84,14 +84,14 @@ class _AccountSettingCardState extends State<AccountSettingCard> {
                     ],
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios,
                   color: networkColor,
                   size: 18,
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -109,11 +109,11 @@ class _AccountSettingCardState extends State<AccountSettingCard> {
                           fontSize: 10,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       widget.data?.inAcc == null
-                          ? Text(
+                          ? const Text(
                               '-',
                               style: TextStyle(
                                 color: grey2,
@@ -129,12 +129,12 @@ class _AccountSettingCardState extends State<AccountSettingCard> {
                                     '${widget.data?.inAcc?.icon}',
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 5,
                                 ),
                                 Text(
                                   '${widget.data?.inAcc?.number}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: grey2,
                                     fontSize: 12,
                                   ),
@@ -156,11 +156,11 @@ class _AccountSettingCardState extends State<AccountSettingCard> {
                           fontSize: 10,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       widget.data?.outAcc == null
-                          ? Text(
+                          ? const Text(
                               '-',
                               style: TextStyle(
                                 color: grey2,
@@ -176,12 +176,12 @@ class _AccountSettingCardState extends State<AccountSettingCard> {
                                     '${widget.data?.outAcc?.icon}',
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 5,
                                 ),
                                 Text(
                                   '${widget.data?.outAcc?.number}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: grey2,
                                     fontSize: 12,
                                   ),

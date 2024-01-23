@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+  const SettingsPage({super.key});
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -49,7 +49,7 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           Container(
             margin: const EdgeInsets.only(left: 10, bottom: 10, top: 15),
-            child: Text(
+            child: const Text(
               'Нууцлал',
               style: TextStyle(
                 color: grey3,
@@ -64,7 +64,7 @@ class _SettingsPageState extends State<SettingsPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Нууц үг',
                   style: TextStyle(
                     color: dark,
@@ -84,7 +84,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           borderRadius: BorderRadius.circular(25),
                           color: lightGrey,
                         ),
-                        child: Text(
+                        child: const Text(
                           'Солих',
                           style: TextStyle(
                             color: networkColor,
@@ -94,10 +94,10 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
-                    Icon(
+                    const Icon(
                       CupertinoIcons.lock,
                       color: networkColor,
                       size: 18,
@@ -114,7 +114,7 @@ class _SettingsPageState extends State<SettingsPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'ПИН код',
                   style: TextStyle(
                     color: dark,
@@ -141,7 +141,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           color: lightGrey,
                         ),
                         child: user.hasPin == false
-                            ? Text(
+                            ? const Text(
                                 'Үүсгэх',
                                 style: TextStyle(
                                   color: networkColor,
@@ -149,7 +149,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               )
-                            : Text(
+                            : const Text(
                                 'Солих',
                                 style: TextStyle(
                                   color: networkColor,
@@ -159,10 +159,10 @@ class _SettingsPageState extends State<SettingsPage> {
                               ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
-                    Icon(
+                    const Icon(
                       CupertinoIcons.lock,
                       color: networkColor,
                       size: 18,
@@ -179,7 +179,7 @@ class _SettingsPageState extends State<SettingsPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Иргэн баталгаажилт',
                   style: TextStyle(
                     color: dark,
@@ -201,7 +201,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 borderRadius: BorderRadius.circular(25),
                                 color: lightGrey,
                               ),
-                              child: Text(
+                              child: const Text(
                                 'Баталгаажаагүй',
                                 style: TextStyle(
                                   color: networkColor,
@@ -211,7 +211,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               ),
                             ),
                           )
-                        : Container(
+                        : const SizedBox(
                             height: 14,
                             width: 14,
                             child: CircularProgressIndicator(
@@ -219,10 +219,10 @@ class _SettingsPageState extends State<SettingsPage> {
                               strokeWidth: 1,
                             ),
                           ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
-                    Icon(
+                    const Icon(
                       CupertinoIcons.checkmark_alt_circle,
                       color: networkColor,
                       size: 18,
@@ -234,7 +234,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           Container(
             margin: const EdgeInsets.only(left: 10, bottom: 10, top: 15),
-            child: Text(
+            child: const Text(
               'Бусад тохиргоо',
               style: TextStyle(
                 color: grey3,
@@ -245,7 +245,7 @@ class _SettingsPageState extends State<SettingsPage> {
           Container(
             color: white,
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -267,7 +267,7 @@ class _SettingsPageState extends State<SettingsPage> {
           Container(
             color: white,
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -289,7 +289,7 @@ class _SettingsPageState extends State<SettingsPage> {
           Container(
             color: white,
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

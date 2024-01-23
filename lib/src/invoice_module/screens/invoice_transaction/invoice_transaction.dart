@@ -27,9 +27,9 @@ class InvoiceTransaction extends StatefulWidget {
   static const routeName = '/InvoiceTransaction';
   final Invoice data;
   const InvoiceTransaction({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<InvoiceTransaction> createState() => _InvoiceTransactionState();
@@ -75,7 +75,7 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
       appBar: AppBar(
         backgroundColor: white,
         surfaceTintColor: white,
-        leading: CustomBackButton(color: invoiceColor),
+        leading: const CustomBackButton(color: invoiceColor),
         leadingWidth: 130,
         elevation: 0,
       ),
@@ -85,7 +85,7 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
           children: [
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Нэхэмжлэх',
                 style: TextStyle(
                   color: grey3,
@@ -101,20 +101,20 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
                   SvgPicture.asset(
                     'assets/svg/inv.svg',
                     colorFilter:
-                        ColorFilter.mode(invoiceColor, BlendMode.srcIn),
+                        const ColorFilter.mode(invoiceColor, BlendMode.srcIn),
                     height: 24,
                     width: 24,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 12,
                   ),
                   Expanded(
                     child: Text(
                       '${widget.data.refCode}',
-                      style: TextStyle(color: invoiceColor),
+                      style: const TextStyle(color: invoiceColor),
                     ),
                   ),
-                  Icon(
+                  const Icon(
                     Icons.arrow_forward_ios,
                     color: grey3,
                     size: 18,
@@ -158,8 +158,8 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
               paddingHorizontal: 15,
               paddingVertical: 10,
               labelText: "Баталсан",
-              secondText:
-                  '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.confirmedDate!)}',
+              secondText: DateFormat("yyyy-MM-dd HH:mm")
+                  .format(widget.data.confirmedDate!),
               secondTextColor: invoiceColor,
               color: white,
             ),
@@ -182,19 +182,19 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
               color: white,
             ),
             isLoading == true
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator(
                       color: invoiceColor,
                     ),
                   )
-                : invoice.rows?.length != 0
+                : invoice.rows!.isNotEmpty
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
                             margin: const EdgeInsets.symmetric(
                                 horizontal: 15, vertical: 10),
-                            child: Text(
+                            child: const Text(
                               'Төлбөрийн түүх',
                               style: TextStyle(
                                 color: grey3,
@@ -222,7 +222,7 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
                           )
                         ],
                       )
-                    : NotFound(
+                    : const NotFound(
                         module: "INVOICE",
                         labelText: 'Хоосон байна',
                       ),

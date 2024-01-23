@@ -24,7 +24,7 @@ class _OptionSelectSheetState extends State<OptionSelectSheet> {
     final source = Provider.of<InventoryProvider>(context, listen: true);
 
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(10),
         ),
@@ -34,7 +34,7 @@ class _OptionSelectSheetState extends State<OptionSelectSheet> {
         children: [
           Container(
             height: 50,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: white,
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(10),
@@ -55,14 +55,14 @@ class _OptionSelectSheetState extends State<OptionSelectSheet> {
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter: const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),
                 Expanded(
                   child: Text(
                     '${widget.data.name} сонголт',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: productColor,
                       fontSize: 16,
                     ),
@@ -80,7 +80,7 @@ class _OptionSelectSheetState extends State<OptionSelectSheet> {
                     Navigator.of(context).pop();
                   },
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(10),
                       ),
@@ -88,7 +88,7 @@ class _OptionSelectSheetState extends State<OptionSelectSheet> {
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 11),
                     height: 50,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'Болсон',
                         style: TextStyle(color: white),
@@ -107,7 +107,7 @@ class _OptionSelectSheetState extends State<OptionSelectSheet> {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Сонголт хийнэ үү',
                       style: TextStyle(
                         color: grey2,
@@ -133,7 +133,7 @@ class _OptionSelectSheetState extends State<OptionSelectSheet> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Бүх хувилбарыг сонгох'),
+                          const Text('Бүх хувилбарыг сонгох'),
                           widget.data.values!.length == values.length
                               ? SvgPicture.asset(
                                   'assets/svg/circle_check.svg',
@@ -174,7 +174,7 @@ class _OptionSelectSheetState extends State<OptionSelectSheet> {
                                       SvgPicture.asset(
                                         'assets/svg/menu_plus.svg',
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 5,
                                       ),
                                       Container(

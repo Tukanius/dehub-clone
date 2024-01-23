@@ -15,9 +15,9 @@ class RankDetailPage extends StatefulWidget {
   final String id;
   static const routeName = '/RankDetailPage';
   const RankDetailPage({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<RankDetailPage> createState() => _RankDetailPageState();
@@ -43,8 +43,8 @@ class _RankDetailPageState extends State<RankDetailPage> with AfterLayoutMixin {
         elevation: 0,
         backgroundColor: white,
         surfaceTintColor: white,
-        iconTheme: IconThemeData(color: networkColor),
-        title: Text(
+        iconTheme: const IconThemeData(color: networkColor),
+        title: const Text(
           'Зэрэглэл нэр, код',
           style: TextStyle(
             color: networkColor,
@@ -54,7 +54,7 @@ class _RankDetailPageState extends State<RankDetailPage> with AfterLayoutMixin {
         ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: networkColor,
               ),
@@ -66,7 +66,7 @@ class _RankDetailPageState extends State<RankDetailPage> with AfterLayoutMixin {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Тохиргоо',
                       style: TextStyle(
                         color: grey3,
@@ -78,7 +78,7 @@ class _RankDetailPageState extends State<RankDetailPage> with AfterLayoutMixin {
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         vertical: 15, horizontal: 15),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -98,7 +98,7 @@ class _RankDetailPageState extends State<RankDetailPage> with AfterLayoutMixin {
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         vertical: 15, horizontal: 15),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -121,18 +121,18 @@ class _RankDetailPageState extends State<RankDetailPage> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Зэрэглэл код',
                           style: TextStyle(color: dark),
                         ),
                         invitation.refCode != null
                             ? Text(
                                 '${invitation.refCode}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: networkColor,
                                 ),
                               )
-                            : Text(
+                            : const Text(
                                 '-',
                                 style: TextStyle(
                                   color: networkColor,
@@ -148,13 +148,13 @@ class _RankDetailPageState extends State<RankDetailPage> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Зэрэглэл',
                           style: TextStyle(color: dark),
                         ),
                         Text(
                           '${invitation.name}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: networkColor,
                           ),
                         )
@@ -168,15 +168,15 @@ class _RankDetailPageState extends State<RankDetailPage> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Тайлбар',
                           style: TextStyle(color: dark),
                         ),
-                        Container(
+                        SizedBox(
                           width: 200,
                           child: Text(
                             '${invitation.description}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: networkColor,
                             ),
                             textAlign: TextAlign.end,
@@ -188,7 +188,7 @@ class _RankDetailPageState extends State<RankDetailPage> with AfterLayoutMixin {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Системийн мэдээлэл',
                       style: TextStyle(
                         color: grey3,
@@ -203,7 +203,7 @@ class _RankDetailPageState extends State<RankDetailPage> with AfterLayoutMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Статус',
                           style: TextStyle(color: dark),
                         ),
@@ -212,9 +212,9 @@ class _RankDetailPageState extends State<RankDetailPage> with AfterLayoutMixin {
                               horizontal: 10, vertical: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            color: Color(0xff01D462).withOpacity(0.1),
+                            color: const Color(0xff01D462).withOpacity(0.1),
                           ),
-                          child: Text(
+                          child: const Text(
                             'Идэвхтэй',
                             style: TextStyle(
                               color: Color(0xff01D462),
@@ -230,7 +230,7 @@ class _RankDetailPageState extends State<RankDetailPage> with AfterLayoutMixin {
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         vertical: 15, horizontal: 15),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -250,7 +250,7 @@ class _RankDetailPageState extends State<RankDetailPage> with AfterLayoutMixin {
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         vertical: 15, horizontal: 15),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -270,7 +270,7 @@ class _RankDetailPageState extends State<RankDetailPage> with AfterLayoutMixin {
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         vertical: 15, horizontal: 15),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(

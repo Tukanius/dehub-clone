@@ -1,7 +1,7 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
-import 'package:dehub/models/business-staffs.dart';
+import 'package:dehub/models/business_staffs.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
@@ -26,9 +26,9 @@ class AddZoning extends StatefulWidget {
   final ListenController listenController;
   static const routeName = "/AddZoning";
   const AddZoning({
-    Key? key,
+    super.key,
     required this.listenController,
-  }) : super(key: key);
+  });
 
   @override
   State<AddZoning> createState() => _AddZoningState();
@@ -55,9 +55,7 @@ class _AddZoningState extends State<AddZoning> {
           context,
           "Амжилттай бүс нэмлээ",
           true,
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          onPressed: () {},
         );
         widget.listenController.changeVariable("createZoning");
         Navigator.of(context).pop();
@@ -83,7 +81,7 @@ class _AddZoningState extends State<AddZoning> {
         surfaceTintColor: networkColor,
         elevation: 0,
         leading: isSubmit == true
-            ? SizedBox()
+            ? const SizedBox()
             : GestureDetector(
                 onTap: () {
                   Navigator.of(context).pop();
@@ -93,7 +91,7 @@ class _AddZoningState extends State<AddZoning> {
                   child: SvgPicture.asset('assets/svg/close.svg'),
                 ),
               ),
-        title: Text(
+        title: const Text(
           'Бүсчлэл',
           style: TextStyle(
             color: white,
@@ -103,7 +101,7 @@ class _AddZoningState extends State<AddZoning> {
         ),
       ),
       body: isSubmit == true
-          ? SizedBox()
+          ? const SizedBox()
           : SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,7 +109,7 @@ class _AddZoningState extends State<AddZoning> {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Мэдээлэл',
                       style: TextStyle(
                         color: grey3,
@@ -123,7 +121,7 @@ class _AddZoningState extends State<AddZoning> {
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 15),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -157,7 +155,7 @@ class _AddZoningState extends State<AddZoning> {
                             prefixIcon: Container(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 15, horizontal: 15),
-                              child: Text(
+                              child: const Text(
                                 'Нэр',
                                 style: TextStyle(color: dark),
                               ),
@@ -166,9 +164,9 @@ class _AddZoningState extends State<AddZoning> {
                             filled: true,
                             contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 15, vertical: 15),
-                            hintStyle: TextStyle(color: networkColor),
+                            hintStyle: const TextStyle(color: networkColor),
                             hintText: 'Бүсийн нэр',
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderSide: BorderSide.none,
                             ),
                           ),
@@ -180,7 +178,7 @@ class _AddZoningState extends State<AddZoning> {
                         Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
-                          child: Text(
+                          child: const Text(
                             'Тайлбар',
                             style: TextStyle(
                               color: grey3,
@@ -188,14 +186,14 @@ class _AddZoningState extends State<AddZoning> {
                             ),
                           ),
                         ),
-                        FormTextField(
+                        const FormTextField(
                           textColor: networkColor,
                           name: 'description',
                           inputType: TextInputType.text,
                           decoration: InputDecoration(
                             fillColor: white,
                             filled: true,
-                            contentPadding: const EdgeInsets.symmetric(
+                            contentPadding: EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 15),
                             hintStyle: TextStyle(color: networkColor),
                             hintText: 'Тайлбар оруулна уу',
@@ -214,13 +212,13 @@ class _AddZoningState extends State<AddZoning> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Бүртгэсэн огноо, цаг',
                           style: TextStyle(color: dark),
                         ),
                         Text(
-                          '${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now())}',
-                          style: TextStyle(
+                          DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now()),
+                          style: const TextStyle(
                             color: dark,
                           ),
                         )
@@ -234,13 +232,13 @@ class _AddZoningState extends State<AddZoning> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Бүртгэсэн ажилтан',
                           style: TextStyle(color: dark),
                         ),
                         Text(
                           '${user.firstName}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: networkColor,
                           ),
                         )
@@ -254,7 +252,7 @@ class _AddZoningState extends State<AddZoning> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Статус',
                           style: TextStyle(color: dark),
                         ),
@@ -265,7 +263,7 @@ class _AddZoningState extends State<AddZoning> {
                             borderRadius: BorderRadius.circular(15),
                             color: grey2.withOpacity(0.1),
                           ),
-                          child: Text(
+                          child: const Text(
                             'Түр төлөв',
                             style: TextStyle(
                               color: grey2,
@@ -277,7 +275,7 @@ class _AddZoningState extends State<AddZoning> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   Row(
@@ -310,7 +308,7 @@ class _AddZoningState extends State<AddZoning> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                 ],

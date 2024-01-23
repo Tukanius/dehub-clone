@@ -54,8 +54,8 @@ class ErrorDialog {
                       height: 16,
                     ),
                     Text(
-                      '${message}',
-                      style: TextStyle(
+                      message,
+                      style: const TextStyle(
                         fontSize: 14,
                         fontFamily: "Montserrat",
                         color: dark,

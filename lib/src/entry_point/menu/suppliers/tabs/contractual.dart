@@ -12,7 +12,7 @@ class Contractual extends StatefulWidget {
 class _ContractualState extends State<Contractual> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: backgroundColor,
     );
   }

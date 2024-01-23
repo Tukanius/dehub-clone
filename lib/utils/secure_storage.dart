@@ -37,7 +37,7 @@ class SecureStorage {
   }
 
   Future setBioMetric(bool bioMetric) async {
-    await storage.write(key: _isBiometric, value: "${bioMetric}");
+    await storage.write(key: _isBiometric, value: "$bioMetric");
   }
 
   Future<String?> getBioMetric() async {

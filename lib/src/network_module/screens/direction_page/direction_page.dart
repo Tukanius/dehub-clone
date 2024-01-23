@@ -22,7 +22,7 @@ class _DirectionPageState extends State<DirectionPage> {
         surfaceTintColor: backgroundColor,
         elevation: 0,
         leadingWidth: 100,
-        leading: CustomBackButton(color: networkColor),
+        leading: const CustomBackButton(color: networkColor),
         actions: [
           AddButton(
             addColor: white,
@@ -44,7 +44,7 @@ class _DirectionPageState extends State<DirectionPage> {
           children: [
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Чиглэл',
                 style: TextStyle(
                   fontSize: 20,

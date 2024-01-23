@@ -12,9 +12,9 @@ import 'package:intl/intl.dart';
 class MainInformationTab extends StatefulWidget {
   final Finance data;
   const MainInformationTab({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<MainInformationTab> createState() => _MainInformationTabState();
@@ -40,7 +40,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
         children: [
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+            child: const Text(
               'Хүсэлтийн мэдээлэл',
               style: TextStyle(
                 color: grey3,
@@ -63,7 +63,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Хүсэлт төлөв',
                   style: TextStyle(color: dark),
                 ),
@@ -134,17 +134,9 @@ class _MainInformationTabState extends State<MainInformationTab> {
             secondTextColor: source.currentColor,
             color: white,
           ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Бусад шимтгэл дүн',
-            secondText: '-',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+            child: const Text(
               'Хөтөлбөрийн мэдээлэл',
               style: TextStyle(
                 color: grey3,
@@ -220,7 +212,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+            child: const Text(
               'Нэхэмжлэх мэдээлэл',
               style: TextStyle(
                 color: grey3,
@@ -253,7 +245,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             paddingVertical: 10,
             labelText: 'Илгээсэн огноо, цаг',
             secondText:
-                '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.invCreatedAt!)}',
+                DateFormat("yyyy-MM-dd HH:mm").format(widget.data.invCreatedAt!),
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -262,7 +254,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             paddingVertical: 10,
             labelText: 'Баталсан огноо, цаг',
             secondText:
-                '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.invConfirmedDate!)}',
+                DateFormat("yyyy-MM-dd HH:mm").format(widget.data.invConfirmedDate!),
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -290,7 +282,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             secondTextColor: source.currentColor,
             color: white,
           ),
-          SizedBox(
+          const SizedBox(
             height: 100,
           ),
         ],

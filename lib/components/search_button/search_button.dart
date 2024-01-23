@@ -9,12 +9,12 @@ class SearchButton extends StatefulWidget {
   final Color? textColor;
   final Color? borderColor;
   const SearchButton({
-    Key? key,
+    super.key,
     this.borderColor,
     this.textColor,
     required this.color,
     this.onChange,
-  }) : super(key: key);
+  });
 
   @override
   State<SearchButton> createState() => _SearchButtonState();
@@ -58,7 +58,7 @@ class _SearchButtonState extends State<SearchButton> {
                     padding: const EdgeInsets.symmetric(vertical: 7),
                     child: SvgPicture.asset('assets/svg/search.svg'),
                   ),
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderSide: BorderSide(
                       color: grey,
                     ),

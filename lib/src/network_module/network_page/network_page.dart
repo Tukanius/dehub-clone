@@ -17,13 +17,13 @@ import 'package:provider/provider.dart';
 
 class NetworkPage extends StatefulWidget {
   static const routeName = '/NetworkPage';
-  const NetworkPage({Key? key}) : super(key: key);
+  const NetworkPage({super.key});
 
   @override
-  _NetworkPageState createState() => _NetworkPageState();
+  NetworkPageState createState() => NetworkPageState();
 }
 
-class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
+class NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
   bool isLoading = true;
 
   @override
@@ -38,10 +38,10 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
   }
 
   static List<dynamic> currentPages = [
-    HomeTab(),
-    DashboardTab(),
-    InboxTab(),
-    SentTab(),
+    const HomeTab(),
+    const DashboardTab(),
+    const InboxTab(),
+    const SentTab(),
   ];
 
   @override
@@ -60,23 +60,21 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
           color: index.selectedIndex != 3 ? networkColor : white,
         ),
         title: index.selectedIndex == 0
-            ? Container(
-                child: FormTextField(
-                  inputType: TextInputType.text,
-                  color: Color(0xff767680).withOpacity(0.12),
-                  name: 'search',
-                  prefixIcon: Icon(Icons.search),
-                  hintText: 'Партнер нэрээр хайх',
-                ),
+            ? FormTextField(
+                inputType: TextInputType.text,
+                color: const Color(0xff767680).withOpacity(0.12),
+                name: 'search',
+                prefixIcon: const Icon(Icons.search),
+                hintText: 'Партнер нэрээр хайх',
               )
-            : SizedBox(),
+            : const SizedBox(),
         actions: [
           index.selectedIndex == 0
               ? Container(
                   padding: const EdgeInsets.all(10),
                   margin: const EdgeInsets.only(right: 15, top: 9, bottom: 9),
                   decoration: BoxDecoration(
-                    color: Color(0xff767680).withOpacity(0.12),
+                    color: const Color(0xff767680).withOpacity(0.12),
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: SvgPicture.asset(
@@ -95,11 +93,11 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
                             .pushNamed(NewInvitationPage.routeName);
                       },
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
         ],
       ),
       body: isLoading == true
-          ? SizedBox()
+          ? const SizedBox()
           : Container(
               child: currentPages.elementAt(index.selectedIndex),
             ),
@@ -141,12 +139,11 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
                           BlendMode.srcIn),
                     ),
                   ),
-                  index.selectedIndex != 0
-                      ? Text(
-                          'Нүүр',
-                          style: TextStyle(color: networkColor, fontSize: 12),
-                        )
-                      : SizedBox(),
+                  if (index.selectedIndex != 0)
+                    const Text(
+                      'Нүүр',
+                      style: TextStyle(color: networkColor, fontSize: 12),
+                    ),
                 ],
               ),
             ),
@@ -168,12 +165,11 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
                         BlendMode.srcIn),
                   ),
                 ),
-                index.selectedIndex != 1
-                    ? Text(
-                        'Дашбоард',
-                        style: TextStyle(color: networkColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (index.selectedIndex != 1)
+                  const Text(
+                    'Дашбоард',
+                    style: TextStyle(color: networkColor, fontSize: 12),
+                  ),
               ],
             ),
             label: '',
@@ -194,12 +190,11 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
                         BlendMode.srcIn),
                   ),
                 ),
-                index.selectedIndex != 2
-                    ? Text(
-                        'Ирсэн',
-                        style: TextStyle(color: networkColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (index.selectedIndex != 2)
+                  const Text(
+                    'Ирсэн',
+                    style: TextStyle(color: networkColor, fontSize: 12),
+                  ),
               ],
             ),
             label: '',
@@ -220,12 +215,11 @@ class _NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
                         BlendMode.srcIn),
                   ),
                 ),
-                index.selectedIndex != 3
-                    ? Text(
-                        'Илгээсэн',
-                        style: TextStyle(color: networkColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (index.selectedIndex != 3)
+                  const Text(
+                    'Илгээсэн',
+                    style: TextStyle(color: networkColor, fontSize: 12),
+                  ),
               ],
             ),
             label: '',

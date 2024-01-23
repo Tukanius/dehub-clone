@@ -17,10 +17,10 @@ class Bugd extends StatefulWidget {
   final ListenController listenController;
   final ListenController partnerListenController;
   const Bugd({
-    Key? key,
+    super.key,
     required this.partnerListenController,
     required this.listenController,
-  }) : super(key: key);
+  });
 
   @override
   State<Bugd> createState() => _BugdState();
@@ -73,14 +73,14 @@ class _BugdState extends State<Bugd> with AfterLayoutMixin {
                   children: [
                     SearchButton(
                         color: invoiceColor,
-                        onChange: (_query) {
-                          onChange(_query);
+                        onChange: (query) {
+                          onChange(query);
                         }),
                     const SizedBox(
                       height: 5,
                     ),
                     isSubmit == false
-                        ? invoice.rows?.length != 0
+                        ? invoice.rows!.isNotEmpty
                             ? Column(
                                 children: invoice.rows!
                                     .map(
@@ -103,7 +103,7 @@ class _BugdState extends State<Bugd> with AfterLayoutMixin {
                                     )
                                     .toList(),
                               )
-                            : NotFound(
+                            : const NotFound(
                                 module: "INVOICE",
                                 labelText: "Мэдээлэл олдсонгүй!",
                               )

@@ -22,10 +22,10 @@ class PinConfirmation extends StatefulWidget {
   final String oldPin;
   static const routeName = '/PinConfirmation';
   const PinConfirmation({
-    Key? key,
+    super.key,
     required this.oldPin,
     required this.value,
-  }) : super(key: key);
+  });
 
   @override
   State<PinConfirmation> createState() => _PinConfirmationState();
@@ -81,24 +81,24 @@ class _PinConfirmationState extends State<PinConfirmation> {
         elevation: 0,
         surfaceTintColor: backgroundColor,
         leadingWidth: 150,
-        leading: CustomBackButton(color: buttonColor),
+        leading: const CustomBackButton(color: buttonColor),
       ),
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 60,
             ),
-            Text(
+            const Text(
               'Пин код давтан оруулна уу',
               style: TextStyle(
                 color: grey2,
                 fontSize: 16,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             Pinput(
@@ -111,7 +111,7 @@ class _PinConfirmationState extends State<PinConfirmation> {
                 decoration: BoxDecoration(
                   color: white,
                   border: Border.all(
-                    color: Color(0xffC6C6C8),
+                    color: const Color(0xffC6C6C8),
                   ),
                   borderRadius: BorderRadius.circular(5),
                 ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class TutorialCard extends StatefulWidget {
-  const TutorialCard({Key? key}) : super(key: key);
+  const TutorialCard({super.key});
 
   @override
   State<TutorialCard> createState() => _TutorialCardState();
@@ -16,7 +16,7 @@ class _TutorialCardState extends State<TutorialCard> {
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Color(0xffE6E6E8)),
+        border: Border.all(color: const Color(0xffE6E6E8)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,7 +33,7 @@ class _TutorialCardState extends State<TutorialCard> {
               'assets/svg/dollar-sign.svg',
             ),
           ),
-          Column(
+          const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -53,11 +53,11 @@ class _TutorialCardState extends State<TutorialCard> {
           Container(
             height: 44,
             width: 44,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: buttonColor,
             ),
-            child: Icon(
+            child: const Icon(
               Icons.play_arrow_rounded,
               color: white,
             ),

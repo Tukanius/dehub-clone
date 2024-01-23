@@ -82,7 +82,7 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
                     Icons.arrow_back_ios_new,
                     color: source.currentColor,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   Text(
@@ -132,7 +132,7 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
           ],
         ),
         body: isLoading == true
-            ? SizedBox()
+            ? const SizedBox()
             : Container(
                 child: currentPages.elementAt(selectedIndex),
               ),
@@ -164,13 +164,12 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
                           BlendMode.srcIn),
                     ),
                   ),
-                  selectedIndex != 0
-                      ? Text(
-                          'Нүүр',
-                          style: TextStyle(
-                              color: source.currentColor, fontSize: 12),
-                        )
-                      : SizedBox(),
+                  if (selectedIndex != 0)
+                    Text(
+                      'Нүүр',
+                      style:
+                          TextStyle(color: source.currentColor, fontSize: 12),
+                    ),
                 ],
               ),
               label: '',
@@ -191,13 +190,12 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
                           BlendMode.srcIn),
                     ),
                   ),
-                  selectedIndex != 1
-                      ? Text(
-                          'Дашбоард',
-                          style: TextStyle(
-                              color: source.currentColor, fontSize: 12),
-                        )
-                      : SizedBox(),
+                  if (selectedIndex != 1)
+                    Text(
+                      'Дашбоард',
+                      style:
+                          TextStyle(color: source.currentColor, fontSize: 12),
+                    ),
                 ],
               ),
               label: '',
@@ -218,13 +216,12 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
                           BlendMode.srcIn),
                     ),
                   ),
-                  selectedIndex != 2
-                      ? Text(
-                          'Лимит',
-                          style: TextStyle(
-                              color: source.currentColor, fontSize: 12),
-                        )
-                      : SizedBox(),
+                  if (selectedIndex != 2)
+                    Text(
+                      'Лимит',
+                      style:
+                          TextStyle(color: source.currentColor, fontSize: 12),
+                    ),
                 ],
               ),
               label: '',
@@ -245,13 +242,12 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
                           BlendMode.srcIn),
                     ),
                   ),
-                  selectedIndex != 3
-                      ? Text(
-                          'Тооцоо',
-                          style: TextStyle(
-                              color: source.currentColor, fontSize: 12),
-                        )
-                      : SizedBox(),
+                  if (selectedIndex != 3)
+                    Text(
+                      'Тооцоо',
+                      style:
+                          TextStyle(color: source.currentColor, fontSize: 12),
+                    ),
                 ],
               ),
               label: '',

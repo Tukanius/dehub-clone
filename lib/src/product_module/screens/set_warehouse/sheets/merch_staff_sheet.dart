@@ -42,7 +42,7 @@ class _MerchStaffSheetState extends State<MerchStaffSheet>
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: productColor,
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(15),
@@ -50,7 +50,7 @@ class _MerchStaffSheetState extends State<MerchStaffSheet>
           ),
           child: Row(
             children: [
-              Expanded(
+              const Expanded(
                 child: Text(
                   'Ажилтан сонгох',
                   style: TextStyle(
@@ -75,7 +75,7 @@ class _MerchStaffSheetState extends State<MerchStaffSheet>
         Expanded(
           child: SingleChildScrollView(
             child: isLoading == true
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator(
                       color: productColor,
                     ),
@@ -100,14 +100,13 @@ class _MerchStaffSheetState extends State<MerchStaffSheet>
                                     children: [
                                       Row(
                                         children: [
-                                          data.avatar != null
-                                              ? CircleAvatar(
-                                                  radius: 12,
-                                                  backgroundColor: grey,
-                                                  backgroundImage: NetworkImage(
-                                                      '${data.avatar}'),
-                                                )
-                                              : SizedBox(),
+                                          if (data.avatar != null)
+                                            CircleAvatar(
+                                              radius: 12,
+                                              backgroundColor: grey,
+                                              backgroundImage: NetworkImage(
+                                                  '${data.avatar}'),
+                                            ),
                                           Text(
                                               "${data.lastName != null ? '${data.lastName[0]}.' : ''} ${data.firstName}"),
                                         ],

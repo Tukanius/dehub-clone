@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/payment_api.dart';
 import 'package:dehub/models/invoice.dart';
-import 'package:dehub/models/qpay-urls.dart';
+import 'package:dehub/models/qpay_urls.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +25,8 @@ class QpayPage extends StatefulWidget {
   const QpayPage({
     required this.color,
     required this.data,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   QpayPageState createState() => QpayPageState();
@@ -42,7 +42,7 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
     try {
       data = widget.data;
       data.method = "QPAY";
-      qpay = await PaymentApi().qpay(data);
+      qpay = await PaymentApi().pay(data);
       setState(() {
         loading = false;
       });
@@ -79,7 +79,7 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
         iconTheme: IconThemeData(color: widget.color),
         elevation: 0,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Qpay-р төлөх',
           style: TextStyle(color: black),
         ),
@@ -135,17 +135,17 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       height: 200,
                       width: 200,
                       child: Image.memory(
-                        base64Decode('${qpay.qr_image?.substring(22)}'),
+                        base64Decode('${qpay.qr_image}'),
                       ),
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    Text(
+                    const Text(
                       'Банкны апп дуудаж төлөх',
                       style: TextStyle(
                         color: black,
@@ -155,7 +155,7 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Container(
+                    SizedBox(
                       height: 120,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
@@ -178,7 +178,7 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
                                     boxShadow: [
                                       BoxShadow(
                                         blurRadius: 4,
-                                        offset: Offset(0, 4),
+                                        offset: const Offset(0, 4),
                                         color: Colors.black.withOpacity(0.25),
                                         spreadRadius: 0,
                                       ),
@@ -198,12 +198,12 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       item.description ==
                                               "Үндэсний хөрөнгө оруулалтын банк"
-                                          ? Text(
+                                          ? const Text(
                                               'ҮХОБ',
                                               style: TextStyle(
                                                 color: grey2,
@@ -213,7 +213,7 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
                                             )
                                           : Text(
                                               '${item.description}',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: grey2,
                                                 fontSize: 12,
                                               ),
@@ -227,7 +227,7 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
                             .toList(),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     CustomButton(
@@ -235,7 +235,7 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
                       labelText: "Төлбөр шалгах",
                       onClick: () {},
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 50,
                     ),
                   ],

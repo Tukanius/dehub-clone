@@ -24,9 +24,9 @@ class AddAttachment extends StatefulWidget {
   final ListenController pickedFile;
   static const routeName = '/AddAttachment';
   const AddAttachment({
-    Key? key,
+    super.key,
     required this.pickedFile,
-  }) : super(key: key);
+  });
 
   @override
   State<AddAttachment> createState() => _AddAttachmentState();
@@ -64,7 +64,7 @@ class _AddAttachmentState extends State<AddAttachment> {
           isFileEmpty = false;
         });
         debugPrint("File name $fileName");
-        user = await AuthApi().uploadFile(pickedFile!);
+        user = await AuthApi().uploadFile(pickedFile!, 'order');
       }
       setState(() {
         isLoading = false;
@@ -87,7 +87,7 @@ class _AddAttachmentState extends State<AddAttachment> {
       setState(() {
         isFileEmpty = false;
       });
-      user = await AuthApi().upload(file);
+      user = await AuthApi().upload(file, 'order');
       setState(() {
         isLoading = false;
       });
@@ -120,95 +120,90 @@ class _AddAttachmentState extends State<AddAttachment> {
   Future showOptions() async {
     showCupertinoModalPopup(
       context: context,
-      builder: (context) => Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            CupertinoActionSheet(
-              title: Column(
-                children: [
-                  Text(
-                    'Файл хавсаргах',
-                    style: TextStyle(
-                      color: black.withOpacity(0.6),
-                      fontFamily: 'Montserrat',
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                    ),
+      builder: (context) => Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          CupertinoActionSheet(
+            title: Column(
+              children: [
+                Text(
+                  'Файл хавсаргах',
+                  style: TextStyle(
+                    color: black.withOpacity(0.6),
+                    fontFamily: 'Montserrat',
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
                   ),
-                  Text(
-                    'Тус бүр 3MB-с хэтрэхгүй 3 файл зөвшөөрнө',
-                    style: TextStyle(
-                      color: black.withOpacity(0.6),
-                      fontFamily: 'Montserrat',
-                      fontSize: 13,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-              actions: [
-                CupertinoActionSheetAction(
-                  child: Text(
-                    'Файлын сангаас',
-                    style:
-                        TextStyle(color: orderColor, fontFamily: 'Montserrat'),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    pickFile();
-                  },
                 ),
-                CupertinoActionSheetAction(
-                  child: Text(
-                    'Зургийн сангаас',
-                    style:
-                        TextStyle(color: orderColor, fontFamily: 'Montserrat'),
+                Text(
+                  'Тус бүр 3MB-с хэтрэхгүй 3 файл зөвшөөрнө',
+                  style: TextStyle(
+                    color: black.withOpacity(0.6),
+                    fontFamily: 'Montserrat',
+                    fontSize: 13,
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    getImage(ImageSource.gallery);
-                  },
-                ),
-                CupertinoActionSheetAction(
-                  child: Text(
-                    'Зураг авах',
-                    style:
-                        TextStyle(color: orderColor, fontFamily: 'Montserrat'),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    getImage(ImageSource.camera);
-                  },
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Container(
-                margin: const EdgeInsets.only(right: 8, left: 8, bottom: 15),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(13),
-                  color: white,
+            actions: [
+              CupertinoActionSheetAction(
+                child: const Text(
+                  'Файлын сангаас',
+                  style: TextStyle(color: orderColor, fontFamily: 'Montserrat'),
                 ),
-                padding: const EdgeInsets.symmetric(vertical: 18),
-                child: Center(
-                  child: Text(
-                    "Буцах",
-                    style: TextStyle(
-                      fontFamily: "Montserrat",
-                      color: grey2,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 20,
-                    ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  pickFile();
+                },
+              ),
+              CupertinoActionSheetAction(
+                child: const Text(
+                  'Зургийн сангаас',
+                  style: TextStyle(color: orderColor, fontFamily: 'Montserrat'),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  getImage(ImageSource.gallery);
+                },
+              ),
+              CupertinoActionSheetAction(
+                child: const Text(
+                  'Зураг авах',
+                  style: TextStyle(color: orderColor, fontFamily: 'Montserrat'),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  getImage(ImageSource.camera);
+                },
+              ),
+            ],
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Container(
+              margin: const EdgeInsets.only(right: 8, left: 8, bottom: 15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(13),
+                color: white,
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 18),
+              child: const Center(
+                child: Text(
+                  "Буцах",
+                  style: TextStyle(
+                    fontFamily: "Montserrat",
+                    color: grey2,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -225,12 +220,12 @@ class _AddAttachmentState extends State<AddAttachment> {
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios_new,
             color: orderColor,
           ),
         ),
-        title: Text(
+        title: const Text(
           'Файлын нэр',
           style: TextStyle(
             color: buttonColor,
@@ -246,7 +241,7 @@ class _AddAttachmentState extends State<AddAttachment> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               FormBuilder(
@@ -258,7 +253,7 @@ class _AddAttachmentState extends State<AddAttachment> {
                       textColor: orderColor,
                       textAlign: TextAlign.end,
                       name: 'name',
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         fillColor: white,
                         filled: true,
@@ -269,7 +264,7 @@ class _AddAttachmentState extends State<AddAttachment> {
                         prefixIcon: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             SizedBox(
                               width: 10,
                             ),
@@ -296,7 +291,7 @@ class _AddAttachmentState extends State<AddAttachment> {
                         textAlign: TextAlign.left,
                         name: 'description',
                         maxLines: 5,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.zero,
                           ),
@@ -324,7 +319,7 @@ class _AddAttachmentState extends State<AddAttachment> {
                   color: white,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
@@ -353,19 +348,18 @@ class _AddAttachmentState extends State<AddAttachment> {
                   ),
                 ),
               ),
-              isFileEmpty == true
-                  ? Row(
-                      children: [
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Text(
-                          'Файл сонгоно уу',
-                          style: TextStyle(color: red),
-                        ),
-                      ],
-                    )
-                  : SizedBox(),
+              if (isFileEmpty == true)
+                const Row(
+                  children: [
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Text(
+                      'Файл сонгоно уу',
+                      style: TextStyle(color: red),
+                    ),
+                  ],
+                ),
               if (user.url != null) Text('$fileName')
             ],
           ),

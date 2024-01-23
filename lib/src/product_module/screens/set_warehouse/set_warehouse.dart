@@ -36,10 +36,10 @@ class SetWarehouse extends StatefulWidget {
   final ListenController listenController;
   final InventoryGoods data;
   const SetWarehouse({
-    Key? key,
+    super.key,
     required this.listenController,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<SetWarehouse> createState() => _SetWarehouseState();
@@ -64,7 +64,7 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
         data.quantityStartDate = startDate.toString();
         data.merchStaffId = res.product.merchStaff?.id;
         data.variantSuppliers = res.product.variantSuppliers;
-        if (res.product.variantSuppliers?.length != 0 &&
+        if (res.product.variantSuppliers!.isNotEmpty &&
             res.product.variantSuppliers != null) {
           for (var i = 0; i < res.product.variantSuppliers!.length; i++) {
             variantSuppliers.add(
@@ -119,14 +119,14 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
       appBar: AppBar(
         backgroundColor: white,
         surfaceTintColor: white,
-        iconTheme: IconThemeData(color: productColor),
-        title: Text(
+        iconTheme: const IconThemeData(color: productColor),
+        title: const Text(
           "Эхний үлдэгдэл тохируулах",
           style: TextStyle(color: productColor, fontSize: 16),
         ),
       ),
       body: isLoading == true
-          ? SizedBox()
+          ? const SizedBox()
           : GestureDetector(
               onTap: () {
                 FocusScope.of(context).unfocus();
@@ -140,7 +140,7 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                       Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
-                        child: Text(
+                        child: const Text(
                           "Ерөнхий мэдээлэл",
                           style: TextStyle(color: productColor),
                         ),
@@ -161,7 +161,7 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
                                     color: grey,
-                                    boxShadow: [
+                                    boxShadow: const [
                                       BoxShadow(
                                         offset: Offset(0, 2),
                                         color: grey,
@@ -177,7 +177,7 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Column(
@@ -187,52 +187,56 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text("Нэр: "),
+                                        const Text("Нэр: "),
                                         Text(
                                           '${widget.data.nameMon}',
-                                          style: TextStyle(color: productColor),
+                                          style: const TextStyle(
+                                              color: productColor),
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 5,
                                     ),
                                     Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text("DeHUB код: "),
+                                        const Text("DeHUB код: "),
                                         Text(
                                           '${widget.data.refCode}',
-                                          style: TextStyle(color: productColor),
+                                          style: const TextStyle(
+                                              color: productColor),
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 5,
                                     ),
                                     Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text("SKU код: "),
+                                        const Text("SKU код: "),
                                         Text(
                                           '${widget.data.skuCode}',
-                                          style: TextStyle(color: productColor),
+                                          style: const TextStyle(
+                                              color: productColor),
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 5,
                                     ),
                                     Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text("Bar код: "),
+                                        const Text("Bar код: "),
                                         Text(
                                           '${widget.data.barCode}',
-                                          style: TextStyle(color: productColor),
+                                          style: const TextStyle(
+                                              color: productColor),
                                         ),
                                       ],
                                     ),
@@ -240,10 +244,10 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
-                            FieldCard(
+                            const FieldCard(
                               paddingHorizontal: 0,
                               paddingVertical: 10,
                               labelText: 'Үнэ тохируулах тоо',
@@ -251,14 +255,14 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                               secondTextColor: grey2,
                               secondTextFontWeight: FontWeight.w600,
                             ),
-                            FieldCard(
+                            const FieldCard(
                               paddingHorizontal: 0,
                               paddingVertical: 10,
                               labelText: 'Үндсэн нэгж',
                               secondText: 'ширхэг',
                               secondTextColor: grey2,
                             ),
-                            FieldCard(
+                            const FieldCard(
                               paddingHorizontal: 0,
                               paddingVertical: 10,
                               labelText: 'Үнэ тооцох валют',
@@ -271,7 +275,7 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                       Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
-                        child: Text(
+                        child: const Text(
                           "Нийлүүлэгч",
                           style: TextStyle(color: productColor),
                         ),
@@ -289,7 +293,7 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                       Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
-                        child: Text(
+                        child: const Text(
                           "Агуулах",
                           style: TextStyle(color: productColor),
                         ),
@@ -298,16 +302,14 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                         paddingHorizontal: 15,
                         paddingVertical: 10,
                         labelText: 'Агуулах нэр',
-                        secondText: source.product.warehouse?.name != null
-                            ? source.product.warehouse?.name
-                            : 'Сонгох',
+                        secondText: source.product.warehouse?.name ?? 'Сонгох',
                         secondTextColor: productColor,
                         color: white,
                         onClick: () {
                           showModalBottomSheet(
                             context: context,
                             useSafeArea: true,
-                            builder: (context) => WarehouseSheet(),
+                            builder: (context) => const WarehouseSheet(),
                           );
                         },
                         arrowColor: productColor,
@@ -316,18 +318,16 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                         paddingHorizontal: 15,
                         paddingVertical: 10,
                         labelText: 'Хариуцсан нярав',
-                        secondText: source.product.warehouse?.warehouseUser
-                                    ?.firstName !=
-                                null
-                            ? source.product.warehouse?.warehouseUser?.firstName
-                            : "Авто гарах",
+                        secondText: source
+                                .product.warehouse?.warehouseUser?.firstName ??
+                            "Авто гарах",
                         secondTextColor: productColor,
                         color: white,
                       ),
                       Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
-                        child: Text(
+                        child: const Text(
                           "Системд эхлэх мэдээлэл",
                           style: TextStyle(color: productColor),
                         ),
@@ -338,7 +338,7 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                         textAlign: TextAlign.end,
                         name: 'warehouseQuantity',
                         onChanged: (value) {},
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           fillColor: white,
                           filled: true,
@@ -349,7 +349,7 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                           prefixIcon: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               SizedBox(
                                 width: 15,
                               ),
@@ -385,7 +385,7 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         'Болсон',
                                         style: TextStyle(
                                           fontSize: 12,
@@ -398,7 +398,7 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                                       child: CupertinoDatePicker(
                                         minimumDate: DateTime.now(),
                                         initialDateTime: startDate
-                                            .add(Duration(minutes: 10)),
+                                            .add(const Duration(minutes: 10)),
                                         mode: CupertinoDatePickerMode.date,
                                         use24hFormat: true,
                                         showDayOfWeek: true,
@@ -422,19 +422,19 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Эхлэх огноо'),
+                              const Text('Эхлэх огноо'),
                               Row(
                                 children: [
                                   Text(
-                                    '${DateFormat("yyyy-MM-dd").format(startDate)}',
-                                    style: TextStyle(color: productColor),
+                                    DateFormat("yyyy-MM-dd").format(startDate),
+                                    style: const TextStyle(color: productColor),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 15,
                                   ),
                                   SvgPicture.asset(
                                     'assets/svg/dot-calendar.svg',
-                                    colorFilter: ColorFilter.mode(
+                                    colorFilter: const ColorFilter.mode(
                                         productColor, BlendMode.srcIn),
                                   ),
                                 ],
@@ -446,16 +446,16 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                       Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
-                        child: Text(
+                        child: const Text(
                           "Нөөц хянах мэдээлэл",
                           style: TextStyle(color: productColor),
                         ),
                       ),
-                      RecourseInfoForm(),
+                      const RecourseInfoForm(),
                       Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
-                        child: Text(
+                        child: const Text(
                           "Мерчандайз",
                           style: TextStyle(color: productColor),
                         ),
@@ -471,7 +471,7 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                           showModalBottomSheet(
                             context: context,
                             useSafeArea: true,
-                            builder: (context) => MerchStaffSheet(),
+                            builder: (context) => const MerchStaffSheet(),
                           );
                         },
                         arrowColor: productColor,
@@ -480,9 +480,8 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                         paddingHorizontal: 15,
                         paddingVertical: 10,
                         labelText: 'Нэр',
-                        secondText: source.product.merchStaff?.firstName != null
-                            ? source.product.merchStaff?.firstName
-                            : 'Нэр',
+                        secondText:
+                            source.product.merchStaff?.firstName ?? 'Нэр',
                         secondTextColor: productColor,
                         color: white,
                       ),
@@ -490,9 +489,7 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                         paddingHorizontal: 15,
                         paddingVertical: 10,
                         labelText: 'Утас',
-                        secondText: source.product.merchStaff?.phone != null
-                            ? source.product.merchStaff?.phone
-                            : 'Утас',
+                        secondText: source.product.merchStaff?.phone ?? 'Утас',
                         secondTextColor: productColor,
                         color: white,
                       ),
@@ -500,100 +497,97 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                         paddingHorizontal: 15,
                         paddingVertical: 10,
                         labelText: 'И-мэйл',
-                        secondText: source.product.merchStaff?.email != null
-                            ? source.product.merchStaff?.email
-                            : 'И-мэйл',
+                        secondText:
+                            source.product.merchStaff?.email ?? 'И-мэйл',
                         secondTextColor: productColor,
                         color: white,
                       ),
-                      widget.data.supplierType == "RESELLER"
-                          ? Container(
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Text(
-                                'Татан авалтын мэдээлэл',
-                                style: TextStyle(color: productColor),
-                              ),
-                            )
-                          : SizedBox(),
-                      source.product.variantSuppliers?.length != 0 &&
-                              source.product.variantSuppliers != null
-                          ? Container(
-                              margin: const EdgeInsets.only(bottom: 15),
-                              child: Column(
-                                children: source.product.variantSuppliers!
-                                    .map(
-                                      (data) => GestureDetector(
-                                        onTap: () {
-                                          showModalBottomSheet(
-                                            context: context,
-                                            useSafeArea: true,
-                                            builder: (context) =>
-                                                VariantSuppliersSheet(
-                                              data: data,
-                                            ),
-                                          );
-                                        },
-                                        child: Container(
-                                          color: white,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 15, vertical: 10),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                      if (widget.data.supplierType == "RESELLER")
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: const Text(
+                            'Татан авалтын мэдээлэл',
+                            style: TextStyle(color: productColor),
+                          ),
+                        ),
+                      if (source.product.variantSuppliers!.isNotEmpty &&
+                          source.product.variantSuppliers != null)
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 15),
+                          child: Column(
+                            children: source.product.variantSuppliers!
+                                .map(
+                                  (data) => GestureDetector(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        useSafeArea: true,
+                                        builder: (context) =>
+                                            VariantSuppliersSheet(
+                                          data: data,
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      color: white,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    '${data.supplierName}',
-                                                    style: TextStyle(
-                                                        color: productColor),
-                                                  ),
-                                                  Text(
-                                                    '${data.partnerName}',
-                                                    style: TextStyle(
-                                                      color: grey2,
-                                                    ),
-                                                  ),
-                                                ],
+                                              Text(
+                                                '${data.supplierName}',
+                                                style: const TextStyle(
+                                                    color: productColor),
                                               ),
-                                              Icon(
-                                                Icons.arrow_forward_ios,
-                                                color: productColor,
-                                                size: 18,
+                                              Text(
+                                                '${data.partnerName}',
+                                                style: const TextStyle(
+                                                  color: grey2,
+                                                ),
                                               ),
                                             ],
                                           ),
-                                        ),
+                                          const Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: productColor,
+                                            size: 18,
+                                          ),
+                                        ],
                                       ),
-                                    )
-                                    .toList(),
-                              ),
-                            )
-                          : SizedBox(),
-                      widget.data.supplierType == "RESELLER"
-                          ? CustomButton(
-                              onClick: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  useSafeArea: true,
-                                  builder: (context) => VariantSuppliersSheet(),
-                                );
-                              },
-                              borderColor: grey2.withOpacity(0.5),
-                              labelColor: Color(0xffE9E9EA),
-                              labelText: 'Мэдээлэл нэмэх',
-                              textColor: productColor,
-                            )
-                          : SizedBox(),
-                      SizedBox(
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ),
+                      if (widget.data.supplierType == "RESELLER")
+                        CustomButton(
+                          onClick: () {
+                            showModalBottomSheet(
+                              context: context,
+                              useSafeArea: true,
+                              builder: (context) =>
+                                  const VariantSuppliersSheet(),
+                            );
+                          },
+                          borderColor: grey2.withOpacity(0.5),
+                          labelColor: const Color(0xffE9E9EA),
+                          labelText: 'Мэдээлэл нэмэх',
+                          textColor: productColor,
+                        ),
+                      const SizedBox(
                         height: 100,
                       ),
                       Row(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             width: 25,
                           ),
                           Expanded(
@@ -607,7 +601,7 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                               textColor: productColor,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 20,
                           ),
                           Expanded(
@@ -619,12 +613,12 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
                               labelText: "Батлах",
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 25,
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 50,
                       ),
                     ],

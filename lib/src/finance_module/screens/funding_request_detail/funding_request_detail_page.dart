@@ -20,9 +20,9 @@ class FundingRequestDetailPage extends StatefulWidget {
   final String id;
   static const routeName = '/FundingRequestDetailPage';
   const FundingRequestDetailPage({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<FundingRequestDetailPage> createState() =>
@@ -66,11 +66,11 @@ class _FundingRequestDetailPageState extends State<FundingRequestDetailPage>
                   Icons.arrow_back_ios_new,
                   color: source.currentColor,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Text(
-                  'Санхүүжилт хүсэх',
+                  'Илгээсэн хүсэлт',
                   style: TextStyle(
                     color: source.currentColor,
                     fontSize: 17,
@@ -92,64 +92,80 @@ class _FundingRequestDetailPageState extends State<FundingRequestDetailPage>
         ],
       ),
       body: DefaultTabController(
-        length: 3,
-        child: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverToBoxAdapter(
-                child: Material(
-                  elevation: 3,
-                  color: white,
-                  child: TabBar(
-                    overlayColor:
-                        MaterialStatePropertyAll(Colors.grey.shade100),
-                    indicatorColor: source.currentColor,
-                    labelColor: source.currentColor,
-                    unselectedLabelColor: grey2,
-                    tabs: [
-                      Container(
-                        alignment: Alignment.center,
-                        height: 40,
-                        child: Text(
-                          'Нэхэмжлэх',
-                          textAlign: TextAlign.center,
+        length: source.type == "BUYER_LED" ? 3 : 2,
+        child: Column(
+          children: [
+            Material(
+              elevation: 3,
+              color: white,
+              child: TabBar(
+                overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
+                indicatorColor: source.currentColor,
+                labelColor: source.currentColor,
+                unselectedLabelColor: grey2,
+                tabs: source.type == "BUYER_LED"
+                    ? [
+                        Container(
+                          alignment: Alignment.center,
+                          height: 40,
+                          child: const Text('Нэхэмжлэх'),
                         ),
-                      ),
-                      Container(
-                        height: 40,
-                        alignment: Alignment.center,
-                        child: Text('Хүсэлт'),
-                      ),
-                      Container(
-                        height: 40,
-                        alignment: Alignment.center,
-                        child: Text('Лимит'),
-                      ),
-                    ],
-                  ),
-                ),
+                        Container(
+                          height: 40,
+                          alignment: Alignment.center,
+                          child: const Text('Хүсэлт'),
+                        ),
+                        Container(
+                          height: 40,
+                          alignment: Alignment.center,
+                          child: const Text('Лимит'),
+                        ),
+                      ]
+                    : [
+                        Container(
+                          alignment: Alignment.center,
+                          height: 40,
+                          child: const Text('Нэхэмжлэх'),
+                        ),
+                        Container(
+                          height: 40,
+                          alignment: Alignment.center,
+                          child: const Text('Хүсэлт'),
+                        ),
+                      ],
               ),
-            ];
-          },
-          body: isLoading == true
-              ? Center(
-                  child: CircularProgressIndicator(
-                    color: source.currentColor,
-                  ),
-                )
-              : TabBarView(
-                  children: [
-                    InvoiceTab(
-                      data: get,
+            ),
+            Expanded(
+              child: isLoading == true
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        color: source.currentColor,
+                      ),
+                    )
+                  : TabBarView(
+                      children: source.type == "BUYER_LED"
+                          ? [
+                              InvoiceTab(
+                                data: get,
+                              ),
+                              RequestTab(
+                                data: get,
+                              ),
+                              LimitTab(
+                                data: get,
+                              ),
+                            ]
+                          : [
+                              InvoiceTab(
+                                data: get,
+                              ),
+                              RequestTab(
+                                data: get,
+                              ),
+                            ],
                     ),
-                    RequestTab(
-                      data: get,
-                    ),
-                    LimitTab(
-                      data: get,
-                    ),
-                  ],
-                ),
+            ),
+          ],
         ),
       ),
     );

@@ -8,12 +8,12 @@ import 'components/success_dialog.dart';
 
 class DialogManager extends StatefulWidget {
   final Widget? child;
-  const DialogManager({Key? key, this.child}) : super(key: key);
+  const DialogManager({super.key, this.child});
   @override
-  _DialogManagerState createState() => _DialogManagerState();
+  DialogManagerState createState() => DialogManagerState();
 }
 
-class _DialogManagerState extends State<DialogManager> {
+class DialogManagerState extends State<DialogManager> {
   DialogService? dialogService = locator<DialogService>();
 
   @override

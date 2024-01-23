@@ -6,11 +6,11 @@ class NotFound extends StatefulWidget {
   final String? labelText;
   final Color? textColor;
   const NotFound({
-    Key? key,
+    super.key,
     this.textColor,
     this.labelText,
     required this.module,
-  }) : super(key: key);
+  });
 
   @override
   State<NotFound> createState() => _NotFoundState();
@@ -38,7 +38,7 @@ class _NotFoundState extends State<NotFound> {
                             : widget.module == "FINANCE"
                                 ? Lottie.asset(
                                     'assets/lottie/invoice-not-found.json')
-                                : SizedBox(),
+                                : const SizedBox(),
         const SizedBox(
           height: 20,
         ),

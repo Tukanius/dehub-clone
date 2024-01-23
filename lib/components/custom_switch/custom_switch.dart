@@ -5,10 +5,10 @@ class CustomSwitch extends StatefulWidget {
   final bool? isDefault;
   final Color? color;
   const CustomSwitch({
-    Key? key,
+    super.key,
     this.color,
     this.isDefault,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomSwitch> createState() => _CustomSwitchState();
@@ -25,21 +25,11 @@ class _CustomSwitchState extends State<CustomSwitch> {
       ),
       child: Row(
         children: [
-          widget.isDefault == false
-              ? Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: white,
-                  ),
-                  height: 18,
-                  width: 18,
-                )
-              : SizedBox(),
-          SizedBox(
+          const SizedBox(
             width: 5,
           ),
           widget.isDefault == true
-              ? Text(
+              ? const Text(
                   'Тийм',
                   style: TextStyle(
                     color: white,
@@ -47,7 +37,7 @@ class _CustomSwitchState extends State<CustomSwitch> {
                     fontWeight: FontWeight.w500,
                   ),
                 )
-              : Text(
+              : const Text(
                   'Үгүй',
                   style: TextStyle(
                     color: white,
@@ -55,19 +45,9 @@ class _CustomSwitchState extends State<CustomSwitch> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-          SizedBox(
+          const SizedBox(
             width: 5,
           ),
-          widget.isDefault == true
-              ? Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: white,
-                  ),
-                  height: 18,
-                  width: 18,
-                )
-              : SizedBox(),
         ],
       ),
     );

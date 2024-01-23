@@ -14,12 +14,11 @@ class InvoiceCard extends StatefulWidget {
   final bool startAnimation;
   final Invoice data;
   const InvoiceCard(
-      {Key? key,
+      {super.key,
       this.onClick,
       required this.data,
       required this.index,
-      required this.startAnimation})
-      : super(key: key);
+      required this.startAnimation});
 
   @override
   State<InvoiceCard> createState() => _InvoiceCardState();
@@ -59,7 +58,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
               children: [
                 Checkbox(
                   side: MaterialStateBorderSide.resolveWith(
-                    (states) => BorderSide(
+                    (states) => const BorderSide(
                       color: invoiceColor,
                       width: 2,
                     ),
@@ -79,7 +78,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Row(
@@ -89,12 +88,12 @@ class _InvoiceCardState extends State<InvoiceCard> {
                               children: [
                                 SvgPicture.asset(
                                   'assets/svg/inv.svg',
-                                  colorFilter: ColorFilter.mode(
+                                  colorFilter: const ColorFilter.mode(
                                       invoiceColor, BlendMode.srcIn),
                                 ),
                                 Text(
                                   '  ${widget.data.refCode}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: invoiceColor,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -105,7 +104,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                           Expanded(
                             child: Text(
                               '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: grey2,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,
@@ -115,7 +114,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Row(
@@ -123,29 +122,29 @@ class _InvoiceCardState extends State<InvoiceCard> {
                         children: [
                           widget.data.paidDate == null
                               ? Text(
-                                  '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.createdAt!)}',
-                                  style: TextStyle(
+                                  DateFormat("yyyy-MM-dd HH:mm").format(widget.data.createdAt!),
+                                  style: const TextStyle(
                                     fontSize: 12,
                                     color: grey2,
                                   ),
                                 )
                               : Text(
-                                  '${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.paidDate!)}',
-                                  style: TextStyle(
+                                  DateFormat("yyyy-MM-dd HH:mm").format(widget.data.paidDate!),
+                                  style: const TextStyle(
                                     fontSize: 12,
                                     color: grey2,
                                   ),
                                 ),
                           Text(
                             "Төлөх огноо: ${DateFormat("yyyy-MM-dd").format(widget.data.paymentDate!)}",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12,
                               color: grey2,
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Row(
@@ -154,12 +153,12 @@ class _InvoiceCardState extends State<InvoiceCard> {
                           widget.data.respondText != null
                               ? Text(
                                   '${widget.data.respondText}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 12,
                                     color: invoiceColor,
                                   ),
                                 )
-                              : Text(
+                              : const Text(
                                   '-',
                                   style: TextStyle(
                                     fontSize: 12,
@@ -168,14 +167,14 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                 ),
                           Text(
                             'Баталсан: ${Utils().formatCurrency(widget.data.confirmedAmount.toString())}₮',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12,
                               color: grey2,
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Row(
@@ -183,14 +182,14 @@ class _InvoiceCardState extends State<InvoiceCard> {
                         children: [
                           Text(
                             'Төлсөн: ${Utils().formatCurrency(widget.data.paidAmount.toString())}₮',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12,
                               color: grey2,
                             ),
                           ),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 'Хугацаа: ',
                                 style: TextStyle(
                                   fontSize: 12,
@@ -215,15 +214,15 @@ class _InvoiceCardState extends State<InvoiceCard> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
                       Row(
                         children: [
-                          Text(
+                          const Text(
                             'Үлдсэн хоног: ',
                             style: TextStyle(
                               fontSize: 12,
@@ -233,7 +232,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                           widget.data.paidDate == null
                               ? Text(
                                   '${widget.data.paymentDate?.difference(DateTime.now()).inDays}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 12,
                                     color: grey2,
                                     fontWeight: FontWeight.w600,
@@ -241,7 +240,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                 )
                               : Text(
                                   '${widget.data.paymentDate?.difference(widget.data.paidDate!).inDays}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 12,
                                     color: grey2,
                                     fontWeight: FontWeight.w600,
@@ -249,7 +248,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                 ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                     ],

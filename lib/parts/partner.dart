@@ -173,45 +173,63 @@ Partner _$PartnerFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$PartnerToJson(Partner instance) {
   Map<String, dynamic> json = {};
-  if (instance.employeeUnit != null)
+  if (instance.employeeUnit != null) {
     json['employeeUnit'] = instance.employeeUnit;
-  if (instance.currentBusinessId != null)
+  }
+  if (instance.currentBusinessId != null) {
     json['currentBusinessId'] = instance.currentBusinessId;
-  if (instance.departmentUnitId != null)
+  }
+  if (instance.departmentUnitId != null) {
     json['departmentUnitId'] = instance.departmentUnitId;
-  if (instance.departmentSubUnitId != null)
+  }
+  if (instance.departmentSubUnitId != null) {
     json['departmentSubUnitId'] = instance.departmentSubUnitId;
-  if (instance.employeeUnitId != null)
+  }
+  if (instance.employeeUnitId != null) {
     json['employeeUnitId'] = instance.employeeUnitId;
+  }
   if (instance.userStatus != null) json['userStatus'] = instance.userStatus;
   if (instance.partnerName != null) json['partnerName'] = instance.partnerName;
-  if (instance.partnerNameEng != null)
+  if (instance.partnerNameEng != null) {
     json['partnerNameEng'] = instance.partnerNameEng;
-  if (instance.businessSectorId != null)
+  }
+  if (instance.businessSectorId != null) {
     json['businessSectorId'] = instance.businessSectorId;
-  if (instance.businessSubSectorId != null)
+  }
+  if (instance.businessSubSectorId != null) {
     json['businessSubSectorId'] = instance.businessSubSectorId;
-  if (instance.purchaseType != null)
+  }
+  if (instance.purchaseType != null) {
     json['purchaseType'] = instance.purchaseType;
-  if (instance.productCategoryType != null)
+  }
+  if (instance.productCategoryType != null) {
     json['productCategoryType'] = instance.productCategoryType;
-  if (instance.serviceCategoryType != null)
+  }
+  if (instance.serviceCategoryType != null) {
     json['serviceCategoryType'] = instance.serviceCategoryType;
-  if (instance.businessStatus != null)
+  }
+  if (instance.businessStatus != null) {
     json['businessStatus'] = instance.businessStatus;
-  if (instance.businessStaffs != null)
+  }
+  if (instance.businessStaffs != null) {
     json['businessStaffs'] = instance.businessStaffs;
-  if (instance.isAnchorBusiness != null)
+  }
+  if (instance.isAnchorBusiness != null) {
     json['isAnchorBusiness'] = instance.isAnchorBusiness;
+  }
   if (instance.isDefault != null) json['isDefault'] = instance.isDefault;
-  if (instance.partnerEmail != null)
+  if (instance.partnerEmail != null) {
     json['partnerEmail'] = instance.partnerEmail;
-  if (instance.partnerEmail2 != null)
+  }
+  if (instance.partnerEmail2 != null) {
     json['partnerEmail2'] = instance.partnerEmail2;
-  if (instance.partnerPhone != null)
+  }
+  if (instance.partnerPhone != null) {
     json['partnerPhone'] = instance.partnerPhone;
-  if (instance.partnerPhone2 != null)
+  }
+  if (instance.partnerPhone2 != null) {
     json['partnerPhone2'] = instance.partnerPhone2;
+  }
   if (instance.profileName != null) json['profileName'] = instance.profileName;
   if (instance.profileInfo != null) json['profileInfo'] = instance.profileInfo;
   if (instance.avatar != null) json['avatar'] = instance.avatar;
@@ -224,43 +242,55 @@ Map<String, dynamic> _$PartnerToJson(Partner instance) {
   if (instance.isAdmin != null) json['isAdmin'] = instance.isAdmin;
   if (instance.username != null) json['username'] = instance.username;
   if (instance.sessionId != null) json['sessionId'] = instance.sessionId;
-  if (instance.profileNameEng != null)
+  if (instance.profileNameEng != null) {
     json['profileNameEng'] = instance.profileNameEng;
-  if (instance.currentBusiness != null)
+  }
+  if (instance.currentBusiness != null) {
     json['currentBusiness'] = instance.currentBusiness;
+  }
   if (instance.user != null) json['user'] = instance.user;
-  if (instance.registrationType != null)
+  if (instance.registrationType != null) {
     json['registrationType'] = instance.registrationType;
+  }
   if (instance.partner != null) json['partner'] = instance.partner;
   if (instance.id != null) json['id'] = instance.id;
   if (instance.createdAt != null) json['createdAt'] = instance.createdAt;
   if (instance.updatedAt != null) json['updatedAt'] = instance.updatedAt;
   if (instance.deletedAt != null) json['deletedAt'] = instance.deletedAt;
-  if (instance.legalEntityType != null)
+  if (instance.legalEntityType != null) {
     json['legalEntityType'] = instance.legalEntityType;
+  }
   if (instance.equityType != null) json['equityType'] = instance.equityType;
-  if (instance.partnerCategory != null)
+  if (instance.partnerCategory != null) {
     json['partnerCategory'] = instance.partnerCategory;
+  }
   if (instance.ownerUserId != null) json['ownerUserId'] = instance.ownerUserId;
   if (instance.country != null) json['country'] = instance.country;
   if (instance.refCode != null) json['refCode'] = instance.refCode;
   if (instance.regUserId != null) json['regUserId'] = instance.regUserId;
-  if (instance.registerStatus != null)
+  if (instance.registerStatus != null) {
     json['registerStatus'] = instance.registerStatus;
-  if (instance.contractStatus != null)
+  }
+  if (instance.contractStatus != null) {
     json['contractStatus'] = instance.contractStatus;
-  if (instance.partnerStatus != null)
+  }
+  if (instance.partnerStatus != null) {
     json['partnerStatus'] = instance.partnerStatus;
+  }
   if (instance.type != null) json['type'] = instance.type;
-  if (instance.classification != null)
+  if (instance.classification != null) {
     json['classification'] = instance.classification;
-  if (instance.businessName != null)
+  }
+  if (instance.businessName != null) {
     json['businessName'] = instance.businessName;
-  if (instance.businessNameEng != null)
+  }
+  if (instance.businessNameEng != null) {
     json['businessNameEng'] = instance.businessNameEng;
+  }
   if (instance.stateRegNum != null) json['stateRegNum'] = instance.stateRegNum;
-  if (instance.stateRegDate != null)
+  if (instance.stateRegDate != null) {
     json['stateRegDate'] = instance.stateRegDate;
+  }
   if (instance.regNumber != null) json['regNumber'] = instance.regNumber;
   if (instance.isVatPayer != null) json['isVatPayer'] = instance.isVatPayer;
   if (instance.web != null) json['web'] = instance.web;
@@ -273,15 +303,19 @@ Map<String, dynamic> _$PartnerToJson(Partner instance) {
   if (instance.provinceId != null) json['provinceId'] = instance.provinceId;
   if (instance.districtId != null) json['districtId'] = instance.districtId;
   if (instance.khorooId != null) json['khorooId'] = instance.khorooId;
-  if (instance.khotkhonBair != null)
+  if (instance.khotkhonBair != null) {
     json['khotkhonBair'] = instance.khotkhonBair;
+  }
   if (instance.khoroolol != null) json['khoroolol'] = instance.khoroolol;
-  if (instance.khashaaDavkhar != null)
+  if (instance.khashaaDavkhar != null) {
     json['khashaaDavkhar'] = instance.khashaaDavkhar;
-  if (instance.khaalgaDugaar != null)
+  }
+  if (instance.khaalgaDugaar != null) {
     json['khaalgaDugaar'] = instance.khaalgaDugaar;
-  if (instance.businessAddress != null)
+  }
+  if (instance.businessAddress != null) {
     json['businessAddress'] = instance.businessAddress;
+  }
   if (instance.locationLat != null) json['locationLat'] = instance.locationLat;
   if (instance.locationLng != null) json['locationLng'] = instance.locationLng;
   if (instance.isAnchor != null) json['isAnchor'] = instance.isAnchor;

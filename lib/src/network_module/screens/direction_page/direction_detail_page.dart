@@ -17,9 +17,9 @@ class DirectionDetailPage extends StatefulWidget {
   final String id;
   static const routeName = 'DirectionDetailPage';
   const DirectionDetailPage({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<DirectionDetailPage> createState() => _DirectionDetailPageState();
@@ -46,8 +46,8 @@ class _DirectionDetailPageState extends State<DirectionDetailPage>
         elevation: 0,
         backgroundColor: white,
         surfaceTintColor: white,
-        iconTheme: IconThemeData(color: networkColor),
-        title: Text(
+        iconTheme: const IconThemeData(color: networkColor),
+        title: const Text(
           'Чиглэл',
           style: TextStyle(
             color: networkColor,
@@ -57,7 +57,7 @@ class _DirectionDetailPageState extends State<DirectionDetailPage>
         ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: networkColor,
               ),
@@ -69,7 +69,7 @@ class _DirectionDetailPageState extends State<DirectionDetailPage>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Тохиргоо',
                       style: TextStyle(
                         color: grey3,
@@ -77,7 +77,7 @@ class _DirectionDetailPageState extends State<DirectionDetailPage>
                       ),
                     ),
                   ),
-                  FieldCard(
+                  const FieldCard(
                     paddingHorizontal: 15,
                     paddingVertical: 10,
                     color: white,
@@ -85,7 +85,7 @@ class _DirectionDetailPageState extends State<DirectionDetailPage>
                     secondText: 'Бүсийн код',
                     secondTextColor: networkColor,
                   ),
-                  FieldCard(
+                  const FieldCard(
                     paddingHorizontal: 15,
                     paddingVertical: 10,
                     color: white,
@@ -93,7 +93,7 @@ class _DirectionDetailPageState extends State<DirectionDetailPage>
                     secondText: 'Бүсийн нэр',
                     secondTextColor: networkColor,
                   ),
-                  FieldCard(
+                  const FieldCard(
                     paddingHorizontal: 15,
                     paddingVertical: 10,
                     color: white,
@@ -120,7 +120,7 @@ class _DirectionDetailPageState extends State<DirectionDetailPage>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Системийн мэдээлэл',
                       style: TextStyle(
                         color: grey3,
@@ -135,7 +135,7 @@ class _DirectionDetailPageState extends State<DirectionDetailPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Статус',
                           style: TextStyle(color: dark),
                         ),
@@ -144,9 +144,9 @@ class _DirectionDetailPageState extends State<DirectionDetailPage>
                               horizontal: 10, vertical: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            color: Color(0xff01D462).withOpacity(0.1),
+                            color: const Color(0xff01D462).withOpacity(0.1),
                           ),
-                          child: Text(
+                          child: const Text(
                             'Идэвхтэй',
                             style: TextStyle(
                               color: Color(0xff01D462),
@@ -158,7 +158,7 @@ class _DirectionDetailPageState extends State<DirectionDetailPage>
                       ],
                     ),
                   ),
-                  FieldCard(
+                  const FieldCard(
                     paddingHorizontal: 15,
                     paddingVertical: 10,
                     color: white,
@@ -166,7 +166,7 @@ class _DirectionDetailPageState extends State<DirectionDetailPage>
                     secondText: 'Username',
                     secondTextColor: networkColor,
                   ),
-                  FieldCard(
+                  const FieldCard(
                     paddingHorizontal: 15,
                     paddingVertical: 10,
                     color: white,
@@ -180,7 +180,7 @@ class _DirectionDetailPageState extends State<DirectionDetailPage>
                     color: white,
                     labelText: 'Бүртгэсэн огноо',
                     secondText:
-                        '${DateFormat("yyyy-MM-dd").format(referenceGet.createdAt!)}',
+                        DateFormat("yyyy-MM-dd").format(referenceGet.createdAt!),
                     secondTextColor: networkColor,
                   ),
                 ],

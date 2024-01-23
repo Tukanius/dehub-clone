@@ -15,7 +15,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class InventoryItemType extends StatefulWidget {
   static const routeName = '/InventoryItemType';
-  const InventoryItemType({Key? key}) : super(key: key);
+  const InventoryItemType({super.key});
 
   @override
   State<InventoryItemType> createState() => _InventoryItemTypeState();
@@ -74,7 +74,7 @@ class _InventoryItemTypeState extends State<InventoryItemType>
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
       page = 1;
@@ -113,10 +113,10 @@ class _InventoryItemTypeState extends State<InventoryItemType>
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: productColor),
+        iconTheme: const IconThemeData(color: productColor),
         backgroundColor: white,
         surfaceTintColor: white,
-        title: Text(
+        title: const Text(
           'Нэр төрөл',
           style: TextStyle(
             color: productColor,
@@ -128,18 +128,18 @@ class _InventoryItemTypeState extends State<InventoryItemType>
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            builder: (context) => AddItemType(),
+            builder: (context) => const AddItemType(),
           );
         },
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         backgroundColor: productColor,
-        child: Icon(
+        child: const Icon(
           Icons.add,
           color: white,
         ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: productColor,
               ),
@@ -161,8 +161,8 @@ class _InventoryItemTypeState extends State<InventoryItemType>
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 15, vertical: 10),
                               child: user.currentBusinessId == item.businessId
-                                  ? Text('Бүртгэсэн жагсаалт')
-                                  : Text('Системд тохируулсан'),
+                                  ? const Text('Бүртгэсэн жагсаалт')
+                                  : const Text('Системд тохируулсан'),
                             ),
                             Column(
                               children: item.values!
@@ -179,28 +179,27 @@ class _InventoryItemTypeState extends State<InventoryItemType>
                                           Expanded(
                                             child: Text(
                                               '${data.name}',
-                                              style: TextStyle(color: dark),
+                                              style:
+                                                  const TextStyle(color: dark),
                                             ),
                                           ),
-                                          user.currentBusinessId ==
-                                                  item.businessId
-                                              ? GestureDetector(
-                                                  onTap: () {
-                                                    update(data);
-                                                    print(data.toJson());
-                                                  },
-                                                  child: Container(
-                                                    color: transparent,
-                                                    child: SvgPicture.asset(
-                                                      'assets/svg/edit_rounded.svg',
-                                                      colorFilter:
-                                                          ColorFilter.mode(
-                                                              productColor,
-                                                              BlendMode.srcIn),
-                                                    ),
-                                                  ),
-                                                )
-                                              : SizedBox(),
+                                          if (user.currentBusinessId ==
+                                              item.businessId)
+                                            GestureDetector(
+                                              onTap: () {
+                                                update(data);
+                                              },
+                                              child: Container(
+                                                color: transparent,
+                                                child: SvgPicture.asset(
+                                                  'assets/svg/edit_rounded.svg',
+                                                  colorFilter:
+                                                      const ColorFilter.mode(
+                                                          productColor,
+                                                          BlendMode.srcIn),
+                                                ),
+                                              ),
+                                            ),
                                         ],
                                       ),
                                     ),

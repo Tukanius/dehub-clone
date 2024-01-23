@@ -11,11 +11,11 @@ class FieldValueSheet extends StatefulWidget {
   final int fieldIndex;
   final List<InventoryGoods> data;
   const FieldValueSheet({
-    Key? key,
+    super.key,
     required this.data,
     required this.index,
     required this.fieldIndex,
-  }) : super(key: key);
+  });
 
   @override
   State<FieldValueSheet> createState() => _FieldValueSheetState();
@@ -33,7 +33,7 @@ class _FieldValueSheetState extends State<FieldValueSheet> {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: productColor,
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(20),
@@ -42,7 +42,7 @@ class _FieldValueSheetState extends State<FieldValueSheet> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Сонголт хийнэ үү',
                 style: TextStyle(
                   color: white,
@@ -90,7 +90,14 @@ class _FieldValueSheetState extends State<FieldValueSheet> {
                                 SvgPicture.asset(
                                   'assets/svg/double-check.svg',
                                   colorFilter: ColorFilter.mode(
-                                      source == data ? productColor : grey3,
+                                      source
+                                                  .product
+                                                  .sections?[widget.index]
+                                                  .fields?[widget.fieldIndex]
+                                                  .fieldValueName ==
+                                              data.name
+                                          ? productColor
+                                          : grey3,
                                       BlendMode.srcIn),
                                 ),
                               ],

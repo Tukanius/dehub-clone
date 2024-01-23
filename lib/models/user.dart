@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:dehub/models/business-staffs.dart';
+import 'package:dehub/models/business_staffs.dart';
 import 'package:dehub/utils/http_request.dart';
 part '../parts/user.dart';
 

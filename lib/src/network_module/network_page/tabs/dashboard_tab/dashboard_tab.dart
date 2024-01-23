@@ -19,14 +19,14 @@ import 'package:provider/provider.dart';
 
 class DashboardTab extends StatefulWidget {
   const DashboardTab({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
-  _DashboardTabState createState() => _DashboardTabState();
+  DashboardTabState createState() => DashboardTabState();
 }
 
-class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
+class DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
   bool isLoading = true;
   Business received = Business();
   Business sent = Business();
@@ -76,13 +76,13 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
         children: [
           Container(
             margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-            child: Text(
+            child: const Text(
               'Дашбоард',
               style: TextStyle(
                   color: black, fontSize: 24, fontWeight: FontWeight.w600),
             ),
           ),
-          Container(
+          SizedBox(
             height: 100,
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -151,27 +151,26 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                   svgColor: networkColor,
                   svg: 'assets/svg/map.svg',
                 ),
-                user.currentBusiness?.type == "SUPPLIER"
-                    ? DashboardCard(
-                        onClick: () {
-                          Navigator.of(context)
-                              .pushNamed(ReferenceInformationPage.routeName);
-                        },
-                        boxColor: networkColor.withOpacity(0.1),
-                        padding: 7,
-                        labelText: 'Лавлах мэдээлэл',
-                        svgColor: networkColor,
-                        svg: 'assets/svg/bag.svg',
-                      )
-                    : SizedBox(),
+                if (user.currentBusiness?.type == "SUPPLIER")
+                  DashboardCard(
+                    onClick: () {
+                      Navigator.of(context)
+                          .pushNamed(ReferenceInformationPage.routeName);
+                    },
+                    boxColor: networkColor.withOpacity(0.1),
+                    padding: 7,
+                    labelText: 'Лавлах мэдээлэл',
+                    svgColor: networkColor,
+                    svg: 'assets/svg/bag.svg',
+                  ),
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 25,
           ),
           isLoading == true
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(
                     color: networkColor,
                   ),
@@ -179,91 +178,87 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    data.isNotEmpty
-                        ? Column(
+                    if (data.isNotEmpty)
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(left: 15),
-                                    child: Text(
-                                      'Харилцагч бизнесүүд',
-                                      style: TextStyle(
-                                        color: black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
+                              Container(
+                                margin: const EdgeInsets.only(left: 15),
+                                child: const Text(
+                                  'Харилцагч бизнесүүд',
+                                  style: TextStyle(
+                                    color: black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).pushNamed(
-                                          NetworkPartnerPage.routeName);
-                                    },
-                                    child: Container(
-                                      color: transparent,
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 5),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "Бүгдийг",
-                                            style: TextStyle(
-                                              color: networkColor,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: networkColor,
-                                            size: 16,
-                                          ),
-                                          SizedBox(
-                                            width: 15,
-                                          ),
-                                        ],
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context)
+                                      .pushNamed(NetworkPartnerPage.routeName);
+                                },
+                                child: Container(
+                                  color: transparent,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  child: const Row(
+                                    children: [
+                                      Text(
+                                        "Бүгдийг",
+                                        style: TextStyle(
+                                          color: networkColor,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
-                                    ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: networkColor,
+                                        size: 16,
+                                      ),
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              PieChart(
-                                legend: legend,
-                                colorList: colorList,
-                                data: data,
-                              ),
-                              SizedBox(
-                                height: 10,
+                                ),
                               ),
                             ],
-                          )
-                        : SizedBox(),
-                    received.stats != null
-                        ? NetworkHorizontalChart(
-                            index: 2,
-                            data: received,
-                            labelText: 'Танайд ирсэн',
-                          )
-                        : SizedBox(),
-                    SizedBox(
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          PieChart(
+                            legend: legend,
+                            colorList: colorList,
+                            data: data,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                    if (received.stats != null)
+                      NetworkHorizontalChart(
+                        index: 2,
+                        data: received,
+                        labelText: 'Танайд ирсэн',
+                      ),
+                    const SizedBox(
                       height: 10,
                     ),
-                    sent.stats != null
-                        ? NetworkHorizontalChart(
-                            index: 3,
-                            labelText: 'Танай илгээсэн',
-                            data: sent,
-                          )
-                        : SizedBox(),
+                    if (sent.stats != null)
+                      NetworkHorizontalChart(
+                        index: 3,
+                        labelText: 'Танай илгээсэн',
+                        data: sent,
+                      ),
                   ],
                 ),
         ],

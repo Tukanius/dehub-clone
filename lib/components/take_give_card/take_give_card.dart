@@ -17,7 +17,7 @@ class _TakeGiveCardState extends State<TakeGiveCard> {
       decoration: BoxDecoration(
         border: Border.all(),
         shape: BoxShape.circle,
-        image: DecorationImage(
+        image: const DecorationImage(
           image: AssetImage('images/map.jpg'),
           fit: BoxFit.fill,
         ),

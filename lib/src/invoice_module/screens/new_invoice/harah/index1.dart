@@ -16,8 +16,8 @@ class Index1 extends StatefulWidget {
   const Index1({
     required this.isNewInvoice,
     required this.invoice,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<Index1> createState() => _Index1State();
@@ -50,7 +50,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).invoiceMe;
     return isLoading == true
-        ? Center(
+        ? const Center(
             child: CircularProgressIndicator(
               color: invoiceColor,
             ),
@@ -65,8 +65,8 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                     margin: const EdgeInsets.symmetric(horizontal: 15),
                     child: RichText(
                       text: TextSpan(
-                        style:
-                            TextStyle(fontFamily: 'Montserrat', color: black),
+                        style: const TextStyle(
+                            fontFamily: 'Montserrat', color: black),
                         children: [
                           TextSpan(
                             text:
@@ -75,20 +75,20 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                           user.lastName != null
                               ? TextSpan(
                                   text: '${user.lastName?[0]}. ',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: invoiceColor,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 )
-                              : TextSpan(),
+                              : const TextSpan(),
                           TextSpan(
                             text: "${user.firstName} ",
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: invoiceColor,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          TextSpan(text: 'үүсгэсэн.'),
+                          const TextSpan(text: 'үүсгэсэн.'),
                         ],
                       ),
                     ),
@@ -96,7 +96,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                   Container(
                     margin:
                         const EdgeInsets.only(left: 15, top: 25, bottom: 10),
-                    child: Text(
+                    child: const Text(
                       'НЭХЭМЖЛЭХ',
                       style: TextStyle(
                         color: grey3,
@@ -111,7 +111,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                       children: [
                         Row(
                           children: [
-                            Expanded(
+                            const Expanded(
                               flex: 4,
                               child: Text(
                                 'Нэхэмжлэх №',
@@ -122,13 +122,13 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                 textAlign: TextAlign.end,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
                             Expanded(
                               flex: 6,
                               child: widget.invoice.refCode == null
-                                  ? Text(
+                                  ? const Text(
                                       '-',
                                       style: TextStyle(
                                         color: black,
@@ -138,7 +138,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                     )
                                   : Text(
                                       '${widget.invoice.refCode}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: black,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -147,12 +147,12 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Row(
                           children: [
-                            Expanded(
+                            const Expanded(
                               flex: 4,
                               child: Text(
                                 'Бүртгэсэн',
@@ -163,14 +163,14 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                 textAlign: TextAlign.end,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
                             Expanded(
                               flex: 6,
                               child: Text(
-                                '${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
-                                style: TextStyle(
+                                DateFormat("yyyy-MM-dd").format(DateTime.now()),
+                                style: const TextStyle(
                                   color: black,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -179,12 +179,12 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Row(
                           children: [
-                            Expanded(
+                            const Expanded(
                               flex: 4,
                               child: Text(
                                 'Төлбөрийн сонголт',
@@ -195,7 +195,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                 textAlign: TextAlign.end,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
                             Expanded(
@@ -204,13 +204,13 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                       null
                                   ? Text(
                                       '${widget.invoice.paymentTerm?.description}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: black,
                                         fontWeight: FontWeight.bold,
                                       ),
                                       textAlign: TextAlign.left,
                                     )
-                                  : Text(
+                                  : const Text(
                                       '-',
                                       style: TextStyle(
                                         color: black,
@@ -221,12 +221,12 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Row(
                           children: [
-                            Expanded(
+                            const Expanded(
                               flex: 4,
                               child: Text(
                                 'Нэхэмжлэх баталсан',
@@ -237,21 +237,22 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                 textAlign: TextAlign.end,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
                             Expanded(
                               flex: 6,
                               child: widget.invoice.createdAt != null
                                   ? Text(
-                                      '${DateFormat("yyyy-MM-dd").format(widget.invoice.createdAt!)}',
-                                      style: TextStyle(
+                                      DateFormat("yyyy-MM-dd")
+                                          .format(widget.invoice.createdAt!),
+                                      style: const TextStyle(
                                         color: black,
                                         fontWeight: FontWeight.bold,
                                       ),
                                       textAlign: TextAlign.left,
                                     )
-                                  : Text(
+                                  : const Text(
                                       "-",
                                       style: TextStyle(
                                         color: black,
@@ -262,12 +263,12 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Row(
                           children: [
-                            Expanded(
+                            const Expanded(
                               flex: 4,
                               child: Text(
                                 'Төлөх сүүлийн өдөр',
@@ -278,21 +279,22 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                 textAlign: TextAlign.end,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
                             Expanded(
                               flex: 6,
                               child: widget.invoice.paymentDate != null
                                   ? Text(
-                                      '${DateFormat("yyyy-MM-dd").format(widget.invoice.paymentDate!)}',
-                                      style: TextStyle(
+                                      DateFormat("yyyy-MM-dd")
+                                          .format(widget.invoice.paymentDate!),
+                                      style: const TextStyle(
                                         color: black,
                                         fontWeight: FontWeight.bold,
                                       ),
                                       textAlign: TextAlign.left,
                                     )
-                                  : Text(
+                                  : const Text(
                                       '-',
                                       style: TextStyle(
                                         color: black,
@@ -306,10 +308,10 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
@@ -326,7 +328,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Row(
@@ -343,44 +345,44 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                   children: [
                                     Text(
                                       '${supplierBusiness.partner?.businessName}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: black,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Text(
                                       'ТТД: ${supplierBusiness.regNumber}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: black,
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Text(
                                       '${supplierBusiness.profileName}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: invoiceColor,
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Text(
                                       '${supplierBusiness.partner?.email}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: black,
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Text(
                                       '${supplierBusiness.partner?.phone}',
-                                      style: TextStyle(color: black),
+                                      style: const TextStyle(color: black),
                                     )
                                   ],
                                 )
@@ -389,50 +391,50 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                   children: [
                                     Text(
                                       '${user.currentBusiness?.partner?.businessName}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: black,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Text(
                                       'ТТД: ${user.currentBusiness?.regNumber}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: black,
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Text(
                                       '${user.currentBusiness?.profileName}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: invoiceColor,
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Text(
                                       '${user.currentBusiness?.partner?.email}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: black,
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Text(
                                       '${user.currentBusiness?.partner?.phone}',
-                                      style: TextStyle(color: black),
+                                      style: const TextStyle(color: black),
                                     )
                                   ],
                                 ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Expanded(
@@ -444,44 +446,44 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                             children: [
                               Text(
                                 '${buyerBusiness.partner?.businessName}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: black,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 'ТТД: ${buyerBusiness.regNumber}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: black,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 '${buyerBusiness.profileName}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: invoiceColor,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 '${buyerBusiness.partner?.email}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: black,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 '${buyerBusiness.partner?.phone}',
-                                style: TextStyle(color: black),
+                                style: const TextStyle(color: black),
                               )
                             ],
                           ),
@@ -489,20 +491,20 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   GoodsInfoCard(
                     data: widget.invoice.lines!,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
                     children: [
                       Container(
                         margin: const EdgeInsets.only(left: 10),
-                        child: Text(
+                        child: const Text(
                           'НИЙТ ТӨЛБӨР',
                           style: TextStyle(
                             color: grey3,
@@ -512,28 +514,28 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
                     color: white,
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Хөнгөлөлт'),
+                        const Text('Хөнгөлөлт'),
                         Row(
                           children: [
                             Text(
                               '${Utils().formatCurrency(widget.invoice.discountAmount.toString())} ₮',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: invoiceColor,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
-                            Icon(
+                            const Icon(
                               Icons.arrow_forward_ios_rounded,
                               size: 12,
                               color: grey2,
@@ -545,117 +547,109 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                   ),
                   Container(
                     color: white,
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Нийт дүн'),
-                        Container(
-                          child: Row(
-                            children: [
-                              Text(
-                                '${Utils().formatCurrency(widget.invoice.itemsTotal.toString())} ₮',
-                                style: TextStyle(
-                                  color: invoiceColor,
-                                ),
+                        const Text('Нийт дүн'),
+                        Row(
+                          children: [
+                            Text(
+                              '${Utils().formatCurrency(widget.invoice.itemsTotal.toString())} ₮',
+                              style: const TextStyle(
+                                color: invoiceColor,
                               ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(
+                              width: 15,
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ),
                   Container(
                     color: white,
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Тооцсон НӨАТ'),
-                        Container(
-                          child: Row(
-                            children: [
-                              Text(
-                                '${Utils().formatCurrency(widget.invoice.vatAmount.toString())} ₮',
-                                style: TextStyle(
-                                  color: invoiceColor,
-                                ),
+                        const Text('Тооцсон НӨАТ'),
+                        Row(
+                          children: [
+                            Text(
+                              '${Utils().formatCurrency(widget.invoice.vatAmount.toString())} ₮',
+                              style: const TextStyle(
+                                color: invoiceColor,
                               ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(
+                              width: 15,
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ),
                   Container(
                     color: white,
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Тооцсон НХАТ'),
-                        Container(
-                          child: Row(
-                            children: [
-                              Text(
-                                '${Utils().formatCurrency(widget.invoice.taxAmount.toString())}₮',
-                                style: TextStyle(
-                                  color: invoiceColor,
-                                ),
+                        const Text('Тооцсон НХАТ'),
+                        Row(
+                          children: [
+                            Text(
+                              '${Utils().formatCurrency(widget.invoice.taxAmount.toString())}₮',
+                              style: const TextStyle(
+                                color: invoiceColor,
                               ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(
+                              width: 15,
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ),
                   Container(
                     color: white,
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Хүргэлт төлбөр'),
-                        Container(
-                          child: Row(
-                            children: [
-                              Text(
-                                '${Utils().formatCurrency("${widget.invoice.shippingAmount}")}₮',
-                                style: TextStyle(
-                                  color: invoiceColor,
-                                ),
+                        const Text('Хүргэлт төлбөр'),
+                        Row(
+                          children: [
+                            Text(
+                              '${Utils().formatCurrency("${widget.invoice.shippingAmount}")}₮',
+                              style: const TextStyle(
+                                color: invoiceColor,
                               ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 12,
-                                color: grey2,
-                              )
-                            ],
-                          ),
+                            ),
+                            const SizedBox(
+                              width: 15,
+                            ),
+                            const Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              size: 12,
+                              color: grey2,
+                            )
+                          ],
                         ),
                       ],
                     ),
                   ),
                   Container(
                     color: white,
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 10, top: 10, bottom: 10, right: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'НИЙТ ТӨЛБӨР',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -665,13 +659,13 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                           children: [
                             Text(
                               '${Utils().formatCurrency(widget.invoice.totalAmount.toString())} ₮',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: invoiceColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 24,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
                           ],
@@ -679,7 +673,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 100,
                   ),
                 ],

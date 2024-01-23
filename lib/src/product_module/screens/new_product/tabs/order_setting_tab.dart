@@ -28,7 +28,6 @@ class OrderSettingTab extends StatefulWidget {
     super.key,
     this.data,
   });
-
   @override
   State<OrderSettingTab> createState() => _OrderSettingTabState();
 }
@@ -53,7 +52,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
           form.returnType = data.returnTypeId;
         }
         form.isCompleted = isCompleted;
-        if (data.additionalUnits != null && data.additionalUnits?.length != 0) {
+        if (data.additionalUnits != null && data.additionalUnits!.isNotEmpty) {
           for (var i = 0; i < data.additionalUnits!.length; i++) {
             additionalUnits.add(
               InventoryGoods(
@@ -73,22 +72,17 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
           }
         }
         form.additionalUnits = additionalUnits;
-        form.hasAdditionalUnit = additionalUnits.length != 0 ? true : false;
+        form.hasAdditionalUnit = additionalUnits.isNotEmpty ? true : false;
         int index = additionalUnits
             .indexWhere((element) => element.convertType == null);
         if (index < 0) {
           await InventoryApi().updateVariant(
               form, widget.data?.id != null ? widget.data!.id! : data.id!);
-          showCustomDialog(
-            context,
-            "Амжилттай",
-            true,
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          );
+          showCustomDialog(context, "Амжилттай", true, onPressed: () {
+            Navigator.of(context).pop();
+          });
         } else {
-          CustomScaffoldMessenger(
+          customScaffoldMessenger(
             context,
             color: productColor,
             labelText: 'Нэмэлт хэмжих нэгжүүд тохируулна уу!',
@@ -96,7 +90,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
         }
       }
     } else {
-      CustomScaffoldMessenger(
+      customScaffoldMessenger(
         context,
         color: productColor,
         labelText: 'Ханган нийлүүлэгч сонгоно уу!',
@@ -120,7 +114,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Text(
+                child: const Text(
                   'Ханган нийлүүлэгч',
                   style: TextStyle(
                     color: grey3,
@@ -132,16 +126,14 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                 paddingHorizontal: 15,
                 paddingVertical: 10,
                 labelText: 'Ханган нийлүүлэгч',
-                secondText: source.product.supplierTypeName != null
-                    ? source.product.supplierTypeName
-                    : 'Сонгох',
+                secondText: source.product.supplierTypeName ?? 'Сонгох',
                 secondTextColor: productColor,
                 arrowColor: productColor,
                 onClick: () {
                   showModalBottomSheet(
                     context: context,
                     useSafeArea: true,
-                    builder: (context) => SupplierTypeSheet(),
+                    builder: (context) => const SupplierTypeSheet(),
                   );
                 },
                 color: white,
@@ -149,7 +141,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Text(
+                child: const Text(
                   'Захиалгын хэмжих нэгж',
                   style: TextStyle(
                     color: grey3,
@@ -161,16 +153,14 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                 paddingHorizontal: 15,
                 paddingVertical: 10,
                 labelText: 'Үндсэн нэгж',
-                secondText: source.product.unitName != null
-                    ? source.product.unitName
-                    : 'Сонгох',
+                secondText: source.product.unitName ?? 'Сонгох',
                 secondTextColor: productColor,
                 onClick: () {
                   showModalBottomSheet(
                     context: context,
                     useSafeArea: true,
                     builder: (context) {
-                      return UnitSheet();
+                      return const UnitSheet();
                     },
                   );
                 },
@@ -181,28 +171,83 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                 paddingHorizontal: 15,
                 paddingVertical: 10,
                 labelText: 'Жин',
-                secondText: source.product.unitWeightLabel != null
-                    ? source.product.unitWeightLabel
-                    : 'Сонгох',
+                secondText: source.product.unitWeightLabel ?? 'Сонгох',
                 secondTextColor: productColor,
                 onClick: () {
                   showModalBottomSheet(
                     context: context,
                     useSafeArea: true,
                     builder: (context) {
-                      return NumberUnitSheet();
+                      return const NumberUnitSheet();
                     },
                   );
                 },
                 arrowColor: productColor,
                 color: white,
               ),
-              source.product.unitWeightLabel != null
-                  ? FormTextField(
+              if (source.product.unitWeightLabel != null)
+                FormTextField(
+                  textColor: productColor,
+                  textAlign: TextAlign.end,
+                  name: 'weight',
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    fillColor: white,
+                    filled: true,
+                    hintText: 'Энд оруулна уу',
+                    hintStyle: TextStyle(
+                      color: productColor,
+                    ),
+                    prefixIcon: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Text(
+                          'Жингийн нэгж',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(
+                      errorText: 'Заавал оруулна',
+                    ),
+                  ]),
+                ),
+              FieldCard(
+                paddingHorizontal: 15,
+                paddingVertical: 10,
+                labelText: 'Эзэлхүүн нэгж',
+                secondText: source.product.unitSpaceLabel ?? 'Сонгох',
+                secondTextColor: productColor,
+                onClick: () {
+                  showModalBottomSheet(
+                    context: context,
+                    useSafeArea: true,
+                    builder: (context) {
+                      return const UnitSpaceLabelSheet();
+                    },
+                  );
+                },
+                arrowColor: productColor,
+                color: white,
+              ),
+              if (source.product.unitSpaceLabel != null)
+                Column(
+                  children: [
+                    FormTextField(
                       textColor: productColor,
                       textAlign: TextAlign.end,
-                      name: 'weight',
-                      decoration: InputDecoration(
+                      inputType: TextInputType.number,
+                      name: 'length',
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         fillColor: white,
                         filled: true,
@@ -213,12 +258,12 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                         prefixIcon: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             SizedBox(
                               width: 15,
                             ),
                             Text(
-                              'Жингийн нэгж',
+                              'Урт',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w400,
@@ -232,146 +277,85 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                           errorText: 'Заавал оруулна',
                         ),
                       ]),
-                    )
-                  : SizedBox(),
-              FieldCard(
-                paddingHorizontal: 15,
-                paddingVertical: 10,
-                labelText: 'Эзэлхүүн нэгж',
-                secondText: source.product.unitSpaceLabel != null
-                    ? source.product.unitSpaceLabel
-                    : 'Сонгох',
-                secondTextColor: productColor,
-                onClick: () {
-                  showModalBottomSheet(
-                    context: context,
-                    useSafeArea: true,
-                    builder: (context) {
-                      return UnitSpaceLabelSheet();
-                    },
-                  );
-                },
-                arrowColor: productColor,
-                color: white,
-              ),
-              source.product.unitSpaceLabel != null
-                  ? Column(
-                      children: [
-                        FormTextField(
-                          textColor: productColor,
-                          textAlign: TextAlign.end,
-                          inputType: TextInputType.number,
-                          name: 'length',
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            fillColor: white,
-                            filled: true,
-                            hintText: 'Энд оруулна уу',
-                            hintStyle: TextStyle(
-                              color: productColor,
-                            ),
-                            prefixIcon: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Text(
-                                  'Урт',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(
-                              errorText: 'Заавал оруулна',
-                            ),
-                          ]),
+                    ),
+                    FormTextField(
+                      textColor: productColor,
+                      textAlign: TextAlign.end,
+                      inputType: TextInputType.number,
+                      name: 'height',
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        fillColor: white,
+                        filled: true,
+                        hintText: 'Энд оруулна уу',
+                        hintStyle: TextStyle(
+                          color: productColor,
                         ),
-                        FormTextField(
-                          textColor: productColor,
-                          textAlign: TextAlign.end,
-                          inputType: TextInputType.number,
-                          name: 'height',
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            fillColor: white,
-                            filled: true,
-                            hintText: 'Энд оруулна уу',
-                            hintStyle: TextStyle(
-                              color: productColor,
+                        prefixIcon: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 15,
                             ),
-                            prefixIcon: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Text(
-                                  'Өндөр',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ],
+                            Text(
+                              'Өндөр',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
-                          ),
-                          validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(
-                              errorText: 'Заавал оруулна',
-                            ),
-                          ]),
+                          ],
                         ),
-                        FormTextField(
-                          textColor: productColor,
-                          textAlign: TextAlign.end,
-                          inputType: TextInputType.number,
-                          name: 'width',
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            fillColor: white,
-                            filled: true,
-                            hintText: 'Энд оруулна уу',
-                            hintStyle: TextStyle(
-                              color: productColor,
-                            ),
-                            prefixIcon: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Text(
-                                  'Өргөн',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(
-                              errorText: 'Заавал оруулна',
-                            ),
-                          ]),
+                      ),
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(
+                          errorText: 'Заавал оруулна',
                         ),
-                      ],
-                    )
-                  : SizedBox(),
+                      ]),
+                    ),
+                    FormTextField(
+                      textColor: productColor,
+                      textAlign: TextAlign.end,
+                      inputType: TextInputType.number,
+                      name: 'width',
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        fillColor: white,
+                        filled: true,
+                        hintText: 'Энд оруулна уу',
+                        hintStyle: TextStyle(
+                          color: productColor,
+                        ),
+                        prefixIcon: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Text(
+                              'Өргөн',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(
+                          errorText: 'Заавал оруулна',
+                        ),
+                      ]),
+                    ),
+                  ],
+                ),
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Text(
+                child: const Text(
                   'Буцаалт',
                   style: TextStyle(
                     color: grey3,
@@ -408,7 +392,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                                   color: transparent,
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 10, horizontal: 15),
-                                  child: Text('Тийм'),
+                                  child: const Text('Тийм'),
                                 ),
                               ),
                               GestureDetector(
@@ -421,7 +405,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 10, horizontal: 15),
                                   width: MediaQuery.of(context).size.width,
-                                  child: Text('Үгүй'),
+                                  child: const Text('Үгүй'),
                                 ),
                               ),
                             ],
@@ -438,16 +422,14 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                 paddingHorizontal: 15,
                 paddingVertical: 10,
                 labelText: 'Буцаалтын төрөл',
-                secondText: source.product.returnType != null
-                    ? source.product.returnType
-                    : 'Сонгох',
+                secondText: source.product.returnType ?? 'Сонгох',
                 secondTextColor: productColor,
                 onClick: () {
                   showModalBottomSheet(
                     context: context,
                     useSafeArea: true,
                     builder: (context) {
-                      return ReturnTypeSheet();
+                      return const ReturnTypeSheet();
                     },
                   );
                 },
@@ -457,7 +439,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Text(
+                child: const Text(
                   'Барааны хувилбар',
                   style: TextStyle(
                     color: grey3,
@@ -465,30 +447,28 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                   ),
                 ),
               ),
-              source.product.values?.length == 0 ||
-                      source.product.values == null
-                  ? FieldCard(
-                      paddingHorizontal: 15,
-                      paddingVertical: 10,
-                      labelText: 'Хувилбар нэмэх',
-                      secondText: '',
-                      secondTextColor: productColor,
-                      onClick: () {
-                        showModalBottomSheet(
-                          context: context,
-                          useSafeArea: true,
-                          builder: (context) {
-                            return OptionSheet();
-                          },
-                        );
+              if (source.product.values == null &&
+                  source.product.values!.isEmpty)
+                FieldCard(
+                  paddingHorizontal: 15,
+                  paddingVertical: 10,
+                  labelText: 'Хувилбар нэмэх',
+                  secondText: '',
+                  secondTextColor: productColor,
+                  onClick: () {
+                    showModalBottomSheet(
+                      context: context,
+                      useSafeArea: true,
+                      builder: (context) {
+                        return const OptionSheet();
                       },
-                      arrowColor: productColor,
-                      color: white,
-                    )
-                  : SizedBox(),
-              source.product.values?.length == 0 ||
-                      source.product.values == null
-                  ? SizedBox()
+                    );
+                  },
+                  arrowColor: productColor,
+                  color: white,
+                ),
+              source.product.values!.isEmpty || source.product.values == null
+                  ? const SizedBox()
                   : Column(
                       children: source.product.values!
                           .map(
@@ -507,11 +487,12 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                                     children: [
                                       Text(
                                         '${data.name}',
-                                        style: TextStyle(color: productColor),
+                                        style: const TextStyle(
+                                            color: productColor),
                                       ),
                                       RichText(
                                         text: TextSpan(
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontFamily: 'Montserrat',
                                             color: grey2,
                                           ),
@@ -531,7 +512,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                                       ),
                                     ],
                                   ),
-                                  Icon(
+                                  const Icon(
                                     Icons.arrow_forward_ios,
                                     color: productColor,
                                     size: 18,
@@ -542,16 +523,15 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                           )
                           .toList(),
                     ),
-              source.options.length != 0
-                  ? Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: Text(
-                        'Хувилбарууд',
-                        style: TextStyle(color: grey2),
-                      ),
-                    )
-                  : SizedBox(),
+              if (source.options.isNotEmpty)
+                Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: const Text(
+                    'Хувилбарууд',
+                    style: TextStyle(color: grey2),
+                  ),
+                ),
               Column(
                 children: source.options
                     .map(
@@ -589,7 +569,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                                 children: [
                                   RichText(
                                     text: TextSpan(
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: productColor,
                                           fontFamily: "Montserrat"),
                                       children: data
@@ -602,21 +582,21 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                                           .toList(),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 3,
                                   ),
                                   widget.data != null
                                       ? Text(
                                           '${widget.data?.skuCode}-${source.options.indexOf(data) + 1}',
-                                          style: TextStyle(color: grey2),
+                                          style: const TextStyle(color: grey2),
                                         )
                                       : Text(
                                           '${source.product.skuCode}-${source.options.indexOf(data) + 1}',
-                                          style: TextStyle(color: grey2),
+                                          style: const TextStyle(color: grey2),
                                         ),
                                 ],
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.arrow_forward_ios,
                                 color: productColor,
                                 size: 14,
@@ -631,7 +611,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Text(
+                child: const Text(
                   'Нэмэлт хэмжих нэгж',
                   style: TextStyle(
                     color: grey3,
@@ -644,14 +624,14 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                   showModalBottomSheet(
                     context: context,
                     useSafeArea: true,
-                    builder: (context) => AdditionalUnitSheet(),
+                    builder: (context) => const AdditionalUnitSheet(),
                   );
                 },
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   color: white,
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Нэмэлт хэмжих нэгж нэмэх'),
@@ -664,38 +644,39 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                   ),
                 ),
               ),
-              source.product.additionalUnits != null &&
-                      source.product.additionalUnits?.length != 0
-                  ? Column(
-                      children: source.product.additionalUnits!
-                          .map(
-                            (item) => AdditionalUnitCard(
-                              onClick: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  useSafeArea: true,
-                                  builder: (context) => SetAdditionalUnitSheet(
-                                    data: item,
-                                  ),
-                                );
-                              },
-                              closeClick: () {
-                                source.removeAdditinoalUnit(source
-                                    .product.additionalUnits!
-                                    .indexOf(item));
-                              },
-                              data: item,
-                            ),
-                          )
-                          .toList(),
-                    )
-                  : SizedBox(),
-              SizedBox(
+              if (source.product.additionalUnits != null &&
+                  source.product.additionalUnits!.isNotEmpty)
+                Column(
+                  children: source.product.additionalUnits!
+                      .map(
+                        (item) => AdditionalUnitCard(
+                          index: source.product.additionalUnits!.indexOf(item),
+                          onClick: () {
+                            showModalBottomSheet(
+                              context: context,
+                              useSafeArea: true,
+                              builder: (context) => SetAdditionalUnitSheet(
+                                data: item,
+                                index: source.product.additionalUnits!
+                                    .indexOf(item),
+                              ),
+                            );
+                          },
+                          closeClick: () {
+                            source.removeAdditinoalUnit(
+                                source.product.additionalUnits!.indexOf(item));
+                          },
+                          data: item,
+                        ),
+                      )
+                      .toList(),
+                ),
+              const SizedBox(
                 height: 80,
               ),
               Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 25,
                   ),
                   Expanded(
@@ -709,7 +690,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                       labelColor: white,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   Expanded(
@@ -722,12 +703,12 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                       labelColor: productColor,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 25,
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 80,
               ),
             ],

@@ -5,14 +5,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class OrderBranchCard extends StatefulWidget {
   final Order? data;
-  final isCheck;
+  final bool? isCheck;
   final Function()? onClick;
   const OrderBranchCard({
     this.isCheck,
     this.onClick,
-    Key? key,
+    super.key,
     this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<OrderBranchCard> createState() => _OrderBranchCardState();
@@ -73,12 +73,12 @@ class _OrderBranchCardState extends State<OrderBranchCard> {
                       : Container(
                           height: 40,
                           width: 40,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: grey,
                             shape: BoxShape.circle,
                           ),
                         ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   Expanded(
@@ -87,14 +87,14 @@ class _OrderBranchCardState extends State<OrderBranchCard> {
                       children: [
                         Text(
                           '${widget.data?.branchAddress}',
-                          style: TextStyle(color: buttonColor),
+                          style: const TextStyle(color: buttonColor),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Text(
                           '${widget.data?.name}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Color(0xff657786),
                           ),
                         )
@@ -106,7 +106,7 @@ class _OrderBranchCardState extends State<OrderBranchCard> {
             ),
             SvgPicture.asset(
               'assets/svg/map.svg',
-              colorFilter: ColorFilter.mode(orderColor, BlendMode.srcIn),
+              colorFilter: const ColorFilter.mode(orderColor, BlendMode.srcIn),
             ),
           ],
         ),

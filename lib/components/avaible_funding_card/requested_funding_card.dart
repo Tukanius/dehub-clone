@@ -12,10 +12,10 @@ class RequestedFundingCard extends StatefulWidget {
   final Function()? onClick;
   final Finance data;
   const RequestedFundingCard({
-    Key? key,
+    super.key,
     required this.data,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<RequestedFundingCard> createState() => _RequestedFundingCardState();
@@ -48,7 +48,7 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
               children: [
                 Text(
                   '${widget.data.refCode}',
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: dark, fontSize: 14, fontWeight: FontWeight.w600),
                 ),
                 Container(
@@ -66,7 +66,7 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -103,13 +103,13 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Хүсэлтийн дүн: ',
                   style: TextStyle(
                     color: grey2,
@@ -118,13 +118,13 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
                 ),
                 Text(
                   '${Utils().formatCurrency(widget.data.requestedAmount.toString())}₮',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12,
                   ),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -132,7 +132,7 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
               children: [
                 Text(
                   'Нийт шимтгэл: ${Utils().formatCurrency(widget.data.totalScfFeeAmount.toString())}₮',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12,
                     color: Color(0xff555555),
                   ),
@@ -142,7 +142,7 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
                     SvgPicture.asset('assets/svg/inv.svg'),
                     Text(
                       ' ${widget.data.invRefCode}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w600,
                       ),
                     )

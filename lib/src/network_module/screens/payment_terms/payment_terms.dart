@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:dehub/api/business_api.dart';
@@ -9,14 +10,13 @@ import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/src/network_module/screens/payment_terms/set_payment_term_detail/set_payment_term_detail.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PaymentTerms extends StatefulWidget {
   static const routeName = '/PaymentTerms';
-  const PaymentTerms({Key? key}) : super(key: key);
+  const PaymentTerms({super.key});
 
   @override
   State<PaymentTerms> createState() => _PaymentTermsState();
@@ -38,14 +38,14 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
   }
 
   list(page, limit, String query) async {
-    Filter filter = Filter(query: '${query}');
+    Filter filter = Filter(query: query);
     Offset offset = Offset(page: page, limit: limit);
     var res = await BusinessApi()
         .networkList(ResultArguments(filter: filter, offset: offset));
     setState(() {
       network = res;
       isLoading = false;
-      Future.delayed(Duration(milliseconds: 100), () {
+      Future.delayed(const Duration(milliseconds: 100), () {
         setState(() {
           startAnimation = true;
         });
@@ -55,7 +55,7 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
 
   onChange(String value) {
     if (timer != null) timer!.cancel();
-    timer = Timer(Duration(milliseconds: 500), () {
+    timer = Timer(const Duration(milliseconds: 500), () {
       setState(() {
         isLoading = true;
       });
@@ -78,7 +78,7 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
     });
@@ -97,9 +97,9 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
         elevation: 0,
         backgroundColor: networkColor,
         surfaceTintColor: networkColor,
-        iconTheme: IconThemeData(color: white),
+        iconTheme: const IconThemeData(color: white),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Төлбөрийн нөхцөл',
           style: TextStyle(
             color: white,
@@ -117,88 +117,59 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
               onChange(query);
             },
           ),
-          Expanded(
-            child: SmartRefresher(
-              enablePullDown: true,
-              enablePullUp: true,
-              controller: refreshController,
-              header: WaterDropHeader(
-                waterDropColor: networkColor,
-                refresh: SizedBox(
-                  height: 20,
-                  width: 20,
+          isLoading == true
+              ? const Center(
                   child: CircularProgressIndicator(
-                    strokeWidth: 2,
                     color: networkColor,
                   ),
+                )
+              : Expanded(
+                  child: Refresher(
+                    refreshController: refreshController,
+                    onLoading: _onLoading,
+                    onRefresh: _onRefresh,
+                    color: networkColor,
+                    child: SingleChildScrollView(
+                      child: network.rows!.isNotEmpty
+                          ? Column(
+                              children: network.rows!
+                                  .map(
+                                    (data) => Column(
+                                      children: [
+                                        SetPaymentTermCard(
+                                          onClick: user.currentBusiness?.type ==
+                                                  "SUPPLIER"
+                                              ? () {
+                                                  Navigator.of(context)
+                                                      .pushNamed(
+                                                    SetPaymentTermDetail
+                                                        .routeName,
+                                                    arguments:
+                                                        SetPaymentTermDetailArguments(
+                                                      id: data.id,
+                                                    ),
+                                                  );
+                                                }
+                                              : () {},
+                                          index: network.rows!.indexOf(data),
+                                          startAnimation: startAnimation,
+                                          data: data,
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                  .toList(),
+                            )
+                          : const NotFound(
+                              module: 'NETWORK',
+                              labelText: "Хоосон байна",
+                            ),
+                    ),
+                  ),
                 ),
-              ),
-              onRefresh: _onRefresh,
-              onLoading: _onLoading,
-              footer: CustomFooter(
-                builder: (context, mode) {
-                  Widget body;
-                  if (mode == LoadStatus.idle) {
-                    body = const Text("");
-                  } else if (mode == LoadStatus.loading) {
-                    body = const CupertinoActivityIndicator();
-                  } else if (mode == LoadStatus.failed) {
-                    body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                  } else {
-                    body = const Text("Мэдээлэл алга байна");
-                  }
-                  return SizedBox(
-                    height: 55.0,
-                    child: Center(child: body),
-                  );
-                },
-              ),
-              child: SingleChildScrollView(
-                child: isLoading == true
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          color: networkColor,
-                        ),
-                      )
-                    : network.rows?.length != 0
-                        ? Column(
-                            children: network.rows!
-                                .map(
-                                  (data) => Column(
-                                    children: [
-                                      SetPaymentTermCard(
-                                        onClick: user.currentBusiness?.type ==
-                                                "SUPPLIER"
-                                            ? () {
-                                                Navigator.of(context).pushNamed(
-                                                  SetPaymentTermDetail
-                                                      .routeName,
-                                                  arguments:
-                                                      SetPaymentTermDetailArguments(
-                                                    id: data.id,
-                                                  ),
-                                                );
-                                              }
-                                            : () {},
-                                        index: network.rows!.indexOf(data),
-                                        startAnimation: startAnimation,
-                                        data: data,
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                    ],
-                                  ),
-                                )
-                                .toList(),
-                          )
-                        : NotFound(
-                            module: 'NETWORK',
-                            labelText: "Хоосон байна",
-                          ),
-              ),
-            ),
-          ),
         ],
       ),
     );

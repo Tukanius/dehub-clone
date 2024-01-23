@@ -11,12 +11,10 @@ class ShoppingPayment extends StatefulWidget {
 class _ShoppingPaymentState extends State<ShoppingPayment> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          PaymentCard(),
-        ],
-      ),
+    return const Column(
+      children: [
+        PaymentCard(),
+      ],
     );
   }
 }

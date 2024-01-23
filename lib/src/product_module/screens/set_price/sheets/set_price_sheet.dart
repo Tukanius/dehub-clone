@@ -52,7 +52,7 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
         Provider.of<GeneralProvider>(context, listen: true).inventoryGeneral;
     final source = Provider.of<InventoryProvider>(context, listen: true);
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(10),
         ),
@@ -62,7 +62,7 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
         children: [
           Container(
             height: 50,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: white,
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(10),
@@ -83,11 +83,12 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter:
+                          const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   child: Text(
                     'Бүлгийн үнэ тохируулах',
                     style: TextStyle(
@@ -109,7 +110,7 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
                     }
                   },
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(10),
                       ),
@@ -117,7 +118,7 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 11),
                     height: 50,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'Болсон',
                         style: TextStyle(color: white),
@@ -130,7 +131,7 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
           ),
           Expanded(
             child: isLoading == true
-                ? SizedBox()
+                ? const SizedBox()
                 : SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,7 +139,7 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
                         Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
-                          child: Text(
+                          child: const Text(
                             "Бүлэг",
                             style: TextStyle(
                               color: grey2,
@@ -153,7 +154,7 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
                           secondText: 'Тохируулаагүй',
                           secondTextColor: grey2,
                         ),
-                        FieldCard(
+                        const FieldCard(
                           paddingHorizontal: 15,
                           paddingVertical: 10,
                           color: white,
@@ -161,7 +162,7 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
                           secondText: '1',
                           secondTextColor: grey2,
                         ),
-                        FieldCard(
+                        const FieldCard(
                           paddingHorizontal: 15,
                           paddingVertical: 10,
                           color: white,
@@ -172,7 +173,7 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
                         Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
-                          child: Text(
+                          child: const Text(
                             "Борлуулах үнийн мэдээлэл",
                             style: TextStyle(
                               color: grey2,
@@ -192,9 +193,9 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
                             textAlign: TextAlign.end,
                             initialValue: widget.data.customPrice != null
                                 ? widget.data.customPrice.toString()
-                                : null,
+                                : '',
                             name: 'price',
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: InputBorder.none,
                               fillColor: white,
                               filled: true,
@@ -202,13 +203,13 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
                               hintStyle: TextStyle(
                                 color: productColor,
                               ),
-                              contentPadding: const EdgeInsets.symmetric(
+                              contentPadding: EdgeInsets.symmetric(
                                   horizontal: 15, vertical: 10),
                               isDense: true,
                               prefixIcon: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   SizedBox(
                                     width: 15,
                                   ),
@@ -249,7 +250,7 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
                                           }
                                           Navigator.of(context).pop();
                                         },
-                                        child: Text(
+                                        child: const Text(
                                           'Болсон',
                                           style: TextStyle(
                                             fontSize: 12,
@@ -286,19 +287,21 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text('Эхлэх огноо'),
+                                const Text('Эхлэх огноо'),
                                 Row(
                                   children: [
                                     Text(
-                                      '${DateFormat('yyyy-MM-dd').format(startDate)}',
-                                      style: TextStyle(color: productColor),
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(startDate),
+                                      style:
+                                          const TextStyle(color: productColor),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 15,
                                     ),
                                     SvgPicture.asset(
                                       'assets/svg/dot-calendar.svg',
-                                      colorFilter: ColorFilter.mode(
+                                      colorFilter: const ColorFilter.mode(
                                         productColor,
                                         BlendMode.srcIn,
                                       ),
@@ -325,7 +328,7 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
-                                        child: Text(
+                                        child: const Text(
                                           'Болсон',
                                           style: TextStyle(
                                             fontSize: 12,
@@ -362,19 +365,20 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text('Дуусах огноо'),
+                                const Text('Дуусах огноо'),
                                 Row(
                                   children: [
                                     Text(
-                                      '${DateFormat('yyyy-MM-dd').format(endDate)}',
-                                      style: TextStyle(color: productColor),
+                                      DateFormat('yyyy-MM-dd').format(endDate),
+                                      style:
+                                          const TextStyle(color: productColor),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 15,
                                     ),
                                     SvgPicture.asset(
                                       'assets/svg/dot-calendar.svg',
-                                      colorFilter: ColorFilter.mode(
+                                      colorFilter: const ColorFilter.mode(
                                           productColor, BlendMode.srcIn),
                                     )
                                   ],
@@ -401,7 +405,7 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
                               '${Utils().formatCurrency((source.product.standardPrice! - customPrice).toString())}₮',
                           secondTextColor: grey2,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 40,
                         ),
                       ],

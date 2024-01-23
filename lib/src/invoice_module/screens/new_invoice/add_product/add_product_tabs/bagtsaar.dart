@@ -3,16 +3,15 @@ import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/invoice.dart';
-
 import 'package:dehub/models/result.dart';
-import 'package:dehub/providers/checkout-provider.dart';
+import 'package:dehub/providers/checkout_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -21,11 +20,11 @@ class Bagtsaar extends StatefulWidget {
   final String businessId;
   final bool isPackage;
   static const routeName = '/bagtsaar';
-  Bagtsaar({
+  const Bagtsaar({
     required this.isPackage,
     required this.businessId,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<Bagtsaar> createState() => _BagtsaarState();
@@ -49,7 +48,7 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
 
   list(page, limit, String value) async {
     Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(query: '${value}', businessId: widget.businessId);
+    Filter filter = Filter(query: value, businessId: widget.businessId);
 
     inventory = await InventoryApi()
         .listGoods(ResultArguments(filter: filter, offset: offset));
@@ -83,7 +82,7 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000), () async {
+    await Future.delayed(const Duration(milliseconds: 1000), () async {
       setState(() {
         isLoading = true;
       });
@@ -118,60 +117,30 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
         SearchButton(
           borderColor: grey,
           textColor: invoiceColor,
-          onChange: (_query) {
-            onChange(_query);
+          onChange: (query) {
+            onChange(query);
           },
           color: invoiceColor,
         ),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
-        Expanded(
-          child: isLoading == true
-              ? Center(
-                  child: CircularProgressIndicator(
-                    color: invoiceColor,
-                  ),
-                )
-              : SmartRefresher(
-                  enablePullDown: true,
-                  enablePullUp: true,
-                  controller: refreshController,
-                  header: WaterDropHeader(
-                    waterDropColor: invoiceColor,
-                    refresh: SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: invoiceColor,
-                      ),
-                    ),
-                  ),
-                  onRefresh: _onRefresh,
+        isLoading == true
+            ? const Center(
+                child: CircularProgressIndicator(
+                  color: invoiceColor,
+                ),
+              )
+            : Expanded(
+                child: Refresher(
+                  refreshController: refreshController,
                   onLoading: _onLoading,
-                  footer: CustomFooter(
-                    builder: (context, mode) {
-                      Widget body;
-                      if (mode == LoadStatus.idle) {
-                        body = const Text("");
-                      } else if (mode == LoadStatus.loading) {
-                        body = const CupertinoActivityIndicator();
-                      } else if (mode == LoadStatus.failed) {
-                        body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                      } else {
-                        body = const Text("Мэдээлэл алга байна");
-                      }
-                      return SizedBox(
-                        height: 55.0,
-                        child: Center(child: body),
-                      );
-                    },
-                  ),
+                  onRefresh: _onRefresh,
+                  color: invoiceColor,
                   child: SingleChildScrollView(
                     child: isSubmit == false
-                        ? inventory.rows?.length == 0
-                            ? NotFound(
+                        ? inventory.rows!.isEmpty
+                            ? const NotFound(
                                 module: "INVOICE",
                                 labelText: "Хоосон байна!",
                               )
@@ -193,44 +162,42 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
                                         )
                                         .toList(),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 50,
                                   ),
                                 ],
                               )
-                        : Center(
+                        : const Center(
                             child: CircularProgressIndicator(
                               color: invoiceColor,
                             ),
                           ),
                   ),
                 ),
-        ),
-        packageProduct.isNotEmpty && widget.isPackage == true
-            ? Container(
-                decoration: BoxDecoration(
-                  color: white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 25),
-                child: CustomButton(
-                  onClick: () {
-                    for (var i = 0; i < packageProduct.length; i++) {
-                      Provider.of<CheckOutProvider>(context, listen: false)
-                          .addCart(
-                              packageProduct[i], packageProduct[i].quantity!);
-                    }
-                    Navigator.of(context).pop();
-                  },
-                  labelText:
-                      "${packageProduct.fold(0, (previousValue, element) => previousValue + element.quantity!)} бараа = ${Utils().formatCurrency(packageProduct.fold(0.0, (previousValue, element) => previousValue + (element.quantity!.toDouble() * element.price!)).toString())} ₮",
-                  labelColor: invoiceColor,
-                ),
-              )
-            : SizedBox(),
+              ),
+        if (packageProduct.isNotEmpty && widget.isPackage == true)
+          Container(
+            decoration: const BoxDecoration(
+              color: white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 25),
+            child: CustomButton(
+              onClick: () {
+                for (var i = 0; i < packageProduct.length; i++) {
+                  Provider.of<CheckOutProvider>(context, listen: false)
+                      .addCart(packageProduct[i], packageProduct[i].quantity!);
+                }
+                Navigator.of(context).pop();
+              },
+              labelText:
+                  "${packageProduct.fold(0, (previousValue, element) => previousValue + element.quantity!)} бараа = ${Utils().formatCurrency(packageProduct.fold(0.0, (previousValue, element) => previousValue + (element.quantity!.toDouble() * element.price!)).toString())} ₮",
+              labelColor: invoiceColor,
+            ),
+          ),
       ],
     );
   }

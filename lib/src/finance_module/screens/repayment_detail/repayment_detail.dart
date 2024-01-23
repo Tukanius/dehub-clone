@@ -19,9 +19,9 @@ class RePaymentDetail extends StatefulWidget {
   final String id;
   static const routeName = '/RePaymentDetail';
   const RePaymentDetail({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<RePaymentDetail> createState() => _RePaymentDetailState();
@@ -66,14 +66,14 @@ class _RePaymentDetailState extends State<RePaymentDetail>
                 unselectedLabelColor: buttonColor,
                 indicatorColor: source.currentColor,
                 labelColor: source.currentColor,
-                tabs: [
-                  Container(
+                tabs: const [
+                  SizedBox(
                     height: 45,
                     child: Center(
                       child: Text('Үндсэн мэдээлэл'),
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     height: 45,
                     child: Center(
                       child: Text('Нэмэлт мэдээлэл'),
@@ -94,7 +94,7 @@ class _RePaymentDetailState extends State<RePaymentDetail>
                         BasicInformation(
                           data: get,
                         ),
-                        Text('1'),
+                        const Text('1'),
                       ],
                     ),
             ),

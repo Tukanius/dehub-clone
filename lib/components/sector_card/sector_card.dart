@@ -7,9 +7,9 @@ class SectorCard extends StatefulWidget {
   final Invoice data;
   const SectorCard({
     required this.data,
-    Key? key,
+    super.key,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<SectorCard> createState() => _SectorCardState();
@@ -37,51 +37,45 @@ class _SectorCardState extends State<SectorCard> {
                         backgroundImage:
                             NetworkImage('${widget.data.branch?.logo}'),
                       )
-                    : CircleAvatar(
+                    : const CircleAvatar(
                         radius: 20,
                         backgroundImage: AssetImage('images/avatar.png'),
                       ),
-                SizedBox(
+                const SizedBox(
                   width: 16,
                 ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: Text(
-                                '${widget.data.branch?.name}',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16,
-                                  color: dark,
-                                ),
-                              ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${widget.data.branch?.name}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              color: dark,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 5),
                         child: Text(
                           '${widget.data.branch?.business?.profileName}  ТТД: ${widget.data.branch?.business?.regNumber}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: dark,
                           ),
                         ),
                       ),
-                      Container(
-                        child: Text(
-                          'Утас: ${widget.data.branch?.business?.partnerPhone}',
-                          style: TextStyle(
-                            color: dark,
-                          ),
+                      Text(
+                        'Утас: ${widget.data.branch?.business?.partnerPhone}',
+                        style: const TextStyle(
+                          color: dark,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

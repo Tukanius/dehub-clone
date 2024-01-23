@@ -12,9 +12,9 @@ class SupplierCard extends StatefulWidget {
     this.data,
     this.boxShadow,
     this.shoppingCard,
-    Key? key,
+    super.key,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<SupplierCard> createState() => _SupplierCardState();
@@ -36,13 +36,13 @@ class _SupplierCardState extends State<SupplierCard> {
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 1,
                     blurRadius: 1,
-                    offset: Offset(0, 1),
+                    offset: const Offset(0, 1),
                   )
                 : BoxShadow(
                     color: Colors.grey.withOpacity(0),
                     spreadRadius: 0,
                     blurRadius: 0,
-                    offset: Offset(0, 0),
+                    offset: const Offset(0, 0),
                   ),
           ],
         ),
@@ -59,11 +59,11 @@ class _SupplierCardState extends State<SupplierCard> {
                         backgroundImage:
                             NetworkImage('${widget.data?.partner?.logo}'),
                       )
-                    : CircleAvatar(
+                    : const CircleAvatar(
                         radius: 20,
                         backgroundImage: AssetImage('images/avatar.png'),
                       ),
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
                 Column(
@@ -71,22 +71,22 @@ class _SupplierCardState extends State<SupplierCard> {
                   children: [
                     Text(
                       "${widget.data?.partnerName}",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: dark,
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Text(
                       '${widget.data?.partner?.businessName}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: dark,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     RatingBar(
@@ -96,15 +96,15 @@ class _SupplierCardState extends State<SupplierCard> {
                       allowHalfRating: true,
                       itemCount: 5,
                       ratingWidget: RatingWidget(
-                        full: Icon(
+                        full: const Icon(
                           Icons.star,
                           color: orange,
                         ),
-                        half: Icon(
+                        half: const Icon(
                           Icons.star_half,
                           color: orange,
                         ),
-                        empty: Icon(
+                        empty: const Icon(
                           Icons.star_border,
                           color: orange,
                         ),
@@ -115,7 +115,7 @@ class _SupplierCardState extends State<SupplierCard> {
                 ),
               ],
             ),
-            Icon(
+            const Icon(
               Icons.arrow_forward_ios,
               color: grey2,
               size: 18,

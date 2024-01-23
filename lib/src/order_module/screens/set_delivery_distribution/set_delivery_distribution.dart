@@ -25,9 +25,9 @@ class SetDeliveryDistribution extends StatefulWidget {
   final Order data;
   static const routeName = '/SetDeliveryDistribution';
   const SetDeliveryDistribution({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<SetDeliveryDistribution> createState() =>
@@ -94,10 +94,10 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
         surfaceTintColor: white,
         elevation: 0,
         leadingWidth: 130,
-        leading: CustomBackButton(color: orderColor),
+        leading: const CustomBackButton(color: orderColor),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: orderColor,
               ),
@@ -109,7 +109,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Харилцагчийн мэдээлэл',
                       style: TextStyle(
                         color: grey3,
@@ -135,7 +135,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                         '${widget.data.order?.receiverBranch?.branchAddress}',
                     secondTextColor: orderColor,
                   ),
-                  FieldCard(
+                  const FieldCard(
                     color: white,
                     paddingHorizontal: 15,
                     paddingVertical: 10,
@@ -143,7 +143,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                     secondText: '-',
                     secondTextColor: orderColor,
                   ),
-                  FieldCard(
+                  const FieldCard(
                     color: white,
                     paddingHorizontal: 15,
                     paddingVertical: 10,
@@ -154,7 +154,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Хүргэлт',
                       style: TextStyle(
                         color: grey3,
@@ -167,7 +167,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                     paddingHorizontal: 15,
                     paddingVertical: 10,
                     labelText: "Эхлэх огноо",
-                    secondText: '${DateFormat('yyyy-MM-dd').format(startDate)}',
+                    secondText: DateFormat('yyyy-MM-dd').format(startDate),
                     secondTextColor: orderColor,
                     onClick: () {
                       showCupertinoModalPopup(
@@ -183,7 +183,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     'Болсон',
                                     style: TextStyle(
                                       fontSize: 12,
@@ -194,8 +194,8 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                                 ),
                                 Expanded(
                                   child: CupertinoDatePicker(
-                                    minimumDate:
-                                        startDate.subtract(Duration(hours: 1)),
+                                    minimumDate: startDate
+                                        .subtract(const Duration(hours: 1)),
                                     initialDateTime: startDate,
                                     mode: CupertinoDatePickerMode.date,
                                     use24hFormat: true,
@@ -236,7 +236,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                     paddingHorizontal: 15,
                     paddingVertical: 10,
                     labelText: "Хүлээлгэж өгөх",
-                    secondText: '${DateFormat('yyyy-MM-dd').format(endDate)}',
+                    secondText: DateFormat('yyyy-MM-dd').format(endDate),
                     secondTextColor: orderColor,
                     onClick: () {
                       showCupertinoModalPopup(
@@ -252,7 +252,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     'Болсон',
                                     style: TextStyle(
                                       fontSize: 12,
@@ -286,8 +286,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                     paddingHorizontal: 15,
                     paddingVertical: 10,
                     labelText: "Ачилт хийх",
-                    secondText:
-                        '${DateFormat('yyyy-MM-dd').format(shipmentDate)}',
+                    secondText: DateFormat('yyyy-MM-dd').format(shipmentDate),
                     secondTextColor: orderColor,
                     onClick: () {
                       showCupertinoModalPopup(
@@ -303,7 +302,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     'Болсон',
                                     style: TextStyle(
                                       fontSize: 12,
@@ -337,14 +336,14 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                     paddingHorizontal: 15,
                     paddingVertical: 10,
                     labelText: "Хүргэлт хариуцсан",
-                    secondText: '${staffName}',
+                    secondText: staffName,
                     secondTextColor: orderColor,
                     onClick: () {
                       show();
                     },
                     arrowColor: orderColor,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 100,
                   ),
                   Align(
@@ -363,7 +362,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                           color: white,
                         ),
                         child: isSubmit == true
-                            ? Center(
+                            ? const Center(
                                 child: SizedBox(
                                   width: 17,
                                   height: 17,
@@ -379,14 +378,14 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                                 children: [
                                   SvgPicture.asset(
                                     'assets/svg/zahialga.svg',
-                                    colorFilter: ColorFilter.mode(
+                                    colorFilter: const ColorFilter.mode(
                                         orderColor, BlendMode.srcIn),
                                     height: 17,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 7,
                                   ),
-                                  Text(
+                                  const Text(
                                     'Хуваарилах',
                                     style: TextStyle(
                                       color: orderColor,
@@ -407,7 +406,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
   show() {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -423,7 +422,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 25, bottom: 20),
-                  child: Text(
+                  child: const Text(
                     'Хариуцсан ажилтан сонгох',
                     style: TextStyle(
                       color: grey2,
@@ -450,7 +449,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                             child: Row(
                               children: [
                                 e.avatar == null
-                                    ? CircleAvatar(
+                                    ? const CircleAvatar(
                                         radius: 12,
                                         backgroundImage:
                                             AssetImage('images/map.jpg'),
@@ -461,7 +460,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                                         backgroundImage:
                                             NetworkImage('${e.avatar}'),
                                       ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 RichText(
@@ -471,7 +470,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                                       color: black.withOpacity(0.7),
                                     ),
                                     children: [
-                                      TextSpan(text: e.lastName),
+                                      TextSpan(text: "${e.lastName} "),
                                       TextSpan(text: e.firstName),
                                     ],
                                   ),
@@ -483,7 +482,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                       )
                       .toList(),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
               ],

@@ -34,7 +34,7 @@ class _ReferenceInformationPageState extends State<ReferenceInformationPage>
     setState(() {
       isLoading = false;
     });
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         startAnimation = true;
       });
@@ -55,7 +55,7 @@ class _ReferenceInformationPageState extends State<ReferenceInformationPage>
         backgroundColor: backgroundColor,
         surfaceTintColor: backgroundColor,
         leadingWidth: 100,
-        leading: CustomBackButton(color: networkColor),
+        leading: const CustomBackButton(color: networkColor),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -63,7 +63,7 @@ class _ReferenceInformationPageState extends State<ReferenceInformationPage>
           children: [
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Network удирдлага',
                 style: TextStyle(
                   fontSize: 24,
@@ -71,14 +71,14 @@ class _ReferenceInformationPageState extends State<ReferenceInformationPage>
                 ),
               ),
             ),
-            DashboardCard(
+            const DashboardCard(
               boxColor: networkColor,
               padding: 8,
               labelText: 'Лавлах мэдээлэл',
               svgColor: white,
               svg: 'assets/svg/bag.svg',
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Column(
@@ -92,7 +92,7 @@ class _ReferenceInformationPageState extends State<ReferenceInformationPage>
                   )
                   .toList(),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
           ],

@@ -9,7 +9,7 @@ import 'tabs/buyer_led.dart';
 
 class FundingRequestPage extends StatefulWidget {
   static const routeName = '/FundingRequestPage';
-  const FundingRequestPage({Key? key}) : super(key: key);
+  const FundingRequestPage({super.key});
 
   @override
   State<FundingRequestPage> createState() => _FundingRequestPageState();
@@ -46,8 +46,8 @@ class _FundingRequestPageState extends State<FundingRequestPage> {
           ),
           Container(
             margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-            child: Text(
-              'Санхүүжих хүсэлт',
+            child: const Text(
+              'Илгээсэн хүсэлт',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -56,14 +56,14 @@ class _FundingRequestPageState extends State<FundingRequestPage> {
           ),
           Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 15,
               ),
               InkWell(
                 borderRadius: BorderRadius.circular(10),
                 onTap: () {
                   pageController.animateToPage(0,
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       curve: Curves.ease);
                 },
                 child: Container(
@@ -84,14 +84,14 @@ class _FundingRequestPageState extends State<FundingRequestPage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 20,
               ),
               InkWell(
                 borderRadius: BorderRadius.circular(10),
                 onTap: () {
                   pageController.animateToPage(1,
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       curve: Curves.ease);
                 },
                 child: Container(
@@ -122,7 +122,7 @@ class _FundingRequestPageState extends State<FundingRequestPage> {
                   currentIndex = value;
                 });
               },
-              children: [
+              children: const [
                 BuyerLed(),
                 SupplierLed(),
               ],

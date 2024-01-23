@@ -10,14 +10,14 @@ class DashboardCard extends StatefulWidget {
   final double padding;
   final Color boxColor;
   const DashboardCard({
-    Key? key,
+    super.key,
     required this.boxColor,
     required this.padding,
     required this.labelText,
     required this.svgColor,
     required this.svg,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<DashboardCard> createState() => _DashboardCardState();
@@ -50,16 +50,16 @@ class _DashboardCardState extends State<DashboardCard> {
                 color: widget.boxColor,
               ),
               child: SvgPicture.asset(
-                '${widget.svg}',
+                widget.svg,
                 colorFilter: ColorFilter.mode(widget.svgColor, BlendMode.srcIn),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 2,
             ),
             Text(
-              '${widget.labelText}',
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+              widget.labelText,
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
               softWrap: true,
             ),
           ],

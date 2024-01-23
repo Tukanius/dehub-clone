@@ -64,23 +64,21 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
           color: selectedIndex != 3 ? paymentColor : backgroundColor,
         ),
         title: selectedIndex == 0
-            ? Container(
-                child: FormTextField(
-                  inputType: TextInputType.text,
-                  color: Color(0xff767680).withOpacity(0.12),
-                  name: 'search',
-                  prefixIcon: Icon(Icons.search),
-                  hintText: 'Партнер нэрээр хайх',
-                ),
+            ? FormTextField(
+                inputType: TextInputType.text,
+                color: const Color(0xff767680).withOpacity(0.12),
+                name: 'search',
+                prefixIcon: const Icon(Icons.search),
+                hintText: 'Партнер нэрээр хайх',
               )
-            : SizedBox(),
+            : const SizedBox(),
         actions: [
           selectedIndex == 0
               ? Container(
                   padding: const EdgeInsets.all(10),
                   margin: const EdgeInsets.only(right: 15, top: 9, bottom: 9),
                   decoration: BoxDecoration(
-                    color: Color(0xff767680).withOpacity(0.12),
+                    color: const Color(0xff767680).withOpacity(0.12),
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: SvgPicture.asset(
@@ -108,11 +106,11 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                                 .pushNamed(LinkAccountPage.routeName);
                           },
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
         ],
       ),
       body: isLoading == true
-          ? SizedBox()
+          ? const SizedBox()
           : Container(
               child: currentPages.elementAt(selectedIndex),
             ),
@@ -148,12 +146,11 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                           BlendMode.srcIn),
                     ),
                   ),
-                  selectedIndex != 0
-                      ? Text(
-                          'Нүүр',
-                          style: TextStyle(color: paymentColor, fontSize: 12),
-                        )
-                      : SizedBox(),
+                  if (selectedIndex != 0)
+                    const Text(
+                      'Нүүр',
+                      style: TextStyle(color: paymentColor, fontSize: 12),
+                    ),
                 ],
               ),
             ),
@@ -175,12 +172,11 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 1
-                    ? Text(
-                        'Дашбоард',
-                        style: TextStyle(color: paymentColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (selectedIndex != 1)
+                  const Text(
+                    'Дашбоард',
+                    style: TextStyle(color: paymentColor, fontSize: 12),
+                  )
               ],
             ),
             label: '',
@@ -201,12 +197,11 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 2
-                    ? Text(
-                        'Данс',
-                        style: TextStyle(color: paymentColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (selectedIndex != 2)
+                  const Text(
+                    'Данс',
+                    style: TextStyle(color: paymentColor, fontSize: 12),
+                  ),
               ],
             ),
             label: '',
@@ -227,12 +222,11 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                         BlendMode.srcIn),
                   ),
                 ),
-                selectedIndex != 3
-                    ? Text(
-                        'Тооцоо',
-                        style: TextStyle(color: paymentColor, fontSize: 12),
-                      )
-                    : SizedBox(),
+                if (selectedIndex != 3)
+                  const Text(
+                    'Тооцоо',
+                    style: TextStyle(color: paymentColor, fontSize: 12),
+                  ),
               ],
             ),
             label: '',

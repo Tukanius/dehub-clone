@@ -76,7 +76,7 @@ class _AddOptionSheetState extends State<AddOptionSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(10),
         ),
@@ -86,7 +86,7 @@ class _AddOptionSheetState extends State<AddOptionSheet> {
         children: [
           Container(
             height: 50,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: white,
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(10),
@@ -107,11 +107,12 @@ class _AddOptionSheetState extends State<AddOptionSheet> {
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter:
+                          const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   child: Text(
                     'Хувилбар нэмэх',
                     style: TextStyle(
@@ -126,7 +127,7 @@ class _AddOptionSheetState extends State<AddOptionSheet> {
                     onSubmit();
                   },
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(10),
                       ),
@@ -134,7 +135,7 @@ class _AddOptionSheetState extends State<AddOptionSheet> {
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 11),
                     height: 50,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'Болсон',
                         style: TextStyle(color: white),
@@ -153,7 +154,7 @@ class _AddOptionSheetState extends State<AddOptionSheet> {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Мэдээлэл оруулна уу',
                       style: TextStyle(
                         color: grey2,
@@ -168,7 +169,7 @@ class _AddOptionSheetState extends State<AddOptionSheet> {
                       setState(() {});
                     },
                     name: 'name',
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       fillColor: white,
                       filled: true,
@@ -179,7 +180,7 @@ class _AddOptionSheetState extends State<AddOptionSheet> {
                       prefixIcon: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           SizedBox(
                             width: 15,
                           ),
@@ -194,102 +195,101 @@ class _AddOptionSheetState extends State<AddOptionSheet> {
                       ),
                     ),
                   ),
-                  controller.text != ''
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Text(
-                                'Сонголтууд оруулна уу',
-                                style: TextStyle(
-                                  color: grey2,
-                                ),
-                              ),
+                  if (controller.text != '')
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: const Text(
+                            'Сонголтууд оруулна уу',
+                            style: TextStyle(
+                              color: grey2,
                             ),
-                            Column(
-                              children: values
-                                  .map(
-                                    (data) => Container(
-                                      color: white,
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 15, horizontal: 15),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                          ),
+                        ),
+                        Column(
+                          children: values
+                              .map(
+                                (data) => Container(
+                                  color: white,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 15, horizontal: 15),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
                                         children: [
-                                          Row(
-                                            children: [
-                                              SvgPicture.asset(
-                                                  'assets/svg/menu_plus.svg'),
-                                              SizedBox(
-                                                width: 5,
-                                              ),
-                                              Text(
-                                                '${data}',
-                                                style: TextStyle(color: grey2),
-                                              ),
-                                            ],
+                                          SvgPicture.asset(
+                                              'assets/svg/menu_plus.svg'),
+                                          const SizedBox(
+                                            width: 5,
                                           ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                values.removeAt(
-                                                    values.indexOf(data));
-                                              });
-                                            },
-                                            child: Container(
-                                              padding: const EdgeInsets.all(3),
-                                              color: transparent,
-                                              child: SvgPicture.asset(
-                                                'assets/svg/remove.svg',
-                                              ),
-                                            ),
+                                          Text(
+                                            data,
+                                            style:
+                                                const TextStyle(color: grey2),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
-                            FormTextField(
-                              controller: valueController,
-                              textColor: productColor,
-                              name: 'value',
-                              onChanged: (p0) {
-                                setState(() {});
-                              },
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                fillColor: white,
-                                filled: true,
-                                hintText: 'Энд оруулна уу',
-                                hintStyle: TextStyle(
-                                  color: productColor,
+                                      GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            values
+                                                .removeAt(values.indexOf(data));
+                                          });
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.all(3),
+                                          color: transparent,
+                                          child: SvgPicture.asset(
+                                            'assets/svg/remove.svg',
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
+                              )
+                              .toList(),
+                        ),
+                        FormTextField(
+                          controller: valueController,
+                          textColor: productColor,
+                          name: 'value',
+                          onChanged: (p0) {
+                            setState(() {});
+                          },
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            fillColor: white,
+                            filled: true,
+                            hintText: 'Энд оруулна уу',
+                            hintStyle: TextStyle(
+                              color: productColor,
                             ),
-                            SizedBox(
-                              height: 25,
-                            ),
-                            valueController.text != ''
-                                ? CustomButton(
-                                    labelColor: white,
-                                    textColor: productColor,
-                                    borderColor: productColor,
-                                    labelText: 'Нэмэх',
-                                    onClick: () {
-                                      addValue();
-                                    },
-                                  )
-                                : SizedBox(),
-                          ],
-                        )
-                      : SizedBox(),
-                  SizedBox(
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        if (valueController.text != '')
+                          CustomButton(
+                            labelColor: white,
+                            textColor: productColor,
+                            borderColor: productColor,
+                            labelText: 'Нэмэх',
+                            onClick: () {
+                              addValue();
+                            },
+                          ),
+                      ],
+                    ),
+                  const SizedBox(
                     height: 40,
                   ),
                 ],

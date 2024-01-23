@@ -80,7 +80,7 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(10),
         ),
@@ -90,7 +90,7 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
         children: [
           Container(
             height: 50,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: white,
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(10),
@@ -111,11 +111,11 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter: const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   child: Text(
                     'Брэндийн мэдээлэл',
                     style: TextStyle(
@@ -130,7 +130,7 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
                     onSubmit();
                   },
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(10),
                       ),
@@ -138,7 +138,7 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 11),
                     height: 50,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'Хадгалах',
                         style: TextStyle(color: white),
@@ -158,7 +158,7 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
                     width: MediaQuery.of(context).size.width,
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text('Энд бичээд "Хадгалах" сонгоно уу'),
+                    child: const Text('Энд бичээд "Хадгалах" сонгоно уу'),
                   ),
                   FormBuilder(
                     key: fbKey,
@@ -167,7 +167,7 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
                       textAlign: TextAlign.end,
                       name: 'name',
                       initialValue: widget.brandName ?? widget.brandName,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         fillColor: white,
                         filled: true,
@@ -178,7 +178,7 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
                         prefixIcon: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             SizedBox(
                               width: 15,
                             ),
@@ -206,8 +206,8 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text('Лого'),
-                        SizedBox(
+                        const Text('Лого'),
+                        const SizedBox(
                           width: 20,
                         ),
                         GestureDetector(
@@ -218,10 +218,10 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
                             height: 90,
                             width: 90,
                             decoration: BoxDecoration(
-                              color: Color(0xffFAFAFA),
+                              color: const Color(0xffFAFAFA),
                               borderRadius: BorderRadius.circular(2),
                               border: Border.all(
-                                color: Color(0xffD9D9D9),
+                                color: const Color(0xffD9D9D9),
                               ),
                             ),
                             padding: EdgeInsets.all(
@@ -229,14 +229,14 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
                                     ? 35
                                     : 0),
                             child: isLoading == true
-                                ? CircularProgressIndicator(
+                                ? const CircularProgressIndicator(
                                     color: productColor,
                                     strokeWidth: 0.5,
                                   )
                                 : upload.url == null
                                     ? SvgPicture.asset(
                                         'assets/svg/image_upload.svg',
-                                        colorFilter: ColorFilter.mode(
+                                        colorFilter: const ColorFilter.mode(
                                             productColor, BlendMode.srcIn),
                                       )
                                     : Image.network(
@@ -248,7 +248,7 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                 ],

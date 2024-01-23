@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class InvoiceAdditionalLine extends StatefulWidget {
   final Invoice? data;
-  const InvoiceAdditionalLine({Key? key, this.data}) : super(key: key);
+  const InvoiceAdditionalLine({super.key, this.data});
 
   @override
   State<InvoiceAdditionalLine> createState() => _InvoiceAdditionalLineState();
@@ -28,12 +28,12 @@ class _InvoiceAdditionalLineState extends State<InvoiceAdditionalLine> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('${widget.data?.name}'),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Text(
                 '${Utils().formatCurrency(widget.data?.quantity.toString())} ш х ${Utils().formatCurrency(widget.data?.price.toString())}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xff657786),
                   fontSize: 12,
                 ),
@@ -44,11 +44,11 @@ class _InvoiceAdditionalLineState extends State<InvoiceAdditionalLine> {
             children: [
               Text(
                 '${Utils().formatCurrency(widget.data?.totalAmount.toString())} ₮',
-                style: TextStyle(
+                style: const TextStyle(
                   color: invoiceColor,
                 ),
               ),
-              Icon(
+              const Icon(
                 Icons.arrow_forward_ios,
                 color: invoiceColor,
                 size: 15,

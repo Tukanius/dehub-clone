@@ -16,10 +16,10 @@ class ProductGiveCard extends StatefulWidget {
   const ProductGiveCard({
     this.onCloseClick,
     this.approveButtonClick,
-    Key? key,
+    super.key,
     this.data,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<ProductGiveCard> createState() => _ProductGiveCardState();
@@ -83,7 +83,7 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
                           color: black,
                         ),
                       ),
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
                 Expanded(
@@ -92,33 +92,33 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
                     children: [
                       Text(
                         '${widget.data?.nameMon}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: dark,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       RichText(
                         text: TextSpan(
-                          style: TextStyle(color: dark),
+                          style: const TextStyle(color: dark),
                           children: [
                             widget.data?.skuCode != null
                                 ? TextSpan(text: "${widget.data?.skuCode}, ")
-                                : TextSpan(),
+                                : const TextSpan(),
                             widget.data?.brand != null
                                 ? TextSpan(text: "${widget.data?.brand}, ")
-                                : TextSpan(),
+                                : const TextSpan(),
                             widget.data?.category != null
                                 ? TextSpan(text: "${widget.data?.category}, ")
-                                : TextSpan(),
+                                : const TextSpan(),
                             widget.data?.optionValues != null
                                 ? TextSpan(
                                     text:
                                         "${widget.data?.optionValues?.map((e) => e.name).join(', ')}")
-                                : TextSpan(),
+                                : const TextSpan(),
                           ],
                         ),
                       ),
@@ -127,7 +127,7 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
                 ),
               ],
             ),
-            Divider(),
+            const Divider(),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -135,28 +135,28 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Нэгж',
                       style: TextStyle(
                         color: coolGrey,
                         fontSize: 12,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 3,
                     ),
                     Text(
                       '${widget.data?.unit}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: orderColor,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 3,
                     ),
-                    Row(
+                    const Row(
                       children: [
                         Text(
                           'Солих',
@@ -174,7 +174,7 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
                     )
                   ],
                 ),
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -210,25 +210,25 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'Нэгж үнэ',
                       style: TextStyle(
                         color: coolGrey,
                         fontSize: 12,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 3,
                     ),
                     Text(
                       '${widget.data?.price}₮',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: orderColor,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
                     ),
-                    Text(
+                    const Text(
                       '1 ш',
                       style: TextStyle(
                         color: dark,
@@ -240,14 +240,14 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 widget.data?.quantity == null
-                    ? Text(
+                    ? const Text(
                         '... ширхэг',
                         style: TextStyle(
                           color: grey2,
@@ -257,7 +257,7 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
                       )
                     : Text(
                         '${fbKey.currentState?.fields['quantity']?.value} ширхэг',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: grey2,
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
@@ -266,16 +266,16 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
                 widget.data?.quantity != null && widget.data?.price != null
                     ? Text(
                         '${widget.data!.price! * widget.data!.quantity!}₮',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: grey2,
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
                         ),
                       )
-                    : Text(''),
+                    : const Text(''),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -298,7 +298,7 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
                         child: SvgPicture.asset('assets/svg/minus.svg'),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     FormBuilder(
@@ -317,13 +317,13 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
                           fontSize: 18,
                           inputType: TextInputType.number,
                           textAlign: TextAlign.end,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelStyle: TextStyle(
                               fontSize: 15,
                             ),
                             hintText: '00',
                             isDense: true,
-                            contentPadding: const EdgeInsets.symmetric(
+                            contentPadding: EdgeInsets.symmetric(
                                 vertical: 6, horizontal: 5),
                             border: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -335,7 +335,7 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     GestureDetector(
@@ -349,7 +349,7 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
                           color: orderColor,
                           borderRadius: BorderRadius.circular(2),
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.add,
                           color: white,
                         ),
@@ -371,18 +371,18 @@ class _ProductGiveCardState extends State<ProductGiveCard> {
                     child: Row(
                       children: [
                         SvgPicture.asset('assets/svg/calculator.svg'),
-                        SizedBox(
+                        const SizedBox(
                           width: 15,
                         ),
                         user.currentBusiness?.type == "SUPPLIER"
-                            ? Text(
+                            ? const Text(
                                 'Өгсөн',
                                 style: TextStyle(
                                   color: orderColor,
                                   fontSize: 18,
                                 ),
                               )
-                            : Text(
+                            : const Text(
                                 'Авсан',
                                 style: TextStyle(
                                   color: orderColor,

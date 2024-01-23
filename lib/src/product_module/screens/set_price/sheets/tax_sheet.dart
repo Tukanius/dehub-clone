@@ -27,7 +27,7 @@ class _TaxSheetState extends State<TaxSheet> {
     final res = Provider.of<InventoryProvider>(context, listen: false);
     if (taxType == true) {
       if (taxPercent == null) {
-        CustomScaffoldMessenger(context,
+        customScaffoldMessenger(context,
             color: productColor, labelText: 'Хувь оруулна уу');
       } else {
         res.taxType(taxType!, taxPercent!);
@@ -51,7 +51,7 @@ class _TaxSheetState extends State<TaxSheet> {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: productColor,
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(15),
@@ -69,7 +69,7 @@ class _TaxSheetState extends State<TaxSheet> {
                     child: SvgPicture.asset('assets/svg/square-x.svg'),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   child: Text(
                     'НХАТ-тай эсэх',
                     style: TextStyle(
@@ -89,7 +89,7 @@ class _TaxSheetState extends State<TaxSheet> {
                       borderRadius: BorderRadius.circular(5),
                       color: white,
                     ),
-                    child: Text(
+                    child: const Text(
                       'Болсон',
                       style: TextStyle(
                         color: productColor,
@@ -107,7 +107,7 @@ class _TaxSheetState extends State<TaxSheet> {
                   Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Мэдээлэллийг оруулаад "болсон" сонгоно уу',
                     ),
                   ),
@@ -136,43 +136,41 @@ class _TaxSheetState extends State<TaxSheet> {
                                   const SizedBox(
                                     width: 10,
                                   ),
-                                  data == true ? Text("Тийм") : Text("Үгүй"),
                                   data == true
-                                      ? Expanded(
-                                          child: FormTextField(
-                                            onChanged: (value) {
-                                              setState(() {
-                                                taxPercent =
-                                                    double.tryParse(value);
-                                              });
-                                            },
-                                            initialValue: taxPercent != null
-                                                ? taxPercent.toString()
-                                                : "",
-                                            inputType:
-                                                TextInputType.numberWithOptions(
-                                                    decimal: true),
-                                            textColor: productColor,
-                                            textAlign: TextAlign.end,
-                                            name: 'taxPercent',
-                                            decoration: InputDecoration(
-                                              hintStyle: TextStyle(
-                                                  color: productColor),
-                                              hintText: 'Хувь оруул',
-                                              border: OutlineInputBorder(
-                                                borderRadius: BorderRadius.zero,
-                                                borderSide: BorderSide.none,
-                                              ),
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                vertical: 0,
-                                                horizontal: 0,
-                                              ),
-                                              isDense: true,
-                                            ),
+                                      ? const Text("Тийм")
+                                      : const Text("Үгүй"),
+                                  if (data == true)
+                                    Expanded(
+                                      child: FormTextField(
+                                        onChanged: (value) {
+                                          setState(() {
+                                            taxPercent = double.tryParse(value);
+                                          });
+                                        },
+                                        initialValue: taxPercent != null
+                                            ? taxPercent.toString()
+                                            : "",
+                                        inputType: const TextInputType
+                                            .numberWithOptions(decimal: true),
+                                        textColor: productColor,
+                                        textAlign: TextAlign.end,
+                                        name: 'taxPercent',
+                                        decoration: const InputDecoration(
+                                          hintStyle:
+                                              TextStyle(color: productColor),
+                                          hintText: 'Хувь оруул',
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.zero,
+                                            borderSide: BorderSide.none,
                                           ),
-                                        )
-                                      : SizedBox(),
+                                          contentPadding: EdgeInsets.symmetric(
+                                            vertical: 0,
+                                            horizontal: 0,
+                                          ),
+                                          isDense: true,
+                                        ),
+                                      ),
+                                    ),
                                 ],
                               ),
                             ),

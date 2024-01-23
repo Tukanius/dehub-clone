@@ -37,10 +37,10 @@ class ReceivedOrderDetail extends StatefulWidget {
   final String id;
   static const routeName = '/ReceivedOrderDetail';
   const ReceivedOrderDetail({
-    Key? key,
+    super.key,
     required this.listenController,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<ReceivedOrderDetail> createState() => _ReceivedOrderDetailState();
@@ -70,12 +70,12 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
   respond(bool isApprove) async {
     approve.approve = isApprove;
     await OrderApi().respond(widget.id, approve);
+    widget.listenController.changeVariable('respond');
     showCustomDialog(
       context,
       isApprove == true ? "Амжилттай зөвшөөрлөө" : 'Татгалзлаа',
       isApprove,
       onPressed: () {
-        widget.listenController.changeVariable('respond');
         Navigator.of(context).pop();
         Navigator.of(context).pop();
       },
@@ -112,12 +112,12 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
   review(bool isReview) async {
     approve.review = isReview;
     await OrderApi().review(widget.id, approve);
+    widget.listenController.changeVariable('review');
     showCustomDialog(
       context,
       isReview == true ? "Амжилттай" : 'Татгалзлаа',
       isReview,
       onPressed: () {
-        widget.listenController.changeVariable('review');
         Navigator.of(context).pop();
         Navigator.of(context).pop();
       },
@@ -147,13 +147,13 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
           },
           child: Container(
             color: transparent,
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back_ios_new,
               color: orderColor,
             ),
           ),
         ),
-        title: Text(
+        title: const Text(
           'Захиалгын дэлгэрэнгүй',
           style: TextStyle(
             color: orderColor,
@@ -162,7 +162,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
         ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: orderColor,
               ),
@@ -182,7 +182,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                             order.type == "SALES" && order.salesCode != null
                                 ? Text(
                                     '${order.salesCode}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: orderColor,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -191,21 +191,21 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                         order.purchaseCode != null
                                     ? Text(
                                         '${order.purchaseCode}',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: orderColor,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       )
-                                    : SizedBox(),
+                                    : const SizedBox(),
                             Text(
-                              '${DateFormat("yyyy-MM-dd").format(order.createdAt!)}',
-                              style: TextStyle(
+                              DateFormat("yyyy-MM-dd").format(order.createdAt!),
+                              style: const TextStyle(
                                 color: buttonColor,
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Row(
@@ -253,16 +253,16 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                           )),
                             Text(
                               '${user.firstName}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: orderColor,
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
-                        Text(
+                        const Text(
                           'Харилцагчийн мэдээлэл',
                           style: TextStyle(
                             color: buttonColor,
@@ -290,20 +290,20 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                 color: grey,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             user.currentBusiness?.type == "SUPPLIER"
                                 ? Text(
                                     '${order.receiverBusiness?.profileName}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: orderColor,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   )
                                 : Text(
                                     '${order.senderBusiness?.profileName}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: orderColor,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -334,7 +334,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Expanded(
+                        const Expanded(
                           child: Text(
                             'Партнер нэр',
                             style: TextStyle(color: buttonColor),
@@ -345,12 +345,13 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                 child: RichText(
                                   textAlign: TextAlign.end,
                                   text: TextSpan(
-                                    style: TextStyle(fontFamily: 'Montserrat'),
+                                    style: const TextStyle(
+                                        fontFamily: 'Montserrat'),
                                     children: [
                                       TextSpan(
                                         text:
                                             '${order.receiverBusiness?.partner?.businessName} ',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: buttonColor,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -358,7 +359,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                       TextSpan(
                                         text:
                                             '${order.receiverBusiness?.partner?.refCode}',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: orderColor,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -371,12 +372,13 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                 child: RichText(
                                   textAlign: TextAlign.end,
                                   text: TextSpan(
-                                    style: TextStyle(fontFamily: 'Montserrat'),
+                                    style: const TextStyle(
+                                        fontFamily: 'Montserrat'),
                                     children: [
                                       TextSpan(
                                         text:
                                             '${order.senderBusiness?.partner?.businessName} ',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: buttonColor,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -384,7 +386,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                       TextSpan(
                                         text:
                                             '${order.senderBusiness?.partner?.refCode}',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: orderColor,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -420,7 +422,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                     color: white,
                     secondTextFontWeight: FontWeight.w500,
                   ),
-                  FieldCard(
+                  const FieldCard(
                     labelTextColor: buttonColor,
                     marginBottom: 3,
                     paddingHorizontal: 15,
@@ -447,7 +449,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Хүлээн авах хаяг',
                       style: TextStyle(
                         color: buttonColor,
@@ -460,7 +462,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Row(
+                    child: const Row(
                       children: [
                         Text(
                           'Хүлээн авах салбар нэр',
@@ -480,21 +482,21 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: lightGrey,
                           ),
                           height: 42,
                           width: 42,
-                          child: Icon(
+                          child: const Icon(
                             Icons.location_on_outlined,
                             color: Colors.blue,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
-                        Expanded(
+                        const Expanded(
                           child: Text(
                             'БЗД, 15-р хороо, 3-р гудамж, Гоё байрны 1 давхар, Баялаг хүнс дэлгүүр',
                             style: TextStyle(
@@ -524,15 +526,15 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                     paddingVertical: 10,
                     labelText: 'Хүлээн авах өдөр',
                     secondTextColor: orderColor,
-                    secondText:
-                        '${DateFormat("yyyy-MM-dd").format(DateTime.parse(order.deliveryDate.toString()))}',
+                    secondText: DateFormat("yyyy-MM-dd")
+                        .format(DateTime.parse(order.deliveryDate.toString())),
                     arrowColor: orderColor,
                     color: white,
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'ЗАХИАЛГЫН ЗҮЙЛ',
                       style: TextStyle(
                         color: buttonColor,
@@ -549,7 +551,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                 readOnly: true,
                                 data: e,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 3,
                               ),
                             ],
@@ -557,82 +559,79 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                         )
                         .toList(),
                   ),
-                  order.additionalLines?.length != 0
-                      ? Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          child: Text(
-                            'Нэмэлтээр',
-                            style: TextStyle(
-                              color: buttonColor,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        )
-                      : SizedBox(),
-                  order.additionalLines?.length != 0
-                      ? Column(
-                          children: order.additionalLines!
-                              .map(
-                                (item) => Container(
-                                  margin: const EdgeInsets.only(bottom: 3),
-                                  color: white,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 10),
-                                  child: Row(
+                  if (order.additionalLines!.isNotEmpty)
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: const Text(
+                        'Нэмэлтээр',
+                        style: TextStyle(
+                          color: buttonColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  if (order.additionalLines!.isNotEmpty)
+                    Column(
+                      children: order.additionalLines!
+                          .map(
+                            (item) => Container(
+                              margin: const EdgeInsets.only(bottom: 3),
+                              color: white,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            '${item.name}',
-                                            style: TextStyle(
-                                              color: buttonColor,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          item.description != null
-                                              ? Text(
-                                                  '${item.description}',
-                                                  style: TextStyle(
-                                                    color: coolGrey,
-                                                    fontSize: 12,
-                                                  ),
-                                                )
-                                              : Text(
-                                                  '-',
-                                                  style: TextStyle(
-                                                    color: coolGrey,
-                                                    fontSize: 12,
-                                                  ),
-                                                ),
-                                        ],
-                                      ),
                                       Text(
-                                        '${Utils().formatCurrency(item.totalAmount.toString())}₮',
-                                        style: TextStyle(
-                                          color: orderColor,
+                                        '${item.name}',
+                                        style: const TextStyle(
+                                          color: buttonColor,
+                                          fontWeight: FontWeight.w500,
                                         ),
                                       ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      item.description != null
+                                          ? Text(
+                                              '${item.description}',
+                                              style: const TextStyle(
+                                                color: coolGrey,
+                                                fontSize: 12,
+                                              ),
+                                            )
+                                          : const Text(
+                                              '-',
+                                              style: TextStyle(
+                                                color: coolGrey,
+                                                fontSize: 12,
+                                              ),
+                                            ),
                                     ],
                                   ),
-                                ),
-                              )
-                              .toList(),
-                        )
-                      : SizedBox(),
+                                  Text(
+                                    '${Utils().formatCurrency(item.totalAmount.toString())}₮',
+                                    style: const TextStyle(
+                                      color: orderColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'НЭГТГЭЛ',
                       style: TextStyle(
                         color: buttonColor,
@@ -738,19 +737,18 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                     arrowColor: orderColor,
                     color: white,
                   ),
-                  order.paymentTerm?.configType == "CIA" &&
-                          order.paymentTerm?.configType == "CBD"
-                      ? FieldCard(
-                          labelTextColor: buttonColor,
-                          paddingHorizontal: 15,
-                          paddingVertical: 10,
-                          labelText: 'Төлбөр баталгаажуулалт',
-                          secondTextColor: orderColor,
-                          secondText: 'XXX,XXX,XXX.XX₮',
-                          arrowColor: orderColor,
-                          color: white,
-                        )
-                      : SizedBox(),
+                  if (order.paymentTerm?.configType == "CIA" &&
+                      order.paymentTerm?.configType == "CBD")
+                    const FieldCard(
+                      labelTextColor: buttonColor,
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
+                      labelText: 'Төлбөр баталгаажуулалт',
+                      secondTextColor: orderColor,
+                      secondText: 'XXX,XXX,XXX.XX₮',
+                      arrowColor: orderColor,
+                      color: white,
+                    ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 3),
                     color: white,
@@ -759,15 +757,16 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Төлөх сүүлийн огноо',
                           style: TextStyle(
                             color: buttonColor,
                           ),
                         ),
                         Text(
-                          '${DateFormat("yyyy-MM-dd").format(DateTime.parse(order.deliveryDate.toString()))}',
-                          style: TextStyle(
+                          DateFormat("yyyy-MM-dd").format(
+                              DateTime.parse(order.deliveryDate.toString())),
+                          style: const TextStyle(
                             color: orderColor,
                           ),
                         )
@@ -777,7 +776,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Харилцагчийн нэмэлт хүсэлт',
                       style: TextStyle(
                         color: buttonColor,
@@ -795,13 +794,13 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                       decoration: BoxDecoration(
                         border: Border.all(width: 0.5, color: grey),
                       ),
-                      child: Text(''),
+                      child: const Text(''),
                     ),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Нэмэлт тэмдэглэл',
                       style: TextStyle(
                         color: buttonColor,
@@ -821,38 +820,37 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                       ),
                     ),
                   ),
-                  order.attachments?.length != 0
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Text(
-                                'Нэмэлт хавсралтууд',
-                                style: TextStyle(
-                                  color: buttonColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
+                  if (order.attachments!.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: const Text(
+                            'Нэмэлт хавсралтууд',
+                            style: TextStyle(
+                              color: buttonColor,
+                              fontWeight: FontWeight.w500,
                             ),
-                            Column(
-                              children: order.attachments!
-                                  .map((data) => attachmentCard(data, () {
-                                        downloadFile(data);
-                                      }))
-                                  .toList(),
-                            ),
-                          ],
-                        )
-                      : SizedBox(),
-                  SizedBox(
+                          ),
+                        ),
+                        Column(
+                          children: order.attachments!
+                              .map((data) => attachmentCard(data, () {
+                                    downloadFile(data);
+                                  }))
+                              .toList(),
+                        ),
+                      ],
+                    ),
+                  const SizedBox(
                     height: 40,
                   ),
                   Container(
                     padding: const EdgeInsets.only(
                         bottom: 70, left: 15, right: 15, top: 15),
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: white,
                       border: Border(
                         top: BorderSide(
@@ -867,13 +865,13 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Нийт дүн: ',
                               style: TextStyle(color: orderColor),
                             ),
                             Text(
                               '${Utils().formatCurrency(totalAmount.toString())}₮',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: orderColor,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -890,7 +888,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                       onSubmit(false, "Татгалзах",
                                           (approve) => review(false));
                                     },
-                                    child: Container(
+                                    child: SizedBox(
                                       height: 38,
                                       child: Column(
                                         mainAxisAlignment:
@@ -899,7 +897,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                           SvgPicture.asset(
                                             'assets/svg/alert-circle.svg',
                                           ),
-                                          Text(
+                                          const Text(
                                             'Татгалзах',
                                             style: TextStyle(
                                               color: Color(0xffFE2413),
@@ -910,7 +908,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 15,
                                   ),
                                   GestureDetector(
@@ -918,7 +916,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                       onSubmit(true, "SO үүсгэх",
                                           (approve) => review(true));
                                     },
-                                    child: Container(
+                                    child: SizedBox(
                                       height: 38,
                                       child: Column(
                                         mainAxisAlignment:
@@ -926,10 +924,10 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                         children: [
                                           SvgPicture.asset(
                                             'assets/svg/create-so.svg',
-                                            colorFilter: ColorFilter.mode(
+                                            colorFilter: const ColorFilter.mode(
                                                 orderColor, BlendMode.srcIn),
                                           ),
-                                          Text(
+                                          const Text(
                                             'SO болгох',
                                             style: TextStyle(
                                               color: orderColor,
@@ -940,7 +938,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                 ],
@@ -955,7 +953,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                           onSubmit(false, "Захиалга цуцлах",
                                               (approve) => respond(false));
                                         },
-                                        child: Container(
+                                        child: SizedBox(
                                           height: 38,
                                           child: Column(
                                             mainAxisAlignment:
@@ -964,7 +962,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                               SvgPicture.asset(
                                                 'assets/svg/alert-circle.svg',
                                               ),
-                                              Text(
+                                              const Text(
                                                 'Татгалзах',
                                                 style: TextStyle(
                                                   color: Color(0xffFE2413),
@@ -975,7 +973,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                           ),
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 15,
                                       ),
                                       GestureDetector(
@@ -983,7 +981,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                           onSubmit(true, "Захиалга зөвшөөрөх",
                                               (approve) => respond(true));
                                         },
-                                        child: Container(
+                                        child: SizedBox(
                                           height: 38,
                                           child: Column(
                                             mainAxisAlignment:
@@ -991,11 +989,12 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                             children: [
                                               SvgPicture.asset(
                                                 'assets/svg/create-so.svg',
-                                                colorFilter: ColorFilter.mode(
-                                                    orderColor,
-                                                    BlendMode.srcIn),
+                                                colorFilter:
+                                                    const ColorFilter.mode(
+                                                        orderColor,
+                                                        BlendMode.srcIn),
                                               ),
-                                              Text(
+                                              const Text(
                                                 'Зөвшөөрөх',
                                                 style: TextStyle(
                                                   color: orderColor,
@@ -1006,7 +1005,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                           ),
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
                                     ],
@@ -1021,7 +1020,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                               onSubmit(false, "Татгалзах",
                                                   (approve) => review(false));
                                             },
-                                            child: Container(
+                                            child: SizedBox(
                                               height: 38,
                                               child: Column(
                                                 mainAxisAlignment:
@@ -1031,7 +1030,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                   SvgPicture.asset(
                                                     'assets/svg/alert-circle.svg',
                                                   ),
-                                                  Text(
+                                                  const Text(
                                                     'Татгалзах',
                                                     style: TextStyle(
                                                       color: Color(0xffFE2413),
@@ -1042,7 +1041,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                               ),
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 15,
                                           ),
                                           GestureDetector(
@@ -1050,7 +1049,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                               onSubmit(true, "SO үүсгэх",
                                                   (approve) => review(true));
                                             },
-                                            child: Container(
+                                            child: SizedBox(
                                               height: 38,
                                               child: Column(
                                                 mainAxisAlignment:
@@ -1060,11 +1059,11 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                   SvgPicture.asset(
                                                     'assets/svg/create-so.svg',
                                                     colorFilter:
-                                                        ColorFilter.mode(
+                                                        const ColorFilter.mode(
                                                             orderColor,
                                                             BlendMode.srcIn),
                                                   ),
-                                                  Text(
+                                                  const Text(
                                                     'SO болгох',
                                                     style: TextStyle(
                                                       color: orderColor,
@@ -1075,7 +1074,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                               ),
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 10,
                                           ),
                                         ],
@@ -1093,7 +1092,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                     (approve) => respond(false),
                                                   );
                                                 },
-                                                child: Container(
+                                                child: SizedBox(
                                                   height: 40,
                                                   child: Column(
                                                     mainAxisAlignment:
@@ -1103,7 +1102,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                       SvgPicture.asset(
                                                         'assets/svg/alert-circle.svg',
                                                       ),
-                                                      Text(
+                                                      const Text(
                                                         'Татгалзах',
                                                         style: TextStyle(
                                                           color:
@@ -1115,7 +1114,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                   ),
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 15,
                                               ),
                                               GestureDetector(
@@ -1126,7 +1125,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                       (approve) =>
                                                           respond(true));
                                                 },
-                                                child: Container(
+                                                child: SizedBox(
                                                   height: 40,
                                                   child: Column(
                                                     mainAxisAlignment:
@@ -1136,12 +1135,13 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                       SvgPicture.asset(
                                                         'assets/svg/create-so.svg',
                                                         colorFilter:
-                                                            ColorFilter.mode(
+                                                            const ColorFilter
+                                                                .mode(
                                                                 orderColor,
                                                                 BlendMode
                                                                     .srcIn),
                                                       ),
-                                                      Text(
+                                                      const Text(
                                                         'Зөвшөөрөх',
                                                         style: TextStyle(
                                                           color: orderColor,
@@ -1152,7 +1152,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                   ),
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 10,
                                               ),
                                             ],
@@ -1170,7 +1170,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                     (approve) => create(),
                                                   );
                                                 },
-                                                child: Container(
+                                                child: SizedBox(
                                                   height: 38,
                                                   child: Column(
                                                     mainAxisAlignment:
@@ -1180,12 +1180,13 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                       SvgPicture.asset(
                                                         'assets/svg/create-so.svg',
                                                         colorFilter:
-                                                            ColorFilter.mode(
+                                                            const ColorFilter
+                                                                .mode(
                                                                 orderColor,
                                                                 BlendMode
                                                                     .srcIn),
                                                       ),
-                                                      Text(
+                                                      const Text(
                                                         'Хүргэлт хуваарилах',
                                                         style: TextStyle(
                                                           color: orderColor,
@@ -1212,7 +1213,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                     },
                                                     child: Container(
                                                       color: transparent,
-                                                      child: Column(
+                                                      child: const Column(
                                                         children: [
                                                           Icon(
                                                             Icons.edit_square,
@@ -1230,7 +1231,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                                       ),
                                                     ),
                                                   )
-                                                : SizedBox(),
+                                                : const SizedBox(),
                       ],
                     ),
                   ),
@@ -1253,13 +1254,13 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
         String tempPath = (await getDownloadsDirectory())!.path;
         File file = File(tempPath);
         await file.writeAsBytes(response.data, flush: true);
-        CustomScaffoldMessenger(
+        customScaffoldMessenger(
           context,
           color: orderColor,
           labelText: 'Амжилттай татагдлаа',
         );
       } catch (e) {
-        CustomScaffoldMessenger(
+        customScaffoldMessenger(
           context,
           color: red,
           labelText: 'Алдаа гарлаа!',
@@ -1269,9 +1270,9 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
       FileDownloader.downloadFile(
         url: data.url.toString(),
         name: data.name,
-        onProgress: (fileName, _progress) {
+        onProgress: (fileName, progress) {
           setState(() {
-            progress = _progress;
+            progress = progress;
           });
         },
         onDownloadCompleted: (path) {
@@ -1297,17 +1298,17 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
             children: [
               Text(
                 '${data.name}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: buttonColor,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Text(
                 '${data.description}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: coolGrey,
                   fontSize: 12,
                 ),
@@ -1323,22 +1324,22 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   progress != null
-                      ? Text(
+                      ? const Text(
                           'Татаж байна',
                           style: TextStyle(
                             color: orderColor,
                           ),
                         )
-                      : Text(
+                      : const Text(
                           'Татах',
                           style: TextStyle(
                             color: orderColor,
                           ),
                         ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
-                  Icon(
+                  const Icon(
                     Icons.arrow_forward_ios,
                     color: orderColor,
                     size: 15,

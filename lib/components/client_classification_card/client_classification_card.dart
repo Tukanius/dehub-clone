@@ -8,12 +8,12 @@ class ClientClassificationCard extends StatefulWidget {
   final Function()? onClick;
   final BusinessNetwork? data;
   const ClientClassificationCard({
-    Key? key,
+    super.key,
     this.onClick,
     this.data,
     required this.index,
     required this.startAnimation,
-  }) : super(key: key);
+  });
 
   @override
   State<ClientClassificationCard> createState() =>
@@ -50,12 +50,12 @@ class _ClientClassificationCardState extends State<ClientClassificationCard> {
                               backgroundImage:
                                   NetworkImage('${widget.data?.logo}'),
                             )
-                          : CircleAvatar(
+                          : const CircleAvatar(
                               backgroundColor: grey,
                               radius: 18,
                               backgroundImage: AssetImage('images/avatar.png'),
                             ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Expanded(
@@ -64,17 +64,17 @@ class _ClientClassificationCardState extends State<ClientClassificationCard> {
                           children: [
                             Text(
                               '${widget.data?.profileName}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: networkColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
                               '${widget.data?.refCode}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: dark,
                                 fontSize: 12,
                               ),
@@ -85,14 +85,14 @@ class _ClientClassificationCardState extends State<ClientClassificationCard> {
                     ],
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios,
                   color: networkColor,
                   size: 18,
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -110,11 +110,11 @@ class _ClientClassificationCardState extends State<ClientClassificationCard> {
                           fontSize: 10,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       widget.data?.classificationCategory?.name == null
-                          ? Text(
+                          ? const Text(
                               '-',
                               style: TextStyle(
                                 color: grey2,
@@ -123,7 +123,7 @@ class _ClientClassificationCardState extends State<ClientClassificationCard> {
                             )
                           : Text(
                               '${widget.data?.classificationCategory?.name}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: grey2,
                                 fontSize: 12,
                               ),
@@ -143,11 +143,11 @@ class _ClientClassificationCardState extends State<ClientClassificationCard> {
                           fontSize: 10,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       widget.data?.classificationPriority?.name == null
-                          ? Text(
+                          ? const Text(
                               '-',
                               style: TextStyle(
                                 color: grey2,
@@ -156,7 +156,7 @@ class _ClientClassificationCardState extends State<ClientClassificationCard> {
                             )
                           : Text(
                               '${widget.data?.classificationPriority?.name}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: grey2,
                                 fontSize: 12,
                               ),

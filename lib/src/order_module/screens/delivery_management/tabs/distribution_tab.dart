@@ -1,11 +1,11 @@
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/delivery_management_card/delivery_management_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/order_module/screens/set_delivery_distribution/set_delivery_distribution.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -37,7 +37,7 @@ class _DistributionTabState extends State<DistributionTab>
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
     });
@@ -64,61 +64,31 @@ class _DistributionTabState extends State<DistributionTab>
   @override
   Widget build(BuildContext context) {
     return isLoading == true
-        ? Center(
+        ? const Center(
             child: CircularProgressIndicator(
               color: orderColor,
             ),
           )
         : Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
-              SearchButton(
+              const SearchButton(
                 color: orderColor,
                 borderColor: grey,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Expanded(
-                child: SmartRefresher(
-                  enablePullDown: true,
-                  enablePullUp: true,
-                  controller: refreshController,
-                  header: WaterDropHeader(
-                    waterDropColor: orderColor,
-                    refresh: SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: orderColor,
-                      ),
-                    ),
-                  ),
-                  onRefresh: _onRefresh,
+                child: Refresher(
+                  refreshController: refreshController,
                   onLoading: _onLoading,
-                  footer: CustomFooter(
-                    builder: (context, mode) {
-                      Widget body;
-                      if (mode == LoadStatus.idle) {
-                        body = const Text("");
-                      } else if (mode == LoadStatus.loading) {
-                        body = const CupertinoActivityIndicator();
-                      } else if (mode == LoadStatus.failed) {
-                        body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                      } else {
-                        body = const Text("Мэдээлэл алга байна");
-                      }
-                      return SizedBox(
-                        height: 55.0,
-                        child: Center(child: body),
-                      );
-                    },
-                  ),
+                  onRefresh: _onRefresh,
+                  color: orderColor,
                   child: SingleChildScrollView(
-                    child: order.rows?.length != 0
+                    child: order.rows!.isNotEmpty
                         ? Column(
                             children: order.rows!
                                 .map(
@@ -137,7 +107,7 @@ class _DistributionTabState extends State<DistributionTab>
                                           );
                                         },
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                     ],
@@ -145,7 +115,7 @@ class _DistributionTabState extends State<DistributionTab>
                                 )
                                 .toList(),
                           )
-                        : NotFound(
+                        : const NotFound(
                             module: "ORDER",
                             labelText: "Хоосон байна",
                           ),

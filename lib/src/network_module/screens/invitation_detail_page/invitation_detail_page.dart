@@ -20,15 +20,15 @@ class SentInvitationDetail extends StatefulWidget {
   final String id;
   static const routeName = '/SentInvitationDetail';
   const SentInvitationDetail({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
-  _SentInvitationDetailState createState() => _SentInvitationDetailState();
+  SentInvitationDetailState createState() => SentInvitationDetailState();
 }
 
-class _SentInvitationDetailState extends State<SentInvitationDetail>
+class SentInvitationDetailState extends State<SentInvitationDetail>
     with AfterLayoutMixin {
   Invitation invitation = Invitation();
   General general = General();
@@ -90,12 +90,12 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios_new,
             color: networkColor,
           ),
         ),
-        title: Text(
+        title: const Text(
           'Илгээсэн урилга',
           style: TextStyle(
             fontSize: 18,
@@ -105,20 +105,20 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
         ),
       ),
       body: isLoading != false
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: networkColor,
               ),
             )
           : SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     margin:
                         const EdgeInsets.only(left: 15, bottom: 15, top: 20),
-                    child: Text(
+                    child: const Text(
                       'Урилга мэдээлэл',
                       style: TextStyle(
                         color: grey3,
@@ -134,13 +134,13 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Урилга №: ',
                           style: TextStyle(color: dark),
                         ),
                         Text(
                           '${invitation.refCode}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: networkColor,
                             fontWeight: FontWeight.w600,
                             fontSize: 18,
@@ -164,7 +164,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Урилга төлөв',
                           style: TextStyle(color: dark),
                         ),
@@ -190,7 +190,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                   Container(
                     margin:
                         const EdgeInsets.only(left: 15, bottom: 15, top: 20),
-                    child: Text(
+                    child: const Text(
                       'УРИЛГА ИЛГЭЭГЧ',
                       style: TextStyle(
                         color: grey3,
@@ -231,7 +231,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                     secondText: invitation.sender?.partner?.refCode,
                     secondTextColor: networkColor,
                   ),
-                  FieldCard(
+                  const FieldCard(
                     paddingHorizontal: 15,
                     paddingVertical: 10,
                     color: white,
@@ -239,7 +239,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                     secondText: 'Тийм',
                     secondTextColor: networkColor,
                   ),
-                  FieldCard(
+                  const FieldCard(
                     paddingHorizontal: 15,
                     paddingVertical: 10,
                     color: white,
@@ -279,12 +279,12 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                     secondText: invitation.senderFinStaff?.firstName,
                     secondTextColor: networkColor,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
                     margin: const EdgeInsets.only(left: 15),
-                    child: Text(
+                    child: const Text(
                       'Урилгын тайлбар',
                       style: TextStyle(
                         color: grey3,
@@ -293,7 +293,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
@@ -312,12 +312,12 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                       child: Text('${invitation.toMessage}'),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
                     margin: const EdgeInsets.only(left: 15),
-                    child: Text(
+                    child: const Text(
                       'УРИЛГА ХҮЛЭЭН АВАГЧ',
                       style: TextStyle(
                         color: grey3,
@@ -326,7 +326,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   FieldCard(
@@ -369,7 +369,7 @@ class _SentInvitationDetailState extends State<SentInvitationDetail>
                     secondText: invitation.receiver?.partner?.refCode,
                     secondTextColor: networkColor,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                 ],

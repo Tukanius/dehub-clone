@@ -3,18 +3,18 @@ import 'dart:async';
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/client_staff_card/client_staff_card.dart';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/network_module/screens/client_staffs/client_staff_detail/client_staff_detail.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ClientStaffs extends StatefulWidget {
   static const routeName = '/ClientStaffs';
-  const ClientStaffs({Key? key}) : super(key: key);
+  const ClientStaffs({super.key});
 
   @override
   State<ClientStaffs> createState() => _ClientStaffsState();
@@ -42,7 +42,7 @@ class _ClientStaffsState extends State<ClientStaffs> with AfterLayoutMixin {
     setState(() {
       network = res;
       isLoading = false;
-      Future.delayed(Duration(milliseconds: 100), () {
+      Future.delayed(const Duration(milliseconds: 100), () {
         setState(() {
           startAnimation = true;
         });
@@ -52,7 +52,7 @@ class _ClientStaffsState extends State<ClientStaffs> with AfterLayoutMixin {
 
   onChange(String query) async {
     if (timer != null) timer!.cancel();
-    timer = Timer(Duration(milliseconds: 400), () {
+    timer = Timer(const Duration(milliseconds: 400), () {
       setState(() {
         isLoading = true;
       });
@@ -75,7 +75,7 @@ class _ClientStaffsState extends State<ClientStaffs> with AfterLayoutMixin {
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
     });
@@ -92,9 +92,9 @@ class _ClientStaffsState extends State<ClientStaffs> with AfterLayoutMixin {
         elevation: 0,
         backgroundColor: networkColor,
         surfaceTintColor: networkColor,
-        iconTheme: IconThemeData(color: white),
+        iconTheme: const IconThemeData(color: white),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "Хариуцсан ажилтнууд",
           style: TextStyle(
             color: white,
@@ -112,82 +112,52 @@ class _ClientStaffsState extends State<ClientStaffs> with AfterLayoutMixin {
               onChange(query);
             },
           ),
-          Expanded(
-            child: SmartRefresher(
-              enablePullDown: true,
-              enablePullUp: true,
-              controller: refreshController,
-              header: WaterDropHeader(
-                waterDropColor: networkColor,
-                refresh: SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
+          isLoading == true
+              ? const Center(
+                  child: CircularProgressIndicator(color: networkColor),
+                )
+              : Expanded(
+                  child: Refresher(
+                    refreshController: refreshController,
+                    onLoading: _onLoading,
+                    onRefresh: _onRefresh,
                     color: networkColor,
+                    child: SingleChildScrollView(
+                      child: network.rows!.isNotEmpty
+                          ? Column(
+                              children: network.rows!
+                                  .map(
+                                    (data) => Column(
+                                      children: [
+                                        ClientStaffCard(
+                                          onClick: () {
+                                            Navigator.of(context).pushNamed(
+                                              ClientStaffDetail.routeName,
+                                              arguments:
+                                                  ClientStaffDetailArguments(
+                                                id: data.id,
+                                              ),
+                                            );
+                                          },
+                                          index: network.rows!.indexOf(data),
+                                          startAnimation: startAnimation,
+                                          data: data,
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                  .toList(),
+                            )
+                          : const NotFound(
+                              module: "NETWORK",
+                              labelText: 'Хоосон байна',
+                            ),
+                    ),
                   ),
                 ),
-              ),
-              onRefresh: _onRefresh,
-              onLoading: _onLoading,
-              footer: CustomFooter(
-                builder: (context, mode) {
-                  Widget body;
-                  if (mode == LoadStatus.idle) {
-                    body = const Text("");
-                  } else if (mode == LoadStatus.loading) {
-                    body = const CupertinoActivityIndicator();
-                  } else if (mode == LoadStatus.failed) {
-                    body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                  } else {
-                    body = const Text("Мэдээлэл алга байна");
-                  }
-                  return SizedBox(
-                    height: 55.0,
-                    child: Center(child: body),
-                  );
-                },
-              ),
-              child: SingleChildScrollView(
-                child: isLoading == true
-                    ? Center(
-                        child: CircularProgressIndicator(color: networkColor),
-                      )
-                    : network.rows?.length != 0
-                        ? Column(
-                            children: network.rows!
-                                .map(
-                                  (data) => Column(
-                                    children: [
-                                      ClientStaffCard(
-                                        onClick: () {
-                                          Navigator.of(context).pushNamed(
-                                            ClientStaffDetail.routeName,
-                                            arguments:
-                                                ClientStaffDetailArguments(
-                                              id: data.id,
-                                            ),
-                                          );
-                                        },
-                                        index: network.rows!.indexOf(data),
-                                        startAnimation: startAnimation,
-                                        data: data,
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                    ],
-                                  ),
-                                )
-                                .toList(),
-                          )
-                        : NotFound(
-                            module: "NETWORK",
-                            labelText: 'Хоосон байна',
-                          ),
-              ),
-            ),
-          ),
         ],
       ),
     );

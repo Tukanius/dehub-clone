@@ -7,16 +7,16 @@ class BuyerBusinessCard extends StatefulWidget {
   final Function()? onClick;
   final Business? data;
   const BuyerBusinessCard({
-    Key? key,
+    super.key,
     this.data,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
-  _BuyerBusinessCardState createState() => _BuyerBusinessCardState();
+  BuyerBusinessCardState createState() => BuyerBusinessCardState();
 }
 
-class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
+class BuyerBusinessCardState extends State<BuyerBusinessCard> {
   bool isCheck = false;
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: white,
-          border: Border.all(width: 0.5, color: Color(0xffF2F2F2)),
+          border: Border.all(width: 0.5, color: const Color(0xffF2F2F2)),
         ),
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         child: Column(
@@ -44,7 +44,7 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                         ? Container(
                             height: 40,
                             width: 40,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               color: grey,
                               image: DecorationImage(
@@ -67,7 +67,7 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                               ),
                             ),
                           ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Column(
@@ -77,12 +77,12 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                           children: [
                             Text(
                               '${widget.data?.partner?.businessName},',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 12, fontWeight: FontWeight.bold),
                             ),
                             Text(
                               '${widget.data?.refCode}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 12,
                                 color: grey3,
                                 decoration: TextDecoration.underline,
@@ -90,18 +90,19 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Row(
                           children: [
                             Text(
                               '${widget.data?.partnerName},',
-                              style: TextStyle(fontSize: 12, color: grey3),
+                              style:
+                                  const TextStyle(fontSize: 12, color: grey3),
                             ),
                             Text(
                               '${widget.data?.partner?.refCode}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 12,
                                 color: grey3,
                                 decoration: TextDecoration.underline,
@@ -109,18 +110,18 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Row(
                           children: [
-                            Text(
+                            const Text(
                               'ТТД: ',
                               style: TextStyle(color: grey3, fontSize: 10),
                             ),
                             Text(
                               '${widget.data?.partner?.regNumber}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,
                                 color: grey3,
@@ -128,11 +129,11 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                             ),
                           ],
                         ),
-                        Container(
+                        SizedBox(
                           width: 250,
                           child: Column(
                             children: [
-                              Divider(
+                              const Divider(
                                 thickness: 1,
                               ),
                               Row(
@@ -144,7 +145,7 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                                     child: Row(
                                       children: [
                                         widget.data?.staff?.avatar == null
-                                            ? CircleAvatar(
+                                            ? const CircleAvatar(
                                                 radius: 12,
                                                 backgroundColor: grey,
                                                 backgroundImage: AssetImage(
@@ -155,15 +156,13 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                                                 backgroundImage: NetworkImage(
                                                     '${widget.data?.staff?.avatar}'),
                                               ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 5,
                                         ),
-                                        Container(
-                                          child: Text(
-                                            '${widget.data?.staff?.firstName}',
-                                            style: TextStyle(
-                                              fontSize: 10,
-                                            ),
+                                        Text(
+                                          '${widget.data?.staff?.firstName}',
+                                          style: const TextStyle(
+                                            fontSize: 10,
                                           ),
                                         ),
                                       ],
@@ -176,13 +175,13 @@ class _BuyerBusinessCardState extends State<BuyerBusinessCard> {
                                       children: [
                                         Text(
                                           '${widget.data?.staff?.email}',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: grey3, fontSize: 10),
                                           textAlign: TextAlign.end,
                                         ),
                                         Text(
                                           '${widget.data?.staff?.phone}',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: grey3, fontSize: 10),
                                           textAlign: TextAlign.end,
                                         ),

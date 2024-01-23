@@ -18,9 +18,9 @@ class EnterPhonePage extends StatefulWidget {
   final Order data;
   static const routeName = '/EnterPhonePage';
   const EnterPhonePage({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<EnterPhonePage> createState() => _EnterPhonePageState();
@@ -35,7 +35,7 @@ class _EnterPhonePageState extends State<EnterPhonePage> {
     decoration: BoxDecoration(
       color: white,
       border: Border.all(
-        color: Color(0xffC6C6C8),
+        color: const Color(0xffC6C6C8),
       ),
       borderRadius: BorderRadius.circular(5),
     ),
@@ -58,29 +58,29 @@ class _EnterPhonePageState extends State<EnterPhonePage> {
         backgroundColor: orderColor,
         elevation: 0,
         leadingWidth: 150,
-        leading: CustomBackButton(color: white),
+        leading: const CustomBackButton(color: white),
       ),
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               SvgPicture.asset(
                 'assets/svg/mobile.svg',
-                colorFilter: ColorFilter.mode(orderColor, BlendMode.srcIn),
+                colorFilter: const ColorFilter.mode(orderColor, BlendMode.srcIn),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Container(
                 margin: const EdgeInsets.symmetric(
                   horizontal: 100,
                 ),
-                child: Text(
+                child: const Text(
                   'Хүлээн авагчийн утасны дугаар оруулна уу',
                   style: TextStyle(
                     color: buttonColor,
@@ -89,10 +89,10 @@ class _EnterPhonePageState extends State<EnterPhonePage> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 45,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
@@ -115,10 +115,10 @@ class _EnterPhonePageState extends State<EnterPhonePage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
-              Text(
+              const Text(
                 'Дээрх утсанд код ирнэ',
               ),
             ],

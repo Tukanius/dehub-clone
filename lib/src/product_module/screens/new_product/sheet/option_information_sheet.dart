@@ -81,7 +81,7 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
       data.skuCode = '${widget.jsonData.skuCode}-${widget.index + 1}';
       data.barCode = '${widget.jsonData.barCode}-${widget.index + 1}';
       data.erpCode = '${widget.jsonData.erpCode}-${widget.index + 1}';
-      data.image = upload.url != null ? upload.url : widget.jsonData.image;
+      data.image = upload.url ?? widget.jsonData.image;
       await InventoryApi().variant(data);
       await Provider.of<InventoryProvider>(context, listen: false)
           .removeOption(widget.index);
@@ -99,7 +99,7 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(10),
         ),
@@ -109,7 +109,7 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
         children: [
           Container(
             height: 50,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: white,
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(10),
@@ -130,11 +130,11 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter: const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   child: Text(
                     'Хувилбар хянах',
                     style: TextStyle(
@@ -149,7 +149,7 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
                     onSubmit();
                   },
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(10),
                       ),
@@ -157,7 +157,7 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 11),
                     height: 50,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'Болсон',
                         style: TextStyle(color: white),
@@ -180,7 +180,7 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
                       Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
-                        child: Text(
+                        child: const Text(
                           'Хувилбар',
                           style: TextStyle(
                             color: grey2,
@@ -199,16 +199,16 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 optionName(),
-                                SizedBox(
+                                const SizedBox(
                                   height: 3,
                                 ),
-                                Text(
+                                const Text(
                                   'SKU-1000000',
                                   style: TextStyle(color: grey2),
                                 ),
                               ],
                             ),
-                            Icon(
+                            const Icon(
                               Icons.arrow_forward_ios,
                               color: productColor,
                               size: 14,
@@ -223,8 +223,8 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text('Лого'),
-                            SizedBox(
+                            const Text('Лого'),
+                            const SizedBox(
                               width: 20,
                             ),
                             GestureDetector(
@@ -235,10 +235,10 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
                                 height: 90,
                                 width: 90,
                                 decoration: BoxDecoration(
-                                  color: Color(0xffFAFAFA),
+                                  color: const Color(0xffFAFAFA),
                                   borderRadius: BorderRadius.circular(2),
                                   border: Border.all(
-                                    color: Color(0xffD9D9D9),
+                                    color: const Color(0xffD9D9D9),
                                   ),
                                 ),
                                 padding: EdgeInsets.all(
@@ -246,14 +246,14 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
                                         ? 35
                                         : 0),
                                 child: isLoading == true
-                                    ? CircularProgressIndicator(
+                                    ? const CircularProgressIndicator(
                                         color: productColor,
                                         strokeWidth: 0.5,
                                       )
                                     : upload.url == null
                                         ? SvgPicture.asset(
                                             'assets/svg/image_upload.svg',
-                                            colorFilter: ColorFilter.mode(
+                                            colorFilter: const ColorFilter.mode(
                                                 productColor, BlendMode.srcIn),
                                           )
                                         : Image.network(
@@ -268,14 +268,14 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
                       Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
-                        child: Text(
+                        child: const Text(
                           'Хадгалах, эсвэл засна уу',
                           style: TextStyle(
                             color: grey2,
                           ),
                         ),
                       ),
-                      FieldCard(
+                      const FieldCard(
                         paddingHorizontal: 15,
                         paddingVertical: 10,
                         color: white,
@@ -311,11 +311,11 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
                         secondTextColor: productColor,
                       ),
                       FormTextField(
-                        initialValue: "${widget.jsonData.nameApp}, ${name}",
+                        initialValue: "${widget.jsonData.nameApp}, $name",
                         textColor: productColor,
                         textAlign: TextAlign.end,
                         name: 'nameApp',
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           fillColor: white,
                           filled: true,
@@ -326,7 +326,7 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
                           prefixIcon: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               SizedBox(
                                 width: 15,
                               ),
@@ -343,11 +343,11 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
                         ]),
                       ),
                       FormTextField(
-                        initialValue: "${widget.jsonData.nameWeb}, ${name}",
+                        initialValue: "${widget.jsonData.nameWeb}, $name",
                         textColor: productColor,
                         textAlign: TextAlign.end,
                         name: 'nameWeb',
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           fillColor: white,
                           filled: true,
@@ -358,7 +358,7 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
                           prefixIcon: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               SizedBox(
                                 width: 15,
                               ),
@@ -375,11 +375,11 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
                         ]),
                       ),
                       FormTextField(
-                        initialValue: "${widget.jsonData.nameBill}, ${name}",
+                        initialValue: "${widget.jsonData.nameBill}, $name",
                         textColor: productColor,
                         textAlign: TextAlign.end,
                         name: 'nameBill',
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           fillColor: white,
                           filled: true,
@@ -390,7 +390,7 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
                           prefixIcon: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               SizedBox(
                                 width: 15,
                               ),
@@ -406,7 +406,7 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
                           ),
                         ]),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
                     ],
@@ -423,7 +423,7 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
   Widget optionName() {
     return RichText(
       text: TextSpan(
-        style: TextStyle(color: productColor, fontFamily: "Montserrat"),
+        style: const TextStyle(color: productColor, fontFamily: "Montserrat"),
         children: widget.arrayData.map((e) {
           "${e.name} ${e.optionId == widget.arrayData.last.optionId ? "" : ","} ";
           return TextSpan(

@@ -12,7 +12,7 @@ class GereetBish extends StatefulWidget {
 class _GereetBishState extends State<GereetBish> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: backgroundColor,
     );
   }

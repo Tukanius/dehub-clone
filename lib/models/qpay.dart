@@ -1,4 +1,4 @@
-import 'package:dehub/models/qpay-urls.dart';
+import 'package:dehub/models/qpay_urls.dart';
 
 part '../parts/qpay.dart';
 

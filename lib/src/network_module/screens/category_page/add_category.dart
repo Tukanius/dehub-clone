@@ -1,6 +1,6 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
-import 'package:dehub/models/business-staffs.dart';
+import 'package:dehub/models/business_staffs.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -23,9 +23,9 @@ class AddCategory extends StatefulWidget {
   final ListenController listenController;
   static const routeName = 'AddCategory';
   const AddCategory({
-    Key? key,
+    super.key,
     required this.listenController,
-  }) : super(key: key);
+  });
 
   @override
   State<AddCategory> createState() => _AddCategoryState();
@@ -68,7 +68,7 @@ class _AddCategoryState extends State<AddCategory> {
             child: SvgPicture.asset('assets/svg/close.svg'),
           ),
         ),
-        title: Text(
+        title: const Text(
           'Харилцагчийн ангилал',
           style: TextStyle(
             color: white,
@@ -83,7 +83,7 @@ class _AddCategoryState extends State<AddCategory> {
           children: [
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Мэдээлэл',
                 style: TextStyle(
                   color: grey3,
@@ -94,7 +94,7 @@ class _AddCategoryState extends State<AddCategory> {
             Container(
               color: white,
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -124,7 +124,7 @@ class _AddCategoryState extends State<AddCategory> {
                     decoration: InputDecoration(
                       hintText: 'Ангилал нэр оруулах',
                       fillColor: white,
-                      hintStyle: TextStyle(color: networkColor),
+                      hintStyle: const TextStyle(color: networkColor),
                       filled: true,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 15, horizontal: 15),
@@ -135,7 +135,7 @@ class _AddCategoryState extends State<AddCategory> {
                       prefixIcon: Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 15, horizontal: 15),
-                        child: Text(
+                        child: const Text(
                           'Ангилал нэр',
                           style: TextStyle(color: dark),
                         ),
@@ -149,7 +149,7 @@ class _AddCategoryState extends State<AddCategory> {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Тайлбар',
                       style: TextStyle(
                         color: grey3,
@@ -163,7 +163,7 @@ class _AddCategoryState extends State<AddCategory> {
                     decoration: InputDecoration(
                       hintText: 'Тайлбар оруулах',
                       fillColor: white,
-                      hintStyle: TextStyle(color: networkColor),
+                      hintStyle: const TextStyle(color: networkColor),
                       filled: true,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 15, horizontal: 15),
@@ -182,13 +182,13 @@ class _AddCategoryState extends State<AddCategory> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Бүртгэсэн огноо, цаг',
                     style: TextStyle(color: dark),
                   ),
                   Text(
-                    '${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now())}',
-                    style: TextStyle(
+                    DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now()),
+                    style: const TextStyle(
                       color: dark,
                     ),
                   )
@@ -198,7 +198,7 @@ class _AddCategoryState extends State<AddCategory> {
             Container(
               color: white,
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -220,7 +220,7 @@ class _AddCategoryState extends State<AddCategory> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Статус',
                     style: TextStyle(color: dark),
                   ),
@@ -231,7 +231,7 @@ class _AddCategoryState extends State<AddCategory> {
                       borderRadius: BorderRadius.circular(15),
                       color: grey2.withOpacity(0.1),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Түр төлөв',
                       style: TextStyle(
                         color: grey2,
@@ -243,7 +243,7 @@ class _AddCategoryState extends State<AddCategory> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             Row(
@@ -276,7 +276,7 @@ class _AddCategoryState extends State<AddCategory> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
           ],

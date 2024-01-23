@@ -10,7 +10,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 
 class ChangePassword extends StatefulWidget {
   static const routeName = '/ChangePassword';
-  const ChangePassword({Key? key}) : super(key: key);
+  const ChangePassword({super.key});
 
   @override
   State<ChangePassword> createState() => _ChangePasswordState();
@@ -46,9 +46,9 @@ class _ChangePasswordState extends State<ChangePassword> {
         surfaceTintColor: backgroundColor,
         backgroundColor: backgroundColor,
         elevation: 0,
-        iconTheme: IconThemeData(color: buttonColor),
+        iconTheme: const IconThemeData(color: buttonColor),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Нууц үг солих',
           style: TextStyle(
             color: buttonColor,
@@ -63,7 +63,7 @@ class _ChangePasswordState extends State<ChangePassword> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 FormBuilder(
@@ -71,17 +71,17 @@ class _ChangePasswordState extends State<ChangePassword> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
-                      Text(
+                      const Text(
                         'Хуучин нууц үг',
                         style: TextStyle(
                           color: buttonColor,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       FormTextField(
@@ -100,11 +100,11 @@ class _ChangePasswordState extends State<ChangePassword> {
                               });
                             },
                             icon: isVisible == true
-                                ? Icon(
+                                ? const Icon(
                                     Icons.visibility_off,
                                     color: buttonColor,
                                   )
-                                : Icon(
+                                : const Icon(
                                     Icons.visibility,
                                     color: buttonColor,
                                   ),
@@ -114,22 +114,22 @@ class _ChangePasswordState extends State<ChangePassword> {
                           fillColor: Colors.white,
                           filled: true,
                           hintText: "Системд нэвтрэх бизнесийн код",
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             color: grey2,
                             fontSize: 14,
                           ),
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color(0xff44566C30),
+                              color: Color(0xff44566c),
                             ),
                           ),
-                          errorBorder: OutlineInputBorder(
+                          errorBorder: const OutlineInputBorder(
                             borderSide: BorderSide(color: red),
                           ),
-                          border: OutlineInputBorder(
+                          border: const OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.blue),
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.blue,
                             ),
@@ -141,17 +141,17 @@ class _ChangePasswordState extends State<ChangePassword> {
                           }
                         ]),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
-                      Text(
+                      const Text(
                         'Нууц үг',
                         style: TextStyle(
                           color: buttonColor,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       FormTextField(
@@ -170,11 +170,11 @@ class _ChangePasswordState extends State<ChangePassword> {
                               });
                             },
                             icon: isVisible1 == true
-                                ? Icon(
+                                ? const Icon(
                                     Icons.visibility_off,
                                     color: buttonColor,
                                   )
-                                : Icon(
+                                : const Icon(
                                     Icons.visibility,
                                     color: buttonColor,
                                   ),
@@ -184,22 +184,22 @@ class _ChangePasswordState extends State<ChangePassword> {
                           fillColor: Colors.white,
                           filled: true,
                           hintText: "Системд нэвтрэх бизнесийн код",
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             color: grey2,
                             fontSize: 14,
                           ),
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color(0xff44566C30),
+                              color: Color(0xff44566c),
                             ),
                           ),
-                          errorBorder: OutlineInputBorder(
+                          errorBorder: const OutlineInputBorder(
                             borderSide: BorderSide(color: red),
                           ),
-                          border: OutlineInputBorder(
+                          border: const OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.blue),
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.blue,
                             ),
@@ -211,17 +211,17 @@ class _ChangePasswordState extends State<ChangePassword> {
                           }
                         ]),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
-                      Text(
+                      const Text(
                         'Дахин оруулна уу',
                         style: TextStyle(
                           color: buttonColor,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       FormTextField(
@@ -239,11 +239,11 @@ class _ChangePasswordState extends State<ChangePassword> {
                               });
                             },
                             icon: isVisible2 == true
-                                ? Icon(
+                                ? const Icon(
                                     Icons.visibility_off,
                                     color: buttonColor,
                                   )
-                                : Icon(
+                                : const Icon(
                                     Icons.visibility,
                                     color: buttonColor,
                                   ),
@@ -253,22 +253,22 @@ class _ChangePasswordState extends State<ChangePassword> {
                           fillColor: Colors.white,
                           filled: true,
                           hintText: "Нууц үг давтан оруулна уу",
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             color: grey2,
                             fontSize: 14,
                           ),
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color(0xff44566C30),
+                              color: Color(0xff44566c),
                             ),
                           ),
-                          errorBorder: OutlineInputBorder(
+                          errorBorder: const OutlineInputBorder(
                             borderSide: BorderSide(color: red),
                           ),
-                          border: OutlineInputBorder(
+                          border: const OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.blue),
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.blue,
                             ),
@@ -290,10 +290,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
                 CustomButton(

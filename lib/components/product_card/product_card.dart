@@ -8,10 +8,10 @@ class ProductCard extends StatefulWidget {
   final Function()? buttonClick;
   final InventoryGoods data;
   const ProductCard({
-    Key? key,
+    super.key,
     this.buttonClick,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<ProductCard> createState() => _ProductCardState();
@@ -39,30 +39,30 @@ class _ProductCardState extends State<ProductCard> {
                 child: SizedBox(
                   height: 40,
                   child: FloatingActionButton(
-                    shape: CircleBorder(),
+                    shape: const CircleBorder(),
                     backgroundColor: white,
-                    child: Icon(
+                    onPressed: widget.buttonClick,
+                    child: const Icon(
                       Icons.add_shopping_cart,
                       color: buttonColor,
                       size: 24,
                     ),
-                    onPressed: widget.buttonClick,
                   ),
                 ),
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Text(
             '${widget.data.nameMon}',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 7,
           ),
           RatingBar(
@@ -72,28 +72,28 @@ class _ProductCardState extends State<ProductCard> {
             allowHalfRating: true,
             itemCount: 5,
             ratingWidget: RatingWidget(
-              full: Icon(
+              full: const Icon(
                 Icons.star,
                 color: orange,
               ),
-              half: Icon(
+              half: const Icon(
                 Icons.star_half,
                 color: orange,
               ),
-              empty: Icon(
+              empty: const Icon(
                 Icons.star_border,
                 color: orange,
               ),
             ),
             onRatingUpdate: (rating) {},
           ),
-          SizedBox(
+          const SizedBox(
             height: 7,
           ),
           RichText(
             textAlign: TextAlign.left,
             text: TextSpan(
-              style: TextStyle(
+              style: const TextStyle(
                   fontFamily: 'Montserrat', fontSize: 16, color: black),
               children: [
                 TextSpan(text: '${widget.data.skuCode} '),
@@ -102,25 +102,25 @@ class _ProductCardState extends State<ProductCard> {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 7,
           ),
           Row(
             children: [
               Text(
                 '₮${Utils().formatCurrency(widget.data.customPrice.toString())}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: buttonColor,
                   fontWeight: FontWeight.w500,
                   fontSize: 20,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 30,
               ),
               Text(
                 '₮${Utils().formatCurrency(widget.data.standardPrice.toString())}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   color: grey3,
                   fontWeight: FontWeight.w500,
@@ -130,7 +130,7 @@ class _ProductCardState extends State<ProductCard> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
         ],

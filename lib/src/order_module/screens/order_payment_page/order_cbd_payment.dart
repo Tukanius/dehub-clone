@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class OrderCbdPayment extends StatefulWidget {
   static const routeName = '/OrderCbdPayment';
-  const OrderCbdPayment({Key? key}) : super(key: key);
+  const OrderCbdPayment({super.key});
 
   @override
   State<OrderCbdPayment> createState() => _OrderCbdPaymentState();
@@ -53,8 +53,8 @@ class _OrderCbdPaymentState extends State<OrderCbdPayment> {
         backgroundColor: orderColor,
         surfaceTintColor: orderColor,
         elevation: 0,
-        leading: CustomCloseButton(),
-        title: Text(
+        leading: const CustomCloseButton(),
+        title: const Text(
           'Захиалгын төлбөр төлөх',
           style: TextStyle(
             color: white,
@@ -69,7 +69,7 @@ class _OrderCbdPaymentState extends State<OrderCbdPayment> {
         children: [
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
+            child: const Text(
               'Төлбөрийн мэдээлэл',
               style: TextStyle(
                 fontWeight: FontWeight.w700,
@@ -94,7 +94,7 @@ class _OrderCbdPaymentState extends State<OrderCbdPayment> {
                 )
                 .toList(),
           ),
-          SizedBox(
+          const SizedBox(
             height: 100,
           ),
           CustomButton(

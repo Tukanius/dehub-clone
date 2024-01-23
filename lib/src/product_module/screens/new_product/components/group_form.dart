@@ -32,9 +32,7 @@ class _GroupFormState extends State<GroupForm> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: "Нэр төрөл",
-            secondText: source.product.itemTypeName != null
-                ? source.product.itemTypeName
-                : "Сонгох",
+            secondText: source.product.itemTypeName ?? "Сонгох",
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
@@ -43,7 +41,7 @@ class _GroupFormState extends State<GroupForm> {
                 context: context,
                 useSafeArea: true,
                 builder: (context) {
-                  return ItemTypeSheet();
+                  return const ItemTypeSheet();
                 },
               );
             },
@@ -54,9 +52,7 @@ class _GroupFormState extends State<GroupForm> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: "Ангилал",
-            secondText: source.product.classificationName != null
-                ? source.product.classificationName
-                : "Сонгох",
+            secondText: source.product.classificationName ?? "Сонгох",
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
@@ -67,7 +63,7 @@ class _GroupFormState extends State<GroupForm> {
                       context: context,
                       useSafeArea: true,
                       builder: (context) {
-                        return CategorySheet(
+                        return const CategorySheet(
                           labelText: 'Ангилал сонгоно уу',
                           type: 'CLASSIFICATION',
                         );
@@ -80,9 +76,7 @@ class _GroupFormState extends State<GroupForm> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: "Дэд ангилал",
-            secondText: source.product.subClassificationName != null
-                ? source.product.subClassificationName
-                : "Сонгох",
+            secondText: source.product.subClassificationName ?? "Сонгох",
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
@@ -93,7 +87,7 @@ class _GroupFormState extends State<GroupForm> {
                       context: context,
                       useSafeArea: true,
                       builder: (context) {
-                        return CategorySheet(
+                        return const CategorySheet(
                           labelText: 'Дэд ангилал сонгоно уу',
                           type: 'SUB_CLASSIFICATION',
                         );
@@ -106,9 +100,7 @@ class _GroupFormState extends State<GroupForm> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: "Категори",
-            secondText: source.product.categoryName != null
-                ? source.product.categoryName
-                : "Сонгох",
+            secondText: source.product.categoryName ?? "Сонгох",
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
@@ -119,7 +111,7 @@ class _GroupFormState extends State<GroupForm> {
                       context: context,
                       useSafeArea: true,
                       builder: (context) {
-                        return CategorySheet(
+                        return const CategorySheet(
                           labelText: 'Категори сонгоно уу',
                           type: 'CATEGORY',
                         );
@@ -132,9 +124,7 @@ class _GroupFormState extends State<GroupForm> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: "Дэд категори",
-            secondText: source.product.subCategoryName != null
-                ? source.product.subCategoryName
-                : "Сонгох",
+            secondText: source.product.subCategoryName ?? "Сонгох",
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
@@ -145,7 +135,7 @@ class _GroupFormState extends State<GroupForm> {
                       context: context,
                       useSafeArea: true,
                       builder: (context) {
-                        return CategorySheet(
+                        return const CategorySheet(
                           labelText: 'Дэд категори сонгоно уу',
                           type: 'SUB_CATEGORY',
                         );
@@ -158,9 +148,7 @@ class _GroupFormState extends State<GroupForm> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: "Таг",
-            secondText: source.product.tagName != null
-                ? source.product.tagName
-                : "Сонгох",
+            secondText: source.product.tagName ?? "Сонгох",
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
@@ -169,7 +157,7 @@ class _GroupFormState extends State<GroupForm> {
                 context: context,
                 useSafeArea: true,
                 builder: (context) {
-                  return TagSheet();
+                  return const TagSheet();
                 },
               );
             },
@@ -183,11 +171,11 @@ class _GroupFormState extends State<GroupForm> {
       String labelText) {
     return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        duration: Duration(milliseconds: 150),
+        duration: const Duration(milliseconds: 150),
         backgroundColor: productColor,
-        shape: StadiumBorder(),
+        shape: const StadiumBorder(),
         content: Center(
-          child: Text('${labelText}'),
+          child: Text(labelText),
         ),
       ),
     );

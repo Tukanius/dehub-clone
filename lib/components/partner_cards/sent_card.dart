@@ -11,15 +11,15 @@ class SentCard extends StatefulWidget {
     required this.index,
     required this.startAnimation,
     this.data,
-    Key? key,
+    super.key,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
-  _SentCardState createState() => _SentCardState();
+  SentCardState createState() => SentCardState();
 }
 
-class _SentCardState extends State<SentCard> {
+class SentCardState extends State<SentCard> {
   invitationStatus() {
     switch (widget.data?.invitationStatus) {
       case "SENT":
@@ -63,106 +63,125 @@ class _SentCardState extends State<SentCard> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: white,
-          border: Border.all(width: 0.5, color: Color(0xffF2F2F2)),
+          border: Border.all(width: 0.5, color: const Color(0xffF2F2F2)),
         ),
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-        child: Column(
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Text(
                           '${widget.data?.receiver?.profileName}',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(
-                          height: 5,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        '${widget.data?.receiver?.refCode}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: grey3,
+                          decoration: TextDecoration.underline,
                         ),
-                        Text(
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Text(
                           '${widget.data?.receiver?.partnerName}',
-                          style: TextStyle(fontSize: 12, color: grey3),
+                          style: const TextStyle(fontSize: 12, color: grey3),
                         ),
-                        SizedBox(
-                          height: 5,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            'Урилга №: ',
+                            style: TextStyle(color: grey3, fontSize: 10),
+                          ),
+                          Text(
+                            '${widget.data?.refCode}',
+                            style: const TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: grey3),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: RichText(
+                          text: TextSpan(
+                            style: const TextStyle(
+                                fontSize: 12,
+                                color: grey3,
+                                fontFamily: 'Montserrat'),
+                            children: [
+                              TextSpan(
+                                text:
+                                    "${widget.data?.receiver?.staff?.firstName}, ",
+                              ),
+                              TextSpan(
+                                text: widget.data?.receiver?.staff?.phone,
+                              ),
+                            ],
+                          ),
                         ),
-                        Text(
-                          '${widget.data?.receiver?.staff?.firstName}, ${widget.data?.receiver?.staff?.phone}',
-                          style: TextStyle(fontSize: 12, color: grey3),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 7),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: invitationStatusColor()),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          '${widget.data?.receiver?.refCode}',
+                        child: Text(
+                          invitationStatus(),
                           style: TextStyle(
+                            color: invitationStatusColor(),
                             fontSize: 12,
-                            color: grey3,
-                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                        SizedBox(
-                          height: 6,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              'Урилга №: ',
-                              style: TextStyle(color: grey3, fontSize: 10),
-                            ),
-                            Text(
-                              '${widget.data?.refCode}',
-                              style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w600,
-                                  color: grey3),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 6,
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 7),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: invitationStatusColor()),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Text(
-                            invitationStatus(),
-                            style: TextStyle(
-                              color: invitationStatusColor(),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 12,
-                    ),
-                  ],
-                )
-              ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              width: 15,
+            ),
+            const Icon(
+              Icons.arrow_forward_ios,
+              size: 12,
             ),
           ],
         ),

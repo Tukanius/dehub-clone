@@ -4,6 +4,7 @@ import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/invoice_card/invoice_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
@@ -18,15 +19,14 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
 class GivePage extends StatefulWidget {
   static const routeName = 'GivePage';
   const GivePage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<GivePage> createState() => _GivePageState();
@@ -88,7 +88,7 @@ class _GivePageState extends State<GivePage>
   }
 
   list(int page, int limit, String query, String status) async {
-    Filter filter = Filter(query: '${query}', status: status);
+    Filter filter = Filter(query: query, status: status);
     Offset offset = Offset(limit: limit, page: page);
     if (user.currentBusiness?.type == "BUYER") {
       invoice = await InvoiceApi()
@@ -101,7 +101,7 @@ class _GivePageState extends State<GivePage>
     setState(() {
       isLoading = false;
     });
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         startAnimation = true;
       });
@@ -141,7 +141,7 @@ class _GivePageState extends State<GivePage>
 
   onChange(String query) async {
     if (timer != null) timer?.cancel();
-    timer = Timer(Duration(milliseconds: 500), () async {
+    timer = Timer(const Duration(milliseconds: 500), () async {
       setState(() {
         isLoading = true;
         startAnimation = false;
@@ -163,7 +163,7 @@ class _GivePageState extends State<GivePage>
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Нээлттэй нэхэмжлэх',
           style: TextStyle(
             fontSize: 17,
@@ -179,26 +179,25 @@ class _GivePageState extends State<GivePage>
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_new,
             color: invoiceColor,
           ),
         ),
         actions: [
-          user.currentBusiness?.type == "SUPPLIER"
-              ? AddButton(
-                  color: invoiceColor,
-                  onClick: () {
-                    Navigator.of(context).pushNamed(NewInvoice.routeName);
-                  },
-                )
-              : SizedBox(),
+          if (user.currentBusiness?.type == "SUPPLIER")
+            AddButton(
+              color: invoiceColor,
+              onClick: () {
+                Navigator.of(context).pushNamed(NewInvoice.routeName);
+              },
+            )
         ],
       ),
       body: Column(
         children: [
           Container(
-            margin: EdgeInsets.symmetric(
+            margin: const EdgeInsets.symmetric(
               vertical: 10,
             ),
             color: white,
@@ -221,8 +220,8 @@ class _GivePageState extends State<GivePage>
                         }
                       : () {},
                   child: Container(
-                    margin: EdgeInsets.only(right: 5, left: 5),
-                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    margin: const EdgeInsets.only(right: 5, left: 5),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(24),
                       color:
@@ -257,50 +256,20 @@ class _GivePageState extends State<GivePage>
             color: invoiceColor,
           ),
           isLoading == true
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(
                     color: invoiceColor,
                   ),
                 )
               : Expanded(
-                  child: SmartRefresher(
-                    enablePullDown: true,
-                    enablePullUp: true,
-                    controller: _refreshController,
-                    header: WaterDropHeader(
-                      waterDropColor: invoiceColor,
-                      refresh: SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: invoiceColor,
-                        ),
-                      ),
-                    ),
-                    onRefresh: _onRefresh,
+                  child: Refresher(
+                    refreshController: _refreshController,
                     onLoading: _onLoading,
-                    footer: CustomFooter(
-                      builder: (context, mode) {
-                        Widget body;
-                        if (mode == LoadStatus.idle) {
-                          body = const Text("");
-                        } else if (mode == LoadStatus.loading) {
-                          body = const CupertinoActivityIndicator();
-                        } else if (mode == LoadStatus.failed) {
-                          body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                        } else {
-                          body = const Text("Мэдээлэл алга байна");
-                        }
-                        return SizedBox(
-                          height: 55.0,
-                          child: Center(child: body),
-                        );
-                      },
-                    ),
+                    onRefresh: _onRefresh,
+                    color: invoiceColor,
                     child: SingleChildScrollView(
-                      child: groupedList.length == 0
-                          ? NotFound(
+                      child: groupedList.isEmpty
+                          ? const NotFound(
                               module: "INVOICE",
                               labelText: "Нэхэмжлэл олдсонгүй",
                             )
@@ -327,14 +296,15 @@ class _GivePageState extends State<GivePage>
                                           margin: const EdgeInsets.only(
                                               left: 15, top: 10),
                                           child: Text(
-                                            '${DateFormat('yyyy-MM-dd').format(item.header!)}',
-                                            style: TextStyle(
+                                            DateFormat('yyyy-MM-dd')
+                                                .format(item.header!),
+                                            style: const TextStyle(
                                               color: grey3,
                                               fontWeight: FontWeight.w600,
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10,
                                         ),
                                         Column(
@@ -361,7 +331,7 @@ class _GivePageState extends State<GivePage>
                                                         );
                                                       },
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 5,
                                                     ),
                                                   ],

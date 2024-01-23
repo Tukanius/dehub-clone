@@ -36,10 +36,10 @@ class OrderCodPayment extends StatefulWidget {
   final List<Order> lines;
   static const routeName = '/OrderCodPayment';
   const OrderCodPayment({
-    Key? key,
+    super.key,
     required this.lines,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<OrderCodPayment> createState() => _OrderCodPaymentState();
@@ -88,7 +88,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
           lastName: "${invoice.paymentTerm?.description}"),
       Order(
           firstName: "Төлөх огноо цаг",
-          lastName: "${DateFormat("yyyy-MM-dd").format(invoice.paymentDate!)}"),
+          lastName: DateFormat("yyyy-MM-dd").format(invoice.paymentDate!)),
       Order(
           firstName: "Дансны дугаар",
           lastName: "${invoice.receiverAcc?.number}"),
@@ -101,7 +101,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
 
   payment() async {
     try {
-      await PaymentApi().qpay(
+      await PaymentApi().pay(
         Invoice(
           method: "B2B",
           amount: invoice.totalAmount,
@@ -174,7 +174,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
           },
           child: Container(
             color: transparent,
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back_ios,
               color: white,
             ),
@@ -184,9 +184,10 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
         elevation: 0,
         backgroundColor: orderColor,
         surfaceTintColor: orderColor,
-        title: Text(
+        title: const Text(
           'Захиалгын төлбөр төлөх',
           style: TextStyle(
+            color: white,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -194,7 +195,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
         centerTitle: true,
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: orderColor,
               ),
@@ -213,7 +214,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                                   ? Container(
                                       margin: const EdgeInsets.symmetric(
                                           horizontal: 15, vertical: 10),
-                                      child: Text(
+                                      child: const Text(
                                         'Төлбөрийн мэдээлэл',
                                         style: TextStyle(
                                           color: grey2,
@@ -225,7 +226,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                                       ? Container(
                                           margin: const EdgeInsets.symmetric(
                                               horizontal: 15, vertical: 10),
-                                          child: Text(
+                                          child: const Text(
                                             'Төлбөр авах данс',
                                             style: TextStyle(
                                               color: grey2,
@@ -233,7 +234,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                                             ),
                                           ),
                                         )
-                                      : SizedBox(),
+                                      : const SizedBox(),
                               FieldCard(
                                 paddingHorizontal: 15,
                                 paddingVertical: 15,
@@ -253,7 +254,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                       horizontal: 15,
                       vertical: 10,
                     ),
-                    child: Text(
+                    child: const Text(
                       'Төлбөрийн хэлбэр',
                       style: TextStyle(
                         color: grey2,
@@ -276,27 +277,27 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                               selectedImage?[0] == "i"
                                   ? Image.asset(selectedImage.toString())
                                   : SvgPicture.asset(selectedImage.toString(),
-                                      colorFilter: ColorFilter.mode(
+                                      colorFilter: const ColorFilter.mode(
                                           grey3, BlendMode.srcIn)),
                               SizedBox(
                                 width: selectedMethod == null ? 0 : 15,
                               ),
                               selectedMethod == null
-                                  ? Text(
+                                  ? const Text(
                                       'Төлбөрийн хэрэгсэл сонгоно уу',
                                       style: TextStyle(
                                         color: grey2,
                                       ),
                                     )
                                   : Text(
-                                      '${selectedMethod}',
-                                      style: TextStyle(
+                                      '$selectedMethod',
+                                      style: const TextStyle(
                                         color: grey2,
                                       ),
                                     ),
                             ],
                           ),
-                          Row(
+                          const Row(
                             children: [
                               Text(
                                 'Солих',
@@ -316,44 +317,43 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                       ),
                     ),
                   ),
-                  selectedMethod == "Бизнес тооцооны дансаар"
-                      ? Column(
-                          children: [
-                            FieldCard(
-                              paddingHorizontal: 15,
-                              paddingVertical: 15,
-                              labelText: "Дансны дугаар",
-                              secondText: "${bankNumber}",
-                              color: white,
-                              labelTextColor: grey2,
-                              onClick: () {
-                                selectBankAccount();
-                              },
-                              arrowColor: orderColor,
-                              secondTextColor: orderColor,
-                            ),
-                            FieldCard(
-                              paddingHorizontal: 15,
-                              paddingVertical: 15,
-                              labelText: "Банкны нэр",
-                              secondText: "${bankName}",
-                              color: white,
-                              labelTextColor: grey2,
-                              secondTextColor: orderColor,
-                            ),
-                            FieldCard(
-                              paddingHorizontal: 15,
-                              paddingVertical: 15,
-                              labelText: "Дансны нэр",
-                              secondText: "${accountName}",
-                              color: white,
-                              labelTextColor: grey2,
-                              secondTextColor: orderColor,
-                            ),
-                          ],
-                        )
-                      : SizedBox(),
-                  SizedBox(
+                  if (selectedMethod == "Бизнес тооцооны дансаар")
+                    Column(
+                      children: [
+                        FieldCard(
+                          paddingHorizontal: 15,
+                          paddingVertical: 15,
+                          labelText: "Дансны дугаар",
+                          secondText: bankNumber,
+                          color: white,
+                          labelTextColor: grey2,
+                          onClick: () {
+                            selectBankAccount();
+                          },
+                          arrowColor: orderColor,
+                          secondTextColor: orderColor,
+                        ),
+                        FieldCard(
+                          paddingHorizontal: 15,
+                          paddingVertical: 15,
+                          labelText: "Банкны нэр",
+                          secondText: bankName,
+                          color: white,
+                          labelTextColor: grey2,
+                          secondTextColor: orderColor,
+                        ),
+                        FieldCard(
+                          paddingHorizontal: 15,
+                          paddingVertical: 15,
+                          labelText: "Дансны нэр",
+                          secondText: accountName,
+                          color: white,
+                          labelTextColor: grey2,
+                          secondTextColor: orderColor,
+                        ),
+                      ],
+                    ),
+                  const SizedBox(
                     height: 70,
                   ),
                   invoice.paymentTerm?.configType == "INV_COD" ||
@@ -385,7 +385,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                         )
                       : Row(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             Expanded(
@@ -421,7 +421,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                                 textColor: orderColor,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
                             Expanded(
@@ -440,12 +440,12 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                                 textColor: white,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                           ],
                         ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                 ],
@@ -484,7 +484,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
   showModal() {
     showModalBottomSheet(
       useSafeArea: true,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(30),
         ),
@@ -499,25 +499,25 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 selectedMethod == null
-                    ? Text(
+                    ? const Text(
                         'Төлбөрийн хэлбэр сонгох',
                         style: TextStyle(
                           color: grey2,
                           fontWeight: FontWeight.w500,
                         ),
                       )
-                    : Text(
+                    : const Text(
                         'Төлбөрийн хэлбэр солих',
                         style: TextStyle(
                           color: grey2,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 Column(
@@ -536,22 +536,22 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                             margin: const EdgeInsets.only(bottom: 25),
                             child: Row(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   width: 5,
                                 ),
                                 data.image?[0] == 'a'
                                     ? SvgPicture.asset(
                                         '${data.image}',
-                                        colorFilter: ColorFilter.mode(
+                                        colorFilter: const ColorFilter.mode(
                                             grey3, BlendMode.srcIn),
                                       )
                                     : Image.asset('${data.image}'),
-                                SizedBox(
+                                const SizedBox(
                                   width: 15,
                                 ),
                                 Text(
                                   "${data.name}",
-                                  style: TextStyle(color: grey3),
+                                  style: const TextStyle(color: grey3),
                                 ),
                               ],
                             ),
@@ -560,7 +560,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                       )
                       .toList(),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
               ],
@@ -575,7 +575,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
     showModalBottomSheet(
       useSafeArea: true,
       backgroundColor: white,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(30),
         ),
@@ -590,7 +590,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                 Container(
                   margin:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Text(
+                  child: const Text(
                     "Данс сонгох",
                     style: TextStyle(
                       color: grey2,

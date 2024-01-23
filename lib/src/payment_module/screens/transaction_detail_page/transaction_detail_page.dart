@@ -15,15 +15,15 @@ class TransactionDetailPage extends StatefulWidget {
   final Payment data;
   static const routeName = '/transactiondetailpage';
   const TransactionDetailPage({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
-  _TransactionDetailPageState createState() => _TransactionDetailPageState();
+  TransactionDetailPageState createState() => TransactionDetailPageState();
 }
 
-class _TransactionDetailPageState extends State<TransactionDetailPage>
+class TransactionDetailPageState extends State<TransactionDetailPage>
     with AfterLayoutMixin {
   Payment payment = Payment();
   bool isLoading = true;
@@ -48,7 +48,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage>
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_new,
             color: paymentColor,
           ),
@@ -63,7 +63,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage>
         // ),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: paymentColor,
               ),
@@ -72,10 +72,10 @@ class _TransactionDetailPageState extends State<TransactionDetailPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
-                  Center(
+                  const Center(
                     child: Text(
                       '521****513',
                       style: TextStyle(
@@ -85,10 +85,10 @@ class _TransactionDetailPageState extends State<TransactionDetailPage>
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Center(
+                  const Center(
                     child: Text(
                       'Голомт банк',
                       style: TextStyle(
@@ -97,21 +97,21 @@ class _TransactionDetailPageState extends State<TransactionDetailPage>
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Divider(
+                  const Divider(
                     endIndent: 20,
                     indent: 20,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 12),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -128,14 +128,14 @@ class _TransactionDetailPageState extends State<TransactionDetailPage>
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Container(
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 12),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -152,14 +152,14 @@ class _TransactionDetailPageState extends State<TransactionDetailPage>
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Container(
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 12),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -176,14 +176,14 @@ class _TransactionDetailPageState extends State<TransactionDetailPage>
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Container(
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 12),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -200,14 +200,14 @@ class _TransactionDetailPageState extends State<TransactionDetailPage>
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Container(
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 12),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -221,14 +221,14 @@ class _TransactionDetailPageState extends State<TransactionDetailPage>
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Container(
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 12),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -245,14 +245,14 @@ class _TransactionDetailPageState extends State<TransactionDetailPage>
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Container(
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 12),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -266,14 +266,14 @@ class _TransactionDetailPageState extends State<TransactionDetailPage>
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Container(
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 12),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -290,7 +290,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage>
                   Container(
                     margin: const EdgeInsets.symmetric(
                         vertical: 15, horizontal: 15),
-                    child: Text(
+                    child: const Text(
                       'ХАРЬЦСАН ДАНС',
                       style:
                           TextStyle(color: grey3, fontWeight: FontWeight.w600),
@@ -300,7 +300,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage>
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 12),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -314,14 +314,14 @@ class _TransactionDetailPageState extends State<TransactionDetailPage>
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Container(
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 12),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -335,14 +335,14 @@ class _TransactionDetailPageState extends State<TransactionDetailPage>
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Container(
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 12),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -356,10 +356,10 @@ class _TransactionDetailPageState extends State<TransactionDetailPage>
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                 ],

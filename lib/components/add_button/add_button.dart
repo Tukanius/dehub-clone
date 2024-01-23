@@ -5,12 +5,12 @@ class AddButton extends StatefulWidget {
   final Function()? onClick;
   final Color? addColor;
   final Color? color;
-  AddButton({
+  const AddButton({
     this.color,
-    Key? key,
+    super.key,
     this.addColor,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<AddButton> createState() => _AddButtonState();
@@ -32,7 +32,7 @@ class _AddButtonState extends State<AddButton> {
         child: Icon(
           Icons.add,
           size: 15,
-          color: widget.addColor == null ? white : widget.addColor,
+          color: widget.addColor ?? white,
         ),
       ),
     );

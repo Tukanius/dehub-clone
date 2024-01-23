@@ -64,7 +64,7 @@ class _AddDeliveryTypeState extends State<AddDeliveryType> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(10),
         ),
@@ -74,7 +74,7 @@ class _AddDeliveryTypeState extends State<AddDeliveryType> {
         children: [
           Container(
             height: 50,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: white,
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(10),
@@ -95,11 +95,11 @@ class _AddDeliveryTypeState extends State<AddDeliveryType> {
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter: const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   child: Text(
                     'Хүргэлтийн нөхцөл',
                     style: TextStyle(
@@ -116,7 +116,7 @@ class _AddDeliveryTypeState extends State<AddDeliveryType> {
                         }
                       : () {},
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(10),
                       ),
@@ -124,7 +124,7 @@ class _AddDeliveryTypeState extends State<AddDeliveryType> {
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 11),
                     height: 50,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'Хадгалах',
                         style: TextStyle(color: white),
@@ -146,14 +146,14 @@ class _AddDeliveryTypeState extends State<AddDeliveryType> {
                       width: MediaQuery.of(context).size.width,
                       margin: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
-                      child: Text('Энд бичээд "Хадгалах" сонгоно уу'),
+                      child: const Text('Энд бичээд "Хадгалах" сонгоно уу'),
                     ),
                     FormTextField(
                       textColor: productColor,
                       textAlign: TextAlign.end,
                       name: 'name',
                       initialValue: widget.name ?? '',
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         fillColor: white,
                         filled: true,
@@ -178,7 +178,7 @@ class _AddDeliveryTypeState extends State<AddDeliveryType> {
                         ),
                       ]),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                   ],

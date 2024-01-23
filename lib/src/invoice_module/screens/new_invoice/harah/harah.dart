@@ -23,8 +23,8 @@ class Harah extends StatefulWidget {
   const Harah({
     required this.isNewInvoice,
     required this.invoice,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<Harah> createState() => _HarahState();
@@ -44,14 +44,14 @@ class _HarahState extends State<Harah> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: white,
           ),
         ),
         automaticallyImplyLeading: false,
         title: widget.invoice.refCode == null
-            ? Text(
+            ? const Text(
                 '-',
                 style: TextStyle(
                   fontSize: 16,
@@ -61,7 +61,7 @@ class _HarahState extends State<Harah> {
               )
             : Text(
                 '${widget.invoice.refCode}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: white,
@@ -72,27 +72,26 @@ class _HarahState extends State<Harah> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Text(
               '${Utils().formatCurrency(widget.invoice.totalAmount.toString())} ₮',
-              style: TextStyle(
+              style: const TextStyle(
                 color: invoiceColor,
                 fontWeight: FontWeight.bold,
                 fontSize: 24,
               ),
             ),
-            widget.isNewInvoice == false
-                ? Text(
-                    '${widget.invoice.senderBusiness?.profileName}',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: grey3,
-                    ),
-                  )
-                : SizedBox(),
-            Divider(
+            if (widget.isNewInvoice == false)
+              Text(
+                '${widget.invoice.senderBusiness?.profileName}',
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: grey3,
+                ),
+              ),
+            const Divider(
               indent: 25,
               endIndent: 25,
             ),
@@ -116,7 +115,7 @@ class _HarahState extends State<Harah> {
                         border: Border.all(color: grey3, width: 0.5),
                         color: white,
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.edit,
                         color: grey3,
                       ),
@@ -131,7 +130,7 @@ class _HarahState extends State<Harah> {
                         borderRadius: BorderRadius.circular(100),
                         border: Border.all(color: grey3, width: 0.5),
                         color: invoiceColor),
-                    child: Icon(
+                    child: const Icon(
                       Icons.visibility_outlined,
                       color: white,
                     ),
@@ -149,7 +148,7 @@ class _HarahState extends State<Harah> {
                           borderRadius: BorderRadius.circular(100),
                           border: Border.all(color: grey3, width: 0.5),
                           color: white),
-                      child: Icon(
+                      child: const Icon(
                         Icons.picture_as_pdf_outlined,
                         color: grey3,
                       ),
@@ -175,7 +174,7 @@ class _HarahState extends State<Harah> {
                         border: Border.all(color: grey3, width: 0.5),
                         color: white,
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.mail_outlined,
                         color: grey3,
                       ),
@@ -184,7 +183,7 @@ class _HarahState extends State<Harah> {
                 ],
               ),
             ),
-            Divider(
+            const Divider(
               indent: 25,
               endIndent: 25,
             ),
@@ -204,7 +203,7 @@ class _HarahState extends State<Harah> {
       backgroundColor: white,
       context: context,
       builder: (context) => SingleChildScrollView(
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         child: Container(
           color: white,
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
@@ -218,17 +217,18 @@ class _HarahState extends State<Harah> {
                   children: [
                     SvgPicture.asset(
                       'assets/svg/close.svg',
-                      colorFilter: ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter:
+                          const ColorFilter.mode(grey2, BlendMode.srcIn),
                       height: 20,
                     ),
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               INVOICEPDF(lines: widget.invoice.lines!, data: widget.invoice),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Row(
@@ -240,13 +240,13 @@ class _HarahState extends State<Harah> {
                       borderRadius: BorderRadius.circular(100),
                       border: Border.all(width: 0.5, color: grey3),
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.share_outlined,
                       color: grey3,
                       size: 20,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 25,
                   ),
                   Container(
@@ -257,12 +257,13 @@ class _HarahState extends State<Harah> {
                     ),
                     child: SvgPicture.asset(
                       'assets/svg/save1.svg',
-                      colorFilter: ColorFilter.mode(grey3, BlendMode.srcIn),
+                      colorFilter:
+                          const ColorFilter.mode(grey3, BlendMode.srcIn),
                     ),
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 200,
               ),
             ],
@@ -276,6 +277,6 @@ class _HarahState extends State<Harah> {
         initialChildSize: 1,
         minChildSize: 0.5,
         maxChildSize: 1,
-        builder: (context, scrollController) => SendPage(),
+        builder: (context, scrollController) => const SendPage(),
       );
 }

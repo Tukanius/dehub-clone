@@ -23,9 +23,9 @@ class OtpPhoneVerify extends StatefulWidget {
   final String phone;
   static const routeName = '/OtpPhoneVerify';
   const OtpPhoneVerify({
-    Key? key,
+    super.key,
     required this.phone,
-  }) : super(key: key);
+  });
 
   @override
   State<OtpPhoneVerify> createState() => _OtpPhoneVerifyState();
@@ -99,10 +99,15 @@ class _OtpPhoneVerifyState extends State<OtpPhoneVerify> with AfterLayoutMixin {
   }
 
   onSubmit(value) async {
-    otpVerify.otpMethod = "FORGOT";
-    otpVerify.otpCode = value;
-    await Provider.of<UserProvider>(context, listen: false).phoneOtp(otpVerify);
-    await Navigator.of(context).pushNamed(CreatePasswordPage.routeName);
+    try {
+      otpVerify.otpMethod = "FORGOT";
+      otpVerify.otpCode = value;
+      await Provider.of<UserProvider>(context, listen: false)
+          .phoneOtp(otpVerify);
+      await Navigator.of(context).pushNamed(CreatePasswordPage.routeName);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   @override
@@ -114,10 +119,10 @@ class _OtpPhoneVerifyState extends State<OtpPhoneVerify> with AfterLayoutMixin {
         surfaceTintColor: backgroundColor,
         backgroundColor: backgroundColor,
         leadingWidth: 150,
-        leading: CustomBackButton(color: buttonColor),
+        leading: const CustomBackButton(color: buttonColor),
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: buttonColor,
               ),
@@ -132,19 +137,19 @@ class _OtpPhoneVerifyState extends State<OtpPhoneVerify> with AfterLayoutMixin {
                     margin: const EdgeInsets.only(top: 20, bottom: 20),
                     child: SvgPicture.asset('assets/svg/otp-phone.svg'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Center(
                     child: Text(
                       '${user.message}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.blue,
                       ),
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Pinput(
@@ -162,7 +167,7 @@ class _OtpPhoneVerifyState extends State<OtpPhoneVerify> with AfterLayoutMixin {
                     length: 6,
                     keyboardType: TextInputType.number,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   if (isGetCode == false)
@@ -200,8 +205,8 @@ class _OtpPhoneVerifyState extends State<OtpPhoneVerify> with AfterLayoutMixin {
                             });
                             _startTimer();
                           },
-                          child: Column(
-                            children: const [
+                          child: const Column(
+                            children: [
                               Icon(
                                 Icons.refresh,
                                 color: buttonColor,
@@ -215,27 +220,24 @@ class _OtpPhoneVerifyState extends State<OtpPhoneVerify> with AfterLayoutMixin {
                         ),
                       ],
                     ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
-                  Text(
-                    'Дахин илгээх',
-                    style: TextStyle(
-                      color: buttonColor,
-                      fontWeight: FontWeight.w500,
+                  GestureDetector(
+                    onTap: () async {
+                      user = await PartnerApi().getPhoneOtp("FORGOT");
+                    },
+                    child: const Text(
+                      'Дахин илгээх',
+                      style: TextStyle(
+                        color: buttonColor,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
-                  // CustomButton(
-                  //   onClick: () {
-                  //     onSubmit(value)
-                  //   },
-                  //   labelColor: buttonColor,
-                  //   labelText: 'Утас баталгаажуулах',
-                  //   textColor: white,
-                  // ),
                 ],
               ),
             ),

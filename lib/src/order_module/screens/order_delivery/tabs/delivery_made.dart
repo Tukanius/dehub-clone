@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/delivery_card/delivery_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/order_module/screens/order_delivery/delivery/delivery.dart';
@@ -9,7 +10,6 @@ import 'package:dehub/src/order_module/screens/order_payment_page/order_cbd_paym
 import 'package:dehub/src/order_module/screens/order_payment_page/order_cod_payment.dart';
 import 'package:dehub/src/order_module/screens/product_give/product_give.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -45,7 +45,7 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
     setState(() {
       pullSheet = res;
       isLoading = false;
-      Timer(Duration(milliseconds: 100), () {
+      Timer(const Duration(milliseconds: 100), () {
         setState(() {
           startAnimation = true;
         });
@@ -55,7 +55,7 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
 
   onChange(String query) async {
     if (timer != null) timer?.cancel();
-    Timer(Duration(milliseconds: 300), () {
+    Timer(const Duration(milliseconds: 300), () {
       setState(() {
         isSubmit = true;
       });
@@ -78,7 +78,7 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
     });
@@ -87,7 +87,7 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
       startAnimation = false;
     });
     refreshController.refreshCompleted();
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         startAnimation = true;
       });
@@ -98,65 +98,33 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     return isLoading == true
-        ? Center(
+        ? const Center(
             child: CircularProgressIndicator(color: orderColor),
           )
         : Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
-              SearchButton(
+              const SearchButton(
                 color: orderColor,
                 textColor: orderColor,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Expanded(
-                child: SmartRefresher(
-                  enablePullDown: true,
-                  enablePullUp: true,
-                  controller: refreshController,
-                  header: WaterDropHeader(
-                    waterDropColor: orderColor,
-                    refresh: SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: orderColor,
-                      ),
-                    ),
-                  ),
-                  onRefresh: _onRefresh,
+                child: Refresher(
+                  refreshController: refreshController,
                   onLoading: _onLoading,
-                  footer: CustomFooter(
-                    builder: (context, mode) {
-                      Widget body;
-                      if (mode == LoadStatus.idle) {
-                        body = const Text("");
-                      } else if (mode == LoadStatus.loading) {
-                        body = const CupertinoActivityIndicator();
-                      } else if (mode == LoadStatus.failed) {
-                        body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                      } else if (mode == LoadStatus.noMore) {
-                        body = const Text('Мэдээлэл алга байна');
-                      } else {
-                        body = const Text("Мэдээлэл алга байна");
-                      }
-                      return SizedBox(
-                        height: 55.0,
-                        child: Center(child: body),
-                      );
-                    },
-                  ),
+                  onRefresh: _onRefresh,
+                  color: orderColor,
                   child: SingleChildScrollView(
                     child: isSubmit == true
-                        ? Center(
+                        ? const Center(
                             child: CircularProgressIndicator(color: orderColor),
                           )
-                        : pullSheet.rows?.length != 0
+                        : pullSheet.rows!.isNotEmpty
                             ? Column(
                                 children: pullSheet.rows!
                                     .map((data) => DeliveryCard(
@@ -197,7 +165,7 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
                                         ))
                                     .toList(),
                               )
-                            : NotFound(
+                            : const NotFound(
                                 module: "ORDER",
                                 labelText: "Хоосон байна",
                               ),

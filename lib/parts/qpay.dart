@@ -27,14 +27,16 @@ Map<String, dynamic> _$QpayToJson(Qpay instance) {
 
   if (instance.success != null) json['success'] = instance.success;
   if (instance.loanId != null) json['loanId'] = instance.loanId;
-  if (instance.loanPaybackGraphId != null)
+  if (instance.loanPaybackGraphId != null) {
     json['loanPaybackGraphId'] = instance.loanPaybackGraphId;
+  }
   if (instance.amount != null) json['amount'] = instance.amount;
   if (instance.invoiceId != null) json['invoice_id'] = instance.invoiceId;
   if (instance.qrText != null) json['qr_text'] = instance.qrText;
   if (instance.qrImage != null) json['qr_image'] = instance.qrImage;
-  if (instance.qPayShortUrl != null)
+  if (instance.qPayShortUrl != null) {
     json['qPay_shortUrl'] = instance.qPayShortUrl;
+  }
 
   return json;
 }

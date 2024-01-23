@@ -13,9 +13,9 @@ class InvoiceTransactionDetail extends StatefulWidget {
   static const routeName = '/InvoiceTransactionDetail';
   final String id;
   const InvoiceTransactionDetail({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<InvoiceTransactionDetail> createState() =>
@@ -31,8 +31,8 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
         backgroundColor: white,
         surfaceTintColor: white,
         elevation: 0,
-        iconTheme: IconThemeData(color: invoiceColor),
-        title: Text(
+        iconTheme: const IconThemeData(color: invoiceColor),
+        title: const Text(
           'Гүйлгээний мэдээлэл',
           style: TextStyle(
             color: invoiceColor,
@@ -49,7 +49,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
               alignment: Alignment.center,
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 10),
-                child: Text(
+                child: const Text(
                   'Гүйлгээний лавлах дугаар',
                   style: TextStyle(
                     color: grey2,
@@ -63,7 +63,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
               alignment: Alignment.center,
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 10),
-                child: Text(
+                child: const Text(
                   'INV-23897',
                   style: TextStyle(
                     color: invoiceColor,
@@ -75,7 +75,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Гүйлгээний мэдээлэл',
                 style: TextStyle(
                   color: grey2,
@@ -83,7 +83,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
                 ),
               ),
             ),
-            FieldCard(
+            const FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
@@ -91,7 +91,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
               secondText: "Огноо, цаг",
               secondTextColor: invoiceColor,
             ),
-            FieldCard(
+            const FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
@@ -99,7 +99,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
               secondText: "Төлсөн дүн",
               secondTextColor: invoiceColor,
             ),
-            FieldCard(
+            const FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
@@ -107,7 +107,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
               secondText: "Гүйлгээний утга",
               secondTextColor: invoiceColor,
             ),
-            FieldCard(
+            const FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
@@ -117,7 +117,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Харилцагчийн мэдээлэл',
                 style: TextStyle(
                   color: grey2,
@@ -125,7 +125,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
                 ),
               ),
             ),
-            FieldCard(
+            const FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
@@ -133,7 +133,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
               secondText: "Ref#, BuyerName",
               secondTextColor: invoiceColor,
             ),
-            FieldCard(
+            const FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
@@ -141,7 +141,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
               secondText: "Ref#, PartnerName",
               secondTextColor: invoiceColor,
             ),
-            FieldCard(
+            const FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
@@ -151,7 +151,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Хүлээн авсан данс',
                 style: TextStyle(
                   color: grey2,
@@ -159,7 +159,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
                 ),
               ),
             ),
-            FieldCard(
+            const FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
@@ -167,7 +167,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
               secondText: "Дансны дугаар",
               secondTextColor: invoiceColor,
             ),
-            FieldCard(
+            const FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
@@ -175,7 +175,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
               secondText: "Дансны нэр",
               secondTextColor: invoiceColor,
             ),
-            FieldCard(
+            const FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
@@ -185,7 +185,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Text(
+              child: const Text(
                 'Шилжүүлэгч данс',
                 style: TextStyle(
                   color: grey2,
@@ -193,7 +193,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
                 ),
               ),
             ),
-            FieldCard(
+            const FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
@@ -201,7 +201,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
               secondText: "Дансны дугаар",
               secondTextColor: invoiceColor,
             ),
-            FieldCard(
+            const FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
@@ -209,7 +209,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
               secondText: "Дансны нэр",
               secondTextColor: invoiceColor,
             ),
-            FieldCard(
+            const FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
@@ -217,7 +217,7 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
               secondText: "Банкны нэр",
               secondTextColor: invoiceColor,
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
           ],

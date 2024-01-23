@@ -7,10 +7,10 @@ class GridViewProductCard extends StatefulWidget {
   final InventoryGoods data;
   final Function()? buttonClick;
   const GridViewProductCard({
-    Key? key,
+    super.key,
     this.buttonClick,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<GridViewProductCard> createState() => _GridViewProductCardState();
@@ -43,14 +43,14 @@ class _GridViewProductCardState extends State<GridViewProductCard> {
                 right: 10,
                 top: 10,
                 child: FloatingActionButton.small(
-                  shape: CircleBorder(),
+                  shape: const CircleBorder(),
                   backgroundColor: white,
-                  child: Icon(
+                  onPressed: widget.buttonClick,
+                  child: const Icon(
                     Icons.add_shopping_cart,
                     color: buttonColor,
                     size: 24,
                   ),
-                  onPressed: widget.buttonClick,
                 ),
               ),
             ],
@@ -59,14 +59,14 @@ class _GridViewProductCardState extends State<GridViewProductCard> {
             children: [
               Text(
                 '${widget.data.nameMon}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               RichText(
@@ -74,7 +74,7 @@ class _GridViewProductCardState extends State<GridViewProductCard> {
                 maxLines: 4,
                 overflow: TextOverflow.ellipsis,
                 text: TextSpan(
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontFamily: 'Montserrat', fontSize: 14, color: black),
                   children: [
                     TextSpan(text: '${widget.data.skuCode} '),
@@ -89,7 +89,7 @@ class _GridViewProductCardState extends State<GridViewProductCard> {
             children: [
               Text(
                 '₮${Utils().formatCurrency(widget.data.standardPrice.toString())}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: buttonColor,
                   fontWeight: FontWeight.w500,
                   fontSize: 14,
@@ -97,7 +97,7 @@ class _GridViewProductCardState extends State<GridViewProductCard> {
               ),
               Text(
                 '₮${Utils().formatCurrency(widget.data.customPrice.toString())}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
                   color: grey3,
                   fontWeight: FontWeight.w500,

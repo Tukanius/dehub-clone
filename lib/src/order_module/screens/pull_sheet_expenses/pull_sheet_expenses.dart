@@ -20,9 +20,9 @@ class PullSheetExpenses extends StatefulWidget {
   final Order data;
   static const routeName = '/PullSheetExpenses';
   const PullSheetExpenses({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<PullSheetExpenses> createState() => _PullSheetExpensesState();
@@ -48,10 +48,10 @@ class _PullSheetExpensesState extends State<PullSheetExpenses> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
-        iconTheme: IconThemeData(color: orderColor),
+        iconTheme: const IconThemeData(color: orderColor),
         backgroundColor: white,
         surfaceTintColor: white,
-        title: Text(
+        title: const Text(
           'Ачилтын падаан',
           style: TextStyle(
             color: buttonColor,
@@ -67,7 +67,7 @@ class _PullSheetExpensesState extends State<PullSheetExpenses> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   ShippingCard(
@@ -78,7 +78,7 @@ class _PullSheetExpensesState extends State<PullSheetExpenses> {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'БАРААНЫ МЭДЭЭЛЭЛ',
                       style: TextStyle(
                         color: coolGrey,
@@ -98,7 +98,7 @@ class _PullSheetExpensesState extends State<PullSheetExpenses> {
                             )
                             .toList(),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                     ],
@@ -106,7 +106,7 @@ class _PullSheetExpensesState extends State<PullSheetExpenses> {
                   Container(
                     margin:
                         const EdgeInsets.only(top: 10, left: 15, bottom: 10),
-                    child: Text(
+                    child: const Text(
                       'ПАДААНЫ ДҮН',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
@@ -136,7 +136,7 @@ class _PullSheetExpensesState extends State<PullSheetExpenses> {
             ),
           ),
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),

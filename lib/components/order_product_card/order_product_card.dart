@@ -1,6 +1,6 @@
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/order.dart';
-import 'package:dehub/providers/checkout-provider.dart';
+import 'package:dehub/providers/checkout_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -23,10 +23,10 @@ class OrderProductCard extends StatefulWidget {
     this.isPackage,
     this.package,
     this.readOnly,
-    Key? key,
+    super.key,
     required this.data,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   State<OrderProductCard> createState() => _OrderProductCardState();
@@ -134,7 +134,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                             image: NetworkImage('${widget.data.image}'),
                             fit: BoxFit.cover,
                           ),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               offset: Offset(0, 1),
                               blurRadius: 3,
@@ -150,7 +150,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           color: grey,
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               offset: Offset(0, 1),
                               blurRadius: 3,
@@ -160,7 +160,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                           ],
                         ),
                       ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Expanded(
@@ -170,7 +170,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                       widget.data.nameMon != null
                           ? Text(
                               '${widget.data.nameMon}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: dark,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -178,56 +178,56 @@ class _OrderProductCardState extends State<OrderProductCard> {
                             )
                           : Text(
                               '${widget.data.name}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: dark,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
                               ),
                             ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       RichText(
                         text: TextSpan(
-                          style:
-                              TextStyle(color: dark, fontFamily: 'Montserrat'),
+                          style: const TextStyle(
+                              color: dark, fontFamily: 'Montserrat'),
                           children: [
                             widget.data.skuCode != null
                                 ? TextSpan(text: "${widget.data.skuCode}, ")
-                                : TextSpan(),
+                                : const TextSpan(),
                             widget.data.brand != null
                                 ? TextSpan(text: "${widget.data.brand}, ")
-                                : TextSpan(),
+                                : const TextSpan(),
                             widget.data.category != null
                                 ? TextSpan(text: "${widget.data.category}, ")
-                                : TextSpan(),
+                                : const TextSpan(),
                             widget.data.optionValues != null
                                 ? TextSpan(
                                     text:
                                         "${widget.data.optionValues?.map((e) => e.name).join(', ')}",
                                   )
-                                : TextSpan(),
+                                : const TextSpan(),
                           ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 GestureDetector(
                   onTap: widget.onCloseClick,
                   child: SvgPicture.asset(
                     'assets/svg/close.svg',
-                    colorFilter: ColorFilter.mode(grey3, BlendMode.srcIn),
+                    colorFilter: const ColorFilter.mode(grey3, BlendMode.srcIn),
                     height: 16,
                     width: 16,
                   ),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -237,26 +237,26 @@ class _OrderProductCardState extends State<OrderProductCard> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Нэгж',
                       style: TextStyle(
                         color: coolGrey,
                         fontSize: 12,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 3,
                     ),
                     widget.data.unit != null
                         ? Text(
                             '${widget.data.unit}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: orderColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
                             ),
                           )
-                        : Text(
+                        : const Text(
                             '-',
                             style: TextStyle(
                               color: orderColor,
@@ -264,10 +264,10 @@ class _OrderProductCardState extends State<OrderProductCard> {
                               fontSize: 16,
                             ),
                           ),
-                    SizedBox(
+                    const SizedBox(
                       height: 3,
                     ),
-                    Row(
+                    const Row(
                       children: [
                         Text(
                           'Солих',
@@ -296,12 +296,12 @@ class _OrderProductCardState extends State<OrderProductCard> {
                         fontSize: 12,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 3,
                     ),
                     Text(
                       '${Utils().formatCurrency(widget.data.price.toString())}₮',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: orderColor,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -309,7 +309,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                     ),
                     Text(
                       '${widget.data.unitConvertValue} ш',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: dark,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -321,17 +321,17 @@ class _OrderProductCardState extends State<OrderProductCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'Хөнгөлөлт',
                       style: TextStyle(
                         color: coolGrey,
                         fontSize: 12,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 3,
                     ),
-                    Text(
+                    const Text(
                       '0₮',
                       style: TextStyle(
                         color: orderColor,
@@ -346,9 +346,9 @@ class _OrderProductCardState extends State<OrderProductCard> {
                           color: grey3.withOpacity(0.3),
                         ),
                         borderRadius: BorderRadius.circular(5),
-                        color: Color(0xffEBFAFA),
+                        color: const Color(0xffEBFAFA),
                       ),
-                      child: Text(
+                      child: const Text(
                         'дүн',
                         style: TextStyle(
                           fontSize: 12,
@@ -361,7 +361,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                 ),
               ],
             ),
-            Divider(),
+            const Divider(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -370,7 +370,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                     Container(
                       height: 32,
                       width: 32,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: whiteGrey,
                       ),
@@ -378,13 +378,13 @@ class _OrderProductCardState extends State<OrderProductCard> {
                         child: SvgPicture.asset('assets/svg/add-comment.svg'),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Container(
                       height: 32,
                       width: 32,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: whiteGrey,
                       ),
@@ -413,7 +413,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                         child: SvgPicture.asset('assets/svg/minus.svg'),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     SizedBox(
@@ -439,14 +439,14 @@ class _OrderProductCardState extends State<OrderProductCard> {
                         controller: quantityController,
                         inputType: TextInputType.number,
                         textAlign: TextAlign.end,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelStyle: TextStyle(
                             fontSize: 15,
                           ),
                           hintText: '0',
                           isDense: true,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 6, horizontal: 5),
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: 6, horizontal: 5),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.zero,
                             borderSide: BorderSide(
@@ -457,7 +457,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                         name: 'quantity',
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     GestureDetector(
@@ -473,7 +473,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                           color: orderColor,
                           borderRadius: BorderRadius.circular(2),
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.add,
                           color: white,
                         ),
@@ -483,14 +483,14 @@ class _OrderProductCardState extends State<OrderProductCard> {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 widget.data.quantity == null || widget.data.quantity == 0
-                    ? Text(
+                    ? const Text(
                         '... ширхэг',
                         style: TextStyle(
                           color: grey2,
@@ -501,7 +501,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                     : Expanded(
                         child: Text(
                           '${widget.data.quantity} ширхэг',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: grey2,
                             fontWeight: FontWeight.w600,
                             fontSize: 16,
@@ -512,7 +512,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                     ? Expanded(
                         child: Text(
                           '${Utils().formatCurrency((widget.data.price! * widget.data.quantity!).toString())}₮',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: grey2,
                             fontWeight: FontWeight.w600,
                             fontSize: 16,
@@ -520,7 +520,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                           textAlign: TextAlign.end,
                         ),
                       )
-                    : Text(''),
+                    : const Text(''),
               ],
             )
           ],

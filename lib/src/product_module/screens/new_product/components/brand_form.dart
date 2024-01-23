@@ -34,9 +34,7 @@ class _BrandFormState extends State<BrandForm> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: "Брэндийн нэр",
-            secondText: source.product.brandName != null
-                ? source.product.brandName
-                : 'Сонгох',
+            secondText: source.product.brandName ?? 'Сонгох',
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
@@ -45,7 +43,7 @@ class _BrandFormState extends State<BrandForm> {
                 context: context,
                 useSafeArea: true,
                 builder: (context) {
-                  return BrandSheet();
+                  return const BrandSheet();
                 },
               );
             },
@@ -54,9 +52,7 @@ class _BrandFormState extends State<BrandForm> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: "Нийлүүлэгч",
-            secondText: source.product.supplierName != null
-                ? source.product.supplierName
-                : 'Сонгох',
+            secondText: source.product.supplierName ?? 'Сонгох',
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
@@ -65,7 +61,7 @@ class _BrandFormState extends State<BrandForm> {
                 context: context,
                 useSafeArea: true,
                 builder: (context) {
-                  return SupplierSheet();
+                  return const SupplierSheet();
                 },
               );
             },
@@ -74,9 +70,7 @@ class _BrandFormState extends State<BrandForm> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: "Үйлдвэрлэгч",
-            secondText: source.product.manufacturerName != null
-                ? source.product.manufacturerName
-                : 'Сонгох',
+            secondText: source.product.manufacturerName ?? 'Сонгох',
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
@@ -85,7 +79,7 @@ class _BrandFormState extends State<BrandForm> {
                 context: context,
                 useSafeArea: true,
                 builder: (context) {
-                  return ManufacturerSheet();
+                  return const ManufacturerSheet();
                 },
               );
             },
@@ -94,9 +88,7 @@ class _BrandFormState extends State<BrandForm> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: "Үйлдвэрлэгч улс",
-            secondText: source.product.manufacturerCountryName != null
-                ? source.product.manufacturerCountryName
-                : 'Сонгох',
+            secondText: source.product.manufacturerCountryName ?? 'Сонгох',
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
@@ -105,7 +97,7 @@ class _BrandFormState extends State<BrandForm> {
                 context: context,
                 useSafeArea: true,
                 builder: (context) {
-                  return ManufacturerCountrySheet();
+                  return const ManufacturerCountrySheet();
                 },
               );
             },
@@ -114,9 +106,7 @@ class _BrandFormState extends State<BrandForm> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: "Импортлогч улс",
-            secondText: source.product.importerCountryName != null
-                ? source.product.importerCountryName
-                : 'Сонгох',
+            secondText: source.product.importerCountryName ?? 'Сонгох',
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
@@ -125,7 +115,7 @@ class _BrandFormState extends State<BrandForm> {
                 context: context,
                 useSafeArea: true,
                 builder: (context) {
-                  return ImporterCountrySheet();
+                  return const ImporterCountrySheet();
                 },
               );
             },
@@ -134,9 +124,7 @@ class _BrandFormState extends State<BrandForm> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: "Дистрибютер",
-            secondText: source.product.distributorName != null
-                ? source.product.distributorName
-                : 'Сонгох',
+            secondText: source.product.distributorName ?? 'Сонгох',
             secondTextColor: productColor,
             arrowColor: productColor,
             onClick: () {
@@ -145,7 +133,7 @@ class _BrandFormState extends State<BrandForm> {
                 context: context,
                 useSafeArea: true,
                 builder: (context) {
-                  return DistributorSheet();
+                  return const DistributorSheet();
                 },
               );
             },

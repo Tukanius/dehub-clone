@@ -12,12 +12,12 @@ class SetPaymentTermCard extends StatefulWidget {
   final int index;
   final Function()? onClick;
   const SetPaymentTermCard({
-    Key? key,
+    super.key,
     this.onClick,
     this.data,
     required this.index,
     required this.startAnimation,
-  }) : super(key: key);
+  });
 
   @override
   State<SetPaymentTermCard> createState() => _SetPaymentTermCardState();
@@ -65,12 +65,12 @@ class _SetPaymentTermCardState extends State<SetPaymentTermCard> {
                               backgroundColor: grey,
                               radius: 18,
                             )
-                          : CircleAvatar(
+                          : const CircleAvatar(
                               backgroundImage: AssetImage('images/avatar.png'),
                               backgroundColor: grey,
                               radius: 18,
                             ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Expanded(
@@ -79,17 +79,17 @@ class _SetPaymentTermCardState extends State<SetPaymentTermCard> {
                           children: [
                             Text(
                               '${widget.data?.profileName}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: networkColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
                               '${widget.data?.refCode}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: dark,
                                 fontSize: 12,
                               ),
@@ -100,14 +100,14 @@ class _SetPaymentTermCardState extends State<SetPaymentTermCard> {
                     ],
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios,
                   color: networkColor,
                   size: 18,
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -125,7 +125,7 @@ class _SetPaymentTermCardState extends State<SetPaymentTermCard> {
                           fontSize: 10,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Row(
@@ -133,9 +133,9 @@ class _SetPaymentTermCardState extends State<SetPaymentTermCard> {
                           SvgPicture.asset(
                             'assets/svg/note.svg',
                             colorFilter:
-                                ColorFilter.mode(networkColor, BlendMode.srcIn),
+                                const ColorFilter.mode(networkColor, BlendMode.srcIn),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Expanded(
@@ -145,12 +145,12 @@ class _SetPaymentTermCardState extends State<SetPaymentTermCard> {
                                             .data?.paymentTerm?.condition
                                             .toString())
                                         .toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: networkColor,
                                       fontSize: 12,
                                     ),
                                   )
-                                : Text(
+                                : const Text(
                                     '-',
                                     style: TextStyle(
                                       color: networkColor,
@@ -163,7 +163,7 @@ class _SetPaymentTermCardState extends State<SetPaymentTermCard> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Expanded(
@@ -178,18 +178,18 @@ class _SetPaymentTermCardState extends State<SetPaymentTermCard> {
                           fontSize: 10,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       widget.data?.paymentTerm?.refCode != null
                           ? Text(
                               '${widget.data?.paymentTerm?.refCode}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: networkColor,
                                 fontSize: 12,
                               ),
                             )
-                          : Text(
+                          : const Text(
                               '-',
                               style: TextStyle(
                                 color: networkColor,
@@ -199,12 +199,12 @@ class _SetPaymentTermCardState extends State<SetPaymentTermCard> {
                       widget.data?.paymentTerm?.description != null
                           ? Text(
                               '${widget.data?.paymentTerm?.description}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: dark,
                                 fontSize: 12,
                               ),
                             )
-                          : Text(
+                          : const Text(
                               '-',
                               style: TextStyle(
                                 color: dark,

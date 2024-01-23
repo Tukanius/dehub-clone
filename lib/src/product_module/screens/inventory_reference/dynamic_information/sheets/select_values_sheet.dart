@@ -66,7 +66,7 @@ class _SelectValuesSheetState extends State<SelectValuesSheet>
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(10),
         ),
@@ -76,7 +76,7 @@ class _SelectValuesSheetState extends State<SelectValuesSheet>
         children: [
           Container(
             height: 50,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: white,
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(10),
@@ -97,11 +97,12 @@ class _SelectValuesSheetState extends State<SelectValuesSheet>
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter:
+                          const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   child: Text(
                     'Сонголтод утгууд нэмэх',
                     style: TextStyle(
@@ -116,7 +117,7 @@ class _SelectValuesSheetState extends State<SelectValuesSheet>
                     onSubmit();
                   },
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(10),
                       ),
@@ -124,7 +125,7 @@ class _SelectValuesSheetState extends State<SelectValuesSheet>
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 11),
                     height: 50,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'Хадгалах',
                         style: TextStyle(color: white),
@@ -137,7 +138,7 @@ class _SelectValuesSheetState extends State<SelectValuesSheet>
           ),
           Expanded(
             child: isLoading == true
-                ? SizedBox()
+                ? const SizedBox()
                 : SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,7 +146,7 @@ class _SelectValuesSheetState extends State<SelectValuesSheet>
                         Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
-                          child: Text(
+                          child: const Text(
                             'Нэр бичээд "+Нэмэх" товчийг дарж нэмнэ үү.',
                             style: TextStyle(
                               color: grey2,
@@ -157,7 +158,7 @@ class _SelectValuesSheetState extends State<SelectValuesSheet>
                           textAlign: TextAlign.end,
                           controller: controller,
                           name: 'name',
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
                             fillColor: white,
                             filled: true,
@@ -168,7 +169,7 @@ class _SelectValuesSheetState extends State<SelectValuesSheet>
                             prefixIcon: Row(
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
+                              children: [
                                 SizedBox(
                                   width: 15,
                                 ),
@@ -201,25 +202,24 @@ class _SelectValuesSheetState extends State<SelectValuesSheet>
                                 borderRadius: BorderRadius.circular(50),
                               ),
                               padding: const EdgeInsets.all(10),
-                              child: Text(
+                              child: const Text(
                                 '+Нэмэх',
                                 style: TextStyle(color: productColor),
                               ),
                             ),
                           ),
                         ),
-                        fieldValues.length != 0
-                            ? Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                                child: Text(
-                                  'Сонголтууд',
-                                  style: TextStyle(
-                                    color: grey2,
-                                  ),
-                                ),
-                              )
-                            : SizedBox(),
+                        if (fieldValues.isNotEmpty)
+                          Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: const Text(
+                              'Сонголтууд',
+                              style: TextStyle(
+                                color: grey2,
+                              ),
+                            ),
+                          ),
                         Column(
                           children: fieldValues
                               .map(
@@ -239,12 +239,12 @@ class _SelectValuesSheetState extends State<SelectValuesSheet>
                                         children: [
                                           Text(
                                             '${data.name}',
-                                            style:
-                                                TextStyle(color: productColor),
+                                            style: const TextStyle(
+                                                color: productColor),
                                           ),
                                           Row(
                                             children: [
-                                              Text(
+                                              const Text(
                                                 'Default эсэх : ',
                                                 style: TextStyle(color: grey2),
                                               ),
@@ -277,7 +277,7 @@ class _SelectValuesSheetState extends State<SelectValuesSheet>
                                           'assets/svg/close.svg',
                                           height: 20,
                                           width: 20,
-                                          colorFilter: ColorFilter.mode(
+                                          colorFilter: const ColorFilter.mode(
                                               productColor, BlendMode.srcIn),
                                         ),
                                       ),
@@ -287,7 +287,7 @@ class _SelectValuesSheetState extends State<SelectValuesSheet>
                               )
                               .toList(),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 40,
                         ),
                       ],

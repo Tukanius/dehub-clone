@@ -27,7 +27,7 @@ class InvoicePaymentPage extends StatefulWidget {
   static const routeName = '/InvoicePaymentPage';
   final Invoice data;
   final String id;
-  InvoicePaymentPage({
+  const InvoicePaymentPage({
     super.key,
     required this.data,
     required this.id,
@@ -46,7 +46,9 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
   bool isLoading = true;
   String? selectedValue;
   String? selectedMethod;
+  Invoice selectedBank = Invoice();
 
+  @override
   afterFirstLayout(BuildContext context) {
     setState(() {
       isLoading = false;
@@ -55,7 +57,7 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
 
   fillAmount() {
     setState(() {
-      textController.text = "${widget.data.amountToPay}";
+      textController.text = "${widget.data.amountToPay?.toInt()}";
     });
   }
 
@@ -73,7 +75,9 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
               data: Invoice(
                 invoiceId: widget.data.id,
                 invoiceRefCode: widget.data.refCode,
-                receiverBusinessId: widget.data.receiverBusinessId,
+                receiverBusinessId: widget.data.type == "PURCHASE"
+                    ? widget.data.receiverBusinessId
+                    : widget.data.senderBusinessId,
                 description: widget.data.refCode,
                 creditAccountId: widget.data.receiverAcc?.id,
                 creditAccountBank: widget.data.receiverAcc?.bankName,
@@ -114,7 +118,7 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
         ),
         title: Text(
           '${widget.data.refCode} - Төлөх',
-          style: TextStyle(
+          style: const TextStyle(
             color: white,
             fontSize: 16,
             fontWeight: FontWeight.w600,
@@ -123,228 +127,231 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
         centerTitle: true,
       ),
       body: isLoading == true
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: invoiceColor,
               ),
             )
           : SingleChildScrollView(
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 25,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 15),
+                    child: const Text(
+                      'ТӨЛБӨРИЙН МЭДЭЭЛЭЛ',
+                      style: TextStyle(
+                        color: grey3,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 15),
-                      child: Text(
-                        'ТӨЛБӨРИЙН МЭДЭЭЛЭЛ',
-                        style: TextStyle(
-                          color: grey3,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    color: white,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 15),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Нэхэмжлэх үлдэгдэл',
                         ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      color: white,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 15, horizontal: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: Text(
-                              'Нэхэмжлэх үлдэгдэл',
+                        Row(
+                          children: [
+                            Text(
+                              // '${Utils().formatCurrency(widget.data.amountToPay.toString())}',
+                              '',
+                              style: TextStyle(color: invoiceColor),
                             ),
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                // '${Utils().formatCurrency(widget.data.amountToPay.toString())}',
-                                '',
-                                style: TextStyle(color: invoiceColor),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: 12,
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      color: white,
-                      padding: const EdgeInsets.all(15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: Text(
-                              'Төлбөл зохих',
+                            SizedBox(
+                              width: 10,
                             ),
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                // '${Utils().formatCurrency(widget.data.amountToPay.toString())}',
-                                '',
-                                style: TextStyle(color: invoiceColor),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: 12,
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin:
-                          const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-                      child: Text(
-                        'ТӨЛБӨР ХҮЛЭЭН АВАХ',
-                        style: TextStyle(
-                          color: grey3,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 12,
+                            )
+                          ],
                         ),
-                      ),
+                      ],
                     ),
-                    Container(
-                      color: white,
-                      padding: const EdgeInsets.all(15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                child: Icon(
-                                  Icons.perm_contact_cal_outlined,
-                                  color: invoiceColor,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                '${widget.data.receiverBusiness?.profileName}',
-                                style: TextStyle(color: invoiceColor),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios,
-                            size: 12,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      color: white,
-                      padding: const EdgeInsets.all(15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: Text(
-                              'Дансны дугаар',
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                '${widget.data.receiverAcc?.number}',
-                                style: TextStyle(color: invoiceColor),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: 12,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin:
-                          const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-                      child: Text(
-                        'ТӨЛБӨР ТӨЛӨХ АРГА',
-                        style: TextStyle(
-                          color: grey3,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
+                  ),
+                  Container(
+                    color: white,
+                    padding: const EdgeInsets.all(15),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Төлбөл зохих',
                         ),
+                        Row(
+                          children: [
+                            Text(
+                              // '${Utils().formatCurrency(widget.data.amountToPay.toString())}',
+                              '',
+                              style: TextStyle(color: invoiceColor),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 12,
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin:
+                        const EdgeInsets.only(left: 15, top: 10, bottom: 10),
+                    child: const Text(
+                      'ТӨЛБӨР ХҮЛЭЭН АВАХ',
+                      style: TextStyle(
+                        color: grey3,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                    Container(
-                      color: white,
-                      child: Column(
-                        children: [
-                          FormBuilderDropdown(
-                            icon: Container(
-                              decoration: BoxDecoration(
-                                color: white,
-                              ),
-                              child: const Icon(
-                                Icons.arrow_forward_ios,
-                                color: black,
-                                size: 12,
-                              ),
+                  ),
+                  Container(
+                    color: white,
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.perm_contact_cal_outlined,
+                              color: invoiceColor,
                             ),
-                            name: 'paymentMethod',
-                            onChanged: (value) async {
-                              setState(() {
-                                selectedMethod = value;
-                              });
-                            },
-                            decoration: InputDecoration(
-                              hintText: 'Төлбөрийн хэрэгсэл сонгох',
-                              hintStyle:
-                                  TextStyle(fontSize: 14, color: invoiceColor),
-                              filled: true,
-                              fillColor: white,
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 15, horizontal: 15),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
+                            const SizedBox(
+                              width: 10,
                             ),
-                            items: general.paymentMethod!
-                                .map(
-                                  (item) => DropdownMenuItem(
-                                    value: item.code,
-                                    child: Container(
-                                      child: Row(
-                                        children: [
-                                          item.code == "B2B"
-                                              ? SizedBox()
-                                              : item.code == "QPAY"
+                            Text(
+                              '${widget.data.receiverBusiness?.profileName}',
+                              style: const TextStyle(color: invoiceColor),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 12,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    color: white,
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Дансны дугаар',
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              '${widget.data.receiverAcc?.number}',
+                              style: const TextStyle(color: invoiceColor),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            const Icon(
+                              Icons.arrow_forward_ios,
+                              size: 12,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin:
+                        const EdgeInsets.only(left: 15, top: 10, bottom: 10),
+                    child: const Text(
+                      'ТӨЛБӨР ТӨЛӨХ АРГА',
+                      style: TextStyle(
+                        color: grey3,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    color: white,
+                    child: Column(
+                      children: [
+                        FormBuilderDropdown(
+                          icon: Container(
+                            decoration: const BoxDecoration(
+                              color: white,
+                            ),
+                            child: const Icon(
+                              Icons.arrow_forward_ios,
+                              color: black,
+                              size: 12,
+                            ),
+                          ),
+                          name: 'paymentMethod',
+                          onChanged: (value) async {
+                            setState(() {
+                              selectedMethod = value;
+                            });
+                          },
+                          decoration: InputDecoration(
+                            hintText: 'Төлбөрийн хэрэгсэл сонгох',
+                            hintStyle: const TextStyle(
+                                fontSize: 14, color: invoiceColor),
+                            filled: true,
+                            fillColor: white,
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 15),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          items: general.paymentMethod!
+                              .map(
+                                (item) => DropdownMenuItem(
+                                  value: item.code,
+                                  child: Row(
+                                    children: [
+                                      item.code == "B2B"
+                                          ? const SizedBox()
+                                          : item.code == "QPAY"
+                                              ? Container(
+                                                  margin: const EdgeInsets.only(
+                                                    right: 10,
+                                                  ),
+                                                  height: 20,
+                                                  width: 20,
+                                                  child: const Image(
+                                                    image: AssetImage(
+                                                      'images/qpay_logo.png',
+                                                    ),
+                                                  ),
+                                                )
+                                              : item.code == "SOCIAL_PAY"
                                                   ? Container(
                                                       margin:
                                                           const EdgeInsets.only(
@@ -352,143 +359,166 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                                                       ),
                                                       height: 20,
                                                       width: 20,
-                                                      child: Image(
+                                                      child: const Image(
                                                         image: AssetImage(
-                                                          'images/qpay_logo.png',
+                                                          'images/social_pay_logo.png',
                                                         ),
                                                       ),
                                                     )
-                                                  : item.code == "SOCIAL_PAY"
+                                                  : item.code == "BANK_CARD"
                                                       ? Container(
                                                           margin:
                                                               const EdgeInsets
                                                                   .only(
-                                                            right: 10,
-                                                          ),
-                                                          height: 20,
-                                                          width: 20,
-                                                          child: Image(
-                                                            image: AssetImage(
-                                                              'images/social_pay_logo.png',
-                                                            ),
-                                                          ),
-                                                        )
-                                                      : item.code == "BANK_CARD"
-                                                          ? Container(
-                                                              margin:
-                                                                  const EdgeInsets
-                                                                      .only(
-                                                                      right:
-                                                                          10),
-                                                              child: SvgPicture
-                                                                  .asset(
-                                                                'assets/svg/bank_card.svg',
-                                                                colorFilter: ColorFilter.mode(
+                                                                  right: 10),
+                                                          child:
+                                                              SvgPicture.asset(
+                                                            'assets/svg/bank_card.svg',
+                                                            colorFilter:
+                                                                const ColorFilter
+                                                                    .mode(
                                                                     invoiceColor,
                                                                     BlendMode
                                                                         .srcIn),
-                                                              ),
-                                                            )
-                                                          : SizedBox(),
-                                          Text(
-                                            '${item.name}',
-                                            style: TextStyle(fontSize: 14),
-                                          ),
-                                        ],
+                                                          ),
+                                                        )
+                                                      : const SizedBox(),
+                                      Text(
+                                        '${item.name}',
+                                        style: const TextStyle(fontSize: 14),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                )
-                                .toList(),
-                          ),
-                          selectedMethod == "B2B"
-                              ? FormBuilderDropdown(
-                                  icon: Container(
-                                    decoration: BoxDecoration(
-                                      color: white,
-                                    ),
-                                    child: const Icon(
-                                      Icons.arrow_forward_ios,
-                                      color: black,
-                                      size: 14,
-                                    ),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                        selectedMethod == "B2B"
+                            ? FormBuilderDropdown(
+                                icon: Container(
+                                  decoration: const BoxDecoration(
+                                    color: white,
                                   ),
-                                  name: 'number',
-                                  onChanged: (value) async {
-                                    selectedValue = value;
-                                  },
-                                  decoration: InputDecoration(
-                                    hintText: 'Дансны дугаар сонгоно уу',
-                                    hintStyle: TextStyle(
-                                        fontSize: 14, color: invoiceColor),
-                                    filled: true,
-                                    fillColor: white,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 12, horizontal: 15),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
+                                  child: const Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: black,
+                                    size: 14,
                                   ),
-                                  items: general.bankAccounts!
-                                      .map(
-                                        (item) => DropdownMenuItem(
-                                          value: item.id,
-                                          child: Container(
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                ),
+                                name: 'number',
+                                onChanged: (value) async {
+                                  selectedValue = value;
+                                },
+                                decoration: InputDecoration(
+                                  hintText: 'Дансны дугаар сонгоно уу',
+                                  hintStyle: const TextStyle(
+                                      fontSize: 14, color: invoiceColor),
+                                  filled: true,
+                                  fillColor: white,
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 12, horizontal: 15),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                items: general.bankAccounts!
+                                    .map(
+                                      (item) => DropdownMenuItem(
+                                        onTap: () {},
+                                        value: item.id,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
                                               children: [
-                                                Row(
-                                                  children: [
-                                                    // Image(
-                                                    //   image: NetworkImage(
-                                                    //     '${item.icon}',
-                                                    //   ),
-                                                    //   height: 20,
-                                                    // ),
-                                                    Text(
-                                                      '${item.bankName}',
-                                                      style: TextStyle(
-                                                        color: black,
-                                                        fontSize: 14,
-                                                      ),
-                                                    ),
-                                                  ],
+                                                Image(
+                                                  image: NetworkImage(
+                                                    '${item.icon}',
+                                                  ),
+                                                  height: 20,
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
                                                 ),
                                                 Text(
-                                                  '${item.number}',
+                                                  '${item.bankName}',
                                                   style: const TextStyle(
+                                                    color: black,
                                                     fontSize: 14,
-                                                    color: invoiceColor,
                                                   ),
                                                 ),
                                               ],
                                             ),
-                                          ),
+                                            Text(
+                                              '${item.number}',
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                color: invoiceColor,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      )
-                                      .toList(),
-                                )
-                              : selectedMethod == "QPAY"
-                                  ? GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context)
-                                            .pushNamed(QpayPage.routeName);
-                                      },
-                                      child: Container(
+                                      ),
+                                    )
+                                    .toList(),
+                              )
+                            : selectedMethod == "QPAY"
+                                ? GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .pushNamed(QpayPage.routeName);
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.only(left: 20),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Text(
+                                            'Төлөлт хийх заавар',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                          Row(
+                                            children: [
+                                              const Text(
+                                                'Заавар татах',
+                                                style: TextStyle(
+                                                  color: invoiceColor,
+                                                  fontSize: 14,
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                ),
+                                              ),
+                                              IconButton(
+                                                onPressed: () {},
+                                                icon: const Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  size: 12,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : selectedMethod == "SOCIAL_PAY"
+                                    ? Container(
                                         padding:
                                             const EdgeInsets.only(left: 20),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
+                                            const Text(
                                               'Төлөлт хийх заавар',
                                               style: TextStyle(
                                                 fontSize: 14,
@@ -496,7 +526,7 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                                             ),
                                             Row(
                                               children: [
-                                                Text(
+                                                const Text(
                                                   'Заавар татах',
                                                   style: TextStyle(
                                                     color: invoiceColor,
@@ -507,7 +537,7 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                                                 ),
                                                 IconButton(
                                                   onPressed: () {},
-                                                  icon: Icon(
+                                                  icon: const Icon(
                                                     Icons.arrow_forward_ios,
                                                     size: 12,
                                                   ),
@@ -516,206 +546,159 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                                             )
                                           ],
                                         ),
-                                      ),
-                                    )
-                                  : selectedMethod == "SOCIAL_PAY"
-                                      ? Container(
-                                          padding:
-                                              const EdgeInsets.only(left: 20),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                'Төлөлт хийх заавар',
-                                                style: TextStyle(
-                                                  fontSize: 14,
+                                      )
+                                    : selectedMethod == "BANK_CARD"
+                                        ? Container(
+                                            padding:
+                                                const EdgeInsets.only(left: 20),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const Text(
+                                                  'Төлөлт хийх заавар',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                  ),
                                                 ),
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    'Заавар татах',
-                                                    style: TextStyle(
-                                                      color: invoiceColor,
-                                                      fontSize: 14,
-                                                      decoration: TextDecoration
-                                                          .underline,
-                                                    ),
-                                                  ),
-                                                  IconButton(
-                                                    onPressed: () {},
-                                                    icon: Icon(
-                                                      Icons.arrow_forward_ios,
-                                                      size: 12,
-                                                    ),
-                                                  ),
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        )
-                                      : selectedMethod == "BANK_CARD"
-                                          ? Container(
-                                              padding: const EdgeInsets.only(
-                                                  left: 20),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Төлөлт хийх заавар',
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        'Заавар татах',
-                                                        style: TextStyle(
-                                                          color: invoiceColor,
-                                                          fontSize: 14,
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .underline,
-                                                        ),
+                                                Row(
+                                                  children: [
+                                                    const Text(
+                                                      'Заавар татах',
+                                                      style: TextStyle(
+                                                        color: invoiceColor,
+                                                        fontSize: 14,
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline,
                                                       ),
-                                                      IconButton(
-                                                        onPressed: () {},
-                                                        icon: Icon(
-                                                          Icons
-                                                              .arrow_forward_ios,
-                                                          size: 12,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                            )
-                                          : Container(
-                                              color: white,
-                                              padding: const EdgeInsets.all(15),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    "Төлбөрийн хэрэгсэл сонгоно уу",
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: invoiceColor,
                                                     ),
-                                                  ),
-                                                  Icon(
-                                                    Icons.arrow_forward_ios,
-                                                    size: 12,
-                                                  ),
-                                                ],
-                                              ),
+                                                    IconButton(
+                                                      onPressed: () {},
+                                                      icon: const Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        size: 12,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
                                             ),
-                        ],
-                      ),
+                                          )
+                                        : Container(
+                                            color: white,
+                                            padding: const EdgeInsets.all(15),
+                                            child: const Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Төлбөрийн хэрэгсэл сонгоно уу",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: invoiceColor,
+                                                  ),
+                                                ),
+                                                Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  size: 12,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    selectedMethod == "B2B" || selectedMethod == null
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(left: 15),
-                                child: Text(
-                                  'Төлөх төлбөрийн дүн',
-                                  style: TextStyle(
-                                    color: black,
-                                    fontSize: 14,
-                                  ),
-                                ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  if (selectedMethod == "B2B")
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(left: 15),
+                          child: const Text(
+                            'Төлөх төлбөрийн дүн',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 15),
+                          child: FormTextField(
+                            name: "amount",
+                            inputType: TextInputType.number,
+                            controller: textController,
+                            decoration: const InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 15),
+                              border: OutlineInputBorder(),
+                              fillColor: Colors.white,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: invoiceColor),
                               ),
-                              SizedBox(
-                                height: 10,
+                            ),
+                            validators: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: 'Төлбөрийн дүн оруулна уу')
+                            ]),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Checkbox(
+                              checkColor: white,
+                              activeColor: invoiceColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
                               ),
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 15),
-                                child: FormTextField(
-                                  name: "amount",
-                                  inputType: TextInputType.number,
-                                  controller: textController,
-                                  decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 15),
-                                    border: OutlineInputBorder(),
-                                    fillColor: Colors.white,
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: invoiceColor),
-                                    ),
-                                  ),
-                                  validators: FormBuilderValidators.compose([
-                                    FormBuilderValidators.required(
-                                        errorText: 'Төлбөрийн дүн оруулна уу')
-                                  ]),
-                                ),
+                              value: value,
+                              onChanged: (value1) {
+                                fillAmount();
+                                if (value == true) {
+                                  textController.text = "";
+                                }
+                                setState(() {
+                                  value = value1!;
+                                });
+                              },
+                            ),
+                            const Text(
+                              'Төлбөл зохих дүнгээр',
+                              style: TextStyle(
+                                color: grey2,
+                                fontSize: 16,
                               ),
-                              Row(
-                                children: [
-                                  Checkbox(
-                                    checkColor: white,
-                                    activeColor: invoiceColor,
-                                    fillColor:
-                                        MaterialStateProperty.resolveWith(
-                                      (states) => invoiceColor,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    value: value,
-                                    onChanged: (value1) {
-                                      fillAmount();
-                                      if (value == true) {
-                                        textController.text = "";
-                                      }
-                                      setState(() {
-                                        value = value1!;
-                                      });
-                                    },
-                                  ),
-                                  Text(
-                                    'Төлбөл зохих дүнгээр',
-                                    style: TextStyle(
-                                      color: grey2,
-                                      fontSize: 16,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          )
-                        : SizedBox(),
-                    SizedBox(
-                      height: 40,
+                            )
+                          ],
+                        ),
+                      ],
                     ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      child: CustomButton(
-                        labelColor: invoiceColor,
-                        labelText: 'Төлбөр зөвшөөрөх',
-                        onClick: () {
-                          onSubmit();
-                        },
-                      ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
+                    child: CustomButton(
+                      labelColor: invoiceColor,
+                      labelText: 'Төлбөр зөвшөөрөх',
+                      onClick: () {
+                        onSubmit();
+                      },
                     ),
-                    SizedBox(
-                      height: 50,
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                ],
               ),
             ),
     );

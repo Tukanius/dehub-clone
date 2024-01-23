@@ -2,22 +2,22 @@ import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/partner_cards/inbox_card.dart';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dehub/src/network_module/network_page/tabs/inbox_tab/invitation_detail_page/invitation_detail_page.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Invitation extends StatefulWidget {
-  const Invitation({Key? key}) : super(key: key);
+  const Invitation({super.key});
 
   @override
-  _InvitationState createState() => _InvitationState();
+  InvitationState createState() => InvitationState();
 }
 
-class _InvitationState extends State<Invitation> with AfterLayoutMixin {
+class InvitationState extends State<Invitation> with AfterLayoutMixin {
   int page = 1;
   int limit = 10;
   Result invitation = Result(rows: [], count: 0);
@@ -62,7 +62,7 @@ class _InvitationState extends State<Invitation> with AfterLayoutMixin {
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
     });
@@ -74,49 +74,19 @@ class _InvitationState extends State<Invitation> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     return isLoading == true
-        ? Center(
+        ? const Center(
             child: CircularProgressIndicator(
               color: networkColor,
             ),
           )
         : Expanded(
-            child: SmartRefresher(
-              enablePullDown: true,
-              enablePullUp: true,
-              controller: refreshController,
-              header: WaterDropHeader(
-                waterDropColor: networkColor,
-                refresh: SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: networkColor,
-                  ),
-                ),
-              ),
-              onRefresh: _onRefresh,
+            child: Refresher(
+              refreshController: refreshController,
               onLoading: _onLoading,
-              footer: CustomFooter(
-                builder: (context, mode) {
-                  Widget body;
-                  if (mode == LoadStatus.idle) {
-                    body = const Text("");
-                  } else if (mode == LoadStatus.loading) {
-                    body = const CupertinoActivityIndicator();
-                  } else if (mode == LoadStatus.failed) {
-                    body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                  } else {
-                    body = const Text("Мэдээлэл алга байна");
-                  }
-                  return SizedBox(
-                    height: 55.0,
-                    child: Center(child: body),
-                  );
-                },
-              ),
+              onRefresh: _onRefresh,
+              color: networkColor,
               child: SingleChildScrollView(
-                child: invitation.rows?.length != 0
+                child: invitation.rows!.isNotEmpty
                     ? Column(
                         children: invitation.rows!
                             .map(
@@ -135,7 +105,7 @@ class _InvitationState extends State<Invitation> with AfterLayoutMixin {
                             )
                             .toList(),
                       )
-                    : NotFound(
+                    : const NotFound(
                         module: "NETWORK",
                         labelText: 'Хоосон байна',
                       ),

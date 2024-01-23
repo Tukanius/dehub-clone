@@ -28,7 +28,7 @@ class HttpRequestFinance {
     debugPrint(uri);
 
     debugPrint('+++++++++++++++++++++++++++++++++++++++++++++++++++');
-    debugPrint('handler: ' + handler.toString() + ", " + uri);
+    debugPrint('handler: $handler , $uri ');
     debugPrint('+++++++++++++++++++++++++++++++++++++++++++++++++++ ');
 
     if (host == 'http://dev-de-fi-bogd.zto.mn') {
@@ -47,7 +47,7 @@ class HttpRequestFinance {
 
         dio.options.headers = {
           'authorization': 'Bearer $token',
-          'device-token': '$deviceToken',
+          'device-token': deviceToken,
           'device_type': 'MOS',
           'device_imei': 'test-imei',
           'device_info': 'iphone 13'
@@ -73,7 +73,7 @@ class HttpRequestFinance {
 
         dio.options.headers = {
           'authorization': 'Bearer $token',
-          'device-token': '$deviceToken',
+          'device-token': deviceToken,
           'device_type': 'MOS',
           'device_imei': 'test-imei',
           'device_info': 'iphone 13'
@@ -99,7 +99,7 @@ class HttpRequestFinance {
 
         dio.options.headers = {
           'authorization': 'Bearer $token',
-          'device-token': '$deviceToken',
+          'device-token': deviceToken,
           'device_type': 'MOS',
           'device_imei': 'test-imei',
           'device_info': 'iphone 13'
@@ -112,7 +112,7 @@ class HttpRequestFinance {
     if (method != 'GET') {
       debugPrint('body: $data');
     }
-    final Connectivity _connectivity = Connectivity();
+    final Connectivity connectivity = Connectivity();
     ConnectivityResult result = ConnectivityResult.none;
 
     try {
@@ -142,7 +142,7 @@ class HttpRequestFinance {
       return HttpHandler(statusCode: response?.statusCode).handle(response);
     } on DioException catch (ex) {
       try {
-        result = await _connectivity.checkConnectivity();
+        result = await connectivity.checkConnectivity();
         if (result == ConnectivityResult.none) {
           locator<NavigationService>()
               .pushNamed(routeName: NoInternetScreen.routeName);
@@ -169,7 +169,7 @@ class HttpRequestFinance {
     try {
       return await request(host, url, 'GET', data, handler: handler);
     } catch (e) {
-      debugPrint("GET =>" + e.toString());
+      debugPrint("GET =>$e");
       rethrow;
     }
   }
@@ -186,7 +186,7 @@ class HttpRequestFinance {
         approve: approve,
       );
     } catch (e) {
-      debugPrint("POST =>" + e.toString());
+      debugPrint("POST =>$e");
       rethrow;
     }
   }

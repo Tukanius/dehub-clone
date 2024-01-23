@@ -1,17 +1,17 @@
 import 'package:dehub/api/finance_api.dart';
 import 'package:dehub/components/avaible_funding_card/requested_funding_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/src/finance_module/screens/funding_request_detail/funding_request_detail_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:provider/provider.dart';
 
 class SupplierLed extends StatefulWidget {
-  const SupplierLed({Key? key}) : super(key: key);
+  const SupplierLed({super.key});
 
   @override
   State<SupplierLed> createState() => _SupplierLedState();
@@ -47,7 +47,7 @@ class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
     });
@@ -58,6 +58,8 @@ class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
+    final source = Provider.of<FinanceProvider>(context, listen: false);
+    source.clearData();
     list(page, limit, '');
   }
 
@@ -73,48 +75,18 @@ class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Expanded(
-                child: SmartRefresher(
-                  enablePullDown: true,
-                  enablePullUp: true,
-                  controller: refreshController,
-                  header: WaterDropHeader(
-                    waterDropColor: source.currentColor,
-                    refresh: SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: source.currentColor,
-                      ),
-                    ),
-                  ),
-                  onRefresh: _onRefresh,
+                child: Refresher(
+                  refreshController: refreshController,
                   onLoading: _onLoading,
-                  footer: CustomFooter(
-                    builder: (context, mode) {
-                      Widget body;
-                      if (mode == LoadStatus.idle) {
-                        body = const Text("");
-                      } else if (mode == LoadStatus.loading) {
-                        body = const CupertinoActivityIndicator();
-                      } else if (mode == LoadStatus.failed) {
-                        body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                      } else {
-                        body = const Text("Мэдээлэл алга байна");
-                      }
-                      return SizedBox(
-                        height: 55.0,
-                        child: Center(child: body),
-                      );
-                    },
-                  ),
+                  onRefresh: _onRefresh,
+                  color: source.currentColor,
                   child: SingleChildScrollView(
-                    child: finance.rows?.length == 0
-                        ? NotFound(
+                    child: finance.rows!.isEmpty
+                        ? const NotFound(
                             module: 'INVOICE',
                             labelText: "Хоосон байна",
                           )
@@ -125,6 +97,7 @@ class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
                                   (data) => RequestedFundingCard(
                                     data: data,
                                     onClick: () {
+                                      source.productType("SUPPLIER_LED");
                                       Navigator.of(context).pushNamed(
                                         FundingRequestDetailPage.routeName,
                                         arguments:

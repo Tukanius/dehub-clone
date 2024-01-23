@@ -1,7 +1,7 @@
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/transaction_filter_card/transaction_filter_card.dart';
 import 'package:dehub/models/payment.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/api/payment_api.dart';
@@ -24,20 +24,20 @@ class TransactionHistory extends StatefulWidget {
   final Payment data;
   static const routeName = '/TransactionHistory';
   const TransactionHistory({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
-  _TransactionHistoryState createState() => _TransactionHistoryState();
+  TransactionHistoryState createState() => TransactionHistoryState();
 }
 
-class _TransactionHistoryState extends State<TransactionHistory>
+class TransactionHistoryState extends State<TransactionHistory>
     with SingleTickerProviderStateMixin, AfterLayoutMixin {
   List<Payment> groupedList = [];
   Map<DateTime, List<Payment>> groupItems = {};
   DateTimeRange dateTimeRange = DateTimeRange(
-    start: DateTime.now().subtract(Duration(days: 1)),
+    start: DateTime.now().subtract(const Duration(days: 1)),
     end: DateTime.now(),
   );
   final RefreshController _refreshController =
@@ -60,7 +60,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
   list(page, limit, String inOutType, String startDate, String endDate) async {
     Offset offset = Offset(page: page, limit: limit);
     Filter filter = Filter(
-      inOutType: "${inOutType}",
+      inOutType: inOutType,
       accountId: widget.data.id,
       startDate: startDate,
       endDate: endDate,
@@ -71,7 +71,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
       isLoading = false;
     });
     await groupMaker();
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         startAnimation = true;
       });
@@ -82,7 +82,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
     setState(() {
       page += 1;
     });
-    await list(page, limit, '${filterText}', dateTimeRange.start.toString(),
+    await list(page, limit, '$filterText', dateTimeRange.start.toString(),
         dateTimeRange.end.toString());
     _refreshController.loadComplete();
     setState(() {
@@ -91,13 +91,13 @@ class _TransactionHistoryState extends State<TransactionHistory>
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
       page = 1;
       groupItems = {};
     });
-    await list(page, limit, '${filterText}', dateTimeRange.start.toString(),
+    await list(page, limit, '$filterText', dateTimeRange.start.toString(),
         dateTimeRange.end.toString());
     _refreshController.refreshCompleted();
     setState(() {
@@ -141,12 +141,12 @@ class _TransactionHistoryState extends State<TransactionHistory>
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_new,
             color: paymentColor,
           ),
         ),
-        title: Text(
+        title: const Text(
           'Гүйлгээний түүх',
           style: TextStyle(color: paymentColor, fontSize: 18),
         ),
@@ -154,28 +154,28 @@ class _TransactionHistoryState extends State<TransactionHistory>
       ),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Center(
             child: Text(
               '${widget.data.number}',
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: paymentColor),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Center(
             child: Text(
               '${widget.data.bankName}',
-              style: TextStyle(fontSize: 15, color: grey2),
+              style: const TextStyle(fontSize: 15, color: grey2),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           GestureDetector(
@@ -194,24 +194,24 @@ class _TransactionHistoryState extends State<TransactionHistory>
                 children: [
                   Text(
                     '${start.year} - ${start.month} - ${start.day}',
-                    style: TextStyle(color: grey2),
+                    style: const TextStyle(color: grey2),
                   ),
                   SvgPicture.asset('assets/svg/calendar.svg'),
-                  Icon(
+                  const Icon(
                     Icons.arrow_forward,
                     size: 15,
                     color: paymentColor,
                   ),
                   Text(
                     '${end.year} - ${end.month} - ${end.day}',
-                    style: TextStyle(color: grey2),
+                    style: const TextStyle(color: grey2),
                   ),
                   SvgPicture.asset('assets/svg/calendar.svg')
                 ],
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Row(
@@ -219,15 +219,18 @@ class _TransactionHistoryState extends State<TransactionHistory>
             children: filter
                 .map(
                   (item) => TransactionFilterCard(
-                    onClick: () {
-                      setState(() {
-                        filterText = item;
-                        isLoading = true;
-                        groupItems = {};
-                      });
-                      list(page, limit, "${filterText}", start.toString(),
-                          end.toString());
-                    },
+                    onClick: filterText != item
+                        ? () {
+                            setState(() {
+                              filterText = item;
+                              isLoading = true;
+                              groupItems = {};
+                              page = 1;
+                            });
+                            list(page, limit, "$filterText", start.toString(),
+                                end.toString());
+                          }
+                        : () {},
                     isTap: item == filterText,
                     text: item == "ALL"
                         ? 'Бүгд'
@@ -241,52 +244,21 @@ class _TransactionHistoryState extends State<TransactionHistory>
           isLoading == true
               ? Container(
                   margin: const EdgeInsets.only(top: 50),
-                  child: Center(
+                  child: const Center(
                     child: CircularProgressIndicator(
                       color: paymentColor,
                     ),
                   ),
                 )
-              : groupedList.length != 0
-                  ? Expanded(
-                      child: SmartRefresher(
-                          enablePullDown: true,
-                          enablePullUp: true,
-                          controller: _refreshController,
-                          header: WaterDropHeader(
-                            waterDropColor: networkColor,
-                            refresh: SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: networkColor,
-                              ),
-                            ),
-                          ),
-                          onRefresh: _onRefresh,
-                          onLoading: _onLoading,
-                          footer: CustomFooter(
-                            builder: (context, mode) {
-                              Widget body;
-                              if (mode == LoadStatus.idle) {
-                                body = const Text("");
-                              } else if (mode == LoadStatus.loading) {
-                                body = const CupertinoActivityIndicator();
-                              } else if (mode == LoadStatus.failed) {
-                                body =
-                                    const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                              } else {
-                                body = const Text("Мэдээлэл алга байна");
-                              }
-                              return SizedBox(
-                                height: 55.0,
-                                child: Center(child: body),
-                              );
-                            },
-                          ),
-                          child: SingleChildScrollView(
-                            child: Column(
+              : Expanded(
+                  child: Refresher(
+                    refreshController: _refreshController,
+                    onLoading: _onLoading,
+                    onRefresh: _onRefresh,
+                    color: networkColor,
+                    child: SingleChildScrollView(
+                      child: groupedList.isNotEmpty
+                          ? Column(
                               children: groupedList
                                   .map(
                                     (data) => Column(
@@ -310,8 +282,9 @@ class _TransactionHistoryState extends State<TransactionHistory>
                                           margin: const EdgeInsets.symmetric(
                                               horizontal: 15, vertical: 10),
                                           child: Text(
-                                            '${DateFormat("yyyy-MM-dd").format(data.header!)}',
-                                            style: TextStyle(
+                                            DateFormat("yyyy-MM-dd")
+                                                .format(data.header!),
+                                            style: const TextStyle(
                                               fontWeight: FontWeight.w500,
                                               color: grey2,
                                             ),
@@ -346,13 +319,14 @@ class _TransactionHistoryState extends State<TransactionHistory>
                                     ),
                                   )
                                   .toList(),
+                            )
+                          : const NotFound(
+                              module: "PAYMENT",
+                              labelText: "Гүйлгээний түүх хоосон байна",
                             ),
-                          )),
-                    )
-                  : NotFound(
-                      module: "PAYMENT",
-                      labelText: "Гүйлгээний түүх хоосон байна",
                     ),
+                  ),
+                ),
         ],
       ),
     );
@@ -377,7 +351,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
       errorFormatText: 'Сүүлийн сар дотор сонгоно уу!!!',
       context: context,
       initialDateRange: dateTimeRange,
-      firstDate: DateTime.now().subtract(Duration(days: 30)),
+      firstDate: DateTime.now().subtract(const Duration(days: 30)),
       lastDate: DateTime.now(),
     );
 
@@ -389,7 +363,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
     setState(() {
       startAnimation = false;
     });
-    list(page, limit, '${filterText}', dateTimeRange.start.toString(),
+    list(page, limit, '$filterText', dateTimeRange.start.toString(),
         dateTimeRange.end.toString());
   }
 }

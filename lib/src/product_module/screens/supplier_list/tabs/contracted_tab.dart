@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/components/inventory_supplier_card/inventory_supplier_card.dart';
@@ -35,7 +35,7 @@ class _ContractedTabState extends State<ContractedTab> with AfterLayoutMixin {
     setState(() {
       isLoading = false;
     });
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         startAnimation = true;
       });
@@ -54,7 +54,7 @@ class _ContractedTabState extends State<ContractedTab> with AfterLayoutMixin {
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
     });
@@ -65,7 +65,7 @@ class _ContractedTabState extends State<ContractedTab> with AfterLayoutMixin {
 
   onChange(String query) {
     if (timer != null) timer?.cancel();
-    Timer(Duration(milliseconds: 500), () {
+    Timer(const Duration(milliseconds: 500), () {
       setState(() {
         isLoading = true;
       });
@@ -89,82 +89,54 @@ class _ContractedTabState extends State<ContractedTab> with AfterLayoutMixin {
             onChange(query);
           },
         ),
-        Expanded(
-          child: SmartRefresher(
-            enablePullDown: true,
-            enablePullUp: true,
-            controller: refreshController,
-            header: WaterDropHeader(
-              waterDropColor: productColor,
-              refresh: SizedBox(
-                height: 20,
-                width: 20,
+        isLoading == true
+            ? const Center(
                 child: CircularProgressIndicator(
-                  strokeWidth: 2,
                   color: productColor,
                 ),
-              ),
-            ),
-            onRefresh: _onRefresh,
-            onLoading: _onLoading,
-            footer: CustomFooter(
-              builder: (context, mode) {
-                Widget body;
-                if (mode == LoadStatus.idle) {
-                  body = const Text("");
-                } else if (mode == LoadStatus.loading) {
-                  body = const CupertinoActivityIndicator();
-                } else if (mode == LoadStatus.failed) {
-                  body = const Text("Алдаа гарлаа. Дахин үзнэ үү!");
-                } else {
-                  body = const Text("Мэдээлэл алга байна");
-                }
-                return SizedBox(
-                  height: 55.0,
-                  child: Center(child: body),
-                );
-              },
-            ),
-            child: SingleChildScrollView(
-                child: Column(
-              children: [
-                isLoading == true
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          color: productColor,
+              )
+            : Expanded(
+                child: Refresher(
+                  refreshController: refreshController,
+                  onLoading: _onLoading,
+                  onRefresh: _onRefresh,
+                  color: productColor,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        suppliers.rows!.isNotEmpty
+                            ? Column(
+                                children: suppliers.rows!
+                                    .map(
+                                      (data) => InventorySupplierCard(
+                                        onClick: () {
+                                          Navigator.of(context).pushNamed(
+                                            SupplierProductList.routeName,
+                                            arguments:
+                                                SupplierProductListArguments(
+                                              id: data.id,
+                                            ),
+                                          );
+                                        },
+                                        index: suppliers.rows!.indexOf(data),
+                                        startAnimation: startAnimation,
+                                        data: data,
+                                      ),
+                                    )
+                                    .toList(),
+                              )
+                            : const NotFound(
+                                module: "INVENTORY",
+                                labelText: 'Хоосон байна',
+                              ),
+                        const SizedBox(
+                          height: 20,
                         ),
-                      )
-                    : suppliers.rows?.length != 0
-                        ? Column(
-                            children: suppliers.rows!
-                                .map(
-                                  (data) => InventorySupplierCard(
-                                    onClick: () {
-                                      Navigator.of(context).pushNamed(
-                                        SupplierProductList.routeName,
-                                        arguments: SupplierProductListArguments(
-                                          id: data.id,
-                                        ),
-                                      );
-                                    },
-                                    index: suppliers.rows!.indexOf(data),
-                                    startAnimation: startAnimation,
-                                    data: data,
-                                  ),
-                                )
-                                .toList(),
-                          )
-                        : NotFound(
-                            module: "INVENTORY",
-                            labelText: 'Хоосон байна',
-                          ),
-                SizedBox(
-                  height: 20,
+                      ],
+                    ),
+                  ),
                 ),
-              ],
-            )),
-          ),
-        ),
+              ),
       ],
     );
   }

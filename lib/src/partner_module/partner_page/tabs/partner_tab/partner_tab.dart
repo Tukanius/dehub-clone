@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class PartnerTab extends StatefulWidget {
-  const PartnerTab({Key? key}) : super(key: key);
+  const PartnerTab({super.key});
 
   @override
-  _PartnerTabState createState() => _PartnerTabState();
+  PartnerTabState createState() => PartnerTabState();
 }
 
-class _PartnerTabState extends State<PartnerTab> {
+class PartnerTabState extends State<PartnerTab> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -18,12 +18,12 @@ class _PartnerTabState extends State<PartnerTab> {
           children: [
             Container(
               margin: const EdgeInsets.only(left: 15, top: 5),
-              child: Text(
+              child: const Text(
                 'Харилцагч',
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             // for (var i = 0; i < 10; i++)

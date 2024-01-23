@@ -19,7 +19,7 @@ class DeliveryCard extends StatefulWidget {
   final Function()? startClick;
   final Function()? onClick;
   const DeliveryCard({
-    Key? key,
+    super.key,
     required this.startAnimation,
     required this.index,
     this.refCodeClick,
@@ -27,7 +27,7 @@ class DeliveryCard extends StatefulWidget {
     this.startClick,
     this.isDeliveried,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   State<DeliveryCard> createState() => _DeliveryCardState();
@@ -71,19 +71,19 @@ class _DeliveryCardState extends State<DeliveryCard> {
                       Container(
                         height: 24,
                         width: 24,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           color: grey,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       user.currentBusiness?.type == "SUPPLIER"
                           ? Expanded(
                               child: Text(
                                 '${widget.data.receiverBusiness?.profileName}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: buttonColor,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -92,7 +92,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                           : Expanded(
                               child: Text(
                                 '${widget.data.business?.profileName}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: buttonColor,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -109,21 +109,21 @@ class _DeliveryCardState extends State<DeliveryCard> {
                     child: Row(
                       children: [
                         SvgPicture.asset('assets/svg/order_note.svg'),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Text(
                           '${widget.data.refCode}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: darkGreen,
                             fontWeight: FontWeight.w500,
                             fontSize: 12,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
-                        Icon(
+                        const Icon(
                           Icons.arrow_forward_ios,
                           color: darkGreen,
                           size: 12,
@@ -134,7 +134,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -143,7 +143,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                 Expanded(
                   child: Row(
                     children: [
-                      Text(
+                      const Text(
                         'Захиалга: ',
                         style: TextStyle(
                           color: buttonColor,
@@ -153,11 +153,11 @@ class _DeliveryCardState extends State<DeliveryCard> {
                       SvgPicture.asset(
                         'assets/svg/inv.svg',
                         colorFilter:
-                            ColorFilter.mode(darkGreen, BlendMode.srcIn),
+                            const ColorFilter.mode(darkGreen, BlendMode.srcIn),
                       ),
                       Text(
                         ' ${widget.data.order?.purchaseCode}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: orderColor,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
@@ -170,7 +170,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
+                      const Text(
                         'Нийт дүн:',
                         style: TextStyle(
                           color: depBrown,
@@ -178,12 +178,12 @@ class _DeliveryCardState extends State<DeliveryCard> {
                           fontSize: 12,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
                       Text(
                         '${Utils().formatCurrency(widget.data.totalAmount.toString())}₮',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: orderColor,
                           fontSize: 12,
                         ),
@@ -193,7 +193,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -201,7 +201,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
               children: [
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'Хүргэлт: ',
                       style: TextStyle(
                         color: buttonColor,
@@ -228,7 +228,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                 ),
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'Хүргэх:',
                       style: TextStyle(
                         color: depBrown,
@@ -236,12 +236,13 @@ class _DeliveryCardState extends State<DeliveryCard> {
                         fontSize: 12,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     Text(
-                      '${DateFormat("yyyy-MM-dd").format(DateTime.parse(widget.data.deliveryDate.toString()))}',
-                      style: TextStyle(
+                      DateFormat("yyyy-MM-dd").format(
+                          DateTime.parse(widget.data.deliveryDate.toString())),
+                      style: const TextStyle(
                         color: buttonColor,
                         fontSize: 12,
                       ),
@@ -250,7 +251,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             widget.isDeliveried == false
@@ -259,7 +260,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                     children: [
                       Row(
                         children: [
-                          Text(
+                          const Text(
                             'Эхэлсэн:  ',
                             style: TextStyle(
                               color: buttonColor,
@@ -267,7 +268,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                             ),
                           ),
                           widget.data.startDate == null
-                              ? Text(
+                              ? const Text(
                                   '-',
                                   style: TextStyle(
                                     color: buttonColor,
@@ -275,8 +276,9 @@ class _DeliveryCardState extends State<DeliveryCard> {
                                   ),
                                 )
                               : Text(
-                                  '${DateFormat('yyyy-MM-dd').format(DateTime.parse(widget.data.startDate!))}',
-                                  style: TextStyle(
+                                  DateFormat('yyyy-MM-dd').format(
+                                      DateTime.parse(widget.data.startDate!)),
+                                  style: const TextStyle(
                                     color: buttonColor,
                                     fontSize: 12,
                                   ),
@@ -306,31 +308,31 @@ class _DeliveryCardState extends State<DeliveryCard> {
                                       user.currentBusiness?.type == "BUYER"
                                   ? SvgPicture.asset(
                                       'assets/svg/check_underline.svg',
-                                      colorFilter: ColorFilter.mode(
+                                      colorFilter: const ColorFilter.mode(
                                           white, BlendMode.srcIn),
                                     )
                                   : SvgPicture.asset('assets/svg/bx_timer.svg'),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
                               user.currentBusiness?.type == "SUPPLIER"
                                   ? widget.data.deliveryNoteStatus ==
                                           "DELIVERING"
-                                      ? Text(
+                                      ? const Text(
                                           'Хүрсэн',
                                           style: TextStyle(
                                             color: white,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         )
-                                      : Text(
+                                      : const Text(
                                           'Эхлэх',
                                           style: TextStyle(
                                             color: white,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         )
-                                  : Text(
+                                  : const Text(
                                       'Хүлээн авах',
                                       style: TextStyle(
                                         color: white,
@@ -348,61 +350,60 @@ class _DeliveryCardState extends State<DeliveryCard> {
                     children: [
                       Text(
                         'Эхэлсэн: ${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.parse(widget.data.startDate!))}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: buttonColor,
                           fontSize: 12,
                         ),
                       ),
                       Text(
                         'Дууссан: ${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.deliveredDate!)}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: buttonColor,
                           fontSize: 12,
                         ),
                       )
                     ],
                   ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            widget.isDeliveried == true &&
-                    widget.data.amountToPay != 0 &&
-                    user.currentBusiness?.type == "BUYER"
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: widget.startClick,
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: orderColor,
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.payment_rounded,
-                                color: white,
-                                size: 18,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                'Төлбөр төлөх',
-                                style: TextStyle(
-                                  color: white,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+            if (widget.isDeliveried == true &&
+                widget.data.amountToPay != 0 &&
+                user.currentBusiness?.type == "BUYER")
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: widget.startClick,
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: orderColor,
                       ),
-                    ],
-                  )
-                : SizedBox(),
+                      child: const Row(
+                        children: [
+                          Icon(
+                            Icons.payment_rounded,
+                            color: white,
+                            size: 18,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'Төлбөр төлөх',
+                            style: TextStyle(
+                              color: white,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
           ],
         ),
       ),
