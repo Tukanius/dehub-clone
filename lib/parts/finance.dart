@@ -9,6 +9,12 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => Finance.fromJson(e)).toList()
         : null,
+    requestFiles: json['requestFiles'] != null
+        ? (json['requestFiles'] as List)
+            .map((e) => Finance.fromJson(e))
+            .toList()
+        : null,
+    url: json['url'] != null ? Uri.parse(json['url'.toString()]) : null,
     id: json['id'] != null ? json['id'] as String : null,
     createdAt: json['createdAt'] != null
         ? DateTime.parse(json['createdAt'].toString())
@@ -38,6 +44,9 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         ? json['buyerPenaltyType'] as String
         : null,
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
+    phoneNumber:
+        json['phoneNumber'] != null ? json['phoneNumber'] as String : null,
+    phone: json['phone'] != null ? json['phone'] as String : null,
     contractFile:
         json['contractFile'] != null ? json['contractFile'] as String : null,
     suppFeeRule:
@@ -81,6 +90,12 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         json['parentRefCode'] != null ? json['parentRefCode'] as String : null,
     invCount: json['invCount'] != null
         ? double.parse(json['invCount'].toString())
+        : null,
+    smeAvailableAmount: json['smeAvailableAmount'] != null
+        ? double.parse(json['smeAvailableAmount'].toString())
+        : null,
+    smeSubLimit: json['smeSubLimit'] != null
+        ? double.parse(json['smeSubLimit'].toString())
         : null,
     suppPenaltyPercent: json['suppPenaltyPercent'] != null
         ? double.parse(json['suppPenaltyPercent'].toString())
@@ -485,6 +500,9 @@ Map<String, dynamic> _$FinanceToJson(Finance instance) {
   if (instance.businessSubLimit != null) {
     json['businessSubLimit'] = instance.businessSubLimit;
   }
+  if (instance.requestFiles != null) {
+    json['requestFiles'] = instance.requestFiles;
+  }
   if (instance.contractFile != null) {
     json['contractFile'] = instance.contractFile;
   }
@@ -521,6 +539,10 @@ Map<String, dynamic> _$FinanceToJson(Finance instance) {
     json['buyerPenaltyPercent'] = instance.buyerPenaltyPercent;
   }
   if (instance.suppMinFee != null) json['suppMinFee'] = instance.suppMinFee;
+  if (instance.smeSubLimit != null) json['smeSubLimit'] = instance.smeSubLimit;
+  if (instance.smeAvailableAmount != null) {
+    json['smeAvailableAmount'] = instance.smeAvailableAmount;
+  }
   if (instance.buyerMinFee != null) json['buyerMinFee'] = instance.buyerMinFee;
   if (instance.suppMaxFee != null) json['suppMaxFee'] = instance.suppMaxFee;
   if (instance.buyerMaxFee != null) json['buyerMaxFee'] = instance.buyerMaxFee;
@@ -557,6 +579,8 @@ Map<String, dynamic> _$FinanceToJson(Finance instance) {
     json['contractFiles'] = instance.contractFiles;
   }
   if (instance.invoices != null) json['invoices'] = instance.invoices;
+  if (instance.phone != null) json['phone'] = instance.phone;
+  if (instance.phoneNumber != null) json['phoneNumber'] = instance.phoneNumber;
   if (instance.bankName != null) json['bankName'] = instance.bankName;
   if (instance.receiverFinUser != null) {
     json['receiverFinUser'] = instance.receiverFinUser;

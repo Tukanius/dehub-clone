@@ -86,33 +86,18 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
         backgroundColor: orderColor,
         surfaceTintColor: orderColor,
         elevation: 0,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: const Icon(
-            Icons.arrow_back_ios_new,
+        iconTheme: const IconThemeData(color: white),
+        centerTitle: false,
+        title: Text(
+          user.currentBusiness?.type == "SUPPLIER"
+              ? "ЗАРЛАГЫН ПАДААН"
+              : "ОРЛОГЫН ПАДААН",
+          style: const TextStyle(
             color: white,
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
           ),
         ),
-        centerTitle: false,
-        title: user.currentBusiness?.type == "SUPPLIER"
-            ? const Text(
-                "ЗАРЛАГЫН ПАДААН",
-                style: TextStyle(
-                  color: white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              )
-            : const Text(
-                "ОРЛОГЫН ПАДААН",
-                style: TextStyle(
-                  color: white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
         actions: const [
           Center(
             child: Text(

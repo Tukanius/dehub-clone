@@ -203,6 +203,12 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     senderBusiness: json['senderBusiness'] != null
         ? Invoice.fromJson(json['senderBusiness'] as Map<String, dynamic>)
         : null,
+    creditAcc: json['creditAcc'] != null
+        ? Invoice.fromJson(json['creditAcc'] as Map<String, dynamic>)
+        : null,
+    debitAcc: json['debitAcc'] != null
+        ? Invoice.fromJson(json['debitAcc'] as Map<String, dynamic>)
+        : null,
     senderFinUser: json['senderFinUser'] != null
         ? Invoice.fromJson(json['senderFinUser'] as Map<String, dynamic>)
         : null,
@@ -374,13 +380,21 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
         ? (json['urls'] as List).map((e) => Urls.fromJson(e)).toList()
         : null,
     qr_image: json['qr_image'] != null ? json['qr_image'] as String : null,
+    paymentRefCode: json['paymentRefCode'] != null
+        ? json['paymentRefCode'] as String
+        : null,
   );
 }
 
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.paymentRefCode != null) {
+    json['paymentRefCode'] = instance.paymentRefCode;
+  }
   if (instance.paidDate != null) json['paidDate'] = instance.paidDate;
+  if (instance.creditAcc != null) json['creditAcc'] = instance.creditAcc;
+  if (instance.debitAcc != null) json['debitAcc'] = instance.debitAcc;
   if (instance.actionUser != null) json['actionUser'] = instance.actionUser;
   if (instance.invoicesCount != null) {
     json['invoicesCount'] = instance.invoicesCount;

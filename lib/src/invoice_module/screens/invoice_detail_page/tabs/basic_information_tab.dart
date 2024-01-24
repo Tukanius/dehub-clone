@@ -332,7 +332,8 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                     paddingVertical: 15,
                     secondTextColor: invoiceColor,
                     labelText: "Нэхэмжлэх бичсэн",
-                    secondText: invoice.createdAt.toString(),
+                    secondText:
+                        DateFormat('yyyy-MM-dd').format(invoice.createdAt!),
                   ),
                   FieldCard(
                     color: white,
@@ -532,15 +533,13 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                   user.currentBusiness?.type == "BUYER"
                       ? Container(
                           margin: const EdgeInsets.symmetric(horizontal: 10),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 37),
-                          height: 50,
+                          padding: const EdgeInsets.symmetric(vertical: 8),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             color: black,
                           ),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               GestureDetector(
                                 onTap: () {
@@ -630,26 +629,6 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                                         ],
                                       ),
                                     ),
-                              GestureDetector(
-                                onTap: () {},
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/svg/cancel.svg',
-                                      height: 17,
-                                      width: 17,
-                                    ),
-                                    const Text(
-                                      'Цуцлах',
-                                      style: TextStyle(
-                                        color: white,
-                                        fontSize: 10,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
                               GestureDetector(
                                 onTap: () {},
                                 child: Column(

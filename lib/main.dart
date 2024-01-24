@@ -79,7 +79,6 @@ import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/cus
 import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/customer_choose_tabs/gereet_bish.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/salbar_songoh.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/harah/harah.dart';
-import 'package:dehub/src/invoice_module/screens/new_invoice/harah/send_page.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/new_invoice.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_detail_page/invoice_detail_page.dart';
 import 'package:dehub/src/payment_module/screens/link_account_page/link_account_page.dart';
@@ -580,10 +579,6 @@ class MyApp extends StatelessWidget {
                       return SentInvitationDetail(
                         id: arguments.id,
                       );
-                    });
-                  case SendPage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return const SendPage();
                     });
                   case InvoiceDetailPage.routeName:
                     InvoiceDetailPageArguments arguments =

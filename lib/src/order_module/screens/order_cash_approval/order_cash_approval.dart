@@ -28,15 +28,7 @@ class _OrderCashApprovalState extends State<OrderCashApproval> {
           ),
         ),
         centerTitle: false,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: const Icon(
-            Icons.arrow_back_ios_new,
-            color: white,
-          ),
-        ),
+        iconTheme: const IconThemeData(color: white),
         actions: const [
           Center(
             child: Text(

@@ -1,3 +1,4 @@
+import 'package:dehub/src/invoice_module/screens/invoice_detail_page/tabs/history_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_detail_page/tabs/basic_information_tab.dart';
@@ -78,7 +79,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
             BasicInformationTab(
               id: widget.id,
             ),
-            const Text('1'),
+            HistoryTab(id: widget.id),
             const Text('1'),
           ],
         ),

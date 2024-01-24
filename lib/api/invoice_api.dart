@@ -86,4 +86,10 @@ class InvoiceApi extends HttpRequest {
         data: resultArguments.toJson());
     return Result.fromJson(res, Invoice.fromJson);
   }
+
+  Future<Result> invoiceHistory(ResultArguments data) async {
+    var res =
+        await get('/invoice/history', "INVOICE", true, data: data.toJson());
+    return Result.fromJson(res, Invoice.fromJson);
+  }
 }

@@ -62,18 +62,7 @@ class _PinCheckScreenState extends State<PinCheckScreen> {
             surfaceTintColor: widget.color,
             backgroundColor: widget.color,
             elevation: 0,
-            leading: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Container(
-                color: transparent,
-                child: const Icon(
-                  Icons.arrow_back_ios_new,
-                  color: white,
-                ),
-              ),
-            ),
+            iconTheme: const IconThemeData(color: white),
             title: const Text(
               'Баталгаажуулах',
               style: TextStyle(

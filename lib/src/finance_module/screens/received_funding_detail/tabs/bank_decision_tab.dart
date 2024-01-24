@@ -131,8 +131,8 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
             paddingVertical: 10,
             color: white,
             labelText: 'Олгосон огноо, цаг',
-            secondText:
-                DateFormat("yyyy-MM-dd HH:mm").format(widget.data.toDisburseDate!),
+            secondText: DateFormat("yyyy-MM-dd HH:mm")
+                .format(widget.data.disbursedDate!),
             secondTextColor: source.currentColor,
           ),
           Container(
@@ -191,7 +191,8 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
             color: white,
             labelText: 'Эргэн төлөх огноо',
             secondText: widget.data.repaymentDate != null
-                ? DateFormat("yyyy-MM-dd HH: mm").format(widget.data.repaymentDate!)
+                ? DateFormat("yyyy-MM-dd HH: mm")
+                    .format(widget.data.repaymentDate!)
                 : '-',
             secondTextColor: source.currentColor,
           ),

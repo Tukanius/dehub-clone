@@ -168,18 +168,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            color: transparent,
-            child: const Icon(
-              Icons.arrow_back_ios,
-              color: white,
-            ),
-          ),
-        ),
+        iconTheme: const IconThemeData(color: white),
         automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: orderColor,

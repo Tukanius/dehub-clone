@@ -70,7 +70,6 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
               height: 5,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   padding:
@@ -94,11 +93,14 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
                         fontWeight: FontWeight.w500),
                   ),
                 ),
-                Text(
-                  '${widget.data.requestedBusiness?.profileName}',
-                  style: TextStyle(
-                    color: source.currentColor,
-                    fontWeight: FontWeight.w500,
+                Expanded(
+                  child: Text(
+                    '${widget.data.program?.name}',
+                    style: TextStyle(
+                      color: source.currentColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.end,
                   ),
                 )
               ],
@@ -107,7 +109,6 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
               height: 10,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const Text(
                   'Хүсэлтийн дүн: ',
@@ -120,6 +121,15 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
                   '${Utils().formatCurrency(widget.data.requestedAmount.toString())}₮',
                   style: const TextStyle(
                     fontSize: 12,
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    '${widget.data.requestedBusiness?.profileName}',
+                    style: const TextStyle(
+                      fontSize: 12,
+                    ),
+                    textAlign: TextAlign.end,
                   ),
                 ),
               ],

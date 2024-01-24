@@ -141,18 +141,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
         surfaceTintColor: white,
         elevation: 0,
         centerTitle: false,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            color: transparent,
-            child: const Icon(
-              Icons.arrow_back_ios_new,
-              color: orderColor,
-            ),
-          ),
-        ),
+        iconTheme: const IconThemeData(color: orderColor),
         title: const Text(
           'Захиалгын дэлгэрэнгүй',
           style: TextStyle(

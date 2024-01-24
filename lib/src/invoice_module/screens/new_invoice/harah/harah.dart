@@ -1,4 +1,6 @@
 import 'package:dehub/models/invoice.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/harah/index1.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/harah/pdf/pdf.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/harah/send_page.dart';
@@ -6,6 +8,7 @@ import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class HarahArguments {
   Invoice invoice;
@@ -31,8 +34,11 @@ class Harah extends StatefulWidget {
 }
 
 class _HarahState extends State<Harah> {
+  User user = User();
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).invoiceMe;
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -101,26 +107,27 @@ class _HarahState extends State<Harah> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 15),
-                      padding: const EdgeInsets.all(8),
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(color: grey3, width: 0.5),
-                        color: white,
-                      ),
-                      child: const Icon(
-                        Icons.edit,
-                        color: grey3,
+                  if (user.currentBusiness?.type == "SUPPLIER")
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 15),
+                        padding: const EdgeInsets.all(8),
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(color: grey3, width: 0.5),
+                          color: white,
+                        ),
+                        child: const Icon(
+                          Icons.edit,
+                          color: grey3,
+                        ),
                       ),
                     ),
-                  ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 15),
                     padding: const EdgeInsets.all(8),
@@ -154,6 +161,7 @@ class _HarahState extends State<Harah> {
                       ),
                     ),
                   ),
+                  // if (user.currentBusiness?.type == "SUPPLIER")
                   GestureDetector(
                     onTap: () {
                       showModalBottomSheet(
@@ -277,6 +285,8 @@ class _HarahState extends State<Harah> {
         initialChildSize: 1,
         minChildSize: 0.5,
         maxChildSize: 1,
-        builder: (context, scrollController) => const SendPage(),
+        builder: (context, scrollController) => SendPage(
+          data: widget.invoice,
+        ),
       );
 }

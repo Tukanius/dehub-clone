@@ -98,15 +98,7 @@ class _AddRowState extends State<InvoiceAddRow> {
         surfaceTintColor: white,
         backgroundColor: white,
         elevation: 0,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: const Icon(
-            Icons.arrow_back_ios_new,
-            color: invoiceColor,
-          ),
-        ),
+        iconTheme: const IconThemeData(color: invoiceColor),
         title: const Text(
           'Мөр нэмэх',
           style: TextStyle(
@@ -221,8 +213,7 @@ class _AddRowState extends State<InvoiceAddRow> {
                           color: invoiceColor,
                         ),
                         decoration: const InputDecoration(
-                          contentPadding:
-                              EdgeInsets.symmetric(horizontal: 15),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 15),
                           hintStyle:
                               TextStyle(color: invoiceColor, fontSize: 14),
                           filled: true,
@@ -383,8 +374,7 @@ class _AddRowState extends State<InvoiceAddRow> {
                           color: invoiceColor,
                         ),
                         decoration: const InputDecoration(
-                          contentPadding:
-                              EdgeInsets.symmetric(horizontal: 15),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 15),
                           hintStyle:
                               TextStyle(color: invoiceColor, fontSize: 14),
                           filled: true,

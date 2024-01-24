@@ -56,22 +56,7 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
         elevation: 0,
         backgroundColor: white,
         surfaceTintColor: white,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            margin: const EdgeInsets.only(left: 15),
-            child: const Row(
-              children: [
-                Icon(
-                  Icons.arrow_back_ios_new,
-                  color: orderColor,
-                ),
-              ],
-            ),
-          ),
-        ),
+        iconTheme: const IconThemeData(color: orderColor),
         title: index.selectedIndex == 0
             ? FormTextField(
                 inputType: TextInputType.text,

@@ -48,15 +48,7 @@ class _DeliveryDetailState extends State<DeliveryDetail> with AfterLayoutMixin {
         backgroundColor: orderColor,
         surfaceTintColor: orderColor,
         elevation: 0,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: const Icon(
-            Icons.arrow_back_ios_new,
-            color: white,
-          ),
-        ),
+        iconTheme: const IconThemeData(color: white),
         centerTitle: false,
         title: Text(
           "${widget.data.receiverBusiness?.profileName}",
@@ -194,6 +186,9 @@ class _DeliveryDetailState extends State<DeliveryDetail> with AfterLayoutMixin {
                           children: [
                             Row(
                               children: [
+                                const SizedBox(
+                                  width: 20,
+                                ),
                                 SvgPicture.asset(
                                   'assets/svg/map.svg',
                                   colorFilter: const ColorFilter.mode(
@@ -233,6 +228,9 @@ class _DeliveryDetailState extends State<DeliveryDetail> with AfterLayoutMixin {
                                     child:
                                         SvgPicture.asset('assets/svg/call.svg'),
                                   ),
+                                ),
+                                const SizedBox(
+                                  width: 20,
                                 ),
                               ],
                             ),

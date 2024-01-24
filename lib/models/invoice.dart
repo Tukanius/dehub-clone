@@ -174,8 +174,14 @@ class Invoice {
   String? paymentMethod;
   Invoice? actionUser;
   double? trxAmount;
+  String? paymentRefCode;
+  Invoice? creditAcc;
+  Invoice? debitAcc;
 
   Invoice({
+    this.debitAcc,
+    this.creditAcc,
+    this.paymentRefCode,
     this.paidDate,
     this.trxAmount,
     this.actionUser,

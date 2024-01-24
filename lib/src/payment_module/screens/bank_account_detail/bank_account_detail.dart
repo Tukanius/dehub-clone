@@ -51,32 +51,17 @@ class BankAccountDetailState extends State<BankAccountDetail>
     return res;
   }
 
-  bankName() {
-    // var res = general.bankNames!
-    //     .firstWhere((element) => element.code == get.bankName)
-    //     .name;
-    // return res;
-  }
-
   @override
   Widget build(BuildContext context) {
     general =
-        Provider.of<GeneralProvider>(context, listen: false).paymentGeneral;
+        Provider.of<GeneralProvider>(context, listen: true).paymentGeneral;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: white,
         surfaceTintColor: white,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            color: black,
-          ),
-        ),
+        iconTheme: const IconThemeData(color: networkColor),
         title: const Text(
           'Дансны мэдээлэл',
           style: TextStyle(color: paymentColor, fontSize: 18),
@@ -98,9 +83,10 @@ class BankAccountDetailState extends State<BankAccountDetail>
                     child: Text(
                       '${get.number}',
                       style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: paymentColor),
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: paymentColor,
+                      ),
                     ),
                   ),
                   const SizedBox(

@@ -27,15 +27,7 @@ class _OrderDeliveryState extends State<OrderDelivery> {
         elevation: 0,
         backgroundColor: white,
         surfaceTintColor: white,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: const Icon(
-            Icons.arrow_back_ios_new,
-            color: orderColor,
-          ),
-        ),
+        iconTheme: const IconThemeData(color: orderColor),
         title: const Text(
           'Захиалга хүргэлт',
           style: TextStyle(

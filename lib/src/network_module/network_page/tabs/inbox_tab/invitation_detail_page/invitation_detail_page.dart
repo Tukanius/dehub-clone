@@ -107,15 +107,7 @@ class InvitationDetailPageState extends State<InvitationDetailPage>
         elevation: 0,
         surfaceTintColor: backgroundColor,
         backgroundColor: backgroundColor,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: const Icon(
-            Icons.arrow_back_ios_new,
-            color: networkColor,
-          ),
-        ),
+        iconTheme: const IconThemeData(color: networkColor),
         title: const Text(
           'Ирсэн урилга',
           style: TextStyle(

@@ -93,7 +93,8 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
           startShipment = true;
         });
         await OrderApi().pullSheetStart(widget.data.id!);
-        timer = Timer.periodic(const Duration(seconds: 1), (timer) => addTimer());
+        timer =
+            Timer.periodic(const Duration(seconds: 1), (timer) => addTimer());
         shipment = await OrderApi().pullSheetGet(widget.data.id!);
         setState(() {
           isStart = true;
@@ -110,7 +111,8 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
         if (isProceed == true) {
           await OrderApi().pullSheetProceed(widget.data.id!);
         }
-        timer = Timer.periodic(const Duration(seconds: 1), (timer) => addTimer());
+        timer =
+            Timer.periodic(const Duration(seconds: 1), (timer) => addTimer());
         shipment = await OrderApi().pullSheetGet(widget.data.id!);
         setState(() {
           isStart = true;
@@ -182,15 +184,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
         elevation: 0,
         backgroundColor: white,
         surfaceTintColor: white,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: const Icon(
-            Icons.arrow_back_ios_new,
-            color: orderColor,
-          ),
-        ),
+        iconTheme: const IconThemeData(color: orderColor),
         title: const Text(
           'Ачилт хийх',
           style: TextStyle(

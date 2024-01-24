@@ -83,15 +83,7 @@ class _ClientClassificationsState extends State<ClientClassifications>
         elevation: 0,
         backgroundColor: networkColor,
         surfaceTintColor: networkColor,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: const Icon(
-            Icons.arrow_back_ios_new,
-            color: white,
-          ),
-        ),
+        iconTheme: const IconThemeData(color: white),
         title: const Text(
           'Ангилал, зэрэглэл',
           style: TextStyle(

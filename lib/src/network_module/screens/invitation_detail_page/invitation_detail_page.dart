@@ -86,15 +86,7 @@ class SentInvitationDetailState extends State<SentInvitationDetail>
         elevation: 0,
         backgroundColor: backgroundColor,
         surfaceTintColor: backgroundColor,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: const Icon(
-            Icons.arrow_back_ios_new,
-            color: networkColor,
-          ),
-        ),
+        iconTheme: const IconThemeData(color: networkColor),
         title: const Text(
           'Илгээсэн урилга',
           style: TextStyle(

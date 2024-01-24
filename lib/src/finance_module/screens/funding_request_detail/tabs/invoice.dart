@@ -46,10 +46,10 @@ class _InvoiceTabState extends State<InvoiceTab> {
         ? widget.data.requestedBusinessAcc!
         : widget.data.invReceiverBusinessAcc!;
     supplierUser = widget.data.type == "SUPPLIER"
-        ? widget.data.requestedUser!
+        ? widget.data.requestedFinUser!
         : widget.data.finUser!;
     buyerUser = widget.data.type == "BUYER"
-        ? widget.data.requestedUser!
+        ? widget.data.requestedFinUser!
         : widget.data.finUser!;
     general =
         Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
@@ -443,23 +443,6 @@ class _InvoiceTabState extends State<InvoiceTab> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             color: white,
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Банкны нэр',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Банкны нэр',
-                  style: TextStyle(color: dark),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            color: white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -474,22 +457,13 @@ class _InvoiceTabState extends State<InvoiceTab> {
               ],
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Санхүү ажилтан утас',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Phone_Number',
-                  style: TextStyle(color: source.currentColor),
-                ),
-              ],
-            ),
+            labelText: 'Санхүү ажилтан утас',
+            secondText: '${buyerUser.phone}',
+            secondTextColor: source.currentColor,
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -656,23 +630,6 @@ class _InvoiceTabState extends State<InvoiceTab> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             color: white,
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Банкны нэр',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Банкны нэр',
-                  style: TextStyle(color: dark),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            color: white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -687,22 +644,13 @@ class _InvoiceTabState extends State<InvoiceTab> {
               ],
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
             color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Санхүү ажилтан утас',
-                  style: TextStyle(color: dark),
-                ),
-                Text(
-                  'Phone_Number',
-                  style: TextStyle(color: source.currentColor),
-                ),
-              ],
-            ),
+            labelText: 'Санхүү ажилтан утас',
+            secondText: '${supplierUser.phone}',
+            secondTextColor: source.currentColor,
           ),
           const SizedBox(
             height: 100,

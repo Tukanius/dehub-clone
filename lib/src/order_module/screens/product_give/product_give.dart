@@ -215,18 +215,19 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
         elevation: 0,
         backgroundColor: white,
         surfaceTintColor: white,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-            if (shipment.isPaused == false && shipment.isConfirmed == false) {
-              stopTimer();
-            }
-          },
-          child: const Icon(
-            Icons.arrow_back_ios_new,
-            color: orderColor,
-          ),
-        ),
+        iconTheme: const IconThemeData(color: orderColor),
+        // leading: GestureDetector(
+        //   onTap: () {
+        //     Navigator.of(context).pop();
+        //     if (shipment.isPaused == false && shipment.isConfirmed == false) {
+        //       stopTimer();
+        //     }
+        //   },
+        //   child: const Icon(
+        //     Icons.arrow_back_ios_new,
+        //     color: orderColor,
+        //   ),
+        // ),
         title: const Text(
           'Захиалга хүлээлцэх',
           style: TextStyle(

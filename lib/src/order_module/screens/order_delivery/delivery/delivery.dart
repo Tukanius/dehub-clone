@@ -147,15 +147,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
           backgroundColor: white,
           surfaceTintColor: white,
           elevation: 0,
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: const Icon(
-              Icons.arrow_back_ios_new,
-              color: orderColor,
-            ),
-          ),
+          iconTheme: const IconThemeData(color: orderColor),
           centerTitle: true,
           title: const Text(
             'Захиалга хүргэлт',

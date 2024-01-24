@@ -186,8 +186,22 @@ class Finance {
   double? businessUtilizedCount;
   double? businessDisbursePendingCount;
   double? businessPendingCount;
+  String? phone;
+  String? phoneNumber;
+
+  List<Finance>? requestFiles;
+  Uri? url;
+
+  double? smeSubLimit;
+  double? smeAvailableAmount;
 
   Finance({
+    this.smeAvailableAmount,
+    this.smeSubLimit,
+    this.url,
+    this.requestFiles,
+    this.phone,
+    this.phoneNumber,
     this.contractFile,
     this.businessPendingCount,
     this.businessDisbursePendingCount,

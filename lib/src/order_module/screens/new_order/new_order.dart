@@ -296,18 +296,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
           surfaceTintColor: white,
           elevation: 0,
           centerTitle: false,
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Container(
-              color: transparent,
-              child: const Icon(
-                Icons.arrow_back_ios_new,
-                color: orderColor,
-              ),
-            ),
-          ),
+          iconTheme: const IconThemeData(color: orderColor),
           title: widget.data == null
               ? const Text(
                   'Шинэ захиалга',

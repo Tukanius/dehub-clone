@@ -104,15 +104,7 @@ class _AddRowState extends State<OrderAddRow> {
           backgroundColor: white,
           surfaceTintColor: white,
           elevation: 0,
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: const Icon(
-              Icons.arrow_back_ios_new,
-              color: orderColor,
-            ),
-          ),
+          iconTheme: const IconThemeData(color: orderColor),
           title: const Text(
             'Мөр нэмэх',
             style: TextStyle(

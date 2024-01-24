@@ -80,7 +80,8 @@ class _HistoryCardState extends State<HistoryCard> {
                     children: [
                       Expanded(
                         child: Text(
-                          DateFormat("yyyy-MM-dd HH:mm").format(widget.data.createdAt!),
+                          DateFormat("yyyy-MM-dd HH:mm")
+                              .format(widget.data.createdAt!),
                           style: const TextStyle(
                             color: grey2,
                             fontSize: 12,

@@ -1,11 +1,17 @@
+import 'package:dehub/models/invoice.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SendPage extends StatefulWidget {
+  final Invoice data;
   static const routeName = '/sendpage';
-  const SendPage({super.key});
+  const SendPage({
+    super.key,
+    required this.data,
+  });
 
   @override
   State<SendPage> createState() => _SendPageState();
@@ -31,9 +37,9 @@ class _SendPageState extends State<SendPage> {
             ),
           ),
         ),
-        title: const Text(
-          'INV - 23987 - илгээх',
-          style: TextStyle(
+        title: Text(
+          '${widget.data.refCode} - илгээх',
+          style: const TextStyle(
             color: white,
             fontWeight: FontWeight.w500,
             fontSize: 16,
@@ -66,22 +72,65 @@ class _SendPageState extends State<SendPage> {
                   Container(
                     padding: const EdgeInsets.only(
                         left: 15, top: 10, bottom: 10, right: 10),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Buyer нэр'),
+                        const Text('Buyer нэр'),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  '${widget.data.receiverBusiness?.profileName}',
+                                  style: const TextStyle(
+                                    color: invoiceColor,
+                                  ),
+                                  textAlign: TextAlign.end,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              const Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 12,
+                                color: grey2,
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              color: white,
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(
+                        left: 15, top: 10, bottom: 10, right: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('И-мэйл хаяг'),
                         Row(
                           children: [
                             Text(
-                              'Bolor Store',
-                              style: TextStyle(
+                              '${widget.data.receiverBusiness?.partner?.email}',
+                              style: const TextStyle(
                                 color: invoiceColor,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
-                            Icon(
+                            const Icon(
                               Icons.arrow_forward_ios_rounded,
                               size: 12,
                               color: grey2,
@@ -101,57 +150,22 @@ class _SendPageState extends State<SendPage> {
                   Container(
                     padding: const EdgeInsets.only(
                         left: 15, top: 10, bottom: 10, right: 10),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('И-мэйл хаяг'),
+                        const Text('Нэхэмжлэх дүн'),
                         Row(
                           children: [
                             Text(
-                              'bolor@gmail.com',
-                              style: TextStyle(
+                              '${Utils().formatCurrency(widget.data.totalAmount.toString())}₮',
+                              style: const TextStyle(
                                 color: invoiceColor,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
-                            Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 12,
-                              color: grey2,
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              color: white,
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(
-                        left: 15, top: 10, bottom: 10, right: 10),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Нэхэмжлэх дүн'),
-                        Row(
-                          children: [
-                            Text(
-                              '417,450.00 ₮',
-                              style: TextStyle(
-                                color: invoiceColor,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            Icon(
+                            const Icon(
                               Icons.arrow_forward_ios_rounded,
                               size: 12,
                               color: grey2,
@@ -230,18 +244,18 @@ class _SendPageState extends State<SendPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Row(
+                      Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.perm_contact_cal_outlined,
                             color: invoiceColor,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'Supplier Business Name',
-                            style: TextStyle(color: invoiceColor),
+                            '${widget.data.senderBusiness?.profileName}',
+                            style: const TextStyle(color: invoiceColor),
                           ),
                         ],
                       ),
@@ -263,9 +277,9 @@ class _SendPageState extends State<SendPage> {
                       ),
                       Row(
                         children: [
-                          const Text(
-                            'Партнер нэр',
-                            style: TextStyle(color: invoiceColor),
+                          Text(
+                            '${widget.data.senderBusiness?.partner?.businessName}',
+                            style: const TextStyle(color: invoiceColor),
                           ),
                           IconButton(
                             onPressed: () {},
@@ -287,9 +301,9 @@ class _SendPageState extends State<SendPage> {
                       ),
                       Row(
                         children: [
-                          const Text(
-                            'Салбарын нэр',
-                            style: TextStyle(color: invoiceColor),
+                          Text(
+                            '${widget.data.senderBranch?.name}',
+                            style: const TextStyle(color: invoiceColor),
                           ),
                           IconButton(
                             onPressed: () {},

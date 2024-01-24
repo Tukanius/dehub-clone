@@ -129,7 +129,7 @@ class _ProgramCardState extends State<ProgramCard> {
                         const TextSpan(text: 'Боломжит дүн: '),
                         TextSpan(
                           text:
-                              "${Utils().formatCurrency(widget.data.availableAmount.toString())}₮",
+                              "${Utils().formatCurrency(widget.data.smeAvailableAmount.toString())}₮",
                         ),
                       ],
                     ),
@@ -148,7 +148,7 @@ class _ProgramCardState extends State<ProgramCard> {
                         const TextSpan(text: 'Лимит: '),
                         TextSpan(
                           text:
-                              "${Utils().formatCurrency(widget.data.programLimit.toString())}₮",
+                              "${Utils().formatCurrency(widget.data.smeSubLimit.toString())}₮",
                         ),
                       ],
                     ),

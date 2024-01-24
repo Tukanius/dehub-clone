@@ -219,7 +219,7 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
                                   ),
                                 )
                                 .toList(),
-                          )
+                          ),
                         ],
                       )
                     : const NotFound(
