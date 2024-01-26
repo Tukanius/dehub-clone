@@ -72,7 +72,7 @@ class HttpRequest {
     debugPrint(uri);
 
     debugPrint('+++++++++++++++++++++++++++++++++++++++++++++++++++');
-    debugPrint('handler: $handler$uri');
+    debugPrint('handler: $handler, uri:$uri');
     debugPrint('+++++++++++++++++++++++++++++++++++++++++++++++++++ ');
 
     try {

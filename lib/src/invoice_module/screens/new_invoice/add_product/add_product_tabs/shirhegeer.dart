@@ -5,7 +5,7 @@ import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/providers/checkout_provider.dart';
+import 'package:dehub/providers/invoice_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +15,12 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class Shirhegeer extends StatefulWidget {
   final String businessId;
   final bool isPackage;
+  final String discountAmount;
+  final String shippingAmount;
   static const routeName = '/Shirhegeer';
   const Shirhegeer({
+    required this.discountAmount,
+    required this.shippingAmount,
     required this.isPackage,
     required this.businessId,
     super.key,
@@ -90,6 +94,7 @@ class _ShirhegeerState extends State<Shirhegeer> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<InvoiceProvider>(context, listen: true);
     return Column(
       children: [
         SearchButton(
@@ -130,13 +135,17 @@ class _ShirhegeerState extends State<Shirhegeer> with AfterLayoutMixin {
                                           (data) => InvoiceProductCard(
                                             isPackage: false,
                                             readOnly: false,
+                                            shippingAmount:
+                                                widget.shippingAmount,
+                                            discountAmount:
+                                                widget.discountAmount,
                                             onClick: () {
                                               if (data.quantity != 0) {
-                                                Provider.of<CheckOutProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .addCart(
-                                                        data, data.quantity);
+                                                source.addCart(
+                                                    data,
+                                                    data.quantity,
+                                                    widget.discountAmount,
+                                                    widget.shippingAmount);
                                                 Navigator.of(context).pop();
                                               }
                                             },

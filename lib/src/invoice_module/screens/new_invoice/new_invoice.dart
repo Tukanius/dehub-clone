@@ -1,4 +1,3 @@
-import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/invoice_additional_line/invoice_additional_line.dart';
@@ -6,8 +5,8 @@ import 'package:dehub/components/invoice_product_card/invoice_product_card.dart'
 import 'package:dehub/components/scaffold_messenger/scaffold_messenger.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/invoice.dart';
-import 'package:dehub/models/partner.dart';
-import 'package:dehub/providers/checkout_provider.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/invoice_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/pin_check/pin_check.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/add_product/add_product.dart';
@@ -23,10 +22,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
 
+class NewInvoiceArguments {
+  Invoice? data;
+  NewInvoiceArguments({
+    this.data,
+  });
+}
+
 class NewInvoice extends StatefulWidget {
   static const routeName = '/NewInvoice';
+  final Invoice? data;
   const NewInvoice({
     super.key,
+    this.data,
   });
 
   @override
@@ -34,38 +42,17 @@ class NewInvoice extends StatefulWidget {
 }
 
 class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
-  //Controllers
-  ListenController productController = ListenController();
-  ListenController listenController = ListenController();
-  ListenController partnerListenController = ListenController();
-  ListenController sectorListenController = ListenController();
-  TextEditingController discountController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  ListenController addRowController = ListenController();
-  //
-  Invoice additionalRow = Invoice();
-  Invoice invoice = Invoice();
-  Invoice partnerInvoice = Invoice();
-  Invoice sectorInvoice = Invoice();
-  Partner user = Partner();
-
-  bool isLoading = false;
+  TextEditingController discountController = TextEditingController();
+  TextEditingController shippingController = TextEditingController();
+  User user = User();
   bool isSubmit = false;
-  String dropdownValue = "Сонгох";
-  //amounts
-  double shippingAmount = 0;
-  double discountAmount = 0;
-  // key
+  bool isLoading = true;
   var productKey = GlobalKey();
   var sectorKey = GlobalKey();
   var invoiceKey = GlobalKey();
-  //validate
   bool invoiceValidate = false;
   bool sectorValidate = false;
-  //list
-  List<Invoice> product = [];
-  List<Invoice> additionalRowList = [];
-
   List<String> list = <String>[
     "Хувиар",
     "Дүнгээр",
@@ -73,14 +60,47 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) {
-    Provider.of<CheckOutProvider>(context, listen: false).clearCart();
+    final source = Provider.of<InvoiceProvider>(context, listen: false);
+    source.clearData();
+    if (widget.data != null) {
+      source.partnerChoose(widget.data!.receiverBusiness!);
+      source.branchChoose(Invoice(branch: widget.data!.receiverBranch!));
+      source.sectorChoose(Invoice(branch: widget.data!.senderBranch!));
+      source.products = widget.data!.lines!;
+      source.additionalLines = widget.data!.additionalLines!;
+      shippingController.text = widget.data!.shippingAmount!.toInt().toString();
+      discountController.text = widget.data!.discountValue!.toInt().toString();
+      descriptionController.text = widget.data!.description.toString();
+      source.discountType(
+          widget.data?.discountType == "PERCENTAGE"
+              ? "Хувиар"
+              : widget.data?.discountType == "AMOUNT"
+                  ? "Дүнгээр"
+                  : "Сонгох",
+          widget.data!.discountAmount.toString(),
+          widget.data!.shippingAmount.toString());
+      source.totalAmountInvoice(
+          discountController.text, shippingController.text);
+    }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final source = Provider.of<CheckOutProvider>(context, listen: true);
-    product = Provider.of<CheckOutProvider>(context, listen: true).invoice;
-    user = Provider.of<UserProvider>(context, listen: true).partnerUser;
+    final invoice = Provider.of<InvoiceProvider>(context, listen: true);
+    user = Provider.of<UserProvider>(context, listen: true).invoiceMe;
+    if (invoice.newInvoice.partner != null) {
+      setState(() {
+        invoiceValidate = false;
+      });
+    }
+    if (invoice.newInvoice.senderBranch != null) {
+      setState(() {
+        sectorValidate = false;
+      });
+    }
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -100,18 +120,18 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
               color: white,
             ),
           ),
-          title: const Text(
-            'Шинэ нэхэмжлэл',
-            style: TextStyle(
+          title: Text(
+            widget.data == null ? 'Шинэ нэхэмжлэл' : "Нэхэмжлэх засах",
+            style: const TextStyle(
               color: white,
               fontSize: 18,
               fontWeight: FontWeight.w500,
             ),
           ),
         ),
-        body: isLoading == false
-            ? SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
+        body: isLoading == true
+            ? const SizedBox()
+            : SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -133,10 +153,6 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       onTap: () {
                         Navigator.of(context).pushNamed(
                           CustomerChoose.routeName,
-                          arguments: CustomerChooseArguments(
-                            listenController: listenController,
-                            partnerListenController: partnerListenController,
-                          ),
                         );
                       },
                       child: Container(
@@ -163,7 +179,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                invoice.partner?.businessName == null
+                                invoice.newInvoice.partner?.profileName == null
                                     ? Text(
                                         'Харилцагч сонгох',
                                         style: TextStyle(
@@ -172,7 +188,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                                 : invoiceColor),
                                       )
                                     : Text(
-                                        '${invoice.partner?.businessName}',
+                                        '${invoice.newInvoice.partner?.profileName}',
                                         style: const TextStyle(
                                             color: invoiceColor),
                                       )
@@ -193,8 +209,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       arrowColor: black,
                       onClick: () {},
                       labelText: 'Хүргэлтийн хаяг',
-                      secondText: partnerInvoice.name != null
-                          ? "${partnerInvoice.name}"
+                      secondText: invoice.newInvoice.receiverBranch != null
+                          ? "${invoice.newInvoice.receiverBranch?.name}"
                           : '-',
                       secondTextColor: invoiceColor,
                       color: white,
@@ -205,8 +221,10 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       arrowColor: black,
                       onClick: () {},
                       labelText: 'Нэхэмжлэх илгээх',
-                      secondText: invoice.partnerName != null
-                          ? "${invoice.partnerName}"
+                      secondText: invoice
+                                  .newInvoice.partner?.partner?.businessName !=
+                              null
+                          ? "${invoice.newInvoice.partner?.partner?.businessName}"
                           : '-',
                       secondTextColor: invoiceColor,
                       color: white,
@@ -239,7 +257,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                 width: 10,
                               ),
                               Text(
-                                '${user.user?.currentBusiness?.profileName}',
+                                '${user.currentBusiness?.profileName}',
                                 style: const TextStyle(color: invoiceColor),
                               ),
                             ],
@@ -260,7 +278,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       arrowColor: black,
                       onClick: () {},
                       labelText: 'Партнерийн нэр',
-                      secondText: user.user?.currentBusiness?.partnerName,
+                      secondText: user.currentBusiness?.partnerName,
                       secondTextColor: invoiceColor,
                       color: white,
                     ),
@@ -271,15 +289,11 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       paddingVertical: 15,
                       arrowColor: black,
                       onClick: () {
-                        Navigator.of(context).pushNamed(
-                          SectorChoose.routeName,
-                          arguments: SectorChooseArguments(
-                              sectorListenController: sectorListenController),
-                        );
+                        Navigator.of(context).pushNamed(SectorChoose.routeName);
                       },
                       labelText: 'Салбарын нэр',
-                      secondText: sectorInvoice.name != null
-                          ? "${sectorInvoice.name}"
+                      secondText: invoice.newInvoice.senderBranch != null
+                          ? "${invoice.newInvoice.senderBranch?.name}"
                           : "Салбар сонгох",
                       secondTextColor: invoiceColor,
                       color: white,
@@ -298,11 +312,14 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                     ),
                     GestureDetector(
                       onTap: () {
-                        if (invoice.id != null && partnerInvoice.id != null) {
+                        if (invoice.newInvoice.partner?.id != null &&
+                            invoice.newInvoice.receiverBranch?.id != null) {
                           Navigator.of(context).pushNamed(
                             AddProduct.routeName,
                             arguments: AddProductArguments(
-                              businessId: invoice.id!,
+                              shippingAmount: shippingController.text,
+                              discountAmount: discountController.text,
+                              businessId: invoice.newInvoice.partner!.id!,
                             ),
                           );
                         } else {
@@ -347,16 +364,18 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       ),
                     ),
                     Column(
-                      children: product
+                      children: invoice.products
                           .map(
                             (item) => InvoiceProductCard(
-                              listenController: productController,
                               readOnly: false,
+                              discountAmount: discountController.text,
+                              shippingAmount: shippingController.text,
                               closeClick: () {
                                 setState(() {
-                                  Provider.of<CheckOutProvider>(context,
-                                          listen: false)
-                                      .removeCart(item);
+                                  invoice.removeCart(
+                                      item,
+                                      discountController.text,
+                                      shippingController.text);
                                 });
                               },
                               data: item,
@@ -384,8 +403,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                         Navigator.of(context).pushNamed(
                           InvoiceAddRow.routeName,
                           arguments: InvoiceAddRowArguments(
-                            additionalRowsListenController: addRowController,
-                          ),
+                              discountAmount: discountController.text,
+                              shippingAmount: shippingController.text),
                         );
                       },
                       child: Container(
@@ -407,9 +426,13 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       ),
                     ),
                     Column(
-                      children: additionalRowList
+                      children: invoice.additionalLines
                           .map(
                             (e) => InvoiceAdditionalLine(
+                              shippingAmount: shippingController.text,
+                              discountAmount: discountController.text,
+                              newInvoice: true,
+                              index: invoice.additionalLines.indexOf(e),
                               data: e,
                             ),
                           )
@@ -441,23 +464,19 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                           Expanded(
                             child: DropdownButtonFormField(
                               onChanged: (value) {
-                                dropdownValue = value.toString();
-                                setState(() {
-                                  source.type = "$value";
-                                  Provider.of<CheckOutProvider>(context,
-                                          listen: false)
-                                      .totalAmountInvoice(source.type, product,
-                                          shippingAmount, discountAmount);
-                                });
+                                invoice.discountType(
+                                    value.toString(),
+                                    discountController.text,
+                                    shippingController.text);
                               },
                               dropdownColor: white,
                               borderRadius: BorderRadius.circular(10),
                               isExpanded: false,
-                              hint: const SizedBox(
+                              hint: SizedBox(
                                 width: 135,
                                 child: Text(
-                                  "Сонгох",
-                                  style: TextStyle(
+                                  "${invoice.newInvoice.discountType}",
+                                  style: const TextStyle(
                                       color: invoiceColor, fontSize: 14),
                                   textAlign: TextAlign.end,
                                 ),
@@ -511,13 +530,10 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       textColor: invoiceColor,
                       controller: discountController,
                       textAlign: TextAlign.end,
-                      readOnly: source.type == "Сонгох",
+                      readOnly: invoice.newInvoice.discountType == "Сонгох",
                       onChanged: (value) {
-                        discountAmount =
-                            double.tryParse(discountController.text) ?? 0;
-                        Provider.of<CheckOutProvider>(context, listen: false)
-                            .totalAmountInvoice(source.type, product,
-                                shippingAmount, discountAmount);
+                        invoice.totalAmountInvoice(
+                            discountController.text, shippingController.text);
                       },
                       name: 'discountAmount',
                       inputType: TextInputType.number,
@@ -531,13 +547,13 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                           ),
                         ),
                         isDense: true,
-                        suffixIcon: source.type == 'Хувиар'
+                        suffixIcon: invoice.newInvoice.discountType == 'Хувиар'
                             ? const Icon(
                                 Icons.percent,
                                 size: 15,
                                 color: invoiceColor,
                               )
-                            : source.type == 'Дүнгээр'
+                            : invoice.newInvoice.discountType == 'Дүнгээр'
                                 ? Container(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 15),
@@ -567,8 +583,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       paddingVertical: 15,
                       arrowColor: black,
                       labelText: 'Тооцсон НӨАТ',
-                      secondText: product.isNotEmpty
-                          ? "${Utils().formatCurrency(source.totalVatAmount.toString())}₮"
+                      secondText: invoice.products.isNotEmpty
+                          ? "${Utils().formatCurrency(invoice.totalVatAmount.toString())}₮"
                           : "0₮",
                       secondTextColor: invoiceColor,
                       color: white,
@@ -579,7 +595,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       color: white,
                       labelText: "Нэмэлтээр",
                       secondText:
-                          "${Utils().formatCurrency(source.additionalRowAmount.toString())}₮",
+                          "${Utils().formatCurrency(invoice.addtionalRowAmount.toString())}₮",
                       secondTextColor: orderColor,
                       arrowColor: orderColor,
                     ),
@@ -588,23 +604,19 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       paddingVertical: 15,
                       arrowColor: black,
                       labelText: 'Тооцсон НХАТ',
-                      secondText: product.isNotEmpty
-                          ? "${Utils().formatCurrency(source.totalTaxAmount.toString())}₮"
+                      secondText: invoice.products.isNotEmpty
+                          ? "${Utils().formatCurrency(invoice.totalTaxAmount.toString())}₮"
                           : "0₮",
                       secondTextColor: invoiceColor,
                       color: white,
                     ),
                     FormTextField(
                       onChanged: (value) {
-                        setState(() {
-                          shippingAmount =
-                              double.tryParse(value.toString()) ?? 0;
-                        });
-                        Provider.of<CheckOutProvider>(context, listen: false)
-                            .totalAmountInvoice(source.type, product,
-                                shippingAmount, discountAmount);
+                        invoice.totalAmountInvoice(
+                            discountController.text, shippingController.text);
                       },
                       textColor: orderColor,
+                      controller: shippingController,
                       name: "shippingAmount",
                       textAlign: TextAlign.end,
                       inputType: TextInputType.number,
@@ -642,9 +654,9 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       paddingHorizontal: 15,
                       paddingVertical: 15,
                       arrowColor: black,
-                      labelText: 'Тооцсон НХАТ',
-                      secondText: product.isNotEmpty
-                          ? "${Utils().formatCurrency(source.additionalRowAmount.toString())}₮"
+                      labelText: 'Нийт дүн',
+                      secondText: invoice.products.isNotEmpty
+                          ? "${Utils().formatCurrency(invoice.amount.toString())}₮"
                           : "0₮",
                       secondTextColor: invoiceColor,
                       color: white,
@@ -654,8 +666,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       paddingVertical: 15,
                       arrowColor: black,
                       labelText: 'Нийт Төлбөр',
-                      secondText: product.isNotEmpty
-                          ? "${Utils().formatCurrency(source.finalAmount.toString())}₮"
+                      secondText: invoice.products.isNotEmpty
+                          ? "${Utils().formatCurrency(invoice.finalAmount.toString())}₮"
                           : "0₮",
                       secondTextColor: invoiceColor,
                       color: white,
@@ -727,14 +739,19 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                         isNewInvoice: true,
                                         invoice: Invoice(
                                           createdAt: DateTime.now(),
-                                          lines: source.invoice,
-                                          vatAmount: source.totalVatAmount,
-                                          taxAmount: source.totalTaxAmount,
-                                          totalAmount: source.total,
-                                          shippingAmount: shippingAmount,
-                                          discountAmount: discountAmount,
-                                          itemsTotal: source.total,
-                                          receiverBusiness: invoice,
+                                          lines: invoice.products,
+                                          vatAmount: invoice.totalVatAmount,
+                                          taxAmount: invoice.totalTaxAmount,
+                                          totalAmount: invoice.totalAmount,
+                                          shippingAmount: double.tryParse(
+                                                  shippingController.text) ??
+                                              0,
+                                          discountAmount: double.tryParse(
+                                                  discountController.text) ??
+                                              0,
+                                          itemsTotal: invoice.amount,
+                                          receiverBusiness:
+                                              invoice.newInvoice.partner,
                                           senderBusiness: Invoice(),
                                         ),
                                       ),
@@ -828,72 +845,34 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                     ),
                   ],
                 ),
-              )
-            : const Center(
-                child: CircularProgressIndicator(
-                  color: invoiceColor,
-                ),
               ),
       ),
     );
   }
 
-  @override
-  void initState() {
-    productController.addListener(() {
-      setState(() {
-        product = product;
-      });
-      Provider.of<CheckOutProvider>(context, listen: false).totalAmountInvoice(
-          dropdownValue, product, shippingAmount, discountAmount);
-    });
-    listenController.addListener(() {
-      setState(() {
-        invoice = listenController.invoice!;
-        invoiceValidate = false;
-      });
-    });
-    partnerListenController.addListener(() {
-      setState(() {
-        partnerInvoice = partnerListenController.partnerInvoice!;
-      });
-    });
-    sectorListenController.addListener(() {
-      setState(() {
-        sectorInvoice = sectorListenController.sectorInvoice!;
-        sectorValidate = false;
-      });
-    });
-    addRowController.addListener(() {
-      setState(() {
-        additionalRow = addRowController.invoiceAdditionalRow!;
-        additionalRowList.add(additionalRow);
-        Provider.of<CheckOutProvider>(context, listen: false).additionalRow =
-            additionalRowList;
-        Provider.of<CheckOutProvider>(context, listen: false)
-            .totalAmountInvoice(
-                dropdownValue, product, shippingAmount, discountAmount);
-      });
-    });
-    super.initState();
-  }
-
   validateCheck(bool value) {
-    if (sectorInvoice.name == null) {
+    final invoice = Provider.of<InvoiceProvider>(context, listen: false);
+    if (invoice.products.isEmpty) {
+      Scrollable.ensureVisible(productKey.currentContext!,
+          duration: const Duration(milliseconds: 300), curve: Curves.ease);
+    }
+    if (invoice.newInvoice.senderBranch?.id == null) {
       Scrollable.ensureVisible(sectorKey.currentContext!,
           duration: const Duration(milliseconds: 300), curve: Curves.ease);
       setState(() {
         sectorValidate = true;
       });
     }
-    if (invoice.partner == null) {
+    if (invoice.newInvoice.partner == null) {
       Scrollable.ensureVisible(invoiceKey.currentContext!,
           duration: const Duration(milliseconds: 300), curve: Curves.ease);
       setState(() {
         invoiceValidate = true;
       });
     }
-    if (sectorValidate == false && invoiceValidate == false) {
+    if (sectorValidate == false &&
+        invoiceValidate == false &&
+        invoice.products.isNotEmpty) {
       Navigator.of(context).pushNamed(
         PinCheckScreen.routeName,
         arguments: PinCheckScreenArguments(
@@ -908,26 +887,43 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
   }
 
   onSubmit(bool value) async {
-    setState(() {
-      isSubmit = true;
-    });
+    final invoice = Provider.of<InvoiceProvider>(context, listen: false);
     try {
+      setState(() {
+        isSubmit = true;
+      });
       List<Invoice> data = [];
-      for (var i = 0; i < product.length; i++) {
+      for (var i = 0; i < invoice.products.length; i++) {
         data.add(
-            Invoice(variantId: product[i].id, quantity: product[i].quantity));
+          Invoice(
+            variantId: widget.data == null
+                ? invoice.products[i].id
+                : invoice.products[i].variantId,
+            quantity: invoice.products[i].quantity,
+          ),
+        );
       }
-      await InvoiceApi().createInvoice(
-        Invoice(
-          description: descriptionController.text,
-          senderBranchId: sectorInvoice.id,
-          receiverBranchId: partnerInvoice.id,
-          receiverBusinessId: invoice.id,
-          send: value,
-          lines: data,
-          additionalLines: additionalRowList,
-        ),
+      Invoice asdf = Invoice(
+        description: descriptionController.text,
+        senderBranchId: invoice.newInvoice.senderBranch?.id,
+        receiverBranchId: invoice.newInvoice.receiverBranch?.id,
+        receiverBusinessId: invoice.newInvoice.partner?.id,
+        send: value,
+        lines: data,
+        additionalLines: invoice.additionalLines,
+        discountType: invoice.newInvoice.discountType == "Хувиар"
+            ? "PERCENTAGE"
+            : invoice.newInvoice.discountType == "Дүнгээр"
+                ? "AMOUNT"
+                : null,
+        discountValue: double.tryParse(discountController.text) ?? 0,
+        shippingAmount: double.tryParse(shippingController.text) ?? 0,
       );
+      if (widget.data == null) {
+        await InvoiceApi().createInvoice(asdf);
+      } else {
+        await InvoiceApi().updateInvoice(asdf, widget.data!.id!);
+      }
       showCustomDialog(
         context,
         value == true

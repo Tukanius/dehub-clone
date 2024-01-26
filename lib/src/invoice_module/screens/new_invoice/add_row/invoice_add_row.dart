@@ -1,5 +1,5 @@
-import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/invoice.dart';
+import 'package:dehub/providers/invoice_provider.dart';
 import 'package:dehub/utils/currency_formatter.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -8,21 +8,25 @@ import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:provider/provider.dart';
 
 class InvoiceAddRowArguments {
-  ListenController additionalRowsListenController;
+  String discountAmount;
+  String shippingAmount;
   InvoiceAddRowArguments({
-    required this.additionalRowsListenController,
+    required this.discountAmount,
+    required this.shippingAmount,
   });
 }
 
 class InvoiceAddRow extends StatefulWidget {
-  final ListenController additionalRowsListenController;
-
   static const routeName = '/InvoiceAddRow';
+  final String discountAmount;
+  final String shippingAmount;
   const InvoiceAddRow({
     super.key,
-    required this.additionalRowsListenController,
+    required this.discountAmount,
+    required this.shippingAmount,
   });
 
   @override
@@ -59,6 +63,7 @@ class _AddRowState extends State<InvoiceAddRow> {
   }
 
   onSubmit() async {
+    final source = Provider.of<InvoiceProvider>(context, listen: false);
     if (fbKey.currentState!.saveAndValidate()) {
       try {
         row = Invoice.fromJson(fbKey.currentState!.value);
@@ -68,8 +73,7 @@ class _AddRowState extends State<InvoiceAddRow> {
                 ? "AMOUNT"
                 : null;
         row.unit = dropdownValue1;
-        row.totalAmount = totalAmount;
-        widget.additionalRowsListenController.invoiceAddRow(row);
+        source.additionalRow(row, widget.discountAmount, widget.shippingAmount);
         Navigator.of(context).pop();
       } catch (e) {
         debugPrint(e.toString());
@@ -89,7 +93,6 @@ class _AddRowState extends State<InvoiceAddRow> {
     });
   }
 
-// isVatPayer
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -151,30 +154,30 @@ class _AddRowState extends State<InvoiceAddRow> {
                   ),
                 ]),
               ),
-              const SizedBox(
-                height: 3,
-              ),
-              Container(
-                color: white,
-                padding: const EdgeInsets.all(10),
-                child: const FormTextField(
-                  textAlign: TextAlign.left,
-                  name: 'description',
-                  maxLines: 5,
-                  decoration: InputDecoration(
-                    hintText: "Энд тайлбар оруулна уу",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.zero,
-                      borderSide: BorderSide(color: grey, width: 0.5),
-                    ),
-                    fillColor: white,
-                    filled: true,
-                    hintStyle: TextStyle(
-                      color: Color(0xff657786),
-                    ),
-                  ),
-                ),
-              ),
+              // const SizedBox(
+              //   height: 3,
+              // ),
+              // Container(
+              //   color: white,
+              //   padding: const EdgeInsets.all(10),
+              //   child: const FormTextField(
+              //     textAlign: TextAlign.left,
+              //     name: 'description',
+              //     maxLines: 5,
+              //     decoration: InputDecoration(
+              //       hintText: "Энд тайлбар оруулна уу",
+              //       border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.zero,
+              //         borderSide: BorderSide(color: grey, width: 0.5),
+              //       ),
+              //       fillColor: white,
+              //       filled: true,
+              //       hintStyle: TextStyle(
+              //         color: Color(0xff657786),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               const SizedBox(
                 height: 3,
               ),

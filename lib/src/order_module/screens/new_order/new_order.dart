@@ -139,50 +139,6 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
     });
   }
 
-  update(bool toReview, bool send) async {
-    List<Order> data = [];
-    for (var i = 0; i < product.length; i++) {
-      data.add(
-        Order(
-          variantId: product[i].id,
-          quantity: product[i].quantity,
-        ),
-      );
-    }
-    await OrderApi().update(
-      widget.data!.id!,
-      Order(
-        additionalLines: additionalLines,
-        businessId: order.id,
-        receiverBranchId: receiverBranch.id ?? order.receiverBranches?.first.id,
-        deliveryDate:
-            isCheck == false ? selectedDate.toString() : dateTime.toString(),
-        deliveryType: isCheck == false ? "DEFAULT_DATE" : "CUSTOM_DATE",
-        receiverStaffId: order.receiverStaff?.id,
-        lines: data,
-        discountType: "AMOUNT",
-        attachments: files,
-        discountValue: discountAmount,
-        shippingAmount: shippingAmount,
-        senderNote: senderNote.text,
-        senderAdditionalNote: senderAdditionalNote.text,
-        toReview: toReview,
-        send: send,
-      ),
-    );
-    showCustomDialog(
-      context,
-      toReview == false
-          ? 'Захиалга амжилттай хадгалагдлаа'
-          : "Захиалга амжилттай илгээгдлээ",
-      true,
-      onPressed: () {
-        Navigator.of(context).pop();
-        Navigator.of(context).pop();
-      },
-    );
-  }
-
   validateCheck(bool toReview, bool send) {
     if (isCheck == false && selectedDate == null) {
       Scrollable.ensureVisible(dateKey.currentContext!,
@@ -229,9 +185,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     : dateTime.toString(),
               ),
               onSubmit: () {
-                widget.data == null
-                    ? onSubmit(toReview, send)
-                    : update(toReview, send);
+                onSubmit(toReview, send);
               }),
         );
       }
@@ -243,12 +197,12 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
     for (var i = 0; i < product.length; i++) {
       data.add(
         Order(
-          variantId: product[i].id,
+          variantId: widget.data == null ? product[i].id : product[i].variantId,
           quantity: product[i].quantity,
         ),
       );
     }
-    await OrderApi().createOrder(Order(
+    Order asdf = Order(
       additionalLines: additionalLines,
       businessId: order.id,
       receiverBranchId: receiverBranch.id ?? order.receiverBranches?.first.id,
@@ -265,7 +219,12 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
       senderAdditionalNote: senderAdditionalNote.text,
       toReview: toReview,
       send: send,
-    ));
+    );
+    if (widget.data == null) {
+      await OrderApi().createOrder(asdf);
+    } else {
+      await OrderApi().update(widget.data!.id!, asdf);
+    }
     showCustomDialog(
       context,
       toReview == false

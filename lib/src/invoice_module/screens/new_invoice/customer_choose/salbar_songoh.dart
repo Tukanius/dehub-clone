@@ -1,37 +1,30 @@
 import 'dart:async';
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/add_button/add_button.dart';
-import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/components/sector_card/sector_card.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/providers/invoice_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 
 class SalbarSongohArguments {
-  ListenController partnerListenController;
   Invoice data;
-  String id;
   SalbarSongohArguments({
     required this.data,
-    required this.partnerListenController,
-    required this.id,
   });
 }
 
 class SalbarSongoh extends StatefulWidget {
-  final ListenController partnerListenController;
-  final String id;
   final Invoice data;
   static const routeName = '/salbarsongoh';
   const SalbarSongoh({
     super.key,
     required this.data,
-    required this.partnerListenController,
-    required this.id,
   });
 
   @override
@@ -50,7 +43,7 @@ class _SalbarSongohState extends State<SalbarSongoh> with AfterLayoutMixin {
     setState(() {
       isLoading = true;
     });
-    invoice = await InvoiceApi().brach(widget.id, query);
+    invoice = await InvoiceApi().brach(widget.data.id!, query);
     setState(() {
       isLoading = false;
     });
@@ -62,7 +55,7 @@ class _SalbarSongohState extends State<SalbarSongoh> with AfterLayoutMixin {
       setState(() {
         isSubmit = true;
       });
-      invoice = await InvoiceApi().brach(widget.id, value);
+      invoice = await InvoiceApi().brach(widget.data.id!, value);
       setState(() {
         isSubmit = false;
       });
@@ -71,6 +64,7 @@ class _SalbarSongohState extends State<SalbarSongoh> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<InvoiceProvider>(context, listen: true);
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -125,8 +119,7 @@ class _SalbarSongohState extends State<SalbarSongoh> with AfterLayoutMixin {
                                     (e) => SectorCard(
                                       data: e,
                                       onClick: () {
-                                        widget.partnerListenController
-                                            .partnerInvoiceChange(e.branch);
+                                        source.branchChoose(e);
                                         Navigator.of(context).pop();
                                         Navigator.of(context).pop();
                                       },

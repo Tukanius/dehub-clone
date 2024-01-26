@@ -387,6 +387,8 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                         children: invoice.lines!
                             .map(
                               (item) => InvoiceProductCard(
+                                discountAmount: '',
+                                shippingAmount: '',
                                 readOnly: true,
                                 data: item,
                               ),
@@ -485,6 +487,10 @@ class _BasicInformationTabState extends State<BasicInformationTab>
                     children: invoice.additionalLines!
                         .map(
                           (e) => InvoiceAdditionalLine(
+                            newInvoice: false,
+                            discountAmount: '',
+                            shippingAmount: '',
+                            index: invoice.additionalLines!.indexOf(e),
                             data: e,
                           ),
                         )

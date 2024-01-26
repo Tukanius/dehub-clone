@@ -4,6 +4,7 @@ import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/harah/index1.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/harah/pdf/pdf.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/harah/send_page.dart';
+import 'package:dehub/src/invoice_module/screens/new_invoice/new_invoice.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -107,10 +108,17 @@ class _HarahState extends State<Harah> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (user.currentBusiness?.type == "SUPPLIER")
+                  if (user.currentBusiness?.type == "SUPPLIER" &&
+                      widget.isNewInvoice == true)
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).pop();
+                        Navigator.of(context).pushNamed(
+                          NewInvoice.routeName,
+                          arguments: NewInvoiceArguments(
+                            data: widget.invoice,
+                          ),
+                        );
                       },
                       child: Container(
                         margin: const EdgeInsets.symmetric(horizontal: 15),

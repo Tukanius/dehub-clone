@@ -58,6 +58,11 @@ class InvoiceApi extends HttpRequest {
     return Invoice.fromJson(res as Map<String, dynamic>);
   }
 
+  Future<Invoice> updateInvoice(Invoice data, String id) async {
+    var res = await put('/invoice/$id', 'INVOICE', true, data: data.toJson());
+    return Invoice.fromJson(res as Map<String, dynamic>);
+  }
+
   Future<Invoice> networkGet(String id) async {
     var res = await get("/network/$id", 'INVOICE', true);
     return Invoice.fromJson(res as Map<String, dynamic>);

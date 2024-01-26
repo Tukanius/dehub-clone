@@ -77,16 +77,18 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
     conversationList =
         await OrderApi().conversationList('${widget.data.id}', limit);
     refreshController.refreshCompleted();
-    isLoading = false;
+    setState(() {
+      isLoading = false;
+    });
   }
 
   void sendChat() async {
     if (chatController.text.isNotEmpty) {
       setState(() async {
         try {
-          // setState(() {
-          //   isSubmit = true;
-          // });
+          setState(() {
+            isSubmit = true;
+          });
           chat.text = chatController.text;
           chat.deliveryNoteId = widget.data.id;
           chat.image = '';
@@ -94,9 +96,9 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
           conversationList =
               await OrderApi().conversationList('${widget.data.id}', 10);
           chatController.text = '';
-          // setState(() {
-          //   isSubmit = false;
-          // });
+          setState(() {
+            isSubmit = false;
+          });
         } catch (e) {
           debugPrint('============err===========');
           debugPrint(e.toString());

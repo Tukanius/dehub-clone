@@ -3,6 +3,7 @@ import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
+import 'package:dehub/providers/invoice_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/entry_point/finance_entry/finance_entry.dart';
 import 'package:dehub/src/finance_module/screens/available_funding_page/available_funding_page.dart';
@@ -191,6 +192,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => CheckOutProvider()),
           ChangeNotifierProvider(create: (_) => FinanceProvider()),
           ChangeNotifierProvider(create: (_) => InventoryProvider()),
+          ChangeNotifierProvider(create: (_) => InvoiceProvider()),
         ],
         child: Stack(
           children: [
@@ -288,8 +290,12 @@ class MyApp extends StatelessWidget {
                       );
                     });
                   case NewInvoice.routeName:
+                    NewInvoiceArguments arguments =
+                        settings.arguments as NewInvoiceArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return const NewInvoice();
+                      return NewInvoice(
+                        data: arguments.data,
+                      );
                     });
                   case AccountSetting.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -353,15 +359,9 @@ class MyApp extends StatelessWidget {
                       );
                     });
                   case CustomerChoose.routeName:
-                    CustomerChooseArguments arguments =
-                        settings.arguments as CustomerChooseArguments;
                     return PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
-                          CustomerChoose(
-                        listenController: arguments.listenController,
-                        partnerListenController:
-                            arguments.partnerListenController,
-                      ),
+                          const CustomerChoose(),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                         var begin = const Offset(0.0, 1.0);
@@ -433,9 +433,6 @@ class MyApp extends StatelessWidget {
                       pageBuilder: (context, animation, secondaryAnimation) =>
                           SalbarSongoh(
                         data: arguments.data,
-                        id: arguments.id,
-                        partnerListenController:
-                            arguments.partnerListenController,
                       ),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
@@ -1130,8 +1127,8 @@ class MyApp extends StatelessWidget {
                         settings.arguments as InvoiceAddRowArguments;
                     return MaterialPageRoute(builder: (context) {
                       return InvoiceAddRow(
-                        additionalRowsListenController:
-                            arguments.additionalRowsListenController,
+                        discountAmount: arguments.discountAmount,
+                        shippingAmount: arguments.shippingAmount,
                       );
                     });
                   case ProductGive.routeName:
@@ -1359,6 +1356,8 @@ class MyApp extends StatelessWidget {
                       pageBuilder: (context, animation, secondaryAnimation) =>
                           AddProduct(
                         businessId: arguments.businessId,
+                        discountAmount: arguments.discountAmount,
+                        shippingAmount: arguments.shippingAmount,
                       ),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
@@ -1510,14 +1509,9 @@ class MyApp extends StatelessWidget {
                       return const GivePage();
                     });
                   case SectorChoose.routeName:
-                    SectorChooseArguments arguments =
-                        settings.arguments as SectorChooseArguments;
                     return PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
-                          SectorChoose(
-                        sectorListenController:
-                            arguments.sectorListenController,
-                      ),
+                          const SectorChoose(),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                         var begin = const Offset(0.0, 1.0);

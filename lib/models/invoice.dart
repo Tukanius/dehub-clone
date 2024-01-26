@@ -177,8 +177,10 @@ class Invoice {
   String? paymentRefCode;
   Invoice? creditAcc;
   Invoice? debitAcc;
+  double? additionalRowAmount;
 
   Invoice({
+    this.additionalRowAmount,
     this.debitAcc,
     this.creditAcc,
     this.paymentRefCode,

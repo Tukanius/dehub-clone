@@ -189,7 +189,10 @@ class _GivePageState extends State<GivePage>
             AddButton(
               color: invoiceColor,
               onClick: () {
-                Navigator.of(context).pushNamed(NewInvoice.routeName);
+                Navigator.of(context).pushNamed(
+                  NewInvoice.routeName,
+                  arguments: NewInvoiceArguments(data: null),
+                );
               },
             )
         ],

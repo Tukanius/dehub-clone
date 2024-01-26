@@ -1,9 +1,7 @@
-import 'dart:io';
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/order_product_card/order_product_card.dart';
-import 'package:dehub/components/scaffold_messenger/scaffold_messenger.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/order.dart';
@@ -19,9 +17,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_file_downloader/flutter_file_downloader.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:dio/dio.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ReceivedOrderDetailArguments {
   ListenController listenController;
@@ -51,7 +47,6 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
   Order order = Order();
   Order approve = Order();
   bool isLoading = true;
-  double? progress;
   User user = User();
   double? totalAmount;
   General general = General();
@@ -383,7 +378,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                     ],
                                   ),
                                 ),
-                              )
+                              ),
                       ],
                     ),
                   ),
@@ -826,9 +821,14 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                         ),
                         Column(
                           children: order.attachments!
-                              .map((data) => attachmentCard(data, () {
-                                    downloadFile(data);
-                                  }))
+                              .map(
+                                (data) => attachmentCard(
+                                  data,
+                                  () {
+                                    launchUrl(Uri.parse(data.url.toString()));
+                                  },
+                                ),
+                              )
                               .toList(),
                         ),
                       ],
@@ -1230,48 +1230,48 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
     );
   }
 
-  Future<void> downloadFile(Order data) async {
-    if (Platform.isIOS) {
-      try {
-        Dio dio = Dio();
-        Response response = await dio.get(
-          data.url!,
-          options: Options(
-            responseType: ResponseType.bytes,
-          ),
-        );
-        String tempPath = (await getDownloadsDirectory())!.path;
-        File file = File(tempPath);
-        await file.writeAsBytes(response.data, flush: true);
-        customScaffoldMessenger(
-          context,
-          color: orderColor,
-          labelText: 'Амжилттай татагдлаа',
-        );
-      } catch (e) {
-        customScaffoldMessenger(
-          context,
-          color: red,
-          labelText: 'Алдаа гарлаа!',
-        );
-      }
-    } else {
-      FileDownloader.downloadFile(
-        url: data.url.toString(),
-        name: data.name,
-        onProgress: (fileName, progress) {
-          setState(() {
-            progress = progress;
-          });
-        },
-        onDownloadCompleted: (path) {
-          setState(() {
-            progress = null;
-          });
-        },
-      );
-    }
-  }
+  // Future<void> downloadFile(Order data) async {
+  //   if (Platform.isIOS) {
+  //     try {
+  //       Dio dio = Dio();
+  //       Response response = await dio.get(
+  //         data.url!,
+  //         options: Options(
+  //           responseType: ResponseType.bytes,
+  //         ),
+  //       );
+  //       String tempPath = (await getDownloadsDirectory())!.path;
+  //       File file = File(tempPath);
+  //       await file.writeAsBytes(response.data, flush: true);
+  //       customScaffoldMessenger(
+  //         context,
+  //         color: orderColor,
+  //         labelText: 'Амжилттай татагдлаа',
+  //       );
+  //     } catch (e) {
+  //       customScaffoldMessenger(
+  //         context,
+  //         color: red,
+  //         labelText: 'Алдаа гарлаа!',
+  //       );
+  //     }
+  //   } else {
+  //     FileDownloader.downloadFile(
+  //       url: data.url.toString(),
+  //       name: data.name,
+  //       onProgress: (fileName, progress) {
+  //         setState(() {
+  //           progress = progress;
+  //         });
+  //       },
+  //       onDownloadCompleted: (path) {
+  //         setState(() {
+  //           progress = null;
+  //         });
+  //       },
+  //     );
+  //   }
+  // }
 
   Widget attachmentCard(Order data, Function() onClick) {
     return Container(
@@ -1309,26 +1309,19 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
             child: Container(
               padding: const EdgeInsets.only(left: 10, bottom: 10),
               color: transparent,
-              child: Row(
+              child: const Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  progress != null
-                      ? const Text(
-                          'Татаж байна',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        )
-                      : const Text(
-                          'Татах',
-                          style: TextStyle(
-                            color: orderColor,
-                          ),
-                        ),
-                  const SizedBox(
+                  Text(
+                    'Харах',
+                    style: TextStyle(
+                      color: orderColor,
+                    ),
+                  ),
+                  SizedBox(
                     width: 5,
                   ),
-                  const Icon(
+                  Icon(
                     Icons.arrow_forward_ios,
                     color: orderColor,
                     size: 15,

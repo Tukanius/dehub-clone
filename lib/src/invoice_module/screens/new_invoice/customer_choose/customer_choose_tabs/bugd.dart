@@ -6,21 +6,16 @@ import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/components/supplier_card/supplier_card.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/providers/invoice_provider.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/salbar_songoh.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 
 class Bugd extends StatefulWidget {
   static const routeName = '/bugd';
-
-  final ListenController listenController;
-  final ListenController partnerListenController;
-  const Bugd({
-    super.key,
-    required this.partnerListenController,
-    required this.listenController,
-  });
+  const Bugd({super.key});
 
   @override
   State<Bugd> createState() => _BugdState();
@@ -60,6 +55,7 @@ class _BugdState extends State<Bugd> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<InvoiceProvider>(context, listen: true);
     return Scaffold(
         backgroundColor: backgroundColor,
         body: isLoading == true
@@ -87,15 +83,11 @@ class _BugdState extends State<Bugd> with AfterLayoutMixin {
                                       (data) => SupplierCard(
                                         data: data,
                                         onClick: () {
-                                          widget.listenController
-                                              .invoiceChange(data);
+                                          source.partnerChoose(data);
                                           Navigator.of(context).pushNamed(
                                             SalbarSongoh.routeName,
                                             arguments: SalbarSongohArguments(
                                               data: data,
-                                              id: data.id,
-                                              partnerListenController: widget
-                                                  .partnerListenController,
                                             ),
                                           );
                                         },

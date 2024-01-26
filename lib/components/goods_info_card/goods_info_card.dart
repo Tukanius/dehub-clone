@@ -127,7 +127,9 @@ class _GoodsInfoCardState extends State<GoodsInfoCard> {
                                 Expanded(
                                   flex: 10,
                                   child: Text(
-                                    '${data.name} SKU ${data.skuCode}',
+                                    data.name != null
+                                        ? '${data.name} SKU ${data.skuCode}'
+                                        : '${data.nameMon} SKU ${data.skuCode}',
                                     style: const TextStyle(
                                       color: black,
                                       fontSize: 12,

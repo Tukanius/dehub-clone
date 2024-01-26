@@ -1,6 +1,6 @@
-import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/providers/checkout_provider.dart';
+import 'package:dehub/providers/invoice_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -12,14 +12,14 @@ class InvoiceProductCard extends StatefulWidget {
   final Function()? closeClick;
   final Function()? onClick;
   final bool? readOnly;
-  final ListenController? listenController;
   final Invoice data;
   final bool? isPackage;
-  final List<Invoice>? package;
+  final String discountAmount;
+  final String shippingAmount;
   const InvoiceProductCard({
-    this.listenController,
+    required this.discountAmount,
+    required this.shippingAmount,
     this.readOnly,
-    this.package,
     this.isPackage,
     this.closeClick,
     this.onClick,
@@ -38,6 +38,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
   bool isLoading = false;
 
   decrease() {
+    final source = Provider.of<InvoiceProvider>(context, listen: false);
     if (widget.data.quantity! > 0) {
       setState(() {
         int newValue = 0;
@@ -46,15 +47,18 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
         quantityController.text = newValue.toString();
         widget.data.quantity = int.parse(quantityController.text.toString());
         if (widget.isPackage == true) {
-          orderCart(widget.data, widget.data.quantity!);
+          source.packageProductAdd(widget.data, widget.data.quantity!);
+          if (widget.data.quantity == 0) {
+            source.packageProductRemove(widget.data);
+          }
         }
-        widget.listenController?.changeVariable('decrease');
-        removeCart(widget.data.quantity!);
+        source.totalAmountInvoice(widget.discountAmount, widget.shippingAmount);
       });
     }
   }
 
   increase() {
+    final source = Provider.of<InvoiceProvider>(context, listen: false);
     setState(() {
       int newValue = 0;
       int currentValue = int.tryParse(quantityController.text) ?? 0;
@@ -62,32 +66,10 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
       quantityController.text = newValue.toString();
       widget.data.quantity = int.parse(quantityController.text.toString());
       if (widget.isPackage == true) {
-        orderCart(widget.data, widget.data.quantity!);
+        source.packageProductAdd(widget.data, widget.data.quantity!);
       }
-      widget.listenController?.changeVariable('increase');
+      source.totalAmountInvoice(widget.discountAmount, widget.shippingAmount);
     });
-  }
-
-  orderCart(Invoice product, int qty) {
-    int? index;
-    try {
-      index = widget.package?.indexWhere((item) => item.id == product.id);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-    if (index! > -1) {
-      if (widget.package?[index].quantity != 0) {
-        widget.package?[index].quantity = qty;
-      } else {
-        widget.package?.removeAt(index);
-      }
-    } else {
-      setState(() {
-        widget.package?.add(
-          product,
-        );
-      });
-    }
   }
 
   removeCart(int quantity) {
@@ -105,6 +87,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
 
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<InvoiceProvider>(context, listen: true);
     if (widget.data.quantity == null) {
       quantityController.text = '0';
     } else {
@@ -118,7 +101,8 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
         decoration: BoxDecoration(
           border: Border.all(
             width: 2,
-            color: widget.package?.contains(widget.data) == true
+            color: source.packageProduct.contains(widget.data) &&
+                    widget.isPackage == true
                 ? invoiceColor
                 : white,
           ),
@@ -203,28 +187,6 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                       width: 20,
                     ),
                   )
-                // : const SizedBox(
-                // height: 20,
-                // width: 20,
-                // child: Checkbox(
-                //   side: MaterialStateBorderSide.resolveWith(
-                //     (states) => BorderSide(
-                //       color: invoiceColor,
-                //       width: 2,
-                //     ),
-                //   ),
-                //   shape: RoundedRectangleBorder(
-                //     borderRadius: BorderRadius.circular(5),
-                //   ),
-                //   activeColor: invoiceColor,
-                //   value: isCheck,
-                //   onChanged: (value) {
-                //     setState(() {
-                //       isCheck = value!;
-                //     });
-                //   },
-                // ),
-                // ),
               ],
             ),
             const Divider(
@@ -381,7 +343,10 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                             widget.data.quantity =
                                 int.tryParse(quantityController.text) ?? 0;
                           });
-                          widget.listenController?.changeVariable('zxcv');
+                          if (widget.isPackage == true) {
+                            source.packageProductAdd(
+                                widget.data, int.tryParse(value) ?? 0);
+                          }
                         },
                         fontSize: 18,
                         inputType: TextInputType.number,

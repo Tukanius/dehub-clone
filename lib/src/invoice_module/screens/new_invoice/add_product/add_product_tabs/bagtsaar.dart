@@ -5,9 +5,8 @@ import 'package:dehub/components/invoice_product_card/invoice_product_card.dart'
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
-import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/providers/checkout_provider.dart';
+import 'package:dehub/providers/invoice_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -19,8 +18,12 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class Bagtsaar extends StatefulWidget {
   final String businessId;
   final bool isPackage;
+  final String shippingAmount;
+  final String discountAmount;
   static const routeName = '/bagtsaar';
   const Bagtsaar({
+    required this.shippingAmount,
+    required this.discountAmount,
     required this.isPackage,
     required this.businessId,
     super.key,
@@ -38,7 +41,6 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
   Timer? timer;
   bool isSubmit = false;
   String query = "";
-  List<Invoice> packageProduct = [];
   ListenController listenController = ListenController();
   RefreshController refreshController = RefreshController();
   @override
@@ -101,17 +103,8 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
   }
 
   @override
-  void initState() {
-    listenController.addListener(() {
-      setState(() {
-        packageProduct = packageProduct;
-      });
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final source = Provider.of<InvoiceProvider>(context, listen: true);
     return Column(
       children: [
         SearchButton(
@@ -150,9 +143,11 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
                                     children: inventory.rows!
                                         .map(
                                           (data) => InvoiceProductCard(
+                                            shippingAmount:
+                                                widget.shippingAmount,
+                                            discountAmount:
+                                                widget.discountAmount,
                                             isPackage: widget.isPackage,
-                                            package: packageProduct,
-                                            listenController: listenController,
                                             readOnly: false,
                                             onClick: () {
                                               FocusScope.of(context).unfocus();
@@ -175,7 +170,7 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
                   ),
                 ),
               ),
-        if (packageProduct.isNotEmpty && widget.isPackage == true)
+        if (source.packageProduct.isNotEmpty && widget.isPackage == true)
           Container(
             decoration: const BoxDecoration(
               color: white,
@@ -186,15 +181,19 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
             ),
             padding: const EdgeInsets.symmetric(vertical: 25),
             child: CustomButton(
-              onClick: () {
-                for (var i = 0; i < packageProduct.length; i++) {
-                  Provider.of<CheckOutProvider>(context, listen: false)
-                      .addCart(packageProduct[i], packageProduct[i].quantity!);
+              onClick: () async {
+                for (var i = 0; i < source.packageProduct.length; i++) {
+                  Provider.of<InvoiceProvider>(context, listen: false).addCart(
+                      source.packageProduct[i],
+                      source.packageProduct[i].quantity!,
+                      widget.discountAmount,
+                      widget.shippingAmount);
                 }
+                // source.packageProductClear();
                 Navigator.of(context).pop();
               },
               labelText:
-                  "${packageProduct.fold(0, (previousValue, element) => previousValue + element.quantity!)} бараа = ${Utils().formatCurrency(packageProduct.fold(0.0, (previousValue, element) => previousValue + (element.quantity!.toDouble() * element.price!)).toString())} ₮",
+                  "${source.packageProduct.fold(0, (previousValue, element) => previousValue + element.quantity!)} бараа = ${Utils().formatCurrency(source.packageProduct.fold(0.0, (previousValue, element) => previousValue + (element.quantity!.toDouble() * element.price!)).toString())} ₮",
               labelColor: invoiceColor,
             ),
           ),

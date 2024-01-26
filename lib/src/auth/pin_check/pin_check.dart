@@ -130,10 +130,12 @@ class _PinCheckScreenState extends State<PinCheckScreen> {
                         await widget.onSubmit();
                       }
                       setState(() {
+                        value = '';
                         isSubmit = false;
                       });
                     } catch (e) {
                       setState(() {
+                        value = '';
                         isSubmit = false;
                       });
                     }

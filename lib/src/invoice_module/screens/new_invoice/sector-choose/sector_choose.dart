@@ -1,31 +1,21 @@
 import 'dart:async';
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/close_button/close_button.dart';
-import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/components/sector_card/sector_card.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/providers/invoice_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
 
-class SectorChooseArguments {
-  ListenController sectorListenController;
-  SectorChooseArguments({
-    required this.sectorListenController,
-  });
-}
-
 class SectorChoose extends StatefulWidget {
-  final ListenController sectorListenController;
-
   static const routeName = '/SectorChoose';
   const SectorChoose({
-    required this.sectorListenController,
     super.key,
   });
 
@@ -72,6 +62,7 @@ class _SectorChooseState extends State<SectorChoose> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     partner = Provider.of<UserProvider>(context, listen: true).partnerUser;
+    final source = Provider.of<InvoiceProvider>(context, listen: true);
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -120,8 +111,7 @@ class _SectorChooseState extends State<SectorChoose> with AfterLayoutMixin {
                                     (e) => SectorCard(
                                       data: e,
                                       onClick: () {
-                                        widget.sectorListenController
-                                            .sectorInvoiceChange(e.branch);
+                                        source.sectorChoose(e);
                                         Navigator.of(context).pop();
                                       },
                                     ),
