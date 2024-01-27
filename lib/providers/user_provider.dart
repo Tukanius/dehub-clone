@@ -171,7 +171,7 @@ class UserProvider extends ChangeNotifier {
   logout() async {
     user = User();
     await AuthApi().logout();
-    clearAccessToken();
+    await clearAccessToken();
   }
 
   Future<String?> getEmail() async {

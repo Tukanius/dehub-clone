@@ -112,7 +112,8 @@ class _MainInformationTabState extends State<MainInformationTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Санхүүжилт хоног',
-            secondText: '365',
+            secondText:
+                '${widget.data.invPaymentDate!.difference(widget.data.disbursedDate!).inDays} хоног',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -121,7 +122,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             paddingVertical: 10,
             labelText: 'Санхүүжилтийн шимтгэл',
             secondText:
-                '${Utils().formatCurrency(widget.data.scfFeeAmount.toString()) + symbol().symbol}',
+                '${Utils().formatCurrency(widget.data.totalScfFeeAmount.toString()) + symbol().symbol}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -233,19 +234,9 @@ class _MainInformationTabState extends State<MainInformationTab> {
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
-            labelText: 'Хүсэх үеийн үлдэгдэл',
-            secondText:
-                '${Utils().formatCurrency(widget.data.minInvBalance.toString()) + symbol().symbol}',
-            secondTextFontWeight: FontWeight.w500,
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
             labelText: 'Илгээсэн огноо, цаг',
-            secondText:
-                DateFormat("yyyy-MM-dd HH:mm").format(widget.data.invCreatedAt!),
+            secondText: DateFormat("yyyy-MM-dd HH:mm")
+                .format(widget.data.invCreatedAt!),
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -253,8 +244,8 @@ class _MainInformationTabState extends State<MainInformationTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Баталсан огноо, цаг',
-            secondText:
-                DateFormat("yyyy-MM-dd HH:mm").format(widget.data.invConfirmedDate!),
+            secondText: DateFormat("yyyy-MM-dd HH:mm")
+                .format(widget.data.invConfirmedDate!),
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -278,7 +269,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Санхүү ажилтан утас',
-            secondText: 'Phone_Number',
+            secondText: '${widget.data.finUser?.phone}',
             secondTextColor: source.currentColor,
             color: white,
           ),

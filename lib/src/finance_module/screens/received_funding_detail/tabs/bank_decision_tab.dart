@@ -1,8 +1,10 @@
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/general.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +24,7 @@ class BankDecisionTab extends StatefulWidget {
 
 class _BankDecisionTabState extends State<BankDecisionTab> {
   General general = General();
+  User user = User();
 
   symbol() {
     final res = general.currencies!
@@ -41,6 +44,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
     final source = Provider.of<FinanceProvider>(context, listen: true);
     general =
         Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
+    user = Provider.of<UserProvider>(context, listen: true).financeUser;
 
     return SingleChildScrollView(
       child: Column(
@@ -103,7 +107,7 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             color: white,
-            labelText: 'Олгох дүн',
+            labelText: 'Олгосон дүн',
             secondText:
                 '${Utils().formatCurrency(widget.data.approvedAmount.toString()) + symbol()}',
             secondTextColor: source.currentColor,
@@ -112,16 +116,16 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             color: white,
-            labelText: 'Татах SCF шимтгэл',
+            labelText: 'Татсан SCF шимтгэл',
             secondText:
-                '${Utils().formatCurrency(widget.data.scfFeeAmount.toString()) + symbol()}',
+                '${Utils().formatCurrency(widget.data.totalScfFeeAmount.toString()) + symbol()}',
             secondTextColor: source.currentColor,
           ),
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
             color: white,
-            labelText: 'Татах банк шимтгэл',
+            labelText: 'Татсан банк шимтгэл',
             secondText:
                 '${Utils().formatCurrency(widget.data.bankFeeAmount.toString()) + symbol()}',
             secondTextColor: source.currentColor,
@@ -190,10 +194,14 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
             paddingVertical: 10,
             color: white,
             labelText: 'Эргэн төлөх огноо',
-            secondText: widget.data.repaymentDate != null
+            secondText: user.currentBusiness?.type == "SUPPLIER"
                 ? DateFormat("yyyy-MM-dd HH: mm")
-                    .format(widget.data.repaymentDate!)
-                : '-',
+                    .format(widget.data.invPaymentDate!)
+                : DateFormat("yyyy-MM-dd HH: mm").format(
+                    widget.data.invPaymentDate!.add(
+                      Duration(days: widget.data.product!.buyerTerm!.toInt()),
+                    ),
+                  ),
             secondTextColor: source.currentColor,
           ),
           const SizedBox(

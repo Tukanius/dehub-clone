@@ -66,6 +66,11 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => RepaymentStatus.fromJson(e))
             .toList()
         : null,
+    repaymentPaymentStatus: json['repaymentPaymentStatus'] != null
+        ? (json['repaymentPaymentStatus'] as List)
+            .map((e) => RepaymentStatus.fromJson(e))
+            .toList()
+        : null,
     scfRequestTypes: json['scfRequestTypes'] != null
         ? (json['scfRequestTypes'] as List)
             .map((e) => RequestTypes.fromJson(e))
@@ -142,6 +147,11 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
         : null,
     paymentMethod: json['paymentMethod'] != null
         ? (json['paymentMethod'] as List)
+            .map((e) => PaymentMethod.fromJson(e))
+            .toList()
+        : null,
+    paymentMethods: json['paymentMethods'] != null
+        ? (json['paymentMethods'] as List)
             .map((e) => PaymentMethod.fromJson(e))
             .toList()
         : null,
@@ -347,6 +357,9 @@ Map<String, dynamic> _$GeneralToJson(General instance) {
   if (instance.productSuppPenaltyTypes != null) {
     json['productSuppPenaltyTypes'] = instance.productSuppPenaltyTypes;
   }
+  if (instance.repaymentPaymentStatus != null) {
+    json['repaymentPaymentStatus'] = instance.repaymentPaymentStatus;
+  }
   if (instance.productBuyerPenaltyTypes != null) {
     json['productBuyerPenaltyTypes'] = instance.productBuyerPenaltyTypes;
   }
@@ -485,6 +498,9 @@ Map<String, dynamic> _$GeneralToJson(General instance) {
   }
   if (instance.paymentMethod != null) {
     json['paymentMethod'] = instance.paymentMethod;
+  }
+  if (instance.paymentMethods != null) {
+    json['paymentMethods'] = instance.paymentMethods;
   }
   if (instance.paymentTermRules != null) {
     json['paymentTermRules'] = instance.paymentTermRules;

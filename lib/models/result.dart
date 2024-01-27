@@ -34,8 +34,12 @@ class Filter {
   String? supplierId;
   bool? isContracted;
   String? programId;
+  String? repaymentId;
+  bool? isEmail;
 
   Filter({
+    this.isEmail,
+    this.repaymentId,
     this.programId,
     this.isContracted,
     this.supplierId,

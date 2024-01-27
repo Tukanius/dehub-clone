@@ -20,6 +20,7 @@ class Finance {
   String? type;
   String? invId;
   String? invRefCode;
+  String? description;
   String? requestedBusinessId;
   double? requestedBusinessSubLimit;
   String? requestedUserId;
@@ -80,6 +81,7 @@ class Finance {
   String? invReceiverBusinessId;
   String? invReceiverBusinessRegNumber;
   DateTime? invPaymentDate;
+  DateTime? invDueDate;
   DateTime? paymentDate;
   String? invConfirmedUserId;
   String? fundingInstructionStatus;
@@ -172,12 +174,10 @@ class Finance {
   double? buyerMinFee;
   double? suppMaxFee;
   double? buyerMaxFee;
-
   double? suppPenaltyPercent;
   double? buyerPenaltyPercent;
   String? buyerPenaltyType;
   String? suppPenaltyType;
-
   double? businessSubLimit;
   double? businessAvailableAmount;
   double? businessUtilizedAmount;
@@ -188,14 +188,42 @@ class Finance {
   double? businessPendingCount;
   String? phone;
   String? phoneNumber;
-
   List<Finance>? requestFiles;
   Uri? url;
-
   double? smeSubLimit;
   double? smeAvailableAmount;
+  double? buyerTerm;
+  bool? isRecalled;
+  String? disbursementRef;
+  String? repaymentRefCode;
+  String? paymentMethod;
+  double? trxAmount;
+  Finance? creditAcc;
+  String? icon;
+  String? clientText;
+
+  String? method;
+  String? creditAccountId;
+  String? addInfo;
+  double? amount;
+  List<String>? files;
 
   Finance({
+    this.amount,
+    this.method,
+    this.creditAccountId,
+    this.addInfo,
+    this.files,
+    this.clientText,
+    this.icon,
+    this.creditAcc,
+    this.paymentMethod,
+    this.trxAmount,
+    this.repaymentRefCode,
+    this.disbursementRef,
+    this.isRecalled,
+    this.invDueDate,
+    this.buyerTerm,
     this.smeAvailableAmount,
     this.smeSubLimit,
     this.url,
@@ -205,6 +233,7 @@ class Finance {
     this.contractFile,
     this.businessPendingCount,
     this.businessDisbursePendingCount,
+    this.description,
     this.businessUtilizedCount,
     this.businessPendingAmount,
     this.businessDisbursePendingAmount,

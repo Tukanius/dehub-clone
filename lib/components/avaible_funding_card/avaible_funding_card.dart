@@ -118,13 +118,24 @@ class _AvaibleFundingCardState extends State<AvaibleFundingCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  DateFormat("yyyy-MM-dd HH:mm")
-                      .format(widget.data.confirmedDate!),
-                  style: const TextStyle(
-                    color: Color(0xff555555),
-                    fontSize: 12,
-                  ),
+                Row(
+                  children: [
+                    const Text(
+                      'Баталсан: ',
+                      style: TextStyle(
+                        color: Color(0xff555555),
+                        fontSize: 12,
+                      ),
+                    ),
+                    Text(
+                      DateFormat("yyyy-MM-dd HH:mm")
+                          .format(widget.data.confirmedDate!),
+                      style: const TextStyle(
+                        color: Color(0xff555555),
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
                 ),
                 Row(
                   children: [

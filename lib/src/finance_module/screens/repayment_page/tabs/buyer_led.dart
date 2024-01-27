@@ -90,11 +90,13 @@ class _BuyerLedState extends State<BuyerLed> with AfterLayoutMixin {
                           children: finance.rows!
                               .map(
                                 (data) => RePaymentCard(
+                                  repayment: true,
                                   data: data,
                                   onClick: () {
                                     Navigator.of(context).pushNamed(
                                       RePaymentDetail.routeName,
                                       arguments: RePaymentDetailArguments(
+                                        recalled: false,
                                         id: data.id,
                                       ),
                                     );

@@ -152,16 +152,16 @@ class _LimitTabState extends State<LimitTab> {
           secondText: '${widget.data.businessPendingCount?.toInt()}',
           secondTextColor: source.currentColor,
         ),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          child: const Text(
-            'Гэрээ баталгаажуулах',
-            style: TextStyle(
-              color: grey3,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
+        // Container(
+        //   margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        //   child: const Text(
+        //     'Гэрээ баталгаажуулах',
+        //     style: TextStyle(
+        //       color: grey3,
+        //       fontWeight: FontWeight.w600,
+        //     ),
+        //   ),
+        // ),
         // Container(
         //   color: white,
         //   child: Row(

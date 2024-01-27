@@ -7,6 +7,7 @@ import 'package:dehub/providers/invoice_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/entry_point/finance_entry/finance_entry.dart';
 import 'package:dehub/src/finance_module/screens/available_funding_page/available_funding_page.dart';
+import 'package:dehub/src/finance_module/screens/payment_page/payment_page.dart';
 import 'package:dehub/src/finance_module/screens/recalled_page/recalled_page.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_transaction/invoice_transaction.dart';
 import 'package:dehub/src/invoice_module/screens/statement_detail/statement_detail.dart';
@@ -894,6 +895,7 @@ class MyApp extends StatelessWidget {
                         settings.arguments as RePaymentDetailArguments;
                     return MaterialPageRoute(builder: (context) {
                       return RePaymentDetail(
+                        recalled: arguments.recalled,
                         id: arguments.id,
                       );
                     });
@@ -931,6 +933,14 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return OrderCodPayment(
                         lines: arguments.lines,
+                        id: arguments.id,
+                      );
+                    });
+                  case FinancePayment.routeName:
+                    FinancePaymentArguments arguments =
+                        settings.arguments as FinancePaymentArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return FinancePayment(
                         id: arguments.id,
                       );
                     });

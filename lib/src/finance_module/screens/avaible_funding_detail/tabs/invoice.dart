@@ -99,7 +99,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             color: white,
-            labelText: 'Нэхэмжлэх статус',
+            labelText: 'Нэхэмжлэх',
             secondText: '${widget.data.refCode}',
             secondTextColor: source.currentColor,
           ),
@@ -409,11 +409,6 @@ class _InvoiceTabState extends State<InvoiceTab> {
                     ),
                   ),
                 ),
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  color: grey3,
-                  size: 18,
-                ),
               ],
             ),
           ),
@@ -454,7 +449,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingVertical: 10,
             color: white,
             labelText: 'Санхүү ажилтан утас',
-            secondText: '-',
+            secondText: '${buyerFinUser.phone}',
             secondTextColor: source.currentColor,
           ),
           Container(
@@ -580,11 +575,6 @@ class _InvoiceTabState extends State<InvoiceTab> {
                     ),
                   ),
                 ),
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  color: grey3,
-                  size: 18,
-                )
               ],
             ),
           ),
@@ -625,7 +615,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingVertical: 10,
             color: white,
             labelText: 'Санхүү ажилтан утас',
-            secondText: '-',
+            secondText: '${supplierFinUser.phone}',
             secondTextColor: source.currentColor,
           ),
           const SizedBox(

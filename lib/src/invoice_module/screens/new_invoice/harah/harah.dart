@@ -109,7 +109,7 @@ class _HarahState extends State<Harah> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   if (user.currentBusiness?.type == "SUPPLIER" &&
-                      widget.isNewInvoice == true)
+                      widget.invoice.invoiceStatus == 'DRAFT')
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).pop();

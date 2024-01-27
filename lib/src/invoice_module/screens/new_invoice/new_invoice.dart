@@ -63,6 +63,10 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
     final source = Provider.of<InvoiceProvider>(context, listen: false);
     source.clearData();
     if (widget.data != null) {
+      for (var i = 0; i < widget.data!.lines!.length; i++) {
+        widget.data!.lines![i].vatAmount = widget.data!.lines![i].vatAmount! /
+            widget.data!.lines![i].quantity!;
+      }
       source.partnerChoose(widget.data!.receiverBusiness!);
       source.branchChoose(Invoice(branch: widget.data!.receiverBranch!));
       source.sectorChoose(Invoice(branch: widget.data!.senderBranch!));

@@ -250,7 +250,8 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                       width: 5,
                     ),
                     Text(
-                      DateFormat("yyyy-MM-dd HH:mm").format(DateTime.parse(widget.data.deliveryDate.toString())),
+                      DateFormat("yyyy-MM-dd HH:mm").format(
+                          DateTime.parse(widget.data.deliveryDate.toString())),
                       style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         color: grey2,
@@ -294,30 +295,23 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                   ),
                 ),
                 Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const Text(
-                        'Төлбөл зохих: ',
-                        style: TextStyle(
-                          color: depBrown,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
+                  child: RichText(
+                    textAlign: TextAlign.end,
+                    text: TextSpan(
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontFamily: "Montserrat",
+                        color: depBrown,
+                      ),
+                      children: [
+                        const TextSpan(text: 'Төлбөл зохих: '),
+                        TextSpan(
+                          text:
+                              '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
+                          style: const TextStyle(color: orderColor),
                         ),
-                        textAlign: TextAlign.end,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
-                        style: const TextStyle(
-                          color: orderColor,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],

@@ -31,8 +31,8 @@ class _BasicInformationState extends State<BasicInformation> {
   }
 
   repaymentStatus() {
-    final res = general.repaymentStatus!
-        .firstWhere((element) => element.code == widget.data.repaymentStatus);
+    final res = general.repaymentPaymentStatus!
+        .firstWhere((element) => element.code == widget.data.paymentStatus);
     return res;
   }
 
@@ -192,22 +192,16 @@ class _BasicInformationState extends State<BasicInformation> {
               ],
             ),
           ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Хугацаа хэтэрсэн хоног',
-            secondText: '0',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Хугацаа хэтрэлтийн мэдээлэл',
-            secondText: '0',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
+          if (widget.data.overdueStatus != "NORMAL")
+            FieldCard(
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              labelText: 'Хугацаа хэтэрсэн хоног',
+              secondText:
+                  '${widget.data.invDueDate!.difference(DateTime.now()).inDays} хоног',
+              secondTextColor: source.currentColor,
+              color: white,
+            ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: const Text(
@@ -218,32 +212,16 @@ class _BasicInformationState extends State<BasicInformation> {
               ),
             ),
           ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Хөтөлбөрийн код',
-            secondText: 'Program_Ref#',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Хөтөлбөрийн нэр',
-            secondText: 'Program_Name',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             color: white,
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Буцаан дуудах эсэх'),
+                const Text('Буцаан дуудах эсэх'),
                 CustomSwitch(
-                  color: Color(0xff151357),
-                  isDefault: true,
+                  color: const Color(0xff151357),
+                  isDefault: widget.data.recourseTerm,
                 ),
               ],
             ),
@@ -252,7 +230,7 @@ class _BasicInformationState extends State<BasicInformation> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Буцаан дуудсан',
-            secondText: 'Үгүй',
+            secondText: "${widget.data.isRecalled}",
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -267,49 +245,15 @@ class _BasicInformationState extends State<BasicInformation> {
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
-            labelText: 'Хүсэлтийн код',
-            secondText: 'Fin_Req_#',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
             labelText: 'Олголтын код',
-            secondText: 'Dis_Ref#',
+            secondText: '${widget.data.disbursementRef}',
             secondTextColor: source.currentColor,
             color: white,
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Хүсэлтийн төлөв'),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: green.withOpacity(0.2),
-                  ),
-                  child: const Text(
-                    'Completed',
-                    style: TextStyle(
-                      color: green,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ],
-            ),
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: const Text(
-              'Худалдан авагч тал',
+              'Нийлүүлэгч тал',
               style: TextStyle(
                 color: grey2,
                 fontWeight: FontWeight.w600,

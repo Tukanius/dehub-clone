@@ -91,6 +91,7 @@ class General {
   List<OrderConfirmTerms>? orderConfirmTerms;
   List<OverDueStatus>? overdueStatus;
   List<PaymentMethod>? paymentMethod;
+  List<PaymentMethod>? paymentMethods;
   List<PaymentTermRules>? paymentTermRules;
   List<PerTypes>? perTypes;
   List<PriceChangeTypes>? priceChangeTypes;
@@ -146,8 +147,11 @@ class General {
   List<ProgramStatus>? programStatus;
   List<ProductSuppPenaltyTypes>? productSuppPenaltyTypes;
   List<ProductBuyerPenaltyTypes>? productBuyerPenaltyTypes;
+  List<RepaymentStatus>? repaymentPaymentStatus;
 
   General({
+    this.paymentMethods,
+    this.repaymentPaymentStatus,
     this.productSuppPenaltyTypes,
     this.productBuyerPenaltyTypes,
     this.programStatus,

@@ -46,7 +46,6 @@ class _FundingRequestDetailPageState extends State<FundingRequestDetailPage>
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<FinanceProvider>(context, listen: true);
-
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(

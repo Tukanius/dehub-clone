@@ -271,7 +271,7 @@ class _RequestTabState extends State<RequestTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Санхүүжилт хоног',
-            secondText: '${widget.data.remainingDays?.toInt()} хоног',
+            secondText: '${widget.data.product?.buyerTerm?.toInt()} хоног',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -342,30 +342,35 @@ class _RequestTabState extends State<RequestTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Эргэн төлөх хугацаа',
-            secondText: widget.data.repaymentDate != null
-                ? DateFormat("yyyy-MM-dd").format(widget.data.repaymentDate!)
-                : '-',
+            secondText: '',
+            // DateFormat('yyyy-MM-dd').format(
+            //   widget.data.invPaymentDate!.add(Duration(
+            //     days: widget.data.product!.buyerTerm!.toInt(),
+            //   )),
+            // ),
             secondTextColor: source.currentColor,
             color: white,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Буцаан дуудах эсэх',
-                  style: TextStyle(color: dark),
-                ),
-                CustomSwitch(
-                  color: const Color(0xff151357),
-                  isDefault: widget.data.recourseTerm,
-                ),
-              ],
+          if (user.currentBusiness?.type == "SUPPLIER")
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              color: white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Буцаан дуудах эсэх',
+                    style: TextStyle(color: dark),
+                  ),
+                  CustomSwitch(
+                    color: const Color(0xff151357),
+                    isDefault: widget.data.recourseTerm,
+                  ),
+                ],
+              ),
             ),
-          ),
-          if (widget.data.recourseTerm == true)
+          if (widget.data.recourseTerm == true &&
+              user.currentBusiness?.type == "SUPPLIER")
             FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
@@ -404,7 +409,7 @@ class _RequestTabState extends State<RequestTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Нэхэмжлэх хугацаа',
-            secondText: "${widget.data.invConfirmedDays?.toInt()}",
+            secondText: "${widget.data.invConfirmedDays?.toInt()} хоног",
             secondTextColor: source.currentColor,
             color: white,
           ),

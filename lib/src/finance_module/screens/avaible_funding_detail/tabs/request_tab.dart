@@ -139,7 +139,6 @@ class _RequestTabState extends State<RequestTab> {
     general =
         Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
     user = Provider.of<UserProvider>(context, listen: true).financeUser;
-
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -363,7 +362,9 @@ class _RequestTabState extends State<RequestTab> {
                     paddingVertical: 10,
                     color: white,
                     labelText: 'Санхүүжилт хоног',
-                    secondText: '$day хоног',
+                    secondText: user.currentBusiness?.type == "SUPPLIER"
+                        ? '$day хоног'
+                        : "${widget.data.program?.product?.buyerTerm?.toInt()} хоног",
                     secondTextColor: source.currentColor,
                   ),
                   FieldCard(
@@ -420,20 +421,6 @@ class _RequestTabState extends State<RequestTab> {
                     paddingHorizontal: 15,
                     paddingVertical: 10,
                     color: white,
-                    labelText: 'Шимтгэл дээд дүн',
-                    secondText: widget.userType == "SUPPLIER"
-                        ? widget.data.program?.product?.suppMaxFee != null
-                            ? '${widget.data.program?.product?.suppMaxFee}₮'
-                            : '-'
-                        : widget.data.program?.product?.buyerMaxFee != null
-                            ? "${widget.data.program?.product?.buyerMaxFee}₮"
-                            : "-",
-                    secondTextColor: source.currentColor,
-                  ),
-                  FieldCard(
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    color: white,
                     labelText: 'Шимтгэл доод дүн',
                     secondText: widget.userType == "SUPPLIER"
                         ? '${Utils().formatCurrency(widget.data.program?.product?.suppMinFee.toString())}₮'
@@ -445,28 +432,34 @@ class _RequestTabState extends State<RequestTab> {
                     paddingVertical: 10,
                     color: white,
                     labelText: 'Эргэн төлөх хугацаа',
-                    secondText: DateFormat('yyyy-MM-dd').format(repaymentDate),
+                    secondText: DateFormat('yyyy-MM-dd').format(
+                        repaymentDate.add(Duration(
+                            days: widget.data.program!.product!.buyerTerm!
+                                .toInt()))),
                     secondTextColor: source.currentColor,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Буцаан дуудах эсэх',
-                          style: TextStyle(color: dark),
-                        ),
-                        CustomSwitch(
-                          isDefault: widget.data.program?.product?.recourseTerm,
-                          color: const Color(0xff151357),
-                        ),
-                      ],
+                  if (user.currentBusiness?.type == "SUPPLIER")
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      color: white,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Буцаан дуудах эсэх',
+                            style: TextStyle(color: dark),
+                          ),
+                          CustomSwitch(
+                            isDefault:
+                                widget.data.program?.product?.recourseTerm,
+                            color: const Color(0xff151357),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  if (widget.data.program?.product?.recourseTerm == true)
+                  if (widget.data.program?.product?.recourseTerm == true &&
+                      user.currentBusiness?.type == "SUPPLIER")
                     FieldCard(
                       paddingHorizontal: 15,
                       paddingVertical: 10,
@@ -505,7 +498,7 @@ class _RequestTabState extends State<RequestTab> {
                     color: white,
                     labelText: 'Нэхэмжлэх хугацаа',
                     secondText:
-                        '${widget.data.confirmedDate?.difference(DateTime.now()).inDays} хоног',
+                        '${DateTime.now().difference(widget.data.confirmedDate!).inDays} хоног',
                     secondTextColor: source.currentColor,
                   ),
                   FieldCard(

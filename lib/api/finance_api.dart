@@ -18,6 +18,12 @@ class FinanceApi extends HttpRequestFinance {
     return User.fromJson(res as Map<String, dynamic>);
   }
 
+  Future<Result> reminderHistory(String host, ResultArguments data) async {
+    var res =
+        await get(host, '/repayment/reminder_history', data: data.toJson());
+    return Result.fromJson(res, Finance.fromJson);
+  }
+
   Future<Result> requestList(
       String host, ResultArguments resultArguments) async {
     var res = await get(host, '/request',
@@ -87,6 +93,27 @@ class FinanceApi extends HttpRequestFinance {
     });
     var res = await post(host, '/media/file/finance/upload', data: formData);
     return User.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> repaymentHistory(String host, ResultArguments data) async {
+    var res = await get(host, '/repayment/history', data: data.toJson());
+    return Result.fromJson(res, Finance.fromJson);
+  }
+
+  Future<Result> compromiseList(String host, ResultArguments data) async {
+    var res = await get(host, '/repayment/compromise', data: data.toJson());
+    return Result.fromJson(res, Finance.fromJson);
+  }
+
+  Future<Finance> compromiseCreate(
+      String host, List<Finance> data, String id) async {
+    var res = await post(host, 'repayment/$id/compromise', data: data);
+    return Finance.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Finance> pay(String host, Finance data, String id) async {
+    var res = await put(host, '/repayment/$id/pay', data: data.toJson());
+    return Finance.fromJson(res as Map<String, dynamic>);
   }
 
   logout(String host) async {

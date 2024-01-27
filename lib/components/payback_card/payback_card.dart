@@ -2,6 +2,7 @@ import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/src/finance_module/screens/payment_page/payment_page.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,10 @@ import 'package:intl/intl.dart';
 class RePaymentCard extends StatefulWidget {
   final Function()? onClick;
   final Finance data;
+  final bool repayment;
   const RePaymentCard({
     super.key,
+    required this.repayment,
     required this.data,
     this.onClick,
   });
@@ -83,14 +86,21 @@ class RePaymentCardState extends State<RePaymentCard> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: repaymentStatusColor(true),
+                    color: Color(int.parse(
+                                repaymentStatus().color.substring(1, 7),
+                                radix: 16) +
+                            0xff000000)
+                        .withOpacity(0.3),
                   ),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                   child: Text(
-                    '${repaymentStatus()}',
+                    '${repaymentStatus().name}',
                     style: TextStyle(
-                      color: repaymentStatusColor(false),
+                      color: Color(int.parse(
+                              repaymentStatus().color.substring(1, 7),
+                              radix: 16) +
+                          0xff000000),
                       fontWeight: FontWeight.w500,
                       fontSize: 12,
                     ),
@@ -157,8 +167,13 @@ class RePaymentCardState extends State<RePaymentCard> {
                           style: TextStyle(color: depBrown),
                         ),
                         TextSpan(
-                          text: '${overdueStatus()}',
-                          style: TextStyle(color: overdueStatusColor()),
+                          text: '${overdueStatus().name}',
+                          style: TextStyle(
+                            color: Color(int.parse(
+                                    overdueStatus().color.substring(1, 7),
+                                    radix: 16) +
+                                0xff000000),
+                          ),
                         ),
                       ],
                     ),
@@ -166,6 +181,41 @@ class RePaymentCardState extends State<RePaymentCard> {
                 ),
               ],
             ),
+            if (widget.repayment == false)
+              const SizedBox(
+                height: 5,
+              ),
+            if (widget.repayment == false)
+              Align(
+                alignment: Alignment.centerRight,
+                child: Material(
+                  borderRadius: BorderRadius.circular(5),
+                  color: source.currentColor,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(5),
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                        FinancePayment.routeName,
+                        arguments: FinancePaymentArguments(id: widget.data.id!),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 6),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: const Text(
+                        'Төлөх',
+                        style: TextStyle(
+                          color: white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),
@@ -174,61 +224,13 @@ class RePaymentCardState extends State<RePaymentCard> {
 
   overdueStatus() {
     final res = general.repaymentOverDueStatus!
-        .firstWhere((element) => element.code == widget.data.overdueStatus)
-        .name;
+        .firstWhere((element) => element.code == widget.data.overdueStatus);
     return res;
   }
 
   repaymentStatus() {
-    final res = general.repaymentStatus!
-        .firstWhere((element) => element.code == widget.data.repaymentStatus)
-        .name;
+    final res = general.repaymentPaymentStatus!
+        .firstWhere((element) => element.code == widget.data.paymentStatus);
     return res;
-  }
-
-  repaymentStatusColor(bool opacity) {
-    if (opacity == false) {
-      switch (widget.data.repaymentStatus) {
-        case "CREATED":
-          return const Color(0xffFF9900);
-        case "APPROVED":
-          return const Color(0xff4169E1);
-        case "RECOURSED":
-          return const Color(0xffFF540D);
-        case "CLOSED":
-          return const Color(0xff25B475);
-        default:
-      }
-    } else {
-      switch (widget.data.repaymentStatus) {
-        case "CREATED":
-          return const Color(0xffFF9900).withOpacity(0.2);
-        case "APPROVED":
-          return const Color(0xff4169E1).withOpacity(0.2);
-        case "RECOURSED":
-          return const Color(0xffFF540D).withOpacity(0.2);
-        case "CLOSED":
-          return const Color(0xff25B475).withOpacity(0.2);
-        default:
-      }
-    }
-  }
-
-  overdueStatusColor() {
-    switch (widget.data.overdueStatus) {
-      case "NORMAL":
-        return const Color(0xff25B475);
-      case "ONE_TO_THREE":
-        return const Color(0xffFF9900);
-      case "FOUR_THIRTY":
-        return const Color(0xffFF76A1);
-      case "THIRTY_ONE_SIXTY":
-        return const Color(0xffFF540D);
-      case "SIXTY_ONE_NINETY":
-        return const Color(0xffEB0404);
-      case "OVER_NINETY":
-        return const Color(0xff890E34);
-      default:
-    }
   }
 }

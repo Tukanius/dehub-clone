@@ -41,11 +41,15 @@ class PartnerCardState extends State<PartnerCard> {
     return GestureDetector(
       onTap: widget.onClick,
       child: AnimatedContainer(
-        duration: Duration(milliseconds: 300 + (widget.index * 200)),
-        curve: Curves.ease,
+        duration: Duration(milliseconds: 200 + (widget.index * 100)),
+        curve: Curves.easeIn,
         transform: Matrix4.translationValues(
-          widget.startAnimation ? 0 : MediaQuery.of(context).size.width,
-          0,
+          widget.startAnimation
+              ? 0
+              : widget.index % 2 == 0
+                  ? MediaQuery.of(context).size.width
+                  : -MediaQuery.of(context).size.width,
+          widget.startAnimation ? 0 : 100,
           0,
         ),
         margin: const EdgeInsets.symmetric(vertical: 2),
