@@ -36,8 +36,10 @@ class Filter {
   String? programId;
   String? repaymentId;
   bool? isEmail;
+  String? financeType;
 
   Filter({
+    this.financeType,
     this.isEmail,
     this.repaymentId,
     this.programId,

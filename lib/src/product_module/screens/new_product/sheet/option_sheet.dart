@@ -34,7 +34,6 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<InventoryProvider>(context, listen: true);
-
     return Column(
       children: [
         Container(
@@ -173,11 +172,26 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
                                                 ),
                                               ],
                                             ),
-                                            const Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: productColor,
-                                              size: 18,
-                                            )
+                                            GestureDetector(
+                                              onTap: () {
+                                                int index = source
+                                                    .product.values!
+                                                    .indexOf(data);
+                                                source.remove(index);
+                                              },
+                                              child: Container(
+                                                height: 20,
+                                                width: 20,
+                                                color: transparent,
+                                                child: SvgPicture.asset(
+                                                  'assets/svg/close.svg',
+                                                  colorFilter:
+                                                      const ColorFilter.mode(
+                                                          grey2,
+                                                          BlendMode.srcIn),
+                                                ),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),

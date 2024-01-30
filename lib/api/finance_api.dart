@@ -105,9 +105,9 @@ class FinanceApi extends HttpRequestFinance {
     return Result.fromJson(res, Finance.fromJson);
   }
 
-  Future<Finance> compromiseCreate(
-      String host, List<Finance> data, String id) async {
-    var res = await post(host, 'repayment/$id/compromise', data: data);
+  Future<Finance> compromiseCreate(String host, Finance data, String id) async {
+    var res =
+        await post(host, '/repayment/$id/compromise', data: data.toJson());
     return Finance.fromJson(res as Map<String, dynamic>);
   }
 

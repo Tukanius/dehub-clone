@@ -136,6 +136,7 @@ class Finance {
   Finance? finUser;
   String? number;
   String? programStatus;
+  String? lbfProgramStatus;
   String? username;
   double? availableAmount;
   double? programLimit;
@@ -201,14 +202,22 @@ class Finance {
   Finance? creditAcc;
   String? icon;
   String? clientText;
-
   String? method;
   String? creditAccountId;
   String? addInfo;
   double? amount;
   List<String>? files;
+  double? lbfProgramLimit;
+  String? date; // Must be string
+  Finance? actionUser;
+  List<Finance>? compromises;
 
   Finance({
+    this.compromises,
+    this.actionUser,
+    this.date,
+    this.lbfProgramLimit,
+    this.lbfProgramStatus,
     this.amount,
     this.method,
     this.creditAccountId,

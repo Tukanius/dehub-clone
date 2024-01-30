@@ -16,16 +16,20 @@ import 'package:dehub/src/finance_module/screens/avaible_funding_detail/avaible_
 
 class AvailableFundingPageArguments {
   String id;
+  String financeType;
   AvailableFundingPageArguments({
     required this.id,
+    required this.financeType,
   });
 }
 
 class AvailableFundingPage extends StatefulWidget {
   static const routeName = '/AvailableFundingPage';
   final String id;
+  final String financeType;
   const AvailableFundingPage({
     super.key,
+    required this.financeType,
     required this.id,
   });
 
@@ -45,7 +49,8 @@ class _AvailableFundingPageState extends State<AvailableFundingPage>
   list(page, limit) async {
     final source = Provider.of<FinanceProvider>(context, listen: false);
     Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(productType: "BUYER_LED", programId: widget.id);
+    Filter filter =
+        Filter(financeType: widget.financeType, programId: widget.id);
     var res = await FinanceApi().financeableList(
         source.url, ResultArguments(filter: filter, offset: offset));
     setState(() {

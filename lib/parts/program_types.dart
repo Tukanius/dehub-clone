@@ -1,13 +1,13 @@
-part of '../models/program_status.dart';
+part of '../models/program_types.dart';
 
-ProgramStatus _$ProgramStatusFromJson(Map<String, dynamic> json) {
-  return ProgramStatus(
+ProgramTypes _$ProgramTypesFromJson(Map<String, dynamic> json) {
+  return ProgramTypes(
     code: json['code'] != null ? json['code'] as String : null,
     name: json['name'] != null ? json['name'] as String : null,
   );
 }
 
-Map<String, dynamic> _$ProgramStatusToJson(ProgramStatus instance) {
+Map<String, dynamic> _$ProgramTypesToJson(ProgramTypes instance) {
   Map<String, dynamic> json = {};
 
   if (instance.code != null) json['code'] = instance.code;

@@ -342,7 +342,7 @@ class _DynamicTabState extends State<DynamicTab> {
             Row(
               children: [
                 const SizedBox(
-                  width: 45,
+                  width: 40,
                 ),
                 Expanded(
                   child: CustomButton(
@@ -370,7 +370,7 @@ class _DynamicTabState extends State<DynamicTab> {
                   ),
                 ),
                 const SizedBox(
-                  width: 45,
+                  width: 40,
                 ),
               ],
             ),

@@ -14,20 +14,16 @@ import 'package:provider/provider.dart';
 
 class RePaymentDetailArguments {
   String id;
-  bool recalled;
   RePaymentDetailArguments({
     required this.id,
-    required this.recalled,
   });
 }
 
 class RePaymentDetail extends StatefulWidget {
   final String id;
-  final bool recalled;
   static const routeName = '/RePaymentDetail';
   const RePaymentDetail({
     super.key,
-    required this.recalled,
     required this.id,
   });
 
@@ -54,7 +50,7 @@ class _RePaymentDetailState extends State<RePaymentDetail>
     final source = Provider.of<FinanceProvider>(context, listen: true);
 
     return DefaultTabController(
-      length: widget.recalled == true ? 2 : 5,
+      length: 5,
       child: Scaffold(
         backgroundColor: backgroundColor,
         appBar: AppBar(
@@ -70,25 +66,19 @@ class _RePaymentDetailState extends State<RePaymentDetail>
               color: white,
               elevation: 2,
               child: TabBar(
-                isScrollable: widget.recalled == false,
-                tabAlignment:
-                    widget.recalled == false ? TabAlignment.start : null,
+                isScrollable: true,
+                tabAlignment: TabAlignment.start,
                 overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
                 unselectedLabelColor: buttonColor,
                 indicatorColor: source.currentColor,
                 labelColor: source.currentColor,
-                tabs: widget.recalled == false
-                    ? const [
-                        Tab(text: 'Үндсэн мэдээлэл'),
-                        Tab(text: 'Төлөлтийн түүх'),
-                        Tab(text: 'Сануулга түүх'),
-                        Tab(text: 'И-мэйл сануулга'),
-                        Tab(text: 'Амлалтууд'),
-                      ]
-                    : const [
-                        Tab(text: 'Үндсэн мэдээлэл'),
-                        Tab(text: 'Төлөлтийн түүх'),
-                      ],
+                tabs: const [
+                  Tab(text: 'Үндсэн мэдээлэл'),
+                  Tab(text: 'Төлөлтийн түүх'),
+                  Tab(text: 'Сануулга түүх'),
+                  Tab(text: 'И-мэйл сануулга'),
+                  Tab(text: 'Амлалтууд'),
+                ],
               ),
             ),
             Expanded(
@@ -99,32 +89,23 @@ class _RePaymentDetailState extends State<RePaymentDetail>
                       ),
                     )
                   : TabBarView(
-                      children: widget.recalled == false
-                          ? [
-                              BasicInformation(
-                                data: get,
-                              ),
-                              PaymentHistoryTab(
-                                id: widget.id,
-                              ),
-                              ReminderHistoryTab(
-                                id: widget.id,
-                              ),
-                              EmailReminderTab(
-                                id: widget.id,
-                              ),
-                              CompromisesTab(
-                                id: widget.id,
-                              ),
-                            ]
-                          : [
-                              BasicInformation(
-                                data: get,
-                              ),
-                              PaymentHistoryTab(
-                                id: widget.id,
-                              ),
-                            ],
+                      children: [
+                        BasicInformation(
+                          data: get,
+                        ),
+                        PaymentHistoryTab(
+                          id: widget.id,
+                        ),
+                        ReminderHistoryTab(
+                          id: widget.id,
+                        ),
+                        EmailReminderTab(
+                          id: widget.id,
+                        ),
+                        CompromisesTab(
+                          id: widget.id,
+                        ),
+                      ],
                     ),
             ),
           ],

@@ -177,14 +177,8 @@ class HttpRequestFinance {
   Future<dynamic> post(String host, String url,
       {dynamic data, bool handler = true, bool approve = false}) async {
     try {
-      return await request(
-        host,
-        url,
-        'POST',
-        data,
-        handler: handler,
-        approve: approve,
-      );
+      return await request(host, url, 'POST', data,
+          handler: handler, approve: approve);
     } catch (e) {
       debugPrint("POST =>$e");
       rethrow;

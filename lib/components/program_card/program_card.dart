@@ -10,9 +10,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class ProgramCard extends StatefulWidget {
   final Finance data;
+  final String financeType;
   final Function()? onClick;
   const ProgramCard({
     super.key,
+    required this.financeType,
     this.onClick,
     required this.data,
   });
@@ -25,14 +27,21 @@ class _ProgramCardState extends State<ProgramCard> {
   General general = General();
 
   programStatus() {
-    final res = general.programStatus!
-        .firstWhere((element) => element.code == widget.data.programStatus)
-        .name;
+    dynamic res;
+    if (widget.financeType == "SCF") {
+      res = general.programTypes!
+          .firstWhere((element) => element.code == widget.data.programStatus)
+          .name;
+    } else {
+      res = general.lbfProgramStatus!
+          .firstWhere((element) => element.code == widget.data.lbfProgramStatus)
+          .name;
+    }
     return res;
   }
 
   statusColor() {
-    switch (widget.data.programStatus) {
+    switch (widget.data.programStatus ?? widget.data.lbfProgramStatus) {
       case "INACTIVE":
         return blue;
       case "ACTIVE":
@@ -42,6 +51,7 @@ class _ProgramCardState extends State<ProgramCard> {
       case "CANCELLED":
         return red;
       default:
+        grey2;
     }
   }
 
@@ -128,9 +138,8 @@ class _ProgramCardState extends State<ProgramCard> {
                       children: [
                         const TextSpan(text: 'Боломжит дүн: '),
                         TextSpan(
-                          text: widget.data.smeAvailableAmount != null
-                              ? "${Utils().formatCurrency(widget.data.smeAvailableAmount.toString())}₮"
-                              : "${Utils().formatCurrency(widget.data.availableAmount.toString())}₮",
+                          text:
+                              "${Utils().formatCurrency(widget.data.lbfProgramLimit.toString())}₮",
                         ),
                       ],
                     ),
@@ -148,9 +157,8 @@ class _ProgramCardState extends State<ProgramCard> {
                       children: [
                         const TextSpan(text: 'Лимит: '),
                         TextSpan(
-                          text: widget.data.smeSubLimit != null
-                              ? "${Utils().formatCurrency(widget.data.smeSubLimit.toString())}₮"
-                              : "${Utils().formatCurrency(widget.data.programLimit.toString())}₮",
+                          text:
+                              "${Utils().formatCurrency(widget.data.lbfProgramLimit.toString())}₮",
                         ),
                       ],
                     ),

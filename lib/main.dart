@@ -7,6 +7,7 @@ import 'package:dehub/providers/invoice_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/entry_point/finance_entry/finance_entry.dart';
 import 'package:dehub/src/finance_module/screens/available_funding_page/available_funding_page.dart';
+import 'package:dehub/src/finance_module/screens/compromise_page/compromise_page.dart';
 import 'package:dehub/src/finance_module/screens/payment_page/payment_page.dart';
 import 'package:dehub/src/finance_module/screens/recalled_page/recalled_page.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_transaction/invoice_transaction.dart';
@@ -465,6 +466,15 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return AvailableFundingPage(
                         id: arguments.id,
+                        financeType: arguments.financeType,
+                      );
+                    });
+                  case CompromisePage.routeName:
+                    CompromisePageArguments arguments =
+                        settings.arguments as CompromisePageArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return CompromisePage(
+                        data: arguments.data,
                       );
                     });
                   case AvaibleFundingDetailPage.routeName:
@@ -895,7 +905,6 @@ class MyApp extends StatelessWidget {
                         settings.arguments as RePaymentDetailArguments;
                     return MaterialPageRoute(builder: (context) {
                       return RePaymentDetail(
-                        recalled: arguments.recalled,
                         id: arguments.id,
                       );
                     });
@@ -942,6 +951,7 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return FinancePayment(
                         id: arguments.id,
+                        refCode: arguments.refCode,
                       );
                     });
                   case FinancingPage.routeName:

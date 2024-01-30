@@ -10,14 +10,14 @@ import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:provider/provider.dart';
 
-class SupplierLed extends StatefulWidget {
-  const SupplierLed({super.key});
+class LoanBased extends StatefulWidget {
+  const LoanBased({super.key});
 
   @override
-  State<SupplierLed> createState() => _SupplierLedState();
+  State<LoanBased> createState() => _LoanBasedState();
 }
 
-class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
+class _LoanBasedState extends State<LoanBased> with AfterLayoutMixin {
   int page = 1;
   int limit = 10;
   bool isLoading = true;
@@ -27,7 +27,7 @@ class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
   list(page, limit, String query) async {
     final source = Provider.of<FinanceProvider>(context, listen: false);
     Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(type: 'SUPPLIER', query: query);
+    Filter filter = Filter(financeType: 'LBF', query: query);
     finance = await FinanceApi().requestList(
         source.url, ResultArguments(filter: filter, offset: offset));
     setState(() {
@@ -97,7 +97,7 @@ class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
                                   (data) => RequestedFundingCard(
                                     data: data,
                                     onClick: () {
-                                      source.productType("SUPPLIER_LED");
+                                      source.productType("BUYER_LED");
                                       Navigator.of(context).pushNamed(
                                         FundingRequestDetailPage.routeName,
                                         arguments:

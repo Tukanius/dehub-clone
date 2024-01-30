@@ -1,7 +1,10 @@
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/general.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/finance_module/screens/compromise_page/compromise_page.dart';
 import 'package:dehub/src/finance_module/screens/payment_page/payment_page.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -27,6 +30,8 @@ class RePaymentCard extends StatefulWidget {
 
 class RePaymentCardState extends State<RePaymentCard> {
   General general = General();
+  List<Finance> compromises = [];
+  User user = User();
 
   symbol() {
     final res = general.currencies!
@@ -39,6 +44,7 @@ class RePaymentCardState extends State<RePaymentCard> {
   Widget build(BuildContext context) {
     general =
         Provider.of<GeneralProvider>(context, listen: false).financeGeneral;
+    user = Provider.of<UserProvider>(context, listen: true).financeUser;
     final source = Provider.of<FinanceProvider>(context, listen: true);
     return GestureDetector(
       onTap: widget.onClick,
@@ -185,42 +191,91 @@ class RePaymentCardState extends State<RePaymentCard> {
               const SizedBox(
                 height: 5,
               ),
-            if (widget.repayment == false)
-              Align(
-                alignment: Alignment.centerRight,
-                child: Material(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Material(
                   borderRadius: BorderRadius.circular(5),
-                  color: source.currentColor,
+                  color: white,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(5),
                     onTap: () {
                       Navigator.of(context).pushNamed(
-                        FinancePayment.routeName,
-                        arguments: FinancePaymentArguments(id: widget.data.id!),
+                        CompromisePage.routeName,
+                        arguments: CompromisePageArguments(data: widget.data),
                       );
                     },
                     child: Container(
+                      height: 40,
+                      width: 40,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 6),
+                          horizontal: 5, vertical: 5),
                       decoration: BoxDecoration(
+                        border:
+                            Border.all(color: source.currentColor, width: 1.3),
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: const Text(
-                        'Төлөх',
-                        style: TextStyle(
-                          color: white,
-                          fontWeight: FontWeight.w500,
-                        ),
+                      child: SvgPicture.asset(
+                        'assets/svg/compromise.svg',
+                        colorFilter: ColorFilter.mode(
+                            source.currentColor, BlendMode.srcIn),
                       ),
                     ),
                   ),
                 ),
-              ),
+                if (widget.repayment == false)
+                  const SizedBox(
+                    width: 10,
+                  ),
+                if (widget.repayment == false)
+                  Material(
+                    borderRadius: BorderRadius.circular(5),
+                    color: white,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(5),
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                          FinancePayment.routeName,
+                          arguments: FinancePaymentArguments(
+                            id: widget.data.id!,
+                            refCode: widget.data.refCode!,
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 5),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: source.currentColor, width: 1.3),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: SvgPicture.asset(
+                          'assets/svg/payment.svg',
+                          colorFilter: ColorFilter.mode(
+                              source.currentColor, BlendMode.srcIn),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ],
         ),
       ),
     );
   }
+
+  // compromiseDialog() {
+  //   final source = Provider.of<FinanceProvider>(context, listen: false);
+  //   showDialog(
+  //     context: context,
+  //     useSafeArea: true,
+  //     builder: (context) =>
+  //   );
+  // }
 
   overdueStatus() {
     final res = general.repaymentOverDueStatus!

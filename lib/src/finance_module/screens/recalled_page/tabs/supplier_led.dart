@@ -87,7 +87,6 @@ class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
                               Navigator.of(context).pushNamed(
                                 RePaymentDetail.routeName,
                                 arguments: RePaymentDetailArguments(
-                                  recalled: true,
                                   id: data.id,
                                 ),
                               );

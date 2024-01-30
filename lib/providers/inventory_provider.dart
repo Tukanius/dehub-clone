@@ -336,6 +336,12 @@ class InventoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  remove(int index) {
+    values.removeAt(index);
+    product.values = values;
+    notifyListeners();
+  }
+
   additinalUnit(InventoryGoods data) {
     additionalUnits.add(data);
     product.additionalUnits = additionalUnits;

@@ -96,7 +96,6 @@ class _BuyerLedState extends State<BuyerLed> with AfterLayoutMixin {
                                     Navigator.of(context).pushNamed(
                                       RePaymentDetail.routeName,
                                       arguments: RePaymentDetailArguments(
-                                        recalled: false,
                                         id: data.id,
                                       ),
                                     );

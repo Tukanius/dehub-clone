@@ -4,8 +4,8 @@ import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import './tabs/supplier_led.dart';
-import 'tabs/buyer_led.dart';
+import 'tabs/supply_chain.dart';
+import 'tabs/loan_based.dart';
 
 class FundingRequestPage extends StatefulWidget {
   static const routeName = '/FundingRequestPage';
@@ -57,7 +57,7 @@ class _FundingRequestPageState extends State<FundingRequestPage> {
           Row(
             children: [
               const SizedBox(
-                width: 15,
+                width: 10,
               ),
               InkWell(
                 borderRadius: BorderRadius.circular(10),
@@ -75,9 +75,9 @@ class _FundingRequestPageState extends State<FundingRequestPage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    'Buyer-Led',
+                    'Зээл суурьтай',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: currentIndex == 0 ? white : black,
                     ),
@@ -85,7 +85,7 @@ class _FundingRequestPageState extends State<FundingRequestPage> {
                 ),
               ),
               const SizedBox(
-                width: 20,
+                width: 5,
               ),
               InkWell(
                 borderRadius: BorderRadius.circular(10),
@@ -103,9 +103,9 @@ class _FundingRequestPageState extends State<FundingRequestPage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    'Supplier-Led',
+                    'Нэхэмжлэх барьцаалсан',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: currentIndex == 1 ? white : black,
                     ),
@@ -123,8 +123,8 @@ class _FundingRequestPageState extends State<FundingRequestPage> {
                 });
               },
               children: const [
-                BuyerLed(),
-                SupplierLed(),
+                LoanBased(),
+                SupplyChain(),
               ],
             ),
           ),

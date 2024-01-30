@@ -3,8 +3,8 @@ import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import './tabs/buyer_led.dart';
-import './tabs/supplier_led.dart';
+import 'tabs/supply_chain.dart';
+import 'tabs/loan_based.dart';
 
 class ProgramPage extends StatefulWidget {
   static const routeName = '/ProgramPage';
@@ -79,17 +79,17 @@ class _ProgramPageState extends State<ProgramPage>
                         initialIndex == 0 ? source.currentColor : transparent,
                   ),
                   child: Text(
-                    'Supplier Led',
+                    'Зээл суурьтай',
                     style: TextStyle(
                       color: initialIndex == 0 ? white : black,
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
               ),
               const SizedBox(
-                width: 15,
+                width: 5,
               ),
               InkWell(
                 customBorder: RoundedRectangleBorder(
@@ -111,10 +111,10 @@ class _ProgramPageState extends State<ProgramPage>
                         initialIndex == 1 ? source.currentColor : transparent,
                   ),
                   child: Text(
-                    'Buyer Led',
+                    'Нэхэмжлэх барьцаалах',
                     style: TextStyle(
                       color: initialIndex == 1 ? white : black,
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -131,8 +131,8 @@ class _ProgramPageState extends State<ProgramPage>
                 });
               },
               children: const [
-                SupplierLed(),
-                BuyerLed(),
+                LoanBased(),
+                SupplyChain(),
               ],
             ),
           ),

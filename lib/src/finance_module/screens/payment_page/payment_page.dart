@@ -19,17 +19,21 @@ import 'package:file_picker/file_picker.dart';
 import 'package:after_layout/after_layout.dart';
 
 class FinancePaymentArguments {
+  String refCode;
   String id;
   FinancePaymentArguments({
     required this.id,
+    required this.refCode,
   });
 }
 
 class FinancePayment extends StatefulWidget {
   final String id;
+  final String refCode;
   static const routeName = '/FinancePayment';
   const FinancePayment({
     super.key,
+    required this.refCode,
     required this.id,
   });
 
@@ -53,6 +57,9 @@ class _FinancePaymentState extends State<FinancePayment> with AfterLayoutMixin {
   User user = User();
   List<PaymentMethod> methods = [];
 
+  bool methodValidate = false;
+  bool accountValidate = false;
+
   pay() async {
     final source = Provider.of<FinanceProvider>(context, listen: false);
 
@@ -64,7 +71,7 @@ class _FinancePaymentState extends State<FinancePayment> with AfterLayoutMixin {
         Finance data = Finance.fromJson(fbkey.currentState!.value);
         data.method = selectedMethodId;
         data.creditAccountId = selectedAccountId;
-        data.files = [user.url.toString()];
+        if (user.url != null) data.files = [user.url.toString()];
         await FinanceApi().pay(source.url, data, widget.id);
         setState(() {
           isSubmit = false;
@@ -74,6 +81,22 @@ class _FinancePaymentState extends State<FinancePayment> with AfterLayoutMixin {
           isSubmit = false;
         });
       }
+    }
+  }
+
+  validateCheck() {
+    if (selectedMethodId == null) {
+      setState(() {
+        methodValidate = true;
+      });
+    }
+    if (selectedMethodId == 'B2B' && selectedAccountId == null) {
+      setState(() {
+        accountValidate = true;
+      });
+    }
+    if (selectedMethodId != null && selectedAccountId != null) {
+      pay();
     }
   }
 
@@ -109,177 +132,184 @@ class _FinancePaymentState extends State<FinancePayment> with AfterLayoutMixin {
     final source = Provider.of<FinanceProvider>(context, listen: true);
     general =
         Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: AppBar(
-        backgroundColor: white,
-        surfaceTintColor: white,
-        iconTheme: IconThemeData(color: source.currentColor),
-        title: Text(
-          'Төлөх',
-          style: TextStyle(
-            color: source.currentColor,
-            fontSize: 17,
-            fontWeight: FontWeight.w500,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: backgroundColor,
+        appBar: AppBar(
+          backgroundColor: white,
+          surfaceTintColor: white,
+          iconTheme: IconThemeData(color: source.currentColor),
+          title: Text(
+            '${widget.refCode} - Төлөх',
+            style: TextStyle(
+              color: source.currentColor,
+              fontSize: 17,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: FormBuilder(
-          key: fbkey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: const Text(
-                  'Төлбөрийн мэдээлэл',
-                  style: TextStyle(
-                    color: grey3,
-                    fontWeight: FontWeight.bold,
+        body: SingleChildScrollView(
+          child: FormBuilder(
+            key: fbkey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: const Text(
+                    'Төлбөрийн мэдээлэл',
+                    style: TextStyle(
+                      color: grey3,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              FieldCard(
-                paddingHorizontal: 15,
-                paddingVertical: 10,
-                color: white,
-                labelText: "Төлбөрийн хэрэгсэл",
-                secondText: selectedMethod,
-                secondTextColor: source.currentColor,
-                onClick: () {
-                  paymentMethod();
-                },
-                arrowColor: source.currentColor,
-              ),
-              if (selectedMethodId == "B2B")
                 FieldCard(
                   paddingHorizontal: 15,
                   paddingVertical: 10,
                   color: white,
-                  labelText: "Зарлага гаргах данс",
-                  secondText: selectedAccount,
+                  labelText: "Төлбөрийн хэрэгсэл",
+                  secondText: selectedMethod,
                   secondTextColor: source.currentColor,
+                  validate: methodValidate,
                   onClick: () {
-                    bankAccount();
+                    paymentMethod();
                   },
                   arrowColor: source.currentColor,
                 ),
-              if (selectedMethodId == "B2B")
-                FormTextField(
-                  textColor: source.currentColor,
-                  name: 'amount',
-                  textAlign: TextAlign.end,
-                  inputType: TextInputType.number,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.zero,
-                      borderSide: BorderSide.none,
-                    ),
-                    hintText: 'Энд оруулна уу',
-                    hintStyle: TextStyle(color: source.currentColor),
-                    fillColor: white,
-                    filled: true,
-                    isDense: true,
-                    contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    prefixIcon: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Text('Дүн'),
-                      ],
-                    ),
+                if (selectedMethodId == "B2B")
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    color: white,
+                    validate: accountValidate,
+                    labelText: "Зарлага гаргах данс",
+                    secondText: selectedAccount,
+                    secondTextColor: source.currentColor,
+                    onClick: () {
+                      bankAccount();
+                    },
+                    arrowColor: source.currentColor,
                   ),
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(errorText: 'Заавал оруулна'),
-                  ]),
-                ),
-              Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: const Text(
-                  'Нэмэлт мэдээлэл',
-                  style: TextStyle(
-                    color: grey3,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              FieldCard(
-                paddingHorizontal: 15,
-                paddingVertical: 10,
-                color: white,
-                labelText: "Файл хавсаргах",
-                secondText: fileName,
-                secondTextColor: source.currentColor,
-                onClick: () {
-                  pickFile();
-                },
-                arrowColor: source.currentColor,
-              ),
-              Container(
-                color: white,
-                padding: const EdgeInsets.all(15),
-                child: const FormTextField(
-                  textAlign: TextAlign.left,
-                  name: 'addInfo',
-                  maxLines: 5,
-                  decoration: InputDecoration(
-                    hintText: 'Тайлбар оруулна уу',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.zero,
-                      borderSide: BorderSide(color: grey),
+                if (selectedMethodId == "B2B")
+                  FormTextField(
+                    textColor: source.currentColor,
+                    name: 'amount',
+                    textAlign: TextAlign.end,
+                    inputType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.zero,
+                        borderSide: BorderSide.none,
+                      ),
+                      hintText: 'Энд оруулна уу',
+                      hintStyle: TextStyle(color: source.currentColor),
+                      fillColor: white,
+                      filled: true,
+                      isDense: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      prefixIcon: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text('Дүн'),
+                        ],
+                      ),
                     ),
-                    fillColor: white,
-                    filled: true,
-                    hintStyle: TextStyle(
-                      color: grey2,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Заавал оруулна'),
+                    ]),
+                  ),
+                Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: const Text(
+                    'Нэмэлт мэдээлэл',
+                    style: TextStyle(
+                      color: grey3,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 100,
-              ),
-              Row(
-                children: [
-                  const SizedBox(
-                    width: 25,
-                  ),
-                  Expanded(
-                    child: CustomButton(
-                      labelColor: backgroundColor,
-                      labelText: 'Буцах',
-                      textColor: source.currentColor,
-                      borderColor: source.currentColor,
-                      onClick: () {
-                        Navigator.of(context).pop();
-                      },
+                FieldCard(
+                  paddingHorizontal: 15,
+                  paddingVertical: 10,
+                  color: white,
+                  labelText: "Файл хавсаргах",
+                  secondText: fileName,
+                  secondTextColor: source.currentColor,
+                  onClick: () {
+                    pickFile();
+                  },
+                  arrowColor: source.currentColor,
+                ),
+                Container(
+                  color: white,
+                  padding: const EdgeInsets.all(15),
+                  child: const FormTextField(
+                    textAlign: TextAlign.left,
+                    name: 'addInfo',
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                      hintText: 'Тайлбар оруулна уу',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.zero,
+                        borderSide: BorderSide(color: grey),
+                      ),
+                      fillColor: white,
+                      filled: true,
+                      hintStyle: TextStyle(
+                        color: grey2,
+                      ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Expanded(
-                    child: CustomButton(
-                      labelColor: source.currentColor,
-                      labelText: 'Төлөх',
-                      onClick: () {
-                        pay();
-                      },
+                ),
+                const SizedBox(
+                  height: 100,
+                ),
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 25,
                     ),
-                  ),
-                  const SizedBox(
-                    width: 25,
-                  ),
-                ],
-              ),
-            ],
+                    Expanded(
+                      child: CustomButton(
+                        labelText: 'Буцах',
+                        textColor: source.currentColor,
+                        borderColor: source.currentColor,
+                        onClick: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Expanded(
+                      child: CustomButton(
+                        labelColor: source.currentColor,
+                        labelText: 'Төлөх',
+                        onClick: () {
+                          validateCheck();
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 25,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -323,6 +353,7 @@ class _FinancePaymentState extends State<FinancePayment> with AfterLayoutMixin {
                             setState(() {
                               selectedMethod = e.name!;
                               selectedMethodId = e.code;
+                              methodValidate = false;
                             });
                             Navigator.of(context).pop();
                           },
@@ -384,6 +415,7 @@ class _FinancePaymentState extends State<FinancePayment> with AfterLayoutMixin {
                             setState(() {
                               selectedAccount = '${e.number} /${e.bankName}/';
                               selectedAccountId = e.id;
+                              accountValidate = false;
                             });
                             Navigator.of(context).pop();
                           },

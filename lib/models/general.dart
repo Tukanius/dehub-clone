@@ -30,7 +30,7 @@ import 'package:dehub/models/product_buyer_fee_rules.dart';
 import 'package:dehub/models/product_buyer_penalty_types.dart';
 import 'package:dehub/models/product_supp_fee_rules.dart';
 import 'package:dehub/models/product_supp_penalty_types.dart';
-import 'package:dehub/models/program_status.dart';
+import 'package:dehub/models/program_types.dart';
 import 'package:dehub/models/pull_sheet_status.dart';
 import 'package:dehub/models/purchase_types.dart';
 import 'package:dehub/models/repayment_over_due_status.dart';
@@ -144,17 +144,19 @@ class General {
   List<VatTypes>? vatTypes;
   List<InventoryGoods>? tiers;
   List<String>? fieldTypes;
-  List<ProgramStatus>? programStatus;
+  List<ProgramTypes>? programTypes;
+  List<ProgramTypes>? lbfProgramStatus;
   List<ProductSuppPenaltyTypes>? productSuppPenaltyTypes;
   List<ProductBuyerPenaltyTypes>? productBuyerPenaltyTypes;
   List<RepaymentStatus>? repaymentPaymentStatus;
 
   General({
+    this.lbfProgramStatus,
     this.paymentMethods,
     this.repaymentPaymentStatus,
     this.productSuppPenaltyTypes,
     this.productBuyerPenaltyTypes,
-    this.programStatus,
+    this.programTypes,
     this.fieldTypes,
     this.tiers,
     this.vatTypes,

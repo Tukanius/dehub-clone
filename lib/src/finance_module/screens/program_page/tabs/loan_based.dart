@@ -10,14 +10,14 @@ import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class BuyerLed extends StatefulWidget {
-  const BuyerLed({super.key});
+class LoanBased extends StatefulWidget {
+  const LoanBased({super.key});
 
   @override
-  State<BuyerLed> createState() => _BuyerLedState();
+  State<LoanBased> createState() => _LoanBasedState();
 }
 
-class _BuyerLedState extends State<BuyerLed> with AfterLayoutMixin {
+class _LoanBasedState extends State<LoanBased> with AfterLayoutMixin {
   int page = 1;
   int limit = 10;
   bool isLoading = true;
@@ -28,7 +28,7 @@ class _BuyerLedState extends State<BuyerLed> with AfterLayoutMixin {
   list(page, limit) async {
     final source = Provider.of<FinanceProvider>(context, listen: false);
     Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(productType: "BUYER_LED");
+    Filter filter = Filter(financeType: "LBF");
     var res = await FinanceApi().programList(
         source.url, ResultArguments(filter: filter, offset: offset));
     setState(() {
@@ -85,12 +85,13 @@ class _BuyerLedState extends State<BuyerLed> with AfterLayoutMixin {
                           children: finance.rows!
                               .map(
                                 (data) => ProgramCard(
+                                  financeType: 'LBF',
                                   onClick: () {
-                                    source.productType('BUYER_LED');
+                                    source.productType("SUPPLIER_LED");
                                     Navigator.of(context).pushNamed(
                                       AvailableFundingPage.routeName,
                                       arguments: AvailableFundingPageArguments(
-                                          id: data.id),
+                                          id: data.id, financeType: "LBF"),
                                     );
                                   },
                                   data: data,

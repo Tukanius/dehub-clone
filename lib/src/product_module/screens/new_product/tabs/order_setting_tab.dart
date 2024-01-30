@@ -34,67 +34,81 @@ class OrderSettingTab extends StatefulWidget {
 
 class _OrderSettingTabState extends State<OrderSettingTab> {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
+  bool isSubmit = false;
 
   onSubmit(bool isCompleted) async {
     InventoryGoods data =
         Provider.of<InventoryProvider>(context, listen: false).product;
     List<InventoryGoods> additionalUnits = [];
-    if (data.supplierTypeName != null) {
-      if (fbKey.currentState!.saveAndValidate()) {
-        InventoryGoods form =
-            InventoryGoods.fromJson(fbKey.currentState!.value);
-        form.supplierType = data.supplierType;
-        form.baseUnitId = data.unitId;
-        form.weightLabel = data.unitWeightLabelId;
-        form.spaceLabel = data.unitSpaceLabelId;
-        form.returnAllow = data.returnAllow ?? false;
-        if (form.returnAllow == true) {
-          form.returnType = data.returnTypeId;
-        }
-        form.isCompleted = isCompleted;
-        if (data.additionalUnits != null && data.additionalUnits!.isNotEmpty) {
-          for (var i = 0; i < data.additionalUnits!.length; i++) {
-            additionalUnits.add(
-              InventoryGoods(
-                unitId: data.additionalUnits?[i].id,
-                convertType: data.additionalUnits?[i].convertType,
-                convertValue: data.additionalUnits?[i].convertValue,
-                floatValue: data.additionalUnits?[i].floatValue,
-                isForLoad: data.additionalUnits?[i].isForLoad,
-                spaceLabel: data.additionalUnits?[i].spaceLabel,
-                height: data.additionalUnits?[i].height,
-                width: data.additionalUnits?[i].width,
-                length: data.additionalUnits?[i].length,
-                weightLabel: data.additionalUnits?[i].weightLabel,
-                weight: data.additionalUnits?[i].weight,
-              ),
+    try {
+      if (data.supplierTypeName != null) {
+        if (fbKey.currentState!.saveAndValidate()) {
+          setState(() {
+            isSubmit = true;
+          });
+          InventoryGoods form =
+              InventoryGoods.fromJson(fbKey.currentState!.value);
+          form.supplierType = data.supplierType;
+          form.baseUnitId = data.unitId;
+          form.weightLabel = data.unitWeightLabelId;
+          form.spaceLabel = data.unitSpaceLabelId;
+          form.returnAllow = data.returnAllow ?? false;
+          if (form.returnAllow == true) {
+            form.returnType = data.returnTypeId;
+          }
+          form.isCompleted = isCompleted;
+          if (data.additionalUnits != null &&
+              data.additionalUnits!.isNotEmpty) {
+            for (var i = 0; i < data.additionalUnits!.length; i++) {
+              additionalUnits.add(
+                InventoryGoods(
+                  unitId: data.additionalUnits?[i].id,
+                  convertType: data.additionalUnits?[i].convertType,
+                  convertValue: data.additionalUnits?[i].convertValue,
+                  floatValue: data.additionalUnits?[i].floatValue,
+                  isForLoad: data.additionalUnits?[i].isForLoad,
+                  spaceLabel: data.additionalUnits?[i].spaceLabel,
+                  height: data.additionalUnits?[i].height,
+                  width: data.additionalUnits?[i].width,
+                  length: data.additionalUnits?[i].length,
+                  weightLabel: data.additionalUnits?[i].weightLabel,
+                  weight: data.additionalUnits?[i].weight,
+                ),
+              );
+            }
+          }
+          form.additionalUnits = additionalUnits;
+          form.hasAdditionalUnit = additionalUnits.isNotEmpty ? true : false;
+          int index = additionalUnits
+              .indexWhere((element) => element.convertType == null);
+          if (index < 0) {
+            await InventoryApi().updateVariant(
+                form, widget.data?.id != null ? widget.data!.id! : data.id!);
+            showCustomDialog(context, "Амжилттай", true, onPressed: () {
+              Navigator.of(context).pop();
+            });
+          } else {
+            customScaffoldMessenger(
+              context,
+              color: productColor,
+              labelText: 'Нэмэлт хэмжих нэгжүүд тохируулна уу!',
             );
           }
         }
-        form.additionalUnits = additionalUnits;
-        form.hasAdditionalUnit = additionalUnits.isNotEmpty ? true : false;
-        int index = additionalUnits
-            .indexWhere((element) => element.convertType == null);
-        if (index < 0) {
-          await InventoryApi().updateVariant(
-              form, widget.data?.id != null ? widget.data!.id! : data.id!);
-          showCustomDialog(context, "Амжилттай", true, onPressed: () {
-            Navigator.of(context).pop();
-          });
-        } else {
-          customScaffoldMessenger(
-            context,
-            color: productColor,
-            labelText: 'Нэмэлт хэмжих нэгжүүд тохируулна уу!',
-          );
-        }
+      } else {
+        customScaffoldMessenger(
+          context,
+          color: productColor,
+          labelText: 'Ханган нийлүүлэгч сонгоно уу!',
+        );
       }
-    } else {
-      customScaffoldMessenger(
-        context,
-        color: productColor,
-        labelText: 'Ханган нийлүүлэгч сонгоно уу!',
-      );
+      setState(() {
+        isSubmit = false;
+      });
+    } catch (e) {
+      setState(() {
+        isSubmit = false;
+      });
     }
   }
 
@@ -447,8 +461,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                   ),
                 ),
               ),
-              if (source.product.values == null &&
-                  source.product.values!.isEmpty)
+              if (source.product.values!.isEmpty)
                 FieldCard(
                   paddingHorizontal: 15,
                   paddingVertical: 10,

@@ -10,14 +10,14 @@ import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class SupplierLed extends StatefulWidget {
-  const SupplierLed({super.key});
+class SupplyChain extends StatefulWidget {
+  const SupplyChain({super.key});
 
   @override
-  State<SupplierLed> createState() => _SupplierLedState();
+  State<SupplyChain> createState() => _SupplyChainState();
 }
 
-class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
+class _SupplyChainState extends State<SupplyChain> with AfterLayoutMixin {
   int page = 1;
   int limit = 10;
   bool isLoading = true;
@@ -28,7 +28,7 @@ class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
   list(page, limit) async {
     final source = Provider.of<FinanceProvider>(context, listen: false);
     Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(productType: "SUPPLIER_LED");
+    Filter filter = Filter(financeType: "SCF");
     var res = await FinanceApi().programList(
         source.url, ResultArguments(filter: filter, offset: offset));
     setState(() {
@@ -85,12 +85,13 @@ class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
                           children: finance.rows!
                               .map(
                                 (data) => ProgramCard(
+                                  financeType: 'SCF',
                                   onClick: () {
-                                    source.productType("SUPPLIER_LED");
+                                    source.productType('BUYER_LED');
                                     Navigator.of(context).pushNamed(
                                       AvailableFundingPage.routeName,
                                       arguments: AvailableFundingPageArguments(
-                                          id: data.id),
+                                          id: data.id, financeType: "SCF"),
                                     );
                                   },
                                   data: data,
