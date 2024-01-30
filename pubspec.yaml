@@ -94,7 +94,7 @@ flutter:
     - images/
     - assets/lottie/
     - assets/fonts/
-    - assets/icon/
+    # - assets/icon/
     - assets/svg/
   #   - images/a_dot_ham.jpeg
 
