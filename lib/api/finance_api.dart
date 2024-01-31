@@ -70,19 +70,30 @@ class FinanceApi extends HttpRequestFinance {
     return Result.fromJson(res, Finance.fromJson);
   }
 
-  Future<Finance> financeableGet(
+  Future<Finance> financeableLbfGet(
       String host, String id, String programId) async {
-    var res = await get(host, '/financeable/$id/program/$programId');
+    var res = await get(host, '/financeable_lbf/$id/program/$programId');
     return Finance.fromJson(res as Map<String, dynamic>);
   }
 
-  Future<Finance> supplierLedCreate(String host, Finance data) async {
-    var res = await post(host, '/request/supplier_led', data: data.toJson());
+  Future<Finance> financeableScfGet(
+      String host, String id, String programId) async {
+    var res = await get(host, '/financeable_scf/$id/program/$programId');
+    return Finance.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Finance> createLbf(String host, Finance data) async {
+    var res = await post(host, '/request/lbf', data: data.toJson());
     return Finance.fromJson(res as Map<String, dynamic>);
   }
 
   Future<Finance> buyerLedCreate(String host, Finance data) async {
     var res = await post(host, '/request/buyer_led', data: data.toJson());
+    return Finance.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Finance> supplierLedCreate(String host, Finance data) async {
+    var res = await post(host, '/request/supplier_led', data: data.toJson());
     return Finance.fromJson(res as Map<String, dynamic>);
   }
 

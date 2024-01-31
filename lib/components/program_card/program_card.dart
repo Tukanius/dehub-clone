@@ -29,7 +29,7 @@ class _ProgramCardState extends State<ProgramCard> {
   programStatus() {
     dynamic res;
     if (widget.financeType == "SCF") {
-      res = general.programTypes!
+      res = general.lbfProgramStatus!
           .firstWhere((element) => element.code == widget.data.programStatus)
           .name;
     } else {
@@ -138,8 +138,9 @@ class _ProgramCardState extends State<ProgramCard> {
                       children: [
                         const TextSpan(text: 'Боломжит дүн: '),
                         TextSpan(
-                          text:
-                              "${Utils().formatCurrency(widget.data.lbfProgramLimit.toString())}₮",
+                          text: widget.financeType == "SCF"
+                              ? "${Utils().formatCurrency(widget.data.programLimit.toString())}₮"
+                              : "${Utils().formatCurrency(widget.data.lbfProgramLimit.toString())}₮",
                         ),
                       ],
                     ),
@@ -157,8 +158,9 @@ class _ProgramCardState extends State<ProgramCard> {
                       children: [
                         const TextSpan(text: 'Лимит: '),
                         TextSpan(
-                          text:
-                              "${Utils().formatCurrency(widget.data.lbfProgramLimit.toString())}₮",
+                          text: widget.financeType == "SCF"
+                              ? "${Utils().formatCurrency(widget.data.programLimit.toString())}₮"
+                              : "${Utils().formatCurrency(widget.data.lbfProgramLimit.toString())}₮",
                         ),
                       ],
                     ),
@@ -173,7 +175,9 @@ class _ProgramCardState extends State<ProgramCard> {
               children: [
                 Expanded(
                   child: Text(
-                    '${widget.data.product?.name}',
+                    widget.financeType == "SCF"
+                        ? '${widget.data.product?.name}'
+                        : '${widget.data.lbfProduct?.name}',
                     style: const TextStyle(
                       color: grey2,
                       fontSize: 12,
@@ -181,7 +185,9 @@ class _ProgramCardState extends State<ProgramCard> {
                   ),
                 ),
                 Text(
-                  '${widget.data.product?.refCode}',
+                  widget.financeType == "SCF"
+                      ? '${widget.data.product?.refCode}'
+                      : '${widget.data.lbfProduct?.refCode}',
                   style: const TextStyle(
                     color: grey2,
                     fontSize: 12,

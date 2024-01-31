@@ -1,3 +1,6 @@
+// ignore_for_file: non_constant_identifier_names
+
+import 'package:dehub/models/qpay_urls.dart';
 part '../parts/finance.dart';
 
 class Finance {
@@ -27,7 +30,9 @@ class Finance {
   double? responsePeriod;
   DateTime? responseDate;
   String? requestStatus;
+  String? lbfRequestStatus;
   String? programId;
+  String? lbfProgramId;
   String? productId;
   String? productType;
   double? requestedAmount;
@@ -108,11 +113,13 @@ class Finance {
   bool? maxAmountAcceptable;
   double? remainingDays;
   Finance? program;
+  Finance? lbfProgram;
   Finance? respondedUser;
   Finance? requestedBusiness;
   Finance? requestedFinUser;
   Finance? partner;
   Finance? product;
+  Finance? lbfProduct;
   Finance? invConfirmedUser;
   String? lastName;
   String? avatar;
@@ -211,9 +218,25 @@ class Finance {
   String? date; // Must be string
   Finance? actionUser;
   List<Finance>? compromises;
+  Finance? supplierBusiness;
+  Finance? buyerBusiness;
+  List<Urls>? urls;
+  String? link;
+  String? qr_image;
+  String? logo;
 
   Finance({
+    this.logo,
+    this.link,
+    this.qr_image,
+    this.urls,
+    this.supplierBusiness,
+    this.lbfProgram,
+    this.lbfRequestStatus,
+    this.lbfProgramId,
+    this.buyerBusiness,
     this.compromises,
+    this.lbfProduct,
     this.actionUser,
     this.date,
     this.lbfProgramLimit,

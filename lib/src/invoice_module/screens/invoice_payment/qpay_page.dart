@@ -35,10 +35,10 @@ class QpayPage extends StatefulWidget {
 class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
   bool loading = true;
   Invoice qpay = Invoice();
-  Invoice data = Invoice();
 
   @override
   void afterFirstLayout(BuildContext context) async {
+    Invoice data = Invoice();
     try {
       data = widget.data;
       data.method = "QPAY";

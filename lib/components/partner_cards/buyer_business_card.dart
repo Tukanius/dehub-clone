@@ -37,165 +37,197 @@ class BuyerBusinessCardState extends State<BuyerBusinessCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    widget.data?.logo == null
-                        ? Container(
-                            height: 40,
-                            width: 40,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: grey,
-                              image: DecorationImage(
-                                image: AssetImage(
-                                  'images/avatar.png',
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      widget.data?.logo == null
+                          ? Container(
+                              height: 40,
+                              width: 40,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: grey,
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    'images/avatar.png',
+                                  ),
+                                  fit: BoxFit.cover,
                                 ),
-                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: grey,
+                                image: DecorationImage(
+                                  image: NetworkImage('${widget.data?.logo}'),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
-                          )
-                        : Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: grey,
-                              image: DecorationImage(
-                                image: NetworkImage('${widget.data?.logo}'),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              '${widget.data?.partner?.businessName},',
-                              style: const TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              '${widget.data?.refCode}',
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: grey3,
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              '${widget.data?.partnerName},',
-                              style:
-                                  const TextStyle(fontSize: 12, color: grey3),
-                            ),
-                            Text(
-                              '${widget.data?.partner?.refCode}',
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: grey3,
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            const Text(
-                              'ТТД: ',
-                              style: TextStyle(color: grey3, fontSize: 10),
-                            ),
-                            Text(
-                              '${widget.data?.partner?.regNumber}',
-                              style: const TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w600,
-                                color: grey3,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 250,
-                          child: Column(
-                            children: [
-                              const Divider(
-                                thickness: 1,
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: Row(
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: RichText(
+                                    text: TextSpan(
                                       children: [
-                                        widget.data?.staff?.avatar == null
-                                            ? const CircleAvatar(
-                                                radius: 12,
-                                                backgroundColor: grey,
-                                                backgroundImage: AssetImage(
-                                                    'images/avatar.png'),
-                                              )
-                                            : CircleAvatar(
-                                                radius: 12,
-                                                backgroundImage: NetworkImage(
-                                                    '${widget.data?.staff?.avatar}'),
-                                              ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          '${widget.data?.staff?.firstName}',
+                                        TextSpan(
+                                          text: '${widget.data?.profileName}, ',
                                           style: const TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 12,
+                                            color: black,
+                                            fontFamily: "Montserrat",
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: '${widget.data?.refCode}',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            fontFamily: "Montserrat",
+                                            color: grey3,
+                                            decoration:
+                                                TextDecoration.underline,
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: RichText(
+                                    text: TextSpan(
                                       children: [
-                                        Text(
-                                          '${widget.data?.staff?.email}',
+                                        TextSpan(
+                                          text: '${widget.data?.partnerName},',
                                           style: const TextStyle(
-                                              color: grey3, fontSize: 10),
-                                          textAlign: TextAlign.end,
+                                              fontFamily: "Montserrat",
+                                              fontSize: 12,
+                                              color: grey3),
                                         ),
-                                        Text(
-                                          '${widget.data?.staff?.phone}',
+                                        TextSpan(
+                                          text:
+                                              '${widget.data?.partner?.refCode}',
                                           style: const TextStyle(
-                                              color: grey3, fontSize: 10),
-                                          textAlign: TextAlign.end,
+                                            fontFamily: "Montserrat",
+                                            fontSize: 12,
+                                            color: grey3,
+                                            decoration:
+                                                TextDecoration.underline,
+                                          ),
                                         ),
                                       ],
                                     ),
-                                  )
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                const Text(
+                                  'ТТД: ',
+                                  style: TextStyle(color: grey3, fontSize: 10),
+                                ),
+                                Text(
+                                  '${widget.data?.partner?.regNumber}',
+                                  style: const TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600,
+                                    color: grey3,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 250,
+                              child: Column(
+                                children: [
+                                  const Divider(
+                                    thickness: 1,
+                                  ),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            widget.data?.staff?.avatar == null
+                                                ? const CircleAvatar(
+                                                    radius: 12,
+                                                    backgroundColor: grey,
+                                                    backgroundImage: AssetImage(
+                                                        'images/avatar.png'),
+                                                  )
+                                                : CircleAvatar(
+                                                    radius: 12,
+                                                    backgroundImage: NetworkImage(
+                                                        '${widget.data?.staff?.avatar}'),
+                                                  ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              '${widget.data?.staff?.firstName}',
+                                              style: const TextStyle(
+                                                fontSize: 10,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              '${widget.data?.staff?.email}',
+                                              style: const TextStyle(
+                                                  color: grey3, fontSize: 10),
+                                              textAlign: TextAlign.end,
+                                            ),
+                                            Text(
+                                              '${widget.data?.staff?.phone}',
+                                              style: const TextStyle(
+                                                  color: grey3, fontSize: 10),
+                                              textAlign: TextAlign.end,
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,

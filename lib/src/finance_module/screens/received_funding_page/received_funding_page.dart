@@ -1,8 +1,8 @@
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/dashboard_card/dashboard_card.dart';
 import 'package:dehub/providers/finance_provider.dart';
-import './tabs/buyer_led.dart';
-import './tabs/supplier_led.dart';
+import 'tabs/loan_based.dart';
+import 'tabs/supply_chain.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -60,7 +60,7 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
           Row(
             children: [
               const SizedBox(
-                width: 15,
+                width: 10,
               ),
               InkWell(
                 borderRadius: BorderRadius.circular(10),
@@ -71,16 +71,16 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
                 },
                 child: Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
                     color:
                         currentIndex == 0 ? source.currentColor : transparent,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    'Buyer-Led',
+                    'Зээл суурьтай',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: currentIndex == 0 ? white : black,
                     ),
@@ -88,7 +88,7 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
                 ),
               ),
               const SizedBox(
-                width: 20,
+                width: 5,
               ),
               InkWell(
                 borderRadius: BorderRadius.circular(10),
@@ -99,16 +99,16 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
                 },
                 child: Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
                     color:
                         currentIndex == 1 ? source.currentColor : transparent,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    'Supplier-Led',
+                    'Нэхэмжлэх барьцаалсан',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: currentIndex == 1 ? white : black,
                     ),
@@ -129,8 +129,8 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
                 });
               },
               children: const [
-                BuyerLed(),
-                SupplierLed(),
+                LoanBased(),
+                SupplyChain(),
               ],
             ),
           ),

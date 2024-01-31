@@ -25,8 +25,14 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
   General general = General();
 
   requestStatus() {
-    final res = general.scfRequestStatus!
-        .firstWhere((element) => element.code == widget.data.requestStatus);
+    dynamic res;
+    if (widget.data.requestStatus != null) {
+      res = general.scfRequestStatus!
+          .firstWhere((element) => element.code == widget.data.requestStatus);
+    } else {
+      res = general.scfRequestStatus!.firstWhere(
+          (element) => element.code == widget.data.lbfRequestStatus);
+    }
     return res;
   }
 
@@ -95,7 +101,9 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
                 ),
                 Expanded(
                   child: Text(
-                    '${widget.data.program?.name}',
+                    widget.data.program != null
+                        ? '${widget.data.program?.name}'
+                        : "${widget.data.lbfProgram?.name}",
                     style: TextStyle(
                       color: source.currentColor,
                       fontWeight: FontWeight.w500,
@@ -125,7 +133,9 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
                 ),
                 Expanded(
                   child: Text(
-                    '${widget.data.requestedBusiness?.profileName}',
+                    widget.data.type != "SUPPLIER"
+                        ? '${widget.data.supplierBusiness?.profileName}'
+                        : "${widget.data.buyerBusiness?.profileName}",
                     style: const TextStyle(
                       fontSize: 12,
                     ),
@@ -141,7 +151,7 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Нийт шимтгэл: ${Utils().formatCurrency(widget.data.totalScfFeeAmount.toString())}₮',
+                  'Нийт шимтгэл:  ${widget.data.totalScfFeeAmount != null ? Utils().formatCurrency(widget.data.totalScfFeeAmount.toString()) : '-'}₮',
                   style: const TextStyle(
                     fontSize: 12,
                     color: Color(0xff555555),

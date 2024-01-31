@@ -68,7 +68,7 @@ class _FundingRequestPageState extends State<FundingRequestPage> {
                 },
                 child: Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
                     color:
                         currentIndex == 0 ? source.currentColor : transparent,
@@ -88,26 +88,30 @@ class _FundingRequestPageState extends State<FundingRequestPage> {
                 width: 5,
               ),
               InkWell(
-                borderRadius: BorderRadius.circular(10),
+                customBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 onTap: () {
-                  pageController.animateToPage(1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.ease);
+                  pageController.animateToPage(
+                    1,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.ease,
+                  );
                 },
                 child: Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
                     color:
                         currentIndex == 1 ? source.currentColor : transparent,
-                    borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
                     'Нэхэмжлэх барьцаалсан',
                     style: TextStyle(
+                      color: currentIndex == 1 ? white : black,
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      color: currentIndex == 1 ? white : black,
                     ),
                   ),
                 ),

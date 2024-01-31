@@ -64,6 +64,7 @@ class User {
   bool? isDanVerified;
   bool? hasPassword;
   User? currentBusiness;
+  String? clientType;
   String? regNumber;
   double? stateRegNum;
   String? legalEntityType;
@@ -118,6 +119,7 @@ class User {
   }
 
   User({
+    this.clientType,
     this.urls,
     this.businessRef,
     this.partnerRef,

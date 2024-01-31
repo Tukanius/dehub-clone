@@ -107,12 +107,14 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                       ),
                     ),
                     Text(
-                      '${widget.data.requestedBusiness?.profileName}',
+                      widget.data.type == "SUPPLIER"
+                          ? '${widget.data.supplierBusiness?.profileName}'
+                          : '${widget.data.buyerBusiness?.profileName}',
                       style: TextStyle(
                         color: source.currentColor,
                         fontWeight: FontWeight.w500,
                       ),
-                    )
+                    ),
                   ],
                 ),
                 const SizedBox(

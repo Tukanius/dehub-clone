@@ -111,7 +111,7 @@ class _ProgramPageState extends State<ProgramPage>
                         initialIndex == 1 ? source.currentColor : transparent,
                   ),
                   child: Text(
-                    'Нэхэмжлэх барьцаалах',
+                    'Нэхэмжлэх барьцаалсан',
                     style: TextStyle(
                       color: initialIndex == 1 ? white : black,
                       fontSize: 14,

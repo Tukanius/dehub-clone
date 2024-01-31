@@ -10,25 +10,24 @@ import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:provider/provider.dart';
 
-class SupplierLed extends StatefulWidget {
-  static const routeName = '/SupplierLed';
-  const SupplierLed({super.key});
+class LoanBased extends StatefulWidget {
+  const LoanBased({super.key});
 
   @override
-  State<SupplierLed> createState() => _SupplierLedState();
+  State<LoanBased> createState() => _LoanBasedState();
 }
 
-class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
+class _LoanBasedState extends State<LoanBased> with AfterLayoutMixin {
   int page = 1;
   int limit = 10;
   bool isLoading = true;
   RefreshController refreshController = RefreshController();
   Result finance = Result(count: 0, rows: []);
 
-  list(page, limit, String query) async {
+  list(page, limit) async {
     final source = Provider.of<FinanceProvider>(context, listen: false);
     Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(type: 'SUPPLIER', query: query);
+    Filter filter = Filter(financeType: 'LBF');
     finance = await FinanceApi().completedList(
         source.url, ResultArguments(filter: filter, offset: offset));
     setState(() {
@@ -40,7 +39,7 @@ class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
     setState(() {
       limit += 10;
     });
-    await list(page, limit, '');
+    await list(page, limit);
     refreshController.loadComplete();
     setState(() {
       isLoading = false;
@@ -52,14 +51,14 @@ class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
     setState(() {
       isLoading = true;
     });
-    await list(page, limit, '');
+    await list(page, limit);
     refreshController.refreshCompleted();
     isLoading = false;
   }
 
   @override
   afterFirstLayout(BuildContext context) async {
-    list(page, limit, '');
+    list(page, limit);
   }
 
   @override

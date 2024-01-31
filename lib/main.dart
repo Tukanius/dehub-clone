@@ -8,6 +8,7 @@ import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/entry_point/finance_entry/finance_entry.dart';
 import 'package:dehub/src/finance_module/screens/available_funding_page/available_funding_page.dart';
 import 'package:dehub/src/finance_module/screens/compromise_page/compromise_page.dart';
+import 'package:dehub/src/finance_module/screens/finance_qpay/finance_qpay.dart';
 import 'package:dehub/src/finance_module/screens/payment_page/payment_page.dart';
 import 'package:dehub/src/finance_module/screens/recalled_page/recalled_page.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_transaction/invoice_transaction.dart';
@@ -466,7 +467,6 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return AvailableFundingPage(
                         id: arguments.id,
-                        financeType: arguments.financeType,
                       );
                     });
                   case CompromisePage.routeName:
@@ -474,6 +474,15 @@ class MyApp extends StatelessWidget {
                         settings.arguments as CompromisePageArguments;
                     return MaterialPageRoute(builder: (context) {
                       return CompromisePage(
+                        data: arguments.data,
+                      );
+                    });
+                  case FinanceQpay.routeName:
+                    FinanceQpayArguments arguments =
+                        settings.arguments as FinanceQpayArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return FinanceQpay(
+                        color: arguments.color,
                         data: arguments.data,
                       );
                     });

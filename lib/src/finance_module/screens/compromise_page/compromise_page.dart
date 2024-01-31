@@ -158,7 +158,6 @@ class _CompromisePageState extends State<CompromisePage> {
                           style: const TextStyle(
                             color: grey2,
                             fontFamily: 'Montserrat',
-                            fontSize: 12,
                           ),
                           children: [
                             const TextSpan(

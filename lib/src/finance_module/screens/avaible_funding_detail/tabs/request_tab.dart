@@ -519,18 +519,28 @@ class _RequestTabState extends State<RequestTab> {
                         '${widget.data.program?.product?.maxDays?.toInt()} хоног',
                     secondTextColor: source.currentColor,
                   ),
-                  if (source.type == "BUYER_LED")
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 15),
-                      child: const Text(
-                        'Файл хавсаргах',
-                        style: TextStyle(
-                          color: grey3,
-                          fontWeight: FontWeight.w600,
-                        ),
+                ],
+              ),
+            if (source.type == "SCF" &&
+                    user.currentBusiness?.type == "BUYER" &&
+                    user.clientType == "ANCHOR" ||
+                source.type == "SCF" &&
+                    user.currentBusiness?.type == "SUPPLIER" &&
+                    user.clientType == "SME")
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 15),
+                    child: const Text(
+                      'Файл хавсаргах',
+                      style: TextStyle(
+                        color: grey3,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
+                  ),
                   GestureDetector(
                     onTap: () {
                       pickFile();

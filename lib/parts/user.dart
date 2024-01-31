@@ -16,6 +16,8 @@ User _$UserFromJson(Map<String, dynamic> json) {
         json['partnerRef'] != null ? json['partnerRef'] as String : null,
     businessRef:
         json['businessRef'] != null ? json['businessRef'] as String : null,
+    clientType:
+        json['clientType'] != null ? json['clientType'] as String : null,
     isActive: json['isActive'] != null ? json['isActive'] as bool : null,
     email: json['email'] != null ? json['email'] as String : null,
     username: json['username'] != null ? json['username'] as String : null,
@@ -214,6 +216,7 @@ Map<String, dynamic> _$UserToJson(User instance) {
   }
   if (instance.urls != null) json["urls"] = instance.urls;
   if (instance.businessRef != null) json["businessRef"] = instance.businessRef;
+  if (instance.clientType != null) json["clientType"] = instance.clientType;
   if (instance.partnerRef != null) json["partnerRef"] = instance.partnerRef;
   if (instance.file != null) json["file"] = instance.file;
   if (instance.oldPin != null) json["oldPin"] = instance.oldPin;

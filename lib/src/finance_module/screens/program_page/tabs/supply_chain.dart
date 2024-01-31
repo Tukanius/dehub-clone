@@ -87,11 +87,12 @@ class _SupplyChainState extends State<SupplyChain> with AfterLayoutMixin {
                                 (data) => ProgramCard(
                                   financeType: 'SCF',
                                   onClick: () {
-                                    source.productType('BUYER_LED');
+                                    source.productType('SCF');
                                     Navigator.of(context).pushNamed(
                                       AvailableFundingPage.routeName,
                                       arguments: AvailableFundingPageArguments(
-                                          id: data.id, financeType: "SCF"),
+                                        id: data.id,
+                                      ),
                                     );
                                   },
                                   data: data,

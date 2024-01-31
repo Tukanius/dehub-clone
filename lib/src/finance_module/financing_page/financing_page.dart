@@ -1,3 +1,4 @@
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
@@ -27,6 +28,7 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
   ];
   int selectedIndex = 1;
   bool isLoading = true;
+  User user = User();
 
   logout() async {
     final source = Provider.of<FinanceProvider>(context, listen: false);
@@ -60,6 +62,7 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<FinanceProvider>(context, listen: true);
+    user = Provider.of<UserProvider>(context, listen: true).financeUser;
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -95,6 +98,42 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
                 ],
               ),
             ),
+          ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(
+                width: 15,
+              ),
+              CircleAvatar(
+                radius: 14,
+                backgroundColor: grey2,
+                backgroundImage: NetworkImage("${user.avatar}"),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${user.lastName?[0].toUpperCase()}.${user.firstName}",
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                  Text(
+                    user.currentBusiness?.type == "SUPPLIER"
+                        ? 'Нийлүүлэгч'
+                        : 'Худалдан авагч',
+                    style: const TextStyle(
+                      color: grey2,
+                      fontSize: 12,
+                    ),
+                  )
+                ],
+              ),
+            ],
           ),
           actions: [
             GestureDetector(
