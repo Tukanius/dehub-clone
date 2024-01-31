@@ -38,7 +38,6 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
   bool isLoading = false;
 
   decrease() {
-    final source = Provider.of<InvoiceProvider>(context, listen: false);
     if (widget.data.quantity! > 0) {
       setState(() {
         int newValue = 0;
@@ -46,29 +45,17 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
         newValue = currentValue - 1;
         quantityController.text = newValue.toString();
         widget.data.quantity = int.parse(quantityController.text.toString());
-        if (widget.isPackage == true) {
-          source.packageProductAdd(widget.data, widget.data.quantity!);
-          if (widget.data.quantity == 0) {
-            source.packageProductRemove(widget.data);
-          }
-        }
-        source.totalAmountInvoice(widget.discountAmount, widget.shippingAmount);
       });
     }
   }
 
   increase() {
-    final source = Provider.of<InvoiceProvider>(context, listen: false);
     setState(() {
       int newValue = 0;
       int currentValue = int.tryParse(quantityController.text) ?? 0;
       newValue = currentValue + 1;
       quantityController.text = newValue.toString();
       widget.data.quantity = int.parse(quantityController.text.toString());
-      if (widget.isPackage == true) {
-        source.packageProductAdd(widget.data, widget.data.quantity!);
-      }
-      source.totalAmountInvoice(widget.discountAmount, widget.shippingAmount);
     });
   }
 
@@ -344,9 +331,20 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                                 int.tryParse(quantityController.text) ?? 0;
                           });
                           if (widget.isPackage == true) {
-                            source.packageProductAdd(
-                                widget.data, int.tryParse(value) ?? 0);
+                            if (widget.data.quantity == 0) {
+                              source.packageProductRemove(widget.data);
+                            } else {
+                              source.packageProductAdd(
+                                  widget.data, int.tryParse(value) ?? 0);
+                            }
                           }
+                          if (widget.isPackage == null &&
+                              widget.data.quantity == 0) {
+                            source.removeCart(widget.data,
+                                widget.discountAmount, widget.shippingAmount);
+                          }
+                          source.totalAmountInvoice(
+                              widget.discountAmount, widget.shippingAmount);
                         },
                         fontSize: 18,
                         inputType: TextInputType.number,

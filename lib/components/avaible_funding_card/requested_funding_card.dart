@@ -150,18 +150,22 @@ class _RequestedFundingCardState extends State<RequestedFundingCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Нийт шимтгэл:  ${widget.data.totalScfFeeAmount != null ? Utils().formatCurrency(widget.data.totalScfFeeAmount.toString()) : '-'}₮',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Color(0xff555555),
-                  ),
-                ),
+                widget.data.totalScfFeeAmount != null
+                    ? Text(
+                        'Нийт шимтгэл:  ${Utils().formatCurrency(widget.data.totalScfFeeAmount.toString())}₮',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Color(0xff555555),
+                        ),
+                      )
+                    : const SizedBox(),
                 Row(
                   children: [
                     SvgPicture.asset('assets/svg/inv.svg'),
                     Text(
-                      ' ${widget.data.invRefCode}',
+                      widget.data.invRefCode != null
+                          ? ' ${widget.data.invRefCode}'
+                          : " ${widget.data.invoice?.refCode}",
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
                       ),

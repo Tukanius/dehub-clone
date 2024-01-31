@@ -86,7 +86,6 @@ class InvoiceProvider extends ChangeNotifier {
       products.add(product);
     }
     totalAmountInvoice(discount, shipping);
-
     notifyListeners();
   }
 
@@ -120,12 +119,12 @@ class InvoiceProvider extends ChangeNotifier {
         0,
         (previousValue, element) =>
             previousValue + (element.quantity! * element.price!));
+    totalAmount = amount + totalTaxAmount + totalVatAmount + addtionalRowAmount;
     if (newInvoice.discountType == 'Хувиар') {
       discountAmount = totalAmount / 100 * (double.tryParse(discount) ?? 0);
     } else if (newInvoice.discountType == 'Дүнгээр') {
       discountAmount = double.tryParse(discount) ?? 0;
     }
-    totalAmount = amount + totalTaxAmount + totalVatAmount + addtionalRowAmount;
     finalAmount = totalAmount;
     finalAmount =
         finalAmount + ((double.tryParse(shipping) ?? 0) - discountAmount);

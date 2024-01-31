@@ -126,8 +126,8 @@ class _EntryPointState extends State<EntryPoint>
                   child: isSideMenuClosed
                       ? SvgPicture.asset(
                           'assets/svg/menu.svg',
-                          colorFilter:
-                              const ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                          colorFilter: const ColorFilter.mode(
+                              buttonColor, BlendMode.srcIn),
                         )
                       : const Center(
                           child: Icon(

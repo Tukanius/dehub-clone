@@ -89,6 +89,7 @@ class _CompromisePageState extends State<CompromisePage> {
       child: Scaffold(
         backgroundColor: backgroundColor,
         appBar: AppBar(
+          surfaceTintColor: white,
           backgroundColor: white,
           title: Text(
             'Амлалт өгөх',
@@ -522,7 +523,10 @@ class _CompromisePageState extends State<CompromisePage> {
                       width: 25,
                     ),
                   ],
-                )
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
               ],
             ),
           ),

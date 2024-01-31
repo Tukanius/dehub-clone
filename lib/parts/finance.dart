@@ -438,6 +438,9 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         ? Finance.fromJson(
             json['invReceiverBusinessAcc'] as Map<String, dynamic>)
         : null,
+    invoice: json['invoice'] != null
+        ? Finance.fromJson(json['invoice'] as Map<String, dynamic>)
+        : null,
     actionUser: json['actionUser'] != null
         ? Finance.fromJson(json['actionUser'] as Map<String, dynamic>)
         : null,
@@ -655,6 +658,7 @@ Map<String, dynamic> _$FinanceToJson(Finance instance) {
     json['smeAvailableAmount'] = instance.smeAvailableAmount;
   }
   if (instance.buyerMinFee != null) json['buyerMinFee'] = instance.buyerMinFee;
+  if (instance.invoice != null) json['invoice'] = instance.invoice;
   if (instance.description != null) json['description'] = instance.description;
   if (instance.trxAmount != null) json['trxAmount'] = instance.trxAmount;
   if (instance.isRecalled != null) json['isRecalled'] = instance.isRecalled;

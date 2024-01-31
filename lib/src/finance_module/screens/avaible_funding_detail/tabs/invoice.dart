@@ -59,8 +59,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
     general =
         Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
     user = Provider.of<UserProvider>(context, listen: true).financeUser;
-    if (user.currentBusiness?.type == "SUPPLIER" &&
-        widget.data.type == "SALES") {
+    if (widget.data.type == "SALES") {
       setState(() {
         buyerBusiness = widget.data.receiverBusiness!;
         supplierBusiness = widget.data.senderBusiness!;

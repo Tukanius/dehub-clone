@@ -224,8 +224,10 @@ class Finance {
   String? link;
   String? qr_image;
   String? logo;
+  Finance? invoice;
 
   Finance({
+    this.invoice,
     this.logo,
     this.link,
     this.qr_image,

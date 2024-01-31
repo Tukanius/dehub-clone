@@ -99,42 +99,44 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
               ),
             ),
           ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(
-                width: 15,
-              ),
-              CircleAvatar(
-                radius: 14,
-                backgroundColor: grey2,
-                backgroundImage: NetworkImage("${user.avatar}"),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${user.lastName?[0].toUpperCase()}.${user.firstName}",
-                    style: const TextStyle(
-                      fontSize: 14,
+          title: isLoading == true
+              ? const SizedBox()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      width: 15,
                     ),
-                  ),
-                  Text(
-                    user.currentBusiness?.type == "SUPPLIER"
-                        ? 'Нийлүүлэгч'
-                        : 'Худалдан авагч',
-                    style: const TextStyle(
-                      color: grey2,
-                      fontSize: 12,
+                    CircleAvatar(
+                      radius: 14,
+                      backgroundColor: grey2,
+                      backgroundImage: NetworkImage("${user.avatar}"),
                     ),
-                  )
-                ],
-              ),
-            ],
-          ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${user.lastName?[0].toUpperCase()}.${user.firstName}",
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                        Text(
+                          user.currentBusiness?.type == "SUPPLIER"
+                              ? 'Нийлүүлэгч'
+                              : 'Худалдан авагч',
+                          style: const TextStyle(
+                            color: grey2,
+                            fontSize: 12,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
           actions: [
             GestureDetector(
               onTap: () async {

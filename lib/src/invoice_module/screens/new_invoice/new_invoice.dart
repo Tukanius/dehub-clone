@@ -659,9 +659,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       paddingVertical: 15,
                       arrowColor: black,
                       labelText: 'Нийт дүн',
-                      secondText: invoice.products.isNotEmpty
-                          ? "${Utils().formatCurrency(invoice.amount.toString())}₮"
-                          : "0₮",
+                      secondText:
+                          "${Utils().formatCurrency(invoice.amount.toString())}₮",
                       secondTextColor: invoiceColor,
                       color: white,
                     ),
@@ -670,9 +669,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       paddingVertical: 15,
                       arrowColor: black,
                       labelText: 'Нийт Төлбөр',
-                      secondText: invoice.products.isNotEmpty
-                          ? "${Utils().formatCurrency(invoice.finalAmount.toString())}₮"
-                          : "0₮",
+                      secondText:
+                          "${Utils().formatCurrency(invoice.finalAmount.toString())}₮",
                       secondTextColor: invoiceColor,
                       color: white,
                       fontWeight: FontWeight.w600,
