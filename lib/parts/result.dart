@@ -47,8 +47,17 @@ Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
     if (instance.filter!.programId != null) {
       params['filter']['programId'] = instance.filter!.programId;
     }
+    if (instance.filter!.month != null) {
+      params['filter']['month'] = instance.filter!.month;
+    }
+    if (instance.filter!.excel != null) {
+      params['filter']['excel'] = instance.filter!.excel;
+    }
     if (instance.filter!.supplierId != null) {
       params['filter']['supplierId'] = instance.filter!.supplierId;
+    }
+    if (instance.filter!.warehouseId != null) {
+      params['filter']['warehouseId'] = instance.filter!.warehouseId;
     }
     if (instance.filter!.isService != null) {
       params['filter']['isService'] = instance.filter!.isService;

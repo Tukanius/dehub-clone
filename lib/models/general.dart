@@ -1,3 +1,4 @@
+import 'package:dehub/models/adjustment_status.dart';
 import 'package:dehub/models/bank_names.dart';
 import 'package:dehub/models/branch_status.dart';
 import 'package:dehub/models/business_sectors.dart';
@@ -26,6 +27,7 @@ import 'package:dehub/models/item_status.dart';
 import 'package:dehub/models/invoice_payment_status.dart';
 import 'package:dehub/models/invoice_history_types.dart';
 import 'package:dehub/models/invoice_status.dart';
+import 'package:dehub/models/price_group_types.dart';
 import 'package:dehub/models/product_buyer_fee_rules.dart';
 import 'package:dehub/models/product_buyer_penalty_types.dart';
 import 'package:dehub/models/product_supp_fee_rules.dart';
@@ -38,6 +40,7 @@ import 'package:dehub/models/repayment_status.dart';
 import 'package:dehub/models/request_status.dart';
 import 'package:dehub/models/request_types.dart';
 import 'package:dehub/models/service_category_types.dart';
+import 'package:dehub/models/stock_movement_types.dart';
 import 'package:dehub/models/supp.dart';
 import 'package:dehub/models/supplier_businesses.dart';
 import 'package:dehub/models/supplier_types.dart';
@@ -149,8 +152,16 @@ class General {
   List<ProductSuppPenaltyTypes>? productSuppPenaltyTypes;
   List<ProductBuyerPenaltyTypes>? productBuyerPenaltyTypes;
   List<RepaymentStatus>? repaymentPaymentStatus;
+  List<StockMovementTypes>? stockMovementTypes;
+  List<AdjustmentStatus>? adjustmentStatus;
+  List<PriceGroupTypes>? priceGroupTypes;
+  List<PriceGroupTypes>? priceGroupStatus;
 
   General({
+    this.priceGroupStatus,
+    this.priceGroupTypes,
+    this.adjustmentStatus,
+    this.stockMovementTypes,
     this.lbfProgramStatus,
     this.paymentMethods,
     this.repaymentPaymentStatus,

@@ -62,41 +62,50 @@ class BusinessSuggestCardState extends State<BusinessSuggestCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          '${widget.data?.partner?.businessName},',
-                          style: const TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          '${widget.data?.refCode}',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: grey3,
-                            decoration: TextDecoration.underline,
+                    RichText(
+                      text: TextSpan(
+                        style: const TextStyle(fontFamily: 'Montserrat'),
+                        children: [
+                          TextSpan(
+                            text: '${widget.data?.profileName}, ',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: black,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      ],
+                          TextSpan(
+                            text: '${widget.data?.refCode}',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: grey3,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 5,
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          '${widget.data?.partnerName},',
-                          style: const TextStyle(fontSize: 12, color: grey3),
-                        ),
-                        Text(
-                          '${widget.data?.partner?.refCode}',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: grey3,
-                            decoration: TextDecoration.underline,
+                    RichText(
+                      text: TextSpan(
+                        style: const TextStyle(fontFamily: 'Montserrat'),
+                        children: [
+                          TextSpan(
+                            text: '${widget.data?.partnerName},',
+                            style: const TextStyle(fontSize: 12, color: grey3),
                           ),
-                        ),
-                      ],
+                          TextSpan(
+                            text: '${widget.data?.partner?.refCode}',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: grey3,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 5,

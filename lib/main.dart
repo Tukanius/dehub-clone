@@ -117,6 +117,7 @@ import 'package:dehub/src/auth/pin_code/pin_code.dart';
 import 'package:dehub/src/auth/pin_code/pin_confirmation.dart';
 import 'package:dehub/src/order_module/screens/product_give/product_give.dart';
 import 'package:dehub/src/product_module/product_page/product_page.dart';
+import 'package:dehub/src/product_module/screens/adjustment/adjustment.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/adjustment_note/adjustment_note.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/brand/brand.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/classification/inventory_classification.dart';
@@ -134,6 +135,7 @@ import 'package:dehub/src/product_module/screens/inventory_reference/price_tiers
 import 'package:dehub/src/product_module/screens/inventory_reference/tag/tag.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/unit/unit.dart';
 import 'package:dehub/src/product_module/screens/new_product/new_product.dart';
+import 'package:dehub/src/product_module/screens/price_group/price_group.dart';
 import 'package:dehub/src/product_module/screens/product_detail_page/product_detail_page.dart';
 import 'package:dehub/src/product_module/screens/product_list_page/product_list_page.dart';
 import 'package:dehub/src/order_module/screens/pull_sheet_expenses/pull_sheet_expenses.dart';
@@ -151,6 +153,7 @@ import 'package:dehub/src/network_module/screens/payment_terms/payment_terms.dar
 import 'package:dehub/src/entry_point/menu/shopping/shopping_page.dart';
 import 'package:dehub/src/entry_point/menu/suppliers/suppliers_page.dart';
 import 'package:dehub/src/product_module/screens/set_price/set_price.dart';
+import 'package:dehub/src/product_module/screens/set_price_group/set_price_group.dart';
 import 'package:dehub/src/product_module/screens/set_warehouse/set_warehouse.dart';
 import 'package:dehub/src/product_module/screens/supplier_list/supplier_list.dart';
 import 'package:dehub/src/product_module/screens/supplier_product/supplier_product_list.dart';
@@ -217,6 +220,10 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return const SplashPage();
                     });
+                  case PriceGroupPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return const PriceGroupPage();
+                    });
                   case NoInternetScreen.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return const NoInternetScreen();
@@ -228,6 +235,14 @@ class MyApp extends StatelessWidget {
                       return InvitationDetailPage(
                         listenController: arguments.listenController,
                         id: arguments.id,
+                      );
+                    });
+                  case SetPriceGroup.routeName:
+                    SetPriceGroupArguments arguments =
+                        settings.arguments as SetPriceGroupArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return SetPriceGroup(
+                        list: arguments.list,
                       );
                     });
                   case PartnerDetailPage.routeName:
@@ -709,6 +724,25 @@ class MyApp extends StatelessWidget {
                         );
                       },
                     );
+                  case Adjustment.routeName:
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          const Adjustment(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
                   case SetClientClassification.routeName:
                     SetClientClassificationArguments arguments =
                         settings.arguments as SetClientClassificationArguments;
@@ -918,12 +952,8 @@ class MyApp extends StatelessWidget {
                       );
                     });
                   case RePayment.routeName:
-                    // RePaymentArguments arguments =
-                    // settings.arguments as RePaymentArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return const RePayment(
-                          // id: arguments.id,
-                          );
+                      return const RePayment();
                     });
                   case PullSheetExpenses.routeName:
                     PullSheetExpensesArguments arguments =

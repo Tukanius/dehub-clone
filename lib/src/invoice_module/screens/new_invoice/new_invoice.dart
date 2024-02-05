@@ -918,8 +918,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
             : invoice.newInvoice.discountType == "Дүнгээр"
                 ? "AMOUNT"
                 : null,
-        discountValue: double.tryParse(discountController.text) ?? 0,
-        shippingAmount: double.tryParse(shippingController.text) ?? 0,
+        discountValue: double.tryParse(discountController.text),
+        shippingAmount: double.tryParse(shippingController.text),
       );
       if (widget.data == null) {
         await InvoiceApi().createInvoice(asdf);

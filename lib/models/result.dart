@@ -37,8 +37,14 @@ class Filter {
   String? repaymentId;
   bool? isEmail;
   String? financeType;
+  String? month;
+  String? warehouseId;
+  bool? excel;
 
   Filter({
+    this.excel,
+    this.warehouseId,
+    this.month,
     this.financeType,
     this.isEmail,
     this.repaymentId,

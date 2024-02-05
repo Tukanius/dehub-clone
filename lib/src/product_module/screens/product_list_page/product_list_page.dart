@@ -63,7 +63,7 @@ class _ProductListPageState extends State<ProductListPage> {
                 height: 40,
                 child: Center(
                   child: Text(
-                    'Багц үйлчилгээ',
+                    'Багц бараа',
                   ),
                 ),
               ),
@@ -74,7 +74,7 @@ class _ProductListPageState extends State<ProductListPage> {
           physics: NeverScrollableScrollPhysics(),
           children: [
             GoodsTab(),
-            Text('1'),
+            Text(''),
           ],
         ),
       ),

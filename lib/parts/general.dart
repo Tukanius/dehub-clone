@@ -16,6 +16,21 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => BankAccounts.fromJson(e))
             .toList()
         : null,
+    stockMovementTypes: json['stockMovementTypes'] != null
+        ? (json['stockMovementTypes'] as List)
+            .map((e) => StockMovementTypes.fromJson(e))
+            .toList()
+        : null,
+    priceGroupTypes: json['priceGroupTypes'] != null
+        ? (json['priceGroupTypes'] as List)
+            .map((e) => PriceGroupTypes.fromJson(e))
+            .toList()
+        : null,
+    priceGroupStatus: json['priceGroupStatus'] != null
+        ? (json['priceGroupStatus'] as List)
+            .map((e) => PriceGroupTypes.fromJson(e))
+            .toList()
+        : null,
     staffs: json['staffs'] != null
         ? (json['staffs'] as List).map((e) => Staffs.fromJson(e)).toList()
         : null,
@@ -27,6 +42,11 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
     lbfProgramStatus: json['lbfProgramStatus'] != null
         ? (json['lbfProgramStatus'] as List)
             .map((e) => ProgramTypes.fromJson(e))
+            .toList()
+        : null,
+    adjustmentStatus: json['adjustmentStatus'] != null
+        ? (json['adjustmentStatus'] as List)
+            .map((e) => AdjustmentStatus.fromJson(e))
             .toList()
         : null,
     suppliers: json['suppliers'] != null
@@ -362,6 +382,15 @@ Map<String, dynamic> _$GeneralToJson(General instance) {
   if (instance.productSuppPenaltyTypes != null) {
     json['productSuppPenaltyTypes'] = instance.productSuppPenaltyTypes;
   }
+  if (instance.stockMovementTypes != null) {
+    json['stockMovementTypes'] = instance.stockMovementTypes;
+  }
+  if (instance.priceGroupTypes != null) {
+    json['priceGroupTypes'] = instance.priceGroupTypes;
+  }
+  if (instance.priceGroupStatus != null) {
+    json['priceGroupStatus'] = instance.priceGroupStatus;
+  }
   if (instance.repaymentPaymentStatus != null) {
     json['repaymentPaymentStatus'] = instance.repaymentPaymentStatus;
   }
@@ -373,6 +402,9 @@ Map<String, dynamic> _$GeneralToJson(General instance) {
   }
   if (instance.lbfProgramStatus != null) {
     json['lbfProgramStatus'] = instance.lbfProgramStatus;
+  }
+  if (instance.adjustmentStatus != null) {
+    json['adjustmentStatus'] = instance.adjustmentStatus;
   }
   if (instance.tiers != null) json['tiers'] = instance.tiers;
   if (instance.vatTypes != null) json['vatTypes'] = instance.vatTypes;

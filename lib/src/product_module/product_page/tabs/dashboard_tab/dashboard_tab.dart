@@ -4,6 +4,7 @@ import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/inventory_reference.dart';
+import 'package:dehub/src/product_module/screens/price_group/price_group.dart';
 import 'package:dehub/src/product_module/screens/product_list_page/product_list_page.dart';
 import 'package:dehub/src/product_module/screens/supplier_list/supplier_list.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -108,18 +109,20 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                 DashboardCard(
                   onClick: () {},
                   boxColor: productColor.withOpacity(0.1),
-                  padding: 9,
+                  padding: 8,
                   labelText: 'Ажил, үйлчилгээ',
                   svgColor: productColor,
-                  svg: 'assets/svg/push.svg',
+                  svg: 'assets/svg/headset.svg',
                 ),
                 DashboardCard(
-                  onClick: () {},
+                  onClick: () {
+                    Navigator.of(context).pushNamed(PriceGroupPage.routeName);
+                  },
                   boxColor: productColor.withOpacity(0.1),
                   padding: 7,
                   labelText: 'Үнийн бодлого',
                   svgColor: productColor,
-                  svg: 'assets/svg/bag.svg',
+                  svg: 'assets/svg/receipt_tax.svg',
                 ),
                 DashboardCard(
                   onClick: () {},

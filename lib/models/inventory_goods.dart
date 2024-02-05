@@ -58,6 +58,7 @@ class InventoryGoods {
   InventoryGoods? catergory;
   String? parentId;
   String? regUserId;
+  InventoryGoods? regUser;
   String? name;
   double? fieldCount;
   bool? isPublic;
@@ -166,6 +167,7 @@ class InventoryGoods {
   List<InventoryGoods>? tierPrices;
   double? price;
   String? variantId;
+  InventoryGoods? variant;
   String? firstName;
   String? lastName;
   InventoryGoods? warehouseUser;
@@ -202,8 +204,74 @@ class InventoryGoods {
   bool? isForLoad;
   List<String>? selections;
   List<InventoryGoods>? sectionFields;
+  int? totalQuantity;
+  int? reservedQuantity;
+  int? loadingQuantity;
+  int? onDeliveryQuantity;
+  int? backorderQuantity;
+  int? deliveredQuantity;
+  String? movementType;
+  String? adjustmentNoteId;
+  String? reference;
+  String? adjustmentStatus;
+  Uri? excelUrl;
+  String? priceStartDate;
+  String? priceEndDate;
+  InventoryGoods? coBusinessStaff;
+  List<InventoryGoods>? coBusinessFinStaffs;
+  String? priceGroupType;
+  String? priceGroupStatus;
+  String? priceGroupId;
+  int? priceTierNo;
+  List<String>? businessIds;
+  double? tier0Price;
+  double? tier1Price;
+  double? tier2Price;
+  double? tier3Price;
+  double? tier4Price;
+  double? tier5Price;
+  double? tier6Price;
+  double? tier7Price;
+  double? tier8Price;
+  double? tier9Price;
+  double? tier10Price;
+  int? variantCount;
 
   InventoryGoods({
+    this.variantCount,
+    this.tier0Price,
+    this.priceGroupStatus,
+    this.tier1Price,
+    this.tier2Price,
+    this.tier3Price,
+    this.tier4Price,
+    this.tier5Price,
+    this.tier6Price,
+    this.tier7Price,
+    this.tier8Price,
+    this.tier9Price,
+    this.tier10Price,
+    this.priceGroupType,
+    this.variant,
+    this.priceGroupId,
+    this.priceTierNo,
+    this.businessIds,
+    this.coBusinessFinStaffs,
+    this.coBusinessStaff,
+    this.priceStartDate,
+    this.priceEndDate,
+    this.excelUrl,
+    this.adjustmentStatus,
+    this.regUser,
+    this.reference,
+    this.movementType,
+    this.adjustmentNoteId,
+    this.totalQuantity,
+    this.reservedQuantity,
+    this.loadingQuantity,
+    this.onDeliveryQuantity,
+    this.backorderQuantity,
+    this.deliveredQuantity,
     this.sectionFields,
     this.selections,
     this.goodsId,

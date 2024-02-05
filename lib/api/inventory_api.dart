@@ -1,3 +1,4 @@
+import 'package:dehub/models/finance.dart';
 import 'package:dio/dio.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/invoice.dart';
@@ -394,6 +395,12 @@ class InventoryApi extends HttpRequest {
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
   }
 
+  Future<Result> variantSelect(String id) async {
+    var res = await get(
+        '/stock/adjustment/variant_select?warehouseId=$id', 'INVENTORY', true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
   Future<Result> packageTypeList(ResultArguments resultArguments) async {
     var res = await get('/package_type', "INVENTORY", true,
         data: resultArguments.toJson());
@@ -472,6 +479,11 @@ class InventoryApi extends HttpRequest {
     return Result.fromJson(res, InventoryGoods.fromJson);
   }
 
+  Future<Result> adjustmentNoteSelect() async {
+    var res = await get('/adjustment_note/select', "INVENTORY", true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
   Future<InventoryGoods> adjustmentNoteCreate(InventoryGoods data) async {
     var res =
         await post('/adjustment_note', "INVENTORY", true, data: data.toJson());
@@ -488,5 +500,54 @@ class InventoryApi extends HttpRequest {
   Future<InventoryGoods> adjustmentNoteDel(String id) async {
     var res = await del('/adjustment_note/$id', "INVENTORY", true);
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> stockList(ResultArguments data) async {
+    var res = await get('/stock', "INVENTORY", true, data: data.toJson());
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<Result> adjustmentList(ResultArguments data) async {
+    var res =
+        await get('/stock/adjustment', "INVENTORY", true, data: data.toJson());
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<Result> warehouse() async {
+    var res = await get('/warehouse/select', 'INVENTORY', true);
+    return Result.fromJson(res, Finance.fromJson);
+  }
+
+  Future<InventoryGoods> adjust(InventoryGoods data) async {
+    var res = await put('/stock/adjustment/adjust', "INVENTORY", true,
+        data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<InventoryGoods> networkList(ResultArguments data) async {
+    var res = await get('/network', "INVENTORY", true, data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> priceGroupSelect(String type) async {
+    var res = await get('/price_group/select?type=$type', "INVENTORY", true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<Result> priceGroupList(ResultArguments data) async {
+    var res = await get('/price_group', "INVENTORY", true, data: data.toJson());
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<InventoryGoods> setPrice(InventoryGoods data) async {
+    var res =
+        await put('/network/set_price', "INVENTORY", true, data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> priceGroupGoods(ResultArguments data) async {
+    var res =
+        await get('/price_group/goods', "INVENTORY", true, data: data.toJson());
+    return Result.fromJson(res, InventoryGoods.fromJson);
   }
 }

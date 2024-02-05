@@ -3,13 +3,15 @@ import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/entry_point/entry_point.dart';
+import 'package:dehub/src/finance_module/financing_page/tabs/settlement_tab/settlement_tab.dart';
 import 'package:dehub/src/splash/splash_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dehub/src/finance_module/financing_page/tabs/dashboard_tab.dart';
+import 'package:dehub/src/finance_module/financing_page/tabs/dashboard_tab/dashboard_tab.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
+import 'tabs/limit_tab/limit_tab.dart';
 
 class FinancingPage extends StatefulWidget {
   static const routeName = '/FinancingPage';
@@ -23,8 +25,8 @@ class _FinancingPageState extends State<FinancingPage> with AfterLayoutMixin {
   static const List<Widget> currentPages = [
     SizedBox(),
     DashBoardTab(),
-    Text('1'),
-    Text('2'),
+    LimitTab(),
+    SettlementTab(),
   ];
   int selectedIndex = 1;
   bool isLoading = true;

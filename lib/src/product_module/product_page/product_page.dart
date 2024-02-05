@@ -1,15 +1,14 @@
-import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/back_button/back_button.dart';
-import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/product_module/product_page/tabs/dashboard_tab/dashboard_tab.dart';
+import 'package:dehub/src/product_module/product_page/tabs/price_tab/price_tab.dart';
+import 'package:dehub/src/product_module/product_page/tabs/resource_tab/resource_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dehub/src/product_module/product_page/tabs/home_page_tab/home_page_tab.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
 
@@ -35,13 +34,10 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
   }
 
   static const List<Widget> currentPages = [
-    HomePageTab(),
+    SizedBox(),
     DashboardTab(),
-    NotFound(
-      module: "INVENTORY",
-      labelText: "Тун удахгүй",
-    ),
-    Text('1'),
+    PriceTab(),
+    ResourceTab(),
   ];
 
   void ontappedItem(int index) {
@@ -91,12 +87,7 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                         BlendMode.srcIn),
                   ),
                 )
-              : selectedIndex == 3
-                  ? const AddButton(
-                      color: white,
-                      addColor: productColor,
-                    )
-                  : const SizedBox(),
+              : const SizedBox(),
         ],
       ),
       body: isLoading == true
@@ -218,7 +209,7 @@ class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
                 ),
                 if (selectedIndex != 3)
                   const Text(
-                    'Барааны нөөц',
+                    'Нөөц',
                     style: TextStyle(color: productColor, fontSize: 12),
                   )
               ],

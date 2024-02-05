@@ -24,7 +24,6 @@ class BasicInformationTab extends StatefulWidget {
     super.key,
     required this.id,
   });
-
   @override
   State<BasicInformationTab> createState() => _BasicInformationTabState();
 }
@@ -35,7 +34,6 @@ class _BasicInformationTabState extends State<BasicInformationTab>
   General general = General();
   bool isLoading = true;
   User user = User();
-
   @override
   afterFirstLayout(BuildContext context) async {
     invoice = await InvoiceApi().getInvoice(widget.id);
