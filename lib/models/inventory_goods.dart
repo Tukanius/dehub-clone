@@ -236,8 +236,16 @@ class InventoryGoods {
   double? tier9Price;
   double? tier10Price;
   int? variantCount;
+  List<InventoryGoods>? tiers;
+  String? perType;
+  String? changeType;
+  double? perValue;
 
   InventoryGoods({
+    this.perValue,
+    this.perType,
+    this.changeType,
+    this.tiers,
     this.variantCount,
     this.tier0Price,
     this.priceGroupStatus,

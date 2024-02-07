@@ -849,7 +849,7 @@ class _OnboardInvitationFormState extends State<OnboardInvitationForm> {
                   child: CustomButton(
                     borderColor: networkColor,
                     onClick: () {
-                      // Navigator.of(context).pop();
+                      Navigator.of(context).pop();
                     },
                     labelColor: backgroundColor,
                     labelText: 'Буцах',

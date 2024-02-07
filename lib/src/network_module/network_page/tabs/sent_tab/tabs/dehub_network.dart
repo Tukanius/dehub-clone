@@ -1,6 +1,6 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
-import 'package:dehub/components/partner_cards/sent_card.dart';
+import 'package:dehub/components/partner_cards/invitation_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/network_module/screens/invitation_detail_page/invitation_detail_page.dart';
@@ -93,7 +93,7 @@ class DehubNetworkState extends State<DehubNetwork> with AfterLayoutMixin {
                         ? Column(
                             children: invitation.rows!
                                 .map(
-                                  (item) => SentCard(
+                                  (item) => InvitationCard(
                                     index: invitation.rows!.indexOf(item),
                                     startAnimation: startAnimation,
                                     data: item,

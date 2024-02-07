@@ -108,14 +108,14 @@ class _AdjustmentCardState extends State<AdjustmentCard> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: lightBlue),
+                  border: Border.all(color: Colors.blue),
                 ),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 child: Text(
                   '${adjustmentStatus().name}',
                   style: const TextStyle(
-                    color: lightBlue,
+                    color: Colors.blue,
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                   ),

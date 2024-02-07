@@ -105,7 +105,7 @@ class InvitationDetailPageState extends State<InvitationDetailPage>
       backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
-        surfaceTintColor: backgroundColor,
+        surfaceTintColor: white,
         backgroundColor: backgroundColor,
         iconTheme: const IconThemeData(color: networkColor),
         title: const Text(

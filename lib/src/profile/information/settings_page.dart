@@ -190,9 +190,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     isSubmit == false
                         ? GestureDetector(
                             onTap: () {
-                              if (isSubmit == false) {
-                                danVerify();
-                              }
+                              danVerify();
                             },
                             child: Container(
                               padding: const EdgeInsets.symmetric(

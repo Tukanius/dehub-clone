@@ -146,8 +146,10 @@ class SentInvitationDetailState extends State<SentInvitationDetail>
                     paddingVertical: 10,
                     color: white,
                     labelText: 'Ирсэн огноо',
-                    secondText: DateFormat("yyyy-MM-dd")
-                        .format(invitation.invitedDate!),
+                    secondText: invitation.invitedDate != null
+                        ? DateFormat("yyyy-MM-dd")
+                            .format(invitation.invitedDate!)
+                        : '-',
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(

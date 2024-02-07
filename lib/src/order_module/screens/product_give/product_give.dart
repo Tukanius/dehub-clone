@@ -190,20 +190,26 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
   }
 
   lineConfirm(Order item) async {
-    setState(() {
-      isSubmit = true;
-    });
-    await OrderApi().deliveryNoteLineConfirm(
-      Order(
-        lineId: item.id,
-        confirmedQuantity: item.quantity,
-      ),
-      '${shipment.id}',
-    );
-    shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
-    setState(() {
-      isSubmit = false;
-    });
+    try {
+      setState(() {
+        isSubmit = true;
+      });
+      await OrderApi().deliveryNoteLineConfirm(
+        Order(
+          lineId: item.id,
+          confirmedQuantity: item.quantity,
+        ),
+        '${shipment.id}',
+      );
+      shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
+      setState(() {
+        isSubmit = false;
+      });
+    } catch (e) {
+      setState(() {
+        isSubmit = false;
+      });
+    }
   }
 
   @override

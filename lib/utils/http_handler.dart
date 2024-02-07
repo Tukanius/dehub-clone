@@ -20,7 +20,7 @@ class HttpHandler {
     if (data.runtimeType == <String, dynamic>{}.runtimeType) {
       Map<String, dynamic> json = data as Map<String, dynamic>;
 
-      message = json['message'] as String?;
+      message = json['message'].toString();
     } else {
       message = data as String;
     }

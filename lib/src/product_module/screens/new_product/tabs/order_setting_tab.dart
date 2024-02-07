@@ -694,6 +694,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                   ),
                   Expanded(
                     child: CustomButton(
+                      isLoading: isSubmit,
                       borderColor: productColor,
                       onClick: () {
                         onSubmit(false);
@@ -708,10 +709,10 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                   ),
                   Expanded(
                     child: CustomButton(
+                      isLoading: isSubmit,
                       onClick: () {
                         onSubmit(true);
                       },
-                      isLoading: false,
                       labelText: 'Бүртгэл дуусгах',
                       labelColor: productColor,
                     ),

@@ -2,12 +2,12 @@ import 'package:dehub/models/invitation_received.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
-class SentCard extends StatefulWidget {
+class InvitationCard extends StatefulWidget {
   final Function()? onClick;
   final Invitation? data;
   final int index;
   final bool startAnimation;
-  const SentCard({
+  const InvitationCard({
     required this.index,
     required this.startAnimation,
     this.data,
@@ -16,10 +16,10 @@ class SentCard extends StatefulWidget {
   });
 
   @override
-  SentCardState createState() => SentCardState();
+  InvitationCardState createState() => InvitationCardState();
 }
 
-class SentCardState extends State<SentCard> {
+class InvitationCardState extends State<InvitationCard> {
   invitationStatus() {
     switch (widget.data?.invitationStatus) {
       case "SENT":

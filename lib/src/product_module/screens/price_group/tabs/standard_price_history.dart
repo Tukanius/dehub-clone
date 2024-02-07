@@ -2,6 +2,7 @@ import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/product_module/screens/price_group/components/price_card.dart';
+import 'package:dehub/src/product_module/screens/price_history_detail/price_group_detail.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -74,6 +75,13 @@ class _StandardPriceHistoryState extends State<StandardPriceHistory>
                     .map(
                       (data) => PriceCard(
                         data: data,
+                        onClick: () {
+                          Navigator.of(context).pushNamed(
+                            PriceGroupDetail.routeName,
+                            arguments: PriceGroupDetailArguments(
+                                id: data.id, type: 'GROUP'),
+                          );
+                        },
                       ),
                     )
                     .toList(),

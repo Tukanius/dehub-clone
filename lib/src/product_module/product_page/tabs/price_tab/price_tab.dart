@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/inventory_goods.dart';
@@ -22,6 +23,7 @@ class _PriceTabState extends State<PriceTab> with AfterLayoutMixin {
   int page = 1;
   int limit = 10;
   bool isLoading = true;
+  ListenController listenController = ListenController();
   InventoryGoods goods =
       InventoryGoods(rows: [], count: 0, coBusinessFinStaffs: []);
   List<InventoryGoods> priceList = [];
@@ -64,6 +66,19 @@ class _PriceTabState extends State<PriceTab> with AfterLayoutMixin {
   }
 
   @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        limit = 10;
+        isLoading = true;
+        priceList = [];
+      });
+      await list(page, limit);
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return isLoading == true
         ? const Center(
@@ -81,7 +96,10 @@ class _PriceTabState extends State<PriceTab> with AfterLayoutMixin {
                       onTap: () {
                         Navigator.of(context).pushNamed(
                           SetPriceGroup.routeName,
-                          arguments: SetPriceGroupArguments(list: priceList),
+                          arguments: SetPriceGroupArguments(
+                            list: priceList,
+                            listenController: listenController,
+                          ),
                         );
                       },
                       borderRadius: BorderRadius.circular(5),

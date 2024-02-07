@@ -385,9 +385,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                         CustomButton(
                           isLoading: isSubmit,
                           onClick: () {
-                            if (isSubmit == false) {
-                              _performLogin(context);
-                            }
+                            _performLogin(context);
                             // show(context);
                           },
                           labelText: "Нэвтрэх",

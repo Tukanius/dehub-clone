@@ -8,8 +8,10 @@ import 'package:provider/provider.dart';
 
 class PriceCard extends StatefulWidget {
   final InventoryGoods data;
+  final Function()? onClick;
   const PriceCard({
     super.key,
+    this.onClick,
     required this.data,
   });
 
@@ -31,139 +33,142 @@ class _PriceCardState extends State<PriceCard> {
     general =
         Provider.of<GeneralProvider>(context, listen: true).inventoryGeneral;
 
-    return Container(
-      color: white,
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      margin: const EdgeInsets.only(bottom: 3),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  '${widget.data.name}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: productColor,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const Text(
-                      'Барааны тоо: ',
-                      style: TextStyle(
-                        fontSize: 12,
-                      ),
-                    ),
-                    Text(
-                      "${widget.data.variantCount ?? '-'}",
-                      style: const TextStyle(
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  "Эхлэх: ${DateFormat('yyyy-MM-dd HH:mm').format(DateTime.parse(widget.data.startDate!))}",
-                  style: const TextStyle(
-                    color: grey2,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  widget.data.endDate != null
-                      ? "Дуусах: ${DateFormat('yyyy-MM-dd HH:mm').format(DateTime.parse(widget.data.endDate!))}"
-                      : "Дуусах: -",
-                  style: const TextStyle(
-                    color: grey2,
-                    fontSize: 12,
-                  ),
-                  textAlign: TextAlign.end,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 3,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  "Тайлбар: ${widget.data.description}",
-                  style: const TextStyle(
-                    color: grey2,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blue),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  '${groupStatus().name}',
-                  style: const TextStyle(
-                    color: Colors.blue,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const Divider(
-            color: lightGrey,
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Row(
+    return GestureDetector(
+      onTap: widget.onClick,
+      child: Container(
+        color: white,
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        margin: const EdgeInsets.only(bottom: 3),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
               children: [
-                CircleAvatar(
-                  radius: 18,
-                  backgroundImage:
-                      NetworkImage('${widget.data.regUser?.avatar}'),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                RichText(
-                  text: TextSpan(
+                Expanded(
+                  child: Text(
+                    '${widget.data.name}',
                     style: const TextStyle(
-                      fontSize: 14,
-                      fontFamily: "Montserrat",
-                      color: grey2,
+                      fontWeight: FontWeight.w600,
+                      color: productColor,
                     ),
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      TextSpan(
-                        text: '${widget.data.regUser?.lastName} ',
+                      const Text(
+                        'Барааны тоо: ',
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
                       ),
-                      TextSpan(text: '${widget.data.regUser?.firstName}'),
+                      Text(
+                        "${widget.data.variantCount ?? '-'}",
+                        style: const TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
-          ),
-        ],
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    "Эхлэх: ${DateFormat('yyyy-MM-dd HH:mm').format(DateTime.parse(widget.data.startDate!))}",
+                    style: const TextStyle(
+                      color: grey2,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    widget.data.endDate != null
+                        ? "Дуусах: ${DateFormat('yyyy-MM-dd HH:mm').format(DateTime.parse(widget.data.endDate!))}"
+                        : "Дуусах: -",
+                    style: const TextStyle(
+                      color: grey2,
+                      fontSize: 12,
+                    ),
+                    textAlign: TextAlign.end,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 3,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    "Тайлбар: ${widget.data.description}",
+                    style: const TextStyle(
+                      color: grey2,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blue),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    '${groupStatus().name}',
+                    style: const TextStyle(
+                      color: Colors.blue,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const Divider(
+              color: lightGrey,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 18,
+                    backgroundImage:
+                        NetworkImage('${widget.data.regUser?.avatar}'),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontFamily: "Montserrat",
+                        color: grey2,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: '${widget.data.regUser?.lastName} ',
+                        ),
+                        TextSpan(text: '${widget.data.regUser?.firstName}'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -118,6 +118,8 @@ import 'package:dehub/src/auth/pin_code/pin_confirmation.dart';
 import 'package:dehub/src/order_module/screens/product_give/product_give.dart';
 import 'package:dehub/src/product_module/product_page/product_page.dart';
 import 'package:dehub/src/product_module/screens/adjustment/adjustment.dart';
+import 'package:dehub/src/product_module/screens/change_standard_price/change_standard_price.dart';
+import 'package:dehub/src/product_module/screens/goods_price_change_history/goods_price_change_history.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/adjustment_note/adjustment_note.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/brand/brand.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/classification/inventory_classification.dart';
@@ -136,6 +138,7 @@ import 'package:dehub/src/product_module/screens/inventory_reference/tag/tag.dar
 import 'package:dehub/src/product_module/screens/inventory_reference/unit/unit.dart';
 import 'package:dehub/src/product_module/screens/new_product/new_product.dart';
 import 'package:dehub/src/product_module/screens/price_group/price_group.dart';
+import 'package:dehub/src/product_module/screens/price_history_detail/price_group_detail.dart';
 import 'package:dehub/src/product_module/screens/product_detail_page/product_detail_page.dart';
 import 'package:dehub/src/product_module/screens/product_list_page/product_list_page.dart';
 import 'package:dehub/src/order_module/screens/pull_sheet_expenses/pull_sheet_expenses.dart';
@@ -220,6 +223,14 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return const SplashPage();
                     });
+                  case ChangeStandardPrice.routeName:
+                    ChangeStandardPriceArguments arguments =
+                        settings.arguments as ChangeStandardPriceArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return ChangeStandardPrice(
+                        type: arguments.type,
+                      );
+                    });
                   case PriceGroupPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return const PriceGroupPage();
@@ -237,11 +248,20 @@ class MyApp extends StatelessWidget {
                         id: arguments.id,
                       );
                     });
+                  case GoodsPriceChangeHistory.routeName:
+                    GoodsPriceChangeHistoryArguments arguments =
+                        settings.arguments as GoodsPriceChangeHistoryArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return GoodsPriceChangeHistory(
+                        id: arguments.id,
+                      );
+                    });
                   case SetPriceGroup.routeName:
                     SetPriceGroupArguments arguments =
                         settings.arguments as SetPriceGroupArguments;
                     return MaterialPageRoute(builder: (context) {
                       return SetPriceGroup(
+                        listenController: arguments.listenController,
                         list: arguments.list,
                       );
                     });
@@ -305,6 +325,15 @@ class MyApp extends StatelessWidget {
                       return NewProduct(
                         initialIndex: arguments.initialIndex,
                         data: arguments.data,
+                      );
+                    });
+                  case PriceGroupDetail.routeName:
+                    PriceGroupDetailArguments arguments =
+                        settings.arguments as PriceGroupDetailArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return PriceGroupDetail(
+                        type: arguments.type,
+                        id: arguments.id,
                       );
                     });
                   case NewInvoice.routeName:

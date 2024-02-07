@@ -539,6 +539,12 @@ class InventoryApi extends HttpRequest {
     return Result.fromJson(res, InventoryGoods.fromJson);
   }
 
+  Future<InventoryGoods> createPriceGroup(InventoryGoods data) async {
+    var res =
+        await post('/price_group', "INVENTORY", true, data: data.toJson());
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
   Future<InventoryGoods> setPrice(InventoryGoods data) async {
     var res =
         await put('/network/set_price', "INVENTORY", true, data: data.toJson());
@@ -548,6 +554,28 @@ class InventoryApi extends HttpRequest {
   Future<Result> priceGroupGoods(ResultArguments data) async {
     var res =
         await get('/price_group/goods', "INVENTORY", true, data: data.toJson());
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<Result> priceGroupVariant(String type) async {
+    var res =
+        await get('/price_group/variant/select?type=$type', "INVENTORY", true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
+  Future<InventoryGoods> priceGroupGet(String id) async {
+    var res = await get('/price_group/$id', "INVENTORY", true);
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<InventoryGoods> priceGroupVariantGet(String id) async {
+    var res = await get('/price_group/goods/variant/$id', "INVENTORY", true);
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> priceGroupVariantHistory(ResultArguments data) async {
+    var res = await get('/price_group/goods/variant/history', "INVENTORY", true,
+        data: data.toJson());
     return Result.fromJson(res, InventoryGoods.fromJson);
   }
 }

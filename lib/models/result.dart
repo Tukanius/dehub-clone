@@ -40,8 +40,10 @@ class Filter {
   String? month;
   String? warehouseId;
   bool? excel;
+  String? variantId;
 
   Filter({
+    this.variantId,
     this.excel,
     this.warehouseId,
     this.month,

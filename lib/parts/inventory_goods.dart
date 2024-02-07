@@ -23,6 +23,11 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => InventoryGoods.fromJson(e)).toList()
         : null,
+    tiers: json['tiers'] != null
+        ? (json['tiers'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
     sectionFields: json['sectionFields'] != null
         ? (json['sectionFields'] as List)
             .map((e) => InventoryGoods.fromJson(e))
@@ -138,6 +143,9 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
         : null,
     distributorId:
         json['distributorId'] != null ? json['distributorId'] as String : null,
+    perType: json['perType'] != null ? json['perType'] as String : null,
+    changeType:
+        json['changeType'] != null ? json['changeType'] as String : null,
     itemTypeId:
         json['itemTypeId'] != null ? json['itemTypeId'] as String : null,
     classificationId: json['classificationId'] != null
@@ -167,6 +175,9 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     unitId: json['unitId'] != null ? json['unitId'] as String : null,
     height:
         json['height'] != null ? double.parse(json['height'].toString()) : null,
+    perValue: json['perValue'] != null
+        ? double.parse(json['perValue'].toString())
+        : null,
     price:
         json['price'] != null ? double.parse(json['price'].toString()) : null,
     quantityPrice: json['quantityPrice'] != null
@@ -587,6 +598,10 @@ Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   if (instance.tier8Price != null) json['tier8Price'] = instance.tier8Price;
   if (instance.tier9Price != null) json['tier9Price'] = instance.tier9Price;
   if (instance.tier10Price != null) json['tier10Price'] = instance.tier10Price;
+  if (instance.perType != null) json['perType'] = instance.perType;
+  if (instance.changeType != null) json['changeType'] = instance.changeType;
+  if (instance.perValue != null) json['perValue'] = instance.perValue;
+  if (instance.tiers != null) json['tiers'] = instance.tiers;
   if (instance.variantCount != null) {
     json['variantCount'] = instance.variantCount;
   }

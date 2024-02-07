@@ -1,4 +1,3 @@
-import 'package:dehub/components/partner_cards/inbox_card.dart';
 import 'package:flutter/material.dart';
 
 class FromBuyer extends StatefulWidget {
@@ -14,7 +13,7 @@ class FromBuyerState extends State<FromBuyer> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          for (var i = 0; i < 10; i++) const InboxCard(),
+          Container(),
         ],
       ),
     );

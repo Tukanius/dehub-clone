@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
@@ -16,16 +17,20 @@ import 'package:after_layout/after_layout.dart';
 
 class SetPriceGroupArguments {
   List<InventoryGoods> list;
+  ListenController listenController;
   SetPriceGroupArguments({
     required this.list,
+    required this.listenController,
   });
 }
 
 class SetPriceGroup extends StatefulWidget {
   static const routeName = '/SetPriceGroup';
   final List<InventoryGoods> list;
+  final ListenController listenController;
   const SetPriceGroup({
     super.key,
+    required this.listenController,
     required this.list,
   });
 
@@ -43,10 +48,52 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
   String? priceGroupId;
   String? tier;
   int? tierNo;
+  bool groupTypeValidate = false;
+  bool priceGroupValidate = false;
+  bool tierValidate = false;
+  var validateKey = GlobalKey();
   List<InventoryGoods> tiers = [];
   bool isLoading = true;
   bool isSubmit = false;
   Result group = Result(rows: [], count: 0);
+
+  validateCheck(bool confirm) {
+    if (groupType == null) {
+      setState(() {
+        groupTypeValidate = true;
+      });
+      Scrollable.ensureVisible(
+        validateKey.currentContext!,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
+    }
+    if (priceGroup == null) {
+      setState(() {
+        priceGroupValidate = true;
+      });
+      Scrollable.ensureVisible(
+        validateKey.currentContext!,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
+    }
+    if (tier == null) {
+      setState(() {
+        tierValidate = true;
+      });
+      Scrollable.ensureVisible(
+        validateKey.currentContext!,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
+    }
+    if (tierValidate == false &&
+        priceGroupValidate == false &&
+        groupTypeValidate == false) {
+      onSubmit(confirm);
+    }
+  }
 
   onSubmit(bool confirm) async {
     try {
@@ -67,6 +114,7 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
       }
       data.businessIds = businessIds;
       await InventoryApi().setPrice(data);
+      widget.listenController.changeVariable('asdf');
       showCustomDialog(context, "Амжилттай", true, onPressed: () {
         Navigator.of(context).pop();
       });
@@ -130,6 +178,8 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
                     ),
                   ),
                   FieldCard(
+                    fbKey: validateKey,
+                    validate: groupTypeValidate,
                     paddingHorizontal: 15,
                     paddingVertical: 10,
                     color: white,
@@ -142,6 +192,7 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
                     },
                   ),
                   FieldCard(
+                    validate: priceGroupValidate,
                     paddingHorizontal: 15,
                     paddingVertical: 10,
                     color: white,
@@ -154,6 +205,7 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
                     },
                   ),
                   FieldCard(
+                    validate: tierValidate,
                     paddingHorizontal: 15,
                     paddingVertical: 10,
                     color: white,
@@ -219,12 +271,13 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
                       ),
                       Expanded(
                         child: CustomButton(
+                          isLoading: isSubmit,
                           borderColor: productColor,
                           labelText: 'Хадгалах',
                           labelColor: backgroundColor,
                           textColor: productColor,
                           onClick: () {
-                            onSubmit(false);
+                            validateCheck(false);
                           },
                         ),
                       ),
@@ -233,10 +286,11 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
                       ),
                       Expanded(
                         child: CustomButton(
+                          isLoading: isSubmit,
                           labelColor: productColor,
                           labelText: 'Батлах',
                           onClick: () {
-                            onSubmit(true);
+                            validateCheck(true);
                           },
                         ),
                       ),
@@ -273,6 +327,7 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
                         setState(() {
                           groupType = e.name;
                           groupTypeId = e.code;
+                          groupTypeValidate = false;
                           tier = null;
                           tierNo = null;
                         });
@@ -313,6 +368,7 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
                         setState(() {
                           priceGroup = e.name;
                           priceGroupId = e.id;
+                          priceGroupValidate = false;
                         });
                         Navigator.of(context).pop();
                       },
@@ -351,6 +407,7 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
                         setState(() {
                           tier = e.name;
                           tierNo = e.tierNo;
+                          tierValidate = false;
                         });
                         Navigator.of(context).pop();
                       },

@@ -32,18 +32,30 @@ class _UpdateOptionSheetState extends State<UpdateOptionSheet> {
   }
 
   onSubmit() async {
-    await InventoryApi().optionUpdate(
-      widget.data.id!,
-      InventoryGoods(
-        name: widget.data.name,
-        isGoods: widget.data.isGoods,
-        isService: widget.data.isService,
-        selections: values,
-      ),
-    );
-    showCustomDialog(context, "Амжилттай", true, onPressed: () {
-      Navigator.of(context).pop();
-    });
+    try {
+      setState(() {
+        isSubmit = true;
+      });
+      await InventoryApi().optionUpdate(
+        widget.data.id!,
+        InventoryGoods(
+          name: widget.data.name,
+          isGoods: widget.data.isGoods,
+          isService: widget.data.isService,
+          selections: values,
+        ),
+      );
+      showCustomDialog(context, "Амжилттай", true, onPressed: () {
+        Navigator.of(context).pop();
+      });
+      setState(() {
+        isSubmit = false;
+      });
+    } catch (e) {
+      setState(() {
+        isSubmit = false;
+      });
+    }
   }
 
   @override
@@ -80,7 +92,8 @@ class _UpdateOptionSheetState extends State<UpdateOptionSheet> {
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: const ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter:
+                          const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),
@@ -201,8 +214,8 @@ class _UpdateOptionSheetState extends State<UpdateOptionSheet> {
                       hintStyle: TextStyle(color: networkColor),
                       fillColor: white,
                       filled: true,
-                      contentPadding: EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                       isDense: true,
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,

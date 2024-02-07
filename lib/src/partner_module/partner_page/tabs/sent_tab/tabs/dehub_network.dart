@@ -1,4 +1,4 @@
-import 'package:dehub/components/partner_cards/sent_card.dart';
+import 'package:dehub/components/partner_cards/invitation_card.dart';
 import 'package:flutter/material.dart';
 
 class DehubNetwork extends StatefulWidget {
@@ -21,7 +21,7 @@ class DehubNetworkState extends State<DehubNetwork> {
               height: 15,
             ),
             for (var i = 0; i < 10; i++)
-              SentCard(
+              InvitationCard(
                 index: i,
                 startAnimation: true,
               ),
