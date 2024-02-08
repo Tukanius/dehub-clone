@@ -65,20 +65,23 @@ class _ProductCardState extends State<ProductCard> {
                             ),
                           ),
                           const SizedBox(
-                            width: 5,
+                            width: 10,
                           ),
                           Expanded(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text('SKU: '),
-                                Expanded(
-                                  child: Text(
-                                    '${widget.data.skuCode}',
+                            child: RichText(
+                              text: TextSpan(
+                                style: const TextStyle(
+                                  color: black,
+                                  fontFamily: 'Montserrat',
+                                ),
+                                children: [
+                                  const TextSpan(text: 'SKU: '),
+                                  TextSpan(
+                                    text: widget.data.skuCode,
                                     style: const TextStyle(color: productColor),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ],

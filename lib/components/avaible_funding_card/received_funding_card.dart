@@ -32,9 +32,15 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
   }
 
   requestStatus() {
-    final res = general.scfRequestStatus!
-        .firstWhere((element) => element.code == widget.data.requestStatus);
-    return res;
+    if (widget.data.lbfRequest == null) {
+      final res = general.scfRequestStatus!
+          .firstWhere((element) => element.code == widget.data.requestStatus);
+      return res;
+    } else {
+      final res = general.scfRequestStatus!.firstWhere((element) =>
+          element.code == widget.data.lbfRequest?.lbfRequestStatus);
+      return res;
+    }
   }
 
   @override
@@ -56,7 +62,7 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${widget.data.refCode}',
+                      '${widget.data.refCode ?? widget.data.lbfRequest?.refCode}',
                       style: const TextStyle(
                           color: dark,
                           fontSize: 14,
@@ -106,13 +112,19 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                             fontWeight: FontWeight.w500),
                       ),
                     ),
-                    Text(
-                      widget.data.type == "SUPPLIER"
-                          ? '${widget.data.supplierBusiness?.profileName}'
-                          : '${widget.data.buyerBusiness?.profileName}',
-                      style: TextStyle(
-                        color: source.currentColor,
-                        fontWeight: FontWeight.w500,
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Expanded(
+                      child: Text(
+                        widget.data.type == "SUPPLIER"
+                            ? '${widget.data.supplier?.profileName ?? widget.data.supplierBusiness?.profileName}'
+                            : '${widget.data.buyer?.profileName ?? widget.data.buyerBusiness?.profileName}',
+                        style: TextStyle(
+                          color: source.currentColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.end,
                       ),
                     ),
                   ],
@@ -130,7 +142,7 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                       ),
                     ),
                     Text(
-                      '${Utils().formatCurrency(widget.data.requestedAmount.toString()) + symbol()}',
+                      '${Utils().formatCurrency((widget.data.lbfRequest?.requestedAmount ?? widget.data.requestedAmount).toString()) + symbol()}',
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -145,7 +157,9 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Нийт шимтгэл: ${Utils().formatCurrency(widget.data.totalScfFeeAmount.toString()) + symbol()}',
+                      widget.data.totalScfFeeAmount != null
+                          ? 'Нийт шимтгэл: ${Utils().formatCurrency(widget.data.totalScfFeeAmount.toString()) + symbol()}'
+                          : '',
                       style: const TextStyle(
                         fontSize: 12,
                         color: Color(0xff555555),
@@ -162,7 +176,7 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                           width: 3,
                         ),
                         Text(
-                          '${widget.data.invRefCode}',
+                          '${widget.data.invoiceRef ?? widget.data.invRefCode}',
                           style: const TextStyle(
                             color: dark,
                             fontWeight: FontWeight.w600,

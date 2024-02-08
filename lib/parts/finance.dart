@@ -53,6 +53,8 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         ? json['buyerPenaltyType'] as String
         : null,
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
+    invoiceRef:
+        json['invoiceRef'] != null ? json['invoiceRef'] as String : null,
     lbfProgramId:
         json['lbfProgramId'] != null ? json['lbfProgramId'] as String : null,
     clientText:
@@ -102,6 +104,9 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         : null,
     businessRef:
         json['businessRef'] != null ? json['businessRef'] as String : null,
+    settlementStatus: json['settlementStatus'] != null
+        ? json['settlementStatus'] as String
+        : null,
     date: json['date'] != null ? json['date'] as String : null,
     regNumber: json['regNumber'] != null ? json['regNumber'] as String : null,
     partnerRef:
@@ -119,6 +124,9 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         json['parentRefCode'] != null ? json['parentRefCode'] as String : null,
     invCount: json['invCount'] != null
         ? double.parse(json['invCount'].toString())
+        : null,
+    subLimit: json['subLimit'] != null
+        ? double.parse(json['subLimit'].toString())
         : null,
     lbfProgramLimit: json['lbfProgramLimit'] != null
         ? double.parse(json['lbfProgramLimit'].toString())
@@ -431,6 +439,21 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
     program: json['program'] != null
         ? Finance.fromJson(json['program'] as Map<String, dynamic>)
         : null,
+    financeStaff: json['financeStaff'] != null
+        ? Finance.fromJson(json['financeStaff'] as Map<String, dynamic>)
+        : null,
+    business: json['business'] != null
+        ? Finance.fromJson(json['business'] as Map<String, dynamic>)
+        : null,
+    buyer: json['buyer'] != null
+        ? Finance.fromJson(json['buyer'] as Map<String, dynamic>)
+        : null,
+    supplier: json['supplier'] != null
+        ? Finance.fromJson(json['supplier'] as Map<String, dynamic>)
+        : null,
+    lbfRequest: json['lbfRequest'] != null
+        ? Finance.fromJson(json['lbfRequest'] as Map<String, dynamic>)
+        : null,
     creditAcc: json['creditAcc'] != null
         ? Finance.fromJson(json['creditAcc'] as Map<String, dynamic>)
         : null,
@@ -567,13 +590,49 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
     link: json['link'] != null ? json['link'] as String : null,
     qr_image: json['qr_image'] != null ? json['qr_image'] as String : null,
     logo: json['logo'] != null ? json['logo'] as String : null,
+    firstAmount: json['firstAmount'] != null
+        ? double.parse(json['firstAmount'].toString())
+        : null,
+    firstInvCount: json['firstInvCount'] != null
+        ? double.parse(json['firstInvCount'].toString())
+        : null,
+    lastAmount: json['lastAmount'] != null
+        ? double.parse(json['lastAmount'].toString())
+        : null,
+    lastInvCount: json['lastInvCount'] != null
+        ? double.parse(json['lastInvCount'].toString())
+        : null,
+    confirmedInvCount: json['confirmedInvCount'] != null
+        ? double.parse(json['confirmedInvCount'].toString())
+        : null,
+    paidInvCount: json['paidInvCount'] != null
+        ? double.parse(json['paidInvCount'].toString())
+        : null,
   );
 }
 
 Map<String, dynamic> _$FinanceToJson(Finance instance) {
   Map<String, dynamic> json = {};
+  if (instance.firstAmount != null) json['firstAmount'] = instance.firstAmount;
+  if (instance.firstInvCount != null) {
+    json['firstInvCount'] = instance.firstInvCount;
+  }
+  if (instance.lastAmount != null) json['lastAmount'] = instance.lastAmount;
+  if (instance.lastInvCount != null) {
+    json['lastInvCount'] = instance.lastInvCount;
+  }
+  if (instance.confirmedInvCount != null) {
+    json['confirmedInvCount'] = instance.confirmedInvCount;
+  }
+  if (instance.paidInvCount != null) {
+    json['paidInvCount'] = instance.paidInvCount;
+  }
 
   if (instance.link != null) json['link'] = instance.link;
+  if (instance.subLimit != null) json['subLimit'] = instance.subLimit;
+  if (instance.buyer != null) json['buyer'] = instance.buyer;
+  if (instance.supplier != null) json['supplier'] = instance.supplier;
+  if (instance.invoiceRef != null) json['invoiceRef'] = instance.invoiceRef;
   if (instance.qr_image != null) json['qr_image'] = instance.qr_image;
   if (instance.logo != null) json['logo'] = instance.logo;
   if (instance.method != null) json['method'] = instance.method;
@@ -582,6 +641,11 @@ Map<String, dynamic> _$FinanceToJson(Finance instance) {
   if (instance.lbfProgram != null) json['lbfProgram'] = instance.lbfProgram;
   if (instance.lbfRequestStatus != null) {
     json['lbfRequestStatus'] = instance.lbfRequestStatus;
+  }
+  if (instance.business != null) json['business'] = instance.business;
+
+  if (instance.settlementStatus != null) {
+    json['settlementStatus'] = instance.settlementStatus;
   }
   if (instance.lbfProgramId != null) {
     json['lbfProgramId'] = instance.lbfProgramId;
@@ -615,6 +679,9 @@ Map<String, dynamic> _$FinanceToJson(Finance instance) {
   if (instance.requestFiles != null) {
     json['requestFiles'] = instance.requestFiles;
   }
+  if (instance.lbfRequest != null) {
+    json['lbfRequest'] = instance.lbfRequest;
+  }
   if (instance.contractFile != null) {
     json['contractFile'] = instance.contractFile;
   }
@@ -640,6 +707,9 @@ Map<String, dynamic> _$FinanceToJson(Finance instance) {
   }
   if (instance.businessPendingCount != null) {
     json['businessPendingCount'] = instance.businessPendingCount;
+  }
+  if (instance.financeStaff != null) {
+    json['financeStaff'] = instance.financeStaff;
   }
   if (instance.recourseDays != null) {
     json['recourseDays'] = instance.recourseDays;

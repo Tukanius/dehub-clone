@@ -21,8 +21,11 @@ class PriceSettingCard extends StatefulWidget {
 }
 
 class _PriceSettingCardState extends State<PriceSettingCard> {
+  int? index;
+
   @override
   Widget build(BuildContext context) {
+    index = widget.list?.indexWhere((element) => element.id == widget.data.id);
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
@@ -80,7 +83,7 @@ class _PriceSettingCardState extends State<PriceSettingCard> {
                     ),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     activeColor: productColor,
-                    value: widget.list!.contains(widget.data),
+                    value: index! > -1,
                     onChanged: (value) {
                       widget.onChange!();
                     },

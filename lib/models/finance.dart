@@ -199,6 +199,7 @@ class Finance {
   List<Finance>? requestFiles;
   Uri? url;
   double? smeSubLimit;
+  double? subLimit;
   double? smeAvailableAmount;
   double? buyerTerm;
   bool? isRecalled;
@@ -220,13 +221,41 @@ class Finance {
   List<Finance>? compromises;
   Finance? supplierBusiness;
   Finance? buyerBusiness;
+  Finance? buyer;
+  Finance? supplier;
   List<Urls>? urls;
   String? link;
   String? qr_image;
   String? logo;
   Finance? invoice;
+  Finance? lbfRequest;
+  String? invoiceRef;
+  String? settlementStatus;
+  Finance? business;
+  Finance? financeStaff;
+
+  double? firstAmount;
+  double? firstInvCount;
+  double? lastAmount;
+  double? lastInvCount;
+  double? confirmedInvCount;
+  double? paidInvCount;
 
   Finance({
+    this.firstAmount,
+    this.firstInvCount,
+    this.lastAmount,
+    this.lastInvCount,
+    this.confirmedInvCount,
+    this.paidInvCount,
+    this.financeStaff,
+    this.business,
+    this.settlementStatus,
+    this.subLimit,
+    this.buyer,
+    this.supplier,
+    this.invoiceRef,
+    this.lbfRequest,
     this.invoice,
     this.logo,
     this.link,

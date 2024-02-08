@@ -43,7 +43,6 @@ class _PriceTabState extends State<PriceTab> with AfterLayoutMixin {
   onLoading() async {
     setState(() {
       limit += 10;
-      priceList = [];
     });
     await list(page, limit);
     refreshController.loadComplete();
@@ -54,7 +53,6 @@ class _PriceTabState extends State<PriceTab> with AfterLayoutMixin {
     setState(() {
       limit = 10;
       isLoading = true;
-      priceList = [];
     });
     await list(page, limit);
     refreshController.refreshCompleted();
@@ -149,38 +147,36 @@ class _PriceTabState extends State<PriceTab> with AfterLayoutMixin {
                     ),
                     goods.rows!.isNotEmpty
                         ? Column(
-                            children: goods.rows!
-                                .map(
-                                  (data) => PriceSettingCard(
-                                    list: priceList,
-                                    data: data,
-                                    onClick: () {
-                                      if (priceList.contains(data)) {
-                                        setState(() {
-                                          priceList.removeAt(
-                                              priceList.indexOf(data));
-                                        });
-                                      } else {
-                                        setState(() {
-                                          priceList.add(data);
-                                        });
-                                      }
-                                    },
-                                    onChange: () {
-                                      if (priceList.contains(data)) {
-                                        setState(() {
-                                          priceList.removeAt(
-                                              priceList.indexOf(data));
-                                        });
-                                      } else {
-                                        setState(() {
-                                          priceList.add(data);
-                                        });
-                                      }
-                                    },
-                                  ),
-                                )
-                                .toList(),
+                            children: goods.rows!.map((data) {
+                              int index = priceList.indexWhere(
+                                  (element) => element.id == data.id);
+                              return PriceSettingCard(
+                                list: priceList,
+                                data: data,
+                                onClick: () {
+                                  if (index >= 0) {
+                                    setState(() {
+                                      priceList.removeAt(index);
+                                    });
+                                  } else {
+                                    setState(() {
+                                      priceList.add(data);
+                                    });
+                                  }
+                                },
+                                onChange: () {
+                                  if (index >= 0) {
+                                    setState(() {
+                                      priceList.removeAt(index);
+                                    });
+                                  } else {
+                                    setState(() {
+                                      priceList.add(data);
+                                    });
+                                  }
+                                },
+                              );
+                            }).toList(),
                           )
                         : const NotFound(
                             module: "INVENTORY",

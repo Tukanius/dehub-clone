@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/src/auth/no_internet/no_internet_screen.dart';
+// import 'package:dehub/src/auth/no_internet/no_internet_screen.dart';
 import 'package:dehub/services/dialog.dart';
-import 'package:dehub/services/navigation.dart';
+// import 'package:dehub/services/navigation.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,7 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'http_handler.dart';
 import '../main.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
+// import 'package:connectivity_plus/connectivity_plus.dart';
 
 class HttpRequestFinance {
   static const version = '/app';
@@ -112,8 +112,8 @@ class HttpRequestFinance {
     if (method != 'GET') {
       debugPrint('body: $data');
     }
-    final Connectivity connectivity = Connectivity();
-    ConnectivityResult result = ConnectivityResult.none;
+    // final Connectivity connectivity = Connectivity();
+    // ConnectivityResult result = ConnectivityResult.none;
 
     try {
       switch (method) {
@@ -142,12 +142,12 @@ class HttpRequestFinance {
       return HttpHandler(statusCode: response?.statusCode).handle(response);
     } on DioException catch (ex) {
       try {
-        result = await connectivity.checkConnectivity();
-        if (result == ConnectivityResult.none) {
-          locator<NavigationService>()
-              .pushNamed(routeName: NoInternetScreen.routeName);
-          return null;
-        }
+        // result = await connectivity.checkConnectivity();
+        // if (result == ConnectivityResult.none) {
+        //   locator<NavigationService>()
+        //       .pushNamed(routeName: NoInternetScreen.routeName);
+        //   return null;
+        // }
       } on PlatformException catch (e) {
         debugPrint(e.toString());
       }
