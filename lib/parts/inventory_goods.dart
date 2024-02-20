@@ -408,11 +408,11 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     reOrderMinNum: json['reOrderMinNum'] != null
         ? double.parse(json['reOrderMinNum'].toString())
         : null,
-    optionValues: json['optionValues'] != null
-        ? (json['optionValues'] as List)
-            .map((e) => InventoryGoods.fromJson(e))
-            .toList()
-        : null,
+    // optionValues: json['optionValues'] != null
+    //     ? (json['optionValues'] as List)
+    //         .map((e) => InventoryGoods.fromJson(e))
+    //         .toList()
+    //     : null,
     variants: json['variants'] != null
         ? (json['variants'] as List)
             .map((e) => InventoryGoods.fromJson(e))

@@ -5,7 +5,7 @@ part '../parts/partner.dart';
 class Partner {
   Partner? partner;
   String? id;
-  String? createdAt;
+  DateTime? createdAt;
   String? updatedAt;
   String? deletedAt;
   String? legalEntityType;
@@ -98,8 +98,42 @@ class Partner {
   String? identityCardBack;
   bool? hasPassword;
   bool? hasPin;
+  String? nameEng;
+  String? branchStatus;
+  String? branchAddress;
+  Partner? regUser;
+  List<Partner>? buyers;
+  List<Partner>? suppliers;
+  List<Partner>? profileBanners;
+  Partner? businessSector;
+  Partner? businessSubSector;
+  Partner? warehouseUser;
+  String? warehouseStatus;
+  String? url;
+  bool? isMain;
+  List<String>? buyerIds;
+  List<String>? supplierIds;
+  String? warehouseName;
+  String? warehouseUserId;
 
   Partner({
+    this.warehouseUserId,
+    this.warehouseName,
+    this.supplierIds,
+    this.buyerIds,
+    this.isMain,
+    this.url,
+    this.warehouseStatus,
+    this.warehouseUser,
+    this.businessSubSector,
+    this.businessSector,
+    this.nameEng,
+    this.branchStatus,
+    this.branchAddress,
+    this.regUser,
+    this.buyers,
+    this.suppliers,
+    this.profileBanners,
     this.user,
     this.employeeUnit,
     this.partner,

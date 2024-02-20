@@ -19,6 +19,7 @@ Result _$ResultFromJson(dynamic res, Function fromJson) {
           .map((json) => fromJson(json as Map<String, dynamic>))
           .toList(),
       count: json['count'] as int?,
+      excelUrl: json['excelUrl'] as String?,
     );
   }
 }
@@ -26,6 +27,7 @@ Result _$ResultFromJson(dynamic res, Function fromJson) {
 Map<String, dynamic> _$ResultToJson(Result instance) => <String, dynamic>{
       'rows': instance.rows,
       'count': instance.count,
+      'excelUrl': instance.excelUrl,
     };
 
 Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {

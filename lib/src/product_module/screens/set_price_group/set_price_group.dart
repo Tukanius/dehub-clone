@@ -130,7 +130,6 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
-    group = await InventoryApi().priceGroupSelect("GROUP");
     tiers = general.tiers!.where((element) => element.isSet == true).toList();
     setState(() {
       isLoading = false;

@@ -53,7 +53,7 @@ class _PartnerInfoState extends State<PartnerInfo> {
                       height: 10,
                     ),
                     Text(
-                      '${partner.user?.currentBusiness?.profileNameEng}',
+                      '${partner.partner?.businessNameEng}',
                       style: const TextStyle(
                         fontSize: 16,
                         color: grey3,

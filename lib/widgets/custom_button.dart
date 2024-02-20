@@ -95,6 +95,7 @@ class _CustomButtonState extends State<CustomButton> {
                               fontSize: 16,
                               color: widget.textColor ?? white,
                             ),
+                            textAlign: TextAlign.center,
                           ),
                         ),
           ),

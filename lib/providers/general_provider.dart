@@ -11,6 +11,7 @@ class GeneralProvider extends ChangeNotifier {
   General financeGeneral = General();
   General inventoryGeneral = General();
   General invoiceGeneral = General();
+  General partnerGeneral = General();
 
   init(bool handler) async {
     general = await GeneralApi().init(handler);
@@ -43,6 +44,11 @@ class GeneralProvider extends ChangeNotifier {
 
   financeInit(String host, bool handler) async {
     financeGeneral = await FinanceApi().init(host, handler);
+    notifyListeners();
+  }
+
+  partnerInit(bool handler) async {
+    partnerGeneral = await GeneralApi().partnerInit(handler);
     notifyListeners();
   }
 }

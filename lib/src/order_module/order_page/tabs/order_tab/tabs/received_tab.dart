@@ -80,7 +80,8 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
     Filter filter = Filter(
-        type: user.currentBusiness?.type == "SUPPLIER" ? "PURCHASE" : "SALES");
+        type: user.currentBusiness?.type == "SUPPLIER" ? "PURCHASE" : "SALES",
+        excel: false);
     var res = await OrderApi()
         .orderList(ResultArguments(filter: filter, offset: offset));
     setState(() {

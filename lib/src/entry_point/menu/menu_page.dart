@@ -1,4 +1,3 @@
-import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/change_password/change_password.dart';
@@ -23,7 +22,6 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-  Partner partner = Partner();
   User user = User();
   bool isLoading = false;
 
@@ -40,7 +38,6 @@ class _MenuPageState extends State<MenuPage> {
 
   @override
   Widget build(BuildContext context) {
-    partner = Provider.of<UserProvider>(context, listen: true).partnerUser;
     user = Provider.of<UserProvider>(context, listen: true).user;
     return Scaffold(
       body: SingleChildScrollView(
@@ -85,9 +82,9 @@ class _MenuPageState extends State<MenuPage> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    partner.user?.lastName != null
+                                    user.lastName != null
                                         ? Text(
-                                            '${partner.user?.lastName?[0]}. ${partner.user?.firstName}',
+                                            '${user.lastName?[0]}. ${user.firstName}',
                                             style: const TextStyle(
                                               color: white,
                                               fontSize: 12,
@@ -95,7 +92,7 @@ class _MenuPageState extends State<MenuPage> {
                                             ),
                                           )
                                         : Text(
-                                            '${partner.user?.firstName}',
+                                            '${user.firstName}',
                                             style: const TextStyle(
                                               color: white,
                                               fontSize: 12,
@@ -103,7 +100,7 @@ class _MenuPageState extends State<MenuPage> {
                                             ),
                                           ),
                                     Text(
-                                      '${partner.user?.currentBusiness?.type}',
+                                      '${user.currentBusiness?.type ?? user.loginType}',
                                       style: const TextStyle(color: white),
                                     ),
                                   ],
@@ -176,8 +173,7 @@ class _MenuPageState extends State<MenuPage> {
                                       const SizedBox(
                                         width: 10,
                                       ),
-                                      partner.user?.currentBusiness?.type ==
-                                              "BUYER"
+                                      user.currentBusiness?.type == "BUYER"
                                           ? const Text(
                                               'Ханган нийлүүлэгчид',
                                               style: TextStyle(

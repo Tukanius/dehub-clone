@@ -1,8 +1,10 @@
 import 'package:dehub/api/finance_api.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/src/finance_module/financing_page/tabs/settlement_tab/components/settlement_card.dart';
+import 'package:dehub/src/finance_module/screens/settlement_respond/settlement_respond.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -117,15 +119,28 @@ class _SettlementTabState extends State<SettlementTab> with AfterLayoutMixin {
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Column(
-                    children: settlements.rows!
-                        .map(
-                          (data) => SettlementCard(
-                            data: data,
-                          ),
+                  settlements.rows!.isNotEmpty
+                      ? Column(
+                          children: settlements.rows!
+                              .map(
+                                (data) => SettlementCard(
+                                  onClick: () {
+                                    Navigator.of(context).pushNamed(
+                                      SettlementRespond.routeName,
+                                      arguments: SettlementRespondArguments(
+                                        data: data,
+                                      ),
+                                    );
+                                  },
+                                  data: data,
+                                ),
+                              )
+                              .toList(),
                         )
-                        .toList(),
-                  ),
+                      : const NotFound(
+                          module: "FINANCE",
+                          labelText: 'Хоосон байна',
+                        ),
                 ],
               ),
             ),
@@ -145,13 +160,17 @@ class _SettlementTabState extends State<SettlementTab> with AfterLayoutMixin {
             children: [
               TextButton(
                 onPressed: () async {
-                  setState(() {
-                    date = DateFormat('yyyy-MM').format(selectedDate!);
-                    limit = 10;
-                    isLoading = true;
-                  });
-                  await list(page, limit, date);
-                  Navigator.of(context).pop();
+                  try {
+                    setState(() {
+                      date = DateFormat('yyyy-MM').format(selectedDate!);
+                      limit = 10;
+                      isLoading = true;
+                    });
+                    await list(page, limit, date);
+                    Navigator.of(context).pop();
+                  } catch (e) {
+                    Navigator.of(context).pop();
+                  }
                 },
                 child: const Text(
                   'Болсон',
@@ -164,7 +183,7 @@ class _SettlementTabState extends State<SettlementTab> with AfterLayoutMixin {
               ),
               Expanded(
                 child: CupertinoDatePicker(
-                  initialDateTime: DateTime.now(),
+                  initialDateTime: DateTime.parse("$date-01"),
                   mode: CupertinoDatePickerMode.monthYear,
                   onDateTimeChanged: (DateTime newDate) {
                     setState(() {

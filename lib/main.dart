@@ -4,6 +4,7 @@ import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/providers/invoice_provider.dart';
+import 'package:dehub/providers/partner_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/entry_point/finance_entry/finance_entry.dart';
 import 'package:dehub/src/finance_module/screens/available_funding_page/available_funding_page.dart';
@@ -11,6 +12,7 @@ import 'package:dehub/src/finance_module/screens/compromise_page/compromise_page
 import 'package:dehub/src/finance_module/screens/finance_qpay/finance_qpay.dart';
 import 'package:dehub/src/finance_module/screens/payment_page/payment_page.dart';
 import 'package:dehub/src/finance_module/screens/recalled_page/recalled_page.dart';
+import 'package:dehub/src/finance_module/screens/settlement_respond/settlement_respond.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_transaction/invoice_transaction.dart';
 import 'package:dehub/src/invoice_module/screens/statement_detail/statement_detail.dart';
 import 'package:dehub/src/invoice_module/screens/transaction_detail/transaction_detail.dart';
@@ -20,6 +22,9 @@ import 'package:dehub/src/network_module/screens/account_setting/set_account/set
 import 'package:dehub/src/order_module/screens/delivery_management/delivery_management.dart';
 import 'package:dehub/src/order_module/screens/set_delivery_distribution/set_delivery_distribution.dart';
 import 'package:dehub/src/order_module/screens/shipment_distribution/shipment_distribution.dart';
+import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/partner_profile.dart';
+import 'package:dehub/src/partner_module/screens/branch_create/branch_create.dart';
+import 'package:dehub/src/partner_module/screens/warehouse_create/warehouse_create.dart';
 import 'package:dehub/src/payment_module/screens/account_statement/account_statement.dart';
 import 'package:dehub/src/network_module/screens/client_classifications/client_classification_detail/client_classification_detail.dart';
 import 'package:dehub/src/network_module/screens/client_classifications/client_classifications.dart';
@@ -186,6 +191,7 @@ class MyApp extends StatelessWidget {
   static const routeName = '/MyApp';
   const MyApp({super.key});
   static DialogService? dialogService = locator<DialogService>();
+  static String currentRouteName = '';
 
   @override
   Widget build(BuildContext context) {
@@ -202,6 +208,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => FinanceProvider()),
           ChangeNotifierProvider(create: (_) => InventoryProvider()),
           ChangeNotifierProvider(create: (_) => InvoiceProvider()),
+          ChangeNotifierProvider(create: (_) => PartnerProvider()),
         ],
         child: Stack(
           children: [
@@ -218,6 +225,7 @@ class MyApp extends StatelessWidget {
               initialRoute: SplashPage.routeName,
               debugShowCheckedModeBanner: false,
               onGenerateRoute: (RouteSettings settings) {
+                currentRouteName = settings.name.toString();
                 switch (settings.name) {
                   case SplashPage.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -301,6 +309,10 @@ class MyApp extends StatelessWidget {
                   case CreateSubCategory.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return const CreateSubCategory();
+                    });
+                  case PartnerProfile.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return const PartnerProfile();
                     });
                   case FundingRequestDetailPage.routeName:
                     FundingRequestDetailPageArguments arguments =
@@ -432,6 +444,77 @@ class MyApp extends StatelessWidget {
                           SetAccount(
                         listenController: arguments.listenController,
                         id: arguments.id,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
+                  case BranchCreate.routeName:
+                    BranchCreateArguments arguments =
+                        settings.arguments as BranchCreateArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          BranchCreate(
+                        listenController: arguments.listenController,
+                        data: arguments.data,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
+                  case WarehouseCreate.routeName:
+                    WarehouseCreateArguments arguments =
+                        settings.arguments as WarehouseCreateArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          WarehouseCreate(
+                        listenController: arguments.listenController,
+                        data: arguments.data,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
+                  case SettlementRespond.routeName:
+                    SettlementRespondArguments arguments =
+                        settings.arguments as SettlementRespondArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          SettlementRespond(
+                        data: arguments.data,
                       ),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {

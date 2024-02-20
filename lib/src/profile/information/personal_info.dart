@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dehub/api/auth_api.dart';
-import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/profile/components/card.dart';
@@ -29,7 +28,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
   bool isLoading = false;
   User dan = User();
   bool isSubmit = false;
-  Partner partner = Partner();
   File? image;
   final picker = ImagePicker();
   String? imageName;
@@ -100,7 +98,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).user;
-    partner = Provider.of<UserProvider>(context, listen: true).partnerUser;
     return isLoading == true
         ? const Center(
             child: CircularProgressIndicator(
@@ -180,7 +177,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       height: 25,
                     ),
                     Text(
-                      '${partner.user?.currentBusiness?.profileNameEng}',
+                      user.currentBusiness?.profileName ?? '',
                       style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

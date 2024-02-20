@@ -12,8 +12,16 @@ Partner _$PartnerFromJson(Map<String, dynamic> json) {
         ? Partner.fromJson(json['partner'] as Map<String, dynamic>)
         : null,
     id: json['id'] != null ? json['id'] as String : null,
-    createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
+    createdAt: json['createdAt'] != null
+        ? DateTime.parse(json['createdAt'].toString())
+        : null,
     updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
+    warehouseUserId: json['warehouseUserId'] != null
+        ? json['warehouseUserId'] as String
+        : null,
+    warehouseName:
+        json['warehouseName'] != null ? json['warehouseName'] as String : null,
+    isMain: json['isMain'] != null ? json['isMain'] as bool : null,
     deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
     legalEntityType: json['legalEntityType'] != null
         ? json['legalEntityType'] as String
@@ -25,7 +33,11 @@ Partner _$PartnerFromJson(Map<String, dynamic> json) {
         : null,
     ownerUserId:
         json['ownerUserId'] != null ? json['ownerUserId'] as String : null,
+    url: json['url'] != null ? json['url'] as String : null,
     country: json['country'] != null ? json['country'] as String : null,
+    warehouseStatus: json['warehouseStatus'] != null
+        ? json['warehouseStatus'] as String
+        : null,
     refCode: json['refCode'] != null ? json['refCode'] as String : null,
     regUserId: json['regUserId'] != null ? json['regUserId'] as String : null,
     registerStatus: json['registerStatus'] != null
@@ -122,6 +134,12 @@ Partner _$PartnerFromJson(Map<String, dynamic> json) {
     currentBusiness: json['currentBusiness'] != null
         ? Partner.fromJson(json['currentBusiness'] as Map<String, dynamic>)
         : null,
+    businessSubSector: json['businessSubSector'] != null
+        ? Partner.fromJson(json['businessSubSector'] as Map<String, dynamic>)
+        : null,
+    businessSector: json['businessSector'] != null
+        ? Partner.fromJson(json['businessSector'] as Map<String, dynamic>)
+        : null,
     partnerName:
         json['partnerName'] != null ? json['partnerName'] as String : null,
     partnerNameEng: json['partnerNameEng'] != null
@@ -168,11 +186,79 @@ Partner _$PartnerFromJson(Map<String, dynamic> json) {
             .map((e) => BusinessStaffs.fromJson(e))
             .toList()
         : null,
+    nameEng: json['nameEng'] != null ? json['nameEng'] as String : null,
+    branchStatus:
+        json['branchStatus'] != null ? json['branchStatus'] as String : null,
+    branchAddress:
+        json['branchAddress'] != null ? json['branchAddress'] as String : null,
+    regUser: json['regUser'] != null
+        ? Partner.fromJson(json['regUser'] as Map<String, dynamic>)
+        : null,
+    warehouseUser: json['warehouseUser'] != null
+        ? Partner.fromJson(json['warehouseUser'] as Map<String, dynamic>)
+        : null,
+    buyers: json['buyers'] != null
+        ? (json['buyers'] as List).map((e) => Partner.fromJson(e)).toList()
+        : null,
+    suppliers: json['suppliers'] != null
+        ? (json['suppliers'] as List).map((e) => Partner.fromJson(e)).toList()
+        : null,
+    profileBanners: json['profileBanners'] != null
+        ? (json['profileBanners'] as List)
+            .map((e) => Partner.fromJson(e))
+            .toList()
+        : null,
+    buyerIds: json['buyerIds'] != null
+        ? (json['buyerIds'] as List).map((e) => e as String).toList()
+        : null,
+    supplierIds: json['supplierIds'] != null
+        ? (json['supplierIds'] as List).map((e) => e as String).toList()
+        : null,
   );
 }
 
 Map<String, dynamic> _$PartnerToJson(Partner instance) {
   Map<String, dynamic> json = {};
+
+  if (instance.warehouseUser != null) {
+    json['warehouseUser'] = instance.warehouseUser;
+  }
+  if (instance.supplierIds != null) {
+    json['supplierIds'] = instance.supplierIds;
+  }
+  if (instance.buyerIds != null) {
+    json['buyerIds'] = instance.buyerIds;
+  }
+  if (instance.warehouseStatus != null) {
+    json['warehouseStatus'] = instance.warehouseStatus;
+  }
+  if (instance.nameEng != null) json['nameEng'] = instance.nameEng;
+  if (instance.branchStatus != null) {
+    json['branchStatus'] = instance.branchStatus;
+  }
+  if (instance.branchAddress != null) {
+    json['branchAddress'] = instance.branchAddress;
+  }
+  if (instance.warehouseUserId != null) {
+    json['warehouseUserId'] = instance.warehouseUserId;
+  }
+  if (instance.warehouseName != null) {
+    json['warehouseName'] = instance.warehouseName;
+  }
+  if (instance.businessSubSector != null) {
+    json['businessSubSector'] = instance.businessSubSector;
+  }
+  if (instance.businessSector != null) {
+    json['businessSector'] = instance.businessSector;
+  }
+  if (instance.regUser != null) json['regUser'] = instance.regUser;
+  if (instance.isMain != null) json['isMain'] = instance.isMain;
+  if (instance.buyers != null) json['buyers'] = instance.buyers;
+  if (instance.suppliers != null) json['suppliers'] = instance.suppliers;
+  if (instance.profileBanners != null) {
+    json['profileBanners'] = instance.profileBanners;
+  }
+
   if (instance.employeeUnit != null) {
     json['employeeUnit'] = instance.employeeUnit;
   }
@@ -288,6 +374,7 @@ Map<String, dynamic> _$PartnerToJson(Partner instance) {
     json['businessNameEng'] = instance.businessNameEng;
   }
   if (instance.stateRegNum != null) json['stateRegNum'] = instance.stateRegNum;
+  if (instance.url != null) json['url'] = instance.url;
   if (instance.stateRegDate != null) {
     json['stateRegDate'] = instance.stateRegDate;
   }

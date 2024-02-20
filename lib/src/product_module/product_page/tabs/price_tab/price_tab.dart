@@ -132,16 +132,18 @@ class _PriceTabState extends State<PriceTab> with AfterLayoutMixin {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              launchUrl(goods.excelUrl!);
-                            },
-                            child: Container(
-                              color: transparent,
-                              padding: const EdgeInsets.all(3),
-                              child: const Icon(Icons.print_rounded),
-                            ),
-                          ),
+                          goods.excelUrl != null
+                              ? GestureDetector(
+                                  onTap: () {
+                                    launchUrl(goods.excelUrl!);
+                                  },
+                                  child: Container(
+                                    color: transparent,
+                                    padding: const EdgeInsets.all(3),
+                                    child: const Icon(Icons.print_rounded),
+                                  ),
+                                )
+                              : const SizedBox(),
                         ],
                       ),
                     ),

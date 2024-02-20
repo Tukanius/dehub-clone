@@ -109,8 +109,9 @@ class Result {
   List<dynamic>? rows = [];
   int? count = 0;
   int? notSeen = 0;
+  String? excelUrl;
 
-  Result({this.rows, this.count, this.notSeen});
+  Result({this.rows, this.count, this.notSeen, this.excelUrl});
 
   factory Result.fromJson(dynamic json, Function fromJson) =>
       _$ResultFromJson(json, fromJson);

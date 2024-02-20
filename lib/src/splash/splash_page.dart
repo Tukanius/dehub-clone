@@ -3,7 +3,6 @@ import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/login_page.dart';
 import 'package:dehub/src/entry_point/entry_point.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-// import 'package:dehub/src/first_page/first_page.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';

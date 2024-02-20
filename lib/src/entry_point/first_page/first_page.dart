@@ -65,11 +65,13 @@ class FirstPageState extends State<FirstPage> with AfterLayoutMixin {
   @override
   afterFirstLayout(BuildContext context) async {
     // showStartDialog(context);
-    await Provider.of<GeneralProvider>(context, listen: false)
-        .invoiceInit(false);
-    await Provider.of<UserProvider>(context, listen: false).invoice(false);
-    await list(page, limit);
-    for (var i = 0; i < invoice.rows!.length; i++) {}
+    if (user.loginType != "PARTNER") {
+      await Provider.of<GeneralProvider>(context, listen: false)
+          .invoiceInit(false);
+      await Provider.of<UserProvider>(context, listen: false).invoice(false);
+      await list(page, limit);
+      for (var i = 0; i < invoice.rows!.length; i++) {}
+    }
   }
 
   @override
@@ -152,7 +154,8 @@ class FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                           ),
                         ),
                         Text(
-                          '${user.currentBusiness?.partner?.businessName}',
+                          user.currentBusiness?.partner?.businessName ??
+                              "${user.lastName?[0]}. ${user.firstName}",
                           style: const TextStyle(
                             color: white,
                             fontWeight: FontWeight.w500,
@@ -166,14 +169,14 @@ class FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "${user.currentBusiness?.type}: ",
+                              "${user.currentBusiness?.type ?? user.loginType}: ",
                               style: const TextStyle(
                                 color: Color(0xffFEBC11),
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                             Text(
-                              "${user.currentBusiness?.profileName}",
+                              user.currentBusiness?.profileName ?? "-",
                               style: const TextStyle(
                                 color: white,
                                 fontWeight: FontWeight.w500,
@@ -184,9 +187,7 @@ class FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                       ],
                     ),
                   ),
-                  ModulesCard(
-                    user: user,
-                  ),
+                  const ModulesCard(),
                 ],
               ),
               user.currentBusiness?.type == "BUYER" ||

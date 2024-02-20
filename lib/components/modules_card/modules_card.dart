@@ -1,4 +1,5 @@
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/entry_point/finance_entry/finance_entry.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -11,12 +12,11 @@ import 'package:dehub/src/payment_module/payment_page/payment_page.dart';
 import 'package:dehub/src/product_module/product_page/product_page.dart';
 import 'package:dehub/src/user_module/user_management_page/user_management_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class ModulesCard extends StatefulWidget {
-  final User? user;
   const ModulesCard({
     super.key,
-    this.user,
   });
 
   @override
@@ -24,8 +24,13 @@ class ModulesCard extends StatefulWidget {
 }
 
 class _ModulesCardState extends State<ModulesCard> {
+  User user = User();
+
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).user;
+    bool isPartner = user.loginType == "PARTNER";
+
     return Container(
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.only(top: 150, left: 20, right: 20, bottom: 20),
@@ -42,8 +47,7 @@ class _ModulesCardState extends State<ModulesCard> {
         children: [
           GestureDetector(
             onTap: () {
-              if (widget.user?.currentBusiness?.type == 'SUPPLIER' ||
-                  widget.user?.currentBusiness?.type == "BUYER") {
+              if (!isPartner) {
                 Navigator.of(context).pushNamed(Invoicepage.routeName);
               }
             },
@@ -59,21 +63,27 @@ class _ModulesCardState extends State<ModulesCard> {
                         const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      color: invoiceColor.withOpacity(0.2),
+                      color: isPartner
+                          ? invoiceColor.withOpacity(0.1)
+                          : invoiceColor.withOpacity(0.2),
                     ),
                     child: SvgPicture.asset(
                       'assets/svg/nehemjleh.svg',
-                      colorFilter:
-                          const ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                      colorFilter: ColorFilter.mode(
+                          isPartner
+                              ? buttonColor.withOpacity(0.3)
+                              : buttonColor,
+                          BlendMode.srcIn),
                     ),
                   ),
                   const SizedBox(
                     height: 5,
                   ),
-                  const Text(
+                  Text(
                     'Нэхэмжлэх',
                     style: TextStyle(
                       fontSize: 12,
+                      color: !isPartner ? black : black.withOpacity(0.5),
                     ),
                   ),
                 ],
@@ -82,8 +92,7 @@ class _ModulesCardState extends State<ModulesCard> {
           ),
           GestureDetector(
             onTap: () {
-              if (widget.user?.currentBusiness!.type == 'SUPPLIER' ||
-                  widget.user?.currentBusiness!.type == "BUYER") {
+              if (!isPartner) {
                 Navigator.of(context).pushNamed(OrderPage.routeName);
               }
             },
@@ -99,12 +108,17 @@ class _ModulesCardState extends State<ModulesCard> {
                         const EdgeInsets.symmetric(horizontal: 6, vertical: 9),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      color: orderColor.withOpacity(0.2),
+                      color: isPartner
+                          ? orderColor.withOpacity(0.1)
+                          : orderColor.withOpacity(0.2),
                     ),
                     child: SvgPicture.asset(
                       'assets/svg/zahialga.svg',
-                      colorFilter:
-                          const ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                      colorFilter: ColorFilter.mode(
+                          isPartner
+                              ? buttonColor.withOpacity(0.3)
+                              : buttonColor,
+                          BlendMode.srcIn),
                       height: 24,
                       width: 24,
                     ),
@@ -112,10 +126,11 @@ class _ModulesCardState extends State<ModulesCard> {
                   const SizedBox(
                     height: 5,
                   ),
-                  const Text(
+                  Text(
                     'Захиалга',
                     style: TextStyle(
                       fontSize: 12,
+                      color: !isPartner ? black : black.withOpacity(0.5),
                     ),
                   ),
                 ],
@@ -124,8 +139,7 @@ class _ModulesCardState extends State<ModulesCard> {
           ),
           GestureDetector(
             onTap: () {
-              if (widget.user?.currentBusiness!.type == 'SUPPLIER' ||
-                  widget.user?.currentBusiness!.type == "BUYER") {
+              if (!isPartner) {
                 Navigator.of(context).pushNamed(PaymentPage.routeName);
               }
               // Navigator.of(context)
@@ -143,21 +157,27 @@ class _ModulesCardState extends State<ModulesCard> {
                         const EdgeInsets.symmetric(horizontal: 7, vertical: 7),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      color: paymentColor.withOpacity(0.2),
+                      color: isPartner
+                          ? paymentColor.withOpacity(0.1)
+                          : paymentColor.withOpacity(0.2),
                     ),
                     child: SvgPicture.asset(
                       'assets/svg/tolbor_tootsoo.svg',
-                      colorFilter:
-                          const ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                      colorFilter: ColorFilter.mode(
+                          isPartner
+                              ? buttonColor.withOpacity(0.3)
+                              : buttonColor,
+                          BlendMode.srcIn),
                     ),
                   ),
                   const SizedBox(
                     height: 5,
                   ),
-                  const Text(
+                  Text(
                     'Төлбөр тооцоо',
                     style: TextStyle(
                       fontSize: 12,
+                      color: !isPartner ? black : black.withOpacity(0.5),
                     ),
                   ),
                 ],
@@ -166,8 +186,7 @@ class _ModulesCardState extends State<ModulesCard> {
           ),
           GestureDetector(
             onTap: () {
-              if (widget.user?.currentBusiness!.type == 'SUPPLIER' ||
-                  widget.user?.currentBusiness!.type == "BUYER") {
+              if (!isPartner) {
                 Navigator.of(context).pushNamed(FinanceEntry.routeName);
               }
             },
@@ -183,21 +202,27 @@ class _ModulesCardState extends State<ModulesCard> {
                         const EdgeInsets.symmetric(horizontal: 7, vertical: 7),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      color: financingColor.withOpacity(0.2),
+                      color: isPartner
+                          ? financingColor.withOpacity(0.1)
+                          : financingColor.withOpacity(0.2),
                     ),
                     child: SvgPicture.asset(
                       'assets/svg/sanhuujilt.svg',
-                      colorFilter:
-                          const ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                      colorFilter: ColorFilter.mode(
+                          isPartner
+                              ? buttonColor.withOpacity(0.3)
+                              : buttonColor,
+                          BlendMode.srcIn),
                     ),
                   ),
                   const SizedBox(
                     height: 5,
                   ),
-                  const Text(
+                  Text(
                     'Санхүүжилт',
                     style: TextStyle(
                       fontSize: 12,
+                      color: !isPartner ? black : black.withOpacity(0.5),
                     ),
                   ),
                 ],
@@ -206,8 +231,7 @@ class _ModulesCardState extends State<ModulesCard> {
           ),
           GestureDetector(
             onTap: () {
-              if (widget.user?.currentBusiness!.type == 'SUPPLIER' ||
-                  widget.user?.currentBusiness!.type == "BUYER") {
+              if (!isPartner) {
                 Navigator.of(context).pushNamed(NetworkPage.routeName);
               }
             },
@@ -223,21 +247,27 @@ class _ModulesCardState extends State<ModulesCard> {
                         const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      color: networkColor.withOpacity(0.2),
+                      color: isPartner
+                          ? networkColor.withOpacity(0.1)
+                          : networkColor.withOpacity(0.2),
                     ),
                     child: SvgPicture.asset(
                       'assets/svg/network.svg',
-                      colorFilter:
-                          const ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                      colorFilter: ColorFilter.mode(
+                          isPartner
+                              ? buttonColor.withOpacity(0.3)
+                              : buttonColor,
+                          BlendMode.srcIn),
                     ),
                   ),
                   const SizedBox(
                     height: 5,
                   ),
-                  const Text(
+                  Text(
                     'Бизнес нетворк',
                     style: TextStyle(
                       fontSize: 12,
+                      color: !isPartner ? black : black.withOpacity(0.5),
                     ),
                   ),
                 ],
@@ -246,8 +276,7 @@ class _ModulesCardState extends State<ModulesCard> {
           ),
           GestureDetector(
             onTap: () {
-              if (widget.user?.currentBusiness!.type == 'SUPPLIER' ||
-                  widget.user?.currentBusiness!.type == "BUYER") {
+              if (!isPartner) {
                 Navigator.of(context).pushNamed(ProductPage.routeName);
               }
             },
@@ -263,20 +292,28 @@ class _ModulesCardState extends State<ModulesCard> {
                         const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      color: productColor.withOpacity(0.2),
+                      color: isPartner
+                          ? productColor.withOpacity(0.1)
+                          : productColor.withOpacity(0.2),
                     ),
                     child: SvgPicture.asset(
                       'assets/svg/baraa.svg',
-                      colorFilter:
-                          const ColorFilter.mode(buttonColor, BlendMode.srcIn),
+                      colorFilter: ColorFilter.mode(
+                          isPartner
+                              ? buttonColor.withOpacity(0.3)
+                              : buttonColor,
+                          BlendMode.srcIn),
                     ),
                   ),
                   const SizedBox(
                     height: 5,
                   ),
-                  const Text(
+                  Text(
                     'Бараа, ажил',
-                    style: TextStyle(fontSize: 12),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: !isPartner ? black : black.withOpacity(0.5),
+                    ),
                   ),
                 ],
               ),
@@ -284,8 +321,8 @@ class _ModulesCardState extends State<ModulesCard> {
           ),
           GestureDetector(
             onTap: () {
-              // if (widget.user?.currentBusiness!.type == 'SUPPLIER' ||
-              //     widget.user?.currentBusiness!.type == "BUYER") {
+              // if (user.currentBusiness?.type == 'SUPPLIER' ||
+              //     user.currentBusiness?.type == "BUYER") {
               //   Navigator.of(context).pushNamed(DebtPage.routeName);
               // }
             },
@@ -316,7 +353,7 @@ class _ModulesCardState extends State<ModulesCard> {
                     'Авлага, өглөг',
                     style: TextStyle(
                       fontSize: 12,
-                      color: black.withOpacity(0.5),
+                      color: !isPartner ? black : black.withOpacity(0.5),
                     ),
                   ),
                 ],
@@ -325,11 +362,11 @@ class _ModulesCardState extends State<ModulesCard> {
           ),
           GestureDetector(
             onTap: () {
-              if (widget.user?.currentBusiness?.type == 'SUPPLIER' ||
-                  widget.user?.currentBusiness?.type == "BUYER") {
-              } else {
-                Navigator.of(context).pushNamed(PartnerPage.routeName);
-              }
+              // if (user.currentBusiness?.type == 'SUPPLIER' ||
+              //     user.currentBusiness?.type == "BUYER") {
+              // } else {
+              Navigator.of(context).pushNamed(PartnerPage.routeName);
+              // }
             },
             child: Container(
               color: transparent,
@@ -343,17 +380,15 @@ class _ModulesCardState extends State<ModulesCard> {
                         const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      color: widget.user?.currentBusiness?.type == 'SUPPLIER' ||
-                              widget.user?.currentBusiness?.type == "BUYER"
+                      color: !isPartner
                           ? partnerColor.withOpacity(0.1)
                           : partnerColor.withOpacity(0.2),
                     ),
                     child: SvgPicture.asset(
                       'assets/svg/partner.svg',
                       colorFilter: ColorFilter.mode(
-                          widget.user?.currentBusiness?.type == 'SUPPLIER' ||
-                                  widget.user?.currentBusiness?.type == "BUYER"
-                              ? partnerColor.withOpacity(0.3)
+                          !isPartner
+                              ? buttonColor.withOpacity(0.3)
                               : buttonColor,
                           BlendMode.srcIn),
                     ),
@@ -365,7 +400,7 @@ class _ModulesCardState extends State<ModulesCard> {
                     'Манай бизнес',
                     style: TextStyle(
                       fontSize: 12,
-                      color: black.withOpacity(0.5),
+                      color: isPartner ? black : black.withOpacity(0.5),
                     ),
                   ),
                 ],
@@ -374,8 +409,7 @@ class _ModulesCardState extends State<ModulesCard> {
           ),
           GestureDetector(
             onTap: () {
-              if (widget.user?.currentBusiness?.type == 'SUPPLIER' ||
-                  widget.user?.currentBusiness?.type == "BUYER") {
+              if (!isPartner) {
               } else {
                 Navigator.of(context).pushNamed(UserMangementPage.routeName);
               }
@@ -392,18 +426,14 @@ class _ModulesCardState extends State<ModulesCard> {
                         const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      color: widget.user?.currentBusiness?.type == 'SUPPLIER' ||
-                              widget.user?.currentBusiness?.type == "BUYER"
+                      color: !isPartner
                           ? userColor.withOpacity(0.1)
                           : userColor.withOpacity(0.2),
                     ),
                     child: SvgPicture.asset(
                       'assets/svg/hereglegch.svg',
                       colorFilter: ColorFilter.mode(
-                          widget.user?.currentBusiness?.type == 'SUPPLIER' ||
-                                  widget.user?.currentBusiness?.type == "BUYER"
-                              ? userColor.withOpacity(0.3)
-                              : buttonColor,
+                          !isPartner ? userColor.withOpacity(0.3) : buttonColor,
                           BlendMode.srcIn),
                     ),
                   ),
@@ -414,7 +444,7 @@ class _ModulesCardState extends State<ModulesCard> {
                     'Хэрэглэгчид',
                     style: TextStyle(
                       fontSize: 12,
-                      color: black.withOpacity(0.5),
+                      color: isPartner ? black : black.withOpacity(0.5),
                     ),
                   ),
                 ],

@@ -12,6 +12,7 @@ import 'package:dehub/models/equity_types.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/invoice_over_due_status.dart';
 import 'package:dehub/models/order_status.dart';
+import 'package:dehub/models/partner_staffs.dart';
 import 'package:dehub/models/payment_term_conditions.dart';
 import 'package:dehub/models/payment_term_config_types.dart';
 import 'package:dehub/models/permissions.dart';
@@ -72,6 +73,7 @@ import 'package:dehub/models/reference_list_types.dart';
 import 'package:dehub/models/reference_types.dart';
 import 'package:dehub/models/units.dart';
 import 'package:dehub/models/vat_types.dart';
+import 'package:dehub/models/warehouse_status.dart';
 import 'package:dehub/models/zip_codes.dart';
 part '../parts/general.dart';
 
@@ -156,8 +158,12 @@ class General {
   List<AdjustmentStatus>? adjustmentStatus;
   List<PriceGroupTypes>? priceGroupTypes;
   List<PriceGroupTypes>? priceGroupStatus;
+  List<WarehouseStatus>? warehouseStatus;
+  List<PartnerStaffs>? partnerStaffs;
 
   General({
+    this.partnerStaffs,
+    this.warehouseStatus,
     this.priceGroupStatus,
     this.priceGroupTypes,
     this.adjustmentStatus,

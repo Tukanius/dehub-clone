@@ -38,8 +38,8 @@ class FinanceApi extends HttpRequestFinance {
     return Result.fromJson(res, Finance.fromJson);
   }
 
-  Future<Finance> requestGet(String host, String id) async {
-    var res = await get(host, '/request/$id', handler: true);
+  Future<Finance> requestGet(String host, String id, String type) async {
+    var res = await get(host, '/request/$type/$id', handler: true);
     return Finance.fromJson(res as Map<String, dynamic>);
   }
 

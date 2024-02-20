@@ -1,13 +1,15 @@
+import 'package:after_layout/after_layout.dart';
 import 'package:dehub/components/add_button/add_button.dart';
-import 'package:dehub/components/back_button/back_button.dart';
+import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/partner_module/partner_page/tabs/branches/branches_tab.dart';
+import 'package:dehub/src/partner_module/partner_page/tabs/businesses/businesses.dart';
+import 'package:dehub/src/partner_module/partner_page/tabs/warehouses/warehouses_tab.dart';
+import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/partner_profile.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dehub/src/partner_module/partner_page/tabs/home_page.dart';
-import 'package:dehub/src/partner_module/partner_page/tabs/partner_tab/partner_tab.dart';
-import 'package:dehub/src/partner_module/partner_page/tabs/inbox_tab/inbox_tab.dart';
-import 'package:dehub/src/partner_module/partner_page/tabs/sent_tab/sent_tab.dart';
+import 'package:provider/provider.dart';
 
 class PartnerPage extends StatefulWidget {
   static const routeName = '/PartnerPage';
@@ -17,73 +19,72 @@ class PartnerPage extends StatefulWidget {
   PartnerPageState createState() => PartnerPageState();
 }
 
-class PartnerPageState extends State<PartnerPage> {
-  int selectedIndex = 1;
+class PartnerPageState extends State<PartnerPage> with AfterLayoutMixin {
+  int selectedIndex = 0;
+  bool isLoading = true;
   static const List<Widget> currentPages = [
-    HomePage(),
-    PartnerTab(),
-    InboxTab(),
-    SentTab(),
+    PartnerProfile(),
+    Businesses(),
+    BranchesTab(),
+    WarehousesTab(),
   ];
 
+  @override
+  afterFirstLayout(BuildContext context) async {
+    await Provider.of<GeneralProvider>(context, listen: false)
+        .partnerInit(true);
+    await Provider.of<UserProvider>(context, listen: false).partnerMe(true);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   void ontappedItem(int index) {
-    if (index == 0) {
-      Navigator.of(context).pop();
-    } else {
-      setState(() {
-        selectedIndex = index;
-      });
-    }
+    setState(() {
+      selectedIndex = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: AppBar(
-        leadingWidth: 100,
-        elevation: 0,
-        backgroundColor: selectedIndex != 3 ? backgroundColor : partnerColor,
-        surfaceTintColor: selectedIndex != 3 ? backgroundColor : partnerColor,
-        leading: CustomBackButton(
-          color: selectedIndex != 3 ? partnerColor : white,
-        ),
-        title: selectedIndex == 0
-            ? FormTextField(
-                inputType: TextInputType.text,
-                color: const Color(0xff767680).withOpacity(0.12),
-                name: 'search',
-                prefixIcon: const Icon(Icons.search),
-                hintText: 'Партнер нэрээр хайх',
-              )
-            : const SizedBox(),
-        actions: [
-          selectedIndex == 0
-              ? Container(
-                  padding: const EdgeInsets.all(10),
-                  margin: const EdgeInsets.only(right: 15, top: 9, bottom: 9),
-                  decoration: BoxDecoration(
-                    color: const Color(0xff767680).withOpacity(0.12),
-                    borderRadius: BorderRadius.circular(100),
+      appBar: selectedIndex != 2 && selectedIndex != 3
+          ? AppBar(
+              elevation: 0,
+              backgroundColor:
+                  selectedIndex != 3 ? backgroundColor : partnerColor,
+              surfaceTintColor:
+                  selectedIndex != 3 ? backgroundColor : partnerColor,
+              iconTheme: IconThemeData(
+                  color: selectedIndex != 3 ? partnerColor : white),
+              title: Text(
+                selectedIndex == 0
+                    ? 'Партнер профайл'
+                    : selectedIndex == 1
+                        ? "Бизнесүүд"
+                        : selectedIndex == 2
+                            ? "Салбарууд"
+                            : 'Агуулахууд',
+                style: TextStyle(
+                  color: selectedIndex != 3 ? partnerColor : white,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              actions: [
+                if (selectedIndex != 1)
+                  AddButton(
+                    color: selectedIndex == 3 ? white : partnerColor,
+                    addColor: selectedIndex == 3 ? partnerColor : white,
+                    onClick: () {},
                   ),
-                  child: SvgPicture.asset(
-                    'assets/svg/grid.svg',
-                    colorFilter: ColorFilter.mode(
-                        selectedIndex != 3 ? partnerColor : white,
-                        BlendMode.srcIn),
-                  ),
-                )
-              : selectedIndex == 3
-                  ? const AddButton(
-                      color: white,
-                      addColor: partnerColor,
-                    )
-                  : const SizedBox(),
-        ],
-      ),
-      body: Container(
-        child: currentPages.elementAt(selectedIndex),
-      ),
+              ],
+            )
+          : null,
+      body: isLoading == true
+          ? const SizedBox()
+          : currentPages.elementAt(selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: partnerColor,
         unselectedFontSize: 12,
@@ -97,32 +98,29 @@ class PartnerPageState extends State<PartnerPage> {
         currentIndex: selectedIndex,
         items: [
           BottomNavigationBarItem(
-            icon: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: selectedIndex == 0 ? partnerColor : white,
-                    ),
-                    padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
-                    child: SvgPicture.asset(
-                      'assets/svg/home.svg',
-                      colorFilter: ColorFilter.mode(
-                          selectedIndex == 0 ? white : partnerColor,
-                          BlendMode.srcIn),
-                    ),
+            icon: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedIndex == 0 ? partnerColor : white,
                   ),
-                  if (selectedIndex != 0)
-                    const Text(
-                      'Нүүр',
-                      style: TextStyle(color: partnerColor, fontSize: 12),
-                    ),
-                ],
-              ),
+                  padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
+                  child: SvgPicture.asset(
+                    'assets/svg/profile.svg',
+                    height: 20,
+                    width: 20,
+                    colorFilter: ColorFilter.mode(
+                        selectedIndex == 0 ? white : partnerColor,
+                        BlendMode.srcIn),
+                  ),
+                ),
+                if (selectedIndex != 0)
+                  const Text(
+                    'Профайл',
+                    style: TextStyle(color: partnerColor, fontSize: 12),
+                  ),
+              ],
             ),
             label: '',
           ),
@@ -136,7 +134,9 @@ class PartnerPageState extends State<PartnerPage> {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'assets/svg/dashboard.svg',
+                    'assets/svg/business.svg',
+                    height: 20,
+                    width: 20,
                     colorFilter: ColorFilter.mode(
                         selectedIndex == 1 ? white : partnerColor,
                         BlendMode.srcIn),
@@ -144,7 +144,7 @@ class PartnerPageState extends State<PartnerPage> {
                 ),
                 if (selectedIndex != 1)
                   const Text(
-                    'Дашбоард',
+                    'Бизнесүүд',
                     style: TextStyle(color: partnerColor, fontSize: 12),
                   ),
               ],
@@ -161,15 +161,18 @@ class PartnerPageState extends State<PartnerPage> {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'assets/svg/inbox.svg',
+                    'assets/svg/branch.svg',
+                    height: 20,
+                    width: 20,
                     colorFilter: ColorFilter.mode(
-                        selectedIndex == 2 ? white : partnerColor,
-                        BlendMode.srcIn),
+                      selectedIndex == 2 ? white : partnerColor,
+                      BlendMode.srcIn,
+                    ),
                   ),
                 ),
                 if (selectedIndex != 2)
                   const Text(
-                    'Ирсэн',
+                    'Салбарууд',
                     style: TextStyle(color: partnerColor, fontSize: 12),
                   ),
               ],
@@ -186,7 +189,9 @@ class PartnerPageState extends State<PartnerPage> {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'assets/svg/sent.svg',
+                    'assets/svg/warehouse.svg',
+                    height: 20,
+                    width: 20,
                     colorFilter: ColorFilter.mode(
                         selectedIndex == 3 ? white : partnerColor,
                         BlendMode.srcIn),
@@ -194,7 +199,7 @@ class PartnerPageState extends State<PartnerPage> {
                 ),
                 if (selectedIndex != 3)
                   const Text(
-                    'Илгээсэн',
+                    'Агуулахууд',
                     style: TextStyle(color: partnerColor, fontSize: 12),
                   ),
               ],

@@ -89,6 +89,7 @@ class _LoanBasedState extends State<LoanBased> with AfterLayoutMixin {
                             (data) => ReceivedFundingCard(
                               data: data,
                               onClick: () {
+                                source.productType('lbf');
                                 Navigator.of(context).pushNamed(
                                   ReceivedFundingDetailPage.routeName,
                                   arguments: ReceivedFundingDetailPageArguments(

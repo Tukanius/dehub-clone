@@ -57,7 +57,8 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
     Filter filter = Filter(
-        type: user.currentBusiness?.type == "SUPPLIER" ? "SALES" : "PURCHASE");
+        type: user.currentBusiness?.type == "SUPPLIER" ? "SALES" : "PURCHASE",
+        excel: true);
     order = await OrderApi()
         .orderList(ResultArguments(filter: filter, offset: offset));
     await groupMaker();
