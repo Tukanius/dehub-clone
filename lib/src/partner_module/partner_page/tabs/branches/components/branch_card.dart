@@ -65,6 +65,7 @@ class _BranchCardState extends State<BranchCard> {
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
                           image: DecorationImage(
                             image: NetworkImage('${widget.data.logo}'),
                             fit: BoxFit.cover,
@@ -74,7 +75,10 @@ class _BranchCardState extends State<BranchCard> {
                     : Container(
                         height: 40,
                         width: 40,
-                        color: lightGrey,
+                        decoration: BoxDecoration(
+                          color: lightGrey,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
                       ),
                 const SizedBox(
                   width: 5,
@@ -123,7 +127,7 @@ class _BranchCardState extends State<BranchCard> {
               children: [
                 Expanded(
                   child: Text(
-                    "Үүссэн: ${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.createdAt!)}",
+                    "Бүртгэсэн: ${DateFormat("yyyy-MM-dd HH:mm").format(widget.data.createdAt!)}",
                     style: const TextStyle(
                       color: grey2,
                       fontSize: 12,
@@ -154,7 +158,7 @@ class _BranchCardState extends State<BranchCard> {
               children: [
                 Expanded(
                   child: Text(
-                    "Ажилтан: ${widget.data.regUser?.lastName?[0]}. ${widget.data.regUser?.firstName}",
+                    "Ажилтан: ${widget.data.regUser?.lastName?[0]}. ${widget.data.regUser?.firstName}, ${widget.data.regUser?.phone}",
                     style: const TextStyle(
                       color: grey2,
                       fontSize: 12,
@@ -173,6 +177,36 @@ class _BranchCardState extends State<BranchCard> {
                 ),
               ],
             ),
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              children: [
+                const Text(
+                  'Үндсэн: ',
+                  style: TextStyle(
+                    color: grey2,
+                    fontSize: 12,
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: widget.data.isDefault == true
+                        ? partnerColor
+                        : grey2.withOpacity(0.3),
+                  ),
+                  child: Text(
+                    widget.data.isDefault == true ? 'Тийм' : "Үгүй",
+                    style: const TextStyle(
+                      color: white,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),

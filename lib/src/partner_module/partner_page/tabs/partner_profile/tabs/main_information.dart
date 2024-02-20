@@ -1,8 +1,15 @@
+import 'package:dehub/api/partner_api.dart';
+import 'package:dehub/models/partner.dart';
+import 'package:dehub/providers/partner_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/sheets/select_partner_category.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class MainInformation extends StatefulWidget {
   const MainInformation({super.key});
@@ -15,9 +22,23 @@ class _MainInformationState extends State<MainInformation> {
   bool edit = false;
   bool isEditted = false;
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
+  Partner user = Partner();
+  Partner api = Partner();
+
+  onSubmit() async {
+    if (fbKey.currentState!.saveAndValidate()) {
+      Partner data = Partner.fromJson(fbKey.currentState!.value);
+      await PartnerApi().profileUpdate(data);
+      setState(() {
+        edit = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).partnerUser;
+    final source = Provider.of<PartnerProvider>(context, listen: true);
     return Scaffold(
       backgroundColor: backgroundColor,
       floatingActionButton: Row(
@@ -47,11 +68,12 @@ class _MainInformationState extends State<MainInformation> {
           FloatingActionButton(
             onPressed: () {
               if (edit == true) {
-                debugPrint('asdf');
+                onSubmit();
+              } else {
+                setState(() {
+                  edit = true;
+                });
               }
-              setState(() {
-                edit = !edit;
-              });
             },
             backgroundColor: partnerColor,
             shape: const CircleBorder(),
@@ -101,7 +123,7 @@ class _MainInformationState extends State<MainInformation> {
                   FormTextField(
                     textColor: grey2,
                     name: 'partnerRef',
-                    initialValue: 'PR-100016',
+                    initialValue: user.partner?.refCode,
                     readOnly: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -126,8 +148,13 @@ class _MainInformationState extends State<MainInformation> {
                     child: const Text('Партнерийн категори'),
                   ),
                   selectionField(
-                    text: 'Корпорэйт',
-                    onClick: () {},
+                    text: source.partner.partnerCategory ?? 'Сонгоно уу',
+                    onClick: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) => const SelectPartnerCategory(),
+                      );
+                    },
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 5),
@@ -135,8 +162,9 @@ class _MainInformationState extends State<MainInformation> {
                   ),
                   FormTextField(
                     textColor: grey2,
-                    name: 'regUser',
-                    initialValue: 'PR-100016',
+                    name: '1',
+                    initialValue:
+                        '${user.user?.lastName?[0]}. ${user.user?.firstName}',
                     readOnly: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -162,9 +190,10 @@ class _MainInformationState extends State<MainInformation> {
                   ),
                   FormTextField(
                     textColor: grey2,
-                    name: 'date',
+                    name: '2',
                     readOnly: true,
-                    initialValue: 'PR-100016',
+                    initialValue: DateFormat("yyyy-MM-dd HH:mm")
+                        .format(user.partner!.createdAt!),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -191,7 +220,7 @@ class _MainInformationState extends State<MainInformation> {
                     textColor: edit == true ? black : grey2,
                     name: 'regNumber',
                     readOnly: !edit,
-                    initialValue: 'PR-100016',
+                    initialValue: '${user.partner?.regNumber}',
                     decoration: InputDecoration(
                       hintText: 'Регистр/Татвар төлөгчийн дугаар',
                       border: OutlineInputBorder(
@@ -217,7 +246,7 @@ class _MainInformationState extends State<MainInformation> {
                   ),
                   FormTextField(
                     textColor: grey2,
-                    name: 'asdf',
+                    name: '3',
                     readOnly: true,
                     initialValue: 'Улсын бүртгэлийн гэрчилгээ №',
                     decoration: InputDecoration(
@@ -244,9 +273,9 @@ class _MainInformationState extends State<MainInformation> {
                   ),
                   FormTextField(
                     textColor: edit == true ? black : grey2,
-                    name: 'name',
+                    name: 'businessName',
                     readOnly: !edit,
-                    initialValue: 'Компани М',
+                    initialValue: '${user.partner?.businessName}',
                     decoration: InputDecoration(
                       hintText: 'Аж ахуйн нэгжийн нэр',
                       border: OutlineInputBorder(
@@ -272,9 +301,9 @@ class _MainInformationState extends State<MainInformation> {
                   ),
                   FormTextField(
                     textColor: edit == true ? black : grey2,
-                    name: 'nameEng',
+                    name: 'businessNameEng',
                     readOnly: !edit,
-                    initialValue: 'Company M',
+                    initialValue: '${user.partner?.businessNameEng}',
                     decoration: InputDecoration(
                       hintText: 'Аж ахуйн нэгжийн нэр/Латин/',
                       border: OutlineInputBorder(
@@ -299,7 +328,7 @@ class _MainInformationState extends State<MainInformation> {
                     child: const Text('Аж ахуйн нэгжийн хэлбэр'),
                   ),
                   selectionField(
-                    text: 'Хувьцаат компани',
+                    text: '${user.partner?.legalEntityType}',
                     onClick: () {},
                   ),
                   Container(
@@ -307,7 +336,7 @@ class _MainInformationState extends State<MainInformation> {
                     child: const Text('Улсын харьяалал'),
                   ),
                   selectionField(
-                    text: 'Монгол',
+                    text: '${user.partner?.country}',
                     onClick: () {},
                   ),
                   Container(
@@ -315,7 +344,7 @@ class _MainInformationState extends State<MainInformation> {
                     child: const Text('Өмчийн хэлбэр'),
                   ),
                   selectionField(
-                    text: 'Монгол улсын иргэн, аж ахуйн нэгжийн',
+                    text: '${user.partner?.equityType}',
                     onClick: () {},
                   ),
                   Container(
@@ -334,9 +363,9 @@ class _MainInformationState extends State<MainInformation> {
                   ),
                   FormTextField(
                     textColor: edit == true ? black : grey2,
-                    name: 'province',
+                    name: 'web',
                     readOnly: !edit,
-                    initialValue: 'Веб сайтын хаяг',
+                    initialValue: user.partner?.web ?? '',
                     decoration: InputDecoration(
                       hintText: 'Веб сайтын хаяг',
                       border: OutlineInputBorder(
@@ -362,9 +391,9 @@ class _MainInformationState extends State<MainInformation> {
                   ),
                   FormTextField(
                     textColor: edit == true ? black : grey2,
-                    name: 'email1',
+                    name: 'email',
                     readOnly: !edit,
-                    initialValue: 'email',
+                    initialValue: '${user.partner?.email}',
                     decoration: InputDecoration(
                       hintText: 'И-мэйл хаяг №1',
                       border: OutlineInputBorder(
@@ -392,7 +421,7 @@ class _MainInformationState extends State<MainInformation> {
                     textColor: edit == true ? black : grey2,
                     name: 'email2',
                     readOnly: !edit,
-                    initialValue: 'email2',
+                    initialValue: user.partner?.email2 ?? '',
                     decoration: InputDecoration(
                       hintText: 'И-мэйл хаяг №2',
                       border: OutlineInputBorder(
@@ -418,9 +447,9 @@ class _MainInformationState extends State<MainInformation> {
                   ),
                   FormTextField(
                     textColor: edit == true ? black : grey2,
-                    name: 'phone1',
+                    name: 'phone',
                     readOnly: !edit,
-                    initialValue: 'phone1',
+                    initialValue: user.partner?.phone,
                     decoration: InputDecoration(
                       hintText: 'Утасны дугаар №1',
                       border: OutlineInputBorder(
@@ -448,7 +477,7 @@ class _MainInformationState extends State<MainInformation> {
                     textColor: edit == true ? black : grey2,
                     name: 'phone2',
                     readOnly: !edit,
-                    initialValue: 'phone2',
+                    initialValue: user.partner?.phone2 ?? '',
                     decoration: InputDecoration(
                       hintText: 'Утасны дугаар №2',
                       border: OutlineInputBorder(
@@ -474,9 +503,9 @@ class _MainInformationState extends State<MainInformation> {
                   ),
                   FormTextField(
                     textColor: edit == true ? black : grey2,
-                    name: 'facebook',
+                    name: 'fbLink',
                     readOnly: !edit,
-                    initialValue: 'Facebook хаяг',
+                    initialValue: user.partner?.fbLink ?? '',
                     decoration: InputDecoration(
                       hintText: 'Facebook хаяг',
                       border: OutlineInputBorder(
@@ -536,9 +565,9 @@ class _MainInformationState extends State<MainInformation> {
                   ),
                   FormTextField(
                     textColor: edit == true ? black : grey2,
-                    name: 'khoroo',
+                    name: 'khoroolol',
                     readOnly: !edit,
-                    initialValue: '1',
+                    initialValue: user.partner?.khoroolol ?? '',
                     decoration: InputDecoration(
                       hintText: 'Хороолол, гудамж',
                       border: OutlineInputBorder(
@@ -564,9 +593,9 @@ class _MainInformationState extends State<MainInformation> {
                   ),
                   FormTextField(
                     textColor: edit == true ? black : grey2,
-                    name: 'khotkhon',
+                    name: 'khotkhonBair',
                     readOnly: !edit,
-                    initialValue: '1',
+                    initialValue: user.partner?.khotkhonBair ?? '',
                     decoration: InputDecoration(
                       hintText: 'Хотхон, байр',
                       border: OutlineInputBorder(
@@ -592,9 +621,9 @@ class _MainInformationState extends State<MainInformation> {
                   ),
                   FormTextField(
                     textColor: edit == true ? black : grey2,
-                    name: 'khashaa',
+                    name: 'khashaaDavkhar',
                     readOnly: !edit,
-                    initialValue: '9 давхар',
+                    initialValue: user.partner?.khashaaDavkhar ?? '',
                     decoration: InputDecoration(
                       hintText: 'Хашаа, давхар',
                       border: OutlineInputBorder(
@@ -620,9 +649,9 @@ class _MainInformationState extends State<MainInformation> {
                   ),
                   FormTextField(
                     textColor: edit == true ? black : grey2,
-                    name: 'khaalga',
+                    name: 'khaalgaDugaar',
                     readOnly: !edit,
-                    initialValue: '9 давхар',
+                    initialValue: user.partner?.khaalgaDugaar ?? '',
                     decoration: InputDecoration(
                       hintText: 'Хаалганы дугаар',
                       border: OutlineInputBorder(

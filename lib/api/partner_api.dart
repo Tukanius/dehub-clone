@@ -91,6 +91,11 @@ class PartnerApi extends HttpRequest {
     return Partner.fromJson(res as Map<String, dynamic>);
   }
 
+  Future<Partner> profileUpdate(Partner data) async {
+    var res = await put('/partner', type, true, data: data.toJson());
+    return Partner.fromJson(res as Map<String, dynamic>);
+  }
+
   warehouseDelete(String id) async {
     var res = await del('/warehouse/$id', type, true);
     return res;

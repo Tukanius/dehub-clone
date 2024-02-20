@@ -160,8 +160,10 @@ class General {
   List<PriceGroupTypes>? priceGroupStatus;
   List<WarehouseStatus>? warehouseStatus;
   List<PartnerStaffs>? partnerStaffs;
+  List<String>? partnerCategories;
 
   General({
+    this.partnerCategories,
     this.partnerStaffs,
     this.warehouseStatus,
     this.priceGroupStatus,

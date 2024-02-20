@@ -26,6 +26,9 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => PriceGroupTypes.fromJson(e))
             .toList()
         : null,
+    partnerCategories: json['partnerCategories'] != null
+        ? (json['partnerCategories'] as List).map((e) => e as String).toList()
+        : null,
     partnerStaffs: json['partnerStaffs'] != null
         ? (json['partnerStaffs'] as List)
             .map((e) => PartnerStaffs.fromJson(e))
@@ -391,6 +394,9 @@ Map<String, dynamic> _$GeneralToJson(General instance) {
 
   if (instance.productSuppPenaltyTypes != null) {
     json['productSuppPenaltyTypes'] = instance.productSuppPenaltyTypes;
+  }
+  if (instance.partnerCategories != null) {
+    json['partnerCategories'] = instance.partnerCategories;
   }
   if (instance.partnerStaffs != null) {
     json['partnerStaffs'] = instance.partnerStaffs;

@@ -1,7 +1,10 @@
+import 'package:dehub/models/partner.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/tabs/admin_user.dart';
 import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/tabs/main_information.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PartnerProfile extends StatefulWidget {
   static const routeName = '/PartnerProfile';
@@ -12,8 +15,11 @@ class PartnerProfile extends StatefulWidget {
 }
 
 class _PartnerProfileState extends State<PartnerProfile> {
+  Partner user = Partner();
+
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).partnerUser;
     return DefaultTabController(
       length: 2,
       child: NestedScrollView(
@@ -25,24 +31,23 @@ class _PartnerProfileState extends State<PartnerProfile> {
                   const SizedBox(
                     height: 5,
                   ),
-                  const CircleAvatar(
+                  CircleAvatar(
                     radius: 30,
-                    backgroundImage: NetworkImage(
-                        'https://miro.medium.com/v2/resize:fit:356/1*EnF9uIN_u2_X7ey24lB7Tg.png'),
+                    backgroundImage: NetworkImage('${user.partner?.logo}'),
                   ),
                   const SizedBox(
                     height: 5,
                   ),
-                  const Text(
-                    'Компани М',
-                    style: TextStyle(
+                  Text(
+                    '${user.partner?.businessName}',
+                    style: const TextStyle(
                       color: partnerColor,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  const Text(
-                    'ТТД: 32100013',
-                    style: TextStyle(
+                  Text(
+                    'ТТД: ${user.partner?.regNumber}',
+                    style: const TextStyle(
                       color: grey2,
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
@@ -75,19 +80,19 @@ class _PartnerProfileState extends State<PartnerProfile> {
                         const SizedBox(
                           height: 5,
                         ),
-                        const Row(
+                        Row(
                           children: [
                             Expanded(
                               child: Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.mail_outline,
                                     color: grey2,
                                     size: 14,
                                   ),
                                   Text(
-                                    'duurenzaya@skillup.mn',
-                                    style: TextStyle(
+                                    '${user.partner?.email}',
+                                    style: const TextStyle(
                                       color: grey2,
                                       fontSize: 12,
                                     ),
@@ -99,14 +104,14 @@ class _PartnerProfileState extends State<PartnerProfile> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.phone_outlined,
                                     color: grey2,
                                     size: 14,
                                   ),
                                   Text(
-                                    '89107733',
-                                    style: TextStyle(
+                                    '${user.partner?.phone}',
+                                    style: const TextStyle(
                                       color: grey2,
                                       fontSize: 12,
                                     ),
@@ -119,72 +124,50 @@ class _PartnerProfileState extends State<PartnerProfile> {
                         const SizedBox(
                           height: 5,
                         ),
-                        const Row(
+                        Row(
                           children: [
-                            Text(
-                              'Buyer бизнес',
-                              style: TextStyle(
-                                color: grey2,
-                                fontSize: 12,
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Icon(
+                                    Icons.location_on_outlined,
+                                    color: grey2,
+                                    size: 14,
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      '${user.partner?.businessAddress}',
+                                      style: const TextStyle(
+                                        color: grey2,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             Expanded(
-                              child: Divider(
-                                indent: 5,
-                                endIndent: 5,
-                                thickness: 0.5,
-                                color: grey2,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  const Icon(
+                                    Icons.person_outline_outlined,
+                                    color: grey2,
+                                    size: 16,
+                                  ),
+                                  Text(
+                                    '${user.user?.employeeUnit?.name}',
+                                    style: const TextStyle(
+                                      color: grey2,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 25),
-                          child: const Text(
-                            'Гүүдтек',
-                            style: TextStyle(
-                              color: grey2,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        const Row(
-                          children: [
-                            Text(
-                              'Supplier бизнес',
-                              style: TextStyle(
-                                color: grey2,
-                                fontSize: 12,
-                              ),
-                            ),
-                            Expanded(
-                              child: Divider(
-                                indent: 5,
-                                endIndent: 5,
-                                thickness: 0.5,
-                                color: grey2,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 25),
-                          child: const Text(
-                            'Гүүдтек татан авалт',
-                            style: TextStyle(
-                              color: grey2,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
                         ),
                       ],
                     ),

@@ -9,6 +9,11 @@ class PartnerProvider extends ChangeNotifier {
   List<Partner> suppliers = [];
   Partner createdBranch = Partner();
 
+  partnerCategory(String value) {
+    partner.partnerCategory = value;
+    notifyListeners();
+  }
+
   branchCreate(Partner data) async {
     createdBranch = await PartnerApi().branchCreate(data);
     notifyListeners();
