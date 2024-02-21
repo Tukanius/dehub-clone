@@ -7,7 +7,9 @@ import 'package:dehub/models/business_status.dart';
 import 'package:dehub/models/client_classification.dart';
 import 'package:dehub/models/countries.dart';
 import 'package:dehub/models/delivery_note_status.dart';
+import 'package:dehub/models/department_units.dart';
 import 'package:dehub/models/distribution_areas.dart';
+import 'package:dehub/models/employee_units.dart';
 import 'package:dehub/models/equity_types.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/invoice_over_due_status.dart';
@@ -161,8 +163,12 @@ class General {
   List<WarehouseStatus>? warehouseStatus;
   List<PartnerStaffs>? partnerStaffs;
   List<String>? partnerCategories;
+  List<DepartmentUnits>? departmentUnits;
+  List<EmployeeUnits>? employeeUnits;
 
   General({
+    this.departmentUnits,
+    this.employeeUnits,
     this.partnerCategories,
     this.partnerStaffs,
     this.warehouseStatus,

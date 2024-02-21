@@ -6,6 +6,9 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/partner_provider.dart';
+import 'package:dehub/src/partner_module/screens/address_sheets/district_sheet.dart';
+import 'package:dehub/src/partner_module/screens/address_sheets/khoroo_sheet.dart';
+import 'package:dehub/src/partner_module/screens/address_sheets/province_sheet.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -31,12 +34,6 @@ class _AddressInformationState extends State<AddressInformation>
     with AfterLayoutMixin {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   General general = General();
-  String? provinceId;
-  String? provinceName;
-  String? districtId;
-  String? districtName;
-  String? khorooId;
-  String? khorooName;
   bool isSubmit = false;
 
   onSubmit() async {
@@ -47,10 +44,12 @@ class _AddressInformationState extends State<AddressInformation>
           isSubmit = true;
         });
         Partner data = Partner.fromJson(fbKey.currentState!.value);
-        data.provinceId = provinceId;
-        data.districtId = districtId;
-        data.khorooId = khorooId;
-        if (provinceId == null || districtId == null || khorooId == null) {
+        data.provinceId = source.partner.province;
+        data.districtId = source.partner.district;
+        data.khorooId = source.partner.khoroo;
+        if (source.partner.province == null ||
+            source.partner.district == null ||
+            source.partner.khoroo == null) {
           showCustomDialog(context, 'Аймаг, сум, хороо сонгоно уу', false);
         } else {
           await PartnerApi().address(data, source.createdBranch.id!);
@@ -68,6 +67,39 @@ class _AddressInformationState extends State<AddressInformation>
           isSubmit = false;
         });
       }
+    }
+  }
+
+  provinceName() {
+    final source = Provider.of<PartnerProvider>(context, listen: false);
+    if (source.partner.province != null) {
+      final res = general.zipCodes!
+          .firstWhere((element) => element.code == source.partner.province);
+      return res.name;
+    } else {
+      return null;
+    }
+  }
+
+  districtName() {
+    final source = Provider.of<PartnerProvider>(context, listen: false);
+    if (source.partner.district != null) {
+      final res = general.zipCodes!
+          .firstWhere((element) => element.code == source.partner.district);
+      return res.name;
+    } else {
+      return null;
+    }
+  }
+
+  khorooName() {
+    final source = Provider.of<PartnerProvider>(context, listen: false);
+    if (source.partner.khoroo != null) {
+      final res = general.zipCodes!
+          .firstWhere((element) => element.code == source.partner.khoroo);
+      return res.name;
+    } else {
+      return null;
     }
   }
 
@@ -124,7 +156,7 @@ class _AddressInformationState extends State<AddressInformation>
                   ),
                 ),
                 selection(
-                  value: provinceName,
+                  value: provinceName(),
                   hintText: 'Аймаг, нийслэл',
                   onClick: () {
                     selectProvince();
@@ -140,7 +172,7 @@ class _AddressInformationState extends State<AddressInformation>
                   ),
                 ),
                 selection(
-                  value: districtName,
+                  value: districtName(),
                   hintText: 'Сум, дүүрэг',
                   onClick: () {
                     selectDistrict();
@@ -156,7 +188,7 @@ class _AddressInformationState extends State<AddressInformation>
                   ),
                 ),
                 selection(
-                  value: khorooName,
+                  value: khorooName(),
                   hintText: 'Баг, хороо',
                   onClick: () {
                     selectKhoroo();
@@ -457,126 +489,21 @@ class _AddressInformationState extends State<AddressInformation>
   selectProvince() {
     showModalBottomSheet(
       context: context,
-      builder: (context) => Material(
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(20),
-        ),
-        color: backgroundColor,
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              children: general.zipCodes!
-                  .where((element) => element.parent == '0')
-                  .map(
-                    (e) => InkWell(
-                      onTap: () {
-                        setState(() {
-                          provinceId = e.code;
-                          provinceName = e.name;
-                          districtId = null;
-                          districtName = null;
-                          khorooId = null;
-                          khorooName = null;
-                        });
-                        Navigator.of(context).pop();
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: Text("${e.name}"),
-                      ),
-                    ),
-                  )
-                  .toList(),
-            ),
-          ),
-        ),
-      ),
+      builder: (context) => const ProvinceSheet(),
     );
   }
 
   selectDistrict() {
     showModalBottomSheet(
       context: context,
-      builder: (context) => Material(
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(20),
-        ),
-        color: backgroundColor,
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              children: general.zipCodes!
-                  .where((element) => element.parent == provinceId)
-                  .map(
-                    (e) => InkWell(
-                      onTap: () {
-                        setState(() {
-                          districtId = e.code;
-                          districtName = e.name;
-                          khorooId = null;
-                          khorooName = null;
-                        });
-                        Navigator.of(context).pop();
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: Text("${e.name}"),
-                      ),
-                    ),
-                  )
-                  .toList(),
-            ),
-          ),
-        ),
-      ),
+      builder: (context) => const DistrictSheet(),
     );
   }
 
   selectKhoroo() {
     showModalBottomSheet(
       context: context,
-      builder: (context) => Material(
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(20),
-        ),
-        color: backgroundColor,
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              children: general.zipCodes!
-                  .where((element) => element.parent == districtId)
-                  .map(
-                    (e) => InkWell(
-                      onTap: () {
-                        setState(() {
-                          khorooId = e.code;
-                          khorooName = e.name;
-                        });
-                        Navigator.of(context).pop();
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: Text("${e.name}"),
-                      ),
-                    ),
-                  )
-                  .toList(),
-            ),
-          ),
-        ),
-      ),
+      builder: (context) => const KhorooSheet(),
     );
   }
 }

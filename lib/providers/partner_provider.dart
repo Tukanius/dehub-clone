@@ -8,9 +8,63 @@ class PartnerProvider extends ChangeNotifier {
   List<Partner> buyers = [];
   List<Partner> suppliers = [];
   Partner createdBranch = Partner();
+  bool isSubmit = false;
 
-  partnerCategory(String value) {
+  loading(bool value) {
+    isSubmit = value;
+    notifyListeners();
+  }
+
+  departmentUnit(String id) {
+    partner.departmentUnitId = id;
+    partner.employeeUnitId = null;
+    notifyListeners();
+  }
+
+  employeeUnit(String id) {
+    partner.employeeUnitId = id;
+    notifyListeners();
+  }
+
+  classification(String value) {
+    partner.classification = value;
+    notifyListeners();
+  }
+
+  province(String? value) {
+    partner.province = value;
+    partner.district = null;
+    notifyListeners();
+  }
+
+  district(String? value) {
+    partner.district = value;
+    partner.khoroo = null;
+    notifyListeners();
+  }
+
+  khoroo(String? value) {
+    partner.khoroo = value;
+    notifyListeners();
+  }
+
+  partnerCategory(String? value) {
     partner.partnerCategory = value;
+    notifyListeners();
+  }
+
+  equityType(String? value) {
+    partner.equityType = value;
+    notifyListeners();
+  }
+
+  country(String? value) {
+    partner.country = value;
+    notifyListeners();
+  }
+
+  legalEntityType(String value) {
+    partner.legalEntityType = value;
     notifyListeners();
   }
 

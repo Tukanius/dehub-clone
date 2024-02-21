@@ -31,10 +31,16 @@ class _PartnerProfileState extends State<PartnerProfile> {
                   const SizedBox(
                     height: 5,
                   ),
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundImage: NetworkImage('${user.partner?.logo}'),
-                  ),
+                  user.partner?.logo != null
+                      ? CircleAvatar(
+                          radius: 30,
+                          backgroundImage:
+                              NetworkImage('${user.partner?.logo}'),
+                        )
+                      : const CircleAvatar(
+                          radius: 30,
+                          backgroundImage: AssetImage('images/avatar.png'),
+                        ),
                   const SizedBox(
                     height: 5,
                   ),

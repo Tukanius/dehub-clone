@@ -9,6 +9,8 @@ import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/partner_provider.dart';
+import 'package:dehub/src/partner_module/screens/address_sheets/district_sheet.dart';
+import 'package:dehub/src/partner_module/screens/address_sheets/province_sheet.dart';
 import 'package:dehub/src/partner_module/screens/branch_create/tabs/sheets/buyer_select.dart';
 import 'package:dehub/src/partner_module/screens/branch_create/tabs/sheets/supplier_select.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -57,10 +59,6 @@ class _WarehouseCreateState extends State<WarehouseCreate>
   Result suppliers = Result(rows: []);
   List<Partner> selectedBuyers = [];
   List<Partner> selectedSuppliers = [];
-  String? provinceId;
-  String? provinceName;
-  String? districtId;
-  String? districtName;
 
   buyerRadio(int value) {
     setState(() {
@@ -84,8 +82,8 @@ class _WarehouseCreateState extends State<WarehouseCreate>
           isSubmit = true;
         });
         Partner data = Partner.fromJson(fbkey.currentState!.value);
-        data.district = districtId;
-        data.province = provinceId;
+        data.district = source.partner.district;
+        data.province = source.partner.province;
         data.isDefault = isDefault;
         data.isBuyer = buyerRadioValue == 1 ? true : false;
         if (buyerRadioValue == 1) {
@@ -104,8 +102,8 @@ class _WarehouseCreateState extends State<WarehouseCreate>
         data.warehouseStatus = source.partner.warehouseStatus;
         data.warehouseUserId = source.partner.warehouseUserId;
         if (source.partner.warehouseStatus != null &&
-            districtId != null &&
-            provinceId != null &&
+            source.partner.district != null &&
+            source.partner.province != null &&
             source.partner.warehouseUserId != null) {
           if (widget.data != null) {
             await PartnerApi().warehouseUpdate(data, widget.data!.id!);
@@ -168,7 +166,7 @@ class _WarehouseCreateState extends State<WarehouseCreate>
       buyerRadioValue = widget.data!.isBuyer == true ? 1 : 0;
       supplierRadioValue = widget.data!.isSupplier == true ? 1 : 0;
       source.warehouseStatus(widget.data!.warehouseStatus!);
-      districtId = widget.data!.district;
+      source.district(widget.data!.district);
       source.partnerStaff(widget.data!.warehouseUserId!);
     }
     setState(() {
@@ -177,9 +175,21 @@ class _WarehouseCreateState extends State<WarehouseCreate>
   }
 
   district() {
-    if (districtId != null) {
-      final res =
-          general.zipCodes!.firstWhere((element) => element.code == districtId);
+    final source = Provider.of<PartnerProvider>(context, listen: false);
+    if (source.partner.district != null) {
+      final res = general.zipCodes!
+          .firstWhere((element) => element.code == source.partner.district);
+      return res.name;
+    } else {
+      return null;
+    }
+  }
+
+  province() {
+    final source = Provider.of<PartnerProvider>(context, listen: false);
+    if (source.partner.province != null) {
+      final res = general.zipCodes!
+          .firstWhere((element) => element.code == source.partner.province);
       return res.name;
     } else {
       return null;
@@ -300,7 +310,7 @@ class _WarehouseCreateState extends State<WarehouseCreate>
                             onClick: () {
                               selectProvince();
                             },
-                            value: provinceName,
+                            value: province(),
                             selected: false,
                           ),
                           Container(
@@ -672,82 +682,14 @@ class _WarehouseCreateState extends State<WarehouseCreate>
   selectProvince() {
     showModalBottomSheet(
       context: context,
-      builder: (context) => Material(
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(20),
-        ),
-        color: backgroundColor,
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              children: general.zipCodes!
-                  .where((element) => element.parent == '0')
-                  .map(
-                    (e) => InkWell(
-                      onTap: () {
-                        setState(() {
-                          provinceId = e.code;
-                          provinceName = e.name;
-                          districtId = null;
-                          districtName = null;
-                        });
-                        Navigator.of(context).pop();
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: Text("${e.name}"),
-                      ),
-                    ),
-                  )
-                  .toList(),
-            ),
-          ),
-        ),
-      ),
+      builder: (context) => const ProvinceSheet(),
     );
   }
 
   selectDistrict() {
     showModalBottomSheet(
       context: context,
-      builder: (context) => Material(
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(20),
-        ),
-        color: backgroundColor,
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              children: general.zipCodes!
-                  .where((element) => element.parent == provinceId)
-                  .map(
-                    (e) => InkWell(
-                      onTap: () {
-                        setState(() {
-                          districtId = e.code;
-                          districtName = e.name;
-                        });
-                        Navigator.of(context).pop();
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: Text("${e.name}"),
-                      ),
-                    ),
-                  )
-                  .toList(),
-            ),
-          ),
-        ),
-      ),
+      builder: (context) => const DistrictSheet(),
     );
   }
 

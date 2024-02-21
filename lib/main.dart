@@ -4,6 +4,7 @@ import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/providers/invoice_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/partner_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/entry_point/finance_entry/finance_entry.dart';
@@ -171,7 +172,9 @@ import 'package:dehub/src/payment_module/screens/transaction_history/transaction
 import 'package:dehub/src/user_module/user_management_page/user_management_page.dart';
 import 'package:dehub/services/dialog.dart';
 import 'package:dehub/services/navigation.dart';
+import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/dialog_manager/dialog_manager.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
@@ -182,7 +185,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => DialogService());
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (_) => LoadingProvider(),
+    lazy: false,
+    child: const MyApp(),
+  ));
 }
 
 GetIt locator = GetIt.instance;
@@ -195,9 +202,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final source = Provider.of<LoadingProvider>(context, listen: true);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'E-Darkhan',
+      title: 'DeHUB',
       theme: ThemeData(useMaterial3: true),
       home: MultiProvider(
         providers: [
@@ -1705,6 +1713,16 @@ class MyApp extends StatelessWidget {
                 }
               },
             ),
+            if (source.isLoading == true)
+              Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                color: black.withOpacity(0.3),
+                child: const CupertinoActivityIndicator(
+                  color: black,
+                  radius: 18,
+                ),
+              ),
           ],
         ),
       ),

@@ -134,6 +134,9 @@ Partner _$PartnerFromJson(Map<String, dynamic> json) {
     currentBusiness: json['currentBusiness'] != null
         ? Partner.fromJson(json['currentBusiness'] as Map<String, dynamic>)
         : null,
+    departmentUnit: json['departmentUnit'] != null
+        ? Partner.fromJson(json['departmentUnit'] as Map<String, dynamic>)
+        : null,
     businessSubSector: json['businessSubSector'] != null
         ? Partner.fromJson(json['businessSubSector'] as Map<String, dynamic>)
         : null,
@@ -264,6 +267,9 @@ Map<String, dynamic> _$PartnerToJson(Partner instance) {
   }
   if (instance.currentBusinessId != null) {
     json['currentBusinessId'] = instance.currentBusinessId;
+  }
+  if (instance.departmentUnit != null) {
+    json['departmentUnit'] = instance.departmentUnit;
   }
   if (instance.departmentUnitId != null) {
     json['departmentUnitId'] = instance.departmentUnitId;

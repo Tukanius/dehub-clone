@@ -116,7 +116,10 @@ class Partner {
   String? warehouseName;
   String? warehouseUserId;
 
+  Partner? departmentUnit;
+
   Partner({
+    this.departmentUnit,
     this.warehouseUserId,
     this.warehouseName,
     this.supplierIds,
