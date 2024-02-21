@@ -156,16 +156,20 @@ class _MainInformationState extends State<MainInformation>
       supplierRadioValue = widget.data!.isSupplier == true ? 1 : 0;
       if (widget.data!.isBuyer == true) {
         for (var i = 0; i < widget.data!.buyers!.length; i++) {
-          Partner buyers = this.buyers.rows!.firstWhere(
+          Partner buyer = buyers.rows!.firstWhere(
               (element) => element.id == widget.data!.buyers![i].id);
-          source.selectBuyer(buyers);
+          buyers.rows?.removeWhere(
+              (element) => element.id == widget.data!.buyers![i].id);
+          source.selectBuyer(buyer);
         }
       }
       if (widget.data!.isSupplier == true) {
         for (var i = 0; i < widget.data!.suppliers!.length; i++) {
-          Partner suppliers = this.suppliers.rows!.firstWhere(
+          Partner supplier = suppliers.rows!.firstWhere(
               (element) => element.id == widget.data!.suppliers![i].id);
-          source.selectSupplier(suppliers);
+          suppliers.rows?.removeWhere(
+              (element) => element.id == widget.data!.suppliers![i].id);
+          source.selectSupplier(supplier);
         }
       }
     }

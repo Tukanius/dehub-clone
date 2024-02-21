@@ -34,6 +34,7 @@ class PartnerProvider extends ChangeNotifier {
   province(String? value) {
     partner.province = value;
     partner.district = null;
+    partner.khoroo = null;
     notifyListeners();
   }
 

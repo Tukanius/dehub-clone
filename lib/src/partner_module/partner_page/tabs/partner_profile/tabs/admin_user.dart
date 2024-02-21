@@ -1,4 +1,5 @@
 import 'package:dehub/api/partner_api.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/providers/partner_provider.dart';
 import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/forms/admin_user_form.dart';
@@ -22,15 +23,28 @@ class _AdminUserState extends State<AdminUser> {
   onSubmit() async {
     final source = Provider.of<PartnerProvider>(context, listen: false);
     if (fbkey.currentState!.saveAndValidate()) {
-      source.loading(true);
-      Partner data = Partner.fromJson(fbkey.currentState!.value);
-      data.departmentUnitId = source.partner.departmentUnitId;
-      data.employeeUnitId = source.partner.employeeUnitId;
-      await PartnerApi().updateAdmin(data);
-      source.loading(false);
-      setState(() {
-        edit = false;
-      });
+      try {
+        source.loading(true);
+        Partner data = Partner.fromJson(fbkey.currentState!.value);
+        data.departmentUnitId = source.partner.departmentUnitId;
+        data.employeeUnitId = source.partner.employeeUnitId;
+        if (data.departmentUnitId != null && data.employeeUnitId != null) {
+          await PartnerApi().updateAdmin(data);
+        } else {
+          showCustomDialog(
+              context,
+              data.departmentUnitId == null
+                  ? 'Харьяалах нэгжийн нэр сонгон уу'
+                  : 'Албан тушаалын нэр сонгоно уу',
+              false);
+        }
+        source.loading(false);
+        setState(() {
+          edit = false;
+        });
+      } catch (e) {
+        source.loading(false);
+      }
     }
   }
 

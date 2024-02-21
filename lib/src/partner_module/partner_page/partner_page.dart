@@ -1,5 +1,4 @@
 import 'package:after_layout/after_layout.dart';
-import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/partner_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
@@ -77,14 +76,6 @@ class PartnerPageState extends State<PartnerPage> with AfterLayoutMixin {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  actions: [
-                    if (selectedIndex != 1)
-                      AddButton(
-                        color: selectedIndex == 3 ? white : partnerColor,
-                        addColor: selectedIndex == 3 ? partnerColor : white,
-                        onClick: () {},
-                      ),
-                  ],
                 )
               : null,
           body: isLoading == true

@@ -31,21 +31,26 @@ class _MainInformationState extends State<MainInformation>
   onSubmit() async {
     final source = Provider.of<PartnerProvider>(context, listen: false);
     if (fbKey.currentState!.saveAndValidate()) {
-      source.loading(true);
-      Partner data = Partner.fromJson(fbKey.currentState!.value);
-      data.province = source.partner.province;
-      data.district = source.partner.district;
-      data.khoroo = source.partner.khoroo;
-      data.legalEntityType = source.partner.legalEntityType;
-      data.equityType = source.partner.equityType;
-      data.country = source.partner.country;
-      data.classification = source.partner.classification;
-      await PartnerApi().profileUpdate(data);
-      await Provider.of<UserProvider>(context, listen: false).partnerMe(false);
-      source.loading(false);
-      setState(() {
-        edit = false;
-      });
+      try {
+        source.loading(true);
+        Partner data = Partner.fromJson(fbKey.currentState!.value);
+        data.province = source.partner.province;
+        data.district = source.partner.district;
+        data.khoroo = source.partner.khoroo;
+        data.legalEntityType = source.partner.legalEntityType;
+        data.equityType = source.partner.equityType;
+        data.country = source.partner.country;
+        data.classification = source.partner.classification;
+        await PartnerApi().profileUpdate(data);
+        await Provider.of<UserProvider>(context, listen: false)
+            .partnerMe(false);
+        source.loading(false);
+        setState(() {
+          edit = false;
+        });
+      } catch (e) {
+        source.loading(false);
+      }
     }
   }
 

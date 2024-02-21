@@ -4,10 +4,12 @@ import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/partner_module/partner_page/tabs/warehouses/components/warehouse_card.dart';
 import 'package:dehub/src/partner_module/screens/warehouse_create/warehouse_create.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class WarehousesTab extends StatefulWidget {
@@ -71,6 +73,7 @@ class _WarehousesTabState extends State<WarehousesTab> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    final load = Provider.of<LoadingProvider>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: partnerColor,
@@ -130,7 +133,9 @@ class _WarehousesTabState extends State<WarehousesTab> with AfterLayoutMixin {
                               data: data,
                               border: warehouse.rows?.last.id != data.id,
                               deleteClick: () async {
+                                load.loading(true);
                                 await PartnerApi().warehouseDelete(data.id);
+                                load.loading(false);
                               },
                             ),
                           )

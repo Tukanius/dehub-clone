@@ -35,6 +35,7 @@ class _AddressInformationState extends State<AddressInformation>
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   General general = General();
   bool isSubmit = false;
+  bool isLoading = true;
 
   onSubmit() async {
     final source = Provider.of<PartnerProvider>(context, listen: false);
@@ -44,9 +45,9 @@ class _AddressInformationState extends State<AddressInformation>
           isSubmit = true;
         });
         Partner data = Partner.fromJson(fbKey.currentState!.value);
-        data.provinceId = source.partner.province;
-        data.districtId = source.partner.district;
-        data.khorooId = source.partner.khoroo;
+        data.province = source.partner.province;
+        data.district = source.partner.district;
+        data.khoroo = source.partner.khoroo;
         if (source.partner.province == null ||
             source.partner.district == null ||
             source.partner.khoroo == null) {
@@ -105,351 +106,406 @@ class _AddressInformationState extends State<AddressInformation>
 
   @override
   afterFirstLayout(BuildContext context) {
-    if (widget.data != null) {}
+    final source = Provider.of<PartnerProvider>(context, listen: false);
+    if (widget.data != null) {
+      source.province(widget.data!.province);
+      source.district(widget.data!.district);
+      source.khoroo(widget.data!.khoroo);
+    }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     general =
         Provider.of<GeneralProvider>(context, listen: true).partnerGeneral;
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: SingleChildScrollView(
-        child: FormBuilder(
-          key: fbKey,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: const Row(
+    Provider.of<PartnerProvider>(context, listen: true);
+    return isLoading == true
+        ? const SizedBox()
+        : GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: SingleChildScrollView(
+              child: FormBuilder(
+                key: fbKey,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Хаягийн мэдээлэл',
-                        style: TextStyle(
-                          color: grey2,
-                          fontWeight: FontWeight.w600,
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: const Row(
+                          children: [
+                            Text(
+                              'Хаягийн мэдээлэл',
+                              style: TextStyle(
+                                color: grey2,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Expanded(
+                              child: Divider(
+                                endIndent: 5,
+                                indent: 5,
+                                thickness: .5,
+                                color: grey2,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Expanded(
-                        child: Divider(
-                          endIndent: 5,
-                          indent: 5,
-                          thickness: .5,
-                          color: grey2,
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        child: const Text(
+                          'Аймаг, нийслэл',
+                          style: TextStyle(
+                            color: grey2,
+                          ),
                         ),
+                      ),
+                      selection(
+                        value: provinceName(),
+                        hintText: 'Аймаг, нийслэл',
+                        onClick: () {
+                          selectProvince();
+                        },
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        child: const Text(
+                          'Сум, дүүрэг',
+                          style: TextStyle(
+                            color: grey2,
+                          ),
+                        ),
+                      ),
+                      selection(
+                        value: districtName(),
+                        hintText: 'Сум, дүүрэг',
+                        onClick: () {
+                          selectDistrict();
+                        },
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        child: const Text(
+                          'Баг, хороо',
+                          style: TextStyle(
+                            color: grey2,
+                          ),
+                        ),
+                      ),
+                      selection(
+                        value: khorooName(),
+                        hintText: 'Баг, хороо',
+                        onClick: () {
+                          selectKhoroo();
+                        },
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        child: const Text(
+                          'Хороолол, гудамж',
+                          style: TextStyle(
+                            color: grey2,
+                          ),
+                        ),
+                      ),
+                      FormTextField(
+                        textColor: black,
+                        name: 'khoroolol',
+                        initialValue: widget.data?.khoroolol ?? '',
+                        decoration: InputDecoration(
+                          hintText: 'Хороолол, гудамж',
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: grey2.withOpacity(0.3),
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: grey2.withOpacity(0.3),
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 15),
+                          isDense: true,
+                          fillColor: backgroundColor,
+                          filled: true,
+                        ),
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(
+                              errorText: 'Заавал оруулна'),
+                        ]),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        child: const Text(
+                          'Хотхон, байр',
+                          style: TextStyle(
+                            color: grey2,
+                          ),
+                        ),
+                      ),
+                      FormTextField(
+                        textColor: black,
+                        name: 'khotkhonBair',
+                        initialValue: widget.data?.khotkhonBair ?? '',
+                        decoration: InputDecoration(
+                          hintText: 'Хотхон, байр',
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: grey2.withOpacity(0.3),
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: grey2.withOpacity(0.3),
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 15),
+                          isDense: true,
+                          fillColor: backgroundColor,
+                          filled: true,
+                        ),
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(
+                              errorText: 'Заавал оруулна'),
+                        ]),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        child: const Text(
+                          'Хашаа, давхар',
+                          style: TextStyle(
+                            color: grey2,
+                          ),
+                        ),
+                      ),
+                      FormTextField(
+                        textColor: black,
+                        name: 'khashaaDavkhar',
+                        initialValue: widget.data?.khashaaDavkhar ?? '',
+                        decoration: InputDecoration(
+                          hintText: 'Хашаа, давхар',
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: grey2.withOpacity(0.3),
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: grey2.withOpacity(0.3),
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 15),
+                          isDense: true,
+                          fillColor: backgroundColor,
+                          filled: true,
+                        ),
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(
+                              errorText: 'Заавал оруулна'),
+                        ]),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        child: const Text(
+                          'Хаалганы дугаар',
+                          style: TextStyle(
+                            color: grey2,
+                          ),
+                        ),
+                      ),
+                      FormTextField(
+                        textColor: black,
+                        name: 'khaalgaDugaar',
+                        initialValue: widget.data?.khaalgaDugaar ?? '',
+                        decoration: InputDecoration(
+                          hintText: 'Хаалганы дугаар',
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: grey2.withOpacity(0.3),
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: grey2.withOpacity(0.3),
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 15),
+                          isDense: true,
+                          fillColor: backgroundColor,
+                          filled: true,
+                        ),
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(
+                              errorText: 'Заавал оруулна'),
+                        ]),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        child: const Text(
+                          'Хаягийн дэлгэрэнгүй',
+                          style: TextStyle(
+                            color: grey2,
+                          ),
+                        ),
+                      ),
+                      FormTextField(
+                        textColor: black,
+                        name: 'branchAddress',
+                        maxLines: 3,
+                        initialValue: widget.data?.branchAddress ?? '',
+                        inputType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: 'Хаягийн дэлгэрэнгүй',
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: grey2.withOpacity(0.3),
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: grey2.withOpacity(0.3),
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 15),
+                          isDense: true,
+                          fillColor: backgroundColor,
+                          filled: true,
+                        ),
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(
+                              errorText: 'Заавал оруулна'),
+                        ]),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: const Row(
+                          children: [
+                            Text(
+                              'Network-д гарах мэдээлэл',
+                              style: TextStyle(
+                                color: grey2,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Expanded(
+                              child: Divider(
+                                endIndent: 5,
+                                indent: 5,
+                                thickness: .5,
+                                color: grey2,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        child: const Text(
+                          'Өргөрөг',
+                          style: TextStyle(
+                            color: grey2,
+                          ),
+                        ),
+                      ),
+                      FormTextField(
+                        textColor: black,
+                        name: 'locationLat',
+                        initialValue: widget.data?.locationLat != null
+                            ? widget.data?.locationLat.toString()
+                            : '',
+                        inputType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: 'Өргөрөг',
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: grey2.withOpacity(0.3),
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: grey2.withOpacity(0.3),
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 15),
+                          isDense: true,
+                          fillColor: backgroundColor,
+                          filled: true,
+                        ),
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(
+                              errorText: 'Заавал оруулна'),
+                        ]),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        child: const Text(
+                          'Уртраг',
+                          style: TextStyle(
+                            color: grey2,
+                          ),
+                        ),
+                      ),
+                      FormTextField(
+                        textColor: black,
+                        name: 'locationLng',
+                        initialValue: widget.data?.locationLng != null
+                            ? widget.data?.locationLng.toString()
+                            : '',
+                        inputType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: 'Уртраг',
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: grey2.withOpacity(0.3),
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: grey2.withOpacity(0.3),
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 15),
+                          isDense: true,
+                          fillColor: backgroundColor,
+                          filled: true,
+                        ),
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(
+                              errorText: 'Заавал оруулна'),
+                        ]),
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      CustomButton(
+                        isLoading: isSubmit,
+                        onClick: onSubmit,
+                        labelText: 'Хадгалах',
+                        labelColor: partnerColor,
+                      ),
+                      const SizedBox(
+                        height: 50,
                       ),
                     ],
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  child: const Text(
-                    'Аймаг, нийслэл',
-                    style: TextStyle(
-                      color: grey2,
-                    ),
-                  ),
-                ),
-                selection(
-                  value: provinceName(),
-                  hintText: 'Аймаг, нийслэл',
-                  onClick: () {
-                    selectProvince();
-                  },
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  child: const Text(
-                    'Сум, дүүрэг',
-                    style: TextStyle(
-                      color: grey2,
-                    ),
-                  ),
-                ),
-                selection(
-                  value: districtName(),
-                  hintText: 'Сум, дүүрэг',
-                  onClick: () {
-                    selectDistrict();
-                  },
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  child: const Text(
-                    'Баг, хороо',
-                    style: TextStyle(
-                      color: grey2,
-                    ),
-                  ),
-                ),
-                selection(
-                  value: khorooName(),
-                  hintText: 'Баг, хороо',
-                  onClick: () {
-                    selectKhoroo();
-                  },
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  child: const Text(
-                    'Хороолол, гудамж',
-                    style: TextStyle(
-                      color: grey2,
-                    ),
-                  ),
-                ),
-                FormTextField(
-                  textColor: black,
-                  name: 'khoroolol',
-                  initialValue: widget.data?.khoroolol ?? '',
-                  decoration: InputDecoration(
-                    hintText: 'Хороолол, гудамж',
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: grey2.withOpacity(0.3),
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: grey2.withOpacity(0.3),
-                      ),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 15),
-                    isDense: true,
-                    fillColor: backgroundColor,
-                    filled: true,
-                  ),
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(errorText: 'Заавал оруулна'),
-                  ]),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  child: const Text(
-                    'Хотхон, байр',
-                    style: TextStyle(
-                      color: grey2,
-                    ),
-                  ),
-                ),
-                FormTextField(
-                  textColor: black,
-                  name: 'khotkhonBair',
-                  initialValue: widget.data?.khotkhonBair ?? '',
-                  decoration: InputDecoration(
-                    hintText: 'Хотхон, байр',
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: grey2.withOpacity(0.3),
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: grey2.withOpacity(0.3),
-                      ),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 15),
-                    isDense: true,
-                    fillColor: backgroundColor,
-                    filled: true,
-                  ),
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(errorText: 'Заавал оруулна'),
-                  ]),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  child: const Text(
-                    'Хашаа, давхар',
-                    style: TextStyle(
-                      color: grey2,
-                    ),
-                  ),
-                ),
-                FormTextField(
-                  textColor: black,
-                  name: 'khashaaDavkhar',
-                  initialValue: widget.data?.khashaaDavkhar ?? '',
-                  decoration: InputDecoration(
-                    hintText: 'Хашаа, давхар',
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: grey2.withOpacity(0.3),
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: grey2.withOpacity(0.3),
-                      ),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 15),
-                    isDense: true,
-                    fillColor: backgroundColor,
-                    filled: true,
-                  ),
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(errorText: 'Заавал оруулна'),
-                  ]),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  child: const Text(
-                    'Хаалганы дугаар',
-                    style: TextStyle(
-                      color: grey2,
-                    ),
-                  ),
-                ),
-                FormTextField(
-                  textColor: black,
-                  name: 'khaalgaDugaar',
-                  initialValue: widget.data?.khaalgaDugaar ?? '',
-                  decoration: InputDecoration(
-                    hintText: 'Хаалганы дугаар',
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: grey2.withOpacity(0.3),
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: grey2.withOpacity(0.3),
-                      ),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 15),
-                    isDense: true,
-                    fillColor: backgroundColor,
-                    filled: true,
-                  ),
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(errorText: 'Заавал оруулна'),
-                  ]),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: const Row(
-                    children: [
-                      Text(
-                        'Network-д гарах мэдээлэл',
-                        style: TextStyle(
-                          color: grey2,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Expanded(
-                        child: Divider(
-                          endIndent: 5,
-                          indent: 5,
-                          thickness: .5,
-                          color: grey2,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  child: const Text(
-                    'Өргөрөг',
-                    style: TextStyle(
-                      color: grey2,
-                    ),
-                  ),
-                ),
-                FormTextField(
-                  textColor: black,
-                  name: 'locationLat',
-                  initialValue: widget.data?.locationLat != null
-                      ? widget.data?.locationLat.toString()
-                      : '',
-                  inputType: TextInputType.number,
-                  decoration: InputDecoration(
-                    hintText: 'Өргөрөг',
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: grey2.withOpacity(0.3),
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: grey2.withOpacity(0.3),
-                      ),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 15),
-                    isDense: true,
-                    fillColor: backgroundColor,
-                    filled: true,
-                  ),
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(errorText: 'Заавал оруулна'),
-                  ]),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  child: const Text(
-                    'Уртраг',
-                    style: TextStyle(
-                      color: grey2,
-                    ),
-                  ),
-                ),
-                FormTextField(
-                  textColor: black,
-                  name: 'locationLng',
-                  initialValue: widget.data?.locationLng != null
-                      ? widget.data?.locationLng.toString()
-                      : '',
-                  inputType: TextInputType.number,
-                  decoration: InputDecoration(
-                    hintText: 'Уртраг',
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: grey2.withOpacity(0.3),
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: grey2.withOpacity(0.3),
-                      ),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 15),
-                    isDense: true,
-                    fillColor: backgroundColor,
-                    filled: true,
-                  ),
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(errorText: 'Заавал оруулна'),
-                  ]),
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                CustomButton(
-                  isLoading: isSubmit,
-                  onClick: onSubmit,
-                  labelText: 'Хадгалах',
-                  labelColor: partnerColor,
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+          );
   }
 
   Widget selection(
