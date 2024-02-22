@@ -21,9 +21,49 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => StockMovementTypes.fromJson(e))
             .toList()
         : null,
+    roles: json['roles'] != null
+        ? (json['roles'] as List).map((e) => Roles.fromJson(e)).toList()
+        : null,
+    userRoleTypes: json['userRoleTypes'] != null
+        ? (json['userRoleTypes'] as List).map((e) => Roles.fromJson(e)).toList()
+        : null,
+    roleTypes: json['roleTypes'] != null
+        ? (json['roleTypes'] as List).map((e) => RoleTypes.fromJson(e)).toList()
+        : null,
+    accessLevels: json['accessLevels'] != null
+        ? (json['accessLevels'] as List)
+            .map((e) => AccessLevels.fromJson(e))
+            .toList()
+        : null,
+    systemUsageTypes: json['systemUsageTypes'] != null
+        ? (json['systemUsageTypes'] as List)
+            .map((e) => SystemUsageType.fromJson(e))
+            .toList()
+        : null,
+    businesses: json['businesses'] != null
+        ? (json['businesses'] as List).map((e) => User.fromJson(e)).toList()
+        : null,
+    branches: json['branches'] != null
+        ? (json['branches'] as List).map((e) => User.fromJson(e)).toList()
+        : null,
+    roleStatus: json['roleStatus'] != null
+        ? (json['roleStatus'] as List)
+            .map((e) => RoleStatus.fromJson(e))
+            .toList()
+        : null,
     priceGroupTypes: json['priceGroupTypes'] != null
         ? (json['priceGroupTypes'] as List)
             .map((e) => PriceGroupTypes.fromJson(e))
+            .toList()
+        : null,
+    userRegisterStatus: json['userRegisterStatus'] != null
+        ? (json['userRegisterStatus'] as List)
+            .map((e) => UserRegisterStatus.fromJson(e))
+            .toList()
+        : null,
+    userStatus: json['userStatus'] != null
+        ? (json['userStatus'] as List)
+            .map((e) => UserStatus.fromJson(e))
             .toList()
         : null,
     partnerCategories: json['partnerCategories'] != null
@@ -405,6 +445,21 @@ Map<String, dynamic> _$GeneralToJson(General instance) {
   if (instance.productSuppPenaltyTypes != null) {
     json['productSuppPenaltyTypes'] = instance.productSuppPenaltyTypes;
   }
+  if (instance.accessLevels != null) {
+    json['accessLevels'] = instance.accessLevels;
+  }
+  if (instance.systemUsageTypes != null) {
+    json['systemUsageTypes'] = instance.systemUsageTypes;
+  }
+  if (instance.roleStatus != null) {
+    json['roleStatus'] = instance.roleStatus;
+  }
+  if (instance.userRoleTypes != null) {
+    json['userRoleTypes'] = instance.userRoleTypes;
+  }
+  if (instance.roleTypes != null) {
+    json['roleTypes'] = instance.roleTypes;
+  }
   if (instance.departmentUnits != null) {
     json['departmentUnits'] = instance.departmentUnits;
   }
@@ -441,10 +496,18 @@ Map<String, dynamic> _$GeneralToJson(General instance) {
   if (instance.lbfProgramStatus != null) {
     json['lbfProgramStatus'] = instance.lbfProgramStatus;
   }
+  if (instance.userStatus != null) json['userStatus'] = instance.userStatus;
+
+  if (instance.userRegisterStatus != null) {
+    json['userRegisterStatus'] = instance.userRegisterStatus;
+  }
   if (instance.adjustmentStatus != null) {
     json['adjustmentStatus'] = instance.adjustmentStatus;
   }
   if (instance.tiers != null) json['tiers'] = instance.tiers;
+  if (instance.roles != null) json['roles'] = instance.roles;
+  if (instance.branches != null) json['branches'] = instance.branches;
+  if (instance.businesses != null) json['businesses'] = instance.businesses;
   if (instance.vatTypes != null) json['vatTypes'] = instance.vatTypes;
   if (instance.fieldTypes != null) json['fieldTypes'] = instance.fieldTypes;
   if (instance.suppliers != null) json['suppliers'] = instance.suppliers;

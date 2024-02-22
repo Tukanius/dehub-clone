@@ -6,7 +6,7 @@ part '../parts/user.dart';
 class User {
   User? user;
   String? id;
-  String? createdAt;
+  DateTime? createdAt;
   String? updatedAt;
   String? deletedAt;
   String? type;
@@ -93,7 +93,6 @@ class User {
   List<BusinessStaffs>? businessStaffs;
   String? pin;
   bool? isAdmin;
-  String? employeeUnit;
   String? verifyId;
   String? otpCode;
   String? message;
@@ -102,23 +101,62 @@ class User {
   String? otpMethod;
   String? oldPassword;
   String? businessName;
-
   String? deliveryNoteId;
   Uri? url;
   String? oldPin;
   File? file;
-
   User? partner;
-
   String? businessRef;
   String? partnerRef;
   List<String>? urls;
-
-  getAvatar() {
+  List<User>? userRoles;
+  bool? hasRole;
+  List<User>? socialLinks;
+  String? usageType;
+  User? departmentUnit;
+  User? departmentSubUnit;
+  User? employeeUnit;
+  String? branchId;
+  String? accessLevel;
+  DateTime? startDate;
+  DateTime? endDate;
+  String? name;
+  String? roleStatus;
+  DateTime? danVerifiedDate;
+  String? link;
+  User? business;
+  User? role;
+  User? branch;
+  User? regUser;
+  String? branchName;
+  String? roleName;
+  String? getAvatar() {
     return HttpRequest.s3host + avatar.toString();
   }
 
   User({
+    this.roleName,
+    this.branchName,
+    this.regUser,
+    this.branch,
+    this.role,
+    this.business,
+    this.link,
+    this.danVerifiedDate,
+    this.usageType,
+    this.departmentUnit,
+    this.departmentSubUnit,
+    this.employeeUnit,
+    this.branchId,
+    this.accessLevel,
+    this.startDate,
+    this.endDate,
+    this.name,
+    this.roleStatus,
+    this.isAdmin,
+    this.userRoles,
+    this.hasRole,
+    this.socialLinks,
     this.clientType,
     this.urls,
     this.businessRef,

@@ -12,6 +12,12 @@ class GeneralProvider extends ChangeNotifier {
   General inventoryGeneral = General();
   General invoiceGeneral = General();
   General partnerGeneral = General();
+  General userGeneral = General();
+
+  userInit(bool handler) async {
+    userGeneral = await GeneralApi().userInit(handler);
+    notifyListeners();
+  }
 
   init(bool handler) async {
     general = await GeneralApi().init(handler);

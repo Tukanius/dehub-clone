@@ -6,6 +6,7 @@ import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/providers/invoice_provider.dart';
 import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/partner_provider.dart';
+import 'package:dehub/providers/user_module_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/entry_point/finance_entry/finance_entry.dart';
 import 'package:dehub/src/finance_module/screens/available_funding_page/available_funding_page.dart';
@@ -169,6 +170,10 @@ import 'package:dehub/src/product_module/screens/supplier_product/supplier_produ
 import 'package:dehub/src/profile/profile_page.dart';
 import 'package:dehub/src/splash/splash_page.dart';
 import 'package:dehub/src/payment_module/screens/transaction_history/transaction_history.dart';
+import 'package:dehub/src/user_module/screens/create_user/create_user.dart';
+import 'package:dehub/src/user_module/screens/invitation_send/invitation_send.dart';
+import 'package:dehub/src/user_module/screens/role_assign/role_assign.dart';
+import 'package:dehub/src/user_module/screens/update_user/update_user_page.dart';
 import 'package:dehub/src/user_module/user_management_page/user_management_page.dart';
 import 'package:dehub/services/dialog.dart';
 import 'package:dehub/services/navigation.dart';
@@ -217,6 +222,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => InventoryProvider()),
           ChangeNotifierProvider(create: (_) => InvoiceProvider()),
           ChangeNotifierProvider(create: (_) => PartnerProvider()),
+          ChangeNotifierProvider(create: (_) => UserModuleProvider()),
         ],
         child: Stack(
           children: [
@@ -1398,6 +1404,15 @@ class MyApp extends StatelessWidget {
                         id: arguments.id,
                       );
                     });
+                  case RoleAssign.routeName:
+                    RoleAssignArguments arguments =
+                        settings.arguments as RoleAssignArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return RoleAssign(
+                        id: arguments.id,
+                        data: arguments.data,
+                      );
+                    });
                   case OrderSendPage.routeName:
                     OrderSendPageArguments arguments =
                         settings.arguments as OrderSendPageArguments;
@@ -1553,6 +1568,54 @@ class MyApp extends StatelessWidget {
                         );
                       },
                     );
+                  case UpdateUserPage.routeName:
+                    UpdateUserPageArguments arguments =
+                        settings.arguments as UpdateUserPageArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          UpdateUserPage(
+                        data: arguments.data,
+                        listenController: arguments.listenController,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
+                  case CreateUser.routeName:
+                    CreateUserArguments arguments =
+                        settings.arguments as CreateUserArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          CreateUser(
+                        listenController: arguments.listenController,
+                        data: arguments.data,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(0.0, 1.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
                   case AddCategory.routeName:
                     AddCategoryArguments arguments =
                         settings.arguments as AddCategoryArguments;
@@ -1602,12 +1665,21 @@ class MyApp extends StatelessWidget {
                         );
                       },
                     );
+
                   case InvoiceConditionDetailPage.routeName:
                     InvoiceConditionDetailPageArguments arguments = settings
                         .arguments as InvoiceConditionDetailPageArguments;
                     return MaterialPageRoute(builder: (context) {
                       return InvoiceConditionDetailPage(
                         id: arguments.id,
+                      );
+                    });
+                  case UserInvitationSend.routeName:
+                    UserInvitationSendArguments arguments =
+                        settings.arguments as UserInvitationSendArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return UserInvitationSend(
+                        data: arguments.data,
                       );
                     });
                   case CategoryPage.routeName:

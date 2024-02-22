@@ -1,6 +1,6 @@
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
-import 'package:dehub/providers/partner_provider.dart';
+import 'package:dehub/providers/user_module_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +17,7 @@ class SelectDepartmentUnitState extends State<SelectDepartmentUnit> {
 
   @override
   Widget build(BuildContext context) {
-    final source = Provider.of<PartnerProvider>(context, listen: true);
+    final source = Provider.of<UserModuleProvider>(context, listen: true);
     general =
         Provider.of<GeneralProvider>(context, listen: true).partnerGeneral;
     return Material(

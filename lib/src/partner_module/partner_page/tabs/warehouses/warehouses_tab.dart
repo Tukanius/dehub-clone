@@ -75,6 +75,7 @@ class _WarehousesTabState extends State<WarehousesTab> with AfterLayoutMixin {
   Widget build(BuildContext context) {
     final load = Provider.of<LoadingProvider>(context, listen: true);
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         surfaceTintColor: partnerColor,
         backgroundColor: partnerColor,

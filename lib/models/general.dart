@@ -1,3 +1,4 @@
+import 'package:dehub/models/access_levels.dart';
 import 'package:dehub/models/adjustment_status.dart';
 import 'package:dehub/models/bank_names.dart';
 import 'package:dehub/models/branch_status.dart';
@@ -42,11 +43,15 @@ import 'package:dehub/models/repayment_over_due_status.dart';
 import 'package:dehub/models/repayment_status.dart';
 import 'package:dehub/models/request_status.dart';
 import 'package:dehub/models/request_types.dart';
+import 'package:dehub/models/role_status.dart';
+import 'package:dehub/models/role_types.dart';
+import 'package:dehub/models/roles.dart';
 import 'package:dehub/models/service_category_types.dart';
 import 'package:dehub/models/stock_movement_types.dart';
 import 'package:dehub/models/supp.dart';
 import 'package:dehub/models/supplier_businesses.dart';
 import 'package:dehub/models/supplier_types.dart';
+import 'package:dehub/models/system_usage_type.dart';
 import 'package:dehub/models/types.dart';
 import 'package:dehub/models/invoice_types.dart';
 import 'package:dehub/models/bank_accounts.dart';
@@ -74,6 +79,9 @@ import 'package:dehub/models/product_category_types.dart';
 import 'package:dehub/models/reference_list_types.dart';
 import 'package:dehub/models/reference_types.dart';
 import 'package:dehub/models/units.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/models/user_register_status.dart';
+import 'package:dehub/models/user_status.dart';
 import 'package:dehub/models/vat_types.dart';
 import 'package:dehub/models/warehouse_status.dart';
 import 'package:dehub/models/zip_codes.dart';
@@ -165,8 +173,28 @@ class General {
   List<String>? partnerCategories;
   List<DepartmentUnits>? departmentUnits;
   List<EmployeeUnits>? employeeUnits;
+  List<UserStatus>? userStatus;
+  List<UserRegisterStatus>? userRegisterStatus;
+  List<SystemUsageType>? systemUsageTypes;
+  List<RoleStatus>? roleStatus;
+  List<User>? businesses;
+  List<User>? branches;
+  List<Roles>? roles;
+  List<Roles>? userRoleTypes;
+  List<AccessLevels>? accessLevels;
+  List<RoleTypes>? roleTypes;
 
   General({
+    this.userRoleTypes,
+    this.roleTypes,
+    this.accessLevels,
+    this.roles,
+    this.branches,
+    this.businesses,
+    this.roleStatus,
+    this.systemUsageTypes,
+    this.userStatus,
+    this.userRegisterStatus,
     this.departmentUnits,
     this.employeeUnits,
     this.partnerCategories,

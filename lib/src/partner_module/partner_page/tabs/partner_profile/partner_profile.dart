@@ -122,24 +122,22 @@ class _PartnerProfileState extends State<PartnerProfile> with AfterLayoutMixin {
                                       ],
                                     ),
                                   ),
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        const Icon(
-                                          Icons.phone_outlined,
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      const Icon(
+                                        Icons.phone_outlined,
+                                        color: grey2,
+                                        size: 14,
+                                      ),
+                                      Text(
+                                        '${user.partner?.phone}',
+                                        style: const TextStyle(
                                           color: grey2,
-                                          size: 14,
+                                          fontSize: 12,
                                         ),
-                                        Text(
-                                          '${user.partner?.phone}',
-                                          style: const TextStyle(
-                                            color: grey2,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),

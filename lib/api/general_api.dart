@@ -36,4 +36,9 @@ class GeneralApi extends HttpRequest {
     var res = await get('/general/init', "PARTNER", true, handler: handler);
     return General.fromJson(res as Map<String, dynamic>);
   }
+
+  Future<General> userInit(bool handler) async {
+    var res = await get('/general/init', "USER", true, handler: handler);
+    return General.fromJson(res as Map<String, dynamic>);
+  }
 }

@@ -35,6 +35,8 @@ class HttpRequest {
 
   static const financeHost = 'http://dev-de-fi.zto.mn';
 
+  static const userHost = 'http://dev-de-user.zto.mn/usr';
+
   static const version = '/app';
 
   Dio dio = Dio();
@@ -65,6 +67,8 @@ class HttpRequest {
       uri = "$media$api";
     } else if (type == "FINANCE") {
       uri = "$financeHost$version$api";
+    } else if (type == "USER") {
+      uri = "$userHost$version$api";
     } else {
       uri = '$host$version$api';
     }

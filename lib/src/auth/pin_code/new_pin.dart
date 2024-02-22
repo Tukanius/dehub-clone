@@ -31,7 +31,7 @@ class _NewPinState extends State<NewPin> {
   TextEditingController pinController = TextEditingController();
 
   onSubmit(String value) async {
-    Navigator.of(context).pushNamed(
+    await Navigator.of(context).pushNamed(
       PinConfirmation.routeName,
       arguments: PinConfirmationArguments(
         value: value,

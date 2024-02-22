@@ -1,6 +1,7 @@
 import 'package:dehub/api/auth_api.dart';
 import 'package:dehub/api/finance_api.dart';
 import 'package:dehub/api/partner_api.dart';
+import 'package:dehub/api/user_api.dart';
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,11 @@ class UserProvider extends ChangeNotifier {
   User paymentMe = User();
   User inventoryMe = User();
   User financeUser = User();
+  User userModule = User();
+
+  userMe(bool handler) async {
+    userModule = await UserApi().me(handler);
+  }
 
   financeMe(String host) async {
     financeUser = await FinanceApi().financeMe(host);

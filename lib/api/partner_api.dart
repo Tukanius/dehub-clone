@@ -54,9 +54,8 @@ class PartnerApi extends HttpRequest {
     FormData formData = FormData.fromMap({
       'file': await MultipartFile.fromFile(file.path, filename: fileName),
     });
-    var res = await post('/media/file/inventory/upload', "MEDIA", true,
-        data: formData);
-
+    var res =
+        await post('/media/file/partner/upload', "MEDIA", true, data: formData);
     return Partner.fromJson(res as Map<String, dynamic>);
   }
 

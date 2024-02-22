@@ -4,7 +4,9 @@ User _$UserFromJson(Map<String, dynamic> json) {
   return User(
     pin: json['pin'] != null ? json['pin'] as String : null,
     id: json['id'] != null ? json['id'] as String : null,
-    createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
+    createdAt: json['createdAt'] != null
+        ? DateTime.parse(json['createdAt'].toString())
+        : null,
     user: json['user'] != null
         ? User.fromJson(json['user'] as Map<String, dynamic>)
         : null,
@@ -19,8 +21,14 @@ User _$UserFromJson(Map<String, dynamic> json) {
     clientType:
         json['clientType'] != null ? json['clientType'] as String : null,
     isActive: json['isActive'] != null ? json['isActive'] as bool : null,
+    hasRole: json['hasRole'] != null ? json['hasRole'] as bool : null,
     email: json['email'] != null ? json['email'] as String : null,
+    branchName:
+        json['branchName'] != null ? json['branchName'] as String : null,
     username: json['username'] != null ? json['username'] as String : null,
+    roleName: json['roleName'] != null ? json['roleName'] as String : null,
+    link: json['link'] != null ? json['link'] as String : null,
+    isAdmin: json['isAdmin'] != null ? json['isAdmin'] as bool : null,
     businessStaffs: json['businessStaffs'] != null
         ? (json['businessStaffs'] as List)
             .map((e) => BusinessStaffs.fromJson(e))
@@ -28,6 +36,12 @@ User _$UserFromJson(Map<String, dynamic> json) {
         : null,
     urls: json['urls'] != null
         ? (json['urls'] as List).map((e) => e as String).toList()
+        : null,
+    socialLinks: json['socialLinks'] != null
+        ? (json['socialLinks'] as List).map((e) => User.fromJson(e)).toList()
+        : null,
+    userRoles: json['userRoles'] != null
+        ? (json['userRoles'] as List).map((e) => User.fromJson(e)).toList()
         : null,
     isEmailVerified: json['isEmailVerified'] != null
         ? json['isEmailVerified'] as bool
@@ -134,6 +148,12 @@ User _$UserFromJson(Map<String, dynamic> json) {
     currentBusiness: json['currentBusiness'] != null
         ? User.fromJson(json['currentBusiness'] as Map<String, dynamic>)
         : null,
+    business: json['business'] != null
+        ? User.fromJson(json['business'] as Map<String, dynamic>)
+        : null,
+    role: json['role'] != null
+        ? User.fromJson(json['role'] as Map<String, dynamic>)
+        : null,
     partner: json['partner'] != null
         ? User.fromJson(json['partner'] as Map<String, dynamic>)
         : null,
@@ -205,15 +225,75 @@ User _$UserFromJson(Map<String, dynamic> json) {
     businessName:
         json['businessName'] != null ? json['businessName'] as String : null,
     file: json['file'] != null ? json['file'] as File : null,
+    danVerifiedDate: json['danVerifiedDate'] != null
+        ? DateTime.parse(json['danVerifiedDate'].toString())
+        : null,
+    usageType: json['usageType'] != null ? json['usageType'] as String : null,
+    departmentUnit: json['departmentUnit'] != null
+        ? User.fromJson(json['departmentUnit'] as Map<String, dynamic>)
+        : null,
+    regUser: json['regUser'] != null
+        ? User.fromJson(json['regUser'] as Map<String, dynamic>)
+        : null,
+    departmentSubUnit: json['departmentSubUnit'] != null
+        ? User.fromJson(json['departmentSubUnit'] as Map<String, dynamic>)
+        : null,
+    branch: json['branch'] != null
+        ? User.fromJson(json['branch'] as Map<String, dynamic>)
+        : null,
+    employeeUnit: json['employeeUnit'] != null
+        ? User.fromJson(json['employeeUnit'] as Map<String, dynamic>)
+        : null,
+    branchId: json['branchId'] != null ? json['branchId'] as String : null,
+    accessLevel:
+        json['accessLevel'] != null ? json['accessLevel'] as String : null,
+    startDate: json['startDate'] != null
+        ? DateTime.parse(json['startDate'].toString())
+        : null,
+    endDate: json['endDate'] != null
+        ? DateTime.parse(json['endDate'].toString())
+        : null,
+    name: json['name'] != null ? json['name'] as String : null,
+    roleStatus:
+        json['roleStatus'] != null ? json['roleStatus'] as String : null,
   );
 }
 
 Map<String, dynamic> _$UserToJson(User instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.danVerifiedDate != null) {
+    json['danVerifiedDate'] = instance.danVerifiedDate;
+  }
+  if (instance.usageType != null) json['usageType'] = instance.usageType;
+  if (instance.roleName != null) json['roleName'] = instance.roleName;
+  if (instance.business != null) json['business'] = instance.business;
+  if (instance.role != null) json['role'] = instance.role;
+  if (instance.departmentUnit != null) {
+    json['departmentUnit'] = instance.departmentUnit;
+  }
+  if (instance.departmentSubUnit != null) {
+    json['departmentSubUnit'] = instance.departmentSubUnit;
+  }
+  if (instance.employeeUnit != null) {
+    json['employeeUnit'] = instance.employeeUnit;
+  }
+  if (instance.branchId != null) json['branchId'] = instance.branchId;
+  if (instance.link != null) json['link'] = instance.link;
+  if (instance.accessLevel != null) json['accessLevel'] = instance.accessLevel;
+  if (instance.startDate != null) json['startDate'] = instance.startDate;
+  if (instance.endDate != null) json['endDate'] = instance.endDate;
+  if (instance.name != null) json['name'] = instance.name;
+  if (instance.roleStatus != null) json['roleStatus'] = instance.roleStatus;
+
   if (instance.businessName != null) {
     json["businessName"] = instance.businessName;
   }
+  if (instance.socialLinks != null) json["socialLinks"] = instance.socialLinks;
+  if (instance.regUser != null) json["regUser"] = instance.regUser;
+  if (instance.isAdmin != null) json["isAdmin"] = instance.isAdmin;
+  if (instance.userRoles != null) json["userRoles"] = instance.userRoles;
+  if (instance.hasRole != null) json["hasRole"] = instance.hasRole;
   if (instance.urls != null) json["urls"] = instance.urls;
   if (instance.businessRef != null) json["businessRef"] = instance.businessRef;
   if (instance.clientType != null) json["clientType"] = instance.clientType;
@@ -235,6 +315,7 @@ Map<String, dynamic> _$UserToJson(User instance) {
     json["emailVerifiedDate"] = instance.emailVerifiedDate;
   }
   if (instance.code != null) json['code'] = instance.code;
+  if (instance.branch != null) json['branch'] = instance.branch;
   if (instance.password != null) json['password'] = instance.password;
   if (instance.regUserId != null) json['regUserId'] = instance.regUserId;
   if (instance.businessId != null) json['businessId'] = instance.businessId;
@@ -319,6 +400,7 @@ Map<String, dynamic> _$UserToJson(User instance) {
     json['isAnchorBusiness'] = instance.isAnchorBusiness;
   }
   if (instance.id != null) json['id'] = instance.id;
+  if (instance.branchName != null) json['branchName'] = instance.branchName;
   if (instance.pin != null) json['pin'] = instance.pin;
   if (instance.createdAt != null) json['createdAt'] = instance.createdAt;
   if (instance.updatedAt != null) json['updatedAt'] = instance.updatedAt;

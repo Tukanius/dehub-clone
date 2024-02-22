@@ -18,11 +18,11 @@ class _PinCodeState extends State<PinCode> {
 
   onSubmit(String value) async {
     try {
-      var res = AuthApi().checkPin(
+      var res = await AuthApi().checkPin(
         User(pin: value),
       );
       if (res == true) {
-        Navigator.of(context).pushNamed(
+        await Navigator.of(context).pushNamed(
           NewPin.routeName,
           arguments: NewPinArguments(oldPin: value),
         );
