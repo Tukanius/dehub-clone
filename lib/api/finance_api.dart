@@ -140,4 +140,14 @@ class FinanceApi extends HttpRequestFinance {
   logout(String host) async {
     await get(host, '/auth/logout');
   }
+
+  forgot(User data, String host) async {
+    var res = await put(host, '/auth/forgot', data: data.toJson());
+    return User.fromJson(res as Map<String, dynamic>);
+  }
+
+  otpVerify(User data, String host) async {
+    var res = await post(host, '/auth/otp/verify', data: data.toJson());
+    return User.fromJson(res as Map<String, dynamic>);
+  }
 }

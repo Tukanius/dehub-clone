@@ -1,5 +1,7 @@
 import 'package:after_layout/after_layout.dart';
+import 'package:dehub/api/partner_api.dart';
 import 'package:dehub/models/partner.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/partner_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/tabs/admin_user.dart';
@@ -7,6 +9,8 @@ import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/tabs/
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class PartnerProfile extends StatefulWidget {
   static const routeName = '/PartnerProfile';
@@ -19,6 +23,10 @@ class PartnerProfile extends StatefulWidget {
 class _PartnerProfileState extends State<PartnerProfile> with AfterLayoutMixin {
   Partner user = Partner();
   bool isLoading = true;
+  String? fileName;
+  bool isFileEmpty = false;
+  final picker = ImagePicker();
+  File? image;
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -27,6 +35,31 @@ class _PartnerProfileState extends State<PartnerProfile> with AfterLayoutMixin {
     setState(() {
       isLoading = false;
     });
+  }
+
+  getImage(ImageSource imageSource) async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
+    XFile? file = await picker.pickImage(
+        source: imageSource, imageQuality: 40, maxHeight: 1024);
+    if (file != null) {
+      try {
+        setState(() {
+          image = File(file.path);
+          fileName = file.path;
+        });
+        setState(() {
+          isFileEmpty = false;
+        });
+        loading.loading(true);
+        user = await PartnerApi().upload(file);
+        await PartnerApi().logoUpdate(Partner(logo: user.url));
+        await Provider.of<UserProvider>(context, listen: false)
+            .partnerMe(false);
+        loading.loading(false);
+      } catch (e) {
+        loading.loading(false);
+      }
+    }
   }
 
   @override
@@ -46,17 +79,22 @@ class _PartnerProfileState extends State<PartnerProfile> with AfterLayoutMixin {
                         const SizedBox(
                           height: 5,
                         ),
-                        user.partner?.logo != null
-                            ? CircleAvatar(
-                                radius: 30,
-                                backgroundImage:
-                                    NetworkImage('${user.partner?.logo}'),
-                              )
-                            : const CircleAvatar(
-                                radius: 30,
-                                backgroundImage:
-                                    AssetImage('images/avatar.png'),
-                              ),
+                        GestureDetector(
+                          onTap: () {
+                            getImage(ImageSource.gallery);
+                          },
+                          child: user.partner?.logo != null
+                              ? CircleAvatar(
+                                  radius: 30,
+                                  backgroundImage:
+                                      NetworkImage('${user.partner?.logo}'),
+                                )
+                              : const CircleAvatar(
+                                  radius: 30,
+                                  backgroundImage:
+                                      AssetImage('images/avatar.png'),
+                                ),
+                        ),
                         const SizedBox(
                           height: 5,
                         ),

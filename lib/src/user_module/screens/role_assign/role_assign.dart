@@ -65,6 +65,14 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
   afterFirstLayout(BuildContext context) {
     final source = Provider.of<UserModuleProvider>(context, listen: false);
     source.clearData();
+    if (widget.data != null) {
+      source.selectBusiness(widget.data!.business!);
+      source.selectBranch(widget.data!.branch!.id!, widget.data!.branch!.name!);
+      source.selectRole(widget.data!.role!.id!, widget.data!.role!.name!);
+      source.selectAccessLevel(widget.data!.accessLevel!);
+      source.selectRoleType(
+          widget.data!.type! == "PERMANENT" ? 'Байнгын' : 'Түр');
+    }
     setState(() {
       isLoading = false;
     });
@@ -73,7 +81,6 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<UserModuleProvider>(context, listen: true);
-
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -174,6 +181,25 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
                         );
                       },
                     ),
+                    if (source.user.type == 'Түр')
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.symmetric(vertical: 5),
+                            child: const Text('Ролийн төрөл'),
+                          ),
+                          selectionField(
+                            text: source.user.type,
+                            onClick: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) => const SelectRoleType(),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     const SizedBox(
                       height: 50,
                     ),

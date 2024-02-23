@@ -21,11 +21,14 @@ User _$UserFromJson(Map<String, dynamic> json) {
     clientType:
         json['clientType'] != null ? json['clientType'] as String : null,
     isActive: json['isActive'] != null ? json['isActive'] as bool : null,
+    module: json['module'] != null ? json['module'] as String : null,
     hasRole: json['hasRole'] != null ? json['hasRole'] as bool : null,
     email: json['email'] != null ? json['email'] as String : null,
     branchName:
         json['branchName'] != null ? json['branchName'] as String : null,
     username: json['username'] != null ? json['username'] as String : null,
+    systemAction:
+        json['systemAction'] != null ? json['systemAction'] as String : null,
     roleName: json['roleName'] != null ? json['roleName'] as String : null,
     link: json['link'] != null ? json['link'] as String : null,
     isAdmin: json['isAdmin'] != null ? json['isAdmin'] as bool : null,
@@ -217,6 +220,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
     expiryIn: json['expiryIn'] != null
         ? int.parse(json['expiryIn'].toString())
         : null,
+    level: json['level'] != null ? int.parse(json['level'].toString()) : null,
     otpCharset:
         json['otpCharset'] != null ? json['otpCharset'] as String : null,
     otpMethod: json['otpMethod'] != null ? json['otpMethod'] as String : null,
@@ -266,7 +270,11 @@ Map<String, dynamic> _$UserToJson(User instance) {
     json['danVerifiedDate'] = instance.danVerifiedDate;
   }
   if (instance.usageType != null) json['usageType'] = instance.usageType;
+  if (instance.systemAction != null) {
+    json['systemAction'] = instance.systemAction;
+  }
   if (instance.roleName != null) json['roleName'] = instance.roleName;
+  if (instance.module != null) json['module'] = instance.module;
   if (instance.business != null) json['business'] = instance.business;
   if (instance.role != null) json['role'] = instance.role;
   if (instance.departmentUnit != null) {
@@ -335,6 +343,7 @@ Map<String, dynamic> _$UserToJson(User instance) {
     json['roleEnableDate'] = instance.roleEnableDate;
   }
   if (instance.phone2 != null) json['phone2'] = instance.phone2;
+  if (instance.level != null) json['level'] = instance.level;
   if (instance.email2 != null) json['email2'] = instance.email2;
   if (instance.isDanVerified != null) {
     json['isDanVerified'] = instance.isDanVerified;

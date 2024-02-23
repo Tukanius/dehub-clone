@@ -1,9 +1,8 @@
-import 'dart:async';
-
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/auth/password_recovery/password_recovery.dart';
 import 'package:dehub/src/finance_module/financing_page/financing_page.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -55,7 +54,7 @@ class _FinancingLoginState extends State<FinancingLogin> with AfterLayoutMixin {
   }
 
   @override
-  FutureOr<void> afterFirstLayout(BuildContext context) async {
+  afterFirstLayout(BuildContext context) async {
     try {
       final source = Provider.of<FinanceProvider>(context, listen: false);
       await Provider.of<UserProvider>(context, listen: false)
@@ -328,15 +327,27 @@ class _FinancingLoginState extends State<FinancingLogin> with AfterLayoutMixin {
                           ),
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(
-                            right: 15, top: 10, bottom: 50),
-                        alignment: Alignment.centerRight,
-                        child: const Text(
-                          'Нууц үгээ мартсан уу?',
-                          style: TextStyle(
-                            color: white,
-                            fontWeight: FontWeight.w500,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            PasswordRecovery.routeName,
+                            arguments: PasswordRecoveryArguments(
+                              color: source.currentColor,
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.only(
+                              right: 15, top: 10, bottom: 10),
+                          margin: const EdgeInsets.only(bottom: 40),
+                          alignment: Alignment.centerRight,
+                          color: transparent,
+                          child: const Text(
+                            'Нууц үгээ мартсан уу?',
+                            style: TextStyle(
+                              color: white,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ),

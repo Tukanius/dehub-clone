@@ -12,6 +12,11 @@ class AuthApi extends HttpRequest {
     return User.fromJson(res as Map<String, dynamic>);
   }
 
+  forgot(User data) async {
+    var res = await put('/auth/forgot', "AUTH", true, data: data.toJson());
+    return User.fromJson(res as Map<String, dynamic>);
+  }
+
   me(bool handler) async {
     var res = await get('/auth/me', "AUTH", true, handler: handler);
     return User.fromJson(res as Map<String, dynamic>);
@@ -111,6 +116,11 @@ class AuthApi extends HttpRequest {
     var res =
         await post('/media/file/$type/upload', "MEDIA", true, data: formData);
 
+    return User.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<User> otpVerify(User data) async {
+    var res = await post('/auth/otp/verify', "AUTH", true, data: data.toJson());
     return User.fromJson(res as Map<String, dynamic>);
   }
 }

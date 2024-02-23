@@ -43,13 +43,34 @@ class UserProvider extends ChangeNotifier {
   static Future<String?> generalToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("FINANCE_TOKEN");
-
     return token;
   }
 
   setBogdToken(String? token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (token != null) prefs.setString("BOGD_TOKEN", token);
+  }
+
+  financeForgot(User data, String host) async {
+    financeUser = await FinanceApi().forgot(data, host);
+    if (host == 'http://dev-de-fi-bogd.zto.mn') {
+      setBogdToken(financeUser.accessToken);
+    } else if (host == "http://dev-de-fi-golomt.zto.mn") {
+      setGolomtToken(financeUser.accessToken);
+    } else {
+      setGeneralToken(financeUser.accessToken);
+    }
+  }
+
+  financeForgotOtp(User data, String host) async {
+    financeUser = await FinanceApi().otpVerify(data, host);
+    if (host == 'http://dev-de-fi-bogd.zto.mn') {
+      setBogdToken(financeUser.accessToken);
+    } else if (host == "http://dev-de-fi-golomt.zto.mn") {
+      setGolomtToken(financeUser.accessToken);
+    } else {
+      setGeneralToken(financeUser.accessToken);
+    }
   }
 
   clearBogdToken() async {
@@ -131,6 +152,18 @@ class UserProvider extends ChangeNotifier {
 
   businessMe(bool handler) async {
     businessUser = await AuthApi().businessMe(handler);
+    notifyListeners();
+  }
+
+  forgot(User data) async {
+    user = await AuthApi().forgot(data);
+    setAccessToken(user.accessToken);
+    notifyListeners();
+  }
+
+  forgotOtp(User data) async {
+    user = await AuthApi().otpVerify(data);
+    setAccessToken(user.accessToken);
     notifyListeners();
   }
 

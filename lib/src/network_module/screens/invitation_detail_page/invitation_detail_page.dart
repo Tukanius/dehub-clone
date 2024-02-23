@@ -1,8 +1,11 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/field_card/field_card.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invitation_received.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
+import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -73,6 +76,24 @@ class SentInvitationDetailState extends State<SentInvitationDetail>
           return red.withOpacity(0.1);
         default:
       }
+    }
+  }
+
+  onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
+    try {
+      loading.loading(true);
+      Invitation respond = Invitation();
+      respond.accept = true;
+      respond.responseMessage = 'accept';
+      await BusinessApi().respond(respond, invitation.id!);
+      loading.loading(false);
+      showCustomDialog(context, "Урилга амжилттай илгээлээ", true,
+          onPressed: () {
+        Navigator.of(context).pop();
+      });
+    } catch (e) {
+      loading.loading(false);
     }
   }
 
@@ -364,8 +385,47 @@ class SentInvitationDetailState extends State<SentInvitationDetail>
                     secondTextColor: networkColor,
                   ),
                   const SizedBox(
-                    height: 25,
+                    height: 50,
                   ),
+                  if (invitation.invitationStatus == "DRAFT")
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        Expanded(
+                          flex: 4,
+                          child: CustomButton(
+                            onClick: () {
+                              Navigator.of(context).pop();
+                            },
+                            borderColor: networkColor,
+                            labelText: 'Буцах',
+                            labelColor: white,
+                            textColor: networkColor,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          flex: 6,
+                          child: CustomButton(
+                            onClick: onSubmit,
+                            labelText: 'Илгээх',
+                            labelColor: networkColor,
+                            textColor: white,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 25,
+                        ),
+                      ],
+                    ),
+                  if (invitation.invitationStatus == "DRAFT")
+                    const SizedBox(
+                      height: 50,
+                    ),
                 ],
               ),
             ),

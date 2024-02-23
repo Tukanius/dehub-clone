@@ -50,7 +50,7 @@ class _UpdateUserPageState extends State<UpdateUserPage>
         backgroundColor: white,
         surfaceTintColor: white,
         title: const Text(
-          "Хэрэгчийн профайл",
+          "Хэрэглэгчийн профайл",
           style: TextStyle(
             color: userColor,
             fontSize: 17,

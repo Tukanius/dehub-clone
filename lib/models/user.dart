@@ -130,11 +130,18 @@ class User {
   User? regUser;
   String? branchName;
   String? roleName;
+  String? systemAction;
+  String? module;
+  int? level;
+
   String? getAvatar() {
     return HttpRequest.s3host + avatar.toString();
   }
 
   User({
+    this.level,
+    this.module,
+    this.systemAction,
     this.roleName,
     this.branchName,
     this.regUser,

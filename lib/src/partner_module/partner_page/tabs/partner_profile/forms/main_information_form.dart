@@ -5,6 +5,7 @@ import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:provider/provider.dart';
 import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/sheets/select_classification.dart';
 import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/sheets/select_country.dart';
@@ -233,7 +234,7 @@ class _MainInformationFormState extends State<MainInformationForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'regNumber',
           readOnly: !widget.edit,
-          initialValue: '${user.partner?.regNumber}',
+          initialValue: user.partner?.regNumber,
           decoration: InputDecoration(
             hintText: 'Регистр/Татвар төлөгчийн дугаар',
             border: OutlineInputBorder(
@@ -252,6 +253,11 @@ class _MainInformationFormState extends State<MainInformationForm> {
             fillColor: widget.edit == true ? white : backgroundColor,
             filled: true,
           ),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(
+              errorText: 'Заавал оруулна',
+            ),
+          ]),
         ),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 5),
@@ -288,7 +294,7 @@ class _MainInformationFormState extends State<MainInformationForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'businessName',
           readOnly: !widget.edit,
-          initialValue: '${user.partner?.businessName}',
+          initialValue: user.partner?.businessName,
           decoration: InputDecoration(
             hintText: 'Аж ахуйн нэгжийн нэр',
             border: OutlineInputBorder(
@@ -307,6 +313,11 @@ class _MainInformationFormState extends State<MainInformationForm> {
             fillColor: widget.edit == true ? white : backgroundColor,
             filled: true,
           ),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(
+              errorText: 'Заавал оруулна',
+            ),
+          ]),
         ),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 5),
@@ -316,7 +327,7 @@ class _MainInformationFormState extends State<MainInformationForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'businessNameEng',
           readOnly: !widget.edit,
-          initialValue: '${user.partner?.businessNameEng}',
+          initialValue: user.partner?.businessNameEng,
           decoration: InputDecoration(
             hintText: 'Аж ахуйн нэгжийн нэр/Латин/',
             border: OutlineInputBorder(
@@ -335,6 +346,11 @@ class _MainInformationFormState extends State<MainInformationForm> {
             fillColor: widget.edit == true ? white : backgroundColor,
             filled: true,
           ),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(
+              errorText: 'Заавал оруулна',
+            ),
+          ]),
         ),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 5),
@@ -406,7 +422,7 @@ class _MainInformationFormState extends State<MainInformationForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'web',
           readOnly: !widget.edit,
-          initialValue: user.partner?.web ?? '',
+          initialValue: user.partner?.web,
           decoration: InputDecoration(
             hintText: 'Веб сайтын хаяг',
             border: OutlineInputBorder(
@@ -434,7 +450,7 @@ class _MainInformationFormState extends State<MainInformationForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'email',
           readOnly: !widget.edit,
-          initialValue: '${user.partner?.email}',
+          initialValue: user.partner?.email,
           decoration: InputDecoration(
             hintText: 'И-мэйл хаяг №1',
             border: OutlineInputBorder(
@@ -462,7 +478,7 @@ class _MainInformationFormState extends State<MainInformationForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'email2',
           readOnly: !widget.edit,
-          initialValue: user.partner?.email2 ?? '',
+          initialValue: user.partner?.email2,
           decoration: InputDecoration(
             hintText: 'И-мэйл хаяг №2',
             border: OutlineInputBorder(
@@ -518,7 +534,7 @@ class _MainInformationFormState extends State<MainInformationForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'phone2',
           readOnly: !widget.edit,
-          initialValue: user.partner?.phone2 ?? '',
+          initialValue: user.partner?.phone2,
           decoration: InputDecoration(
             hintText: 'Утасны дугаар №2',
             border: OutlineInputBorder(
@@ -546,7 +562,7 @@ class _MainInformationFormState extends State<MainInformationForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'fbLink',
           readOnly: !widget.edit,
-          initialValue: user.partner?.fbLink ?? '',
+          initialValue: user.partner?.fbLink,
           decoration: InputDecoration(
             hintText: 'Facebook хаяг',
             border: OutlineInputBorder(
@@ -631,7 +647,7 @@ class _MainInformationFormState extends State<MainInformationForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'khoroolol',
           readOnly: !widget.edit,
-          initialValue: user.partner?.khoroolol ?? '',
+          initialValue: user.partner?.khoroolol,
           decoration: InputDecoration(
             hintText: 'Хороолол, гудамж',
             border: OutlineInputBorder(
@@ -659,7 +675,7 @@ class _MainInformationFormState extends State<MainInformationForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'khotkhonBair',
           readOnly: !widget.edit,
-          initialValue: user.partner?.khotkhonBair ?? '',
+          initialValue: user.partner?.khotkhonBair,
           decoration: InputDecoration(
             hintText: 'Хотхон, байр',
             border: OutlineInputBorder(
@@ -687,7 +703,7 @@ class _MainInformationFormState extends State<MainInformationForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'khashaaDavkhar',
           readOnly: !widget.edit,
-          initialValue: user.partner?.khashaaDavkhar ?? '',
+          initialValue: user.partner?.khashaaDavkhar,
           decoration: InputDecoration(
             hintText: 'Хашаа, давхар',
             border: OutlineInputBorder(
@@ -715,7 +731,7 @@ class _MainInformationFormState extends State<MainInformationForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'khaalgaDugaar',
           readOnly: !widget.edit,
-          initialValue: user.partner?.khaalgaDugaar ?? '',
+          initialValue: user.partner?.khaalgaDugaar,
           decoration: InputDecoration(
             hintText: 'Хаалганы дугаар',
             border: OutlineInputBorder(
@@ -744,7 +760,7 @@ class _MainInformationFormState extends State<MainInformationForm> {
           name: 'businessAddress',
           readOnly: !widget.edit,
           maxLines: 3,
-          initialValue: user.partner?.businessAddress ?? '',
+          initialValue: user.partner?.businessAddress,
           decoration: InputDecoration(
             hintText: 'Хаягийн бичгийн тайлбар',
             border: OutlineInputBorder(

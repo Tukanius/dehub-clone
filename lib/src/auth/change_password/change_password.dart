@@ -59,253 +59,251 @@ class _ChangePasswordState extends State<ChangePassword> {
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: FormBuilder(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 15,
-                ),
-                FormBuilder(
-                  key: fbKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 10,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 15,
+              ),
+              FormBuilder(
+                key: fbKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      'Хуучин нууц үг',
+                      style: TextStyle(
+                        color: buttonColor,
+                        fontWeight: FontWeight.w500,
                       ),
-                      const Text(
-                        'Хуучин нууц үг',
-                        style: TextStyle(
-                          color: buttonColor,
-                          fontWeight: FontWeight.w500,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    FormTextField(
+                      onComplete: () {
+                        FocusScope.of(context).nextFocus();
+                        FocusScope.of(context).nextFocus();
+                      },
+                      name: "oldPassword",
+                      inputType: TextInputType.text,
+                      obscureText: isVisible,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              isVisible = !isVisible;
+                            });
+                          },
+                          icon: isVisible == true
+                              ? const Icon(
+                                  Icons.visibility_off,
+                                  color: buttonColor,
+                                )
+                              : const Icon(
+                                  Icons.visibility,
+                                  color: buttonColor,
+                                ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      FormTextField(
-                        onComplete: () {
-                          FocusScope.of(context).nextFocus();
-                          FocusScope.of(context).nextFocus();
-                        },
-                        name: "oldPassword",
-                        inputType: TextInputType.text,
-                        obscureText: isVisible,
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                isVisible = !isVisible;
-                              });
-                            },
-                            icon: isVisible == true
-                                ? const Icon(
-                                    Icons.visibility_off,
-                                    color: buttonColor,
-                                  )
-                                : const Icon(
-                                    Icons.visibility,
-                                    color: buttonColor,
-                                  ),
-                          ),
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 10),
-                          fillColor: Colors.white,
-                          filled: true,
-                          hintText: "Системд нэвтрэх бизнесийн код",
-                          hintStyle: const TextStyle(
-                            color: grey2,
-                            fontSize: 14,
-                          ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xff44566c),
-                            ),
-                          ),
-                          errorBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: red),
-                          ),
-                          border: const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.blue,
-                            ),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 10),
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText: "Системд нэвтрэх бизнесийн код",
+                        hintStyle: const TextStyle(
+                          color: grey2,
+                          fontSize: 14,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: grey2.withOpacity(0.3),
                           ),
                         ),
-                        validator: FormBuilderValidators.compose([
-                          (value) {
-                            return validatePassword(value.toString(), context);
+                        errorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: red),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                      validator: FormBuilderValidators.compose([
+                        (value) {
+                          return validatePassword(value.toString(), context);
+                        }
+                      ]),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      'Нууц үг',
+                      style: TextStyle(
+                        color: buttonColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    FormTextField(
+                      onComplete: () {
+                        FocusScope.of(context).nextFocus();
+                        FocusScope.of(context).nextFocus();
+                      },
+                      name: "password",
+                      inputType: TextInputType.text,
+                      obscureText: isVisible1,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              isVisible1 = !isVisible1;
+                            });
+                          },
+                          icon: isVisible1 == true
+                              ? const Icon(
+                                  Icons.visibility_off,
+                                  color: buttonColor,
+                                )
+                              : const Icon(
+                                  Icons.visibility,
+                                  color: buttonColor,
+                                ),
+                        ),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 10),
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText: "Системд нэвтрэх бизнесийн код",
+                        hintStyle: const TextStyle(
+                          color: grey2,
+                          fontSize: 14,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: grey2.withOpacity(0.3),
+                          ),
+                        ),
+                        errorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: red),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                      validator: FormBuilderValidators.compose([
+                        (value) {
+                          return validatePassword(value.toString(), context);
+                        }
+                      ]),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      'Дахин оруулна уу',
+                      style: TextStyle(
+                        color: buttonColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    FormTextField(
+                      onComplete: () {
+                        onSubmit();
+                      },
+                      obscureText: isVisible2,
+                      name: "passwordVerify",
+                      inputType: TextInputType.text,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              isVisible2 = !isVisible2;
+                            });
+                          },
+                          icon: isVisible2 == true
+                              ? const Icon(
+                                  Icons.visibility_off,
+                                  color: buttonColor,
+                                )
+                              : const Icon(
+                                  Icons.visibility,
+                                  color: buttonColor,
+                                ),
+                        ),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 10),
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText: "Нууц үг давтан оруулна уу",
+                        hintStyle: const TextStyle(
+                          color: grey2,
+                          fontSize: 14,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: grey2.withOpacity(0.3),
+                          ),
+                        ),
+                        errorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: red),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(
+                          errorText: 'Нууц үг давтан оруулна уу',
+                        ),
+                        (value) {
+                          if (fbKey.currentState?.fields['password']?.value !=
+                              value) {
+                            return "Нууц үг таарахгүй байна";
                           }
-                        ]),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                        'Нууц үг',
-                        style: TextStyle(
-                          color: buttonColor,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      FormTextField(
-                        onComplete: () {
-                          FocusScope.of(context).nextFocus();
-                          FocusScope.of(context).nextFocus();
-                        },
-                        name: "password",
-                        inputType: TextInputType.text,
-                        obscureText: isVisible1,
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                isVisible1 = !isVisible1;
-                              });
-                            },
-                            icon: isVisible1 == true
-                                ? const Icon(
-                                    Icons.visibility_off,
-                                    color: buttonColor,
-                                  )
-                                : const Icon(
-                                    Icons.visibility,
-                                    color: buttonColor,
-                                  ),
-                          ),
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 10),
-                          fillColor: Colors.white,
-                          filled: true,
-                          hintText: "Системд нэвтрэх бизнесийн код",
-                          hintStyle: const TextStyle(
-                            color: grey2,
-                            fontSize: 14,
-                          ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xff44566c),
-                            ),
-                          ),
-                          errorBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: red),
-                          ),
-                          border: const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ),
-                        validator: FormBuilderValidators.compose([
-                          (value) {
-                            return validatePassword(value.toString(), context);
-                          }
-                        ]),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                        'Дахин оруулна уу',
-                        style: TextStyle(
-                          color: buttonColor,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      FormTextField(
-                        onComplete: () {
-                          onSubmit();
-                        },
-                        obscureText: isVisible2,
-                        name: "passwordVerify",
-                        inputType: TextInputType.text,
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                isVisible2 = !isVisible2;
-                              });
-                            },
-                            icon: isVisible2 == true
-                                ? const Icon(
-                                    Icons.visibility_off,
-                                    color: buttonColor,
-                                  )
-                                : const Icon(
-                                    Icons.visibility,
-                                    color: buttonColor,
-                                  ),
-                          ),
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 10),
-                          fillColor: Colors.white,
-                          filled: true,
-                          hintText: "Нууц үг давтан оруулна уу",
-                          hintStyle: const TextStyle(
-                            color: grey2,
-                            fontSize: 14,
-                          ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xff44566c),
-                            ),
-                          ),
-                          errorBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: red),
-                          ),
-                          border: const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ),
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(
-                            errorText: 'Нууц үг давтан оруулна уу',
-                          ),
-                          (value) {
-                            if (fbKey.currentState?.fields['password']?.value !=
-                                value) {
-                              return "Нууц үг таарахгүй байна";
-                            }
-                            return null;
-                          }
-                        ]),
-                      ),
-                    ],
-                  ),
+                          return null;
+                        }
+                      ]),
+                    ),
+                  ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                CustomButton(
-                  onClick: () {
-                    onSubmit();
-                  },
-                  labelColor: buttonColor,
-                  labelText: 'Нууц үг солих',
-                  textColor: white,
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              CustomButton(
+                onClick: () {
+                  onSubmit();
+                },
+                labelColor: buttonColor,
+                labelText: 'Нууц үг солих',
+                textColor: white,
+              ),
+            ],
           ),
         ),
       ),

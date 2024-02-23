@@ -1,4 +1,5 @@
 import 'package:dehub/models/access_levels.dart';
+import 'package:dehub/models/actions.dart';
 import 'package:dehub/models/adjustment_status.dart';
 import 'package:dehub/models/bank_names.dart';
 import 'package:dehub/models/branch_status.dart';
@@ -14,6 +15,7 @@ import 'package:dehub/models/employee_units.dart';
 import 'package:dehub/models/equity_types.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/invoice_over_due_status.dart';
+import 'package:dehub/models/modules.dart';
 import 'package:dehub/models/order_status.dart';
 import 'package:dehub/models/partner_staffs.dart';
 import 'package:dehub/models/payment_term_conditions.dart';
@@ -183,8 +185,12 @@ class General {
   List<Roles>? userRoleTypes;
   List<AccessLevels>? accessLevels;
   List<RoleTypes>? roleTypes;
+  List<Actions>? actions;
+  List<Modules>? modules;
 
   General({
+    this.modules,
+    this.actions,
     this.userRoleTypes,
     this.roleTypes,
     this.accessLevels,

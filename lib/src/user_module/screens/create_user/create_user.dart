@@ -48,18 +48,18 @@ class _CreateUserState extends State<CreateUser> with AfterLayoutMixin {
       try {
         loading.loading(true);
         User data = User.fromJson(fbkey.currentState!.value);
-        data.avatar = source.user.avatar;
+        if (widget.data == null) {
+          data.avatar = source.user.avatar;
+        }
         data.identityCardBack = source.user.identityCardBack;
         data.identityCardFront = source.user.identityCardFront;
         data.departmentUnitId = source.user.departmentUnitId;
         data.departmentSubUnitId = source.user.departmentSubUnitId;
         data.employeeUnitId = source.user.employeeUnitId;
         data.socialLinks = source.user.socialLinks!
-            .where((element) => element.type != null)
+            .where((element) => element.link != null)
             .toList();
-        if (data.identityCardBack == null ||
-            data.identityCardFront == null ||
-            data.avatar == null) {
+        if (data.identityCardBack == null || data.identityCardFront == null) {
           loading.loading(false);
           showCustomDialog(
               context,
@@ -78,7 +78,7 @@ class _CreateUserState extends State<CreateUser> with AfterLayoutMixin {
           }
           widget.listenController.changeVariable('newUser');
           loading.loading(false);
-          showCustomDialog(context, "Амилттай", true, onPressed: () {
+          showCustomDialog(context, "Амжилттай", true, onPressed: () {
             Navigator.of(context).pop();
           });
         }
@@ -99,12 +99,14 @@ class _CreateUserState extends State<CreateUser> with AfterLayoutMixin {
       source.profileImage(widget.data!.avatar!);
       source.cardFront(widget.data!.identityCardFront!);
       source.cardBack(widget.data!.identityCardBack!);
-      for (var i = 0; i < widget.data!.socialLinks!.length; i++) {
-        int index = source.user.socialLinks!.indexWhere(
-            (element) => element.type == widget.data!.socialLinks![i].type);
-        if (index > -1) {
-          source.user.socialLinks?[index].link =
-              widget.data!.socialLinks![i].link;
+      if (widget.data!.socialLinks!.isNotEmpty) {
+        for (var i = 0; i < widget.data!.socialLinks!.length; i++) {
+          int index = source.user.socialLinks!.indexWhere(
+              (element) => element.type == widget.data!.socialLinks![i].type);
+          if (index > -1) {
+            source.user.socialLinks?[index].link =
+                widget.data!.socialLinks![i].link;
+          }
         }
       }
     }

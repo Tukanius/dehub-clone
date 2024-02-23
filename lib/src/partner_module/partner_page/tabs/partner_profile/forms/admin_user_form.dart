@@ -85,7 +85,7 @@ class _AdminUserFormState extends State<AdminUserForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'registerNo',
           readOnly: !widget.edit,
-          initialValue: user.user?.registerNo ?? '',
+          initialValue: user.user?.registerNo,
           decoration: InputDecoration(
             hintText: 'Админы регстр №',
             border: OutlineInputBorder(
@@ -113,7 +113,7 @@ class _AdminUserFormState extends State<AdminUserForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'familyName',
           readOnly: !widget.edit,
-          initialValue: user.user?.familyName ?? '',
+          initialValue: user.user?.familyName,
           decoration: InputDecoration(
             hintText: 'Ургын овог',
             border: OutlineInputBorder(
@@ -141,7 +141,7 @@ class _AdminUserFormState extends State<AdminUserForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'lastName',
           readOnly: !widget.edit,
-          initialValue: user.user?.lastName ?? '',
+          initialValue: user.user?.lastName,
           decoration: InputDecoration(
             hintText: 'Эцэг эхийн нэр',
             border: OutlineInputBorder(
@@ -169,7 +169,7 @@ class _AdminUserFormState extends State<AdminUserForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'firstName',
           readOnly: !widget.edit,
-          initialValue: user.user?.firstName ?? '',
+          initialValue: user.user?.firstName,
           decoration: InputDecoration(
             hintText: 'Нэр',
             border: OutlineInputBorder(
@@ -227,7 +227,7 @@ class _AdminUserFormState extends State<AdminUserForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'phone',
           readOnly: !widget.edit,
-          initialValue: user.user?.phone ?? '',
+          initialValue: user.user?.phone,
           decoration: InputDecoration(
             hintText: 'Утасны дугаар №1',
             border: OutlineInputBorder(
@@ -255,7 +255,7 @@ class _AdminUserFormState extends State<AdminUserForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'phone2',
           readOnly: !widget.edit,
-          initialValue: user.user?.phone2 ?? '',
+          initialValue: user.user?.phone2,
           decoration: InputDecoration(
             hintText: 'Утасны дугаар №2',
             border: OutlineInputBorder(
@@ -283,7 +283,7 @@ class _AdminUserFormState extends State<AdminUserForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'email',
           readOnly: !widget.edit,
-          initialValue: user.user?.email ?? '',
+          initialValue: user.user?.email,
           decoration: InputDecoration(
             hintText: 'И-мэйл хаяг №1',
             border: OutlineInputBorder(
@@ -311,7 +311,7 @@ class _AdminUserFormState extends State<AdminUserForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'email2',
           readOnly: !widget.edit,
-          initialValue: user.user?.email2 ?? '',
+          initialValue: user.user?.email2,
           decoration: InputDecoration(
             hintText: 'И-мэйл хаяг №2',
             border: OutlineInputBorder(
@@ -339,7 +339,7 @@ class _AdminUserFormState extends State<AdminUserForm> {
           textColor: widget.edit == true ? black : grey2,
           name: 'socialFbLink',
           readOnly: !widget.edit,
-          initialValue: user.user?.email2 ?? '',
+          initialValue: user.user?.email2,
           decoration: InputDecoration(
             hintText: 'Facebook хаяг',
             border: OutlineInputBorder(

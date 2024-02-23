@@ -25,12 +25,12 @@ class _MenuPageState extends State<MenuPage> {
   User user = User();
   bool isLoading = false;
 
-  logout() {
+  logout() async {
     setState(() {
       isLoading = true;
     });
-    Provider.of<UserProvider>(context, listen: false).logout();
-    Navigator.of(context).pushNamed(SplashPage.routeName);
+    await Provider.of<UserProvider>(context, listen: false).logout();
+    await Navigator.of(context).pushNamed(SplashPage.routeName);
     setState(() {
       isLoading = false;
     });

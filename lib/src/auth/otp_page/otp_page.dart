@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/finance_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/auth/otp_page/create_password.dart';
 import 'package:dehub/src/auth/otp_page/otp_phone_verify.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +47,6 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> with AfterLayoutMixin {
   bool isSubmit = false;
   late Timer _timer;
   String username = "";
-  User user = User();
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -52,16 +54,45 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> with AfterLayoutMixin {
   }
 
   checkOtp(value) async {
+    final source = Provider.of<FinanceProvider>(context, listen: false);
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
+    User user = User();
     try {
-      user.otpCode = value;
-      user.verifyId = widget.verifyId;
-      Provider.of<UserProvider>(context, listen: false).mailOtp(user);
-      Navigator.of(context).pushNamed(
-        OtpPhoneVerify.routeName,
-        arguments: OtpPhoneVerifyArguments(phone: widget.phone),
-      );
+      if (widget.verifyId == '') {
+        user.otpCode = value;
+        user.verifyId = widget.verifyId;
+        loading.loading(true);
+        await Provider.of<UserProvider>(context, listen: false).mailOtp(user);
+        loading.loading(false);
+        await Navigator.of(context).pushNamed(
+          OtpPhoneVerify.routeName,
+          arguments: OtpPhoneVerifyArguments(phone: widget.phone),
+        );
+      } else if (widget.verifyId == "CORE") {
+        user.otpMethod = 'FORGOT';
+        user.otpCode = value;
+        loading.loading(true);
+        await Provider.of<UserProvider>(context, listen: false).forgotOtp(user);
+        loading.loading(false);
+        await Navigator.of(context).pushNamed(
+          CreatePasswordPage.routeName,
+          arguments: CreatePasswordPageArguments(type: "FORGOT"),
+        );
+      } else {
+        user.otpMethod = 'FORGOT';
+        user.otpCode = value;
+        loading.loading(true);
+        await Provider.of<UserProvider>(context, listen: false)
+            .financeForgotOtp(user, source.url);
+        loading.loading(false);
+        await Navigator.of(context).pushNamed(
+          CreatePasswordPage.routeName,
+          arguments: CreatePasswordPageArguments(type: "FORGOT"),
+        );
+      }
+      loading.loading(false);
     } catch (e) {
-      debugPrint(e.toString());
+      loading.loading(false);
     }
   }
 
@@ -230,30 +261,9 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> with AfterLayoutMixin {
             const SizedBox(
               height: 50,
             ),
-            // CustomButton(
-            //   onClick: () {
-            //     Navigator.of(context).pushNamed(OtpPhoneVerify.routeName);
-            //   },
-            //   labelColor: buttonColor,
-            //   labelText: 'И-мэйл баталгаажуулах',
-            //   textColor: white,
-            // ),
           ],
         ),
       ),
     );
-  }
-}
-
-String? validateEmail(String value, context) {
-  RegExp regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-  if (value.isEmpty) {
-    return 'И-Мейлээ оруулна уу';
-  } else {
-    if (!regex.hasMatch(value)) {
-      return 'И-Мейлээ шалгана уу';
-    } else {
-      return null;
-    }
   }
 }

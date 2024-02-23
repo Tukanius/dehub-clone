@@ -30,7 +30,6 @@ class _ModulesCardState extends State<ModulesCard> {
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).user;
     bool isPartner = user.loginType == "PARTNER";
-
     return Container(
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.only(top: 150, left: 20, right: 20, bottom: 20),
@@ -142,8 +141,6 @@ class _ModulesCardState extends State<ModulesCard> {
               if (!isPartner) {
                 Navigator.of(context).pushNamed(PaymentPage.routeName);
               }
-              // Navigator.of(context)
-              //     .pushNamed(AddBankAccountPage.routeName);
             },
             child: Container(
               color: transparent,
@@ -362,11 +359,9 @@ class _ModulesCardState extends State<ModulesCard> {
           ),
           GestureDetector(
             onTap: () {
-              // if (user.currentBusiness?.type == 'SUPPLIER' ||
-              //     user.currentBusiness?.type == "BUYER") {
-              // } else {
-              Navigator.of(context).pushNamed(PartnerPage.routeName);
-              // }
+              if (isPartner) {
+                Navigator.of(context).pushNamed(PartnerPage.routeName);
+              }
             },
             child: Container(
               color: transparent,
@@ -409,8 +404,7 @@ class _ModulesCardState extends State<ModulesCard> {
           ),
           GestureDetector(
             onTap: () {
-              if (!isPartner) {
-              } else {
+              if (isPartner) {
                 Navigator.of(context).pushNamed(UserMangementPage.routeName);
               }
             },
@@ -433,7 +427,9 @@ class _ModulesCardState extends State<ModulesCard> {
                     child: SvgPicture.asset(
                       'assets/svg/hereglegch.svg',
                       colorFilter: ColorFilter.mode(
-                          !isPartner ? userColor.withOpacity(0.3) : buttonColor,
+                          !isPartner
+                              ? buttonColor.withOpacity(0.3)
+                              : buttonColor,
                           BlendMode.srcIn),
                     ),
                   ),

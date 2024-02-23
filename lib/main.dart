@@ -8,6 +8,7 @@ import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/partner_provider.dart';
 import 'package:dehub/providers/user_module_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/auth/password_recovery/password_recovery.dart';
 import 'package:dehub/src/entry_point/finance_entry/finance_entry.dart';
 import 'package:dehub/src/finance_module/screens/available_funding_page/available_funding_page.dart';
 import 'package:dehub/src/finance_module/screens/compromise_page/compromise_page.dart';
@@ -652,8 +653,12 @@ class MyApp extends StatelessWidget {
                       );
                     });
                   case CreatePasswordPage.routeName:
+                    CreatePasswordPageArguments arguments =
+                        settings.arguments as CreatePasswordPageArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return const CreatePasswordPage();
+                      return CreatePasswordPage(
+                        type: arguments.type,
+                      );
                     });
                   case OtpPhoneVerify.routeName:
                     OtpPhoneVerifyArguments arguments =
@@ -1374,6 +1379,14 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return DeliveryPage(
                         data: arguments.data,
+                      );
+                    });
+                  case PasswordRecovery.routeName:
+                    PasswordRecoveryArguments arguments =
+                        settings.arguments as PasswordRecoveryArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return PasswordRecovery(
+                        color: arguments.color,
                       );
                     });
                   case DeliveryDetail.routeName:

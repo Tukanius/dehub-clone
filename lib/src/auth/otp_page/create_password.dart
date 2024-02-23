@@ -1,6 +1,8 @@
 import 'package:dehub/api/auth_api.dart';
 import 'package:dehub/components/back_button/back_button.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -8,11 +10,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
+
+class CreatePasswordPageArguments {
+  String type;
+  CreatePasswordPageArguments({
+    required this.type,
+  });
+}
 
 class CreatePasswordPage extends StatefulWidget {
   static const routeName = '/CreatePasswordPage';
-  const CreatePasswordPage({super.key});
+  final String type;
+  const CreatePasswordPage({
+    super.key,
+    required this.type,
+  });
 
   @override
   State<CreatePasswordPage> createState() => _CreatePasswordPageState();
@@ -25,76 +38,33 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
   bool isVisible1 = true;
   User user = User();
 
-  dynamic show(ctx) async {
-    showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (context) {
-          return Container(
-            alignment: Alignment.center,
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.only(top: 75),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  padding: const EdgeInsets.only(top: 90, left: 20, right: 20),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      const Text(
-                        'Амжилттай',
-                        style: TextStyle(
-                            color: dark,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      const Text(
-                        'Таны бүртгэл амжилттай үүслээ. Цахим хаягт ирсэн бизнесийн кодоор нэвтэрнэ үү.',
-                        textAlign: TextAlign.center,
-                      ),
-                      ButtonBar(
-                        buttonMinWidth: 100,
-                        alignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          TextButton(
-                            child: const Text(
-                              "Нэвтрэх",
-                              style: TextStyle(color: dark),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              Navigator.of(ctx).pop();
-                              Navigator.of(ctx).pop();
-                              Navigator.of(ctx).pop();
-                              Navigator.of(ctx).pop();
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Lottie.asset('assets/lottie/success.json',
-                    height: 150, repeat: false),
-              ],
-            ),
-          );
-        });
-  }
-
   onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     if (fbKey.currentState!.saveAndValidate()) {
-      user = User.fromJson(fbKey.currentState!.value);
-      AuthApi().createPassword(user);
-      show(context);
+      try {
+        user = User.fromJson(fbKey.currentState!.value);
+        loading.loading(true);
+        await AuthApi().createPassword(user);
+        loading.loading(false);
+        showCustomDialog(
+          context,
+          widget.type == 'FORGOT'
+              ? 'Нууц үг амжилттай солилоо'
+              : 'Таны бүртгэл амжилттай үүслээ. Цахим хаягт ирсэн бизнесийн кодоор нэвтэрнэ үү.',
+          true,
+          onPressed: () {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+            if (widget.type != "FORGOT") {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            }
+          },
+        );
+      } catch (e) {
+        loading.loading(false);
+      }
     }
   }
 

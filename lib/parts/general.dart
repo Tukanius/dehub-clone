@@ -21,6 +21,12 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => StockMovementTypes.fromJson(e))
             .toList()
         : null,
+    actions: json['actions'] != null
+        ? (json['actions'] as List).map((e) => Actions.fromJson(e)).toList()
+        : null,
+    modules: json['modules'] != null
+        ? (json['modules'] as List).map((e) => Modules.fromJson(e)).toList()
+        : null,
     roles: json['roles'] != null
         ? (json['roles'] as List).map((e) => Roles.fromJson(e)).toList()
         : null,
@@ -505,6 +511,8 @@ Map<String, dynamic> _$GeneralToJson(General instance) {
     json['adjustmentStatus'] = instance.adjustmentStatus;
   }
   if (instance.tiers != null) json['tiers'] = instance.tiers;
+  if (instance.actions != null) json['actions'] = instance.actions;
+  if (instance.modules != null) json['modules'] = instance.modules;
   if (instance.roles != null) json['roles'] = instance.roles;
   if (instance.branches != null) json['branches'] = instance.branches;
   if (instance.businesses != null) json['businesses'] = instance.businesses;

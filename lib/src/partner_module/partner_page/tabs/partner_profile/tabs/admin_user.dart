@@ -30,18 +30,18 @@ class _AdminUserState extends State<AdminUser> {
         data.employeeUnitId = source.partner.employeeUnitId;
         if (data.departmentUnitId != null && data.employeeUnitId != null) {
           await PartnerApi().updateAdmin(data);
+          setState(() {
+            edit = false;
+          });
         } else {
           showCustomDialog(
               context,
               data.departmentUnitId == null
-                  ? 'Харьяалах нэгжийн нэр сонгон уу'
+                  ? 'Харьяалах нэгжийн нэр сонгоно уу'
                   : 'Албан тушаалын нэр сонгоно уу',
               false);
         }
         source.loading(false);
-        setState(() {
-          edit = false;
-        });
       } catch (e) {
         source.loading(false);
       }

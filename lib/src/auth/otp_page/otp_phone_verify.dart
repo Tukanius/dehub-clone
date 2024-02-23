@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dehub/api/partner_api.dart';
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/otp_page/create_password.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -99,14 +100,20 @@ class _OtpPhoneVerifyState extends State<OtpPhoneVerify> with AfterLayoutMixin {
   }
 
   onSubmit(value) async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
       otpVerify.otpMethod = "FORGOT";
       otpVerify.otpCode = value;
+      loading.loading(true);
       await Provider.of<UserProvider>(context, listen: false)
           .phoneOtp(otpVerify);
-      await Navigator.of(context).pushNamed(CreatePasswordPage.routeName);
+      loading.loading(false);
+      await Navigator.of(context).pushNamed(
+        CreatePasswordPage.routeName,
+        arguments: CreatePasswordPageArguments(type: 'CREATE'),
+      );
     } catch (e) {
-      debugPrint(e.toString());
+      loading.loading(false);
     }
   }
 

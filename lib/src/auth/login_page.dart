@@ -1,6 +1,7 @@
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/check_biometric.dart';
+import 'package:dehub/src/auth/password_recovery/password_recovery.dart';
 import 'package:dehub/src/auth/register-page/register_page.dart';
 import 'package:dehub/src/splash/splash_page.dart';
 import 'package:dehub/utils/secure_storage.dart';
@@ -362,17 +363,26 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                                   ),
                                 ]),
                               ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Container(
-                                alignment: Alignment.centerRight,
-                                child: const Text(
-                                  'Нууц үгээ мартсан уу?',
-                                  style: TextStyle(
-                                    color: buttonColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                    PasswordRecovery.routeName,
+                                    arguments: PasswordRecoveryArguments(
+                                        color: buttonColor),
+                                  );
+                                },
+                                child: Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  alignment: Alignment.centerRight,
+                                  color: transparent,
+                                  child: const Text(
+                                    'Нууц үгээ мартсан уу?',
+                                    style: TextStyle(
+                                      color: buttonColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ),
                               )
@@ -380,7 +390,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                           ),
                         ),
                         const SizedBox(
-                          height: 30,
+                          height: 25,
                         ),
                         CustomButton(
                           isLoading: isSubmit,
