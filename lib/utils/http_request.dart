@@ -68,7 +68,11 @@ class HttpRequest {
     } else if (type == "FINANCE") {
       uri = "$financeHost$version$api";
     } else if (type == "USER") {
-      uri = "$userHost$version$api";
+      if (isVersionTrue == false) {
+        uri = "$userHost$api";
+      } else {
+        uri = "$userHost$version$api";
+      }
     } else {
       uri = '$host$version$api';
     }

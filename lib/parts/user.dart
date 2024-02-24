@@ -20,8 +20,12 @@ User _$UserFromJson(Map<String, dynamic> json) {
         json['businessRef'] != null ? json['businessRef'] as String : null,
     clientType:
         json['clientType'] != null ? json['clientType'] as String : null,
+    financeRoleStatus: json['financeRoleStatus'] != null
+        ? json['financeRoleStatus'] as String
+        : null,
     isActive: json['isActive'] != null ? json['isActive'] as bool : null,
     module: json['module'] != null ? json['module'] as String : null,
+    icon: json['icon'] != null ? json['icon'] as String : null,
     hasRole: json['hasRole'] != null ? json['hasRole'] as bool : null,
     email: json['email'] != null ? json['email'] as String : null,
     branchName:
@@ -151,6 +155,9 @@ User _$UserFromJson(Map<String, dynamic> json) {
     currentBusiness: json['currentBusiness'] != null
         ? User.fromJson(json['currentBusiness'] as Map<String, dynamic>)
         : null,
+    financeRole: json['financeRole'] != null
+        ? User.fromJson(json['financeRole'] as Map<String, dynamic>)
+        : null,
     business: json['business'] != null
         ? User.fromJson(json['business'] as Map<String, dynamic>)
         : null,
@@ -270,6 +277,7 @@ Map<String, dynamic> _$UserToJson(User instance) {
     json['danVerifiedDate'] = instance.danVerifiedDate;
   }
   if (instance.usageType != null) json['usageType'] = instance.usageType;
+  if (instance.icon != null) json['icon'] = instance.icon;
   if (instance.systemAction != null) {
     json['systemAction'] = instance.systemAction;
   }
@@ -333,6 +341,9 @@ Map<String, dynamic> _$UserToJson(User instance) {
   if (instance.departmentUnitId != null) {
     json['departmentUnitId'] = instance.departmentUnitId;
   }
+  if (instance.financeRoleStatus != null) {
+    json['financeRoleStatus'] = instance.financeRoleStatus;
+  }
   if (instance.departmentSubUnitId != null) {
     json['departmentSubUnitId'] = instance.departmentSubUnitId;
   }
@@ -361,6 +372,9 @@ Map<String, dynamic> _$UserToJson(User instance) {
   if (instance.partnerName != null) json['partnerName'] = instance.partnerName;
   if (instance.partnerNameEng != null) {
     json['partnerNameEng'] = instance.partnerNameEng;
+  }
+  if (instance.financeRole != null) {
+    json['financeRole'] = instance.financeRole;
   }
   if (instance.refCode != null) json['refCode'] = instance.refCode;
   if (instance.businessSectorId != null) {

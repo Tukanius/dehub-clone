@@ -94,7 +94,9 @@ class _CreateUserState extends State<CreateUser> with AfterLayoutMixin {
     source.clearData();
     if (widget.data != null) {
       source.departmentUnit(widget.data!.departmentUnitId!);
-      source.departmentSubUnit(widget.data!.departmentSubUnitId!);
+      if (widget.data!.departmentSubUnitId != null) {
+        source.departmentSubUnit(widget.data!.departmentSubUnitId!);
+      }
       source.employeeUnit(widget.data!.employeeUnitId!);
       source.profileImage(widget.data!.avatar!);
       source.cardFront(widget.data!.identityCardFront!);

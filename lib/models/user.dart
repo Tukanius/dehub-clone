@@ -133,12 +133,18 @@ class User {
   String? systemAction;
   String? module;
   int? level;
+  String? icon;
+  User? financeRole;
+  String? financeRoleStatus;
 
   String? getAvatar() {
     return HttpRequest.s3host + avatar.toString();
   }
 
   User({
+    this.financeRoleStatus,
+    this.financeRole,
+    this.icon,
     this.level,
     this.module,
     this.systemAction,

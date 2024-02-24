@@ -56,4 +56,9 @@ class UserApi extends HttpRequest {
     var res = await post('/user/role', type, true, data: data.toJson());
     return User.fromJson(res as Map<String, dynamic>);
   }
+
+  Future<Result> bankList() async {
+    var res = await get('/finance_settings/bank', type, false);
+    return Result.fromJson(res, User.fromJson);
+  }
 }

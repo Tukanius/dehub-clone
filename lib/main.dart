@@ -173,6 +173,7 @@ import 'package:dehub/src/profile/profile_page.dart';
 import 'package:dehub/src/splash/splash_page.dart';
 import 'package:dehub/src/payment_module/screens/transaction_history/transaction_history.dart';
 import 'package:dehub/src/user_module/screens/create_user/create_user.dart';
+import 'package:dehub/src/user_module/screens/finance_request/finance_request.dart';
 import 'package:dehub/src/user_module/screens/invitation_send/invitation_send.dart';
 import 'package:dehub/src/user_module/screens/role_assign/role_assign.dart';
 import 'package:dehub/src/user_module/screens/update_user/update_user_page.dart';
@@ -659,6 +660,14 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return CreatePasswordPage(
                         type: arguments.type,
+                      );
+                    });
+                  case FinanceRequest.routeName:
+                    FinanceRequestArguments arguments =
+                        settings.arguments as FinanceRequestArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return FinanceRequest(
+                        id: arguments.id,
                       );
                     });
                   case UpdateBusiness.routeName:
