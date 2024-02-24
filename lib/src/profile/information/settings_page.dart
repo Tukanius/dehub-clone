@@ -28,10 +28,10 @@ class _SettingsPageState extends State<SettingsPage> {
         isSubmit = true;
       });
       dan = await AuthApi().danVerify();
-      await launchUrl(dan.url!);
       setState(() {
         isSubmit = false;
       });
+      await launchUrl(dan.url!);
     } catch (e) {
       setState(() {
         isSubmit = false;

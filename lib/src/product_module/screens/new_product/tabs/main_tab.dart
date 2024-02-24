@@ -143,7 +143,7 @@ class _MainTabState extends State<MainTab> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              PictureForm(
+              ProductPictureForm(
                 profileKey: profileKey,
               ),
               Container(

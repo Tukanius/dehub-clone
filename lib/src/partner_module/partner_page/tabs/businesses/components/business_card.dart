@@ -34,54 +34,54 @@ class _BusinessCardState extends State<BusinessCard> {
     general =
         Provider.of<GeneralProvider>(context, listen: true).partnerGeneral;
 
-    return Container(
-      color: white,
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      '${widget.data.logo}',
+    return GestureDetector(
+      onTap: widget.onClick,
+      child: Container(
+        color: white,
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        '${widget.data.logo}',
+                      ),
+                      fit: BoxFit.cover,
                     ),
-                    fit: BoxFit.cover,
                   ),
                 ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${widget.data.profileName}',
-                      style: const TextStyle(
-                        color: partnerColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      '${widget.data.refCode}',
-                      style: const TextStyle(color: grey2, fontSize: 12),
-                    ),
-                  ],
+                const SizedBox(
+                  width: 5,
                 ),
-              ),
-              GestureDetector(
-                onTap: widget.onClick,
-                child: Container(
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${widget.data.profileName}',
+                        style: const TextStyle(
+                          color: partnerColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        '${widget.data.refCode}',
+                        style: const TextStyle(color: grey2, fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
                   height: 35,
                   width: 35,
                   padding: const EdgeInsets.all(8),
@@ -95,68 +95,68 @@ class _BusinessCardState extends State<BusinessCard> {
                         const ColorFilter.mode(partnerColor, BlendMode.srcIn),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'Партнер: ${widget.data.partnerName}',
-                  style: const TextStyle(
-                    color: grey2,
-                    fontSize: 12,
+              ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Партнер: ${widget.data.partnerName}',
+                    style: const TextStyle(
+                      color: grey2,
+                      fontSize: 12,
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blue),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  '${businessStatus()}',
-                  style: const TextStyle(
-                    color: Colors.blue,
-                    fontSize: 12,
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blue),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    '${businessStatus()}',
+                    style: const TextStyle(
+                      color: Colors.blue,
+                      fontSize: 12,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Text(
-                  'Сектор: ${widget.data.businessSector?.name}',
-                  style: const TextStyle(
-                    color: grey2,
-                    fontSize: 12,
+              ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                    'Сектор: ${widget.data.businessSector?.name}',
+                    style: const TextStyle(
+                      color: grey2,
+                      fontSize: 12,
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Text(
-                  'Дэд сектор: ${widget.data.businessSubSector?.name}',
-                  style: const TextStyle(
-                    color: grey2,
-                    fontSize: 12,
+                Expanded(
+                  child: Text(
+                    'Дэд сектор: ${widget.data.businessSubSector?.name}',
+                    style: const TextStyle(
+                      color: grey2,
+                      fontSize: 12,
+                    ),
+                    textAlign: TextAlign.end,
                   ),
-                  textAlign: TextAlign.end,
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

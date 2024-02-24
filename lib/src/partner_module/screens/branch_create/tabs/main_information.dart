@@ -314,7 +314,7 @@ class _MainInformationState extends State<MainInformation>
                         ],
                       ),
                     ),
-                    const PictureForm(),
+                    const PartnerPictureForm(),
                     Row(
                       children: [
                         const SizedBox(

@@ -7,14 +7,14 @@ import 'package:dehub/api/user_api.dart';
 import 'package:dehub/models/user.dart';
 import 'package:image_picker/image_picker.dart';
 
-class PictureForm extends StatefulWidget {
-  const PictureForm({super.key});
+class UserPictureForm extends StatefulWidget {
+  const UserPictureForm({super.key});
 
   @override
-  State<PictureForm> createState() => _PictureFormState();
+  State<UserPictureForm> createState() => _UserPictureFormState();
 }
 
-class _PictureFormState extends State<PictureForm> {
+class _UserPictureFormState extends State<UserPictureForm> {
   bool isLoading = false;
   final picker = ImagePicker();
   User banner = User();

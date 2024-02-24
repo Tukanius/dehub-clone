@@ -150,7 +150,7 @@ class _CreateUserState extends State<CreateUser> with AfterLayoutMixin {
                       CreateUserForm(
                         data: widget.data,
                       ),
-                      const PictureForm(),
+                      const UserPictureForm(),
                       AdditionalForm(
                         data: widget.data,
                       ),

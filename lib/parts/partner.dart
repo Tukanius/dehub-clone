@@ -16,6 +16,12 @@ Partner _$PartnerFromJson(Map<String, dynamic> json) {
         ? DateTime.parse(json['createdAt'].toString())
         : null,
     updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
+    businessSectorName: json['businessSectorName'] != null
+        ? json['businessSectorName'] as String
+        : null,
+    businessSubSectorName: json['businessSubSectorName'] != null
+        ? json['businessSubSectorName'] as String
+        : null,
     warehouseUserId: json['warehouseUserId'] != null
         ? json['warehouseUserId'] as String
         : null,
@@ -231,6 +237,12 @@ Map<String, dynamic> _$PartnerToJson(Partner instance) {
   }
   if (instance.buyerIds != null) {
     json['buyerIds'] = instance.buyerIds;
+  }
+  if (instance.businessSectorName != null) {
+    json['businessSectorName'] = instance.businessSectorName;
+  }
+  if (instance.businessSubSectorName != null) {
+    json['businessSubSectorName'] = instance.businessSubSectorName;
   }
   if (instance.warehouseStatus != null) {
     json['warehouseStatus'] = instance.warehouseStatus;

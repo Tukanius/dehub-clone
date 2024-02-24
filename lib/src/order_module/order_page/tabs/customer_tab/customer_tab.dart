@@ -33,7 +33,7 @@ class _CustomerTabState extends State<CustomerTab> with AfterLayoutMixin {
   }
 
   list(page, limit, String value) async {
-    Filter filter = Filter(partnerName: value);
+    Filter filter = Filter(partnerName: value, excel: true);
     Offset offset = Offset(page: page, limit: limit);
     var res = await OrderApi()
         .networkList(ResultArguments(filter: filter, offset: offset));

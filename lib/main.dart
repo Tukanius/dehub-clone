@@ -27,6 +27,7 @@ import 'package:dehub/src/order_module/screens/set_delivery_distribution/set_del
 import 'package:dehub/src/order_module/screens/shipment_distribution/shipment_distribution.dart';
 import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/partner_profile.dart';
 import 'package:dehub/src/partner_module/screens/branch_create/branch_create.dart';
+import 'package:dehub/src/partner_module/screens/update_business/update_business.dart';
 import 'package:dehub/src/partner_module/screens/warehouse_create/warehouse_create.dart';
 import 'package:dehub/src/payment_module/screens/account_statement/account_statement.dart';
 import 'package:dehub/src/network_module/screens/client_classifications/client_classification_detail/client_classification_detail.dart';
@@ -658,6 +659,15 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return CreatePasswordPage(
                         type: arguments.type,
+                      );
+                    });
+                  case UpdateBusiness.routeName:
+                    UpdateBusinessArguments arguments =
+                        settings.arguments as UpdateBusinessArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return UpdateBusiness(
+                        data: arguments.data,
+                        listenController: arguments.listenController,
                       );
                     });
                   case OtpPhoneVerify.routeName:

@@ -7,15 +7,15 @@ import 'package:dehub/providers/inventory_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 
-class PictureForm extends StatefulWidget {
+class ProductPictureForm extends StatefulWidget {
   final GlobalKey? profileKey;
-  const PictureForm({super.key, this.profileKey});
+  const ProductPictureForm({super.key, this.profileKey});
 
   @override
-  State<PictureForm> createState() => _PictureFormState();
+  State<ProductPictureForm> createState() => _ProductPictureFormState();
 }
 
-class _PictureFormState extends State<PictureForm> {
+class _ProductPictureFormState extends State<ProductPictureForm> {
   final picker = ImagePicker();
   bool isLoading = false;
   InventoryGoods user = InventoryGoods();

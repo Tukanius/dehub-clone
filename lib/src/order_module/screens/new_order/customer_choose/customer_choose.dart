@@ -44,7 +44,7 @@ class _OrderCustomerChooseState extends State<OrderCustomerChoose>
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(categoryId: '');
+    Filter filter = Filter(categoryId: '', excel: false);
     var res = await OrderApi()
         .networkList(ResultArguments(filter: filter, offset: offset));
     setState(() {

@@ -10,6 +10,20 @@ class PartnerProvider extends ChangeNotifier {
   Partner createdBranch = Partner();
   bool isSubmit = false;
 
+  selectBusinessSector(String id, String name) {
+    partner.businessSectorId = id;
+    partner.businessSectorName = name;
+    partner.businessSubSectorId = null;
+    partner.businessSubSectorName = null;
+    notifyListeners();
+  }
+
+  selectBusinessSubSector(String id, String name) {
+    partner.businessSubSectorId = id;
+    partner.businessSubSectorName = name;
+    notifyListeners();
+  }
+
   loading(bool value) {
     isSubmit = value;
     notifyListeners();

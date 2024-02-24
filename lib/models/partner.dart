@@ -115,10 +115,13 @@ class Partner {
   List<String>? supplierIds;
   String? warehouseName;
   String? warehouseUserId;
-
   Partner? departmentUnit;
+  String? businessSectorName;
+  String? businessSubSectorName;
 
   Partner({
+    this.businessSectorName,
+    this.businessSubSectorName,
     this.departmentUnit,
     this.warehouseUserId,
     this.warehouseName,

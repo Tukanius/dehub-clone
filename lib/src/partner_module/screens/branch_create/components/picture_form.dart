@@ -7,18 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 
-class PictureForm extends StatefulWidget {
+class PartnerPictureForm extends StatefulWidget {
   final GlobalKey? profileKey;
-  const PictureForm({
+  const PartnerPictureForm({
     super.key,
     this.profileKey,
   });
 
   @override
-  State<PictureForm> createState() => _PictureFormState();
+  State<PartnerPictureForm> createState() => _PartnerPictureFormState();
 }
 
-class _PictureFormState extends State<PictureForm> {
+class _PartnerPictureFormState extends State<PartnerPictureForm> {
   final picker = ImagePicker();
   bool isLoading = false;
   Partner user = Partner();
