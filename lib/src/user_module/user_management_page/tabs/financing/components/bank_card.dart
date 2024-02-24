@@ -71,12 +71,15 @@ class _BankCardState extends State<BankCard> {
                   width: 25,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: userColor.withOpacity(0.1),
+                    color: widget.data.financeRole == null
+                        ? userColor.withOpacity(0.1)
+                        : lightGrey,
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/cloud_lock.svg',
-                    colorFilter:
-                        const ColorFilter.mode(userColor, BlendMode.srcIn),
+                    colorFilter: ColorFilter.mode(
+                        widget.data.financeRole == null ? userColor : grey,
+                        BlendMode.srcIn),
                   ),
                 ),
               ],

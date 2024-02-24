@@ -95,6 +95,7 @@ class OnboarInvitationState extends State<OnboarInvitation>
                             children: invitation.rows!
                                 .map(
                                   (item) => InvitationCard(
+                                    send: true,
                                     data: item,
                                     startAnimation: startAnimation,
                                     index: invitation.rows!.indexOf(item),

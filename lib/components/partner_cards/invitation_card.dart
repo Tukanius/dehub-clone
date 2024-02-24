@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 
 class InvitationCard extends StatefulWidget {
   final Function()? onClick;
-  final Invitation? data;
+  final Invitation data;
   final int index;
   final bool startAnimation;
+  final bool send;
   const InvitationCard({
     required this.index,
     required this.startAnimation,
-    this.data,
+    required this.send,
+    required this.data,
     super.key,
     this.onClick,
   });
@@ -50,6 +52,8 @@ class InvitationCardState extends State<InvitationCard> {
 
   @override
   Widget build(BuildContext context) {
+    Invitation business =
+        widget.send == false ? widget.data.sender! : widget.data.receiver!;
     return GestureDetector(
       onTap: widget.onClick,
       child: AnimatedContainer(
@@ -78,7 +82,7 @@ class InvitationCardState extends State<InvitationCard> {
                     children: [
                       Expanded(
                         child: Text(
-                          '${widget.data?.receiver?.profileName}',
+                          '${business.profileName}',
                           style: const TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
                         ),
@@ -87,7 +91,7 @@ class InvitationCardState extends State<InvitationCard> {
                         width: 10,
                       ),
                       Text(
-                        '${widget.data?.receiver?.refCode}',
+                        '${business.refCode}',
                         style: const TextStyle(
                           fontSize: 12,
                           color: grey3,
@@ -104,7 +108,7 @@ class InvitationCardState extends State<InvitationCard> {
                     children: [
                       Expanded(
                         child: Text(
-                          '${widget.data?.receiver?.partnerName}',
+                          '${business.partnerName}',
                           style: const TextStyle(fontSize: 12, color: grey3),
                         ),
                       ),
@@ -143,11 +147,10 @@ class InvitationCardState extends State<InvitationCard> {
                                 fontFamily: 'Montserrat'),
                             children: [
                               TextSpan(
-                                text:
-                                    "${widget.data?.receiver?.staff?.firstName}, ",
+                                text: "${business.staff?.firstName}, ",
                               ),
                               TextSpan(
-                                text: widget.data?.receiver?.staff?.phone,
+                                text: business.staff?.phone,
                               ),
                             ],
                           ),

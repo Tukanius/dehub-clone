@@ -102,13 +102,13 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
                                   .toList(),
                               options: CarouselOptions(
                                 enlargeCenterPage:
-                                    businessNetwork.profileBanners?.length == 1
-                                        ? false
-                                        : true,
+                                    businessNetwork.profileBanners?.length != 1,
                                 autoPlayCurve: Curves.ease,
                                 height: 200,
-                                autoPlay: true,
-                                enableInfiniteScroll: true,
+                                autoPlay:
+                                    businessNetwork.profileBanners?.length != 1,
+                                enableInfiniteScroll:
+                                    businessNetwork.profileBanners?.length != 1,
                               ),
                             ),
                           const SizedBox(

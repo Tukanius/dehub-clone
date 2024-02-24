@@ -105,6 +105,7 @@ class InboxTabState extends State<InboxTab>
                               children: invitation.rows!
                                   .map(
                                     (item) => InvitationCard(
+                                      send: false,
                                       index: invitation.rows!.indexOf(item),
                                       startAnimation: startAnimation,
                                       data: item,

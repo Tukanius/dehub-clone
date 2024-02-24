@@ -21,19 +21,23 @@ class UserMangementPage extends StatefulWidget {
 
 class UserMangementPageState extends State<UserMangementPage>
     with AfterLayoutMixin {
-  int selectedIndex = 0;
+  int selectedIndex = 1;
   bool isLoading = true;
   static const List<Widget> currentPages = [
-    UsersTab(),
     SettingTab(),
+    UsersTab(),
     RuleTab(),
     FinancingTab(),
   ];
 
   void ontappedItem(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
+    if (index == 0) {
+      Navigator.of(context).pop();
+    } else {
+      setState(() {
+        selectedIndex = index;
+      });
+    }
   }
 
   @override
@@ -49,7 +53,7 @@ class UserMangementPageState extends State<UserMangementPage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: selectedIndex != 0
+      appBar: selectedIndex != 1
           ? AppBar(
               leadingWidth: 100,
               elevation: 0,
@@ -83,7 +87,7 @@ class UserMangementPageState extends State<UserMangementPage>
                   ),
                   padding: EdgeInsets.all(selectedIndex == 0 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'assets/svg/people.svg',
+                    'assets/svg/home.svg',
                     height: 20,
                     width: 20,
                     colorFilter: ColorFilter.mode(
@@ -93,7 +97,7 @@ class UserMangementPageState extends State<UserMangementPage>
                 ),
                 if (selectedIndex != 0)
                   const Text(
-                    'Хэрэглэгчид',
+                    'Нүүр',
                     style: TextStyle(color: userColor, fontSize: 12),
                   )
               ],
@@ -110,7 +114,7 @@ class UserMangementPageState extends State<UserMangementPage>
                   ),
                   padding: EdgeInsets.all(selectedIndex == 1 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'assets/svg/person-check.svg',
+                    'assets/svg/people.svg',
                     height: 20,
                     width: 20,
                     colorFilter: ColorFilter.mode(

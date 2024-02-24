@@ -94,6 +94,7 @@ class DehubNetworkState extends State<DehubNetwork> with AfterLayoutMixin {
                             children: invitation.rows!
                                 .map(
                                   (item) => InvitationCard(
+                                    send: true,
                                     index: invitation.rows!.indexOf(item),
                                     startAnimation: startAnimation,
                                     data: item,

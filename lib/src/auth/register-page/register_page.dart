@@ -507,6 +507,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       FormTextField(
                         name: "phone",
+                        maxLenght: 8,
+                        showCounter: false,
                         inputType: TextInputType.phone,
                         decoration: InputDecoration(
                           contentPadding:
