@@ -102,6 +102,12 @@ class _MainInformationState extends State<MainInformation>
             'Салбарын төрөл сонгоно уу',
             false,
           );
+        } else if (source.partner.profileBanners!.length > 5) {
+          showCustomDialog(
+            context,
+            '5 болон түүнээс доош зураг оруулах боломжтой',
+            false,
+          );
         } else {
           if (widget.data != null) {
             await source.branchUpdate(data, widget.data!.id!);

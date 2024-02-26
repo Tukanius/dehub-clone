@@ -118,8 +118,8 @@ class User {
   User? employeeUnit;
   String? branchId;
   String? accessLevel;
-  DateTime? startDate;
-  DateTime? endDate;
+  String? startDate; // Must be string
+  String? endDate; // Must be string
   String? name;
   String? roleStatus;
   DateTime? danVerifiedDate;
@@ -136,12 +136,14 @@ class User {
   String? icon;
   User? financeRole;
   String? financeRoleStatus;
+  String? bank;
 
   String? getAvatar() {
     return HttpRequest.s3host + avatar.toString();
   }
 
   User({
+    this.bank,
     this.financeRoleStatus,
     this.financeRole,
     this.icon,

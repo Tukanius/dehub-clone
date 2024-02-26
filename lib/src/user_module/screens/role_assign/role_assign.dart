@@ -11,7 +11,9 @@ import 'package:dehub/src/user_module/screens/role_assign/sheets/select_role.dar
 import 'package:dehub/src/user_module/screens/role_assign/sheets/select_role_type.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class RoleAssignArguments {
@@ -39,6 +41,9 @@ class RoleAssign extends StatefulWidget {
 
 class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
   bool isLoading = true;
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
+
   onSubmit() async {
     final source = Provider.of<UserModuleProvider>(context, listen: false);
     final loading = Provider.of<LoadingProvider>(context, listen: false);
@@ -51,11 +56,24 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
       data.roleId = source.user.roleId;
       data.accessLevel = source.user.accessLevel;
       data.type = source.user.type == "Байнгын" ? "PERMANENT" : "TEMPORARY";
-      await UserApi().roleAdd(data);
-      loading.loading(false);
-      showCustomDialog(context, "Амжилттай эрх нэмлээ", true, onPressed: () {
-        Navigator.of(context).pop();
-      });
+      if (source.user.type == 'Түр') {
+        data.startDate = startDate.toString();
+        data.endDate = endDate.toString();
+      }
+      if (data.businessId != null &&
+          data.branchId != null &&
+          data.roleId != null &&
+          data.accessLevel != null &&
+          data.type != null) {
+        await UserApi().roleAdd(data);
+        loading.loading(false);
+        showCustomDialog(context, "Амжилттай эрх нэмлээ", true, onPressed: () {
+          Navigator.of(context).pop();
+        });
+      } else {
+        showCustomDialog(context, 'Талбаруудийг бүрэн бөглөнө үү', false);
+        loading.loading(false);
+      }
     } catch (e) {
       loading.loading(false);
     }
@@ -72,6 +90,10 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
       source.selectAccessLevel(widget.data!.accessLevel!);
       source.selectRoleType(
           widget.data!.type! == "PERMANENT" ? 'Байнгын' : 'Түр');
+      if (widget.data!.type == "TEMPORARY") {
+        startDate = DateTime.parse(widget.data!.startDate!);
+        endDate = DateTime.parse(widget.data!.endDate!);
+      }
     }
     setState(() {
       isLoading = false;
@@ -160,7 +182,11 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
                       child: const Text('Өгөгдлийн түвшин'),
                     ),
                     selectionField(
-                      text: source.user.accessLevel,
+                      text: source.user.accessLevel == 'ONLY_ME'
+                          ? 'Надад хуваарилагдсан'
+                          : source.user.accessLevel == "TO_ANYONE"
+                              ? 'Бүгд'
+                              : null,
                       onClick: () {
                         showModalBottomSheet(
                           context: context,
@@ -182,21 +208,48 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
                       },
                     ),
                     if (source.user.type == 'Түр')
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
                         children: [
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 5),
-                            child: const Text('Ролийн төрөл'),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  child: const Text('Эхлэх хугацаа'),
+                                ),
+                                selectionField(
+                                  text: DateFormat('yyyy-MM-dd')
+                                      .format(startDate),
+                                  onClick: () {
+                                    changeStartDate();
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
-                          selectionField(
-                            text: source.user.type,
-                            onClick: () {
-                              showModalBottomSheet(
-                                context: context,
-                                builder: (context) => const SelectRoleType(),
-                              );
-                            },
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  child: const Text('Дуусах хугацаа'),
+                                ),
+                                selectionField(
+                                  text:
+                                      DateFormat('yyyy-MM-dd').format(endDate),
+                                  onClick: () {
+                                    changeEndDate();
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -273,6 +326,99 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
           ],
         ),
       ),
+    );
+  }
+
+  changeStartDate() {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) {
+        return Container(
+          color: white,
+          height: MediaQuery.of(context).size.height * 0.4,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextButton(
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Болсон',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: black,
+                    fontFamily: "Montserrat",
+                  ),
+                ),
+              ),
+              Expanded(
+                child: CupertinoDatePicker(
+                  initialDateTime: DateTime.parse(
+                      DateFormat('yyyy-MM-dd').format(startDate)),
+                  minimumDate: DateTime.parse(
+                      DateFormat('yyyy-MM-dd').format(DateTime.now())),
+                  mode: CupertinoDatePickerMode.date,
+                  onDateTimeChanged: (DateTime newDate) {
+                    setState(() {
+                      startDate = newDate;
+                    });
+                    if (startDate.difference(endDate).inDays > 0) {
+                      setState(() {
+                        endDate = startDate;
+                      });
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  changeEndDate() {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) {
+        return Container(
+          color: white,
+          height: MediaQuery.of(context).size.height * 0.4,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextButton(
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Болсон',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: black,
+                    fontFamily: "Montserrat",
+                  ),
+                ),
+              ),
+              Expanded(
+                child: CupertinoDatePicker(
+                  initialDateTime:
+                      DateTime.parse(DateFormat('yyyy-MM-dd').format(endDate)),
+                  minimumDate: DateTime.parse(
+                      DateFormat('yyyy-MM-dd').format(startDate)),
+                  mode: CupertinoDatePickerMode.date,
+                  onDateTimeChanged: (DateTime newDate) {
+                    setState(() {
+                      endDate = newDate;
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

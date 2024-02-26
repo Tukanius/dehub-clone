@@ -227,7 +227,7 @@ class _RoleCardState extends State<RoleCard> {
                           )
                         : Text(
                             DateFormat('yyyy-MM-dd HH:mm')
-                                .format(widget.data.startDate!),
+                                .format(DateTime.parse(widget.data.startDate!)),
                             style: const TextStyle(
                               color: grey2,
                               fontSize: 12,
@@ -254,7 +254,7 @@ class _RoleCardState extends State<RoleCard> {
                           )
                         : Text(
                             DateFormat('yyyy-MM-dd HH:mm')
-                                .format(widget.data.endDate!),
+                                .format(DateTime.parse(widget.data.endDate!)),
                             style: const TextStyle(
                               color: grey2,
                               fontSize: 12,

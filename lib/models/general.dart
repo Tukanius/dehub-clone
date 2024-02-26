@@ -13,6 +13,7 @@ import 'package:dehub/models/department_units.dart';
 import 'package:dehub/models/distribution_areas.dart';
 import 'package:dehub/models/employee_units.dart';
 import 'package:dehub/models/equity_types.dart';
+import 'package:dehub/models/finance_role_status.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/invoice_over_due_status.dart';
 import 'package:dehub/models/modules.dart';
@@ -187,8 +188,10 @@ class General {
   List<RoleTypes>? roleTypes;
   List<Actions>? actions;
   List<Modules>? modules;
+  List<FinanceRoleStatus>? financeRoleStatus;
 
   General({
+    this.financeRoleStatus,
     this.modules,
     this.actions,
     this.userRoleTypes,

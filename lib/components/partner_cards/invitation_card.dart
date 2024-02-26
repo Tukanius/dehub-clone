@@ -23,7 +23,7 @@ class InvitationCard extends StatefulWidget {
 
 class InvitationCardState extends State<InvitationCard> {
   invitationStatus() {
-    switch (widget.data?.invitationStatus) {
+    switch (widget.data.invitationStatus) {
       case "SENT":
         return 'Илгээсэн';
       case "DRAFT":
@@ -37,7 +37,7 @@ class InvitationCardState extends State<InvitationCard> {
   }
 
   invitationStatusColor() {
-    switch (widget.data?.invitationStatus) {
+    switch (widget.data.invitationStatus) {
       case "SENT":
         return orange;
       case "DRAFT":
@@ -122,7 +122,7 @@ class InvitationCardState extends State<InvitationCard> {
                             style: TextStyle(color: grey3, fontSize: 10),
                           ),
                           Text(
-                            '${widget.data?.refCode}',
+                            '${widget.data.refCode}',
                             style: const TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,

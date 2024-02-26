@@ -1,3 +1,4 @@
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/src/user_module/screens/finance_request/finance_request.dart';
 import 'package:dehub/src/user_module/user_management_page/tabs/financing/components/bank_card.dart';
 import 'package:flutter/material.dart';
@@ -40,25 +41,30 @@ class BanksTabState extends State<BanksTab> with AfterLayoutMixin {
         : SingleChildScrollView(
             child: Column(
               children: [
-                Column(
-                  children: banks.rows!
-                      .map(
-                        (e) => BankCard(
-                          data: e,
-                          onClick: e.financeRole == null
-                              ? () {
-                                  Navigator.of(context).pushNamed(
-                                    FinanceRequest.routeName,
-                                    arguments: FinanceRequestArguments(
-                                      id: e.name,
-                                    ),
-                                  );
-                                }
-                              : () {},
-                        ),
+                banks.rows!.isNotEmpty
+                    ? Column(
+                        children: banks.rows!
+                            .map(
+                              (e) => BankCard(
+                                data: e,
+                                onClick: e.financeRole == null
+                                    ? () {
+                                        Navigator.of(context).pushNamed(
+                                          FinanceRequest.routeName,
+                                          arguments: FinanceRequestArguments(
+                                            id: e.name,
+                                          ),
+                                        );
+                                      }
+                                    : () {},
+                              ),
+                            )
+                            .toList(),
                       )
-                      .toList(),
-                ),
+                    : const NotFound(
+                        module: "USER",
+                        labelText: 'Хоосон байна',
+                      ),
                 const SizedBox(
                   height: 50,
                 ),

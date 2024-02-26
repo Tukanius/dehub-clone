@@ -28,6 +28,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
     icon: json['icon'] != null ? json['icon'] as String : null,
     hasRole: json['hasRole'] != null ? json['hasRole'] as bool : null,
     email: json['email'] != null ? json['email'] as String : null,
+    bank: json['bank'] != null ? json['bank'] as String : null,
     branchName:
         json['branchName'] != null ? json['branchName'] as String : null,
     username: json['username'] != null ? json['username'] as String : null,
@@ -258,12 +259,8 @@ User _$UserFromJson(Map<String, dynamic> json) {
     branchId: json['branchId'] != null ? json['branchId'] as String : null,
     accessLevel:
         json['accessLevel'] != null ? json['accessLevel'] as String : null,
-    startDate: json['startDate'] != null
-        ? DateTime.parse(json['startDate'].toString())
-        : null,
-    endDate: json['endDate'] != null
-        ? DateTime.parse(json['endDate'].toString())
-        : null,
+    startDate: json['startDate'] != null ? json['startDate'] as String : null,
+    endDate: json['endDate'] != null ? json['endDate'] as String : null,
     name: json['name'] != null ? json['name'] as String : null,
     roleStatus:
         json['roleStatus'] != null ? json['roleStatus'] as String : null,
@@ -277,6 +274,7 @@ Map<String, dynamic> _$UserToJson(User instance) {
     json['danVerifiedDate'] = instance.danVerifiedDate;
   }
   if (instance.usageType != null) json['usageType'] = instance.usageType;
+  if (instance.bank != null) json['bank'] = instance.bank;
   if (instance.icon != null) json['icon'] = instance.icon;
   if (instance.systemAction != null) {
     json['systemAction'] = instance.systemAction;
