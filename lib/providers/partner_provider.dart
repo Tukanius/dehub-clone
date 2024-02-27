@@ -8,7 +8,6 @@ class PartnerProvider extends ChangeNotifier {
   List<Partner> buyers = [];
   List<Partner> suppliers = [];
   Partner createdBranch = Partner();
-  bool isSubmit = false;
 
   selectBusinessSector(String id, String name) {
     partner.businessSectorId = id;
@@ -21,11 +20,6 @@ class PartnerProvider extends ChangeNotifier {
   selectBusinessSubSector(String id, String name) {
     partner.businessSubSectorId = id;
     partner.businessSubSectorName = name;
-    notifyListeners();
-  }
-
-  loading(bool value) {
-    isSubmit = value;
     notifyListeners();
   }
 

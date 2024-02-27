@@ -23,8 +23,6 @@ class FieldSettingSheet extends StatefulWidget {
 }
 
 class _FieldSettingSheetState extends State<FieldSettingSheet> {
-  bool isSubmit = false;
-
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<InventoryProvider>(context, listen: true);
@@ -90,14 +88,8 @@ class _FieldSettingSheetState extends State<FieldSettingSheet> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      setState(() {
-                        isSubmit = true;
-                      });
                       source.removeSection(widget.index);
                       Navigator.of(context).pop();
-                      setState(() {
-                        isSubmit = false;
-                      });
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(

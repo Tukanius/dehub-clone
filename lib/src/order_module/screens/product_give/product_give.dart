@@ -3,6 +3,7 @@ import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/shipment_product_card/shipment_product_card.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/order_module/screens/expenses_page/expenses_page.dart';
 import 'package:dehub/utils/utils.dart';
@@ -41,7 +42,6 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
   Timer? timer;
   bool isCountDown = true;
   bool startShipment = false;
-  bool isSubmit = false;
   Order endResponse = Order();
   Duration resume = const Duration();
   Duration difference = const Duration();
@@ -190,10 +190,9 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
   }
 
   lineConfirm(Order item) async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      setState(() {
-        isSubmit = true;
-      });
+      loading.loading(true);
       await OrderApi().deliveryNoteLineConfirm(
         Order(
           lineId: item.id,
@@ -202,13 +201,9 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
         '${shipment.id}',
       );
       shipment = await OrderApi().deliveryNoteGet(widget.data.id!);
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     }
   }
 
@@ -222,18 +217,6 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
         backgroundColor: white,
         surfaceTintColor: white,
         iconTheme: const IconThemeData(color: orderColor),
-        // leading: GestureDetector(
-        //   onTap: () {
-        //     Navigator.of(context).pop();
-        //     if (shipment.isPaused == false && shipment.isConfirmed == false) {
-        //       stopTimer();
-        //     }
-        //   },
-        //   child: const Icon(
-        //     Icons.arrow_back_ios_new,
-        //     color: orderColor,
-        //   ),
-        // ),
         title: const Text(
           'Захиалга хүлээлцэх',
           style: TextStyle(
@@ -429,9 +412,7 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
                                   children: [
                                     ShipmentProductCard(
                                       approveButtonClick: () async {
-                                        if (isSubmit == false) {
-                                          lineConfirm(item);
-                                        }
+                                        lineConfirm(item);
                                       },
                                       lineConfirmText:
                                           user.currentBusiness?.type ==

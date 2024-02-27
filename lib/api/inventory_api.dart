@@ -7,9 +7,9 @@ import 'package:dehub/models/result.dart';
 import 'package:image_picker/image_picker.dart';
 
 class InventoryApi extends HttpRequest {
-  Future<Result> listGoods(ResultArguments resultArguments) async {
-    var res = await get("/invoice/variant", "INVENTORY", true,
-        data: resultArguments.toJson());
+  Future<Result> listGoods(String businessId) async {
+    var res = await get(
+        "/invoice/variant/select?businessId=$businessId", "INVENTORY", true);
     return Result.fromJson(res, Invoice.fromJson);
   }
 

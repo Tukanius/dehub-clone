@@ -103,6 +103,7 @@ class _NetworkSettlementDetailState extends State<NetworkSettlementDetail> {
             ];
           },
           body: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
             children: [
               OpenTab(
                 data: widget.data,

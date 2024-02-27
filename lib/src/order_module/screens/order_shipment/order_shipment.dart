@@ -5,11 +5,13 @@ import 'package:dehub/components/goods_info_card/order_goods_info_card.dart';
 import 'package:dehub/components/shipment_product_card/shipment_product_card.dart';
 import 'package:dehub/components/shipping_card/shipping_card.dart';
 import 'package:dehub/models/order.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/order_module/screens/pull_sheet_expenses/pull_sheet_expenses.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 
 class OrderShipmentArguments {
   Order data;
@@ -41,7 +43,6 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
   Duration difference1 = const Duration();
   Duration difference2 = const Duration();
   Duration difference = const Duration();
-  bool isSubmit = false;
   String? lineId;
 
   @override
@@ -178,6 +179,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    final loading = Provider.of<LoadingProvider>(context, listen: true);
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -386,9 +388,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                                     ShipmentProductCard(
                                       approveButtonClick: () async {
                                         try {
-                                          setState(() {
-                                            isSubmit = true;
-                                          });
+                                          loading.loading(true);
                                           await OrderApi().pullSheetLineConfirm(
                                             Order(
                                               pullSheetLineId: e.id,
@@ -398,14 +398,9 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
                                           );
                                           shipment = await OrderApi()
                                               .pullSheetGet(widget.data.id!);
-                                          setState(() {
-                                            isSubmit = false;
-                                          });
+                                          loading.loading(false);
                                         } catch (e) {
-                                          setState(() {
-                                            isSubmit = false;
-                                          });
-                                          debugPrint(e.toString());
+                                          loading.loading(false);
                                         }
                                       },
                                       data: e,

@@ -8,6 +8,7 @@ import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/distribution_areas.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/network_module/screens/direction_page/add_direction.dart';
 import 'package:dehub/src/network_module/screens/zoning_page/add_zoning.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -50,13 +51,11 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
   String? coClientStaffId;
   General general = General();
   List<DistributionAreas> parentList = [];
-  bool isSubmit = false;
 
   onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      setState(() {
-        isSubmit = true;
-      });
+      loading.loading(true);
       await BusinessApi().setDistributionArea(
         BusinessNetwork(
           businessIds: [widget.id],
@@ -65,6 +64,7 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
           areaDesc: textController.text,
         ),
       );
+      loading.loading(false);
       showCustomDialog(
         context,
         "Амжилттай хадгаллаа",
@@ -74,13 +74,8 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
           Navigator.of(context).pop();
         },
       );
-      setState(() {
-        isSubmit = false;
-      });
     } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     }
   }
 
@@ -199,7 +194,6 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
               labelColor: distributionArea == null
                   ? networkColor.withOpacity(0.3)
                   : networkColor,
-              isLoading: isSubmit,
               onClick: () {
                 distributionArea == null ? () {} : onSubmit();
               },

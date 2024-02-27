@@ -4,6 +4,7 @@ import 'package:dehub/components/scaffold_messenger/scaffold_messenger.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/inventory_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/product_module/screens/new_product/components/additional_unit_card.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/additional_unit_sheet.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/number_unit_sheet.dart';
@@ -34,18 +35,16 @@ class OrderSettingTab extends StatefulWidget {
 
 class _OrderSettingTabState extends State<OrderSettingTab> {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
-  bool isSubmit = false;
 
   onSubmit(bool isCompleted) async {
     InventoryGoods data =
         Provider.of<InventoryProvider>(context, listen: false).product;
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     List<InventoryGoods> additionalUnits = [];
     try {
       if (data.supplierTypeName != null) {
         if (fbKey.currentState!.saveAndValidate()) {
-          setState(() {
-            isSubmit = true;
-          });
+          loading.loading(true);
           InventoryGoods form =
               InventoryGoods.fromJson(fbKey.currentState!.value);
           form.supplierType = data.supplierType;
@@ -84,6 +83,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
           if (index < 0) {
             await InventoryApi().updateVariant(
                 form, widget.data?.id != null ? widget.data!.id! : data.id!);
+            loading.loading(false);
             showCustomDialog(context, "Амжилттай", true, onPressed: () {
               Navigator.of(context).pop();
             });
@@ -102,13 +102,8 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
           labelText: 'Ханган нийлүүлэгч сонгоно уу!',
         );
       }
-      setState(() {
-        isSubmit = false;
-      });
     } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     }
   }
 
@@ -694,7 +689,6 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                   ),
                   Expanded(
                     child: CustomButton(
-                      isLoading: isSubmit,
                       borderColor: productColor,
                       onClick: () {
                         onSubmit(false);
@@ -709,7 +703,6 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                   ),
                   Expanded(
                     child: CustomButton(
-                      isLoading: isSubmit,
                       onClick: () {
                         onSubmit(true);
                       },

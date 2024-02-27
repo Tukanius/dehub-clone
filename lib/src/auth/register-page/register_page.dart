@@ -1,6 +1,7 @@
 import 'package:dehub/api/partner_api.dart';
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/auth/otp_page/otp_page.dart';
 import 'package:dehub/utils/is_device_size.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
   static const routeName = '/RegisterPage';
@@ -30,7 +32,6 @@ class _RegisterPageState extends State<RegisterPage> {
   User otpverify = User();
   String registerNo = "";
   List<String> letters = [cryilliAlphabetsList[0], cryilliAlphabetsList[0]];
-  bool isSubmit = false;
 
   void onChangeLetter(String item, index) {
     Navigator.pop(context);
@@ -41,32 +42,27 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     if (fbKey.currentState!.saveAndValidate()) {
       try {
-        setState(() {
-          isSubmit = true;
-        });
+        loading.loading(true);
         user = User.fromJson(fbKey.currentState!.value);
         user.type = isCheck == true ? "COMPANY" : "CITIZEN";
         user.regNumber = isCheck1 == true
             ? "${letters.join()}${regnumController.text}"
             : fbKey.currentState?.fields['regNumber']?.value;
         otpverify = await PartnerApi().register(user);
-        await Navigator.of(context).pushNamed(OtpVerifyPage.routeName,
-            arguments: OtpVerifyPageArguments(
-              verifyId: otpverify.verifyId!,
-              email: user.email!,
-              phone: user.phone!,
-            ));
-        setState(() {
-          isSubmit = false;
-        });
+        loading.loading(false);
+        await Navigator.of(context).pushNamed(
+          OtpVerifyPage.routeName,
+          arguments: OtpVerifyPageArguments(
+            verifyId: otpverify.verifyId!,
+            email: user.email!,
+            phone: user.phone!,
+          ),
+        );
       } catch (e) {
-        setState(() {
-          isSubmit = false;
-        });
-        debugPrint(e.toString());
-        debugPrint('======error======');
+        loading.loading(false);
       }
     }
   }
@@ -550,7 +546,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 50,
                 ),
                 CustomButton(
-                  isLoading: isSubmit,
                   onClick: () {
                     onSubmit();
                   },

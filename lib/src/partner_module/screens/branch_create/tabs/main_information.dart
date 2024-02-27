@@ -46,7 +46,6 @@ class _MainInformationState extends State<MainInformation>
   int? buyerRadioValue;
   bool isDefault = false;
   bool isLoading = true;
-  bool isSubmit = false;
   General general = General();
   Result buyers = Result(rows: []);
   Result suppliers = Result(rows: []);
@@ -525,7 +524,6 @@ class _MainInformationState extends State<MainInformation>
                       height: 50,
                     ),
                     CustomButton(
-                      isLoading: isSubmit,
                       labelColor: white,
                       borderColor: partnerColor,
                       labelText: 'Үргэлжлүүлэх',

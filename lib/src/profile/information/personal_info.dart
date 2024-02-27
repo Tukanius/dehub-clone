@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dehub/api/auth_api.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/profile/components/card.dart';
 import 'package:dehub/src/profile/components/editing_information.dart';
@@ -27,7 +28,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
   User user = User();
   bool isLoading = false;
   User dan = User();
-  bool isSubmit = false;
   File? image;
   final picker = ImagePicker();
   String? imageName;
@@ -35,14 +35,11 @@ class _PersonalInfoState extends State<PersonalInfo> {
   bool edit = false;
 
   danVerify() async {
-    setState(() {
-      isSubmit = true;
-    });
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
+    loading.loading(true);
     dan = await AuthApi().danVerify();
+    loading.loading(false);
     await launchUrl(dan.url!);
-    setState(() {
-      isSubmit = false;
-    });
   }
 
   getImage(ImageSource imageSource) async {

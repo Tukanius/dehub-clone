@@ -1,13 +1,11 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/providers/general_provider.dart';
-import 'package:dehub/providers/partner_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/partner_module/partner_page/tabs/branches/branches_tab.dart';
 import 'package:dehub/src/partner_module/partner_page/tabs/businesses/businesses.dart';
 import 'package:dehub/src/partner_module/partner_page/tabs/warehouses/warehouses_tab.dart';
 import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/partner_profile.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +46,6 @@ class PartnerPageState extends State<PartnerPage> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    final source = Provider.of<PartnerProvider>(context, listen: true);
     return Stack(
       children: [
         Scaffold(
@@ -205,16 +202,6 @@ class PartnerPageState extends State<PartnerPage> with AfterLayoutMixin {
             ],
           ),
         ),
-        if (source.isSubmit == true)
-          Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            color: black.withOpacity(0.3),
-            child: const CupertinoActivityIndicator(
-              color: black,
-              radius: 18,
-            ),
-          ),
       ],
     );
   }

@@ -1,12 +1,12 @@
 import 'package:dehub/api/auth_api.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/change_password/change_password.dart';
 import 'package:dehub/src/auth/pin_code/new_pin.dart';
 import 'package:dehub/src/auth/pin_code/pin_code.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,22 +20,16 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   User user = User();
   User dan = User();
-  bool isSubmit = false;
 
   danVerify() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      setState(() {
-        isSubmit = true;
-      });
+      loading.loading(true);
       dan = await AuthApi().danVerify();
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
       await launchUrl(dan.url!);
     } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     }
   }
 
@@ -187,36 +181,27 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 Row(
                   children: [
-                    isSubmit == false
-                        ? GestureDetector(
-                            onTap: () {
-                              danVerify();
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 1),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                color: lightGrey,
-                              ),
-                              child: const Text(
-                                'Баталгаажаагүй',
-                                style: TextStyle(
-                                  color: networkColor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          )
-                        : const SizedBox(
-                            height: 14,
-                            width: 14,
-                            child: CircularProgressIndicator(
-                              color: networkColor,
-                              strokeWidth: 1,
-                            ),
+                    GestureDetector(
+                      onTap: () {
+                        danVerify();
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 1),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: lightGrey,
+                        ),
+                        child: const Text(
+                          'Баталгаажаагүй',
+                          style: TextStyle(
+                            color: networkColor,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
                           ),
+                        ),
+                      ),
+                    ),
                     const SizedBox(
                       width: 15,
                     ),

@@ -6,6 +6,7 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/product_module/product_page/tabs/price_tab/components/price_setting_card.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -54,7 +55,6 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
   var validateKey = GlobalKey();
   List<InventoryGoods> tiers = [];
   bool isLoading = true;
-  bool isSubmit = false;
   Result group = Result(rows: [], count: 0);
 
   validateCheck(bool confirm) {
@@ -96,10 +96,9 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
   }
 
   onSubmit(bool confirm) async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      setState(() {
-        isSubmit = true;
-      });
+      loading.loading(true);
       List<String> businessIds = [];
       InventoryGoods data = InventoryGoods(
         priceGroupType: groupTypeId,
@@ -114,17 +113,13 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
       }
       data.businessIds = businessIds;
       await InventoryApi().setPrice(data);
+      loading.loading(false);
       widget.listenController.changeVariable('asdf');
       showCustomDialog(context, "Амжилттай", true, onPressed: () {
         Navigator.of(context).pop();
       });
-      setState(() {
-        isSubmit = false;
-      });
     } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     }
   }
 
@@ -140,192 +135,175 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
   Widget build(BuildContext context) {
     general =
         Provider.of<GeneralProvider>(context, listen: true).inventoryGeneral;
-    return Stack(
-      children: [
-        Scaffold(
-          backgroundColor: backgroundColor,
-          appBar: AppBar(
-            backgroundColor: white,
-            surfaceTintColor: white,
-            iconTheme: const IconThemeData(color: productColor),
-            title: const Text(
-              'Үнийн бүлэг тохируулах',
-              style: TextStyle(
-                color: productColor,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      appBar: AppBar(
+        backgroundColor: white,
+        surfaceTintColor: white,
+        iconTheme: const IconThemeData(color: productColor),
+        title: const Text(
+          'Үнийн бүлэг тохируулах',
+          style: TextStyle(
+            color: productColor,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
           ),
-          body: isLoading == true
-              ? const Center(
-                  child: CircularProgressIndicator(
-                    color: productColor,
+        ),
+      ),
+      body: isLoading == true
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: productColor,
+              ),
+            )
+          : SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    child: const Text(
+                      'Тохиргоо мэдээлэл',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: grey2,
+                      ),
+                    ),
                   ),
-                )
-              : SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  FieldCard(
+                    fbKey: validateKey,
+                    validate: groupTypeValidate,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    color: white,
+                    labelText: 'Бүлгийн төрөл',
+                    secondText: groupType ?? 'Сонгох',
+                    arrowColor: productColor,
+                    secondTextColor: productColor,
+                    onClick: () {
+                      selectGroupType();
+                    },
+                  ),
+                  FieldCard(
+                    validate: priceGroupValidate,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    color: white,
+                    labelText: 'Үнийн бүлэг',
+                    secondText: priceGroup ?? 'Сонгох',
+                    arrowColor: productColor,
+                    secondTextColor: productColor,
+                    onClick: groupTypeId != null
+                        ? () {
+                            selectPriceGroup();
+                          }
+                        : () {},
+                  ),
+                  FieldCard(
+                    validate: tierValidate,
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    color: white,
+                    labelText: 'Tier сонгох',
+                    secondText: tier ?? 'Сонгох',
+                    arrowColor: productColor,
+                    secondTextColor: productColor,
+                    onClick: groupTypeId == "GROUP"
+                        ? () {
+                            selectTier();
+                          }
+                        : () {},
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    color: white,
+                    labelText: 'Эхлэх огноо',
+                    secondText: DateFormat('yyyy-MM-dd').format(startDate),
+                    arrowColor: productColor,
+                    secondTextColor: productColor,
+                    onClick: () {
+                      changeStartDate();
+                    },
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    color: white,
+                    labelText: 'Дуусах огноо',
+                    secondText: DateFormat('yyyy-MM-dd').format(endDate),
+                    arrowColor: productColor,
+                    secondTextColor: productColor,
+                    onClick: () {
+                      changeEndDate();
+                    },
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    child: const Text(
+                      'Тохиргоонд хамаарах харилцагчид',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: grey2,
+                      ),
+                    ),
+                  ),
+                  Column(
+                    children: widget.list
+                        .map(
+                          (data) => PriceSettingCard(data: data),
+                        )
+                        .toList(),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Row(
                     children: [
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: const Text(
-                          'Тохиргоо мэдээлэл',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: grey2,
-                          ),
+                      const SizedBox(
+                        width: 25,
+                      ),
+                      Expanded(
+                        child: CustomButton(
+                          borderColor: productColor,
+                          labelText: 'Хадгалах',
+                          labelColor: backgroundColor,
+                          textColor: productColor,
+                          onClick: () {
+                            validateCheck(false);
+                          },
                         ),
                       ),
-                      FieldCard(
-                        fbKey: validateKey,
-                        validate: groupTypeValidate,
-                        paddingHorizontal: 15,
-                        paddingVertical: 10,
-                        color: white,
-                        labelText: 'Бүлгийн төрөл',
-                        secondText: groupType ?? 'Сонгох',
-                        arrowColor: productColor,
-                        secondTextColor: productColor,
-                        onClick: () {
-                          selectGroupType();
-                        },
+                      const SizedBox(
+                        width: 10,
                       ),
-                      FieldCard(
-                        validate: priceGroupValidate,
-                        paddingHorizontal: 15,
-                        paddingVertical: 10,
-                        color: white,
-                        labelText: 'Үнийн бүлэг',
-                        secondText: priceGroup ?? 'Сонгох',
-                        arrowColor: productColor,
-                        secondTextColor: productColor,
-                        onClick: groupTypeId != null
-                            ? () {
-                                selectPriceGroup();
-                              }
-                            : () {},
-                      ),
-                      FieldCard(
-                        validate: tierValidate,
-                        paddingHorizontal: 15,
-                        paddingVertical: 10,
-                        color: white,
-                        labelText: 'Tier сонгох',
-                        secondText: tier ?? 'Сонгох',
-                        arrowColor: productColor,
-                        secondTextColor: productColor,
-                        onClick: groupTypeId == "GROUP"
-                            ? () {
-                                selectTier();
-                              }
-                            : () {},
-                      ),
-                      FieldCard(
-                        paddingHorizontal: 15,
-                        paddingVertical: 10,
-                        color: white,
-                        labelText: 'Эхлэх огноо',
-                        secondText: DateFormat('yyyy-MM-dd').format(startDate),
-                        arrowColor: productColor,
-                        secondTextColor: productColor,
-                        onClick: () {
-                          changeStartDate();
-                        },
-                      ),
-                      FieldCard(
-                        paddingHorizontal: 15,
-                        paddingVertical: 10,
-                        color: white,
-                        labelText: 'Дуусах огноо',
-                        secondText: DateFormat('yyyy-MM-dd').format(endDate),
-                        arrowColor: productColor,
-                        secondTextColor: productColor,
-                        onClick: () {
-                          changeEndDate();
-                        },
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: const Text(
-                          'Тохиргоонд хамаарах харилцагчид',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: grey2,
-                          ),
+                      Expanded(
+                        child: CustomButton(
+                          labelColor: productColor,
+                          labelText: 'Батлах',
+                          onClick: () {
+                            validateCheck(true);
+                          },
                         ),
                       ),
-                      Column(
-                        children: widget.list
-                            .map(
-                              (data) => PriceSettingCard(data: data),
-                            )
-                            .toList(),
-                      ),
                       const SizedBox(
-                        height: 50,
-                      ),
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 25,
-                          ),
-                          Expanded(
-                            child: CustomButton(
-                              isLoading: isSubmit,
-                              borderColor: productColor,
-                              labelText: 'Хадгалах',
-                              labelColor: backgroundColor,
-                              textColor: productColor,
-                              onClick: () {
-                                validateCheck(false);
-                              },
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: CustomButton(
-                              isLoading: isSubmit,
-                              labelColor: productColor,
-                              labelText: 'Батлах',
-                              onClick: () {
-                                validateCheck(true);
-                              },
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 25,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 50,
+                        width: 25,
                       ),
                     ],
                   ),
-                ),
-        ),
-        if (isSubmit == true)
-          Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            color: black.withOpacity(0.3),
-            child: const Center(
-              child: CupertinoActivityIndicator(
-                radius: 16,
-                color: black,
+                  const SizedBox(
+                    height: 50,
+                  ),
+                ],
               ),
             ),
-          ),
-      ],
     );
   }
 
   selectGroupType() {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     showModalBottomSheet(
       context: context,
       builder: (context) => Material(
@@ -342,8 +320,8 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
                     (e) => InkWell(
                       onTap: groupTypeId != e.code
                           ? () async {
+                              loading.loading(true);
                               setState(() {
-                                isSubmit = true;
                                 groupType = e.name;
                                 groupTypeId = e.code;
                                 groupTypeValidate = false;
@@ -355,9 +333,7 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
                               Navigator.of(context).pop();
                               group = await InventoryApi()
                                   .priceGroupSelect(e.code!);
-                              setState(() {
-                                isSubmit = false;
-                              });
+                              loading.loading(false);
                             }
                           : () {
                               Navigator.of(context).pop();

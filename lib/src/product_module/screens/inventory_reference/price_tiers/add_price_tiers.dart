@@ -19,7 +19,6 @@ class AddPriceTiers extends StatefulWidget {
 
 class _AddPriceTiersState extends State<AddPriceTiers> {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
-  bool isSubmit = false;
 
   onSubmit() {
     if (fbKey.currentState!.saveAndValidate()) {}
@@ -59,7 +58,8 @@ class _AddPriceTiersState extends State<AddPriceTiers> {
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: const ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter:
+                          const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),
@@ -74,11 +74,9 @@ class _AddPriceTiersState extends State<AddPriceTiers> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: isSubmit == false
-                      ? () {
-                          onSubmit();
-                        }
-                      : () {},
+                  onTap: () {
+                    onSubmit();
+                  },
                   child: Container(
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(

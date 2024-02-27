@@ -3,6 +3,7 @@ import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/inventory_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -23,15 +24,13 @@ class CreateSubCategory extends StatefulWidget {
 
 class _CreateSubCategoryState extends State<CreateSubCategory> {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
-  bool isSubmit = false;
 
   create() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     final source = Provider.of<InventoryProvider>(context, listen: false);
     if (fbKey.currentState!.saveAndValidate()) {
       try {
-        setState(() {
-          isSubmit = true;
-        });
+        loading.loading(true);
         InventoryGoods create =
             InventoryGoods.fromJson(fbKey.currentState!.value);
         create.itemTypeId = source.product.itemTypeId;
@@ -45,13 +44,9 @@ class _CreateSubCategoryState extends State<CreateSubCategory> {
             Navigator.of(context).pop();
           },
         );
-        setState(() {
-          isSubmit = false;
-        });
+        loading.loading(false);
       } catch (e) {
-        setState(() {
-          isSubmit = false;
-        });
+        loading.loading(false);
       }
     }
   }
@@ -247,7 +242,6 @@ class _CreateSubCategoryState extends State<CreateSubCategory> {
                 ),
                 Expanded(
                   child: CustomButton(
-                    isLoading: isSubmit,
                     onClick: () {
                       Navigator.of(context).pop();
                     },
@@ -262,7 +256,6 @@ class _CreateSubCategoryState extends State<CreateSubCategory> {
                 ),
                 Expanded(
                   child: CustomButton(
-                    isLoading: isSubmit,
                     onClick: () {
                       create();
                     },

@@ -2,6 +2,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/partner_api.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/partner.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/partner_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/forms/main_information_form.dart';
@@ -30,9 +31,10 @@ class _MainInformationState extends State<MainInformation>
 
   onSubmit() async {
     final source = Provider.of<PartnerProvider>(context, listen: false);
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     if (fbKey.currentState!.saveAndValidate()) {
       try {
-        source.loading(true);
+        loading.loading(true);
         Partner data = Partner.fromJson(fbKey.currentState!.value);
         data.province = source.partner.province;
         data.district = source.partner.district;
@@ -44,12 +46,12 @@ class _MainInformationState extends State<MainInformation>
         await PartnerApi().profileUpdate(data);
         await Provider.of<UserProvider>(context, listen: false)
             .partnerMe(false);
-        source.loading(false);
+        loading.loading(false);
         setState(() {
           edit = false;
         });
       } catch (e) {
-        source.loading(false);
+        loading.loading(false);
       }
     }
   }

@@ -2,6 +2,7 @@ import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/product_module/screens/new_product/components/brand_form.dart';
 import 'package:dehub/src/product_module/screens/new_product/components/group_form.dart';
 import 'package:dehub/src/product_module/screens/new_product/components/picture_form.dart';
@@ -27,7 +28,6 @@ class _MainTabState extends State<MainTab> {
   InventoryGoods data = InventoryGoods();
   var profileKey = GlobalKey();
   dynamic res;
-  bool isSubmit = false;
 
   validateCheck() {
     if (data.detailImages == null || data.detailImages!.isEmpty) {
@@ -78,10 +78,9 @@ class _MainTabState extends State<MainTab> {
   }
 
   onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      setState(() {
-        isSubmit = true;
-      });
+      loading.loading(true);
       var res = await InventoryApi().goodsCreate(
         InventoryGoods(
           skuCode: data.skuCode,
@@ -116,15 +115,11 @@ class _MainTabState extends State<MainTab> {
       );
       await Provider.of<InventoryProvider>(context, listen: false)
           .id(res.id.toString());
+      loading.loading(false);
       await Provider.of<IndexProvider>(context, listen: false)
           .newProductIndexChange(1);
-      setState(() {
-        isSubmit = false;
-      });
     } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     }
   }
 
@@ -311,7 +306,6 @@ class _MainTabState extends State<MainTab> {
                 onClick: () {
                   validateCheck();
                 },
-                isLoading: isSubmit,
                 labelColor: productColor,
                 labelText: "Үргэлжлүүлэх",
               ),

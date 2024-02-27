@@ -1,11 +1,13 @@
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class UpdateOptionSheet extends StatefulWidget {
   final InventoryGoods data;
@@ -19,7 +21,6 @@ class UpdateOptionSheet extends StatefulWidget {
 }
 
 class _UpdateOptionSheetState extends State<UpdateOptionSheet> {
-  bool isSubmit = false;
   List<String> values = [];
   TextEditingController controller = TextEditingController();
 
@@ -32,10 +33,9 @@ class _UpdateOptionSheetState extends State<UpdateOptionSheet> {
   }
 
   onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      setState(() {
-        isSubmit = true;
-      });
+      loading.loading(true);
       await InventoryApi().optionUpdate(
         widget.data.id!,
         InventoryGoods(
@@ -45,16 +45,12 @@ class _UpdateOptionSheetState extends State<UpdateOptionSheet> {
           selections: values,
         ),
       );
+      loading.loading(false);
       showCustomDialog(context, "Амжилттай", true, onPressed: () {
         Navigator.of(context).pop();
       });
-      setState(() {
-        isSubmit = false;
-      });
     } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     }
   }
 
@@ -108,11 +104,9 @@ class _UpdateOptionSheetState extends State<UpdateOptionSheet> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: isSubmit == false
-                      ? () {
-                          onSubmit();
-                        }
-                      : () {},
+                  onTap: () {
+                    onSubmit();
+                  },
                   child: Container(
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(

@@ -3,6 +3,7 @@ import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/product_module/screens/new_product/components/check_box_field.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/dynamic_sheet.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/field_value_sheet.dart';
@@ -28,16 +29,14 @@ class DynamicTab extends StatefulWidget {
 
 class _DynamicTabState extends State<DynamicTab> {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
-  bool isSubmit = false;
 
   onSubmit() async {
     final res = Provider.of<InventoryProvider>(context, listen: false);
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     List<String> sectionIds = [];
     List<InventoryGoods> itemFieldValues = [];
     try {
-      setState(() {
-        isSubmit = true;
-      });
+      loading.loading(true);
       if (res.product.sections != null) {
         for (var i = 0; i < res.product.sections!.length; i++) {
           sectionIds.add(res.product.sections![i].id!);
@@ -70,15 +69,11 @@ class _DynamicTabState extends State<DynamicTab> {
             ),
             widget.id == null ? res.product.id! : widget.id!);
       }
-      Provider.of<IndexProvider>(context, listen: false)
+      loading.loading(false);
+      await Provider.of<IndexProvider>(context, listen: false)
           .newProductIndexChange(2);
-      setState(() {
-        isSubmit = false;
-      });
     } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     }
   }
 
@@ -384,7 +379,6 @@ class _DynamicTabState extends State<DynamicTab> {
                 ),
                 Expanded(
                   child: CustomButton(
-                    isLoading: isSubmit,
                     onClick: () {},
                     labelText: 'Хадгалах',
                     textColor: productColor,
@@ -397,7 +391,6 @@ class _DynamicTabState extends State<DynamicTab> {
                 ),
                 Expanded(
                   child: CustomButton(
-                    isLoading: isSubmit,
                     onClick: () {
                       if (fbKey.currentState!.saveAndValidate() &&
                           source.fieldValidate == false) {

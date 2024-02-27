@@ -7,6 +7,7 @@ import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/invoice_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/pin_check/pin_check.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/add_product/add_product.dart';
@@ -46,7 +47,6 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
   TextEditingController discountController = TextEditingController();
   TextEditingController shippingController = TextEditingController();
   User user = User();
-  bool isSubmit = false;
   bool isLoading = true;
   var productKey = GlobalKey();
   var sectorKey = GlobalKey();
@@ -719,128 +719,113 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                         borderRadius: BorderRadius.circular(5),
                         color: black,
                       ),
-                      child: isSubmit == true
-                          ? const Center(
-                              child: SizedBox(
-                                height: 30,
-                                width: 30,
-                                child: CircularProgressIndicator(
-                                  color: white,
-                                  strokeWidth: 1,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                Harah.routeName,
+                                arguments: HarahArguments(
+                                  isNewInvoice: true,
+                                  invoice: Invoice(
+                                    createdAt: DateTime.now(),
+                                    lines: invoice.products,
+                                    vatAmount: invoice.totalVatAmount,
+                                    taxAmount: invoice.totalTaxAmount,
+                                    totalAmount: invoice.totalAmount,
+                                    shippingAmount: double.tryParse(
+                                            shippingController.text) ??
+                                        0,
+                                    discountAmount: double.tryParse(
+                                            discountController.text) ??
+                                        0,
+                                    itemsTotal: invoice.amount,
+                                    receiverBusiness:
+                                        invoice.newInvoice.partner,
+                                    senderBusiness: Invoice(),
+                                  ),
                                 ),
-                              ),
-                            )
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              );
+                            },
+                            child: const Column(
                               children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed(
-                                      Harah.routeName,
-                                      arguments: HarahArguments(
-                                        isNewInvoice: true,
-                                        invoice: Invoice(
-                                          createdAt: DateTime.now(),
-                                          lines: invoice.products,
-                                          vatAmount: invoice.totalVatAmount,
-                                          taxAmount: invoice.totalTaxAmount,
-                                          totalAmount: invoice.totalAmount,
-                                          shippingAmount: double.tryParse(
-                                                  shippingController.text) ??
-                                              0,
-                                          discountAmount: double.tryParse(
-                                                  discountController.text) ??
-                                              0,
-                                          itemsTotal: invoice.amount,
-                                          receiverBusiness:
-                                              invoice.newInvoice.partner,
-                                          senderBusiness: Invoice(),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: const Column(
-                                    children: [
-                                      Icon(
-                                        Icons.visibility_outlined,
-                                        color: white,
-                                        size: 20,
-                                      ),
-                                      Text(
-                                        'Харах',
-                                        style: TextStyle(
-                                          color: white,
-                                          fontSize: 10,
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                Icon(
+                                  Icons.visibility_outlined,
+                                  color: white,
+                                  size: 20,
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    if (isSubmit == false) {
-                                      validateCheck(false);
-                                    }
-                                  },
-                                  child: Column(
-                                    children: [
-                                      SvgPicture.asset(
-                                        'assets/svg/save.svg',
-                                        height: 20,
-                                      ),
-                                      const Text(
-                                        'Хадгалах',
-                                        style: TextStyle(
-                                          color: white,
-                                          fontSize: 10,
-                                        ),
-                                      )
-                                    ],
+                                Text(
+                                  'Харах',
+                                  style: TextStyle(
+                                    color: white,
+                                    fontSize: 10,
                                   ),
+                                )
+                              ],
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              validateCheck(false);
+                            },
+                            child: Column(
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/svg/save.svg',
+                                  height: 20,
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    if (isSubmit == false) {
-                                      validateCheck(true);
-                                    }
-                                  },
-                                  child: const Column(
-                                    children: [
-                                      Icon(
-                                        Icons.send,
-                                        color: white,
-                                        size: 20,
-                                      ),
-                                      Text(
-                                        'Илгээх',
-                                        style: TextStyle(
-                                          color: white,
-                                          fontSize: 10,
-                                        ),
-                                      )
-                                    ],
+                                const Text(
+                                  'Хадгалах',
+                                  style: TextStyle(
+                                    color: white,
+                                    fontSize: 10,
                                   ),
+                                )
+                              ],
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              validateCheck(true);
+                            },
+                            child: const Column(
+                              children: [
+                                Icon(
+                                  Icons.send,
+                                  color: white,
+                                  size: 20,
                                 ),
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: Column(
-                                    children: [
-                                      SvgPicture.asset(
-                                        'assets/svg/cancel.svg',
-                                        height: 20,
-                                      ),
-                                      const Text(
-                                        'Цуцлах',
-                                        style: TextStyle(
-                                          color: white,
-                                          fontSize: 10,
-                                        ),
-                                      ),
-                                    ],
+                                Text(
+                                  'Илгээх',
+                                  style: TextStyle(
+                                    color: white,
+                                    fontSize: 10,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {},
+                            child: Column(
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/svg/cancel.svg',
+                                  height: 20,
+                                ),
+                                const Text(
+                                  'Цуцлах',
+                                  style: TextStyle(
+                                    color: white,
+                                    fontSize: 10,
                                   ),
                                 ),
                               ],
                             ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 50,
@@ -890,10 +875,9 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
 
   onSubmit(bool value) async {
     final invoice = Provider.of<InvoiceProvider>(context, listen: false);
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      setState(() {
-        isSubmit = true;
-      });
+      loading.loading(true);
       List<Invoice> data = [];
       for (var i = 0; i < invoice.products.length; i++) {
         data.add(
@@ -923,8 +907,10 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
       );
       if (widget.data == null) {
         await InvoiceApi().createInvoice(asdf);
+        loading.loading(false);
       } else {
         await InvoiceApi().updateInvoice(asdf, widget.data!.id!);
+        loading.loading(false);
       }
       showCustomDialog(
         context,
@@ -937,13 +923,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
           Navigator.of(context).pop();
         },
       );
-      setState(() {
-        isSubmit = false;
-      });
     } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     }
   }
 }

@@ -3,6 +3,7 @@ import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/zip_codes.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dehub/components/field_card/field_card.dart';
@@ -59,7 +60,6 @@ class _OnboardInvitationFormState extends State<OnboardInvitationForm> {
   var districtkey = GlobalKey();
   var provinceKey = GlobalKey();
   var countryKey = GlobalKey();
-  bool isSubmit = false;
 
   validateCheck() {
     if (khorooName == "Сонгох") {
@@ -145,10 +145,9 @@ class _OnboardInvitationFormState extends State<OnboardInvitationForm> {
   }
 
   onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      setState(() {
-        isSubmit = true;
-      });
+      loading.loading(true);
       BusinessNetwork data =
           BusinessNetwork.fromJson(formKey.currentState!.value);
       data.type = type == "Иргэн" ? "CITIZEN" : "COMPANY";
@@ -159,13 +158,9 @@ class _OnboardInvitationFormState extends State<OnboardInvitationForm> {
       data.province = provinceCode;
       data.khoroo = khorooCode;
       await BusinessApi().createOnboard(data);
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     }
   }
 
@@ -861,7 +856,6 @@ class _OnboardInvitationFormState extends State<OnboardInvitationForm> {
                 child: Container(
                   margin: const EdgeInsets.only(right: 10, left: 2.5),
                   child: CustomButton(
-                    isLoading: isSubmit,
                     onClick: () {
                       validateCheck();
                     },

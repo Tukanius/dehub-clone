@@ -1,3 +1,4 @@
+import 'package:dehub/components/custom_switch/custom_switch.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -105,15 +106,25 @@ class _PriceSettingCardState extends State<PriceSettingCard> {
                   ),
                 ),
                 Expanded(
-                  child: Text(
-                    widget.data.isPriceSet == true
-                        ? 'Үнэ тохиргоо: Тийм'
-                        : 'Үнэ тохиргоо: Үгүй',
-                    style: const TextStyle(
-                      color: grey2,
-                      fontSize: 12,
-                    ),
-                    textAlign: TextAlign.end,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Text(
+                        'Үнэ тохиргоо:',
+                        style: TextStyle(
+                          color: grey2,
+                          fontSize: 12,
+                        ),
+                        textAlign: TextAlign.end,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      CustomSwitch(
+                        isDefault: widget.data.isPriceSet,
+                        color: productColor,
+                      ),
+                    ],
                   ),
                 ),
               ],

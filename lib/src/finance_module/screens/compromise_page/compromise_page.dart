@@ -3,6 +3,7 @@ import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/finance_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -38,16 +39,14 @@ class _CompromisePageState extends State<CompromisePage> {
   User user = User();
   List<Finance> compromises = [];
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
-  bool isSubmit = false;
 
   onSubmit() async {
     final source = Provider.of<FinanceProvider>(context, listen: false);
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     List<Finance> data = [];
     if (fbKey.currentState!.saveAndValidate()) {
       try {
-        setState(() {
-          isSubmit = true;
-        });
+        loading.loading(true);
         for (var i = 0; i < compromises.length; i++) {
           data.add(
             Finance(
@@ -59,6 +58,7 @@ class _CompromisePageState extends State<CompromisePage> {
         }
         await FinanceApi().compromiseCreate(
             source.url, Finance(compromises: data), widget.data.id!);
+        loading.loading(false);
         showCustomDialog(
           context,
           'Амлалт амжилттай илгээлээ',
@@ -67,13 +67,8 @@ class _CompromisePageState extends State<CompromisePage> {
             Navigator.of(context).pop();
           },
         );
-        setState(() {
-          isSubmit = false;
-        });
       } catch (e) {
-        setState(() {
-          isSubmit = false;
-        });
+        loading.loading(false);
       }
     }
   }
@@ -496,7 +491,6 @@ class _CompromisePageState extends State<CompromisePage> {
                     ),
                     Expanded(
                       child: CustomButton(
-                        isLoading: isSubmit,
                         onClick: () {
                           Navigator.of(context).pop();
                         },
@@ -511,7 +505,6 @@ class _CompromisePageState extends State<CompromisePage> {
                     ),
                     Expanded(
                       child: CustomButton(
-                        isLoading: isSubmit,
                         onClick: () {
                           onSubmit();
                         },

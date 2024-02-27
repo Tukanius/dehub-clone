@@ -3,6 +3,7 @@ import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/zip_codes.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dehub/components/field_card/field_card.dart';
@@ -55,7 +56,6 @@ class _OnboardTabState extends State<OnboardTab> {
   var districtkey = GlobalKey();
   var provinceKey = GlobalKey();
   var countryKey = GlobalKey();
-  bool isSubmit = false;
 
   validateCheck() {
     if (khorooName == "Сонгох") {
@@ -141,10 +141,8 @@ class _OnboardTabState extends State<OnboardTab> {
   }
 
   onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      setState(() {
-        isSubmit = true;
-      });
       BusinessNetwork data =
           BusinessNetwork.fromJson(formKey.currentState!.value);
       data.type = type == "Иргэн" ? "CITIZEN" : "COMPANY";
@@ -156,14 +154,11 @@ class _OnboardTabState extends State<OnboardTab> {
       data.khoroo = khorooCode;
       data.locationLat = 90.45;
       data.locationLng = 45.45;
+      loading.loading(true);
       await BusinessApi().createOnboard(data);
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     }
   }
 
@@ -868,7 +863,6 @@ class _OnboardTabState extends State<OnboardTab> {
                     child: Container(
                       margin: const EdgeInsets.only(right: 10, left: 2.5),
                       child: CustomButton(
-                        isLoading: isSubmit,
                         onClick: () {
                           validateCheck();
                         },

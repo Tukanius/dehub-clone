@@ -7,6 +7,7 @@ import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/network_module/screens/category_page/add_category.dart';
 import 'package:dehub/src/network_module/screens/rank_page/add_rank.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -48,7 +49,6 @@ class _SetClientClassificationState extends State<SetClientClassification> {
   String? classRefCode;
   String? rankName;
   String? rankId;
-  bool? isSubmit;
   List<ClientClassifications>? classList = [];
 
   list(bool isParent) {
@@ -64,11 +64,10 @@ class _SetClientClassificationState extends State<SetClientClassification> {
   }
 
   onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     if (classId != null || rankId != null) {
       try {
-        setState(() {
-          isSubmit = true;
-        });
+        loading.loading(true);
         await BusinessApi().setClientClassification(
           BusinessNetwork(
             businessIds: [widget.id],
@@ -77,6 +76,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
             classificationDesc: controller.text,
           ),
         );
+        loading.loading(false);
         showCustomDialog(
           context,
           "Амжилттай хадгаллааа",
@@ -86,13 +86,8 @@ class _SetClientClassificationState extends State<SetClientClassification> {
             widget.listenController.changeVariable('SetClassification');
           },
         );
-        setState(() {
-          isSubmit = false;
-        });
       } catch (e) {
-        setState(() {
-          isSubmit = false;
-        });
+        loading.loading(false);
       }
     }
   }
@@ -192,7 +187,6 @@ class _SetClientClassificationState extends State<SetClientClassification> {
               height: 30,
             ),
             CustomButton(
-              isLoading: isSubmit,
               textColor: white,
               labelText: 'Хадгалах',
               labelColor: classId == null || rankId == null

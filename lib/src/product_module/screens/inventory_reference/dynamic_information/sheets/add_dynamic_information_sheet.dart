@@ -2,6 +2,7 @@ import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/inventory_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/dynamic_information/sheets/field_setting_sheet.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -21,7 +22,6 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
     with AfterLayoutMixin {
   TextEditingController controller = TextEditingController();
   bool isLoading = true;
-  bool isSubmit = false;
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -32,10 +32,9 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
   }
 
   onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      setState(() {
-        isSubmit = true;
-      });
+      loading.loading(true);
       final source = Provider.of<InventoryProvider>(context, listen: false);
       if (controller.text != '') {
         await InventoryApi().sectionCreate(
@@ -44,20 +43,17 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
             name: controller.text,
           ),
         );
+        loading.loading(false);
         showCustomDialog(context, "Динамик мэдээлэл амжилттай нэмлээ", true,
             onPressed: () {
           Navigator.of(context).pop();
         });
       } else {
         showCustomDialog(context, "Нэр оруулна уу", false);
+        loading.loading(false);
       }
-      setState(() {
-        isSubmit = false;
-      });
     } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     }
   }
 
@@ -118,9 +114,7 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
                   ),
                   GestureDetector(
                     onTap: () {
-                      if (isSubmit == false) {
-                        onSubmit();
-                      }
+                      onSubmit();
                     },
                     child: Container(
                       decoration: const BoxDecoration(

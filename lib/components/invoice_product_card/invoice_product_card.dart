@@ -75,6 +75,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<InvoiceProvider>(context, listen: true);
+
     if (widget.data.quantity == null) {
       quantityController.text = '0';
     } else {

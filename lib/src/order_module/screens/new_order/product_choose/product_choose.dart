@@ -6,7 +6,6 @@ import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/order_product_card/order_product_card.dart';
 import 'package:dehub/components/scaffold_messenger/scaffold_messenger.dart';
-import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
@@ -80,26 +79,6 @@ class _ProductChooseState extends State<ProductChoose>
     });
   }
 
-  onChange(String value) async {
-    if (timer != null) timer!.cancel();
-    timer = Timer(const Duration(milliseconds: 500), () async {
-      setState(() {
-        packageProduct = [];
-        isSubmit = true;
-      });
-      order = await OrderApi().variantSelect(
-          user.currentBusiness?.type == "SUPPLIER" ? "SALES" : "PURCHASE",
-          'a',
-          value,
-          "",
-          type,
-          '');
-      setState(() {
-        isSubmit = false;
-      });
-    });
-  }
-
   @override
   void initState() {
     listenController.addListener(() {
@@ -141,13 +120,6 @@ class _ProductChooseState extends State<ProductChoose>
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        SearchButton(
-                          color: orderColor,
-                          textColor: orderColor,
-                          onChange: (query) {
-                            onChange(query);
-                          },
-                        ),
                         Container(
                           width: MediaQuery.of(context).size.width,
                           margin: const EdgeInsets.symmetric(vertical: 5),

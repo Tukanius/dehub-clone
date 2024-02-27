@@ -2,12 +2,14 @@ import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class AddDeliveryType extends StatefulWidget {
   final String? id;
@@ -26,38 +28,33 @@ class AddDeliveryType extends StatefulWidget {
 
 class _AddDeliveryTypeState extends State<AddDeliveryType> {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
-  bool isSubmit = false;
 
   onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
       if (fbKey.currentState!.saveAndValidate()) {
-        setState(() {
-          isSubmit = true;
-        });
+        loading.loading(true);
         InventoryGoods data =
             InventoryGoods.fromJson(fbKey.currentState!.value);
         if (widget.name == null) {
           await InventoryApi().deliveryTypeCreate(data);
+          loading.loading(false);
           showCustomDialog(context, 'Хэмжих нэгж амжилттай нэмлээ', true,
               onPressed: () {
             Navigator.of(context).pop();
           });
         } else {
           await InventoryApi().deliveryTypeUpdate(widget.id!, data);
+          loading.loading(false);
           showCustomDialog(context, 'Хэмжих нэгж амжилттай заслаа', true,
               onPressed: () {
             Navigator.of(context).pop();
           });
         }
         widget.listenController.changeVariable('deliveryType');
-        setState(() {
-          isSubmit = false;
-        });
       }
     } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     }
   }
 
@@ -95,7 +92,8 @@ class _AddDeliveryTypeState extends State<AddDeliveryType> {
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: const ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter:
+                          const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),
@@ -110,11 +108,7 @@ class _AddDeliveryTypeState extends State<AddDeliveryType> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: isSubmit == false
-                      ? () {
-                          onSubmit();
-                        }
-                      : () {},
+                  onTap: onSubmit,
                   child: Container(
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(

@@ -6,6 +6,7 @@ import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -44,13 +45,11 @@ class _SetClientStaffState extends State<SetClientStaff> {
   String? clientStaffId;
   String? coClientStaffId;
   General general = General();
-  bool isSubmit = false;
 
   onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      setState(() {
-        isSubmit = true;
-      });
+      loading.loading(true);
       await BusinessApi().setClientStaff(
         BusinessNetwork(
           businessIds: [widget.id],
@@ -59,6 +58,7 @@ class _SetClientStaffState extends State<SetClientStaff> {
           businessStaffDesc: textController.text,
         ),
       );
+      loading.loading(false);
       showCustomDialog(
         context,
         "Амжилттай хадгаллаа",
@@ -68,13 +68,8 @@ class _SetClientStaffState extends State<SetClientStaff> {
           Navigator.of(context).pop();
         },
       );
-      setState(() {
-        isSubmit = false;
-      });
     } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     }
   }
 
@@ -177,7 +172,6 @@ class _SetClientStaffState extends State<SetClientStaff> {
               labelColor: clientStaff == null
                   ? networkColor.withOpacity(0.3)
                   : networkColor,
-              isLoading: isSubmit,
               onClick: () {
                 clientStaff == null ? () {} : onSubmit();
               },

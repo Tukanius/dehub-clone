@@ -6,6 +6,7 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -44,13 +45,11 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
   String staffName = 'Сонгох';
   bool isLoading = true;
   String? staffId;
-  bool isSubmit = false;
 
   onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      setState(() {
-        isSubmit = true;
-      });
+      loading.loading(true);
       Order data = Order();
       data.startDate = startDate.toString();
       data.deliveryDate = shipmentDate.toString();
@@ -65,13 +64,9 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
           Navigator.of(context).pop();
         },
       );
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     }
   }
 
@@ -361,39 +356,28 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                           borderRadius: BorderRadius.circular(5),
                           color: white,
                         ),
-                        child: isSubmit == true
-                            ? const Center(
-                                child: SizedBox(
-                                  width: 17,
-                                  height: 17,
-                                  child: CircularProgressIndicator(
-                                    color: orderColor,
-                                    strokeWidth: 1,
-                                  ),
-                                ),
-                              )
-                            : Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/svg/zahialga.svg',
-                                    colorFilter: const ColorFilter.mode(
-                                        orderColor, BlendMode.srcIn),
-                                    height: 17,
-                                  ),
-                                  const SizedBox(
-                                    width: 7,
-                                  ),
-                                  const Text(
-                                    'Хуваарилах',
-                                    style: TextStyle(
-                                      color: orderColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  )
-                                ],
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/svg/zahialga.svg',
+                              colorFilter: const ColorFilter.mode(
+                                  orderColor, BlendMode.srcIn),
+                              height: 17,
+                            ),
+                            const SizedBox(
+                              width: 7,
+                            ),
+                            const Text(
+                              'Хуваарилах',
+                              style: TextStyle(
+                                color: orderColor,
+                                fontWeight: FontWeight.w500,
                               ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),

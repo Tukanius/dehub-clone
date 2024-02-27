@@ -5,6 +5,7 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -36,7 +37,6 @@ class _AdjustmentState extends State<Adjustment> with AfterLayoutMixin {
   General general = General();
   bool noteValidate = false;
   String? movementTypeId;
-  bool isSubmit = false;
   bool isLoading = true;
   String? warehouseName;
   String? movementType;
@@ -74,10 +74,9 @@ class _AdjustmentState extends State<Adjustment> with AfterLayoutMixin {
   }
 
   onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      setState(() {
-        isSubmit = true;
-      });
+      loading.loading(true);
       InventoryGoods data = InventoryGoods.fromJson(fbkey.currentState!.value);
       data.warehouseId = warehouseId;
       data.confirm = true;
@@ -90,16 +89,12 @@ class _AdjustmentState extends State<Adjustment> with AfterLayoutMixin {
         ),
       ];
       await InventoryApi().adjust(data);
+      loading.loading(false);
       showCustomDialog(context, "Амжилттай", true, onPressed: () {
         Navigator.of(context).pop();
       });
-      setState(() {
-        isSubmit = false;
-      });
     } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     }
   }
 
@@ -376,7 +371,6 @@ class _AdjustmentState extends State<Adjustment> with AfterLayoutMixin {
                                         onClick: () {
                                           validateCheck();
                                         },
-                                        isLoading: isSubmit,
                                         labelText: 'Батлах',
                                         labelColor: productColor,
                                       ),

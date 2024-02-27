@@ -5,8 +5,8 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -37,7 +37,6 @@ class PaymentApprovalPage extends StatefulWidget {
 
 class _PaymentApprovalPageState extends State<PaymentApprovalPage> {
   final formKey = GlobalKey<FormState>();
-  bool isSubmit = false;
   final defaultPinTheme = PinTheme(
     height: 50,
     width: 45,
@@ -54,14 +53,12 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage> {
   Invoice invoice = Invoice();
 
   checkPin(value) async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     user.pin = value;
+    loading.loading(true);
     var res = await AuthApi().checkPin(user);
-
     if (res == true) {
       try {
-        setState(() {
-          isSubmit = true;
-        });
         await PaymentApi().pay(
           Invoice(
             method: "B2B",
@@ -84,6 +81,7 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage> {
             debitAccountCurrency: widget.data.senderAcc?.currency,
           ),
         );
+        loading.loading(false);
         showCustomDialog(
           context,
           'Таны ${widget.data.refCode} дугаартай нэхэмжлэхийн ${widget.amount.toString()} ₮-ийн төлөлт амжилттай хийгдлээ.',
@@ -94,13 +92,8 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage> {
             Navigator.of(context).pop();
           },
         );
-        setState(() {
-          isSubmit = false;
-        });
       } catch (e) {
-        setState(() {
-          isSubmit = false;
-        });
+        loading.loading(false);
       }
     }
   }
@@ -110,118 +103,104 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage> {
   @override
   Widget build(BuildContext context) {
     general = Provider.of<GeneralProvider>(context, listen: true).general;
-    return Stack(
-      children: [
-        Scaffold(
-          backgroundColor: backgroundColor,
-          appBar: AppBar(
-            backgroundColor: invoiceColor,
-            surfaceTintColor: invoiceColor,
-            elevation: 0,
-            leading: IconButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              icon: const Icon(
-                Icons.arrow_back_ios,
-                color: white,
-              ),
-            ),
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      appBar: AppBar(
+        backgroundColor: invoiceColor,
+        surfaceTintColor: invoiceColor,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: white,
           ),
-          body: SingleChildScrollView(
-            child: Column(
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 50),
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: invoiceColor,
-                        borderRadius: BorderRadius.circular(3),
-                      ),
-                      child: SvgPicture.asset(
-                        'assets/svg/send.svg',
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  'Нэхэмжлэх төлөх',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: Color(0xff2C3D7A),
+                Container(
+                  margin: const EdgeInsets.only(top: 50),
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    color: invoiceColor,
+                    borderRadius: BorderRadius.circular(3),
                   ),
-                ),
-                Text(
-                  'Лавлах код: 32165421',
-                  style: TextStyle(
-                    color: const Color(0xff000000).withOpacity(0.6),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 150,
-                ),
-                const Text(
-                  'Төлөлт батлах ПИН кодоо оруулна уу.',
-                  style: TextStyle(
-                    color: Color(0xff657786),
-                    fontWeight: FontWeight.w300,
-                    fontSize: 14,
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
-                      Directionality(
-                        textDirection: TextDirection.ltr,
-                        child: Pinput(
-                          autofocus: true,
-                          keyboardType: TextInputType.number,
-                          obscureText: true,
-                          onCompleted: (value) => checkPin(value),
-                          length: 6,
-                          hapticFeedbackType: HapticFeedbackType.lightImpact,
-                          defaultPinTheme: defaultPinTheme,
-                          submittedPinTheme: defaultPinTheme.copyWith(
-                            decoration: defaultPinTheme.decoration!.copyWith(
-                              color: white,
-                            ),
-                          ),
-                          errorPinTheme: defaultPinTheme.copyBorderWith(
-                            border: Border.all(color: Colors.redAccent),
-                          ),
-                        ),
-                      ),
-                    ],
+                  child: SvgPicture.asset(
+                    'assets/svg/send.svg',
                   ),
                 ),
               ],
             ),
-          ),
-        ),
-        if (isSubmit == true)
-          Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            color: black.withOpacity(0.3),
-            child: const CupertinoActivityIndicator(
-              color: black,
-              radius: 18,
+            const SizedBox(
+              height: 20,
             ),
-          ),
-      ],
+            const Text(
+              'Нэхэмжлэх төлөх',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+                color: Color(0xff2C3D7A),
+              ),
+            ),
+            Text(
+              'Лавлах код: 32165421',
+              style: TextStyle(
+                color: const Color(0xff000000).withOpacity(0.6),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 150,
+            ),
+            const Text(
+              'Төлөлт батлах ПИН кодоо оруулна уу.',
+              style: TextStyle(
+                color: Color(0xff657786),
+                fontWeight: FontWeight.w300,
+                fontSize: 14,
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: Pinput(
+                      autofocus: true,
+                      keyboardType: TextInputType.number,
+                      obscureText: true,
+                      onCompleted: (value) => checkPin(value),
+                      length: 6,
+                      hapticFeedbackType: HapticFeedbackType.lightImpact,
+                      defaultPinTheme: defaultPinTheme,
+                      submittedPinTheme: defaultPinTheme.copyWith(
+                        decoration: defaultPinTheme.decoration!.copyWith(
+                          color: white,
+                        ),
+                      ),
+                      errorPinTheme: defaultPinTheme.copyBorderWith(
+                        border: Border.all(color: Colors.redAccent),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

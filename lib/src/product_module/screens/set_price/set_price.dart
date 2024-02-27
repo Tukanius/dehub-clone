@@ -7,6 +7,7 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/product_module/screens/set_price/sheets/quantity_sheet.dart';
 import 'package:dehub/src/product_module/screens/set_price/sheets/set_price_sheet.dart';
 import 'package:dehub/src/product_module/screens/set_price/sheets/tax_sheet.dart';
@@ -48,7 +49,6 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
   General general = General();
   List<InventoryGoods> tiers = [];
   bool isLoading = true;
-  bool isSubmit = false;
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -63,13 +63,12 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
 
   onSubmit(bool confirm) async {
     final res = Provider.of<InventoryProvider>(context, listen: false);
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     List<InventoryGoods> tierPrices = [];
     List<InventoryGoods> quantityPrices = [];
     if (fbKey.currentState!.saveAndValidate()) {
       try {
-        setState(() {
-          isSubmit = true;
-        });
+        loading.loading(true);
         InventoryGoods data =
             InventoryGoods.fromJson(fbKey.currentState!.value);
         data.variantId = widget.data.variantId;
@@ -111,6 +110,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
         data.confirm = confirm;
         data.quantityPrices = quantityPrices;
         await InventoryApi().price(data);
+        loading.loading(false);
         widget.listenController.changeVariable('setPrice');
         showCustomDialog(
           context,
@@ -120,13 +120,8 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
             Navigator.of(context).pop();
           },
         );
-        setState(() {
-          isSubmit = false;
-        });
       } catch (e) {
-        setState(() {
-          isSubmit = false;
-        });
+        loading.loading(false);
       }
     }
   }
@@ -537,7 +532,6 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                         ),
                         Expanded(
                           child: CustomButton(
-                            isLoading: isSubmit,
                             onClick: () {
                               int index = tiers.indexWhere(
                                   (element) => element.customPrice == null);
@@ -563,7 +557,6 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                         ),
                         Expanded(
                           child: CustomButton(
-                            isLoading: isSubmit,
                             onClick: () {
                               int index = tiers.indexWhere(
                                   (element) => element.customPrice == null);

@@ -8,6 +8,7 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/partner_provider.dart';
 import 'package:dehub/src/partner_module/screens/address_sheets/district_sheet.dart';
 import 'package:dehub/src/partner_module/screens/address_sheets/province_sheet.dart';
@@ -53,7 +54,6 @@ class _WarehouseCreateState extends State<WarehouseCreate>
   int? buyerRadioValue = 0;
   bool isDefault = false;
   bool isLoading = true;
-  bool isSubmit = false;
   General general = General();
   Result buyers = Result(rows: []);
   Result suppliers = Result(rows: []);
@@ -74,13 +74,12 @@ class _WarehouseCreateState extends State<WarehouseCreate>
 
   onSubmit() async {
     final source = Provider.of<PartnerProvider>(context, listen: false);
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     List<String> buyerIds = [];
     List<String> supplierIds = [];
     if (fbkey.currentState!.saveAndValidate()) {
       try {
-        setState(() {
-          isSubmit = true;
-        });
+        loading.loading(true);
         Partner data = Partner.fromJson(fbkey.currentState!.value);
         data.district = source.partner.district;
         data.province = source.partner.province;
@@ -110,6 +109,7 @@ class _WarehouseCreateState extends State<WarehouseCreate>
           } else {
             await PartnerApi().warehouseCreate(data);
           }
+          loading.loading(false);
           widget.listenController.changeVariable('warehouse');
           showCustomDialog(context, "Амжилттай", true, onPressed: () {
             Navigator.of(context).pop();
@@ -117,13 +117,8 @@ class _WarehouseCreateState extends State<WarehouseCreate>
         } else {
           showCustomDialog(context, "Мэдээлэл бүрэн бөглөнө үү", false);
         }
-        setState(() {
-          isSubmit = false;
-        });
       } catch (e) {
-        setState(() {
-          isSubmit = false;
-        });
+        loading.loading(false);
       }
     }
   }
@@ -627,7 +622,6 @@ class _WarehouseCreateState extends State<WarehouseCreate>
                       height: 50,
                     ),
                     CustomButton(
-                      isLoading: isSubmit,
                       onClick: onSubmit,
                       labelText: 'Хадгалах',
                       labelColor: partnerColor,

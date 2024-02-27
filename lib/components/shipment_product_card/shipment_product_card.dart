@@ -109,8 +109,8 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                       ),
                       RichText(
                         text: TextSpan(
-                          style:
-                              const TextStyle(color: dark, fontFamily: "Montserrat"),
+                          style: const TextStyle(
+                              color: dark, fontFamily: "Montserrat"),
                           children: [
                             widget.data.skuCode != null
                                 ? TextSpan(text: "${widget.data.skuCode}, ")
@@ -311,8 +311,8 @@ class _ShipmentProductCardState extends State<ShipmentProductCard>
                           ),
                           hintText: '0',
                           isDense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 6, horizontal: 5),
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: 6, horizontal: 5),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0xffD9DCDE),

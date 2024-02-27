@@ -2,6 +2,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/partner_api.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/partner.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/partner_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/forms/admin_user_form.dart';
@@ -25,9 +26,10 @@ class _AdminUserState extends State<AdminUser> with AfterLayoutMixin {
 
   onSubmit() async {
     final source = Provider.of<PartnerProvider>(context, listen: false);
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     if (fbkey.currentState!.saveAndValidate()) {
       try {
-        source.loading(true);
+        loading.loading(true);
         Partner data = Partner.fromJson(fbkey.currentState!.value);
         data.departmentUnitId = source.partner.departmentUnitId;
         data.employeeUnitId = source.partner.employeeUnitId;
@@ -46,9 +48,9 @@ class _AdminUserState extends State<AdminUser> with AfterLayoutMixin {
                   : 'Албан тушаалын нэр сонгоно уу',
               false);
         }
-        source.loading(false);
+        loading.loading(false);
       } catch (e) {
-        source.loading(false);
+        loading.loading(false);
       }
     }
   }

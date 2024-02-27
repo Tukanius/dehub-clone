@@ -4,8 +4,8 @@ import 'package:dehub/components/close_button/close_button.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/components/sector_card/sector_card.dart';
-import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/invoice_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -24,7 +24,7 @@ class SectorChoose extends StatefulWidget {
 }
 
 class _SectorChooseState extends State<SectorChoose> with AfterLayoutMixin {
-  Partner partner = Partner();
+  User user = User();
   int page = 1;
   int limit = 10;
   Timer? timer;
@@ -38,8 +38,7 @@ class _SectorChooseState extends State<SectorChoose> with AfterLayoutMixin {
     setState(() {
       isLoading = true;
     });
-    invoice =
-        await InvoiceApi().brach(partner.user!.currentBusiness!.id!, query);
+    invoice = await InvoiceApi().brach(user.currentBusiness!.id!, query);
     setState(() {
       isLoading = false;
     });
@@ -51,8 +50,7 @@ class _SectorChooseState extends State<SectorChoose> with AfterLayoutMixin {
       setState(() {
         isSubmit = true;
       });
-      invoice =
-          await InvoiceApi().brach(partner.user!.currentBusiness!.id!, value);
+      invoice = await InvoiceApi().brach(user.currentBusiness!.id!, value);
       setState(() {
         isSubmit = false;
       });
@@ -61,7 +59,7 @@ class _SectorChooseState extends State<SectorChoose> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    partner = Provider.of<UserProvider>(context, listen: true).partnerUser;
+    user = Provider.of<UserProvider>(context, listen: true).invoiceMe;
     final source = Provider.of<InvoiceProvider>(context, listen: true);
     return Scaffold(
       backgroundColor: backgroundColor,

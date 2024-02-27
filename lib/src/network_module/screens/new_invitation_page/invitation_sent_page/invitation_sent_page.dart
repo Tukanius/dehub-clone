@@ -5,6 +5,7 @@ import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/business.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -53,7 +54,6 @@ class _InvitationSentPageState extends State<InvitationSentPage>
   Business invitation = Business();
   List<String> receiverIds = [];
   bool isLineEmpty = false;
-  bool isSubmit = false;
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -72,12 +72,10 @@ class _InvitationSentPageState extends State<InvitationSentPage>
   }
 
   save(bool send) async {
-    if (isSubmit == false) {
-      if (receiverIds.isEmpty) {
-        show(context);
-      } else {
-        onSubmit(send);
-      }
+    if (receiverIds.isEmpty) {
+      show(context);
+    } else {
+      onSubmit(send);
     }
   }
 
@@ -114,15 +112,15 @@ class _InvitationSentPageState extends State<InvitationSentPage>
   }
 
   onSubmit(bool send) async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      setState(() {
-        isLoading = true;
-      });
+      loading.loading(true);
       invitation.toMessage = "invite";
       invitation.send = send;
       invitation.receiverIds = receiverIds;
       invitation.toMessage = controller.text;
       await BusinessApi().createInvitation(invitation);
+      loading.loading(false);
       widget.listenController.changeVariable('invitationSent');
       showCustomDialog(
         context,
@@ -132,13 +130,8 @@ class _InvitationSentPageState extends State<InvitationSentPage>
           Navigator.of(context).pop();
         },
       );
-      setState(() {
-        isLoading = false;
-      });
     } catch (e) {
-      debugPrint('================err=============');
-      debugPrint(e.toString());
-      debugPrint('================err=============');
+      loading.loading(false);
     }
   }
 

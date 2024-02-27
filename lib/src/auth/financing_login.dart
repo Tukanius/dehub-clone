@@ -1,6 +1,7 @@
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/finance_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/password_recovery/password_recovery.dart';
 import 'package:dehub/src/finance_module/financing_page/financing_page.dart';
@@ -25,30 +26,23 @@ class FinancingLogin extends StatefulWidget {
 class _FinancingLoginState extends State<FinancingLogin> with AfterLayoutMixin {
   bool _isVisible = true;
   User user = User();
-  bool isSubmit = false;
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   bool isLoading = true;
 
   onSubmit() async {
     final source = Provider.of<FinanceProvider>(context, listen: false);
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     if (fbKey.currentState!.saveAndValidate()) {
       try {
-        setState(() {
-          isSubmit = true;
-        });
+        loading.loading(true);
         Finance data = Finance.fromJson(fbKey.currentState!.value);
         data.businessRef = user.currentBusiness?.refCode;
         await Provider.of<UserProvider>(context, listen: false)
             .financeLogin(source.url, data);
+        loading.loading(false);
         await Navigator.of(context).pushNamed(FinancingPage.routeName);
-        setState(() {
-          isSubmit = false;
-        });
       } catch (e) {
-        setState(() {
-          isSubmit = false;
-        });
-        debugPrint(e.toString());
+        loading.loading(false);
       }
     }
   }
@@ -352,7 +346,6 @@ class _FinancingLoginState extends State<FinancingLogin> with AfterLayoutMixin {
                         ),
                       ),
                       CustomButton(
-                        isLoading: isSubmit,
                         onClick: () {
                           onSubmit();
                         },

@@ -7,6 +7,7 @@ import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/payment_module/screens/link_account_page/link_account_page.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -46,13 +47,11 @@ class _SetAccountState extends State<SetAccount> {
   String? inAccId;
   String? outAccId;
   General general = General();
-  bool isSubmit = false;
 
   onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      setState(() {
-        isSubmit = true;
-      });
+      loading.loading(true);
       await BusinessApi().setAccount(
         BusinessNetwork(
           businessIds: [widget.id],
@@ -60,6 +59,7 @@ class _SetAccountState extends State<SetAccount> {
           outAccId: outAccId,
         ),
       );
+      loading.loading(false);
       showCustomDialog(
         context,
         "Амжилттай хадгаллаа",
@@ -69,13 +69,8 @@ class _SetAccountState extends State<SetAccount> {
           Navigator.of(context).pop();
         },
       );
-      setState(() {
-        isSubmit = false;
-      });
     } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     }
   }
 
@@ -175,7 +170,6 @@ class _SetAccountState extends State<SetAccount> {
               labelColor: inAccName == null || outAccName == null
                   ? networkColor.withOpacity(0.3)
                   : networkColor,
-              isLoading: isSubmit,
               onClick: () {
                 inAccName == null || outAccName == null ? () {} : onSubmit();
               },

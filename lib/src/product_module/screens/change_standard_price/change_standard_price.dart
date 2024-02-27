@@ -6,6 +6,7 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/product_module/screens/change_standard_price/components/select_variant_sheet.dart';
 import 'package:dehub/src/product_module/screens/change_standard_price/components/standard_price_card.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -49,7 +50,6 @@ class _ChangeStandardPriceState extends State<ChangeStandardPrice>
   List<InventoryGoods> selectedVariants = [];
   General general = General();
   bool isLoading = true;
-  bool isSubmit = false;
   String perType = "PERCENTAGE";
   String priceType = "DECREASE";
 
@@ -70,12 +70,11 @@ class _ChangeStandardPriceState extends State<ChangeStandardPrice>
   }
 
   onSubmit(bool confirm) async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     List<InventoryGoods> variant = [];
     if (fbKey.currentState!.saveAndValidate()) {
       try {
-        setState(() {
-          isSubmit = true;
-        });
+        loading.loading(true);
         InventoryGoods data =
             InventoryGoods.fromJson(fbKey.currentState!.value);
         data.type = widget.type;
@@ -106,17 +105,13 @@ class _ChangeStandardPriceState extends State<ChangeStandardPrice>
           data.perValue = double.parse(controller.text);
         }
         await InventoryApi().createPriceGroup(data);
+        loading.loading(false);
         showCustomDialog(context, "Амжилттай үнэ өөрчиллөө", true,
             onPressed: () {
           Navigator.of(context).pop();
         });
-        setState(() {
-          isSubmit = false;
-        });
       } catch (e) {
-        setState(() {
-          isSubmit = false;
-        });
+        loading.loading(false);
       }
     }
   }
@@ -398,7 +393,6 @@ class _ChangeStandardPriceState extends State<ChangeStandardPrice>
                               onClick: () {
                                 onSubmit(false);
                               },
-                              isLoading: isSubmit,
                               borderColor: productColor,
                               labelColor: backgroundColor,
                               textColor: productColor,
@@ -410,7 +404,6 @@ class _ChangeStandardPriceState extends State<ChangeStandardPrice>
                           ),
                           Expanded(
                             child: CustomButton(
-                              isLoading: isSubmit,
                               onClick: () {
                                 onSubmit(true);
                               },

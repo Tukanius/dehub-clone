@@ -7,6 +7,7 @@ import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -47,7 +48,6 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
   String? config;
   General general = General();
   bool isLoading = false;
-  bool isSubmit = false;
   Result paymentTerms = Result(rows: [], count: 0);
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now().add(const Duration(days: 1));
@@ -61,10 +61,9 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
   }
 
   onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      setState(() {
-        isSubmit = true;
-      });
+      loading.loading(true);
       await BusinessApi().setPaymentTerm(
         BusinessNetwork(
           businessIds: [widget.id],
@@ -73,6 +72,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
           paymentTermEndDate: DateFormat("yyyy-MM-dd").format(endDate),
         ),
       );
+      loading.loading(false);
       showCustomDialog(
         context,
         "Амжилттай хадгаллаа",
@@ -82,13 +82,8 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
           Navigator.of(context).pop();
         },
       );
-      setState(() {
-        isSubmit = false;
-      });
     } catch (e) {
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
     }
   }
 
@@ -245,7 +240,8 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                           ),
                           Expanded(
                             child: CupertinoDatePicker(
-                              minimumDate: endDate.subtract(const Duration(hours: 1)),
+                              minimumDate:
+                                  endDate.subtract(const Duration(hours: 1)),
                               initialDateTime: endDate,
                               mode: CupertinoDatePickerMode.date,
                               use24hFormat: true,
@@ -273,7 +269,6 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
               labelColor: paymentTerm == null || config == null
                   ? networkColor.withOpacity(0.3)
                   : networkColor,
-              isLoading: isSubmit,
               onClick: () {
                 paymentTerm == null || config == null ? () {} : onSubmit();
               },
