@@ -1,115 +1,115 @@
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
-import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invitation_received.dart';
-import 'package:dehub/providers/general_provider.dart';
-import 'package:dehub/providers/loading_provider.dart';
+import 'package:dehub/src/auth/pin_check/pin_check.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
-class SentInvitationDetailArguments {
+class InvitationDetailPageArguments {
+  ListenController listenController;
   String id;
-  SentInvitationDetailArguments({
+  InvitationDetailPageArguments({
+    required this.listenController,
     required this.id,
   });
 }
 
-class SentInvitationDetail extends StatefulWidget {
+class InvitationDetailPage extends StatefulWidget {
   final String id;
-  static const routeName = '/SentInvitationDetail';
-  const SentInvitationDetail({
+  final ListenController listenController;
+  static const routeName = '/invitationdetailpage';
+  const InvitationDetailPage({
     super.key,
+    required this.listenController,
     required this.id,
   });
 
   @override
-  SentInvitationDetailState createState() => SentInvitationDetailState();
+  InvitationDetailPageState createState() => InvitationDetailPageState();
 }
 
-class SentInvitationDetailState extends State<SentInvitationDetail>
+class InvitationDetailPageState extends State<InvitationDetailPage>
     with AfterLayoutMixin {
-  Invitation invitation = Invitation();
-  General general = General();
   bool isLoading = true;
+  Invitation invitation = Invitation();
+  Invitation respond = Invitation();
+  List<Invitation> list = [];
 
   @override
   afterFirstLayout(BuildContext context) async {
     invitation = await BusinessApi().getInfo(widget.id);
+    list = [
+      Invitation(
+        firstName: 'Урилга №',
+        lastName: invitation.refCode,
+      ),
+    ];
     setState(() {
       isLoading = false;
     });
   }
 
-  invitationStatus() {
-    final result = general.invitationStatus!
-        .firstWhere((element) => element.code == invitation.invitationStatus);
-    return result;
-  }
-
-  statusColor(bool opacity) {
-    if (opacity == false) {
-      switch (invitation.invitationStatus) {
-        case 'DRAFT':
-          return grey;
-        case 'SENT':
-          return orange;
-        case 'ACCEPTED':
-          return green;
-        case 'REJECTED':
-          return red;
-        default:
-      }
-    } else {
-      switch (invitation.invitationStatus) {
-        case 'DRAFT':
-          return grey.withOpacity(0.1);
-        case 'SENT':
-          return orange.withOpacity(0.1);
-        case 'ACCEPTED':
-          return green.withOpacity(0.1);
-        case 'REJECTED':
-          return red.withOpacity(0.1);
-        default:
-      }
+  onSubmit() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      respond.accept = true;
+      respond.responseMessage = 'accept';
+      await BusinessApi().respond(respond, widget.id);
+      showCustomDialog(
+        context,
+        "Амжилттай зөвшөөрлөө",
+        true,
+        onPressed: () {
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+        },
+      );
+      widget.listenController.changeVariable('refresh');
+      setState(() {
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      debugPrint('===============ERROR===============');
+      debugPrint(e.toString());
+      debugPrint('===============ERROR===============');
     }
   }
 
-  onSubmit() async {
-    final loading = Provider.of<LoadingProvider>(context, listen: false);
-    try {
-      loading.loading(true);
-      Invitation respond = Invitation();
-      respond.accept = true;
-      respond.responseMessage = 'accept';
-      await BusinessApi().respond(respond, invitation.id!);
-      loading.loading(false);
-      showCustomDialog(context, "Урилга амжилттай илгээлээ", true,
-          onPressed: () {
-        Navigator.of(context).pop();
-      });
-    } catch (e) {
-      loading.loading(false);
+  invitationStatus() {
+    switch (invitation.invitationStatus) {
+      case "DRAFT":
+        return "Түр төлөв";
+      case "SENT":
+        return "Илгээгдсэн";
+      case "ACCEPTED":
+        return "Зөвшөөрсөн";
+      case "REJECTED":
+        return "Цуцлагдсан";
+      default:
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    general =
-        Provider.of<GeneralProvider>(context, listen: true).businessGeneral;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
+        surfaceTintColor: white,
         backgroundColor: backgroundColor,
-        surfaceTintColor: backgroundColor,
         iconTheme: const IconThemeData(color: networkColor),
         title: const Text(
-          'Илгээсэн урилга',
+          'Ирсэн урилга',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
@@ -117,7 +117,7 @@ class SentInvitationDetailState extends State<SentInvitationDetail>
           ),
         ),
       ),
-      body: isLoading != false
+      body: isLoading == true
           ? const Center(
               child: CircularProgressIndicator(
                 color: networkColor,
@@ -162,15 +162,24 @@ class SentInvitationDetailState extends State<SentInvitationDetail>
                       ],
                     ),
                   ),
-                  FieldCard(
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
                     color: white,
-                    labelText: 'Ирсэн огноо',
-                    secondText: invitation.invitedDate != null
-                        ? DateFormat("yyyy-MM-dd")
-                            .format(invitation.invitedDate!)
-                        : '-',
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Ирсэн огноо',
+                          style: TextStyle(color: dark),
+                        ),
+                        Text(
+                          DateFormat("yyyy-MM-dd hh:MM")
+                              .format(invitation.createdAt!),
+                          style: const TextStyle(color: dark),
+                        ),
+                      ],
+                    ),
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(
@@ -180,7 +189,7 @@ class SentInvitationDetailState extends State<SentInvitationDetail>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          'Урилга төлөв',
+                          'Статус',
                           style: TextStyle(color: dark),
                         ),
                         Container(
@@ -188,12 +197,12 @@ class SentInvitationDetailState extends State<SentInvitationDetail>
                               horizontal: 10, vertical: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: statusColor(true),
+                            color: const Color(0xff71717A).withOpacity(0.1),
                           ),
                           child: Text(
-                            '${invitationStatus().name}',
-                            style: TextStyle(
-                              color: statusColor(false),
+                            invitationStatus(),
+                            style: const TextStyle(
+                              color: dark,
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
                             ),
@@ -216,83 +225,93 @@ class SentInvitationDetailState extends State<SentInvitationDetail>
                   ),
                   FieldCard(
                     paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    color: white,
+                    paddingVertical: 15,
                     labelText: 'Партнерийн нэр',
-                    secondText: invitation.sender?.partnerName,
+                    secondText: '${invitation.sender?.partnerName}',
                     secondTextColor: networkColor,
+                    color: white,
                   ),
                   FieldCard(
                     paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    color: white,
+                    paddingVertical: 15,
                     labelText: 'Партнер код',
-                    secondText: invitation.sender?.refCode,
+                    secondText: '${invitation.sender?.partner?.refCode}',
                     secondTextColor: networkColor,
+                    color: white,
                   ),
                   FieldCard(
                     paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    color: white,
+                    paddingVertical: 15,
                     labelText: 'Бизнесийн нэр',
-                    secondText: invitation.sender?.partner?.businessName,
+                    secondText: '${invitation.sender?.partner?.businessName}',
                     secondTextColor: networkColor,
+                    color: white,
                   ),
                   FieldCard(
                     paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    color: white,
+                    paddingVertical: 15,
                     labelText: 'Бизнес код',
-                    secondText: invitation.sender?.partner?.refCode,
+                    secondText: '${invitation.sender?.refCode}',
                     secondTextColor: networkColor,
-                  ),
-                  const FieldCard(
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
                     color: white,
-                    labelText: 'Buyer роль',
-                    secondText: 'Тийм',
-                    secondTextColor: networkColor,
-                  ),
-                  const FieldCard(
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    color: white,
-                    labelText: 'Supplier роль',
-                    secondText: 'Үгүй',
-                    secondTextColor: networkColor,
                   ),
                   FieldCard(
                     paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    color: white,
+                    paddingVertical: 15,
                     labelText: 'Урьсан ажилтан',
-                    secondText: invitation.senderUser?.firstName,
+                    secondText: '${invitation.senderUser?.firstName}',
                     secondTextColor: networkColor,
+                    color: white,
                   ),
                   FieldCard(
                     paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    color: white,
-                    labelText: 'Урьсан и-мэйл хаяг',
-                    secondText: invitation.senderUser?.email,
+                    paddingVertical: 15,
+                    labelText: 'И-мэйл хаяг',
+                    secondText: '${invitation.senderUser?.email}',
                     secondTextColor: networkColor,
+                    color: white,
                   ),
                   FieldCard(
                     paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    color: white,
-                    labelText: 'Урьсан утас',
-                    secondText: invitation.senderUser?.phone,
+                    paddingVertical: 15,
+                    labelText: 'Утас',
+                    secondText: '${invitation.senderUser?.phone}',
                     secondTextColor: networkColor,
+                    color: white,
                   ),
                   FieldCard(
                     paddingHorizontal: 15,
-                    paddingVertical: 10,
+                    paddingVertical: 15,
+                    labelText: 'Buyer-с ирсэн',
+                    secondText:
+                        invitation.sender?.type == "BUYER" ? 'Тийм' : 'Үгүй',
+                    secondTextColor: networkColor,
                     color: white,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 15,
+                    labelText: 'Supplier-с ирсэн',
+                    secondText:
+                        invitation.sender?.type == "SUPPLIER" ? 'Тийм' : 'Үгүй',
+                    secondTextColor: networkColor,
+                    color: white,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 15,
                     labelText: 'Санхүү ажилтан',
-                    secondText: invitation.senderFinStaff?.firstName,
+                    secondText: "${invitation.senderFinStaff?.firstName}",
                     secondTextColor: networkColor,
+                    color: white,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 15,
+                    labelText: 'Урилга төрөл',
+                    secondText: "${invitation.type}",
+                    secondTextColor: networkColor,
+                    color: white,
                   ),
                   const SizedBox(
                     height: 10,
@@ -346,85 +365,93 @@ class SentInvitationDetailState extends State<SentInvitationDetail>
                   ),
                   FieldCard(
                     paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    color: white,
+                    paddingVertical: 15,
                     labelText: 'Партнерийн нэр',
-                    secondText: invitation.receiver?.partnerName,
+                    secondText: "${invitation.receiver?.partnerName}",
                     secondTextColor: networkColor,
+                    color: white,
                   ),
                   FieldCard(
                     paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    color: white,
+                    paddingVertical: 15,
                     labelText: 'Партнер код',
-                    secondText: invitation.receiver?.refCode,
+                    secondText: "${invitation.receiver?.partner?.refCode}",
                     secondTextColor: networkColor,
+                    color: white,
                   ),
                   FieldCard(
                     paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    color: white,
+                    paddingVertical: 15,
                     labelText: 'Татвар төлөгч №',
-                    secondText: invitation.receiver?.regNumber,
+                    secondText: "${invitation.receiver?.regNumber}",
                     secondTextColor: networkColor,
+                    color: white,
                   ),
                   FieldCard(
                     paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    color: white,
+                    paddingVertical: 15,
                     labelText: 'Бизнесийн нэр',
-                    secondText: invitation.receiver?.partner?.businessName,
+                    secondText: "${invitation.receiver?.profileName}",
                     secondTextColor: networkColor,
+                    color: white,
                   ),
                   FieldCard(
                     paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    color: white,
+                    paddingVertical: 15,
                     labelText: 'Бизнес код',
-                    secondText: invitation.receiver?.partner?.refCode,
+                    secondText: "${invitation.receiver?.refCode}",
                     secondTextColor: networkColor,
+                    color: white,
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 25,
                   ),
-                  if (invitation.invitationStatus == "DRAFT")
-                    Row(
-                      children: [
-                        const SizedBox(
-                          width: 25,
-                        ),
-                        Expanded(
-                          flex: 4,
-                          child: CustomButton(
-                            onClick: () {
-                              Navigator.of(context).pop();
-                            },
-                            borderColor: networkColor,
-                            labelText: 'Буцах',
-                            labelColor: white,
-                            textColor: networkColor,
+                  if (invitation.invitationStatus == "SENT")
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 50),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              child: CustomButton(
+                                borderColor: networkColor,
+                                labelColor: backgroundColor,
+                                labelText: "Татгалзах",
+                                onClick: () {
+                                  // onSubmit(false);
+                                },
+                                textColor: networkColor,
+                              ),
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          flex: 6,
-                          child: CustomButton(
-                            onClick: onSubmit,
-                            labelText: 'Илгээх',
-                            labelColor: networkColor,
-                            textColor: white,
+                          const SizedBox(
+                            width: 5,
                           ),
-                        ),
-                        const SizedBox(
-                          width: 25,
-                        ),
-                      ],
-                    ),
-                  if (invitation.invitationStatus == "DRAFT")
-                    const SizedBox(
-                      height: 50,
+                          Expanded(
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 10),
+                              child: CustomButton(
+                                textColor: white,
+                                labelColor: networkColor,
+                                onClick: () {
+                                  Navigator.of(context).pushNamed(
+                                    PinCheckScreen.routeName,
+                                    arguments: PinCheckScreenArguments(
+                                      onSubmit: () {
+                                        onSubmit();
+                                      },
+                                      color: networkColor,
+                                      labelText: 'Урилга баталгаажуулалт',
+                                    ),
+                                  );
+                                },
+                                labelText: "Зөвшөөрөх",
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                 ],
               ),

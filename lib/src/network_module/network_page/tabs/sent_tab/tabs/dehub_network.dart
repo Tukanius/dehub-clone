@@ -3,7 +3,7 @@ import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/partner_cards/invitation_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/src/network_module/screens/invitation_detail_page/invitation_detail_page.dart';
+import 'package:dehub/src/network_module/screens/sent_invitation_detail/sent_invitation_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';

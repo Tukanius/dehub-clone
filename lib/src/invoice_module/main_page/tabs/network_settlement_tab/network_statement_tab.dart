@@ -6,20 +6,21 @@ import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
-import 'package:dehub/src/invoice_module/screens/statement_detail/statement_detail.dart';
+import 'package:dehub/src/invoice_module/screens/network_settlement_detail/network_settlement_detail.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class StatementTab extends StatefulWidget {
-  const StatementTab({super.key});
+class NetworkSettlementTab extends StatefulWidget {
+  const NetworkSettlementTab({super.key});
 
   @override
-  State<StatementTab> createState() => _StatementTabState();
+  State<NetworkSettlementTab> createState() => _NetworkSettlementTabState();
 }
 
-class _StatementTabState extends State<StatementTab> with AfterLayoutMixin {
+class _NetworkSettlementTabState extends State<NetworkSettlementTab>
+    with AfterLayoutMixin {
   User user = User();
   int page = 1;
   int limit = 10;
@@ -116,9 +117,10 @@ class _StatementTabState extends State<StatementTab> with AfterLayoutMixin {
                                     startAnimation: startAnimation,
                                     onClick: () {
                                       Navigator.of(context).pushNamed(
-                                        StatementDetail.routeName,
-                                        arguments: StatementDetailArguments(
-                                            data: data),
+                                        NetworkSettlementDetail.routeName,
+                                        arguments:
+                                            NetworkSettlementDetailArguments(
+                                                data: data),
                                       );
                                     },
                                   ),

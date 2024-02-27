@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 
 class PartnerApi extends HttpRequest {
   String type = "PARTNER";
+
   Future<User> register(User data) async {
     var res = await post("/pub/partner", type, false, data: data.toJson());
     return User.fromJson(res as Map<String, dynamic>);

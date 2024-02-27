@@ -29,8 +29,8 @@ class _OpenTabState extends State<OpenTab> with AfterLayoutMixin {
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
     Filter filter = Filter(businessId: widget.data.id, type: "CONFIRMED");
-    invoice = await InvoiceApi()
-        .settlementInvoice(ResultArguments(filter: filter, offset: offset));
+    invoice = await InvoiceApi().networkSettlementInvoice(
+        ResultArguments(filter: filter, offset: offset));
     setState(() {
       isLoading = false;
     });

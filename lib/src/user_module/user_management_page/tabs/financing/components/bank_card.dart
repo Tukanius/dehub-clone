@@ -145,7 +145,7 @@ class _BankCardState extends State<BankCard> {
             const SizedBox(
               height: 5,
             ),
-            if (widget.data.financeRole != null)
+            if (widget.data.financeRole?.user != null)
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Column(

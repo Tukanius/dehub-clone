@@ -1,32 +1,33 @@
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/models/invoice.dart';
-import 'package:dehub/src/invoice_module/screens/statement_detail/components/partner_card.dart';
-import 'package:dehub/src/invoice_module/screens/statement_detail/tabs/closed_tab.dart';
-import 'package:dehub/src/invoice_module/screens/statement_detail/tabs/pending_tab.dart';
-import 'package:dehub/src/invoice_module/screens/statement_detail/tabs/open_tab.dart';
+import 'package:dehub/src/invoice_module/screens/network_settlement_detail/components/partner_card.dart';
+import 'package:dehub/src/invoice_module/screens/network_settlement_detail/tabs/closed_tab.dart';
+import 'package:dehub/src/invoice_module/screens/network_settlement_detail/tabs/pending_tab.dart';
+import 'package:dehub/src/invoice_module/screens/network_settlement_detail/tabs/open_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
-class StatementDetailArguments {
+class NetworkSettlementDetailArguments {
   Invoice data;
-  StatementDetailArguments({
+  NetworkSettlementDetailArguments({
     required this.data,
   });
 }
 
-class StatementDetail extends StatefulWidget {
-  static const routeName = '/StatementDetail';
+class NetworkSettlementDetail extends StatefulWidget {
+  static const routeName = '/NetworkSettlementDetail';
   final Invoice data;
-  const StatementDetail({
+  const NetworkSettlementDetail({
     super.key,
     required this.data,
   });
 
   @override
-  State<StatementDetail> createState() => _StatementDetailState();
+  State<NetworkSettlementDetail> createState() =>
+      _NetworkSettlementDetailState();
 }
 
-class _StatementDetailState extends State<StatementDetail> {
+class _NetworkSettlementDetailState extends State<NetworkSettlementDetail> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

@@ -36,7 +36,7 @@ class AccountStatementState extends State<AccountStatement>
     end: DateTime.now(),
   );
   int currentIndex = 0;
-  Result transaction = Result();
+  Result transaction = Result(rows: [], count: 0);
   bool isLoading = true;
 
   @override
@@ -52,10 +52,9 @@ class AccountStatementState extends State<AccountStatement>
       startDate: startDate,
       endDate: endDate,
     );
-    var res = await PaymentApi()
+    transaction = await PaymentApi()
         .accountStatement(ResultArguments(filter: filter, offset: offset));
     setState(() {
-      transaction = res;
       isLoading = false;
     });
   }

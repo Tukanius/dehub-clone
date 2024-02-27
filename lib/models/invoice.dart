@@ -178,8 +178,25 @@ class Invoice {
   Invoice? creditAcc;
   Invoice? debitAcc;
   double? additionalRowAmount;
+  String? settlementStatus;
+  Invoice? financeStaff;
+  Invoice? myFinanceStaff;
+  List<Invoice>? histories;
+  double? firstAmount;
+  double? lastAmount;
+
+  int? numberOfInv;
+  Invoice? invoice;
 
   Invoice({
+    this.invoice,
+    this.numberOfInv,
+    this.histories,
+    this.firstAmount,
+    this.lastAmount,
+    this.myFinanceStaff,
+    this.financeStaff,
+    this.settlementStatus,
     this.additionalRowAmount,
     this.debitAcc,
     this.creditAcc,

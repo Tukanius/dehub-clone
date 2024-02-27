@@ -62,9 +62,6 @@ class _DistributionAreasState extends State<DistributionAreas>
         isLoading = true;
       });
       list(page, limit, query);
-      setState(() {
-        isLoading = false;
-      });
     });
   }
 
@@ -74,9 +71,6 @@ class _DistributionAreasState extends State<DistributionAreas>
     });
     await list(page, limit, '');
     refreshController.loadComplete();
-    setState(() {
-      isLoading = false;
-    });
   }
 
   void _onRefresh() async {
@@ -86,9 +80,6 @@ class _DistributionAreasState extends State<DistributionAreas>
     });
     await list(page, limit, '');
     refreshController.refreshCompleted();
-    setState(() {
-      isLoading = false;
-    });
   }
 
   @override

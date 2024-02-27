@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/partner_api.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/selection_field/selection_field.dart';
 import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/partner_provider.dart';
 import 'package:provider/provider.dart';
@@ -107,12 +108,9 @@ class _MainInformationState extends State<MainInformation>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 5),
-                    child: const Text('Нийлүүлэлт хийх сектор'),
-                  ),
-                  selection(
-                    hintText: "Нийлүүлэлт хийх сектор",
+                  SelectionField(
+                    hintText: 'Нийлүүлэлт хийх сектор',
+                    labelText: 'Нийлүүлэлт хийх сектор',
                     value: source.partner.businessSectorName,
                     onClick: () {
                       showModalBottomSheet(
@@ -121,12 +119,9 @@ class _MainInformationState extends State<MainInformation>
                       );
                     },
                   ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 5),
-                    child: const Text('Дэд сектор'),
-                  ),
-                  selection(
-                    hintText: "Дэд сектор",
+                  SelectionField(
+                    hintText: 'Дэд сектор',
+                    labelText: 'Дэд сектор',
                     value: source.partner.businessSubSectorName,
                     onClick: () {
                       showModalBottomSheet(
@@ -237,10 +232,9 @@ class _MainInformationState extends State<MainInformation>
                       ],
                     ),
                   if (productCategoryTypeRadio == 0)
-                    selection(
+                    SelectionField(
                       hintText: 'Барааны категори сонгох',
                       onClick: () {},
-                      value: null,
                     ),
                   if (purchaseTypeRadio == 1 || purchaseTypeRadio == 2)
                     Column(
@@ -283,10 +277,9 @@ class _MainInformationState extends State<MainInformation>
                       ],
                     ),
                   if (serviceCategoryTypeRadio == 0)
-                    selection(
+                    SelectionField(
                       hintText: 'Ажил, үйлчилгээний категори сонгох',
                       onClick: () {},
-                      value: null,
                     ),
                   const SizedBox(
                     height: 50,
@@ -332,39 +325,5 @@ class _MainInformationState extends State<MainInformation>
               ),
             ),
           );
-  }
-
-  Widget selection(
-      {String? value, required String hintText, Function()? onClick}) {
-    return GestureDetector(
-      onTap: onClick,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(
-            color: grey2.withOpacity(0.3),
-          ),
-          color: white,
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                value ?? hintText,
-                style: TextStyle(
-                  color: value == null ? grey2 : black,
-                ),
-              ),
-            ),
-            const Icon(
-              Icons.arrow_forward_ios,
-              color: grey3,
-              size: 16,
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

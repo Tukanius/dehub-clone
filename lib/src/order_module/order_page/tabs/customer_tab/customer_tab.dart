@@ -67,9 +67,6 @@ class _CustomerTabState extends State<CustomerTab> with AfterLayoutMixin {
     });
     await list(page, limit, '');
     refreshController.loadComplete();
-    setState(() {
-      isLoading = false;
-    });
   }
 
   void _onRefresh() async {
@@ -79,7 +76,6 @@ class _CustomerTabState extends State<CustomerTab> with AfterLayoutMixin {
     });
     await list(page, limit, '');
     refreshController.refreshCompleted();
-    isLoading = false;
   }
 
   @override

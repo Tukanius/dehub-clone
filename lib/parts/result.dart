@@ -40,6 +40,9 @@ Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
     if (instance.filter!.accountId != null) {
       params['filter']['accountId'] = instance.filter!.accountId;
     }
+    if (instance.filter!.settlementId != null) {
+      params['filter']['settlementId'] = instance.filter!.settlementId;
+    }
     if (instance.filter!.userId != null) {
       params['filter']['userId'] = instance.filter!.userId;
     }

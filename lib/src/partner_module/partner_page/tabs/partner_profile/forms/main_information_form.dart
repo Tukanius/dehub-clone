@@ -1,3 +1,4 @@
+import 'package:dehub/components/selection_field/selection_field.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/providers/partner_provider.dart';
@@ -156,12 +157,12 @@ class _MainInformationFormState extends State<MainInformationForm> {
             filled: true,
           ),
         ),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          child: const Text('Партнерийн категори'),
-        ),
-        selectionField(
-          text: source.partner.partnerCategory,
+        SelectionField(
+          hintText: 'Сонгоно уу',
+          value: source.partner.partnerCategory,
+          labelText: 'Партнерийн категори',
+          backgroundColor: widget.edit == true ? white : backgroundColor,
+          labelTextColor: widget.edit == true ? black : grey2,
           onClick: widget.edit == true
               ? () {
                   showModalBottomSheet(
@@ -352,57 +353,65 @@ class _MainInformationFormState extends State<MainInformationForm> {
             ),
           ]),
         ),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          child: const Text('Аж ахуйн нэгжийн хэлбэр'),
+        SelectionField(
+          hintText: 'Сонгоно уу',
+          value: legalEntityType(),
+          labelText: 'Аж ахуйн нэгжийн хэлбэр',
+          backgroundColor: widget.edit == true ? white : backgroundColor,
+          labelTextColor: widget.edit == true ? black : grey2,
+          onClick: widget.edit == true
+              ? () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => const SelectLegalEntityType(),
+                  );
+                }
+              : () {},
         ),
-        selectionField(
-          text: '${legalEntityType()}',
-          onClick: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) => const SelectLegalEntityType(),
-            );
-          },
+        SelectionField(
+          hintText: 'Сонгоно уу',
+          value: source.partner.country,
+          labelText: 'Улсын харьяалал',
+          backgroundColor: widget.edit == true ? white : backgroundColor,
+          labelTextColor: widget.edit == true ? black : grey2,
+          onClick: widget.edit == true
+              ? () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => const SelectCountry(),
+                  );
+                }
+              : () {},
         ),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          child: const Text('Улсын харьяалал'),
+        SelectionField(
+          hintText: 'Сонгоно уу',
+          value: equityType(),
+          labelText: 'Өмчийн хэлбэр',
+          backgroundColor: widget.edit == true ? white : backgroundColor,
+          labelTextColor: widget.edit == true ? black : grey2,
+          onClick: widget.edit == true
+              ? () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => const SelectEquityType(),
+                  );
+                }
+              : () {},
         ),
-        selectionField(
-          text: '${source.partner.country}',
-          onClick: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) => const SelectCountry(),
-            );
-          },
-        ),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          child: const Text('Өмчийн хэлбэр'),
-        ),
-        selectionField(
-          text: '${equityType()}',
-          onClick: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) => const SelectEquityType(),
-            );
-          },
-        ),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          child: const Text('Ангилал'),
-        ),
-        selectionField(
-          text: '${classification()}',
-          onClick: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) => const SelectClassification(),
-            );
-          },
+        SelectionField(
+          hintText: 'Сонгоно уу',
+          value: classification(),
+          labelText: 'Ангилал',
+          backgroundColor: widget.edit == true ? white : backgroundColor,
+          labelTextColor: widget.edit == true ? black : grey2,
+          onClick: widget.edit == true
+              ? () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => const SelectClassification(),
+                  );
+                }
+              : () {},
         ),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 10),
@@ -603,36 +612,36 @@ class _MainInformationFormState extends State<MainInformationForm> {
             ],
           ),
         ),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          child: const Text('Аймаг, нийслэл'),
-        ),
-        selectionField(
-          text: provinceName(),
+        SelectionField(
+          hintText: 'Сонгоно уу',
+          value: provinceName(),
+          labelText: 'Аймаг, нийслэл',
+          backgroundColor: widget.edit == true ? white : backgroundColor,
+          labelTextColor: widget.edit == true ? black : grey2,
           onClick: widget.edit == true
               ? () {
                   selectProvince();
                 }
               : () {},
         ),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          child: const Text('Сум, дүүрэг'),
-        ),
-        selectionField(
-          text: districtName(),
+        SelectionField(
+          hintText: 'Сонгоно уу',
+          value: districtName(),
+          labelText: 'Сум, дүүрэг',
+          backgroundColor: widget.edit == true ? white : backgroundColor,
+          labelTextColor: widget.edit == true ? black : grey2,
           onClick: widget.edit == true
               ? () {
                   selectDistrict();
                 }
               : () {},
         ),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          child: const Text('Баг, хороо'),
-        ),
-        selectionField(
-          text: khorooName(),
+        SelectionField(
+          hintText: 'Сонгоно уу',
+          value: khorooName(),
+          labelText: 'Баг, хороо',
+          backgroundColor: widget.edit == true ? white : backgroundColor,
+          labelTextColor: widget.edit == true ? black : grey2,
           onClick: widget.edit == true
               ? () {
                   selectKhoroo();
@@ -865,37 +874,6 @@ class _MainInformationFormState extends State<MainInformationForm> {
           height: 50,
         ),
       ],
-    );
-  }
-
-  Widget selectionField({String? text, required Function() onClick}) {
-    return GestureDetector(
-      onTap: onClick,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        decoration: BoxDecoration(
-          border: Border.all(color: grey2.withOpacity(0.3)),
-          borderRadius: BorderRadius.circular(5),
-          color: widget.edit == true ? white : backgroundColor,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                text ?? "Сонгоно уу",
-                style: TextStyle(
-                  color: widget.edit == true ? black : grey2,
-                ),
-              ),
-            ),
-            Icon(
-              Icons.arrow_forward_ios,
-              color: widget.edit == true ? grey2 : grey2.withOpacity(0.3),
-              size: 14,
-            )
-          ],
-        ),
-      ),
     );
   }
 

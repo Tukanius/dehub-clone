@@ -1,3 +1,4 @@
+import 'package:dehub/components/selection_field/selection_field.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
@@ -69,12 +70,9 @@ class _AdditionalFormState extends State<AdditionalForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 5),
-            child: const Text('Харьяалах нэгж'),
-          ),
-          selection(
+          SelectionField(
             hintText: 'Сонгоно уу',
+            labelText: 'Харьяалах нэгж',
             value: departmentUnit(),
             onClick: () {
               showModalBottomSheet(
@@ -83,12 +81,9 @@ class _AdditionalFormState extends State<AdditionalForm> {
               );
             },
           ),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 5),
-            child: const Text('Харьяалах дэд нэгж'),
-          ),
-          selection(
+          SelectionField(
             hintText: 'Сонгоно уу',
+            labelText: 'Харьяалах дэд нэгж',
             value: departmentSubUnit(),
             onClick: () {
               showModalBottomSheet(
@@ -97,12 +92,9 @@ class _AdditionalFormState extends State<AdditionalForm> {
               );
             },
           ),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 5),
-            child: const Text('Албан тушаал'),
-          ),
-          selection(
+          SelectionField(
             hintText: 'Сонгоно уу',
+            labelText: 'Албан тушаал',
             value: employeeUnit(),
             onClick: () {
               showModalBottomSheet(
@@ -250,38 +242,6 @@ class _AdditionalFormState extends State<AdditionalForm> {
             }).toList(),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget selection(
-      {String? value, required String hintText, Function()? onClick}) {
-    return GestureDetector(
-      onTap: onClick,
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          color: white,
-          border: Border.all(
-            color: grey2.withOpacity(0.3),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              value ?? hintText,
-              style: TextStyle(color: value != null ? black : grey2),
-            ),
-            const Icon(
-              Icons.arrow_forward_ios,
-              color: grey3,
-              size: 16,
-            ),
-          ],
-        ),
       ),
     );
   }

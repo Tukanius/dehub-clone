@@ -61,9 +61,6 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
     });
     await list(page, limit, '');
     refreshController.loadComplete();
-    setState(() {
-      isLoading = false;
-    });
   }
 
   void _onRefresh() async {
@@ -73,7 +70,6 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
     });
     await list(page, limit, '');
     refreshController.refreshCompleted();
-    isLoading = false;
   }
 
   onChange(String value) {

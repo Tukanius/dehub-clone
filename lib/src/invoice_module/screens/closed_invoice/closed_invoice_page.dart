@@ -76,7 +76,6 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
     });
     await list(page, limit, '');
     refreshController.refreshCompleted();
-    isLoading = false;
   }
 
   @override
@@ -99,9 +98,6 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
         groupItems = {};
       });
       list(page, limit, query);
-      setState(() {
-        isLoading = false;
-      });
     });
   }
 

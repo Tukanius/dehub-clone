@@ -1,11 +1,13 @@
 import 'dart:io';
 import 'package:dehub/api/partner_api.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/selection_field/selection_field.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/partner_provider.dart';
 import 'package:dehub/src/partner_module/screens/branch_create/tabs/sheets/buyer_select.dart';
 import 'package:dehub/src/partner_module/screens/branch_create/tabs/sheets/select_branch_type.dart';
@@ -66,6 +68,7 @@ class _MainInformationState extends State<MainInformation>
 
   onSubmit() async {
     final source = Provider.of<PartnerProvider>(context, listen: false);
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     List<String> buyers = [];
     List<String> suppliers = [];
     if (fbKey.currentState!.saveAndValidate()) {
@@ -110,9 +113,13 @@ class _MainInformationState extends State<MainInformation>
           );
         } else {
           if (widget.data != null) {
+            loading.loading(true);
             await source.branchUpdate(data, widget.data!.id!);
+            loading.loading(false);
           } else {
+            loading.loading(true);
             await source.branchCreate(data);
+            loading.loading(false);
           }
           widget.listenController.changeVariable('branch');
           setState(() {
@@ -120,7 +127,7 @@ class _MainInformationState extends State<MainInformation>
           });
         }
       } catch (e) {
-        debugPrint(e.toString());
+        loading.loading(false);
       }
     }
   }
@@ -286,18 +293,10 @@ class _MainInformationState extends State<MainInformation>
                                   englishValidate(value.toString(), context),
                             ]),
                           ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 5),
-                            child: const Text(
-                              'Салбарын төрөл',
-                              style: TextStyle(
-                                color: grey3,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          selection(
+                          SelectionField(
                             hintText: 'Салбарын төрөл',
+                            labelText: 'Салбарын төрөл',
+                            backgroundColor: backgroundColor,
                             value: branchType(),
                             onClick: () {
                               showModalBottomSheet(
@@ -305,7 +304,6 @@ class _MainInformationState extends State<MainInformation>
                                 builder: (context) => const SelectBranchType(),
                               );
                             },
-                            selected: false,
                           ),
                           Container(
                             margin: const EdgeInsets.symmetric(vertical: 10),

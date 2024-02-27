@@ -57,9 +57,6 @@ class _GivePageState extends State<GivePage>
     });
     await list(page, limit, '', selectedStatus!);
     _refreshController.loadComplete();
-    setState(() {
-      isLoading = false;
-    });
   }
 
   void _onRefresh() async {
@@ -71,9 +68,6 @@ class _GivePageState extends State<GivePage>
     await Future.delayed(const Duration(milliseconds: 1000));
     await list(page, limit, '', selectedStatus!);
     _refreshController.refreshCompleted();
-    setState(() {
-      isLoading = false;
-    });
   }
 
   @override
@@ -148,9 +142,6 @@ class _GivePageState extends State<GivePage>
         groupItems = {};
       });
       await list(page, limit, query, selectedStatus!);
-      setState(() {
-        isLoading = false;
-      });
     });
   }
 

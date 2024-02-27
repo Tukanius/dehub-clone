@@ -1,3 +1,4 @@
+import 'package:dehub/components/selection_field/selection_field.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/providers/general_provider.dart';
@@ -8,6 +9,7 @@ import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/sheet
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:provider/provider.dart';
 
 class AdminUserForm extends StatefulWidget {
@@ -132,6 +134,9 @@ class _AdminUserFormState extends State<AdminUserForm> {
             fillColor: widget.edit == true ? white : backgroundColor,
             filled: true,
           ),
+          validator: FormBuilderValidators.compose([
+            (value) => validateCryllic(value.toString(), context),
+          ]),
         ),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 5),
@@ -160,6 +165,9 @@ class _AdminUserFormState extends State<AdminUserForm> {
             fillColor: widget.edit == true ? white : backgroundColor,
             filled: true,
           ),
+          validator: FormBuilderValidators.compose([
+            (value) => validateCryllic(value.toString(), context),
+          ]),
         ),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 5),
@@ -188,12 +196,16 @@ class _AdminUserFormState extends State<AdminUserForm> {
             fillColor: widget.edit == true ? white : backgroundColor,
             filled: true,
           ),
+          validator: FormBuilderValidators.compose([
+            (value) => validateCryllic(value.toString(), context),
+          ]),
         ),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          child: const Text('Харьяалах нэгжийн нэр'),
-        ),
-        selectionField(
+        SelectionField(
+          hintText: 'Сонгоно уу',
+          value: departmentUnit(),
+          labelText: 'Харьяалах нэгжийн нэр',
+          labelTextColor: widget.edit == true ? black : grey2,
+          backgroundColor: widget.edit == true ? white : backgroundColor,
           onClick: widget.edit == true
               ? () {
                   showModalBottomSheet(
@@ -202,13 +214,13 @@ class _AdminUserFormState extends State<AdminUserForm> {
                   );
                 }
               : () {},
-          text: departmentUnit(),
         ),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          child: const Text('Албан тушаалын нэр'),
-        ),
-        selectionField(
+        SelectionField(
+          hintText: 'Сонгоно уу',
+          value: employeeUnit(),
+          labelText: 'Албан тушаалын нэр',
+          labelTextColor: widget.edit == true ? black : grey2,
+          backgroundColor: widget.edit == true ? white : backgroundColor,
           onClick: widget.edit == true
               ? () {
                   showModalBottomSheet(
@@ -217,7 +229,6 @@ class _AdminUserFormState extends State<AdminUserForm> {
                   );
                 }
               : () {},
-          text: employeeUnit(),
         ),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 5),
@@ -365,35 +376,18 @@ class _AdminUserFormState extends State<AdminUserForm> {
       ],
     );
   }
+}
 
-  Widget selectionField({String? text, required Function() onClick}) {
-    return GestureDetector(
-      onTap: onClick,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        decoration: BoxDecoration(
-          border: Border.all(color: grey2.withOpacity(0.3)),
-          borderRadius: BorderRadius.circular(5),
-          color: widget.edit == true ? white : backgroundColor,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                text ?? "Сонгоно уу",
-                style: TextStyle(
-                  color: widget.edit == true ? black : grey2,
-                ),
-              ),
-            ),
-            Icon(
-              Icons.arrow_forward_ios,
-              color: widget.edit == true ? grey2 : grey2.withOpacity(0.3),
-              size: 14,
-            )
-          ],
-        ),
-      ),
-    );
+String? validateCryllic(String name, BuildContext context) {
+  String pattern = r'(^[а-яА-ЯӨөҮүЁёӨө -]+$)';
+  RegExp isValidName = RegExp(pattern);
+  if (name.isEmpty) {
+    return "Заавал оруулна";
+  } else {
+    if (!isValidName.hasMatch(name)) {
+      return "Зөвхөн крилл үсэг ашиглана";
+    } else {
+      return null;
+    }
   }
 }

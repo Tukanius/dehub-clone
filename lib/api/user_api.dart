@@ -58,12 +58,12 @@ class UserApi extends HttpRequest {
   }
 
   Future<Result> bankList() async {
-    var res = await get('/finance_settings/bank', type, false);
+    var res = await get('/finance_settings/bank', type, true);
     return Result.fromJson(res, User.fromJson);
   }
 
   Future<Result> financeRoleList(ResultArguments data) async {
-    var res = await get('/finance_settings/finance_role', type, false,
+    var res = await get('/finance_settings/finance_role', type, true,
         data: data.toJson());
     return Result.fromJson(res, User.fromJson);
   }

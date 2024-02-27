@@ -1,5 +1,6 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/user_api.dart';
+import 'package:dehub/components/selection_field/selection_field.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/loading_provider.dart';
@@ -136,14 +137,12 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
                         ),
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 5),
-                      child: const Text('Бизнесийн нэр'),
-                    ),
-                    selectionField(
-                      text: source.user.business?.profileName != null
+                    SelectionField(
+                      hintText: 'Сонгоно уу',
+                      value: source.user.business?.profileName != null
                           ? "${source.user.business?.profileName} / ${source.user.business?.refCode}"
                           : null,
+                      labelText: 'Бизнесийн нэр',
                       onClick: () {
                         showModalBottomSheet(
                           context: context,
@@ -151,12 +150,10 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
                         );
                       },
                     ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 5),
-                      child: const Text('Хамрах хүрээ'),
-                    ),
-                    selectionField(
-                      text: source.user.branchName,
+                    SelectionField(
+                      hintText: 'Сонгоно уу',
+                      value: source.user.branchName,
+                      labelText: 'Хамрах хүрээ',
                       onClick: () {
                         showModalBottomSheet(
                           context: context,
@@ -164,12 +161,10 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
                         );
                       },
                     ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 5),
-                      child: const Text('Хэрэглэгчийн роль'),
-                    ),
-                    selectionField(
-                      text: source.user.roleName,
+                    SelectionField(
+                      hintText: 'Сонгоно уу',
+                      value: source.user.roleName,
+                      labelText: 'Хэрэглэгчийн роль',
                       onClick: () {
                         showModalBottomSheet(
                           context: context,
@@ -177,16 +172,14 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
                         );
                       },
                     ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 5),
-                      child: const Text('Өгөгдлийн түвшин'),
-                    ),
-                    selectionField(
-                      text: source.user.accessLevel == 'ONLY_ME'
+                    SelectionField(
+                      hintText: 'Сонгоно уу',
+                      value: source.user.accessLevel == 'ONLY_ME'
                           ? 'Надад хуваарилагдсан'
                           : source.user.accessLevel == "TO_ANYONE"
                               ? 'Бүгд'
                               : null,
+                      labelText: 'Өгөгдлийн түвшин',
                       onClick: () {
                         showModalBottomSheet(
                           context: context,
@@ -194,12 +187,10 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
                         );
                       },
                     ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 5),
-                      child: const Text('Ролийн төрөл'),
-                    ),
-                    selectionField(
-                      text: source.user.type,
+                    SelectionField(
+                      hintText: 'Сонгоно уу',
+                      value: source.user.type,
+                      labelText: 'Ролийн төрөл',
                       onClick: () {
                         showModalBottomSheet(
                           context: context,
@@ -214,14 +205,11 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 5),
-                                  child: const Text('Эхлэх хугацаа'),
-                                ),
-                                selectionField(
-                                  text: DateFormat('yyyy-MM-dd')
+                                SelectionField(
+                                  hintText: 'Сонгоно уу',
+                                  value: DateFormat('yyyy-MM-dd')
                                       .format(startDate),
+                                  labelText: 'Эхлэх хугацаа',
                                   onClick: () {
                                     changeStartDate();
                                   },
@@ -236,14 +224,11 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 5),
-                                  child: const Text('Дуусах хугацаа'),
-                                ),
-                                selectionField(
-                                  text:
+                                SelectionField(
+                                  hintText: 'Сонгоно уу',
+                                  value:
                                       DateFormat('yyyy-MM-dd').format(endDate),
+                                  labelText: 'Дуусах хугацаа',
                                   onClick: () {
                                     changeEndDate();
                                   },
@@ -295,37 +280,6 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
                 ),
               ),
             ),
-    );
-  }
-
-  Widget selectionField({String? text, required Function() onClick}) {
-    return GestureDetector(
-      onTap: onClick,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        decoration: BoxDecoration(
-          border: Border.all(color: grey2.withOpacity(0.3)),
-          borderRadius: BorderRadius.circular(5),
-          color: white,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                text ?? "Сонгоно уу",
-                style: TextStyle(
-                  color: text != null ? black : grey2,
-                ),
-              ),
-            ),
-            const Icon(
-              Icons.arrow_forward_ios,
-              color: grey2,
-              size: 14,
-            )
-          ],
-        ),
-      ),
     );
   }
 

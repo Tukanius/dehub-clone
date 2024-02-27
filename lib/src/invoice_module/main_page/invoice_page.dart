@@ -3,7 +3,8 @@ import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/src/invoice_module/main_page/tabs/statement_tab/statement_tab.dart';
+import './tabs/settlement_tab/settlement_tab.dart';
+import 'package:dehub/src/invoice_module/main_page/tabs/network_settlement_tab/network_statement_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
@@ -35,10 +36,10 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
   }
 
   static const List<Widget> currentPages = [
-    Text(''),
+    SizedBox(),
     DashBoardTab(),
-    StatementTab(),
-    Text('1'),
+    NetworkSettlementTab(),
+    SettlementTab(),
   ];
 
   void ontappedItem(int index) {
@@ -211,7 +212,9 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'assets/svg/bill.svg',
+                    'assets/svg/user-dollar.svg',
+                    height: 20,
+                    width: 20,
                     colorFilter: ColorFilter.mode(
                         selectedIndex == 2 ? white : invoiceColor,
                         BlendMode.srcIn),
@@ -236,7 +239,9 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'assets/svg/document.svg',
+                    'assets/svg/finance_review.svg',
+                    height: 20,
+                    width: 20,
                     colorFilter: ColorFilter.mode(
                         selectedIndex == 3 ? white : invoiceColor,
                         BlendMode.srcIn),
@@ -244,7 +249,7 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
                 ),
                 if (selectedIndex != 3)
                   const Text(
-                    'Баримт',
+                    'Тооцоо нийлэх',
                     style: TextStyle(color: invoiceColor, fontSize: 12),
                   ),
               ],

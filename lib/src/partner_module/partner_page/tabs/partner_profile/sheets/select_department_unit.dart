@@ -31,6 +31,7 @@ class SelectDepartmentUnitState extends State<SelectDepartmentUnit> {
         child: SingleChildScrollView(
           child: Column(
             children: general.departmentUnits!
+                .where((element) => element.parentId == null)
                 .map(
                   (e) => InkWell(
                     onTap: () {

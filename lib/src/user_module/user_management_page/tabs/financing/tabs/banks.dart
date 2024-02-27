@@ -52,7 +52,8 @@ class BanksTabState extends State<BanksTab> with AfterLayoutMixin {
                                         Navigator.of(context).pushNamed(
                                           FinanceRequest.routeName,
                                           arguments: FinanceRequestArguments(
-                                            id: e.name,
+                                            name: e.name,
+                                            bank: e.code,
                                           ),
                                         );
                                       }

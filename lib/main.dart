@@ -17,7 +17,8 @@ import 'package:dehub/src/finance_module/screens/payment_page/payment_page.dart'
 import 'package:dehub/src/finance_module/screens/recalled_page/recalled_page.dart';
 import 'package:dehub/src/finance_module/screens/settlement_respond/settlement_respond.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_transaction/invoice_transaction.dart';
-import 'package:dehub/src/invoice_module/screens/statement_detail/statement_detail.dart';
+import 'package:dehub/src/invoice_module/screens/network_settlement_detail/network_settlement_detail.dart';
+import 'package:dehub/src/invoice_module/screens/settlement_detail/settlement_detail.dart';
 import 'package:dehub/src/invoice_module/screens/transaction_detail/transaction_detail.dart';
 import 'package:dehub/src/network_module/screens/account_setting/account_setting.dart';
 import 'package:dehub/src/network_module/screens/account_setting/account_setting_detail/account_setting_detail.dart';
@@ -85,7 +86,7 @@ import 'package:dehub/src/network_module/screens/zoning_page/zoning_detail_page.
 import 'package:dehub/src/network_module/screens/zoning_page/zoning_page.dart';
 import 'package:dehub/src/network_module/screens/new_invitation_page/invitation_sent_page/invitation_sent_page.dart';
 import 'package:dehub/src/network_module/screens/new_invitation_page/new_invitation_page.dart';
-import 'package:dehub/src/network_module/network_page/tabs/inbox_tab/invitation_detail_page/invitation_detail_page.dart';
+import 'package:dehub/src/network_module/screens/invitation_detail_page/invitation_detail_page.dart';
 import 'package:dehub/src/invoice_module/main_page/invoice_page.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/customer_choose.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/customer_choose_tabs/gereet.dart';
@@ -97,7 +98,7 @@ import 'package:dehub/src/invoice_module/screens/invoice_detail_page/invoice_det
 import 'package:dehub/src/payment_module/screens/link_account_page/link_account_page.dart';
 import 'package:dehub/src/entry_point/menu/menu_page.dart';
 import 'package:dehub/src/network_module/network_page/network_page.dart';
-import 'package:dehub/src/network_module/screens/invitation_detail_page/invitation_detail_page.dart';
+import 'package:dehub/src/network_module/screens/sent_invitation_detail/sent_invitation_detail_page.dart';
 import 'package:dehub/src/order_module/screens/new_order/add_attachment/add_attachment.dart';
 import 'package:dehub/src/order_module/screens/new_order/add_row/order_add_row.dart';
 import 'package:dehub/src/order_module/screens/new_order/change_branch/change_branch_name.dart';
@@ -174,6 +175,7 @@ import 'package:dehub/src/splash/splash_page.dart';
 import 'package:dehub/src/payment_module/screens/transaction_history/transaction_history.dart';
 import 'package:dehub/src/user_module/screens/create_user/create_user.dart';
 import 'package:dehub/src/user_module/screens/finance_request/finance_request.dart';
+import 'package:dehub/src/user_module/screens/finance_role_assign/finance_role_assign.dart';
 import 'package:dehub/src/user_module/screens/invitation_send/invitation_send.dart';
 import 'package:dehub/src/user_module/screens/role_assign/role_assign.dart';
 import 'package:dehub/src/user_module/screens/update_user/update_user_page.dart';
@@ -643,7 +645,10 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return const GereetBish();
                     });
-
+                  case FinanceRoleAssign.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return const FinanceRoleAssign();
+                    });
                   case OtpVerifyPage.routeName:
                     OtpVerifyPageArguments arguments =
                         settings.arguments as OtpVerifyPageArguments;
@@ -667,7 +672,8 @@ class MyApp extends StatelessWidget {
                         settings.arguments as FinanceRequestArguments;
                     return MaterialPageRoute(builder: (context) {
                       return FinanceRequest(
-                        id: arguments.id,
+                        bank: arguments.bank,
+                        name: arguments.name,
                       );
                     });
                   case UpdateBusiness.routeName:
@@ -1077,12 +1083,20 @@ class MyApp extends StatelessWidget {
                         id: arguments.id,
                       );
                     });
-                  case StatementDetail.routeName:
-                    StatementDetailArguments arguments =
-                        settings.arguments as StatementDetailArguments;
+                  case NetworkSettlementDetail.routeName:
+                    NetworkSettlementDetailArguments arguments =
+                        settings.arguments as NetworkSettlementDetailArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return StatementDetail(
+                      return NetworkSettlementDetail(
                         data: arguments.data,
+                      );
+                    });
+                  case SettlementDetail.routeName:
+                    SettlementDetailArguments arguments =
+                        settings.arguments as SettlementDetailArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return SettlementDetail(
+                        id: arguments.id,
                       );
                     });
                   case InvoiceTransaction.routeName:

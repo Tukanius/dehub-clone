@@ -56,9 +56,6 @@ class _AccountSettingState extends State<AccountSetting> with AfterLayoutMixin {
         isLoading = true;
       });
       list(page, limit, query);
-      setState(() {
-        isLoading = false;
-      });
     });
   }
 

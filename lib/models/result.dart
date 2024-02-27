@@ -42,8 +42,10 @@ class Filter {
   bool? excel;
   String? variantId;
   String? userId;
+  String? settlementId;
 
   Filter({
+    this.settlementId,
     this.userId,
     this.variantId,
     this.excel,

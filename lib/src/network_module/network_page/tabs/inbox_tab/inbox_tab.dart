@@ -8,7 +8,7 @@ import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/partner_cards/invitation_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:dehub/src/network_module/network_page/tabs/inbox_tab/invitation_detail_page/invitation_detail_page.dart';
+import 'package:dehub/src/network_module/screens/invitation_detail_page/invitation_detail_page.dart';
 
 class InboxTab extends StatefulWidget {
   const InboxTab({super.key});

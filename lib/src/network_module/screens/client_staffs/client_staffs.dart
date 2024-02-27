@@ -57,9 +57,6 @@ class _ClientStaffsState extends State<ClientStaffs> with AfterLayoutMixin {
         isLoading = true;
       });
       list(page, limit, query);
-      setState(() {
-        isLoading = false;
-      });
     });
   }
 
@@ -69,9 +66,6 @@ class _ClientStaffsState extends State<ClientStaffs> with AfterLayoutMixin {
     });
     await list(page, limit, '');
     refreshController.loadComplete();
-    setState(() {
-      isLoading = false;
-    });
   }
 
   void _onRefresh() async {
@@ -81,7 +75,6 @@ class _ClientStaffsState extends State<ClientStaffs> with AfterLayoutMixin {
     });
     await list(page, limit, '');
     refreshController.refreshCompleted();
-    isLoading = false;
   }
 
   @override

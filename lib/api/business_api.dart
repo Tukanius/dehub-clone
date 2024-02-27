@@ -41,6 +41,11 @@ class BusinessApi extends HttpRequest {
     return res;
   }
 
+  send(String id) async {
+    var res = await put('/invitation/$id/send', "BUSINESS", true);
+    return res;
+  }
+
   Future<Result> networkList(ResultArguments resultArguments) async {
     var res = await get("/network", "BUSINESS", true,
         data: resultArguments.toJson(), handler: true);

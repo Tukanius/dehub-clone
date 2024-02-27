@@ -2,24 +2,24 @@ import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/result.dart';
+import '../components/invoice_card.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_transaction/invoice_transaction.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import '../components/invoice_card.dart';
 import 'package:after_layout/after_layout.dart';
 
-class ClosedTab extends StatefulWidget {
+class PendingTab extends StatefulWidget {
   final Invoice data;
-  const ClosedTab({
+  const PendingTab({
     super.key,
     required this.data,
   });
 
   @override
-  State<ClosedTab> createState() => _ClosedTabState();
+  State<PendingTab> createState() => _PendingTabState();
 }
 
-class _ClosedTabState extends State<ClosedTab> with AfterLayoutMixin {
+class _PendingTabState extends State<PendingTab> with AfterLayoutMixin {
   int page = 1;
   int limit = 10;
   Result invoice = Result(count: 0, rows: []);
@@ -28,9 +28,9 @@ class _ClosedTabState extends State<ClosedTab> with AfterLayoutMixin {
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(businessId: widget.data.id, type: "CLOSED");
-    invoice = await InvoiceApi()
-        .settlementInvoice(ResultArguments(filter: filter, offset: offset));
+    Filter filter = Filter(businessId: widget.data.id, type: "PENDING");
+    invoice = await InvoiceApi().networkSettlementInvoice(
+        ResultArguments(filter: filter, offset: offset));
     setState(() {
       isLoading = false;
     });
@@ -71,7 +71,7 @@ class _ClosedTabState extends State<ClosedTab> with AfterLayoutMixin {
                       margin: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
                       child: const Text(
-                        'Төлбөрийн үлдэгдэлгүй',
+                        'Батлах нэхэмжлэхүүд',
                         style: TextStyle(
                             color: grey3, fontWeight: FontWeight.w600),
                       ),

@@ -60,9 +60,6 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
         isLoading = true;
       });
       list(page, limit, value);
-      setState(() {
-        isLoading = false;
-      });
     });
   }
 
@@ -72,9 +69,6 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
     });
     await list(page, limit, '');
     refreshController.loadComplete();
-    setState(() {
-      isLoading = false;
-    });
   }
 
   void _onRefresh() async {
@@ -84,7 +78,6 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
     });
     await list(page, limit, '');
     refreshController.refreshCompleted();
-    isLoading = false;
   }
 
   @override

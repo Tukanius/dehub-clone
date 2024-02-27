@@ -50,6 +50,7 @@ import 'package:dehub/models/role_status.dart';
 import 'package:dehub/models/role_types.dart';
 import 'package:dehub/models/roles.dart';
 import 'package:dehub/models/service_category_types.dart';
+import 'package:dehub/models/settlement_status.dart';
 import 'package:dehub/models/stock_movement_types.dart';
 import 'package:dehub/models/supp.dart';
 import 'package:dehub/models/supplier_businesses.dart';
@@ -189,8 +190,10 @@ class General {
   List<Actions>? actions;
   List<Modules>? modules;
   List<FinanceRoleStatus>? financeRoleStatus;
+  List<SettlementStatus>? settlementStatus;
 
   General({
+    this.settlementStatus,
     this.financeRoleStatus,
     this.modules,
     this.actions,

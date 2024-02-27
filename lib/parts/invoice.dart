@@ -35,6 +35,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     configType:
         json['configType'] != null ? json['configType'] as String : null,
     updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
+    settlementStatus: json['settlementStatus'] != null
+        ? json['settlementStatus'] as String
+        : null,
     paymentMethod:
         json['paymentMethod'] != null ? json['paymentMethod'] as String : null,
     deletedAt: json['deletedAt'] != null ? json['deletedAt'] as String : null,
@@ -136,6 +139,15 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     receiverBusiness: json['receiverBusiness'] != null
         ? Invoice.fromJson(json['receiverBusiness'] as Map<String, dynamic>)
         : null,
+    invoice: json['invoice'] != null
+        ? Invoice.fromJson(json['invoice'] as Map<String, dynamic>)
+        : null,
+    myFinanceStaff: json['myFinanceStaff'] != null
+        ? Invoice.fromJson(json['myFinanceStaff'] as Map<String, dynamic>)
+        : null,
+    financeStaff: json['financeStaff'] != null
+        ? Invoice.fromJson(json['financeStaff'] as Map<String, dynamic>)
+        : null,
     additionalRowAmount: json['additionalRowAmount'] != null
         ? double.parse(json['additionalRowAmount'].toString())
         : null,
@@ -199,6 +211,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
         : null,
     remainingDays: json['remainingDays'] != null
         ? int.parse('${json['remainingDays']}')
+        : null,
+    numberOfInv: json['numberOfInv'] != null
+        ? int.parse('${json['numberOfInv']}')
         : null,
     confirmationDay: json['confirmationDay'] != null
         ? int.parse('${json['confirmationDay']}')
@@ -386,6 +401,15 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     paymentRefCode: json['paymentRefCode'] != null
         ? json['paymentRefCode'] as String
         : null,
+    histories: json['histories'] != null
+        ? (json['histories'] as List).map((e) => Invoice.fromJson(e)).toList()
+        : null,
+    firstAmount: json['firstAmount'] != null
+        ? double.parse('${json['firstAmount']}')
+        : null,
+    lastAmount: json['lastAmount'] != null
+        ? double.parse('${json['lastAmount']}')
+        : null,
   );
 }
 
@@ -394,6 +418,21 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
 
   if (instance.paymentRefCode != null) {
     json['paymentRefCode'] = instance.paymentRefCode;
+  }
+  if (instance.numberOfInv != null) {
+    json['numberOfInv'] = instance.numberOfInv;
+  }
+  if (instance.histories != null) {
+    json['histories'] = instance.histories;
+  }
+  if (instance.firstAmount != null) {
+    json['firstAmount'] = instance.firstAmount;
+  }
+  if (instance.lastAmount != null) {
+    json['lastAmount'] = instance.lastAmount;
+  }
+  if (instance.settlementStatus != null) {
+    json['settlementStatus'] = instance.settlementStatus;
   }
   if (instance.additionalRowAmount != null) {
     json['additionalRowAmount'] = instance.additionalRowAmount;
@@ -417,6 +456,7 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   }
   if (instance.email != null) json['email'] = instance.email;
   if (instance.business != null) json['business'] = instance.business;
+  if (instance.invoice != null) json['invoice'] = instance.invoice;
   if (instance.branch != null) json['branch'] = instance.branch;
   if (instance.confirmationDay != null) {
     json['confirmationDay'] = instance.confirmationDay;
@@ -540,6 +580,12 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   if (instance.taxAmount != null) json['taxAmount'] = instance.taxAmount;
   if (instance.discountType != null) {
     json['discountType'] = instance.discountType;
+  }
+  if (instance.myFinanceStaff != null) {
+    json['myFinanceStaff'] = instance.myFinanceStaff;
+  }
+  if (instance.financeStaff != null) {
+    json['financeStaff'] = instance.financeStaff;
   }
   if (instance.discountValue != null) {
     json['discountValue'] = instance.discountValue;

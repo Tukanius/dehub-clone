@@ -1,10 +1,12 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/partner_api.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/selection_field/selection_field.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/partner_provider.dart';
 import 'package:dehub/src/partner_module/screens/address_sheets/district_sheet.dart';
 import 'package:dehub/src/partner_module/screens/address_sheets/khoroo_sheet.dart';
@@ -34,16 +36,13 @@ class _AddressInformationState extends State<AddressInformation>
     with AfterLayoutMixin {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   General general = General();
-  bool isSubmit = false;
   bool isLoading = true;
 
   onSubmit() async {
     final source = Provider.of<PartnerProvider>(context, listen: false);
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     if (fbKey.currentState!.saveAndValidate()) {
       try {
-        setState(() {
-          isSubmit = true;
-        });
         Partner data = Partner.fromJson(fbKey.currentState!.value);
         data.province = source.partner.province;
         data.district = source.partner.district;
@@ -53,20 +52,17 @@ class _AddressInformationState extends State<AddressInformation>
             source.partner.khoroo == null) {
           showCustomDialog(context, 'Аймаг, сум, хороо сонгоно уу', false);
         } else {
+          loading.loading(true);
           await PartnerApi().address(data, source.createdBranch.id!);
+          loading.loading(false);
           widget.listenController.changeVariable('branch');
           showCustomDialog(context, "Салбарын хаяг амжилттай нэмлээ", true,
               onPressed: () {
             Navigator.of(context).pop();
           });
         }
-        setState(() {
-          isSubmit = false;
-        });
       } catch (e) {
-        setState(() {
-          isSubmit = false;
-        });
+        loading.loading(false);
       }
     }
   }
@@ -158,50 +154,29 @@ class _AddressInformationState extends State<AddressInformation>
                           ],
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 5),
-                        child: const Text(
-                          'Аймаг, нийслэл',
-                          style: TextStyle(
-                            color: grey2,
-                          ),
-                        ),
-                      ),
-                      selection(
-                        value: provinceName(),
+                      SelectionField(
                         hintText: 'Аймаг, нийслэл',
+                        labelText: 'Аймаг нийслэл',
+                        value: provinceName(),
+                        backgroundColor: backgroundColor,
                         onClick: () {
                           selectProvince();
                         },
                       ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 5),
-                        child: const Text(
-                          'Сум, дүүрэг',
-                          style: TextStyle(
-                            color: grey2,
-                          ),
-                        ),
-                      ),
-                      selection(
-                        value: districtName(),
+                      SelectionField(
                         hintText: 'Сум, дүүрэг',
+                        labelText: 'Сум, дүүрэг',
+                        value: districtName(),
+                        backgroundColor: backgroundColor,
                         onClick: () {
                           selectDistrict();
                         },
                       ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 5),
-                        child: const Text(
-                          'Баг, хороо',
-                          style: TextStyle(
-                            color: grey2,
-                          ),
-                        ),
-                      ),
-                      selection(
-                        value: khorooName(),
+                      SelectionField(
                         hintText: 'Баг, хороо',
+                        labelText: 'Баг, хороо',
+                        value: khorooName(),
+                        backgroundColor: backgroundColor,
                         onClick: () {
                           selectKhoroo();
                         },
@@ -492,7 +467,6 @@ class _AddressInformationState extends State<AddressInformation>
                         height: 50,
                       ),
                       CustomButton(
-                        isLoading: isSubmit,
                         onClick: onSubmit,
                         labelText: 'Хадгалах',
                         labelColor: partnerColor,
@@ -506,40 +480,6 @@ class _AddressInformationState extends State<AddressInformation>
               ),
             ),
           );
-  }
-
-  Widget selection(
-      {String? value, required String hintText, Function()? onClick}) {
-    return GestureDetector(
-      onTap: onClick,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(
-            color: grey2.withOpacity(0.3),
-          ),
-          color: backgroundColor,
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                value ?? hintText,
-                style: TextStyle(
-                  color: value == null ? grey2 : black,
-                ),
-              ),
-            ),
-            const Icon(
-              Icons.arrow_forward_ios,
-              color: grey3,
-              size: 16,
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   selectProvince() {

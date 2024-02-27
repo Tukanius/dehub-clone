@@ -88,7 +88,8 @@ class _VersionControlSheetState extends State<VersionControlSheet>
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: const ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter:
+                          const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),
@@ -228,7 +229,8 @@ class _VersionControlSheetState extends State<VersionControlSheet>
                                                           ),
                                                           child: Text(
                                                             '${item.name}',
-                                                            style: const TextStyle(
+                                                            style:
+                                                                const TextStyle(
                                                               color: grey2,
                                                             ),
                                                           ),

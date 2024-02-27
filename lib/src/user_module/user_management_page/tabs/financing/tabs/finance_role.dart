@@ -2,6 +2,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/user_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/src/user_module/screens/finance_role_assign/finance_role_assign.dart';
 import 'package:dehub/src/user_module/user_management_page/tabs/financing/components/finance_role_card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -36,34 +37,48 @@ class _FinanceRoleState extends State<FinanceRole> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading == true
-        ? const Center(
-            child: CircularProgressIndicator(
-              color: userColor,
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        backgroundColor: userColor,
+        onPressed: () {
+          Navigator.of(context).pushNamed(FinanceRoleAssign.routeName);
+        },
+        child: const Icon(
+          Icons.add,
+          color: white,
+        ),
+      ),
+      body: isLoading == true
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: userColor,
+              ),
+            )
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  roles.rows!.isNotEmpty
+                      ? Column(
+                          children: roles.rows!
+                              .map(
+                                (data) => FinanceRoleCard(
+                                  data: data,
+                                ),
+                              )
+                              .toList(),
+                        )
+                      : const NotFound(
+                          module: 'USER',
+                          labelText: 'Хоосон байна',
+                        ),
+                  const SizedBox(
+                    height: 50,
+                  )
+                ],
+              ),
             ),
-          )
-        : SingleChildScrollView(
-            child: Column(
-              children: [
-                roles.rows!.isNotEmpty
-                    ? Column(
-                        children: roles.rows!
-                            .map(
-                              (data) => FinanceRoleCard(
-                                data: data,
-                              ),
-                            )
-                            .toList(),
-                      )
-                    : const NotFound(
-                        module: 'USER',
-                        labelText: 'Хоосон байна',
-                      ),
-                const SizedBox(
-                  height: 50,
-                )
-              ],
-            ),
-          );
+    );
   }
 }

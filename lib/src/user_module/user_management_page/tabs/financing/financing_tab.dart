@@ -25,54 +25,40 @@ class _FinancingTabState extends State<FinancingTab>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      floatingActionButton: tabController.index == 1
-          ? FloatingActionButton(
-              shape: const CircleBorder(),
-              backgroundColor: userColor,
-              onPressed: () {},
-              child: const Icon(
-                Icons.add,
-                color: white,
-              ),
-            )
-          : const SizedBox(),
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverToBoxAdapter(
-              child: TabBar(
-                controller: tabController,
-                labelColor: userColor,
-                unselectedLabelColor: grey2,
-                indicatorColor: userColor,
-                isScrollable: true,
-                tabAlignment: TabAlignment.start,
-                overlayColor: MaterialStatePropertyAll(Colors.grey.shade200),
-                tabs: const [
-                  Tab(
-                    text: 'SCF/DCF банк',
-                  ),
-                  Tab(
-                    text: 'Эрхийн түүх',
-                  ),
-                  Tab(
-                    text: 'Системийн лог',
-                  ),
-                ],
-              ),
+    return NestedScrollView(
+      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+        return <Widget>[
+          SliverToBoxAdapter(
+            child: TabBar(
+              controller: tabController,
+              labelColor: userColor,
+              unselectedLabelColor: grey2,
+              indicatorColor: userColor,
+              isScrollable: true,
+              tabAlignment: TabAlignment.start,
+              overlayColor: MaterialStatePropertyAll(Colors.grey.shade200),
+              tabs: const [
+                Tab(
+                  text: 'SCF/DCF банк',
+                ),
+                Tab(
+                  text: 'Эрхийн түүх',
+                ),
+                Tab(
+                  text: 'Системийн лог',
+                ),
+              ],
             ),
-          ];
-        },
-        body: TabBarView(
-          controller: tabController,
-          children: const [
-            BanksTab(),
-            FinanceRole(),
-            Text(''),
-          ],
-        ),
+          ),
+        ];
+      },
+      body: TabBarView(
+        controller: tabController,
+        children: const [
+          BanksTab(),
+          FinanceRole(),
+          Text(''),
+        ],
       ),
     );
   }

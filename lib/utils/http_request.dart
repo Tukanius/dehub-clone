@@ -54,7 +54,11 @@ class HttpRequest {
         uri = '$partnerHost$version$api';
       }
     } else if (type == "INVOICE") {
-      uri = '$invoiceHost$version$api';
+      if (isVersionTrue == false) {
+        uri = '$invoiceHost$api';
+      } else {
+        uri = '$invoiceHost$version$api';
+      }
     } else if (type == "BUSINESS") {
       uri = '$businessHost$version$api';
     } else if (type == "INVENTORY") {

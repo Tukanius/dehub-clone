@@ -3,18 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 
 class FinanceRequestArguments {
-  String id;
+  String bank;
+  String name;
   FinanceRequestArguments({
-    required this.id,
+    required this.bank,
+    required this.name,
   });
 }
 
 class FinanceRequest extends StatefulWidget {
   static const routeName = '/FinanceRequest';
-  final String id;
+  final String bank;
+  final String name;
   const FinanceRequest({
     super.key,
-    required this.id,
+    required this.name,
+    required this.bank,
   });
 
   @override
@@ -81,7 +85,7 @@ class _FinanceRequestState extends State<FinanceRequest> {
                 border: Border.all(color: grey2.withOpacity(0.3)),
                 color: white,
               ),
-              child: Text(widget.id),
+              child: Text(widget.name),
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
