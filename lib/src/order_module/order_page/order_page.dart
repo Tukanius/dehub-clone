@@ -3,15 +3,14 @@ import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/order_module/order_page/tabs/customer_order/customer_order.dart';
 import 'package:dehub/src/order_module/order_page/tabs/order_tab/order_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/src/order_module/order_page/tabs/dashboard_tab/dashboard_tab.dart';
-import 'package:dehub/src/order_module/order_page/tabs/customer_tab/customer_tab.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:dehub/src/order_module/screens/new_order/new_order.dart';
 import 'package:provider/provider.dart';
 
 class OrderPage extends StatefulWidget {
@@ -42,8 +41,8 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
       labelText: "Хоосон байна",
     ),
     DashboardTab(),
+    CustomerOrder(),
     OrderTab(),
-    CustomerTab(),
   ];
 
   @override
@@ -65,18 +64,18 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                 prefixIcon: const Icon(Icons.search),
                 hintText: 'Партнер нэрээр хайх',
               )
-            : index.selectedIndex == 2
+            : index.selectedIndex == 3
                 ? const Text(
-                    'Захиалгын жагсаалт',
+                    'Борлуулалтын захиалга',
                     style: TextStyle(
                       color: buttonColor,
                       fontSize: 17,
                       fontWeight: FontWeight.w500,
                     ),
                   )
-                : index.selectedIndex == 3
+                : index.selectedIndex == 2
                     ? const Text(
-                        'Харилцагчийн жагсаалт',
+                        'Харилцагчийн захиалга',
                         style: TextStyle(
                           color: buttonColor,
                           fontSize: 17,
@@ -117,149 +116,148 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
           : Container(
               child: currentPages.elementAt(index.selectedIndex),
             ),
-      floatingActionButton: index.selectedIndex == 2
-          ? FloatingActionButton(
-              shape: const CircleBorder(),
-              backgroundColor: orderColor,
-              onPressed: () {
-                Navigator.of(context).pushNamed(
-                  NewOrder.routeName,
-                  arguments: NewOrderArguments(
-                    id: null,
-                  ),
-                );
+      bottomNavigationBar: isLoading == false
+          ? BottomNavigationBar(
+              unselectedItemColor: buttonColor,
+              unselectedFontSize: 12,
+              selectedFontSize: 12,
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              backgroundColor: white,
+              type: BottomNavigationBarType.fixed,
+              fixedColor: orderColor,
+              onTap: (value) {
+                if (value != 0) {
+                  index.indexChange(value);
+                } else {
+                  Navigator.of(context).pop();
+                }
               },
-              child: const Icon(
-                Icons.add,
-                color: white,
-              ),
+              currentIndex: index.selectedIndex,
+              items: [
+                BottomNavigationBarItem(
+                  icon: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color:
+                                index.selectedIndex == 0 ? orderColor : white,
+                          ),
+                          padding:
+                              EdgeInsets.all(index.selectedIndex == 0 ? 7 : 0),
+                          child: SvgPicture.asset(
+                            'assets/svg/home.svg',
+                            height: 20,
+                            width: 20,
+                            colorFilter: ColorFilter.mode(
+                                index.selectedIndex == 0 ? white : orderColor,
+                                BlendMode.srcIn),
+                          ),
+                        ),
+                        if (index.selectedIndex != 0)
+                          const Text(
+                            'Нүүр',
+                            style: TextStyle(color: orderColor, fontSize: 12),
+                          ),
+                      ],
+                    ),
+                  ),
+                  label: '',
+                ),
+                BottomNavigationBarItem(
+                  icon: Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: index.selectedIndex == 1 ? orderColor : white,
+                        ),
+                        padding:
+                            EdgeInsets.all(index.selectedIndex == 1 ? 7 : 0),
+                        child: SvgPicture.asset(
+                          'assets/svg/dashboard.svg',
+                          height: 20,
+                          width: 20,
+                          colorFilter: ColorFilter.mode(
+                              index.selectedIndex == 1 ? white : orderColor,
+                              BlendMode.srcIn),
+                        ),
+                      ),
+                      if (index.selectedIndex != 1)
+                        const Text(
+                          'Дашбоард',
+                          style: TextStyle(color: orderColor, fontSize: 12),
+                        ),
+                    ],
+                  ),
+                  label: '',
+                ),
+                BottomNavigationBarItem(
+                  icon: Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: index.selectedIndex == 2 ? orderColor : white,
+                        ),
+                        padding:
+                            EdgeInsets.all(index.selectedIndex == 2 ? 7 : 0),
+                        child: SvgPicture.asset(
+                          'assets/svg/box.svg',
+                          height: 20,
+                          width: 20,
+                          colorFilter: ColorFilter.mode(
+                              index.selectedIndex == 2 ? white : orderColor,
+                              BlendMode.srcIn),
+                        ),
+                      ),
+                      if (index.selectedIndex != 2)
+                        const Text(
+                          'Харилцагч',
+                          style: TextStyle(color: orderColor, fontSize: 12),
+                        ),
+                    ],
+                  ),
+                  label: '',
+                ),
+                if (user.currentBusiness?.type == "SUPPLIER")
+                  BottomNavigationBarItem(
+                    icon: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color:
+                                index.selectedIndex == 3 ? orderColor : white,
+                          ),
+                          padding:
+                              EdgeInsets.all(index.selectedIndex == 3 ? 7 : 0),
+                          child: SvgPicture.asset(
+                            'assets/svg/order.svg',
+                            height: 20,
+                            width: 20,
+                            colorFilter: ColorFilter.mode(
+                                index.selectedIndex == 3 ? white : orderColor,
+                                BlendMode.srcIn),
+                          ),
+                        ),
+                        if (index.selectedIndex != 3)
+                          const Text(
+                            'Захиалга',
+                            style: TextStyle(color: orderColor, fontSize: 12),
+                          ),
+                      ],
+                    ),
+                    label: '',
+                  ),
+              ],
             )
-          : const SizedBox(),
-      bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: buttonColor,
-        unselectedFontSize: 12,
-        selectedFontSize: 12,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        backgroundColor: white,
-        type: BottomNavigationBarType.fixed,
-        fixedColor: orderColor,
-        onTap: (value) {
-          if (value != 0) {
-            index.indexChange(value);
-          } else {
-            Navigator.of(context).pop();
-          }
-        },
-        currentIndex: index.selectedIndex,
-        items: [
-          BottomNavigationBarItem(
-            icon: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: index.selectedIndex == 0 ? orderColor : white,
-                    ),
-                    padding: EdgeInsets.all(index.selectedIndex == 0 ? 7 : 0),
-                    child: SvgPicture.asset(
-                      'assets/svg/home.svg',
-                      colorFilter: ColorFilter.mode(
-                          index.selectedIndex == 0 ? white : orderColor,
-                          BlendMode.srcIn),
-                    ),
-                  ),
-                  if (index.selectedIndex != 0)
-                    const Text(
-                      'Нүүр',
-                      style: TextStyle(color: orderColor, fontSize: 12),
-                    ),
-                ],
-              ),
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: index.selectedIndex == 1 ? orderColor : white,
-                  ),
-                  padding: EdgeInsets.all(index.selectedIndex == 1 ? 7 : 0),
-                  child: SvgPicture.asset(
-                    'assets/svg/dashboard.svg',
-                    colorFilter: ColorFilter.mode(
-                        index.selectedIndex == 1 ? white : orderColor,
-                        BlendMode.srcIn),
-                  ),
-                ),
-                if (index.selectedIndex != 1)
-                  const Text(
-                    'Дашбоард',
-                    style: TextStyle(color: orderColor, fontSize: 12),
-                  ),
-              ],
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: index.selectedIndex == 2 ? orderColor : white,
-                  ),
-                  padding: EdgeInsets.all(index.selectedIndex == 2 ? 7 : 0),
-                  child: SvgPicture.asset(
-                    'assets/svg/order.svg',
-                    colorFilter: ColorFilter.mode(
-                        index.selectedIndex == 2 ? white : orderColor,
-                        BlendMode.srcIn),
-                  ),
-                ),
-                if (index.selectedIndex != 2)
-                  const Text(
-                    'Захиалга',
-                    style: TextStyle(color: orderColor, fontSize: 12),
-                  ),
-              ],
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: index.selectedIndex == 3 ? orderColor : white,
-                  ),
-                  padding: EdgeInsets.all(index.selectedIndex == 3 ? 7 : 0),
-                  child: SvgPicture.asset(
-                    'assets/svg/order_customer.svg',
-                    colorFilter: ColorFilter.mode(
-                        index.selectedIndex == 3 ? white : orderColor,
-                        BlendMode.srcIn),
-                  ),
-                ),
-                if (index.selectedIndex != 3)
-                  const Text(
-                    'Харилцагч',
-                    style: TextStyle(color: orderColor, fontSize: 12),
-                  ),
-              ],
-            ),
-            label: '',
-          ),
-        ],
-      ),
+          : null,
     );
   }
 }

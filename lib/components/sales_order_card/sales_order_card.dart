@@ -2,6 +2,7 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/order_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -53,6 +54,9 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
   Widget build(BuildContext context) {
     general = Provider.of<GeneralProvider>(context, listen: true).orderGeneral;
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
+    final source = Provider.of<OrderProvider>(context, listen: true);
+    int index = source.backorderList
+        .indexWhere((element) => element.id == widget.data.id);
     return GestureDetector(
       onTap: widget.onClick,
       child: AnimatedContainer(
@@ -135,7 +139,31 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                                   color: grey2,
                                   fontWeight: FontWeight.w500,
                                 ),
-                              )
+                              ),
+                    if (user.currentBusiness?.type == "SUPPLIER" &&
+                        widget.data.type == "PURCHASE" &&
+                        widget.data.orderStatus == "REVIEWED")
+                      Checkbox(
+                        side: MaterialStateBorderSide.resolveWith(
+                          (states) => const BorderSide(
+                            color: orderColor,
+                            width: 2,
+                          ),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        activeColor: orderColor,
+                        value: source.backorderList.contains(widget.data),
+                        onChanged: (value) {
+                          if (index > -1) {
+                            source.removeBackOrder(index);
+                          } else {
+                            source.addBackOrder(widget.data);
+                          }
+                        },
+                      ),
                   ],
                 ),
               ],
@@ -198,7 +226,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                   ],
                 ),
                 Text(
-                  DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now()),
+                  DateFormat("yyyy-MM-dd HH:mm").format(widget.data.createdAt!),
                   style: const TextStyle(
                     color: grey2,
                     fontSize: 12,

@@ -28,12 +28,9 @@ class OrderApi extends HttpRequest {
     return Result.fromJson(res, Order.fromJson);
   }
 
-  Future<Result> branchSelect(
-      String? businessId, int? limit, String? query) async {
+  Future<Result> branchSelect(String? businessId) async {
     var res = await get(
-        '/branch/select?businessId=$businessId&query=$query&limit=$limit',
-        "ORDER",
-        true);
+        '/branch/select?businessId=$businessId&query=&limit=', "ORDER", true);
     return Result.fromJson(res, Order.fromJson);
   }
 
@@ -230,5 +227,20 @@ class OrderApi extends HttpRequest {
     var res = await put('/order/$id', "ORDER", true,
         handler: true, data: data.toJson());
     return Order.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> splitList(ResultArguments data) async {
+    var res = await get('/order/split', "ORDER", true, data: data.toJson());
+    return Result.fromJson(res, Order.fromJson);
+  }
+
+  Future<Order> splitCreate(Order data, String id) async {
+    var res = await put('/order/$id/split', "ORDER", true, data: data.toJson());
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> backOrderList(ResultArguments data) async {
+    var res = await get('/order/backorder', "ORDER", true, data: data.toJson());
+    return Result.fromJson(res, Order.fromJson);
   }
 }

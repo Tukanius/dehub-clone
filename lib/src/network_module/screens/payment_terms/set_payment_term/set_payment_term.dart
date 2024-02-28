@@ -46,6 +46,8 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
   String? paymentTerm;
   String? configTypeId;
   String? config;
+  String? conditionName;
+  String? conditionId;
   General general = General();
   bool isLoading = false;
   Result paymentTerms = Result(rows: [], count: 0);
@@ -67,7 +69,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
       await BusinessApi().setPaymentTerm(
         BusinessNetwork(
           businessIds: [widget.id],
-          paymentTermId: configTypeId,
+          paymentTermId: paymentTermId,
           paymentTermStartDate: DateFormat("yyyy-MM-dd").format(startDate),
           paymentTermEndDate: DateFormat("yyyy-MM-dd").format(endDate),
         ),
@@ -87,14 +89,16 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
     }
   }
 
-  api(String condition) async {
-    setState(() {
-      isLoading = true;
-    });
-    paymentTerms = await BusinessApi().paymentTermSelect(condition);
-    setState(() {
-      isLoading = false;
-    });
+  api(String condition, String configType) async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
+    try {
+      loading.loading(true);
+      paymentTerms =
+          await BusinessApi().paymentTermSelect(condition, configType);
+      loading.loading(false);
+    } catch (e) {
+      loading.loading(false);
+    }
   }
 
   @override
@@ -138,7 +142,19 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                 condition();
               },
               arrowColor: networkColor,
-              secondText: paymentTerm ?? '-',
+              secondText: conditionName ?? '-',
+              secondTextColor: networkColor,
+            ),
+            FieldCard(
+              color: white,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              labelText: "Төлбөр",
+              onClick: () {
+                configType();
+              },
+              arrowColor: networkColor,
+              secondText: config ?? '-',
               secondTextColor: networkColor,
             ),
             FieldCard(
@@ -147,12 +163,10 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
               paddingVertical: 10,
               labelText: "Төлбөрийн нөхцөл",
               onClick: () {
-                if (isLoading == false) {
-                  configType();
-                }
+                paymentTermSelect();
               },
               arrowColor: networkColor,
-              secondText: config ?? '-',
+              secondText: paymentTerm ?? '-',
               secondTextColor: networkColor,
             ),
             FieldCard(
@@ -266,12 +280,10 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
             ),
             CustomButton(
               labelText: "Хадгалах",
-              labelColor: paymentTerm == null || config == null
+              labelColor: paymentTerm == null
                   ? networkColor.withOpacity(0.3)
                   : networkColor,
-              onClick: () {
-                paymentTerm == null || config == null ? () {} : onSubmit();
-              },
+              onClick: paymentTerm != null ? onSubmit : () {},
             ),
           ],
         ),
@@ -313,12 +325,13 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                         (e) => GestureDetector(
                           onTap: () async {
                             setState(() {
-                              paymentTerm = "${e.name}";
-                              paymentTermId = e.code.toString();
+                              conditionId = e.code;
+                              conditionName = e.name;
+                              paymentTerm = null;
+                              paymentTermId = null;
                               config = null;
                               configTypeId = null;
                             });
-                            await api(e.code!);
                             Navigator.of(context).pop();
                           },
                           child: Container(
@@ -360,6 +373,75 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
       builder: (context) {
         return SingleChildScrollView(
           child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 25, bottom: 20),
+                  child: const Text(
+                    'Төлбөрийн хэлбэр сонгох',
+                    style: TextStyle(
+                      color: grey2,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: general.paymentTermConfigTypes!
+                      .where((element) => element.condition == conditionId)
+                      .map(
+                        (e) => GestureDetector(
+                          onTap: () async {
+                            setState(() {
+                              config = e.text;
+                              configTypeId = e.code;
+                              paymentTerm = null;
+                              paymentTermId = null;
+                            });
+                            await api(conditionId!, e.code!);
+                            Navigator.of(context).pop();
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            color: transparent,
+                            child: Text(
+                              '${e.text}',
+                              style: TextStyle(
+                                color: black.withOpacity(0.7),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  paymentTermSelect() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20),
+        ),
+      ),
+      useSafeArea: true,
+      backgroundColor: white,
+      builder: (context) {
+        return SingleChildScrollView(
+          child: Container(
             width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
@@ -382,8 +464,8 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                         (e) => GestureDetector(
                           onTap: () {
                             setState(() {
-                              config = e.description;
-                              configTypeId = e.id;
+                              paymentTermId = e.id;
+                              paymentTerm = e.description;
                             });
                             Navigator.of(context).pop();
                           },

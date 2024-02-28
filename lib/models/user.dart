@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:dehub/models/business_staffs.dart';
-import 'package:dehub/utils/http_request.dart';
 part '../parts/user.dart';
 
 class User {
@@ -137,10 +136,6 @@ class User {
   User? financeRole;
   String? financeRoleStatus;
   String? bank;
-
-  String? getAvatar() {
-    return HttpRequest.s3host + avatar.toString();
-  }
 
   User({
     this.bank,

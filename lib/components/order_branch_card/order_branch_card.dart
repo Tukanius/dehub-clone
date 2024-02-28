@@ -36,29 +36,7 @@ class _OrderBranchCardState extends State<OrderBranchCard> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Transform.scale(
-                  //   scale: 1.4,
-                  //   child: Checkbox(
-                  //     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  //     side: MaterialStateBorderSide.resolveWith(
-                  //       (Set<MaterialState> states) {
-                  //         if (states.contains(MaterialState.selected)) {
-                  //           return const BorderSide(width: 0, color: transparent);
-                  //         }
-                  //         return const BorderSide(width: 1, color: grey);
-                  //       },
-                  //     ),
-                  //     shape: CircleBorder(),
-                  //     activeColor: orderColor,
-                  //     value: isCheck,
-                  //     onChanged: (value) {
-                  //       setState(() {
-                  //         isCheck = !isCheck;
-                  //       });
-                  //     },
-                  //   ),
-                  // ),
-                  widget.data?.logo != null || widget.data?.logo != ''
+                  widget.data?.logo != null && widget.data?.logo != ''
                       ? Container(
                           height: 40,
                           width: 40,

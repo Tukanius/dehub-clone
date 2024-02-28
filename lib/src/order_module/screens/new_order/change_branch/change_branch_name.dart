@@ -1,35 +1,48 @@
+import 'package:after_layout/after_layout.dart';
+import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/order_branch_card/order_branch_card.dart';
-import 'package:dehub/models/order.dart';
+import 'package:dehub/models/result.dart';
 // import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class ChangeBranchNamePageArguments {
+  String id;
   ListenController receiverBranchController;
-  List<Order> data;
   ChangeBranchNamePageArguments({
+    required this.id,
     required this.receiverBranchController,
-    required this.data,
   });
 }
 
 class ChangeBranchNamePage extends StatefulWidget {
   final ListenController receiverBranchController;
-  final List<Order> data;
+  final String id;
   static const routeName = '/ChangeBranchNamePage';
   const ChangeBranchNamePage({
     super.key,
+    required this.id,
     required this.receiverBranchController,
-    required this.data,
   });
 
   @override
   State<ChangeBranchNamePage> createState() => _ChangeBranchNamePageState();
 }
 
-class _ChangeBranchNamePageState extends State<ChangeBranchNamePage> {
+class _ChangeBranchNamePageState extends State<ChangeBranchNamePage>
+    with AfterLayoutMixin {
+  bool isLoading = true;
+  Result branches = Result(rows: []);
+  @override
+  afterFirstLayout(BuildContext context) async {
+    branches = await OrderApi().branchSelect(widget.id);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   String? selectedBranch;
   @override
   Widget build(BuildContext context) {
@@ -55,32 +68,35 @@ class _ChangeBranchNamePageState extends State<ChangeBranchNamePage> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Column(
-              children: widget.data
-                  .map(
-                    (e) => OrderBranchCard(
-                      onClick: () {
-                        widget.receiverBranchController.receiverBranchChange(e);
-                        Navigator.of(context).pop();
-                      },
-                      data: e,
-                    ),
-                  )
-                  .toList(),
+      body: isLoading == true
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: orderColor,
+              ),
+            )
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  Column(
+                    children: branches.rows!
+                        .map(
+                          (e) => OrderBranchCard(
+                            onClick: () {
+                              widget.receiverBranchController
+                                  .receiverBranchChange(e);
+                              Navigator.of(context).pop();
+                            },
+                            data: e,
+                          ),
+                        )
+                        .toList(),
+                  ),
+                  const SizedBox(
+                    height: 70,
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(
-              height: 70,
-            ),
-            // CustomButton(
-            //   isGradient: true,
-            //   labelText: 'Сольё',
-            // ),
-          ],
-        ),
-      ),
     );
   }
 }

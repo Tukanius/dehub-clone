@@ -184,75 +184,87 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                               padding: const EdgeInsets.all(15),
                               margin: const EdgeInsets.symmetric(vertical: 2),
                               child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        height: 36,
-                                        width: 36,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: grey,
-                                          image: DecorationImage(
-                                            image: NetworkImage(
-                                              user.currentBusiness?.type ==
-                                                      "SUPPLIER"
-                                                  ? '${get.buyerBusiness?.logo}'
-                                                  : "${get.supplierBusiness?.logo}",
+                                  Expanded(
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: 36,
+                                          width: 36,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: grey,
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                user.currentBusiness?.type ==
+                                                        "SUPPLIER"
+                                                    ? '${get.buyerBusiness?.logo}'
+                                                    : "${get.supplierBusiness?.logo}",
+                                              ),
+                                              fit: BoxFit.cover,
                                             ),
-                                            fit: BoxFit.cover,
                                           ),
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                      user.currentBusiness?.type == "SUPPLIER"
-                                          ? Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  '${get.buyerBusiness?.profileName}',
-                                                  style: const TextStyle(
-                                                    color: black,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  '${get.buyerBusiness?.partner?.businessName}',
-                                                  style: const TextStyle(
-                                                    color: saaral,
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
+                                        const SizedBox(
+                                          width: 15,
+                                        ),
+                                        Expanded(
+                                          child: user.currentBusiness?.type ==
+                                                  "SUPPLIER"
+                                              ? Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      '${get.buyerBusiness?.profileName}',
+                                                      style: const TextStyle(
+                                                        color: black,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      '${get.buyerBusiness?.partner?.businessName}',
+                                                      style: const TextStyle(
+                                                        color: saaral,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    )
+                                                  ],
                                                 )
-                                              ],
-                                            )
-                                          : Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  '${get.supplierBusiness?.profileName}',
-                                                  style: const TextStyle(
-                                                    color: black,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
+                                              : Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      '${get.supplierBusiness?.profileName}',
+                                                      style: const TextStyle(
+                                                        color: black,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      '${get.supplierBusiness?.partner?.businessName}',
+                                                      style: const TextStyle(
+                                                        color: saaral,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    )
+                                                  ],
                                                 ),
-                                                Text(
-                                                  '${get.supplierBusiness?.partner?.businessName}',
-                                                  style: const TextStyle(
-                                                    color: saaral,
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                    ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   Row(
                                     children: [

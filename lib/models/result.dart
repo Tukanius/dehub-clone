@@ -43,8 +43,10 @@ class Filter {
   String? variantId;
   String? userId;
   String? settlementId;
+  String? orderStatus;
 
   Filter({
+    this.orderStatus,
     this.settlementId,
     this.userId,
     this.variantId,

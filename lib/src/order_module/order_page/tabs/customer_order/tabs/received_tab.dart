@@ -17,7 +17,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ReceivedTab extends StatefulWidget {
-  const ReceivedTab({super.key});
+  const ReceivedTab({
+    super.key,
+  });
 
   @override
   State<ReceivedTab> createState() => _ReceivedTabState();

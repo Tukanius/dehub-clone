@@ -4,6 +4,7 @@ import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/order_module/screens/customers/customers.dart';
 import 'package:dehub/src/order_module/screens/delivery_management/delivery_management.dart';
 import 'package:dehub/src/order_module/screens/order_delivery/order_delivery.dart';
 import 'package:dehub/src/order_module/screens/order_shipping/order_shipping.dart';
@@ -87,6 +88,16 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               scrollDirection: Axis.horizontal,
               children: [
+                DashboardCard(
+                  onClick: () {
+                    Navigator.of(context).pushNamed(OrderCustomers.routeName);
+                  },
+                  boxColor: orderColor.withOpacity(0.2),
+                  padding: 9,
+                  labelText: 'Гэрээт харилцагч',
+                  svgColor: buttonColor,
+                  svg: 'assets/svg/order_customer.svg',
+                ),
                 if (user.currentBusiness?.type == "SUPPLIER")
                   DashboardCard(
                     onClick: () {
@@ -123,18 +134,10 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                 DashboardCard(
                   onClick: () {},
                   boxColor: orderColor.withOpacity(0.2),
-                  padding: 10,
-                  labelText: 'Захиалга нэгтгэл',
+                  padding: 7,
+                  labelText: 'Dropship захиалга',
                   svgColor: buttonColor,
-                  svg: 'assets/svg/push.svg',
-                ),
-                DashboardCard(
-                  onClick: () {},
-                  boxColor: orderColor.withOpacity(0.2),
-                  padding: 10,
-                  labelText: 'Буцаалтын тооцоо',
-                  svgColor: buttonColor,
-                  svg: 'assets/svg/push.svg',
+                  svg: 'assets/svg/box.svg',
                 ),
                 DashboardCard(
                   onClick: () {},

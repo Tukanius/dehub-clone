@@ -28,7 +28,7 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
@@ -43,11 +43,15 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
                   Text(
                     '${widget.data.refCode}',
                     style: const TextStyle(
-                      color: orderColor,
+                      color: black,
                       fontSize: 14,
                     ),
                   ),
                 ],
+              ),
+              Text(
+                'Захиалга №: ${widget.data.order?.salesCode}',
+                style: const TextStyle(color: orderColor),
               ),
             ],
           ),

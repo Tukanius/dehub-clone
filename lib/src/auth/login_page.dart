@@ -1,4 +1,5 @@
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/check_biometric.dart';
 import 'package:dehub/src/auth/password_recovery/password_recovery.dart';
@@ -8,7 +9,6 @@ import 'package:dehub/utils/secure_storage.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -32,12 +32,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
   TextEditingController codeController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   final LocalAuthentication auth = LocalAuthentication();
-  String fingerPrintIcon = "assets/svg/finger-print.svg";
-  String faceIdIcon = "assets/svg/face-id.svg";
   bool _isVisible = true;
-  bool saveCode = false;
-  bool isLoading = false;
-  bool isSubmit = false;
   bool activeBio = false;
   bool isBioMetric = false;
   String bioType = '';
@@ -65,7 +60,7 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
         setState(() {
           bioType = "FACE";
         });
-      } else {}
+      }
       if (availableBiometrics.contains(BiometricType.fingerprint)) {
         setState(() {
           bioType = "FINGER_PRINT";
@@ -74,36 +69,12 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
       if (isBioMetric == false) {
         String? code = await UserProvider().getCode();
         String? username = await UserProvider().getEmail();
-        if (code == null || code == "") {
-          setState(() {
-            saveCode = false;
-          });
-        } else {
-          setState(() {
-            saveCode = true;
-          });
-        }
         setState(() {
           codeController.text = code!;
           emailController.text = username!;
         });
       }
     }
-  }
-
-  show(BuildContext context) {
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) {
-        return const Center(
-          child: CupertinoActivityIndicator(
-            color: mainColor,
-            radius: 15,
-          ),
-        );
-      },
-    );
   }
 
   @override
@@ -304,11 +275,9 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                                 height: 8,
                               ),
                               FormTextField(
-                                onComplete: isSubmit == false
-                                    ? () {
-                                        _performLogin(context);
-                                      }
-                                    : () {},
+                                onComplete: () {
+                                  _performLogin(context);
+                                },
                                 inputAction: TextInputAction.done,
                                 textColor: buttonColor,
                                 name: "password",
@@ -393,10 +362,8 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                           height: 25,
                         ),
                         CustomButton(
-                          isLoading: isSubmit,
                           onClick: () {
                             _performLogin(context);
-                            // show(context);
                           },
                           labelText: "Нэвтрэх",
                           labelColor: buttonColor,
@@ -424,8 +391,8 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                               ),
                               child: SvgPicture.asset(
                                 bioType == "FACE"
-                                    ? faceIdIcon
-                                    : fingerPrintIcon,
+                                    ? "assets/svg/face-id.svg"
+                                    : "assets/svg/finger-print.svg",
                                 colorFilter: const ColorFilter.mode(
                                     white, BlendMode.srcIn),
                               ),
@@ -508,32 +475,26 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
     final String password;
     final List<BiometricType> availableBiometrics =
         await auth.getAvailableBiometrics();
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     if (fbKey.currentState!.saveAndValidate()) {
       code = fbKey.currentState?.fields['code']?.value;
       username = fbKey.currentState?.fields['username']?.value;
       password = fbKey.currentState?.fields['password']?.value;
       try {
-        setState(() {
-          isSubmit = true;
-        });
+        loading.loading(true);
         User save = User.fromJson(fbKey.currentState!.value);
         UserProvider().setEmail(save.username.toString());
         UserProvider().setCode(save.code.toString());
         await Provider.of<UserProvider>(context, listen: false).login(save);
+        loading.loading(false);
         await _storeCredentials(code, username, password);
         if (activeBio == true && availableBiometrics.isNotEmpty) {
           Navigator.of(context).pushNamed(CheckBiometric.routeName);
         } else {
           Navigator.of(context).pushNamed(SplashPage.routeName);
         }
-        setState(() {
-          isSubmit = false;
-        });
       } catch (e) {
-        debugPrint(e.toString());
-        setState(() {
-          isSubmit = false;
-        });
+        loading.loading(false);
       }
     }
   }
@@ -541,12 +502,11 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
   Future<void> loginBio() async {
     bool authenticated = false;
     User save = User();
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      setState(() {
-        isSubmit = true;
-      });
+      loading.loading(true);
       authenticated = await auth.authenticate(
-        localizedReason: 'Let OS determine authentication method',
+        localizedReason: 'Баталгаажуулалт',
         options: const AuthenticationOptions(
           stickyAuth: true,
           biometricOnly: true,
@@ -563,16 +523,12 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
         save.username = resultEmail;
         save.password = resultPassword;
         await Provider.of<UserProvider>(context, listen: false).login(save);
+        loading.loading(false);
         Navigator.of(context).pushNamed(SplashPage.routeName);
       }
-      setState(() {
-        isSubmit = false;
-      });
     } on PlatformException catch (e) {
       debugPrint(e.toString());
-      setState(() {
-        isSubmit = false;
-      });
+      loading.loading(false);
       return;
     }
     if (!mounted) {

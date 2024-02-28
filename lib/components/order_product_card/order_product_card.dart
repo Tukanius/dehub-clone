@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 class OrderProductCard extends StatefulWidget {
   final Function()? onClick;
   final Function()? onCloseClick;
+  final List<Order>? splitList;
   final Order data;
   final bool? readOnly;
   final List<Order>? package;
@@ -20,6 +21,7 @@ class OrderProductCard extends StatefulWidget {
   const OrderProductCard({
     this.listenController,
     this.onCloseClick,
+    this.splitList,
     this.isPackage,
     this.package,
     this.readOnly,
@@ -216,15 +218,43 @@ class _OrderProductCardState extends State<OrderProductCard> {
                 const SizedBox(
                   width: 5,
                 ),
-                GestureDetector(
-                  onTap: widget.onCloseClick,
-                  child: SvgPicture.asset(
-                    'assets/svg/close.svg',
-                    colorFilter: const ColorFilter.mode(grey3, BlendMode.srcIn),
-                    height: 16,
-                    width: 16,
-                  ),
-                ),
+                widget.splitList == null
+                    ? GestureDetector(
+                        onTap: widget.onCloseClick,
+                        child: SvgPicture.asset(
+                          'assets/svg/close.svg',
+                          colorFilter:
+                              const ColorFilter.mode(grey3, BlendMode.srcIn),
+                          height: 16,
+                          width: 16,
+                        ),
+                      )
+                    : Checkbox(
+                        side: MaterialStateBorderSide.resolveWith(
+                          (states) => const BorderSide(
+                            color: orderColor,
+                            width: 2,
+                          ),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        activeColor: orderColor,
+                        value: widget.splitList?.contains(widget.data),
+                        onChanged: (value) {
+                          if (widget.splitList!.contains(widget.data)) {
+                            setState(() {
+                              widget.splitList!.removeWhere(
+                                  (element) => element.id == widget.data.id);
+                            });
+                          } else {
+                            setState(() {
+                              widget.splitList!.add(widget.data);
+                            });
+                          }
+                        },
+                      ),
               ],
             ),
             const SizedBox(
@@ -397,11 +427,11 @@ class _OrderProductCardState extends State<OrderProductCard> {
                 Row(
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        if (widget.readOnly != true) {
-                          decrease();
-                        }
-                      },
+                      onTap: widget.readOnly != true
+                          ? () {
+                              decrease();
+                            }
+                          : null,
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 7),
                         height: 40,
@@ -461,11 +491,11 @@ class _OrderProductCardState extends State<OrderProductCard> {
                       width: 10,
                     ),
                     GestureDetector(
-                      onTap: () {
-                        if (widget.readOnly != true) {
-                          increase();
-                        }
-                      },
+                      onTap: widget.readOnly == false
+                          ? () {
+                              increase();
+                            }
+                          : null,
                       child: Container(
                         height: 40,
                         width: 30,

@@ -205,7 +205,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
     Order asdf = Order(
       additionalLines: additionalLines,
       businessId: order.id,
-      receiverBranchId: receiverBranch.id ?? order.receiverBranches?.first.id,
+      receiverBranchId: receiverBranch.id ?? order.receiverBranch?.id,
       deliveryDate:
           isCheck == false ? selectedDate.toString() : dateTime.toString(),
       deliveryType: isCheck == false ? "DEFAULT_DATE" : "CUSTOM_DATE",
@@ -564,18 +564,21 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       paddingVertical: 10,
                       color: white,
                       labelText: "Хүлээн авах салбар",
-                      secondText: order.receiverBranches != null &&
-                              order.receiverBranches!.length > 1
-                          ? "Солих"
-                          : '',
+                      secondText: user.currentBusiness?.type != "BUYER"
+                          ? order.receiverBranch == null
+                              ? "Солих"
+                              : '${order.receiverBranch?.name}'
+                          : receiverBranch.name == null
+                              ? "Солих"
+                              : '${receiverBranch.name}',
                       secondTextColor: orderColor,
-                      onClick: order.receiverBranches != null &&
-                              order.receiverBranches!.length > 1
+                      onClick: user.currentBusiness?.type == "BUYER" &&
+                              receiverBranch.branchAddress == null
                           ? () {
                               Navigator.of(context).pushNamed(
                                 ChangeBranchNamePage.routeName,
                                 arguments: ChangeBranchNamePageArguments(
-                                  data: order.receiverBranches!,
+                                  id: order.id!,
                                   receiverBranchController:
                                       receiverBranchController,
                                 ),
@@ -609,33 +612,33 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                             width: 10,
                           ),
                           Expanded(
-                            child: order.receiverBranches != null
-                                ? order.receiverBranches!.isEmpty
-                                    ? const Text(
-                                        'Салбар тохируулаагүй байна',
+                            child: user.currentBusiness?.type == "SUPPLIER"
+                                ? order.receiverBranch != null
+                                    ? Text(
+                                        '${order.receiverBranch?.branchAddress}',
+                                        style: const TextStyle(
+                                          color: buttonColor,
+                                        ),
+                                      )
+                                    : const Text(
+                                        'Харилцагч сонгоно уу',
                                         style: TextStyle(
                                           color: red,
                                         ),
                                       )
-                                    : receiverBranch.branchAddress == null
-                                        ? Text(
-                                            '${order.receiverBranches?.first.branchAddress}',
-                                            style: const TextStyle(
-                                              color: buttonColor,
-                                            ),
-                                          )
-                                        : Text(
-                                            '${receiverBranch.branchAddress}',
-                                            style: const TextStyle(
-                                              color: buttonColor,
-                                            ),
-                                          )
-                                : const Text(
-                                    'Харилцагч сонгоно уу',
-                                    style: TextStyle(
-                                      color: orderColor,
-                                    ),
-                                  ),
+                                : receiverBranch.branchAddress == null
+                                    ? const Text(
+                                        'Харилцагч сонгоно уу',
+                                        style: TextStyle(
+                                          color: red,
+                                        ),
+                                      )
+                                    : Text(
+                                        '${receiverBranch.branchAddress}',
+                                        style: const TextStyle(
+                                          color: buttonColor,
+                                        ),
+                                      ),
                           ),
                         ],
                       ),

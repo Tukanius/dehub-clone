@@ -182,9 +182,11 @@ class BusinessApi extends HttpRequest {
     return BusinessNetwork.fromJson(res as Map<String, dynamic>);
   }
 
-  Future<Result> paymentTermSelect(String condition) async {
+  Future<Result> paymentTermSelect(String condition, String configType) async {
     var res = await get(
-        '/payment_term/select?condition=$condition', "BUSINESS", true);
+        '/payment_term/select?condition=$condition&configType=$configType',
+        "BUSINESS",
+        true);
     return Result.fromJson(res, Business.fromJson);
   }
 

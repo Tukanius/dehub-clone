@@ -6,6 +6,9 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => Order.fromJson(e)).toList()
         : null,
+    ids: json['ids'] != null
+        ? (json['ids'] as List).map((e) => e as String).toList()
+        : null,
     values: json['values'] != null
         ? (json['values'] as List).map((e) => Order.fromJson(e)).toList()
         : null,
@@ -27,8 +30,10 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         ? DateTime.parse(json['deletedAt'].toString())
         : null,
     refCode: json['refCode'] != null ? json['refCode'] as String : null,
+    salesType: json['salesType'] != null ? json['salesType'] as String : null,
     type: json['type'] != null ? json['type'] as String : null,
     isDefault: json['isDefault'] != null ? json['isDefault'] as bool : null,
+    isSplit: json['isSplit'] != null ? json['isSplit'] as bool : null,
     isConfirmed:
         json['isConfirmed'] != null ? json['isConfirmed'] as bool : null,
     businessStatus: json['businessStatus'] != null
@@ -458,6 +463,7 @@ Map<String, dynamic> _$OrderToJson(Order instance) {
   Map<String, dynamic> json = {};
 
   if (instance.warehouses != null) json['warehouses'] = instance.warehouses;
+  if (instance.ids != null) json['ids'] = instance.ids;
   if (instance.values != null) json['values'] = instance.values;
   if (instance.header != null) json['header'] = instance.header;
   if (instance.receipt != null) json['receipt'] = instance.receipt;
@@ -603,6 +609,7 @@ Map<String, dynamic> _$OrderToJson(Order instance) {
   }
   if (instance.approve != null) json['approve'] = instance.approve;
   if (instance.orderedUser != null) json['orderedUser'] = instance.orderedUser;
+  if (instance.salesType != null) json['salesType'] = instance.salesType;
   if (instance.senderBusiness != null) {
     json['senderBusiness'] = instance.senderBusiness;
   }
@@ -708,6 +715,7 @@ Map<String, dynamic> _$OrderToJson(Order instance) {
   }
   if (instance.lines != null) json['lines'] = instance.lines;
   if (instance.attachments != null) json['attachments'] = instance.attachments;
+  if (instance.isSplit != null) json['isSplit'] = instance.isSplit;
   if (instance.additionalLines != null) {
     json['additionalLines'] = instance.additionalLines;
   }

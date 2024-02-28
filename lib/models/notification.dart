@@ -1,4 +1,3 @@
-import '../utils/http_request.dart';
 part '../parts/notification.dart';
 
 class Notify {
@@ -26,10 +25,6 @@ class Notify {
   String? notificationStatusDate;
   String? navigationId;
   bool? isNavigation;
-
-  getImage() {
-    return HttpRequest.s3host + image.toString();
-  }
 
   Notify({
     this.seen,

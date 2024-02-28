@@ -16,26 +16,31 @@ import 'package:dehub/src/auth/login_page.dart';
 
 class HttpRequest {
   static const host = 'http://dev-de-dehub.zto.mn/2fa';
+  // static const host = 'http://192.168.1.220:30510/2fa';
 
   static const partnerHost = 'http://dev-de-partner.zto.mn/prt';
+  // static const partnerHost = 'http://192.168.1.220:30518/prt';
 
   static const invoiceHost = 'http://dev-de-invoice.zto.mn/inv';
+  // static const invoiceHost = 'http://192.168.1.220:30514/inv';
 
   static const businessHost = 'http://dev-de-network.zto.mn/biz';
+  // static const businessHost = 'http://192.168.1.220:30512/biz';
 
   static const inventoryHost = 'http://dev-de-inventory.zto.mn/erp';
+  // static const inventoryHost = 'http://192.168.1.220:30513/erp';
 
   static const orderHost = 'http://dev-de-order.zto.mn/ord';
+  // static const orderHost = 'http://192.168.1.220:30517/ord';
 
   static const paymentHost = 'http://dev-de-payment.zto.mn/pay';
-
-  static const s3host = 'http://dev-de-dehub.zto.mn/s3';
+  // static const paymentHost = 'http://192.168.1.220:30519/pay';
 
   static const media = 'http://dev-de-dehub.zto.mn/mdi';
-
-  static const financeHost = 'http://dev-de-fi.zto.mn';
+  // static const media = 'http://192.168.1.220:30515/mdi';
 
   static const userHost = 'http://dev-de-user.zto.mn/usr';
+  // static const userHost = 'http://192.168.1.220:30521/usr';
 
   static const version = '/app';
 
@@ -64,13 +69,15 @@ class HttpRequest {
     } else if (type == "INVENTORY") {
       uri = '$inventoryHost$version$api';
     } else if (type == "ORDER") {
-      uri = "$orderHost$version$api";
+      if (isVersionTrue == true) {
+        uri = "$orderHost$version$api";
+      } else {
+        uri = "$orderHost$api";
+      }
     } else if (type == "PAYMENT") {
       uri = "$paymentHost$version$api";
     } else if (type == "MEDIA") {
       uri = "$media$api";
-    } else if (type == "FINANCE") {
-      uri = "$financeHost$version$api";
     } else if (type == "USER") {
       if (isVersionTrue == false) {
         uri = "$userHost$api";

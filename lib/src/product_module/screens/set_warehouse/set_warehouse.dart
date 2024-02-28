@@ -6,6 +6,7 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/product_module/screens/set_warehouse/components/recourse_info_form.dart';
 import 'package:dehub/src/product_module/screens/set_warehouse/sheets/merch_staff_sheet.dart';
 import 'package:dehub/src/product_module/screens/set_warehouse/sheets/variant_suppliers.dart';
@@ -53,9 +54,11 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
 
   onSubmit(bool confirm) async {
     final res = Provider.of<InventoryProvider>(context, listen: false);
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     List<InventoryGoods> variantSuppliers = [];
     if (fbKey.currentState!.saveAndValidate()) {
       try {
+        loading.loading(true);
         InventoryGoods data =
             InventoryGoods.fromJson(fbKey.currentState!.value);
         data.variantId = widget.data.variantId;
@@ -83,13 +86,14 @@ class _SetWarehouseState extends State<SetWarehouse> with AfterLayoutMixin {
         }
         data.variantSuppliers = variantSuppliers;
         await InventoryApi().setWarehouse(data);
+        loading.loading(false);
         widget.listenController.changeVariable('setWarehouse');
         showCustomDialog(context, 'Амжилттай үлдэгдэл тохирууллаа', true,
             onPressed: () {
           Navigator.of(context).pop();
         });
       } catch (e) {
-        debugPrint(e.toString());
+        loading.loading(false);
       }
     }
   }

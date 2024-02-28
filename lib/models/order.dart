@@ -184,7 +184,6 @@ class Order {
   Order? deliveryStaff;
   String? code;
   String? configType;
-
   bool? isEnded;
   DateTime? deliveredDate;
   Order? respondedUser;
@@ -193,16 +192,19 @@ class Order {
   Order? business;
   Order? receipt;
   Order? order;
-
   Order? deliveryNote;
   double? advancePercent;
-
   List<Order>? values;
   DateTime? header;
-
   List<Order>? warehouses;
+  List<String>? ids;
+  bool? isSplit;
+  String? salesType;
 
   Order({
+    this.salesType,
+    this.ids,
+    this.isSplit,
     this.warehouses,
     this.values,
     this.header,

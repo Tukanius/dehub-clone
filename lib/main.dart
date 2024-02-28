@@ -5,6 +5,7 @@ import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/providers/invoice_provider.dart';
 import 'package:dehub/providers/loading_provider.dart';
+import 'package:dehub/providers/order_provider.dart';
 import 'package:dehub/providers/partner_provider.dart';
 import 'package:dehub/providers/user_module_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
@@ -23,6 +24,8 @@ import 'package:dehub/src/invoice_module/screens/transaction_detail/transaction_
 import 'package:dehub/src/network_module/screens/account_setting/account_setting.dart';
 import 'package:dehub/src/network_module/screens/account_setting/account_setting_detail/account_setting_detail.dart';
 import 'package:dehub/src/network_module/screens/account_setting/set_account/set_account.dart';
+import 'package:dehub/src/order_module/screens/create_back_order/create_back_order.dart';
+import 'package:dehub/src/order_module/screens/customers/customers.dart';
 import 'package:dehub/src/order_module/screens/delivery_management/delivery_management.dart';
 import 'package:dehub/src/order_module/screens/set_delivery_distribution/set_delivery_distribution.dart';
 import 'package:dehub/src/order_module/screens/shipment_distribution/shipment_distribution.dart';
@@ -228,6 +231,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => InvoiceProvider()),
           ChangeNotifierProvider(create: (_) => PartnerProvider()),
           ChangeNotifierProvider(create: (_) => UserModuleProvider()),
+          ChangeNotifierProvider(create: (_) => OrderProvider()),
         ],
         child: Stack(
           children: [
@@ -258,9 +262,21 @@ class MyApp extends StatelessWidget {
                         type: arguments.type,
                       );
                     });
+                  case CreateBackOrder.routeName:
+                    CreateBackOrderArguments arguments =
+                        settings.arguments as CreateBackOrderArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return CreateBackOrder(
+                        orders: arguments.orders,
+                      );
+                    });
                   case PriceGroupPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return const PriceGroupPage();
+                    });
+                  case OrderCustomers.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return const OrderCustomers();
                     });
                   case NoInternetScreen.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -1323,7 +1339,7 @@ class MyApp extends StatelessWidget {
                         settings.arguments as ChangeBranchNamePageArguments;
                     return MaterialPageRoute(builder: (context) {
                       return ChangeBranchNamePage(
-                        data: arguments.data,
+                        id: arguments.id,
                         receiverBranchController:
                             arguments.receiverBranchController,
                       );

@@ -1,5 +1,4 @@
 import 'package:dehub/components/dashboard_card/dashboard_card.dart';
-// import 'package:dehub/components/pie_chart/pie_chart.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
@@ -13,6 +12,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:provider/provider.dart';
+// import 'package:dehub/components/pie_chart/pie_chart.dart';
 
 class DashboardTab extends StatefulWidget {
   const DashboardTab({super.key});
@@ -124,14 +124,6 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                   svgColor: productColor,
                   svg: 'assets/svg/receipt_tax.svg',
                 ),
-                DashboardCard(
-                  onClick: () {},
-                  boxColor: productColor.withOpacity(0.1),
-                  padding: 9,
-                  labelText: 'Хөнгөлөлт, урамшуулал',
-                  svgColor: productColor,
-                  svg: 'assets/svg/map.svg',
-                ),
                 if (user.currentBusiness?.type == "SUPPLIER")
                   DashboardCard(
                     onClick: () {
@@ -142,7 +134,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                     padding: 9,
                     labelText: 'Лавлах мэдээлэл',
                     svgColor: productColor,
-                    svg: 'assets/svg/box.svg',
+                    svg: 'assets/svg/multi_box.svg',
                   ),
               ],
             ),

@@ -32,7 +32,7 @@ class CheckBiometricState extends State<CheckBiometric> with AfterLayoutMixin {
         isLoading = true;
       });
       bioMetric = await auth.authenticate(
-        localizedReason: 'Let OS determine authentication method',
+        localizedReason: 'Баталгаажуулалт',
         options: const AuthenticationOptions(
           stickyAuth: true,
         ),

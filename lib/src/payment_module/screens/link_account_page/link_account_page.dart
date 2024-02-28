@@ -107,260 +107,265 @@ class LinkAccountPageState extends State<LinkAccountPage> {
     user = Provider.of<UserProvider>(context, listen: true).paymentMe;
     general =
         Provider.of<GeneralProvider>(context, listen: false).paymentGeneral;
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: AppBar(
-        elevation: 0,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
         backgroundColor: backgroundColor,
-        surfaceTintColor: backgroundColor,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            color: paymentColor,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: backgroundColor,
+          surfaceTintColor: backgroundColor,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: paymentColor,
+            ),
           ),
-        ),
-        title: const Text(
-          'Данс холбох',
-          style: TextStyle(
-            color: paymentColor,
-            fontSize: 17,
-            fontWeight: FontWeight.bold,
+          title: const Text(
+            'Данс холбох',
+            style: TextStyle(
+              color: paymentColor,
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: const Text(
-                  'Дансны мэдээлэл',
-                  style: TextStyle(
-                    color: dark,
-                    fontWeight: FontWeight.w600,
+        body: SingleChildScrollView(
+          child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: const Text(
+                    'Дансны мэдээлэл',
+                    style: TextStyle(
+                      color: dark,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  bankModal();
-                },
-                child: Container(
+                GestureDetector(
+                  onTap: () {
+                    bankModal();
+                  },
+                  child: Container(
+                    color: white,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Банкны нэр',
+                          style: TextStyle(
+                            color: grey2,
+                          ),
+                        ),
+                        Text(
+                          bankName,
+                          style: const TextStyle(
+                            color: paymentColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                if (bankValidate == true)
+                  Container(
+                    margin: const EdgeInsets.only(left: 15, top: 8),
+                    child: const Text(
+                      'Заавал сонгоно',
+                      style: TextStyle(
+                        color: red,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                FormBuilder(
+                  key: fbKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FormTextField(
+                        maxLenght: 10,
+                        showCounter: false,
+                        controller: numberController,
+                        inputType: TextInputType.number,
+                        textColor: paymentColor,
+                        name: 'number',
+                        onChanged: (value) {
+                          setState(() {
+                            check = Payment();
+                          });
+                          if (value != "") {
+                            setState(() {
+                              numberValidate = false;
+                            });
+                          } else {
+                            setState(() {
+                              numberValidate = true;
+                            });
+                          }
+                          if (numberController.text.length == 10) {
+                            checkAccount();
+                          }
+                        },
+                        readOnly: bankName == "Банк сонгох",
+                        textAlign: TextAlign.end,
+                        decoration: InputDecoration(
+                          prefixIcon: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 15),
+                            child: const Text(
+                              'Дансны дугаар',
+                              style: TextStyle(color: grey2),
+                            ),
+                          ),
+                          hintStyle: const TextStyle(color: paymentColor),
+                          hintText: 'Энд оруулна уу',
+                          isDense: true,
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 15),
+                          border: const OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                          ),
+                          fillColor: white,
+                          filled: true,
+                        ),
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(
+                              errorText: 'Заавал оруулна'),
+                        ]),
+                      ),
+                      Container(
+                        color: white,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Дансны нэр',
+                              style: TextStyle(
+                                color: grey2,
+                              ),
+                            ),
+                            Text(
+                              check.accountName != null
+                                  ? "${check.accountName}"
+                                  : 'Дансны нэр',
+                              style: const TextStyle(
+                                color: grey2,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      FormTextField(
+                        controller: shortNameController,
+                        textColor: paymentColor,
+                        name: 'shortName',
+                        onChanged: (value) {
+                          if (value != "") {
+                            setState(() {
+                              shortnameValidate = false;
+                            });
+                          } else {
+                            setState(() {
+                              shortnameValidate = true;
+                            });
+                          }
+                        },
+                        readOnly: bankName == "Банк сонгох",
+                        textAlign: TextAlign.end,
+                        decoration: InputDecoration(
+                          prefixIcon: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 15),
+                            child: const Text(
+                              'Богино нэр',
+                              style: TextStyle(color: grey2),
+                            ),
+                          ),
+                          hintStyle: const TextStyle(color: paymentColor),
+                          hintText: 'Энд оруулна уу',
+                          isDense: true,
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 15),
+                          border: const OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                          ),
+                          fillColor: white,
+                          filled: true,
+                        ),
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(
+                              errorText: 'Заавал оруулна'),
+                        ]),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        'Банкны нэр',
-                        style: TextStyle(
-                          color: grey2,
-                        ),
+                        'Үндсэн данс болгох',
+                        style: TextStyle(fontSize: 14, color: grey2),
                       ),
-                      Text(
-                        bankName,
-                        style: const TextStyle(
-                          color: paymentColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                      Transform.scale(
+                        scale: 0.7,
+                        child: CupertinoSwitch(
+                          activeColor: paymentColor,
+                          value: isSwitched,
+                          onChanged: (bool value) {
+                            setState(() {
+                              isSwitched = value;
+                            });
+                          },
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-              if (bankValidate == true)
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  'Та буруу дансанд орлого авахаас сэргийлэн оруулсан мэдээллээ сайтар шалгана уу. Буруу данс сонгосоноос үүсэх алдаанд DeHUB платформ хариуцлага хүлээхгүйг анхаарна уу!!!',
+                  style: TextStyle(fontSize: 14, color: grey3),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
                 Container(
-                  margin: const EdgeInsets.only(left: 15, top: 8),
-                  child: const Text(
-                    'Заавал сонгоно',
-                    style: TextStyle(
-                      color: red,
-                      fontSize: 12,
-                    ),
+                  margin: const EdgeInsets.symmetric(horizontal: 40),
+                  child: CustomButton(
+                    labelColor: paymentColor,
+                    labelText: 'Мэдээлэл зөв. Холбоё',
+                    onClick: () {
+                      checkValidate();
+                    },
                   ),
                 ),
-              FormBuilder(
-                key: fbKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FormTextField(
-                      maxLenght: 10,
-                      showCounter: false,
-                      controller: numberController,
-                      inputType: TextInputType.number,
-                      textColor: paymentColor,
-                      name: 'number',
-                      onChanged: (value) {
-                        setState(() {
-                          check = Payment();
-                        });
-                        if (value != "") {
-                          setState(() {
-                            numberValidate = false;
-                          });
-                        } else {
-                          setState(() {
-                            numberValidate = true;
-                          });
-                        }
-                        if (numberController.text.length == 10) {
-                          checkAccount();
-                        }
-                      },
-                      readOnly: bankName == "Банк сонгох",
-                      textAlign: TextAlign.end,
-                      decoration: InputDecoration(
-                        prefixIcon: Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 15),
-                          child: const Text(
-                            'Дансны дугаар',
-                            style: TextStyle(color: grey2),
-                          ),
-                        ),
-                        hintStyle: const TextStyle(color: paymentColor),
-                        hintText: 'Энд оруулна уу',
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 15),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                        fillColor: white,
-                        filled: true,
-                      ),
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(
-                            errorText: 'Заавал оруулна'),
-                      ]),
-                    ),
-                    Container(
-                      color: white,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Дансны нэр',
-                            style: TextStyle(
-                              color: grey2,
-                            ),
-                          ),
-                          Text(
-                            check.accountName != null
-                                ? "${check.accountName}"
-                                : 'Дансны нэр',
-                            style: const TextStyle(
-                              color: grey2,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    FormTextField(
-                      controller: shortNameController,
-                      textColor: paymentColor,
-                      name: 'shortName',
-                      onChanged: (value) {
-                        if (value != "") {
-                          setState(() {
-                            shortnameValidate = false;
-                          });
-                        } else {
-                          setState(() {
-                            shortnameValidate = true;
-                          });
-                        }
-                      },
-                      readOnly: bankName == "Банк сонгох",
-                      textAlign: TextAlign.end,
-                      decoration: InputDecoration(
-                        prefixIcon: Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 15),
-                          child: const Text(
-                            'Богино нэр',
-                            style: TextStyle(color: grey2),
-                          ),
-                        ),
-                        hintStyle: const TextStyle(color: paymentColor),
-                        hintText: 'Энд оруулна уу',
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 15),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                        fillColor: white,
-                        filled: true,
-                      ),
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(
-                            errorText: 'Заавал оруулна'),
-                      ]),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                color: white,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Үндсэн данс болгох',
-                      style: TextStyle(fontSize: 14, color: grey2),
-                    ),
-                    Transform.scale(
-                      scale: 0.7,
-                      child: CupertinoSwitch(
-                        activeColor: paymentColor,
-                        value: isSwitched,
-                        onChanged: (bool value) {
-                          setState(() {
-                            isSwitched = value;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                'Та буруу дансанд орлого авахаас сэргийлэн оруулсан мэдээллээ сайтар шалгана уу. Буруу данс сонгосоноос үүсэх алдаанд DeHUB платформ хариуцлага хүлээхгүйг анхаарна уу!!!',
-                style: TextStyle(fontSize: 14, color: grey3),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 40),
-                child: CustomButton(
-                  labelColor: paymentColor,
-                  labelText: 'Мэдээлэл зөв. Холбоё',
-                  onClick: () {
-                    checkValidate();
-                  },
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
