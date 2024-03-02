@@ -73,7 +73,7 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${widget.data?.partner?.businessName}',
+                          '${widget.data?.profileName}',
                           style: const TextStyle(
                             color: buttonColor,
                             fontWeight: FontWeight.bold,
@@ -95,7 +95,7 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
                                 ),
                               ),
                               TextSpan(
-                                text: 'РД${widget.data?.regNumber}',
+                                text: ', ${widget.data?.refCode}',
                                 style: const TextStyle(
                                   color: buttonColor,
                                   fontSize: 13,

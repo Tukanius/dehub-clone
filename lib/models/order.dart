@@ -198,10 +198,30 @@ class Order {
   DateTime? header;
   List<Order>? warehouses;
   List<String>? ids;
+  List<String>? orderIds;
   bool? isSplit;
   String? salesType;
+  int? minQuantity;
+  int? availableQuantity;
+  int? totalOrderedQuantity;
+  String? buyerBusinessId;
+  String? supplierBusinessId;
+  bool? isLoadable;
+  List<Order>? buyers;
+  List<Order>? suppliers;
+  bool? isDropshipping;
 
   Order({
+    this.isDropshipping,
+    this.isLoadable,
+    this.buyers,
+    this.suppliers,
+    this.buyerBusinessId,
+    this.supplierBusinessId,
+    this.minQuantity,
+    this.availableQuantity,
+    this.totalOrderedQuantity,
+    this.orderIds,
     this.salesType,
     this.ids,
     this.isSplit,

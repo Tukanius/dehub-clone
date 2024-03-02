@@ -243,4 +243,28 @@ class OrderApi extends HttpRequest {
     var res = await get('/order/backorder', "ORDER", true, data: data.toJson());
     return Result.fromJson(res, Order.fromJson);
   }
+
+  Future<Result> getLines(Order data) async {
+    var res = await put('/order/backorder/get_lines', "ORDER", true,
+        data: data.toJson());
+    return Result.fromJson(res, Order.fromJson);
+  }
+
+  Future<Order> backorderCreate(Order data) async {
+    var res =
+        await post('/order/backorder', "ORDER", true, data: data.toJson());
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> dropshipList(ResultArguments data) async {
+    var res =
+        await get('/order/dropshipping', "ORDER", true, data: data.toJson());
+    return Result.fromJson(res, Order.fromJson);
+  }
+
+  Future<Order> dropshipCreate(Order data) async {
+    var res =
+        await post('/order/dropshipping', "ORDER", true, data: data.toJson());
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
 }

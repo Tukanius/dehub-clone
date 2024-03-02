@@ -1,32 +1,32 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/order_api.dart';
-import 'package:dehub/components/back_order_card/back_order_card.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/dropshipping_card/dropshipping_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/order_module/screens/received_order_detail/received_order_detail.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
-class BackOrder extends StatefulWidget {
-  const BackOrder({super.key});
+class DropshippingTab extends StatefulWidget {
+  const DropshippingTab({super.key});
 
   @override
-  State<BackOrder> createState() => _BackOrderState();
+  State<DropshippingTab> createState() => _DropshippingTabState();
 }
 
-class _BackOrderState extends State<BackOrder> with AfterLayoutMixin {
+class _DropshippingTabState extends State<DropshippingTab>
+    with AfterLayoutMixin {
   int page = 1;
   int limit = 10;
   Result orders = Result(rows: [], count: 0);
   bool isLoading = true;
   ListenController listenController = ListenController();
-
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(orderStatus: '');
+    Filter filter = Filter(isDropshipping: true, excel: false);
     orders = await OrderApi()
-        .backOrderList(ResultArguments(filter: filter, offset: offset));
+        .dropshipList(ResultArguments(filter: filter, offset: offset));
     setState(() {
       isLoading = false;
     });
@@ -47,24 +47,12 @@ class _BackOrderState extends State<BackOrder> with AfterLayoutMixin {
           )
         : SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: const Text(
-                    'Захиалгын жагсаалт',
-                    style: TextStyle(
-                      color: grey3,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
                 orders.rows!.isNotEmpty
                     ? Column(
                         children: orders.rows!
                             .map(
-                              (e) => BackorderCard(
+                              (e) => DropshippingCard(
                                 data: e,
                                 onClick: () {
                                   Navigator.of(context).pushNamed(

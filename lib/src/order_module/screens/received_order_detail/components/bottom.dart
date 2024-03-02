@@ -58,6 +58,7 @@ class _BottomState extends State<Bottom> {
       true,
       onPressed: () {
         Navigator.pop(context);
+        Navigator.pop(context);
       },
     );
   }

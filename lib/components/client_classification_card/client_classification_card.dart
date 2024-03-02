@@ -32,6 +32,7 @@ class _ClientClassificationCardState extends State<ClientClassificationCard> {
             widget.startAnimation ? 0 : MediaQuery.of(context).size.width,
             0,
             0),
+        margin: const EdgeInsets.only(bottom: 3),
         padding: const EdgeInsets.all(15),
         color: white,
         child: Column(

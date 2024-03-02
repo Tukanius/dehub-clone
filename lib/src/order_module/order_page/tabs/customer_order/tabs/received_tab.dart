@@ -7,6 +7,7 @@ import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/order_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/order_module/screens/received_order_detail/received_order_detail.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -53,7 +54,8 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
-    list(page, limit);
+    await Provider.of<OrderProvider>(context, listen: false).clearData();
+    await list(page, limit);
   }
 
   void _onLoading() async {

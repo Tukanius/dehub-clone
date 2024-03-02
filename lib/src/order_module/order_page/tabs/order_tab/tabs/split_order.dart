@@ -1,6 +1,7 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/split_order_card/split_order_card.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/order_module/screens/received_order_detail/received_order_detail.dart';
@@ -57,24 +58,29 @@ class _SplitOrderState extends State<SplitOrder> with AfterLayoutMixin {
         : SingleChildScrollView(
             child: Column(
               children: [
-                Column(
-                  children: splits.rows!
-                      .map(
-                        (data) => SplitOrderCard(
-                          data: data,
-                          onClick: () {
-                            Navigator.of(context).pushNamed(
-                              ReceivedOrderDetail.routeName,
-                              arguments: ReceivedOrderDetailArguments(
-                                listenController: listenController,
-                                id: data.id,
+                splits.rows!.isNotEmpty
+                    ? Column(
+                        children: splits.rows!
+                            .map(
+                              (data) => SplitOrderCard(
+                                data: data,
+                                onClick: () {
+                                  Navigator.of(context).pushNamed(
+                                    ReceivedOrderDetail.routeName,
+                                    arguments: ReceivedOrderDetailArguments(
+                                      listenController: listenController,
+                                      id: data.id,
+                                    ),
+                                  );
+                                },
                               ),
-                            );
-                          },
-                        ),
+                            )
+                            .toList(),
                       )
-                      .toList(),
-                ),
+                    : const NotFound(
+                        module: 'ORDER',
+                        labelText: "Хоосон байна",
+                      ),
                 const SizedBox(
                   height: 50,
                 ),

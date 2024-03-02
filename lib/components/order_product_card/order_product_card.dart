@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 class OrderProductCard extends StatefulWidget {
   final Function()? onClick;
   final Function()? onCloseClick;
-  final List<Order>? splitList;
+  final List<Order>? list;
   final Order data;
   final bool? readOnly;
   final List<Order>? package;
@@ -21,7 +21,7 @@ class OrderProductCard extends StatefulWidget {
   const OrderProductCard({
     this.listenController,
     this.onCloseClick,
-    this.splitList,
+    this.list,
     this.isPackage,
     this.package,
     this.readOnly,
@@ -218,7 +218,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                 const SizedBox(
                   width: 5,
                 ),
-                widget.splitList == null
+                widget.list == null
                     ? GestureDetector(
                         onTap: widget.onCloseClick,
                         child: SvgPicture.asset(
@@ -241,16 +241,16 @@ class _OrderProductCardState extends State<OrderProductCard> {
                         ),
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         activeColor: orderColor,
-                        value: widget.splitList?.contains(widget.data),
+                        value: widget.list?.contains(widget.data),
                         onChanged: (value) {
-                          if (widget.splitList!.contains(widget.data)) {
+                          if (widget.list!.contains(widget.data)) {
                             setState(() {
-                              widget.splitList!.removeWhere(
+                              widget.list!.removeWhere(
                                   (element) => element.id == widget.data.id);
                             });
                           } else {
                             setState(() {
-                              widget.splitList!.add(widget.data);
+                              widget.list!.add(widget.data);
                             });
                           }
                         },

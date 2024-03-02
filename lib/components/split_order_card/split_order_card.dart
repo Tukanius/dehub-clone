@@ -88,7 +88,7 @@ class _SplitOrderCardState extends State<SplitOrderCard> {
               children: [
                 Expanded(
                   child: Text(
-                    'Бүс: ${widget.data.region?.name}',
+                    'Бүс: ${widget.data.region?.name ?? "-"}',
                     style: const TextStyle(
                       color: grey2,
                       fontSize: 12,
@@ -97,7 +97,7 @@ class _SplitOrderCardState extends State<SplitOrderCard> {
                 ),
                 Expanded(
                   child: Text(
-                    'Чиглэл: ${widget.data.direction?.name}',
+                    'Чиглэл: ${widget.data.direction?.name ?? '-'}',
                     style: const TextStyle(
                       color: grey2,
                       fontSize: 12,

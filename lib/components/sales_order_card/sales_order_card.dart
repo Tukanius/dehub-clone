@@ -72,39 +72,40 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
         child: Column(
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 12,
-                      backgroundColor: grey,
-                      backgroundImage: widget.data.type == "SALES" &&
-                              user.currentBusiness?.type == "SUPPLIER"
-                          ? NetworkImage(
-                              '${widget.data.receiverBusiness?.logo}')
-                          : NetworkImage('${widget.data.senderBusiness?.logo}'),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    widget.data.type == "SALES" &&
-                            user.currentBusiness?.type == "SUPPLIER"
-                        ? Text(
-                            '${widget.data.receiverBusiness?.partner?.businessName}',
-                            style: const TextStyle(
-                              color: buttonColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        : Text(
-                            '${widget.data.senderBusiness?.partner?.businessName}',
-                            style: const TextStyle(
-                              color: buttonColor,
-                              fontWeight: FontWeight.bold,
-                            ),
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CircleAvatar(
+                        radius: 12,
+                        backgroundColor: grey,
+                        backgroundImage: widget.data.type == "SALES" &&
+                                user.currentBusiness?.type == "SUPPLIER"
+                            ? NetworkImage(
+                                '${widget.data.receiverBusiness?.logo}')
+                            : NetworkImage(
+                                '${widget.data.senderBusiness?.logo}'),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        child: Text(
+                          widget.data.type == "SALES" &&
+                                  user.currentBusiness?.type == "SUPPLIER"
+                              ? '${widget.data.receiverBusiness?.profileName}'
+                              : '${widget.data.senderBusiness?.profileName}',
+                          style: const TextStyle(
+                            color: buttonColor,
+                            fontWeight: FontWeight.bold,
                           ),
-                  ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Row(
                   children: [

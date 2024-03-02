@@ -6,6 +6,7 @@ import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/order_module/screens/customers/customers.dart';
 import 'package:dehub/src/order_module/screens/delivery_management/delivery_management.dart';
+import 'package:dehub/src/order_module/screens/dropship_order/dropship_order.dart';
 import 'package:dehub/src/order_module/screens/order_delivery/order_delivery.dart';
 import 'package:dehub/src/order_module/screens/order_shipping/order_shipping.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -132,7 +133,9 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                   svg: 'assets/svg/zahialga.svg',
                 ),
                 DashboardCard(
-                  onClick: () {},
+                  onClick: () {
+                    Navigator.of(context).pushNamed(DropshipOrder.routeName);
+                  },
                   boxColor: orderColor.withOpacity(0.2),
                   padding: 7,
                   labelText: 'Dropship захиалга',

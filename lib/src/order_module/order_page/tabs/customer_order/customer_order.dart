@@ -1,3 +1,4 @@
+import 'package:after_layout/after_layout.dart';
 import 'package:dehub/providers/order_provider.dart';
 import 'package:dehub/src/order_module/order_page/tabs/customer_order/tabs/back_order.dart';
 import 'package:dehub/src/order_module/order_page/tabs/customer_order/tabs/received_tab.dart';
@@ -15,8 +16,9 @@ class CustomerOrder extends StatefulWidget {
 }
 
 class _CustomerOrderState extends State<CustomerOrder>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, AfterLayoutMixin {
   late TabController tabController;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -25,6 +27,14 @@ class _CustomerOrderState extends State<CustomerOrder>
       setState(() {});
     });
     super.initState();
+  }
+
+  @override
+  afterFirstLayout(BuildContext context) {
+    Provider.of<OrderProvider>(context, listen: false).clearData();
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -121,13 +131,15 @@ class _CustomerOrderState extends State<CustomerOrder>
             ),
           ];
         },
-        body: TabBarView(
-          controller: tabController,
-          children: const [
-            ReceivedTab(),
-            BackOrder(),
-          ],
-        ),
+        body: isLoading == true
+            ? const SizedBox()
+            : TabBarView(
+                controller: tabController,
+                children: const [
+                  ReceivedTab(),
+                  BackOrder(),
+                ],
+              ),
       ),
     );
   }

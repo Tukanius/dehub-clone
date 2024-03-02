@@ -6,8 +6,17 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => Order.fromJson(e)).toList()
         : null,
+    buyers: json['buyers'] != null
+        ? (json['buyers'] as List).map((e) => Order.fromJson(e)).toList()
+        : null,
+    suppliers: json['suppliers'] != null
+        ? (json['suppliers'] as List).map((e) => Order.fromJson(e)).toList()
+        : null,
     ids: json['ids'] != null
         ? (json['ids'] as List).map((e) => e as String).toList()
+        : null,
+    orderIds: json['orderIds'] != null
+        ? (json['orderIds'] as List).map((e) => e as String).toList()
         : null,
     values: json['values'] != null
         ? (json['values'] as List).map((e) => Order.fromJson(e)).toList()
@@ -30,10 +39,19 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         ? DateTime.parse(json['deletedAt'].toString())
         : null,
     refCode: json['refCode'] != null ? json['refCode'] as String : null,
+    buyerBusinessId: json['buyerBusinessId'] != null
+        ? json['buyerBusinessId'] as String
+        : null,
+    supplierBusinessId: json['supplierBusinessId'] != null
+        ? json['supplierBusinessId'] as String
+        : null,
     salesType: json['salesType'] != null ? json['salesType'] as String : null,
     type: json['type'] != null ? json['type'] as String : null,
     isDefault: json['isDefault'] != null ? json['isDefault'] as bool : null,
+    isDropshipping:
+        json['isDropshipping'] != null ? json['isDropshipping'] as bool : null,
     isSplit: json['isSplit'] != null ? json['isSplit'] as bool : null,
+    isLoadable: json['isLoadable'] != null ? json['isLoadable'] as bool : null,
     isConfirmed:
         json['isConfirmed'] != null ? json['isConfirmed'] as bool : null,
     businessStatus: json['businessStatus'] != null
@@ -178,6 +196,15 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         : null,
     quantity: json['quantity'] != null
         ? int.parse(json['quantity'].toString())
+        : null,
+    minQuantity: json['minQuantity'] != null
+        ? int.parse(json['minQuantity'].toString())
+        : null,
+    availableQuantity: json['availableQuantity'] != null
+        ? int.parse(json['availableQuantity'].toString())
+        : null,
+    totalOrderedQuantity: json['totalOrderedQuantity'] != null
+        ? int.parse(json['totalOrderedQuantity'].toString())
         : null,
     unit: json['unit'] != null ? json['unit'] as String : null,
     price:
@@ -462,7 +489,26 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$OrderToJson(Order instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.minQuantity != null) json['minQuantity'] = instance.minQuantity;
+  if (instance.isDropshipping != null) {
+    json['isDropshipping'] = instance.isDropshipping;
+  }
+  if (instance.isLoadable != null) json['isLoadable'] = instance.isLoadable;
+  if (instance.availableQuantity != null) {
+    json['availableQuantity'] = instance.availableQuantity;
+  }
+  if (instance.supplierBusinessId != null) {
+    json['supplierBusinessId'] = instance.supplierBusinessId;
+  }
+  if (instance.buyerBusinessId != null) {
+    json['buyerBusinessId'] = instance.buyerBusinessId;
+  }
+  if (instance.totalOrderedQuantity != null) {
+    json['totalOrderedQuantity'] = instance.totalOrderedQuantity;
+  }
   if (instance.warehouses != null) json['warehouses'] = instance.warehouses;
+  if (instance.buyers != null) json['buyers'] = instance.buyers;
+  if (instance.suppliers != null) json['suppliers'] = instance.suppliers;
   if (instance.ids != null) json['ids'] = instance.ids;
   if (instance.values != null) json['values'] = instance.values;
   if (instance.header != null) json['header'] = instance.header;
@@ -563,6 +609,7 @@ Map<String, dynamic> _$OrderToJson(Order instance) {
     json['warehouseStatus'] = instance.warehouseStatus;
   }
   if (instance.regUser != null) json['regUser'] = instance.regUser;
+  if (instance.orderIds != null) json['orderIds'] = instance.orderIds;
   if (instance.warehouseId != null) json['warehouseId'] = instance.warehouseId;
   if (instance.staffId != null) json['staffId'] = instance.staffId;
   if (instance.loadingDate != null) json['loadingDate'] = instance.loadingDate;

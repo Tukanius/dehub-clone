@@ -88,7 +88,8 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: const ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter:
+                          const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),
@@ -204,7 +205,8 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                           paddingVertical: 10,
                           labelText: "Манай Buyer бизнес",
                           secondText:
-                              source.product.buyerBusiness?.profileName ?? 'Сонгох',
+                              source.product.buyerBusiness?.profileName ??
+                                  'Сонгох',
                           secondTextColor: productColor,
                           onClick: () {
                             showModalBottomSheet(
@@ -221,7 +223,8 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                           paddingVertical: 10,
                           labelText: "Нийлүүлэгч партнер",
                           secondText:
-                              source.product.partnerBusiness?.businessName ?? 'Сонгох',
+                              source.product.partnerBusiness?.businessName ??
+                                  'Сонгох',
                           secondTextColor: productColor,
                           onClick: source.product.buyerBusiness?.id == null
                               ? () {}
@@ -242,7 +245,8 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                           paddingVertical: 10,
                           labelText: "Нийлүүлэгч бизнес",
                           secondText:
-                              source.product.supplierBusiness?.profileName ?? 'Сонгох',
+                              source.product.supplierBusiness?.profileName ??
+                                  'Сонгох',
                           secondTextColor: productColor,
                           onClick: source.product.partnerBusiness?.id == null
                               ? () {}
@@ -265,8 +269,9 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                           paddingHorizontal: 15,
                           paddingVertical: 10,
                           labelText: "Хариуцсан ажилтан",
-                          secondText: source.product.supplierBusiness?.merchStaff
-                                  ?.firstName ?? 'Авто гарах',
+                          secondText: source.product.supplierBusiness
+                                  ?.merchStaff?.firstName ??
+                              'Авто гарах',
                           secondTextColor: productColor,
                           color: white,
                         ),
@@ -294,6 +299,9 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                                   onChanged: (value) {
                                     setState(() {
                                       backorderable = value;
+                                      if (backorderable == true) {
+                                        isDropShipping = false;
+                                      }
                                     });
                                   },
                                 ),
@@ -317,6 +325,9 @@ class _VariantSuppliersSheetState extends State<VariantSuppliersSheet>
                                   onChanged: (value) {
                                     setState(() {
                                       isDropShipping = value;
+                                      if (isDropShipping == true) {
+                                        backorderable = false;
+                                      }
                                     });
                                   },
                                 ),

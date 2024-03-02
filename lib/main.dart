@@ -27,6 +27,8 @@ import 'package:dehub/src/network_module/screens/account_setting/set_account/set
 import 'package:dehub/src/order_module/screens/create_back_order/create_back_order.dart';
 import 'package:dehub/src/order_module/screens/customers/customers.dart';
 import 'package:dehub/src/order_module/screens/delivery_management/delivery_management.dart';
+import 'package:dehub/src/order_module/screens/dropship_create/dropship_create.dart';
+import 'package:dehub/src/order_module/screens/dropship_order/dropship_order.dart';
 import 'package:dehub/src/order_module/screens/set_delivery_distribution/set_delivery_distribution.dart';
 import 'package:dehub/src/order_module/screens/shipment_distribution/shipment_distribution.dart';
 import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/partner_profile.dart';
@@ -254,6 +256,10 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return const SplashPage();
                     });
+                  case DropshipOrder.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return const DropshipOrder();
+                    });
                   case ChangeStandardPrice.routeName:
                     ChangeStandardPriceArguments arguments =
                         settings.arguments as ChangeStandardPriceArguments;
@@ -268,6 +274,15 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return CreateBackOrder(
                         orders: arguments.orders,
+                      );
+                    });
+                  case DropshipCreate.routeName:
+                    DropshipCreateArguments arguments =
+                        settings.arguments as DropshipCreateArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return DropshipCreate(
+                        id: arguments.id,
+                        lines: arguments.lines,
                       );
                     });
                   case PriceGroupPage.routeName:
