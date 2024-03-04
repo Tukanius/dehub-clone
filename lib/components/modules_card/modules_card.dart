@@ -318,47 +318,6 @@ class _ModulesCardState extends State<ModulesCard> {
           ),
           GestureDetector(
             onTap: () {
-              // if (user.currentBusiness?.type == 'SUPPLIER' ||
-              //     user.currentBusiness?.type == "BUYER") {
-              //   Navigator.of(context).pushNamed(DebtPage.routeName);
-              // }
-            },
-            child: Container(
-              color: transparent,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 36,
-                    width: 36,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 7, vertical: 7),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: debtColor.withOpacity(0.1),
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/svg/avlaga_uglug.svg',
-                      colorFilter: ColorFilter.mode(
-                          buttonColor.withOpacity(0.3), BlendMode.srcIn),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    'Авлага, өглөг',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: !isPartner ? black : black.withOpacity(0.5),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
               if (isPartner) {
                 Navigator.of(context).pushNamed(PartnerPage.routeName);
               }

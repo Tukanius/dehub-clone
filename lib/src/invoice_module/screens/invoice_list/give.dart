@@ -190,56 +190,59 @@ class _GivePageState extends State<GivePage>
       ),
       body: Column(
         children: [
-          Container(
-            margin: const EdgeInsets.symmetric(
-              vertical: 10,
-            ),
-            color: white,
-            height: 50,
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-              itemCount: general.invoiceStatus?.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: selectedStatus != general.invoiceStatus?[index].code
-                      ? () {
-                          setState(() {
-                            selectedStatus = general.invoiceStatus?[index].code;
-                            isLoading = true;
-                            page = 1;
-                            groupItems = {};
-                          });
-                          list(page, limit, search, selectedStatus!);
-                        }
-                      : () {},
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 5, left: 5),
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24),
-                      color:
-                          selectedStatus == general.invoiceStatus?[index].code
-                              ? invoiceColor
-                              : Colors.grey.shade100,
-                    ),
-                    child: Center(
-                      child: Text(
-                        '${general.invoiceStatus?[index].name}',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: selectedStatus ==
-                                  general.invoiceStatus?[index].code
-                              ? white
-                              : grey2,
+          if (isLoading == false)
+            Container(
+              margin: const EdgeInsets.symmetric(
+                vertical: 10,
+              ),
+              color: white,
+              height: 50,
+              child: ListView.builder(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                itemCount: general.invoiceStatus?.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: selectedStatus != general.invoiceStatus?[index].code
+                        ? () {
+                            setState(() {
+                              selectedStatus =
+                                  general.invoiceStatus?[index].code;
+                              isLoading = true;
+                              page = 1;
+                              groupItems = {};
+                            });
+                            list(page, limit, search, selectedStatus!);
+                          }
+                        : () {},
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 5, left: 5),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24),
+                        color:
+                            selectedStatus == general.invoiceStatus?[index].code
+                                ? invoiceColor
+                                : Colors.grey.shade100,
+                      ),
+                      child: Center(
+                        child: Text(
+                          '${general.invoiceStatus?[index].name}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: selectedStatus ==
+                                    general.invoiceStatus?[index].code
+                                ? white
+                                : grey2,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-          ),
           SearchButton(
             onChange: (query) {
               setState(() {

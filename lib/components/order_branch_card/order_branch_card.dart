@@ -36,26 +36,13 @@ class _OrderBranchCardState extends State<OrderBranchCard> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  widget.data?.logo != null && widget.data?.logo != ''
-                      ? Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                            color: grey,
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: NetworkImage('${widget.data?.logo}'),
-                            ),
-                          ),
-                        )
-                      : Container(
-                          height: 40,
-                          width: 40,
-                          decoration: const BoxDecoration(
-                            color: grey,
-                            shape: BoxShape.circle,
-                          ),
-                        ),
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundColor: grey,
+                    backgroundImage: widget.data?.logo == null
+                        ? null
+                        : NetworkImage('${widget.data?.logo}'),
+                  ),
                   const SizedBox(
                     width: 5,
                   ),

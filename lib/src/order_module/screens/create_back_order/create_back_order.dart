@@ -2,6 +2,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/back_order_create_card/back_order_create_card.dart';
 import 'package:dehub/components/field_card/field_card.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/result.dart';
@@ -74,11 +75,15 @@ class CreateBackOrderState extends State<CreateBackOrder>
             );
           }
           data.lines = lines;
-          await OrderApi().backorderCreate(data);
-          showCustomDialog(context, "Амжилттай захиалга багцаллаа", true,
-              onPressed: () {
-            Navigator.of(context).pop();
-          });
+          if (this.lines.rows!.isNotEmpty) {
+            await OrderApi().backorderCreate(data);
+            showCustomDialog(context, "Амжилттай захиалга багцаллаа", true,
+                onPressed: () {
+              Navigator.of(context).pop();
+            });
+          } else {
+            showCustomDialog(context, 'Багцлах бараа хоосон байна', false);
+          }
           loading.loading(false);
         }
       } catch (e) {
@@ -197,15 +202,20 @@ class CreateBackOrderState extends State<CreateBackOrder>
                           ),
                         ),
                       ),
-                      Column(
-                        children: lines.rows!
-                            .map(
-                              (data) => BackorderCreateCard(
-                                data: data,
-                              ),
+                      lines.rows!.isNotEmpty
+                          ? Column(
+                              children: lines.rows!
+                                  .map(
+                                    (data) => BackorderCreateCard(
+                                      data: data,
+                                    ),
+                                  )
+                                  .toList(),
                             )
-                            .toList(),
-                      ),
+                          : const NotFound(
+                              module: "ORDER",
+                              labelText: 'Хоосон байна',
+                            ),
                       const SizedBox(
                         height: 50,
                       ),

@@ -181,7 +181,6 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
                         labelText: "Бүсийн нэр",
                         secondText: business.areaRegion?.name,
                         secondTextColor: networkColor,
-                        onClick: () {},
                         arrowColor: networkColor,
                       ),
                       FieldCard(
@@ -191,7 +190,6 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
                         labelText: "Чиглэл",
                         secondText: business.areaDirection?.name,
                         secondTextColor: networkColor,
-                        onClick: () {},
                         arrowColor: networkColor,
                       ),
                     ],
@@ -209,6 +207,7 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
                       margin: EdgeInsets.only(
                           left: MediaQuery.of(context).size.width * 0.5),
                       color: transparent,
+                      alignment: Alignment.centerRight,
                       padding:
                           const EdgeInsets.only(right: 15, top: 10, bottom: 8),
                       child: Row(

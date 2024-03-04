@@ -572,13 +572,12 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                               ? "Солих"
                               : '${receiverBranch.name}',
                       secondTextColor: orderColor,
-                      onClick: user.currentBusiness?.type == "BUYER" &&
-                              receiverBranch.branchAddress == null
+                      onClick: user.currentBusiness?.type == "BUYER"
                           ? () {
                               Navigator.of(context).pushNamed(
                                 ChangeBranchNamePage.routeName,
                                 arguments: ChangeBranchNamePageArguments(
-                                  id: order.id!,
+                                  id: user.currentBusinessId!,
                                   receiverBranchController:
                                       receiverBranchController,
                                 ),

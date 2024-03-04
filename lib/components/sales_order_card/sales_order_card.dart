@@ -108,6 +108,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                   ),
                 ),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SvgPicture.asset(
                       'assets/svg/inv.svg',
@@ -144,26 +145,32 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                     if (user.currentBusiness?.type == "SUPPLIER" &&
                         widget.data.type == "PURCHASE" &&
                         widget.data.orderStatus == "REVIEWED")
-                      Checkbox(
-                        side: MaterialStateBorderSide.resolveWith(
-                          (states) => const BorderSide(
-                            color: orderColor,
-                            width: 2,
+                      Container(
+                        margin: const EdgeInsets.only(left: 5),
+                        height: 20,
+                        width: 20,
+                        child: Checkbox(
+                          side: MaterialStateBorderSide.resolveWith(
+                            (states) => const BorderSide(
+                              color: orderColor,
+                              width: 2,
+                            ),
                           ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          activeColor: orderColor,
+                          value: source.backorderList.contains(widget.data),
+                          onChanged: (value) {
+                            if (index > -1) {
+                              source.removeBackOrder(index);
+                            } else {
+                              source.addBackOrder(widget.data);
+                            }
+                          },
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        activeColor: orderColor,
-                        value: source.backorderList.contains(widget.data),
-                        onChanged: (value) {
-                          if (index > -1) {
-                            source.removeBackOrder(index);
-                          } else {
-                            source.addBackOrder(widget.data);
-                          }
-                        },
                       ),
                   ],
                 ),
