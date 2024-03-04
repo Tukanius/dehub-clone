@@ -237,6 +237,18 @@ class _AdjustmentState extends State<Adjustment> with AfterLayoutMixin {
                                           movementTypeSelect();
                                         },
                                       ),
+                                      FieldCard(
+                                        validate: noteValidate,
+                                        paddingHorizontal: 10,
+                                        paddingVertical: 10,
+                                        labelText: 'Тайлбар',
+                                        secondText: noteName ?? 'Сонгох',
+                                        color: white,
+                                        fontSize: 12,
+                                        onClick: () {
+                                          noteSelect();
+                                        },
+                                      ),
                                       FormTextField(
                                         fontSize: 12,
                                         name: 'asdf',
@@ -261,20 +273,8 @@ class _AdjustmentState extends State<Adjustment> with AfterLayoutMixin {
                                         validator:
                                             FormBuilderValidators.compose([
                                           FormBuilderValidators.required(
-                                              errorText: 'Заавал оруулна')
+                                              errorText: 'Заавал оруулна'),
                                         ]),
-                                      ),
-                                      FieldCard(
-                                        validate: noteValidate,
-                                        paddingHorizontal: 10,
-                                        paddingVertical: 10,
-                                        labelText: 'Тайлбар',
-                                        secondText: noteName ?? 'Сонгох',
-                                        color: white,
-                                        fontSize: 12,
-                                        onClick: () {
-                                          noteSelect();
-                                        },
                                       ),
                                     ],
                                   ),

@@ -114,12 +114,14 @@ class Finance {
   double? remainingDays;
   Finance? program;
   Finance? lbfProgram;
+  Finance? scfProgram;
   Finance? respondedUser;
   Finance? requestedBusiness;
   Finance? requestedFinUser;
   Finance? partner;
   Finance? product;
   Finance? lbfProduct;
+  Finance? scfProduct;
   Finance? invConfirmedUser;
   String? lastName;
   String? avatar;
@@ -233,15 +235,24 @@ class Finance {
   String? settlementStatus;
   Finance? business;
   Finance? financeStaff;
-
   double? firstAmount;
   double? firstInvCount;
   double? lastAmount;
   double? lastInvCount;
   double? confirmedInvCount;
   double? paidInvCount;
+  Finance? buyerAccount;
+  Finance? supplierAccount;
+  Finance? supplierFinUser;
+  Finance? buyerFinUser;
 
   Finance({
+    this.scfProgram,
+    this.scfProduct,
+    this.buyerFinUser,
+    this.supplierFinUser,
+    this.buyerAccount,
+    this.supplierAccount,
     this.firstAmount,
     this.firstInvCount,
     this.lastAmount,

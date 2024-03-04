@@ -181,8 +181,9 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
                                               DateFormat("yyyy-MM-dd")
                                                   .format(data.header!),
                                               style: const TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  color: grey2),
+                                                fontWeight: FontWeight.w600,
+                                                color: grey2,
+                                              ),
                                             ),
                                           ),
                                           Column(
@@ -210,7 +211,7 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
                                                   ),
                                                 )
                                                 .toList(),
-                                          )
+                                          ),
                                         ],
                                       ),
                                     )

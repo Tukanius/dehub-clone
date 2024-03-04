@@ -13,17 +13,15 @@ import 'package:intl/intl.dart';
 class InvoiceCard extends StatefulWidget {
   static const routeName = '/invoicecard';
   final Function()? onClick;
-  final Invoice? data;
+  final Invoice data;
   final int index;
   final bool startAnimation;
-  final bool isClosed;
   const InvoiceCard({
     super.key,
-    required this.isClosed,
     required this.startAnimation,
     required this.index,
     this.onClick,
-    this.data,
+    required this.data,
   });
 
   @override
@@ -37,46 +35,18 @@ class _InvoiceCardState extends State<InvoiceCard> {
 
   invoiceStatus() {
     final result = general.invoiceStatus!
-        .firstWhere((element) => element.code == widget.data?.invoiceStatus);
+        .firstWhere((element) => element.code == widget.data.invoiceStatus);
     return result;
   }
 
   paymentStatus() {
     final result = general.invoicePaymentStatus!
-        .firstWhere((element) => element.code == widget.data?.paymentStatus);
+        .firstWhere((element) => element.code == widget.data.paymentStatus);
     return result;
   }
 
-  fillColor() {
-    switch (widget.data?.paymentStatus) {
-      case "PENDING":
-        return invoiceColor.withOpacity(0.3);
-      case "DIVIDED":
-        return lightYellow.withOpacity(0.5);
-      case "OVER_DUE":
-        return lightRed.withOpacity(0.5);
-      case "CLOSED":
-        return green.withOpacity(0.4);
-      default:
-    }
-  }
-
-  borderColor() {
-    switch (widget.data?.paymentStatus) {
-      case "PENDING":
-        return grey3.withOpacity(0.4);
-      case "DIVIDED":
-        return lightYellow;
-      case "OVER_DUE":
-        return lightRed;
-      case "CLOSED":
-        return grey3.withOpacity(0.4);
-      default:
-    }
-  }
-
   textColor() {
-    switch (widget.data?.paymentStatus) {
+    switch (widget.data.paymentStatus) {
       case "PENDING":
         return invoiceColor;
       case "DIVIDED":
@@ -87,6 +57,12 @@ class _InvoiceCardState extends State<InvoiceCard> {
         return green;
       default:
     }
+  }
+
+  overdueStatus() {
+    final res = general.overdueStatus!
+        .firstWhere((element) => element.code == widget.data.overdueStatus);
+    return res;
   }
 
   @override
@@ -138,35 +114,23 @@ class _InvoiceCardState extends State<InvoiceCard> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          widget.isClosed == false
-                              ? Expanded(
-                                  child: Text(
-                                  user.currentBusiness?.type == "SUPPLIER"
-                                      ? '${widget.data?.receiverBusiness?.profileName}'
-                                      : '${widget.data?.senderBusiness?.profileName}',
-                                  style: const TextStyle(
-                                    color: black,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ))
-                              : Expanded(
-                                  child: Text(
-                                    user.currentBusiness?.type == "SUPPLIER" &&
-                                                widget.data?.type == "SALES" ||
-                                            user.currentBusiness?.type ==
-                                                    "BUYER" &&
-                                                widget.data?.type == "PURCHASE"
-                                        ? '${widget.data?.receiverBusiness?.profileName}'
-                                        : '${widget.data?.senderBusiness?.profileName}',
-                                    style: const TextStyle(
-                                      color: black,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
                           Expanded(
                             child: Text(
-                              '${Utils().formatCurrency(widget.data!.amountToPay.toString())}₮',
+                              user.currentBusiness?.type == "SUPPLIER" &&
+                                          widget.data.type == "SALES" ||
+                                      user.currentBusiness?.type == "BUYER" &&
+                                          widget.data.type == "PURCHASE"
+                                  ? '${widget.data.receiverBusiness?.profileName}'
+                                  : '${widget.data.senderBusiness?.profileName}',
+                              style: const TextStyle(
+                                color: black,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
                               style: const TextStyle(
                                 color: black,
                                 fontWeight: FontWeight.w500,
@@ -184,7 +148,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                         children: [
                           Text(
                             DateFormat("yyyy-MM-dd")
-                                .format(widget.data!.createdAt!),
+                                .format(widget.data.createdAt!),
                             style: const TextStyle(
                               fontSize: 12,
                               color: grey2,
@@ -194,10 +158,10 @@ class _InvoiceCardState extends State<InvoiceCard> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 5, vertical: 3),
                             decoration: BoxDecoration(
-                              color: fillColor(),
+                              color: textColor().withOpacity(0.3),
                               borderRadius: BorderRadius.circular(5),
                               border: Border.all(
-                                color: borderColor(),
+                                color: grey3.withOpacity(0.3),
                               ),
                             ),
                             child: Text(
@@ -250,7 +214,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                 ),
                               ),
                               Text(
-                                '${Utils().formatCurrency(widget.data!.confirmedAmount.toString())}₮',
+                                '${Utils().formatCurrency(widget.data.confirmedAmount.toString())}₮',
                                 style: const TextStyle(
                                   fontSize: 12,
                                   color: Color(0xff555555),
@@ -275,10 +239,10 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                   color: Color(0xff555555),
                                 ),
                               ),
-                              widget.data?.paymentDate != null
+                              widget.data.paymentDate != null
                                   ? Text(
                                       DateFormat('yyyy-MM-dd')
-                                          .format(widget.data!.paymentDate!),
+                                          .format(widget.data.paymentDate!),
                                       style: const TextStyle(
                                         fontSize: 12,
                                         color: Color(0xff555555),
@@ -302,21 +266,16 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                   color: Color(0xff555555),
                                 ),
                               ),
-                              widget.data!.overdueStatus == "NORMAL"
-                                  ? const Text(
-                                      'Хэвийн',
-                                      style: TextStyle(
-                                        color: green,
-                                        fontSize: 12,
-                                      ),
-                                    )
-                                  : const Text(
-                                      'Хугацаа хэтэрсэн',
-                                      style: TextStyle(
-                                        color: buttonColor,
-                                        fontSize: 12,
-                                      ),
-                                    )
+                              Text(
+                                '${overdueStatus().name}',
+                                style: TextStyle(
+                                  color: Color(int.parse(
+                                          overdueStatus().color.substring(1, 7),
+                                          radix: 16) +
+                                      0xff000000),
+                                  fontSize: 12,
+                                ),
+                              ),
                             ],
                           ),
                         ],
@@ -338,7 +297,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                 width: 5,
                               ),
                               Text(
-                                '${widget.data!.refCode}',
+                                '${widget.data.refCode}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: black,
@@ -359,7 +318,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
                                 width: 5,
                               ),
                               Text(
-                                '${Utils().formatCurrency(widget.data!.paidAmount.toString())} ₮',
+                                '${Utils().formatCurrency(widget.data.paidAmount.toString())} ₮',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: grey2,

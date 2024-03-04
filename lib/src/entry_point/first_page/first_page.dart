@@ -371,7 +371,6 @@ class FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                 children: invoice.rows!
                                     .map(
                                       (e) => InvoiceCard(
-                                        isClosed: false,
                                         startAnimation: startAnimation,
                                         index: invoice.rows!.indexOf(e),
                                         data: e,

@@ -439,6 +439,24 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
     program: json['program'] != null
         ? Finance.fromJson(json['program'] as Map<String, dynamic>)
         : null,
+    scfProgram: json['scfProgram'] != null
+        ? Finance.fromJson(json['scfProgram'] as Map<String, dynamic>)
+        : null,
+    scfProduct: json['scfProduct'] != null
+        ? Finance.fromJson(json['scfProduct'] as Map<String, dynamic>)
+        : null,
+    buyerFinUser: json['buyerFinUser'] != null
+        ? Finance.fromJson(json['buyerFinUser'] as Map<String, dynamic>)
+        : null,
+    supplierFinUser: json['supplierFinUser'] != null
+        ? Finance.fromJson(json['supplierFinUser'] as Map<String, dynamic>)
+        : null,
+    supplierAccount: json['supplierAccount'] != null
+        ? Finance.fromJson(json['supplierAccount'] as Map<String, dynamic>)
+        : null,
+    buyerAccount: json['buyerAccount'] != null
+        ? Finance.fromJson(json['buyerAccount'] as Map<String, dynamic>)
+        : null,
     financeStaff: json['financeStaff'] != null
         ? Finance.fromJson(json['financeStaff'] as Map<String, dynamic>)
         : null,
@@ -614,6 +632,20 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$FinanceToJson(Finance instance) {
   Map<String, dynamic> json = {};
   if (instance.firstAmount != null) json['firstAmount'] = instance.firstAmount;
+  if (instance.supplierAccount != null) {
+    json['supplierAccount'] = instance.supplierAccount;
+  }
+  if (instance.scfProgram != null) json['scfProgram'] = instance.scfProgram;
+  if (instance.scfProduct != null) json['scfProduct'] = instance.scfProduct;
+  if (instance.buyerAccount != null) {
+    json['buyerAccount'] = instance.buyerAccount;
+  }
+  if (instance.buyerFinUser != null) {
+    json['buyerFinUser'] = instance.buyerFinUser;
+  }
+  if (instance.supplierFinUser != null) {
+    json['supplierFinUser'] = instance.supplierFinUser;
+  }
   if (instance.firstInvCount != null) {
     json['firstInvCount'] = instance.firstInvCount;
   }

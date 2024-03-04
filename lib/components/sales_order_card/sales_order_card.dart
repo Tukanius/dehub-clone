@@ -247,7 +247,6 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
                   child: Row(
@@ -272,30 +271,17 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                     ],
                   ),
                 ),
-                Row(
-                  children: [
-                    const Text(
-                      'Хүргэх: ',
-                      style: TextStyle(
-                        color: grey2,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                      ),
+                Expanded(
+                  child: Text(
+                    'Хүргэх: ${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.parse("${widget.data.deliveryDate}"))}',
+                    style: const TextStyle(
+                      color: grey2,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 12,
                     ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      DateFormat("yyyy-MM-dd HH:mm").format(
-                          DateTime.parse(widget.data.deliveryDate.toString())),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: grey2,
-                        fontSize: 12,
-                      ),
-                    )
-                  ],
-                )
+                    textAlign: TextAlign.end,
+                  ),
+                ),
               ],
             ),
             const SizedBox(

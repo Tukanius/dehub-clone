@@ -31,7 +31,7 @@ class FundingRequestDetailPage extends StatefulWidget {
 
 class _FundingRequestDetailPageState extends State<FundingRequestDetailPage>
     with AfterLayoutMixin {
-  Finance get = Finance();
+  Finance get = Finance(requestFiles: []);
   bool isLoading = true;
 
   @override
@@ -91,7 +91,7 @@ class _FundingRequestDetailPageState extends State<FundingRequestDetailPage>
         ],
       ),
       body: DefaultTabController(
-        length: source.type == "BUYER_LED" ? 3 : 2,
+        length: source.type == "scf" ? 3 : 2,
         child: Column(
           children: [
             Material(
@@ -142,7 +142,7 @@ class _FundingRequestDetailPageState extends State<FundingRequestDetailPage>
                       ),
                     )
                   : TabBarView(
-                      children: source.type == "BUYER_LED"
+                      children: source.type == "scf"
                           ? [
                               InvoiceTab(
                                 data: get,

@@ -58,8 +58,8 @@ class _RequestTabState extends State<RequestTab> {
   }
 
   overdue() {
-    final res = general.invoiceOverdueStatus!
-        .firstWhere((element) => element.code == widget.data.invOverdueStatus);
+    final res = general.invoiceOverdueStatus!.firstWhere(
+        (element) => element.code == widget.data.invoice?.overdueStatus);
     return res;
   }
 
@@ -103,7 +103,7 @@ class _RequestTabState extends State<RequestTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Хүсэлт гаргасан',
-            secondText: '${widget.data.requestedFinUser?.firstName}',
+            secondText: '${widget.data.requestedUser?.firstName}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -154,7 +154,9 @@ class _RequestTabState extends State<RequestTab> {
             onClick: () {},
             paddingVertical: 10,
             labelText: 'Хөтөлбөрийн нэр',
-            secondText: '${widget.data.program?.name}',
+            secondText: source.type == "lbf"
+                ? '${widget.data.lbfProgram?.name}'
+                : "${widget.data.scfProgram?.name}",
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -163,7 +165,9 @@ class _RequestTabState extends State<RequestTab> {
             onClick: () {},
             paddingVertical: 10,
             labelText: 'Бүтээгдэхүүн',
-            secondText: '${widget.data.product?.name}',
+            secondText: source.type == "lbf"
+                ? '${widget.data.lbfProduct?.name}'
+                : "${widget.data.scfProduct?.name}",
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -207,7 +211,7 @@ class _RequestTabState extends State<RequestTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  '${currency()}',
+                  '${currency().name}',
                   style: TextStyle(color: source.currentColor),
                 ),
               ],
@@ -229,7 +233,7 @@ class _RequestTabState extends State<RequestTab> {
             paddingVertical: 10,
             labelText: 'Боломжит доод дүн',
             secondText:
-                '${Utils().formatCurrency(widget.data.finMinAmount.toString()) + symbol()}',
+                '${Utils().formatCurrency(widget.data.finMinAmount.toString()) + currency().symbol}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -238,7 +242,7 @@ class _RequestTabState extends State<RequestTab> {
             paddingVertical: 10,
             labelText: 'Боломжит дээд дүн',
             secondText:
-                '${Utils().formatCurrency(widget.data.finMaxAmount.toString()) + symbol()}',
+                '${Utils().formatCurrency(widget.data.finMaxAmount.toString()) + currency().symbol}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -247,7 +251,7 @@ class _RequestTabState extends State<RequestTab> {
             paddingVertical: 10,
             labelText: 'Нэхэмжлэх доод үлдэгдэл',
             secondText:
-                '${Utils().formatCurrency(widget.data.minInvBalance.toString()) + symbol()}',
+                '${Utils().formatCurrency(widget.data.minInvBalance.toString()) + currency().symbol}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -289,7 +293,7 @@ class _RequestTabState extends State<RequestTab> {
             paddingVertical: 10,
             labelText: 'Тооцсон шимтгэл',
             secondText:
-                '${Utils().formatCurrency(widget.data.calculatedFeeAmount.toString()) + symbol()}',
+                '${Utils().formatCurrency(widget.data.calculatedFeeAmount.toString()) + currency().symbol}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -298,7 +302,7 @@ class _RequestTabState extends State<RequestTab> {
             paddingVertical: 10,
             labelText: 'Өргөдөл хураамж',
             secondText:
-                '${Utils().formatCurrency(widget.data.appFee.toString()) + symbol()}',
+                '${Utils().formatCurrency(widget.data.appFee.toString()) + currency().symbol}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -307,7 +311,7 @@ class _RequestTabState extends State<RequestTab> {
             paddingVertical: 10,
             labelText: 'Олголт шимтгэл',
             secondText:
-                '${Utils().formatCurrency(widget.data.disbursementFee.toString()) + symbol()}',
+                '${Utils().formatCurrency(widget.data.disbursementFee.toString()) + currency().symbol}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -321,20 +325,20 @@ class _RequestTabState extends State<RequestTab> {
             secondTextFontWeight: FontWeight.bold,
             color: white,
           ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Шимтгэл дүрэм',
-            secondText: feeRule(),
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
+          // FieldCard(
+          //   paddingHorizontal: 15,
+          //   paddingVertical: 10,
+          //   labelText: 'Шимтгэл дүрэм',
+          //   secondText: feeRule(),
+          //   secondTextColor: source.currentColor,
+          //   color: white,
+          // ),
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Шимтгэл доод дүн',
             secondText:
-                '${Utils().formatCurrency(widget.data.minFeeAmount.toString()) + symbol()}',
+                '${Utils().formatCurrency(widget.data.minFeeAmount.toString()) + currency().symbol}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -389,22 +393,22 @@ class _RequestTabState extends State<RequestTab> {
             secondTextColor: source.currentColor,
             color: white,
           ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Алдангийн арга',
-            secondText: penaltyType(),
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
           // FieldCard(
           //   paddingHorizontal: 15,
           //   paddingVertical: 10,
-          //   labelText: 'Эргэн төлөх дүрэм',
-          //   secondText: '',
+          //   labelText: 'Алдангийн арга',
+          //   secondText: penaltyType(),
           //   secondTextColor: source.currentColor,
           //   color: white,
           // ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            labelText: 'Эргэн төлөх дүрэм',
+            secondText: '-',
+            secondTextColor: source.currentColor,
+            color: white,
+          ),
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
@@ -472,18 +476,19 @@ class _RequestTabState extends State<RequestTab> {
             secondTextColor: source.currentColor,
             color: white,
           ),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            child: const Text(
-              'Хавсаргасан файл',
-              style: TextStyle(
-                color: grey3,
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
+          if (widget.data.requestFiles != null)
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              child: const Text(
+                'Хавсаргасан файл',
+                style: TextStyle(
+                  color: grey3,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
-          ),
-          if (widget.data.requestFiles!.isNotEmpty)
+          if (widget.data.requestFiles != null)
             Column(
               children: widget.data.requestFiles!
                   .map(
@@ -521,7 +526,7 @@ class _RequestTabState extends State<RequestTab> {
                   .toList(),
             ),
           const SizedBox(
-            height: 100,
+            height: 50,
           ),
         ],
       ),
@@ -530,7 +535,7 @@ class _RequestTabState extends State<RequestTab> {
 
   requestStatus() {
     final res = general.scfRequestStatus!
-        .firstWhere((element) => element.code == widget.data.requestStatus);
+        .firstWhere((element) => element.code == widget.data.lbfRequestStatus);
     return res;
   }
 
@@ -543,15 +548,7 @@ class _RequestTabState extends State<RequestTab> {
 
   currency() {
     final res = general.currencies!
-        .firstWhere((element) => element.code == widget.data.currency)
-        .name;
-    return res;
-  }
-
-  symbol() {
-    final res = general.currencies!
-        .firstWhere((element) => element.code == widget.data.currency)
-        .symbol;
+        .firstWhere((element) => element.code == widget.data.currency);
     return res;
   }
 }

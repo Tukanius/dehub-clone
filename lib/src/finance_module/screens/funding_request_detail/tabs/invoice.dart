@@ -23,34 +23,10 @@ class InvoiceTab extends StatefulWidget {
 
 class _InvoiceTabState extends State<InvoiceTab> {
   General general = General();
-  Finance supplier = Finance();
-  Finance supplierAcc = Finance();
-  Finance supplierUser = Finance();
-  Finance buyer = Finance();
-  Finance buyerAcc = Finance();
-  Finance buyerUser = Finance();
 
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<FinanceProvider>(context, listen: true);
-    supplier = widget.data.type == "SUPPLIER"
-        ? widget.data.requestedBusiness!
-        : widget.data.invReceiverBusiness!;
-    buyer = widget.data.type == "BUYER"
-        ? widget.data.requestedBusiness!
-        : widget.data.invReceiverBusiness!;
-    supplierAcc = widget.data.type == "SUPPLIER"
-        ? widget.data.requestedBusinessAcc!
-        : widget.data.invReceiverBusinessAcc!;
-    buyerAcc = widget.data.type == "BUYER"
-        ? widget.data.requestedBusinessAcc!
-        : widget.data.invReceiverBusinessAcc!;
-    supplierUser = widget.data.type == "SUPPLIER"
-        ? widget.data.requestedFinUser!
-        : widget.data.finUser!;
-    buyerUser = widget.data.type == "BUYER"
-        ? widget.data.requestedFinUser!
-        : widget.data.finUser!;
     general =
         Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
     return SingleChildScrollView(
@@ -73,7 +49,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Нэхэмжлэх дугаар',
-            secondText: '${widget.data.invRefCode}',
+            secondText: '${widget.data.invoice?.refCode}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -81,7 +57,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Илгээсэн ажилтан',
-            secondText: '${widget.data.invSenderUser?.firstName}',
+            secondText: '${widget.data.invoice?.senderUser?.firstName}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -90,14 +66,14 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingVertical: 10,
             labelText: 'Илгээсэн огноо, цаг',
             secondText: DateFormat("yyyy-MM-dd HH:mm")
-                .format(widget.data.invCreatedAt!),
+                .format(widget.data.invoice!.createdAt!),
             color: white,
           ),
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Баталсан ажилтан',
-            secondText: '${widget.data.invConfirmedUser?.firstName}',
+            secondText: '${widget.data.invoice?.confirmedUser?.firstName}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -106,7 +82,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingVertical: 10,
             labelText: 'Баталсан огноо, цаг',
             secondText: DateFormat('yyyy-MM-dd HH:mm')
-                .format(widget.data.invConfirmedDate!),
+                .format(widget.data.invoice!.confirmedDate!),
             color: white,
           ),
           FieldCard(
@@ -114,7 +90,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingVertical: 10,
             labelText: 'Баталсан дүн',
             secondText:
-                '${Utils().formatCurrency(widget.data.invConfirmedAmount.toString())}',
+                '${Utils().formatCurrency(widget.data.invoice?.confirmedAmount.toString())}',
             color: white,
             secondTextColor: source.currentColor,
           ),
@@ -123,7 +99,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingVertical: 10,
             labelText: 'Төлсөн дүн',
             secondText:
-                '${Utils().formatCurrency(widget.data.invPaidAmount.toString()) + currency()}',
+                '${Utils().formatCurrency(widget.data.invoice?.paidAmount.toString()) + currency()}',
             color: white,
             secondTextColor: source.currentColor,
           ),
@@ -132,7 +108,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingVertical: 10,
             labelText: 'Үлдэгдэл төлбөр',
             secondText:
-                '${Utils().formatCurrency(widget.data.invAmountToPay.toString()) + currency()}',
+                '${Utils().formatCurrency(widget.data.invoice?.amountToPay.toString()) + currency()}',
             color: white,
             secondTextColor: source.currentColor,
             secondTextFontWeight: FontWeight.w500,
@@ -229,7 +205,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Төлбөрийн нөхцөл',
-            secondText: '${widget.data.invPaymentTermDesc}',
+            secondText: '${widget.data.invoice?.paymentTermDesc}',
             color: white,
             secondTextColor: source.currentColor,
           ),
@@ -244,7 +220,8 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  DateFormat("yyyy-MM-dd").format(widget.data.invPaymentDate!),
+                  DateFormat("yyyy-MM-dd")
+                      .format(widget.data.invoice!.paymentDate!),
                   style: TextStyle(color: source.currentColor, fontSize: 18),
                 ),
               ],
@@ -322,7 +299,8 @@ class _InvoiceTabState extends State<InvoiceTab> {
                       style: const TextStyle(fontFamily: 'Montserrat'),
                       children: [
                         TextSpan(
-                          text: "${buyer.partner?.refCode}, ",
+                          text:
+                              "${widget.data.invoice?.buyer?.partner?.refCode}, ",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
@@ -330,7 +308,8 @@ class _InvoiceTabState extends State<InvoiceTab> {
                           ),
                         ),
                         TextSpan(
-                          text: "${buyer.partner?.businessName}",
+                          text:
+                              "${widget.data.invoice?.buyer?.partner?.businessName}",
                           style: const TextStyle(color: grey2, fontSize: 18),
                         ),
                       ],
@@ -351,7 +330,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  '${buyer.regNumber}',
+                  '${widget.data.invoice?.buyer?.regNumber}',
                   style: TextStyle(color: source.currentColor, fontSize: 18),
                 ),
               ],
@@ -381,14 +360,14 @@ class _InvoiceTabState extends State<InvoiceTab> {
                       ),
                       children: [
                         TextSpan(
-                          text: '${buyer.refCode}, ',
+                          text: '${widget.data.invoice?.buyer?.refCode}, ',
                           style: TextStyle(
                             decoration: TextDecoration.underline,
                             color: source.currentColor,
                           ),
                         ),
                         TextSpan(
-                          text: buyer.profileName,
+                          text: widget.data.invoice?.buyer?.profileName,
                           style: const TextStyle(
                             decoration: TextDecoration.underline,
                             color: grey2,
@@ -417,7 +396,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  '${buyerAcc.number}',
+                  '${widget.data.invoice?.buyerAccount?.number}',
                   style: TextStyle(color: source.currentColor),
                 ),
               ],
@@ -434,7 +413,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  '${buyerAcc.name}',
+                  '${widget.data.invoice?.buyerAccount?.name}',
                   style: TextStyle(color: source.currentColor),
                 ),
               ],
@@ -451,7 +430,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  '${buyerUser.firstName}',
+                  '${widget.data.invoice?.buyerFinUser?.firstName}',
                   style: TextStyle(color: source.currentColor),
                 ),
               ],
@@ -462,7 +441,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingVertical: 10,
             color: white,
             labelText: 'Санхүү ажилтан утас',
-            secondText: '${buyerUser.phone}',
+            secondText: '${widget.data.invoice?.buyerFinUser?.phone}',
             secondTextColor: source.currentColor,
           ),
           Container(
@@ -510,7 +489,8 @@ class _InvoiceTabState extends State<InvoiceTab> {
                       style: const TextStyle(fontFamily: 'Montserrat'),
                       children: [
                         TextSpan(
-                          text: "${supplier.partner?.refCode}, ",
+                          text:
+                              "${widget.data.invoice?.supplier?.partner?.refCode}, ",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
@@ -518,7 +498,8 @@ class _InvoiceTabState extends State<InvoiceTab> {
                           ),
                         ),
                         TextSpan(
-                          text: "${supplier.partner?.businessName}",
+                          text:
+                              "${widget.data.invoice?.supplier?.partner?.businessName}",
                           style: const TextStyle(color: grey2, fontSize: 18),
                         ),
                       ],
@@ -539,7 +520,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  '${supplier.regNumber}',
+                  '${widget.data.invoice?.supplier?.regNumber}',
                   style: TextStyle(color: source.currentColor, fontSize: 18),
                 ),
               ],
@@ -568,14 +549,14 @@ class _InvoiceTabState extends State<InvoiceTab> {
                       ),
                       children: [
                         TextSpan(
-                          text: '${supplier.refCode}, ',
+                          text: '${widget.data.invoice?.supplier?.refCode}, ',
                           style: TextStyle(
                             decoration: TextDecoration.underline,
                             color: source.currentColor,
                           ),
                         ),
                         TextSpan(
-                          text: supplier.profileName,
+                          text: widget.data.invoice?.supplier?.profileName,
                           style: const TextStyle(
                             decoration: TextDecoration.underline,
                             color: grey2,
@@ -604,7 +585,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  '${supplierAcc.number}',
+                  '${widget.data.invoice?.supplierAccount?.number}',
                   style: TextStyle(color: source.currentColor),
                 ),
               ],
@@ -621,7 +602,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  '${supplierAcc.name}',
+                  '${widget.data.invoice?.supplierAccount?.name}',
                   style: TextStyle(color: source.currentColor),
                 ),
               ],
@@ -638,7 +619,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  '${supplierUser.firstName}',
+                  '${widget.data.invoice?.supplierFinUser?.firstName}',
                   style: TextStyle(color: source.currentColor),
                 ),
               ],
@@ -649,11 +630,11 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingVertical: 10,
             color: white,
             labelText: 'Санхүү ажилтан утас',
-            secondText: '${supplierUser.phone}',
+            secondText: '${widget.data.invoice?.supplierFinUser?.phone}',
             secondTextColor: source.currentColor,
           ),
           const SizedBox(
-            height: 100,
+            height: 50,
           )
         ],
       ),
@@ -669,20 +650,21 @@ class _InvoiceTabState extends State<InvoiceTab> {
 
   invoicePaymentStatus() {
     final res = general.invoicePaymentStatus!
-        .firstWhere((element) => element.code == widget.data.invPaymentStatus)
+        .firstWhere(
+            (element) => element.code == widget.data.invoice?.paymentStatus)
         .name;
     return res;
   }
 
   invoiceOverdueStatus() {
-    final res = general.invoiceOverdueStatus!
-        .firstWhere((element) => element.code == widget.data.invOverdueStatus);
+    final res = general.invoiceOverdueStatus!.firstWhere(
+        (element) => element.code == widget.data.invoice?.overdueStatus);
     return res;
   }
 
   invoicePaymentStatusColor(bool opacity) {
     if (opacity == false) {
-      switch (widget.data.invPaymentStatus) {
+      switch (widget.data.paymentStatus) {
         case "DRAFT":
           return grey;
         case "PENDING":
@@ -694,7 +676,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
         default:
       }
     } else {
-      switch (widget.data.invPaymentStatus) {
+      switch (widget.data.paymentStatus) {
         case "DRAFT":
           return grey.withOpacity(0.2);
         case "PENDING":
@@ -749,8 +731,8 @@ class _InvoiceTabState extends State<InvoiceTab> {
   }
 
   invoiceStatus() {
-    final res = general.invoiceStatus!
-        .firstWhere((element) => element.code == widget.data.invStatus);
+    final res = general.invoiceStatus!.firstWhere(
+        (element) => element.code == widget.data.invoice?.invoiceStatus);
     return res;
   }
 }

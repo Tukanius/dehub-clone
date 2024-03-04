@@ -6,8 +6,8 @@ class Utils {
     if (value == '0.00' || value == '0' || value == "0.0") {
       return result = '0';
     }
-    if (value == null) {
-      return result = '';
+    if (value == null || value == 'null') {
+      return result = '-';
     }
     var formattedNumber =
         NumberFormat("#,###", "en_US").format(double.parse(value.toString()));

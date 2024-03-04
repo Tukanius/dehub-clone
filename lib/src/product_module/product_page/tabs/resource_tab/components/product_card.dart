@@ -69,6 +69,7 @@ class _ProductCardState extends State<ProductCard> {
                           ),
                           Expanded(
                             child: RichText(
+                              textAlign: TextAlign.end,
                               text: TextSpan(
                                 style: const TextStyle(
                                   color: black,

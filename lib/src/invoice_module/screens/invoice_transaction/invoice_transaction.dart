@@ -158,8 +158,10 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
               paddingHorizontal: 15,
               paddingVertical: 10,
               labelText: "Баталсан",
-              secondText: DateFormat("yyyy-MM-dd HH:mm")
-                  .format(widget.data.confirmedDate!),
+              secondText: widget.data.confirmedDate != null
+                  ? DateFormat("yyyy-MM-dd HH:mm")
+                      .format(widget.data.confirmedDate!)
+                  : '-',
               secondTextColor: invoiceColor,
               color: white,
             ),
