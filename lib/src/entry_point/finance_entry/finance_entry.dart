@@ -37,6 +37,7 @@ class _FinanceEntryState extends State<FinanceEntry> {
               height: 25,
             ),
             GridView.count(
+              physics: const NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.symmetric(horizontal: 45),
               shrinkWrap: true,
               mainAxisSpacing: 25,

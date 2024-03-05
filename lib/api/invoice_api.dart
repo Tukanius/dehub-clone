@@ -125,4 +125,20 @@ class InvoiceApi extends HttpRequest {
     var res = await put('/settlement/$id/respond', type, true);
     return res;
   }
+
+  Future<Result> businessSelect() async {
+    var res = await get('/invoice/history/business_select', type, true);
+    return Result.fromJson(res, Invoice.fromJson);
+  }
+
+  Future<Result> historyInvoiceList(ResultArguments data) async {
+    var res = await get('/invoice/history/invoice_list', type, true,
+        data: data.toJson());
+    return Result.fromJson(res, Invoice.fromJson);
+  }
+
+  Future<Invoice> historyCreate(Invoice data) async {
+    var res = await post('/invoice/history', type, true, data: data.toJson());
+    return Invoice.fromJson(res as Map<String, dynamic>);
+  }
 }

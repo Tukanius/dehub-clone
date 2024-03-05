@@ -1,4 +1,3 @@
-import 'package:dehub/components/supplier_card/supplier_card.dart';
 import 'package:dehub/src/entry_point/menu/shopping/tabs/invoice.dart';
 import 'package:dehub/src/entry_point/menu/shopping/tabs/order.dart';
 import 'package:dehub/src/entry_point/menu/shopping/tabs/payment.dart';
@@ -79,12 +78,6 @@ class _ShoppingPageState extends State<ShoppingPage> {
                 child: Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: SvgPicture.asset('assets/svg/banner.svg'),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SupplierCard(
-                  boxShadow: true,
-                  shoppingCard: true,
                 ),
               ),
               SliverToBoxAdapter(

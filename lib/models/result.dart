@@ -45,8 +45,10 @@ class Filter {
   String? settlementId;
   String? orderStatus;
   bool? isDropshipping;
+  String? receiverBusinessId;
 
   Filter({
+    this.receiverBusinessId,
     this.isDropshipping,
     this.orderStatus,
     this.settlementId,

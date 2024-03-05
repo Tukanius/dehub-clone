@@ -1,10 +1,11 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/partner_cards/business_suggest_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/business.dart';
-import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
@@ -46,7 +47,7 @@ class InvitationSentPage extends StatefulWidget {
 class _InvitationSentPageState extends State<InvitationSentPage>
     with AfterLayoutMixin {
   TextEditingController controller = TextEditingController();
-  Partner partner = Partner();
+  User user = User();
   int page = 1;
   int limit = 10;
   Result business = Result(rows: [], count: 0);
@@ -144,7 +145,7 @@ class _InvitationSentPageState extends State<InvitationSentPage>
 
   @override
   Widget build(BuildContext context) {
-    partner = Provider.of<UserProvider>(context, listen: false).partnerUser;
+    user = Provider.of<UserProvider>(context, listen: false).businessUser;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -265,119 +266,59 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                           TextStyle(fontWeight: FontWeight.w600, color: grey3),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
+                  FieldCard(
+                    paddingHorizontal: 10,
+                    paddingVertical: 10,
+                    labelText: 'Партнер нэр',
+                    labelTextColor: dark,
+                    secondText: user.currentBusiness?.partnerName,
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Партнер нэр',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${partner.user?.currentBusiness?.partnerName}',
-                          style: const TextStyle(
-                            color: networkColor,
-                          ),
-                        )
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
+                  FieldCard(
+                    paddingHorizontal: 10,
+                    paddingVertical: 10,
+                    labelText: 'Партнер код',
+                    labelTextColor: dark,
+                    secondText: user.partner?.refCode,
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Партнер код',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${partner.partner?.refCode}',
-                          style: const TextStyle(
-                            color: networkColor,
-                          ),
-                        )
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
+                  FieldCard(
+                    paddingHorizontal: 10,
+                    paddingVertical: 10,
+                    labelText: 'Татвар төлөгч №',
+                    labelTextColor: dark,
+                    secondText: user.partner?.regNumber,
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Татвар төлөгч №',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${partner.partner?.regNumber}',
-                          style: const TextStyle(
-                            color: networkColor,
-                          ),
-                        )
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
+                  FieldCard(
+                    paddingHorizontal: 10,
+                    paddingVertical: 10,
+                    labelText: 'Бизнесийн нэр',
+                    labelTextColor: dark,
+                    secondText: user.currentBusiness?.profileName,
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Бизнесийн нэр',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${partner.partner?.businessName}',
-                          style: const TextStyle(
-                            color: networkColor,
-                          ),
-                        )
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
+                  FieldCard(
+                    paddingHorizontal: 10,
+                    paddingVertical: 10,
+                    labelText: 'Бизнес код',
+                    labelTextColor: dark,
+                    secondText: user.currentBusiness?.refCode,
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Бизнес код',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${partner.user?.currentBusiness?.refCode}',
-                          style: const TextStyle(
-                            color: networkColor,
-                          ),
-                        )
-                      ],
-                    ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
+                  FieldCard(
+                    paddingHorizontal: 10,
+                    paddingVertical: 10,
+                    labelText: 'Илгээсэн ажилтан',
+                    labelTextColor: dark,
+                    secondText: user.firstName,
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Илгээсэн ажилтан',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '${partner.user?.firstName}',
-                          style: const TextStyle(
-                            color: networkColor,
-                          ),
-                        )
-                      ],
-                    ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(10),
@@ -398,24 +339,14 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                       ],
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
+                  FieldCard(
+                    paddingHorizontal: 10,
+                    paddingVertical: 10,
+                    labelText: 'Урилга төрөл',
+                    labelTextColor: dark,
+                    secondText: widget.invitationType,
+                    secondTextColor: networkColor,
                     color: white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Урилга төрөл',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          widget.invitationType,
-                          style: const TextStyle(
-                            color: networkColor,
-                          ),
-                        )
-                      ],
-                    ),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(
@@ -437,6 +368,10 @@ class _InvitationSentPageState extends State<InvitationSentPage>
                       name: 'toMessage',
                       maxLines: 5,
                       decoration: const InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.zero,
+                          borderSide: BorderSide(color: grey),
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.zero,
                           borderSide: BorderSide(color: grey),

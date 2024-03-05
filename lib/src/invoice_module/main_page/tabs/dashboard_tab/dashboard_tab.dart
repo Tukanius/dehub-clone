@@ -7,6 +7,7 @@ import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/invoice_module/screens/closed_invoice/closed_invoice_page.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_list/give.dart';
+import 'package:dehub/src/invoice_module/screens/payment_register/payment_register.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -135,14 +136,24 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                 ),
                 DashboardCard(
                   onClick: () {
+                    Navigator.of(context).pushNamed(PaymentRegister.routeName);
+                  },
+                  boxColor: invoiceColor.withOpacity(0.1),
+                  padding: 10,
+                  labelText: 'Төлөлт бүртгэх',
+                  svgColor: invoiceColor,
+                  svg: 'assets/svg/closed_invoice.svg',
+                ),
+                DashboardCard(
+                  onClick: () {
                     Navigator.of(context)
                         .pushNamed(ClosedInvoicePage.routeName);
                   },
                   boxColor: invoiceColor.withOpacity(0.1),
-                  padding: 10,
+                  padding: 8,
                   labelText: 'Хаагдсан нэхэмжлэх',
                   svgColor: invoiceColor,
-                  svg: 'assets/svg/closed_invoice.svg',
+                  svg: 'assets/svg/report_off.svg',
                 ),
               ],
             ),

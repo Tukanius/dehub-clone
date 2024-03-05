@@ -107,7 +107,6 @@ class CheckBiometricState extends State<CheckBiometric> with AfterLayoutMixin {
             CustomButton(
               labelColor: buttonColor,
               labelText: "Зөвшөөрөх",
-              isLoading: isLoading,
               textColor: white,
               onClick: () {
                 _authenticate();
@@ -120,7 +119,6 @@ class CheckBiometricState extends State<CheckBiometric> with AfterLayoutMixin {
               borderColor: buttonColor,
               labelColor: backgroundColor,
               labelText: "Алгасах",
-              isLoading: isLoading,
               textColor: buttonColor,
               onClick: () {
                 Navigator.of(context).pushNamed(SplashPage.routeName);

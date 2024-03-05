@@ -534,8 +534,7 @@ class _AddRowState extends State<OrderAddRow> {
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 15),
                   child: CustomButton(
-                    isGradient: true,
-                    gradient: gradient,
+                    labelColor: orderColor,
                     onClick: () {
                       onSubmit();
                     },

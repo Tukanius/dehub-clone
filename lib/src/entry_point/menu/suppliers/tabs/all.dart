@@ -1,4 +1,5 @@
 import 'package:dehub/components/supplier_card/supplier_card.dart';
+import 'package:dehub/models/invoice.dart';
 import 'package:dehub/src/entry_point/menu/shopping/shopping_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class _AllState extends State<All> {
           children: [
             for (var i = 0; i < 10; i++)
               SupplierCard(
+                data: Invoice(),
                 shoppingCard: true,
                 onClick: () {
                   Navigator.of(context).pushNamed(ShoppingPage.routeName);

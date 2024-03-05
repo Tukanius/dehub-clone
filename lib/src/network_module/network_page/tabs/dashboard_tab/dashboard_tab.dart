@@ -39,10 +39,10 @@ class DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
 
   Map<String, double> dummy = {
     "ТОП 100": 5,
-    "ТОП 50": 5,
-    "ТОП 30": 5,
-    "ТОП 20": 5,
-    "ТОП 10": 5,
+    "ТОП 50": 4,
+    "ТОП 30": 3,
+    "ТОП 20": 2,
+    "ТОП 10": 1,
   };
 
   List<Business> dummyLegend = [
@@ -51,19 +51,19 @@ class DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
       profileName: 'ТОП 100',
     ),
     Business(
-      count: 5,
+      count: 4,
       profileName: 'ТОП 50',
     ),
     Business(
-      count: 5,
+      count: 3,
       profileName: 'ТОП 30',
     ),
     Business(
-      count: 5,
+      count: 2,
       profileName: 'ТОП 20',
     ),
     Business(
-      count: 5,
+      count: 1,
       profileName: 'ТОП 10',
     ),
   ];
@@ -74,11 +74,11 @@ class DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
     stats: [
       Business(
         name: 'Илгээсэн',
-        count: 2,
+        count: 3,
       ),
       Business(
         name: 'Зөвшөөрсөн',
-        count: 3,
+        count: 2,
       ),
       Business(
         name: 'Цуцлагдсан',

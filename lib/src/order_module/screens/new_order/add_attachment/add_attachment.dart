@@ -358,8 +358,7 @@ class _AddAttachmentState extends State<AddAttachment> {
           Container(
             margin: const EdgeInsets.only(bottom: 70, right: 15, left: 15),
             child: CustomButton(
-              isGradient: true,
-              gradient: gradient,
+              labelColor: orderColor,
               onClick: onSubmit,
               labelText: "Болсон. Нэмье",
             ),

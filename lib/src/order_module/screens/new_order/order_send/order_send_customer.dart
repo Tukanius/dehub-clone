@@ -49,7 +49,8 @@ class _OrderSendCustomerState extends State<OrderSendCustomer> {
                 'assets/svg/message_sent.svg',
                 height: 25,
                 width: 30,
-                colorFilter: const ColorFilter.mode(orderColor, BlendMode.srcIn),
+                colorFilter:
+                    const ColorFilter.mode(orderColor, BlendMode.srcIn),
               ),
               const SizedBox(
                 height: 15,
@@ -170,7 +171,6 @@ class _OrderSendCustomerState extends State<OrderSendCustomer> {
               ),
               CustomButton(
                 onClick: () {},
-                isGradient: false,
                 labelColor: orderColor,
                 labelText: "Хяналтад илгээе.",
                 textColor: white,

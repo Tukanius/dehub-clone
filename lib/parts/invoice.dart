@@ -11,6 +11,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => Invoice.fromJson(e)).toList()
         : null,
+    invoices: json['invoices'] != null
+        ? (json['invoices'] as List).map((e) => Invoice.fromJson(e)).toList()
+        : null,
     values: json['values'] != null
         ? (json['values'] as List).map((e) => Invoice.fromJson(e)).toList()
         : null,
@@ -35,6 +38,8 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     configType:
         json['configType'] != null ? json['configType'] as String : null,
     updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
+    trxRefCode:
+        json['trxRefCode'] != null ? json['trxRefCode'] as String : null,
     settlementStatus: json['settlementStatus'] != null
         ? json['settlementStatus'] as String
         : null,
@@ -428,6 +433,9 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   if (instance.firstAmount != null) {
     json['firstAmount'] = instance.firstAmount;
   }
+  if (instance.trxRefCode != null) {
+    json['trxRefCode'] = instance.trxRefCode;
+  }
   if (instance.lastAmount != null) {
     json['lastAmount'] = instance.lastAmount;
   }
@@ -438,6 +446,7 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
     json['additionalRowAmount'] = instance.additionalRowAmount;
   }
   if (instance.paidDate != null) json['paidDate'] = instance.paidDate;
+  if (instance.invoices != null) json['invoices'] = instance.invoices;
   if (instance.creditAcc != null) json['creditAcc'] = instance.creditAcc;
   if (instance.debitAcc != null) json['debitAcc'] = instance.debitAcc;
   if (instance.actionUser != null) json['actionUser'] = instance.actionUser;

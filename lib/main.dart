@@ -17,6 +17,7 @@ import 'package:dehub/src/finance_module/screens/finance_qpay/finance_qpay.dart'
 import 'package:dehub/src/finance_module/screens/payment_page/payment_page.dart';
 import 'package:dehub/src/finance_module/screens/recalled_page/recalled_page.dart';
 import 'package:dehub/src/finance_module/screens/settlement_respond/settlement_respond.dart';
+import 'package:dehub/src/invoice_module/screens/payment_register/payment_register.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_transaction/invoice_transaction.dart';
 import 'package:dehub/src/invoice_module/screens/network_settlement_detail/network_settlement_detail.dart';
 import 'package:dehub/src/invoice_module/screens/settlement_detail/settlement_detail.dart';
@@ -255,6 +256,10 @@ class MyApp extends StatelessWidget {
                   case SplashPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return const SplashPage();
+                    });
+                  case PaymentRegister.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return const PaymentRegister();
                     });
                   case DropshipOrder.routeName:
                     return MaterialPageRoute(builder: (context) {

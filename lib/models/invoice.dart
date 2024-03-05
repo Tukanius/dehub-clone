@@ -136,13 +136,11 @@ class Invoice {
   String? phone;
   String? businessAddress;
   Invoice? staff;
-
   String? category;
   String? supplier;
   String? brand;
   List<Invoice>? optionValues;
   String? optionId;
-
   String? invoiceRefCode;
   String? creditAccountBank;
   String? creditAccountName;
@@ -184,11 +182,14 @@ class Invoice {
   List<Invoice>? histories;
   double? firstAmount;
   double? lastAmount;
-
   int? numberOfInv;
   Invoice? invoice;
+  String? trxRefCode;
+  List<Invoice>? invoices;
 
   Invoice({
+    this.invoices,
+    this.trxRefCode,
     this.invoice,
     this.numberOfInv,
     this.histories,

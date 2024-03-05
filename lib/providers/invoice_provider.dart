@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class InvoiceProvider extends ChangeNotifier {
   Invoice newInvoice = Invoice();
+  Invoice invoice = Invoice();
   List<Invoice> additionalLines = [];
   List<Invoice> products = [];
   List<Invoice> packageProduct = [];
@@ -14,6 +15,16 @@ class InvoiceProvider extends ChangeNotifier {
   double shippingAmount = 0;
   double addtionalRowAmount = 0;
   double amount = 0;
+
+  selectPaymentMethod(String code) {
+    invoice.paymentMethod = code;
+    notifyListeners();
+  }
+
+  selectBusiness(Invoice data) {
+    invoice = data;
+    notifyListeners();
+  }
 
   partnerChoose(Invoice data) {
     newInvoice.partner = data;
@@ -133,6 +144,7 @@ class InvoiceProvider extends ChangeNotifier {
 
   clearData() {
     newInvoice = Invoice(discountType: "Сонгох");
+    invoice = Invoice();
     additionalLines = [];
     products = [];
     packageProduct = [];

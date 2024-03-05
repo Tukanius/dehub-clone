@@ -88,7 +88,7 @@ class PieChartState extends State<PieChart> {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            '${(100 * data.count / widget.legend.fold(0, (previousValue, element) => previousValue + element.count!)).toStringAsFixed(0)}%',
+                            '${(100 * data.count / widget.legend.fold(0, (previousValue, element) => previousValue + element.count!)).toStringAsFixed(1)}%',
                             style: const TextStyle(
                               color: grey,
                               fontSize: 12,

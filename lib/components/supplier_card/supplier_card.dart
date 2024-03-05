@@ -7,9 +7,9 @@ class SupplierCard extends StatefulWidget {
   final bool? shoppingCard;
   final bool? boxShadow;
   final Function()? onClick;
-  final Invoice? data;
+  final Invoice data;
   const SupplierCard({
-    this.data,
+    required this.data,
     this.boxShadow,
     this.shoppingCard,
     super.key,
@@ -50,70 +50,74 @@ class _SupplierCardState extends State<SupplierCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                widget.data?.partner?.logo != null
-                    ? CircleAvatar(
-                        radius: 20,
-                        backgroundImage:
-                            NetworkImage('${widget.data?.partner?.logo}'),
-                      )
-                    : const CircleAvatar(
-                        radius: 20,
-                        backgroundImage: AssetImage('images/avatar.png'),
-                      ),
-                const SizedBox(
-                  width: 15,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${widget.data?.partnerName}",
-                      style: const TextStyle(
-                        color: dark,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      '${widget.data?.partner?.businessName}',
-                      style: const TextStyle(
-                        color: dark,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    RatingBar(
-                      itemSize: 12,
-                      initialRating: 3,
-                      direction: Axis.horizontal,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      ratingWidget: RatingWidget(
-                        full: const Icon(
-                          Icons.star,
-                          color: orange,
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  widget.data.partner?.logo != null
+                      ? CircleAvatar(
+                          radius: 20,
+                          backgroundImage:
+                              NetworkImage('${widget.data.partner?.logo}'),
+                        )
+                      : const CircleAvatar(
+                          radius: 20,
+                          backgroundImage: AssetImage('images/avatar.png'),
                         ),
-                        half: const Icon(
-                          Icons.star_half,
-                          color: orange,
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${widget.data.profileName}",
+                          style: const TextStyle(
+                            color: dark,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          ),
                         ),
-                        empty: const Icon(
-                          Icons.star_border,
-                          color: orange,
+                        const SizedBox(
+                          height: 5,
                         ),
-                      ),
-                      onRatingUpdate: (rating) {},
+                        Text(
+                          '${widget.data.partner?.businessName}, ${widget.data.partner?.refCode}',
+                          style: const TextStyle(
+                            color: dark,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        RatingBar(
+                          itemSize: 12,
+                          initialRating: 3,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          ratingWidget: RatingWidget(
+                            full: const Icon(
+                              Icons.star,
+                              color: orange,
+                            ),
+                            half: const Icon(
+                              Icons.star_half,
+                              color: orange,
+                            ),
+                            empty: const Icon(
+                              Icons.star_border,
+                              color: orange,
+                            ),
+                          ),
+                          onRatingUpdate: (rating) {},
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
             const Icon(
               Icons.arrow_forward_ios,

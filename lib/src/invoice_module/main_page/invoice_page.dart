@@ -239,7 +239,7 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
                   ),
                   padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'assets/svg/finance_review.svg',
+                    'assets/svg/coins.svg',
                     height: 20,
                     width: 20,
                     colorFilter: ColorFilter.mode(

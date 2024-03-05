@@ -11,7 +11,6 @@ import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
 
@@ -353,7 +352,6 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                               Expanded(
                                 child: CustomButton(
                                   borderColor: orderColor,
-                                  isGradient: true,
                                   onClick: () {
                                     Navigator.of(context).pushNamed(
                                       EnterPhonePage.routeName,
@@ -361,33 +359,10 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                                           data: receipt),
                                     );
                                   },
-                                  gradient: const LinearGradient(
-                                    colors: [white, white],
-                                  ),
-                                  container: Container(
-                                    color: transparent,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SvgPicture.asset(
-                                          'assets/svg/lock.svg',
-                                          height: 16,
-                                          width: 16,
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        const Text(
-                                          'Код илгээх',
-                                          style: TextStyle(
-                                            color: orderColor,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  labelColor: white,
+                                  labelText: 'Код илгээх',
+                                  textColor: orderColor,
+                                  svgIcon: 'assets/svg/lock.svg',
                                 ),
                               ),
                             SizedBox(
@@ -399,37 +374,12 @@ class _ExpensesPageState extends State<ExpensesPage> with AfterLayoutMixin {
                             if (receipt.isSupplierConfirmed == false)
                               Expanded(
                                 child: CustomButton(
-                                  isGradient: true,
                                   onClick: () {
                                     onSubmit();
                                   },
-                                  gradient: const LinearGradient(
-                                    colors: [orderColor, orderColor],
-                                  ),
-                                  container: Container(
-                                    color: transparent,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SvgPicture.asset(
-                                          'assets/svg/mobile_message.svg',
-                                          height: 16,
-                                          width: 16,
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        const Text(
-                                          'Батлуулах',
-                                          style: TextStyle(
-                                            color: white,
-                                            fontSize: 18,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                                  labelColor: orderColor,
+                                  svgIcon: 'assets/svg/mobile_message.svg',
+                                  labelText: 'Батлуулах',
                                 ),
                               ),
                             const SizedBox(

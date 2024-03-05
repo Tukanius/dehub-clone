@@ -207,4 +207,10 @@ class BusinessApi extends HttpRequest {
         data: data.toJson());
     return BusinessNetwork.fromJson(res as Map<String, dynamic>);
   }
+
+  clientClassificationUpdate(String id, Business data) async {
+    var res = await put('/client_classification/$id', "BUSINESS", true,
+        data: data.toJson());
+    return Business.fromJson(res as Map<String, dynamic>);
+  }
 }
