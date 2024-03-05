@@ -150,6 +150,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
           FormTextField(
             textColor: black,
             name: 'email',
+            inputType: TextInputType.emailAddress,
             initialValue: widget.data?.email ?? '',
             decoration: InputDecoration(
               hintText: 'Оруулна уу',

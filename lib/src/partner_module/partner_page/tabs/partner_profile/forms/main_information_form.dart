@@ -430,6 +430,7 @@ class _MainInformationFormState extends State<MainInformationForm> {
         FormTextField(
           textColor: widget.edit == true ? black : grey2,
           name: 'web',
+          inputType: TextInputType.url,
           readOnly: !widget.edit,
           initialValue: user.partner?.web,
           decoration: InputDecoration(
@@ -458,6 +459,7 @@ class _MainInformationFormState extends State<MainInformationForm> {
         FormTextField(
           textColor: widget.edit == true ? black : grey2,
           name: 'email',
+          inputType: TextInputType.emailAddress,
           readOnly: !widget.edit,
           initialValue: user.partner?.email,
           decoration: InputDecoration(

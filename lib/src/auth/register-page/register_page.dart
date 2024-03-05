@@ -454,7 +454,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       FormTextField(
                         name: "email",
-                        inputType: TextInputType.text,
+                        inputType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 10),

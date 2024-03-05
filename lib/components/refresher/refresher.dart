@@ -5,14 +5,14 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class Refresher extends StatefulWidget {
   final Widget child;
   final Color color;
-  final Function() onRefresh;
-  final Function() onLoading;
+  final Function()? onRefresh;
+  final Function()? onLoading;
   final RefreshController refreshController;
   const Refresher({
     super.key,
     required this.refreshController,
-    required this.onLoading,
-    required this.onRefresh,
+    this.onLoading,
+    this.onRefresh,
     required this.color,
     required this.child,
   });
@@ -25,8 +25,8 @@ class _RefresherState extends State<Refresher> {
   @override
   Widget build(BuildContext context) {
     return SmartRefresher(
-      enablePullDown: true,
-      enablePullUp: true,
+      enablePullDown: widget.onRefresh != null,
+      enablePullUp: widget.onLoading != null,
       controller: widget.refreshController,
       header: WaterDropHeader(
         waterDropColor: widget.color,

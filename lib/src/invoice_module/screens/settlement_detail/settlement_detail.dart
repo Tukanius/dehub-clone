@@ -79,16 +79,6 @@ class _SettlementDetailState extends State<SettlementDetail>
     refreshController.loadComplete();
   }
 
-  onRefresh() async {
-    await Future.delayed(const Duration(milliseconds: 1000));
-    setState(() {
-      isLoading = true;
-      limit = 10;
-    });
-    await list(page, limit);
-    refreshController.refreshCompleted();
-  }
-
   @override
   afterFirstLayout(BuildContext context) async {
     settlement = await InvoiceApi().settlementDetail(widget.id);
@@ -250,7 +240,6 @@ class _SettlementDetailState extends State<SettlementDetail>
                   child: Refresher(
                     color: invoiceColor,
                     onLoading: onLoading,
-                    onRefresh: onRefresh,
                     refreshController: refreshController,
                     child: SingleChildScrollView(
                       child: Column(

@@ -293,6 +293,7 @@ class _AdminUserFormState extends State<AdminUserForm> {
         FormTextField(
           textColor: widget.edit == true ? black : grey2,
           name: 'email',
+          inputType: TextInputType.emailAddress,
           readOnly: !widget.edit,
           initialValue: user.user?.email,
           decoration: InputDecoration(

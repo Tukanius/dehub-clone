@@ -137,6 +137,7 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
                   ),
                   FormTextField(
                     textColor: grey2,
+                    inputType: TextInputType.emailAddress,
                     name: 'email',
                     decoration: InputDecoration(
                       hintText: 'Энд оруулна уу',

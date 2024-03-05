@@ -44,16 +44,6 @@ class PaymentRegisterState extends State<PaymentRegister>
   GlobalKey<FormBuilderState> fbkey = GlobalKey<FormBuilderState>();
   ListenController listenController = ListenController();
 
-  onRefresh() async {
-    await Future.delayed(const Duration(milliseconds: 1000));
-    setState(() {
-      limit = 10;
-      isLoading = true;
-    });
-    await list(page, limit);
-    refreshController.refreshCompleted();
-  }
-
   onLoading() async {
     setState(() {
       limit += 10;
@@ -64,14 +54,21 @@ class PaymentRegisterState extends State<PaymentRegister>
 
   list(page, limit) async {
     final source = Provider.of<InvoiceProvider>(context, listen: false);
-    Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(receiverBusinessId: source.invoice.id);
-    invoices = await InvoiceApi().historyInvoiceList(
-      ResultArguments(filter: filter, offset: offset),
-    );
-    setState(() {
-      isLoading = false;
-    });
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
+    try {
+      loading.loading(true);
+      Offset offset = Offset(page: page, limit: limit);
+      Filter filter = Filter(receiverBusinessId: source.invoice.id);
+      invoices = await InvoiceApi().historyInvoiceList(
+        ResultArguments(filter: filter, offset: offset),
+      );
+      loading.loading(false);
+      setState(() {
+        selected = [];
+      });
+    } catch (e) {
+      loading.loading(false);
+    }
   }
 
   @override
@@ -262,7 +259,6 @@ class PaymentRegisterState extends State<PaymentRegister>
                             ),
                             FormTextField(
                               textColor: invoiceColor,
-                              inputType: TextInputType.number,
                               fontSize: 14,
                               textAlign: TextAlign.end,
                               name: "trxRefCode",
@@ -307,7 +303,6 @@ class PaymentRegisterState extends State<PaymentRegister>
                       child: Refresher(
                         refreshController: refreshController,
                         onLoading: onLoading,
-                        onRefresh: onRefresh,
                         color: invoiceColor,
                         child: SingleChildScrollView(
                           child: Column(
@@ -329,13 +324,7 @@ class PaymentRegisterState extends State<PaymentRegister>
                                 children: invoices.rows!
                                     .map(
                                       (data) => PaymentRegisterCard(
-                                        differential: received -
-                                            selected.fold(
-                                              0.0,
-                                              (previousValue, element) =>
-                                                  previousValue +
-                                                  element.amount!,
-                                            ),
+                                        received: received,
                                         listenController: listenController,
                                         list: selected,
                                         data: data,

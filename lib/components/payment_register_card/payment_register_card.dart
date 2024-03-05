@@ -11,10 +11,10 @@ class PaymentRegisterCard extends StatefulWidget {
   final Invoice data;
   final List<Invoice> list;
   final ListenController listenController;
-  final double differential;
+  final double received;
   const PaymentRegisterCard({
     super.key,
-    required this.differential,
+    required this.received,
     required this.listenController,
     required this.list,
     required this.data,
@@ -28,19 +28,22 @@ class _PaymentRegisterCardState extends State<PaymentRegisterCard> {
   double registered = 0;
   TextEditingController controller = TextEditingController();
 
-  @override
-  void initState() {
-    setState(() {
-      widget.data.amount = 0;
-    });
-    super.initState();
+  differential() {
+    double difference = widget.received -
+        widget.list.fold(
+            0, (previousValue, element) => previousValue + element.amount!) +
+        (double.tryParse(controller.text) ?? 0);
+    return difference;
   }
 
   @override
   Widget build(BuildContext context) {
+    int index =
+        widget.list.indexWhere((element) => element.id == widget.data.id);
+    widget.data.amount ??= 0;
     return GestureDetector(
       onTap: () {
-        if (widget.list.contains(widget.data)) {
+        if (index > -1) {
           setState(() {
             controller.text = '';
             registered = 0;
@@ -84,9 +87,9 @@ class _PaymentRegisterCardState extends State<PaymentRegisterCard> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     activeColor: invoiceColor,
-                    value: widget.list.contains(widget.data),
+                    value: index > -1,
                     onChanged: (value) {
-                      if (widget.list.contains(widget.data)) {
+                      if (index > -1) {
                         setState(() {
                           controller.text = '';
                           registered = 0;
@@ -175,7 +178,7 @@ class _PaymentRegisterCardState extends State<PaymentRegisterCard> {
             const SizedBox(
               height: 5,
             ),
-            if (widget.list.contains(widget.data))
+            if (index > -1)
               Row(
                 children: [
                   const Text(
@@ -219,7 +222,7 @@ class _PaymentRegisterCardState extends State<PaymentRegisterCard> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      if (widget.data.amountToPay! < widget.differential) {
+                      if (widget.data.amountToPay! < differential()) {
                         setState(() {
                           registered = widget.data.amountToPay!;
                           controller.text =
@@ -227,9 +230,8 @@ class _PaymentRegisterCardState extends State<PaymentRegisterCard> {
                         });
                       } else {
                         setState(() {
-                          registered = widget.differential;
-                          controller.text =
-                              widget.differential.toInt().toString();
+                          registered = differential();
+                          controller.text = differential().toInt().toString();
                         });
                       }
                       widget.listenController.changeVariable('asdf');
