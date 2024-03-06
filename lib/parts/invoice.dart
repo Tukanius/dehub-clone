@@ -38,6 +38,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     configType:
         json['configType'] != null ? json['configType'] as String : null,
     updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
+    logType: json['logType'] != null ? json['logType'] as String : null,
     trxRefCode:
         json['trxRefCode'] != null ? json['trxRefCode'] as String : null,
     settlementStatus: json['settlementStatus'] != null
@@ -457,6 +458,7 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
     json['invoicesAmount'] = instance.invoicesAmount;
   }
   if (instance.trxAmount != null) json['trxAmount'] = instance.trxAmount;
+  if (instance.logType != null) json['logType'] = instance.logType;
   if (instance.overdueInvoicesCount != null) {
     json['overdueInvoicesCount'] = instance.overdueInvoicesCount;
   }

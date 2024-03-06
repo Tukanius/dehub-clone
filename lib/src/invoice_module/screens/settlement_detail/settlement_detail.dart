@@ -9,6 +9,7 @@ import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/invoice_module/screens/settlement_detail/components/settlement_invoice_card.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -109,160 +110,236 @@ class _SettlementDetailState extends State<SettlementDetail>
                 color: invoiceColor,
               ),
             )
-          : Column(
-              children: [
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    children: [
-                      const Expanded(
-                        flex: 4,
-                        child: Text('Партнер'),
-                      ),
-                      Expanded(
-                        flex: 6,
-                        child: RichText(
-                          textAlign: TextAlign.end,
-                          text: TextSpan(
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'Montserrat',
-                              color: black,
-                            ),
+          : NestedScrollView(
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                return <Widget>[
+                  SliverToBoxAdapter(
+                    child: Column(
+                      children: [
+                        Container(
+                          color: white,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Row(
                             children: [
-                              TextSpan(
-                                text:
-                                    '${settlement.business?.partner?.refCode}, ',
-                                style: const TextStyle(color: invoiceColor),
+                              const Expanded(
+                                flex: 4,
+                                child: Text('Партнер'),
                               ),
-                              TextSpan(
-                                  text:
-                                      ' ${settlement.business?.partner?.businessName}'),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    children: [
-                      const Expanded(
-                        flex: 4,
-                        child: Text('Бизнес'),
-                      ),
-                      Expanded(
-                        flex: 6,
-                        child: RichText(
-                          textAlign: TextAlign.end,
-                          text: TextSpan(
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'Montserrat',
-                              color: black,
-                            ),
-                            children: [
-                              TextSpan(
-                                text: '${settlement.business?.refCode}, ',
-                                style: const TextStyle(color: invoiceColor),
-                              ),
-                              TextSpan(
-                                  text: ' ${settlement.business?.profileName}'),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    children: [
-                      const Expanded(
-                        flex: 6,
-                        child: Text('Төлбөрийн үлдэгдэлтэй'),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: Text(
-                          '${settlement.numberOfInv}',
-                          style: const TextStyle(
-                            color: invoiceColor,
-                          ),
-                          textAlign: TextAlign.end,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                FieldCard(
-                  paddingHorizontal: 15,
-                  paddingVertical: 10,
-                  color: white,
-                  labelText: 'Илгээсэн',
-                  secondText:
-                      '${settlement.financeStaff?.lastName?[0]}. ${settlement.financeStaff?.firstName}',
-                  secondTextColor: invoiceColor,
-                ),
-                if (settlement.settlementStatus != "CONFIRMED")
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: onSubmit,
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: invoiceColor,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 5),
-                        child: Text(
-                          user.currentBusiness?.type == "SUPPLIER"
-                              ? 'Тооцоо илгээх'
-                              : 'Зөвшөөрөх',
-                          style: const TextStyle(
-                              color: white, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
-                  ),
-                Expanded(
-                  child: Refresher(
-                    color: invoiceColor,
-                    onLoading: onLoading,
-                    refreshController: refreshController,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Column(
-                            children: invoices.rows!
-                                .map(
-                                  (data) => SettlementInvoiceCard(
-                                    data: data,
+                              Expanded(
+                                flex: 6,
+                                child: RichText(
+                                  textAlign: TextAlign.end,
+                                  text: TextSpan(
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontFamily: 'Montserrat',
+                                      color: black,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            '${settlement.business?.partner?.refCode}, ',
+                                        style: const TextStyle(
+                                            color: invoiceColor),
+                                      ),
+                                      TextSpan(
+                                          text:
+                                              ' ${settlement.business?.partner?.businessName}'),
+                                    ],
                                   ),
-                                )
-                                .toList(),
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(
-                            height: 50,
+                        ),
+                        Container(
+                          color: white,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Row(
+                            children: [
+                              const Expanded(
+                                flex: 4,
+                                child: Text('Бизнес'),
+                              ),
+                              Expanded(
+                                flex: 6,
+                                child: RichText(
+                                  textAlign: TextAlign.end,
+                                  text: TextSpan(
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontFamily: 'Montserrat',
+                                      color: black,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            '${settlement.business?.refCode}, ',
+                                        style: const TextStyle(
+                                            color: invoiceColor),
+                                      ),
+                                      TextSpan(
+                                          text:
+                                              ' ${settlement.business?.profileName}'),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        FieldCard(
+                          paddingHorizontal: 15,
+                          paddingVertical: 10,
+                          color: white,
+                          labelText: 'Илгээсэн',
+                          secondText:
+                              '${settlement.financeStaff?.lastName?[0]}. ${settlement.financeStaff?.firstName}',
+                          secondTextColor: invoiceColor,
+                        ),
+                        FieldCard(
+                          paddingHorizontal: 15,
+                          paddingVertical: 10,
+                          color: white,
+                          labelText: 'Эхний үлдэгдэл',
+                          secondText:
+                              '${Utils().formatCurrency("${settlement.firstAmount}")}₮',
+                          secondTextColor: invoiceColor,
+                        ),
+                        Container(
+                          color: white,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Row(
+                            children: [
+                              const Expanded(
+                                flex: 6,
+                                child: Text('Тухайн сард нэмэгдсэн'),
+                              ),
+                              Expanded(
+                                flex: 4,
+                                child: Text(
+                                  '${Utils().formatCurrency("${settlement.confirmedAmount}")}₮',
+                                  style: const TextStyle(
+                                    color: invoiceColor,
+                                  ),
+                                  textAlign: TextAlign.end,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          color: white,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Row(
+                            children: [
+                              const Expanded(
+                                flex: 6,
+                                child: Text('Тухайн сард хасагдсан'),
+                              ),
+                              Expanded(
+                                flex: 4,
+                                child: Text(
+                                  '${Utils().formatCurrency("${settlement.paidAmount}")}₮',
+                                  style: const TextStyle(
+                                    color: invoiceColor,
+                                  ),
+                                  textAlign: TextAlign.end,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          color: white,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Row(
+                            children: [
+                              const Expanded(
+                                flex: 6,
+                                child: Text('Төлбөрийн үлдэгдэлтэй'),
+                              ),
+                              Expanded(
+                                flex: 4,
+                                child: Text(
+                                  '${settlement.numberOfInv}',
+                                  style: const TextStyle(
+                                    color: invoiceColor,
+                                  ),
+                                  textAlign: TextAlign.end,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        FieldCard(
+                          paddingHorizontal: 15,
+                          paddingVertical: 10,
+                          color: white,
+                          labelText: 'Эцсийн үлдэгдэл',
+                          secondText:
+                              '${Utils().formatCurrency("${settlement.lastAmount}")}₮',
+                          secondTextColor: invoiceColor,
+                        ),
+                        if (settlement.settlementStatus != "CONFIRMED")
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(
+                              onTap: onSubmit,
+                              child: Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: invoiceColor,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 5),
+                                child: Text(
+                                  user.currentBusiness?.type == "SUPPLIER"
+                                      ? 'Тооцоо илгээх'
+                                      : 'Зөвшөөрөх',
+                                  style: const TextStyle(
+                                      color: white,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
+                  )
+                ];
+              },
+              body: Refresher(
+                color: invoiceColor,
+                onLoading: onLoading,
+                refreshController: refreshController,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Column(
+                        children: invoices.rows!
+                            .map(
+                              (data) => SettlementInvoiceCard(
+                                data: data,
+                              ),
+                            )
+                            .toList(),
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
     );
   }

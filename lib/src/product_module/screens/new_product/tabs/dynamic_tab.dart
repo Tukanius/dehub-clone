@@ -343,8 +343,10 @@ class _DynamicTabState extends State<DynamicTab> {
                   child: CustomButton(
                     onClick: () {},
                     labelText: '+ Талбар нэмэх',
+                    fontSize: 14,
                     textColor: productColor,
                     labelColor: productColor.withOpacity(0.2),
+                    shadow: false,
                   ),
                 ),
                 const SizedBox(
@@ -360,8 +362,10 @@ class _DynamicTabState extends State<DynamicTab> {
                       );
                     },
                     labelText: 'Сонголт хийх',
+                    fontSize: 14,
                     textColor: productColor,
                     labelColor: productColor.withOpacity(0.2),
+                    shadow: false,
                   ),
                 ),
                 const SizedBox(
@@ -378,6 +382,7 @@ class _DynamicTabState extends State<DynamicTab> {
                   width: 25,
                 ),
                 Expanded(
+                  flex: 4,
                   child: CustomButton(
                     onClick: () {},
                     labelText: 'Хадгалах',
@@ -390,6 +395,7 @@ class _DynamicTabState extends State<DynamicTab> {
                   width: 15,
                 ),
                 Expanded(
+                  flex: 6,
                   child: CustomButton(
                     onClick: () {
                       if (fbKey.currentState!.saveAndValidate() &&

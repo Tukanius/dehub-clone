@@ -29,6 +29,11 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => FinanceRoleStatus.fromJson(e))
             .toList()
         : null,
+    invoiceHistoryLogTypes: json['invoiceHistoryLogTypes'] != null
+        ? (json['invoiceHistoryLogTypes'] as List)
+            .map((e) => InvoiceHistoryLogTypes.fromJson(e))
+            .toList()
+        : null,
     settlementStatus: json['settlementStatus'] != null
         ? (json['settlementStatus'] as List)
             .map((e) => SettlementStatus.fromJson(e))
@@ -460,6 +465,9 @@ Map<String, dynamic> _$GeneralToJson(General instance) {
 
   if (instance.productSuppPenaltyTypes != null) {
     json['productSuppPenaltyTypes'] = instance.productSuppPenaltyTypes;
+  }
+  if (instance.invoiceHistoryLogTypes != null) {
+    json['invoiceHistoryLogTypes'] = instance.invoiceHistoryLogTypes;
   }
   if (instance.financeRoleStatus != null) {
     json['financeRoleStatus'] = instance.financeRoleStatus;

@@ -71,7 +71,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
     return GestureDetector(
       onTap: widget.onClick,
       child: AnimatedContainer(
-        padding: const EdgeInsets.only(right: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         duration: Duration(milliseconds: 300 + (widget.index * 200)),
         curve: Curves.ease,
         transform: Matrix4.translationValues(
@@ -85,30 +85,31 @@ class _InvoiceCardState extends State<InvoiceCard> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Checkbox(
-                  side: MaterialStateBorderSide.resolveWith(
-                    (states) => const BorderSide(
-                      color: invoiceColor,
-                      width: 2,
-                    ),
-                  ),
-                  shape: RoundedRectangleBorder(
+                Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        user.currentBusiness?.type == "SUPPLIER" &&
+                                    widget.data.type == "SALES" ||
+                                user.currentBusiness?.type == "BUYER" &&
+                                    widget.data.type == "PURCHASE"
+                            ? '${widget.data.receiverBusiness?.logo}'
+                            : '${widget.data.senderBusiness?.logo}',
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                    color: grey,
                   ),
-                  activeColor: invoiceColor,
-                  value: value,
-                  onChanged: (value1) {
-                    setState(() {
-                      value = value1!;
-                    });
-                  },
+                ),
+                const SizedBox(
+                  width: 5,
                 ),
                 Expanded(
                   child: Column(
                     children: [
-                      const SizedBox(
-                        height: 12,
-                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -231,7 +232,9 @@ class _InvoiceCardState extends State<InvoiceCard> {
                           Expanded(
                             flex: 4,
                             child: Text(
-                              'Төлөх: ${DateFormat('yyyy-MM-dd').format(widget.data.paymentDate!)}',
+                              widget.data.paymentDate != null
+                                  ? 'Төлөх: ${DateFormat('yyyy-MM-dd').format(widget.data.paymentDate!)}'
+                                  : 'Төлөх: -',
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: Color(0xff555555),
@@ -314,9 +317,6 @@ class _InvoiceCardState extends State<InvoiceCard> {
                             ],
                           ),
                         ],
-                      ),
-                      const SizedBox(
-                        height: 15,
                       ),
                     ],
                   ),

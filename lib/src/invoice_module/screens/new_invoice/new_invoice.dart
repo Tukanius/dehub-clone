@@ -905,11 +905,10 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
       );
       if (widget.data == null) {
         await InvoiceApi().createInvoice(asdf);
-        loading.loading(false);
       } else {
         await InvoiceApi().updateInvoice(asdf, widget.data!.id!);
-        loading.loading(false);
       }
+      await loading.loading(false);
       showCustomDialog(
         context,
         value == true

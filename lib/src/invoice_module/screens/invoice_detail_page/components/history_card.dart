@@ -35,7 +35,7 @@ class _HistoryCardState extends State<HistoryCard> {
           Row(
             children: [
               Text(
-                '${widget.data.paymentRefCode}',
+                '${widget.data.paymentRefCode ?? widget.data.trxRefCode}',
                 style: const TextStyle(
                   color: invoiceColor,
                   fontWeight: FontWeight.w600,
@@ -57,7 +57,7 @@ class _HistoryCardState extends State<HistoryCard> {
             children: [
               Expanded(
                 child: Text(
-                  'Төлсөн: ${widget.data.debitAcc?.number}',
+                  'Төлсөн: ${widget.data.debitAcc?.number ?? "-"}',
                   style: const TextStyle(
                     color: grey2,
                     fontSize: 12,
@@ -66,7 +66,7 @@ class _HistoryCardState extends State<HistoryCard> {
               ),
               Expanded(
                 child: Text(
-                  'Хүлээн авсан: ${widget.data.debitAcc?.number}',
+                  'Хүлээн авсан: ${widget.data.debitAcc?.number ?? widget.data.actionUser?.firstName}',
                   style: const TextStyle(
                     color: grey2,
                     fontSize: 12,

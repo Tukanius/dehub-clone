@@ -9,8 +9,12 @@ class CustomButton extends StatefulWidget {
   final Color? textColor;
   final Color? borderColor;
   final String? svgIcon;
+  final double? fontSize;
+  final bool? shadow;
   const CustomButton({
+    this.shadow,
     this.svgIcon,
+    this.fontSize,
     this.borderColor,
     this.textColor,
     this.labelColor,
@@ -34,12 +38,14 @@ class _CustomButtonState extends State<CustomButton> {
         width: 360,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
             foregroundColor: Colors.grey,
             backgroundColor: widget.labelColor,
             side: BorderSide(color: widget.borderColor ?? transparent),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5),
             ),
+            shadowColor: widget.shadow == false ? Colors.transparent : null,
           ),
           onPressed: widget.onClick,
           child: Row(
@@ -60,7 +66,7 @@ class _CustomButtonState extends State<CustomButton> {
                 widget.labelText,
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
-                  fontSize: 16,
+                  fontSize: widget.fontSize ?? 16,
                   color: widget.textColor ?? white,
                 ),
               ),

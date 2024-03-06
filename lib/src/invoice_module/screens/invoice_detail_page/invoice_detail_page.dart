@@ -23,7 +23,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         backgroundColor: backgroundColor,
         appBar: AppBar(
@@ -44,8 +44,6 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
             indicatorColor: invoiceColor,
             labelColor: invoiceColor,
             unselectedLabelColor: grey2,
-            isScrollable: true,
-            tabAlignment: TabAlignment.start,
             tabs: const [
               SizedBox(
                 height: 40,
@@ -63,14 +61,6 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 40,
-                child: Center(
-                  child: Text(
-                    'Тооцоо үлдэгдэл',
-                  ),
-                ),
-              ),
             ],
           ),
         ),
@@ -80,7 +70,6 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
               id: widget.id,
             ),
             HistoryTab(id: widget.id),
-            const Text('1'),
           ],
         ),
       ),

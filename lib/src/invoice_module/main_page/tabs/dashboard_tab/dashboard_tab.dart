@@ -134,16 +134,18 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                   svgColor: invoiceColor,
                   svg: 'assets/svg/take_invoice.svg',
                 ),
-                DashboardCard(
-                  onClick: () {
-                    Navigator.of(context).pushNamed(PaymentRegister.routeName);
-                  },
-                  boxColor: invoiceColor.withOpacity(0.1),
-                  padding: 10,
-                  labelText: 'Төлөлт бүртгэх',
-                  svgColor: invoiceColor,
-                  svg: 'assets/svg/closed_invoice.svg',
-                ),
+                if (user.currentBusiness?.type == "SUPPLIER")
+                  DashboardCard(
+                    onClick: () {
+                      Navigator.of(context)
+                          .pushNamed(PaymentRegister.routeName);
+                    },
+                    boxColor: invoiceColor.withOpacity(0.1),
+                    padding: 10,
+                    labelText: 'Төлөлт бүртгэх',
+                    svgColor: invoiceColor,
+                    svg: 'assets/svg/closed_invoice.svg',
+                  ),
                 DashboardCard(
                   onClick: () {
                     Navigator.of(context)
@@ -155,14 +157,14 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                   svgColor: invoiceColor,
                   svg: 'assets/svg/report_off.svg',
                 ),
-                DashboardCard(
-                  onClick: () {},
-                  boxColor: invoiceColor.withOpacity(0.1),
-                  padding: 8,
-                  labelText: 'Буцаалтын нэхэмжлэх',
-                  svgColor: invoiceColor,
-                  svg: 'assets/svg/return.svg',
-                ),
+                // DashboardCard(
+                //   onClick: () {},
+                //   boxColor: invoiceColor.withOpacity(0.1),
+                //   padding: 8,
+                //   labelText: 'Буцаалтын нэхэмжлэх',
+                //   svgColor: invoiceColor,
+                //   svg: 'assets/svg/return.svg',
+                // ),
               ],
             ),
           ),

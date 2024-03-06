@@ -186,8 +186,10 @@ class Invoice {
   Invoice? invoice;
   String? trxRefCode;
   List<Invoice>? invoices;
+  String? logType;
 
   Invoice({
+    this.logType,
     this.invoices,
     this.trxRefCode,
     this.invoice,

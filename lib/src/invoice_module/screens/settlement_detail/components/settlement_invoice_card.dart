@@ -4,6 +4,7 @@ import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SettlementInvoiceCard extends StatefulWidget {
@@ -24,6 +25,12 @@ class _SettlementInvoiceCardState extends State<SettlementInvoiceCard> {
     final res = general.overdueStatus!.firstWhere(
         (element) => element.code == widget.data.invoice?.overdueStatus);
     return res;
+  }
+
+  logType() {
+    final res = general.invoiceHistoryLogTypes!
+        .firstWhere((element) => element.code == widget.data.logType);
+    return res.name;
   }
 
   @override
@@ -48,30 +55,7 @@ class _SettlementInvoiceCardState extends State<SettlementInvoiceCard> {
               ),
               Expanded(
                 child: Text(
-                  '${Utils().formatCurrency(widget.data.invoice?.confirmedAmount.toString())}₮',
-                  style: const TextStyle(color: invoiceColor),
-                  textAlign: TextAlign.end,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 3,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'Үлдсэн хоног: ${widget.data.invoice?.paymentDate?.difference(DateTime.now()).inDays}',
-                  style: const TextStyle(
-                    color: grey2,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  'Төлсөн: ${Utils().formatCurrency(widget.data.invoice?.paidAmount.toString())}₮',
+                  '${logType()}',
                   style: const TextStyle(
                     color: grey2,
                     fontSize: 12,
@@ -86,15 +70,6 @@ class _SettlementInvoiceCardState extends State<SettlementInvoiceCard> {
           ),
           Row(
             children: [
-              Expanded(
-                child: Text(
-                  'Үлдэгдэл: ${Utils().formatCurrency(widget.data.invoice?.amountToPay.toString())}₮',
-                  style: const TextStyle(
-                    color: grey2,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
@@ -118,8 +93,63 @@ class _SettlementInvoiceCardState extends State<SettlementInvoiceCard> {
                   ),
                 ),
               ),
+              Expanded(
+                child: Text(
+                  "Үүссэн: ${DateFormat('yyyy-MM-dd HH:mm').format(widget.data.createdAt!)}",
+                  style: const TextStyle(
+                    color: grey2,
+                    fontSize: 12,
+                  ),
+                  textAlign: TextAlign.end,
+                ),
+              ),
             ],
-          )
+          ),
+          const SizedBox(
+            height: 3,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Үлдсэн хоног: ${widget.data.invoice?.paymentDate?.difference(DateTime.now()).inDays}',
+                  style: const TextStyle(
+                    color: grey2,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: RichText(
+                  textAlign: TextAlign.end,
+                  text: TextSpan(
+                    style: const TextStyle(
+                      color: grey2,
+                      fontSize: 12,
+                      fontFamily: "Montserrat",
+                    ),
+                    children: [
+                      TextSpan(
+                        text: widget.data.logType == "CONFIRMED"
+                            ? 'Нэмэгдсэн: '
+                            : 'Хасагдсан: ',
+                      ),
+                      TextSpan(
+                        text: widget.data.logType == "CONFIRMED"
+                            ? '${Utils().formatCurrency(widget.data.invoice?.confirmedAmount.toString())}₮'
+                            : '${Utils().formatCurrency(widget.data.trxAmount.toString())}₮',
+                        style: TextStyle(
+                          color: widget.data.logType == "CONFIRMED"
+                              ? neonGreen
+                              : red,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
