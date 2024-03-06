@@ -17,7 +17,6 @@ class Bagtsaar extends StatefulWidget {
   final bool isPackage;
   final String shippingAmount;
   final String discountAmount;
-  static const routeName = '/bagtsaar';
   const Bagtsaar({
     required this.shippingAmount,
     required this.discountAmount,
@@ -112,10 +111,11 @@ class _BagtsaarState extends State<Bagtsaar> with AfterLayoutMixin {
               onClick: () async {
                 for (var i = 0; i < source.packageProduct.length; i++) {
                   Provider.of<InvoiceProvider>(context, listen: false).addCart(
-                      source.packageProduct[i],
-                      source.packageProduct[i].quantity!,
-                      widget.discountAmount,
-                      widget.shippingAmount);
+                    source.packageProduct[i],
+                    source.packageProduct[i].quantity!,
+                    widget.discountAmount,
+                    widget.shippingAmount,
+                  );
                 }
                 // source.packageProductClear();
                 Navigator.of(context).pop();

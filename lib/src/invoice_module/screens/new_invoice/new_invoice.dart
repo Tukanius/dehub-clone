@@ -72,7 +72,9 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
       source.sectorChoose(Invoice(branch: widget.data!.senderBranch!));
       source.products = widget.data!.lines!;
       source.additionalLines = widget.data!.additionalLines!;
-      shippingController.text = widget.data!.shippingAmount!.toInt().toString();
+      shippingController.text = widget.data!.shippingAmount != 0
+          ? widget.data!.shippingAmount!.toInt().toString()
+          : '';
       discountController.text = widget.data!.discountValue!.toInt().toString();
       descriptionController.text = widget.data!.description.toString();
       source.discountType(
@@ -375,12 +377,10 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                               discountAmount: discountController.text,
                               shippingAmount: shippingController.text,
                               closeClick: () {
-                                setState(() {
-                                  invoice.removeCart(
-                                      item,
-                                      discountController.text,
-                                      shippingController.text);
-                                });
+                                invoice.removeCart(
+                                    item,
+                                    discountController.text,
+                                    shippingController.text);
                               },
                               data: item,
                               onClick: () {
@@ -867,7 +867,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
             onSubmit(value);
           },
           color: invoiceColor,
-          labelText: "Нэхэмжлэл илгээх",
+          labelText: value ? "Нэхэмжлэл илгээх" : 'Нэхэмжлэх хадгалах',
         ),
       );
     }
@@ -882,9 +882,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
       for (var i = 0; i < invoice.products.length; i++) {
         data.add(
           Invoice(
-            variantId: widget.data == null
-                ? invoice.products[i].id
-                : invoice.products[i].variantId,
+            variantId: invoice.products[i].variantId ?? invoice.products[i].id,
             quantity: invoice.products[i].quantity,
           ),
         );

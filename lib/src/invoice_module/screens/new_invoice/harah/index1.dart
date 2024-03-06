@@ -390,7 +390,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '${user.currentBusiness?.partner?.businessName}',
+                                      '${user.partner?.businessName}',
                                       style: const TextStyle(
                                         color: black,
                                         fontWeight: FontWeight.bold,
@@ -418,7 +418,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                       height: 10,
                                     ),
                                     Text(
-                                      '${user.currentBusiness?.partner?.email}',
+                                      '${user.partner?.email}',
                                       style: const TextStyle(
                                         color: black,
                                       ),
@@ -427,7 +427,7 @@ class _Index1State extends State<Index1> with AfterLayoutMixin {
                                       height: 10,
                                     ),
                                     Text(
-                                      '${user.currentBusiness?.partner?.phone}',
+                                      '${user.partner?.phone}',
                                       style: const TextStyle(color: black),
                                     )
                                   ],

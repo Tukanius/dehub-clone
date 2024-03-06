@@ -118,17 +118,14 @@ class _SettlementTabState extends State<SettlementTab> with AfterLayoutMixin {
                               .map(
                                 (e) => SettlementCard(
                                   data: e,
-                                  onClick: e.settlementStatus != "SENT"
-                                      ? () {
-                                          Navigator.of(context).pushNamed(
-                                            SettlementDetail.routeName,
-                                            arguments:
-                                                SettlementDetailArguments(
-                                              id: e.id,
-                                            ),
-                                          );
-                                        }
-                                      : () {},
+                                  onClick: () {
+                                    Navigator.of(context).pushNamed(
+                                      SettlementDetail.routeName,
+                                      arguments: SettlementDetailArguments(
+                                        id: e.id,
+                                      ),
+                                    );
+                                  },
                                 ),
                               )
                               .toList(),

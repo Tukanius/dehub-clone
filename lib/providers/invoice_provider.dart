@@ -82,7 +82,9 @@ class InvoiceProvider extends ChangeNotifier {
   addCart(Invoice product, int qty, String discount, String shipping) {
     int? index;
     try {
-      index = products.indexWhere((item) => item.id == product.id);
+      index = products.indexWhere((item) => item.variantId != null
+          ? item.variantId == product.id
+          : item.id == product.id);
     } catch (e) {
       debugPrint(e.toString());
     }

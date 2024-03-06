@@ -48,11 +48,9 @@ class _InvoiceCardState extends State<InvoiceCard> {
   textColor() {
     switch (widget.data.paymentStatus) {
       case "PENDING":
-        return invoiceColor;
+        return yellow;
       case "DIVIDED":
-        return grey3;
-      case "OVER_DUE":
-        return Colors.red;
+        return Colors.blue;
       case "CLOSED":
         return green;
       default:
@@ -230,53 +228,42 @@ class _InvoiceCardState extends State<InvoiceCard> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              const Text(
-                                'Төлөх: ',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xff555555),
-                                ),
+                          Expanded(
+                            flex: 4,
+                            child: Text(
+                              'Төлөх: ${DateFormat('yyyy-MM-dd').format(widget.data.paymentDate!)}',
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Color(0xff555555),
                               ),
-                              widget.data.paymentDate != null
-                                  ? Text(
-                                      DateFormat('yyyy-MM-dd')
-                                          .format(widget.data.paymentDate!),
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        color: Color(0xff555555),
-                                      ),
-                                    )
-                                  : const Text(
-                                      '-',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Color(0xff555555),
-                                      ),
-                                    ),
-                            ],
+                            ),
                           ),
-                          Row(
-                            children: [
-                              const Text(
-                                'Хугацаа: ',
-                                style: TextStyle(
+                          Expanded(
+                            flex: 6,
+                            child: RichText(
+                              textAlign: TextAlign.end,
+                              text: TextSpan(
+                                style: const TextStyle(
+                                  color: grey2,
                                   fontSize: 12,
-                                  color: Color(0xff555555),
+                                  fontFamily: 'Montserrat',
                                 ),
+                                children: [
+                                  const TextSpan(text: 'Хугацаа хэтрэлт: '),
+                                  TextSpan(
+                                    text: '${overdueStatus().name}',
+                                    style: TextStyle(
+                                      color: Color(int.parse(
+                                              overdueStatus()
+                                                  .color
+                                                  .substring(1, 7),
+                                              radix: 16) +
+                                          0xff000000),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                '${overdueStatus().name}',
-                                style: TextStyle(
-                                  color: Color(int.parse(
-                                          overdueStatus().color.substring(1, 7),
-                                          radix: 16) +
-                                      0xff000000),
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                         ],
                       ),

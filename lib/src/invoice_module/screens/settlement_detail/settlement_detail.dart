@@ -213,29 +213,30 @@ class _SettlementDetailState extends State<SettlementDetail>
                       '${settlement.financeStaff?.lastName?[0]}. ${settlement.financeStaff?.firstName}',
                   secondTextColor: invoiceColor,
                 ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: GestureDetector(
-                    onTap: onSubmit,
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: invoiceColor,
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 5),
-                      child: Text(
-                        user.currentBusiness?.type == "SUPPLIER"
-                            ? 'Тооцоо илгээх'
-                            : 'Зөвшөөрөх',
-                        style: const TextStyle(
-                            color: white, fontWeight: FontWeight.w500),
+                if (settlement.settlementStatus != "CONFIRMED")
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: onSubmit,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: invoiceColor,
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 5),
+                        child: Text(
+                          user.currentBusiness?.type == "SUPPLIER"
+                              ? 'Тооцоо илгээх'
+                              : 'Зөвшөөрөх',
+                          style: const TextStyle(
+                              color: white, fontWeight: FontWeight.w500),
+                        ),
                       ),
                     ),
                   ),
-                ),
                 Expanded(
                   child: Refresher(
                     color: invoiceColor,

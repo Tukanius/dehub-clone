@@ -67,20 +67,22 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
   }
 
   @override
-  void dispose() {
-    quantityController.dispose();
-    super.dispose();
+  void initState() {
+    final source = Provider.of<InvoiceProvider>(context, listen: false);
+    if (widget.data.quantity != null) {
+      quantityController.text = widget.data.quantity.toString();
+    }
+    source.addListener(() {
+      if (widget.data.quantity != null) {
+        quantityController.text = widget.data.quantity.toString();
+      }
+    });
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<InvoiceProvider>(context, listen: true);
-
-    if (widget.data.quantity == null) {
-      quantityController.text = '0';
-    } else {
-      quantityController.text = widget.data.quantity.toString();
-    }
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
@@ -327,10 +329,8 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                       child: FormTextField(
                         readOnly: widget.readOnly!,
                         onChanged: (value) {
-                          setState(() {
-                            widget.data.quantity =
-                                int.tryParse(quantityController.text) ?? 0;
-                          });
+                          widget.data.quantity =
+                              int.tryParse(quantityController.text) ?? 0;
                           if (widget.isPackage == true) {
                             if (widget.data.quantity == 0) {
                               source.packageProductRemove(widget.data);
@@ -421,7 +421,7 @@ class _InvoiceProductCardState extends State<InvoiceProductCard> {
                         ),
                       )
                     : Text(
-                        '${Utils().formatCurrency((double.parse(quantityController.text.toString()) * widget.data.price!).toString())} ₮',
+                        '${Utils().formatCurrency(((double.tryParse(quantityController.text.toString()) ?? 0) * widget.data.price!).toString())} ₮',
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,

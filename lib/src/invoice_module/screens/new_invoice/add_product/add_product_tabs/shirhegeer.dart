@@ -14,7 +14,6 @@ class Shirhegeer extends StatefulWidget {
   final bool isPackage;
   final String discountAmount;
   final String shippingAmount;
-  static const routeName = '/Shirhegeer';
   const Shirhegeer({
     required this.discountAmount,
     required this.shippingAmount,
@@ -77,10 +76,11 @@ class _ShirhegeerState extends State<Shirhegeer> with AfterLayoutMixin {
                                       onClick: () {
                                         if (data.quantity != 0) {
                                           source.addCart(
-                                              data,
-                                              data.quantity,
-                                              widget.discountAmount,
-                                              widget.shippingAmount);
+                                            data,
+                                            data.quantity,
+                                            widget.discountAmount,
+                                            widget.shippingAmount,
+                                          );
                                           Navigator.of(context).pop();
                                         }
                                       },

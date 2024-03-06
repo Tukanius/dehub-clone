@@ -150,25 +150,26 @@ class _HarahState extends State<Harah> {
                       color: white,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      pdf();
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 15),
-                      padding: const EdgeInsets.all(8),
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          border: Border.all(color: grey3, width: 0.5),
-                          color: white),
-                      child: const Icon(
-                        Icons.picture_as_pdf_outlined,
-                        color: grey3,
+                  if (widget.isNewInvoice == false)
+                    GestureDetector(
+                      onTap: () {
+                        pdf();
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 15),
+                        padding: const EdgeInsets.all(8),
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(color: grey3, width: 0.5),
+                            color: white),
+                        child: const Icon(
+                          Icons.picture_as_pdf_outlined,
+                          color: grey3,
+                        ),
                       ),
                     ),
-                  ),
                   // if (user.currentBusiness?.type == "SUPPLIER")
                   GestureDetector(
                     onTap: () {
