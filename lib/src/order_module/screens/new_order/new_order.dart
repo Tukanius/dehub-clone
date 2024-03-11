@@ -14,6 +14,7 @@ import 'package:dehub/src/order_module/screens/new_order/add_row/order_add_row.d
 import 'package:dehub/src/order_module/screens/new_order/change_branch/change_branch_name.dart';
 import 'package:dehub/src/order_module/screens/new_order/order_send/order_send_page.dart';
 import 'package:dehub/src/order_module/screens/new_order/product_choose/product_choose.dart';
+import 'package:dehub/utils/currency_formatter.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -94,7 +95,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
-    Provider.of<CheckOutProvider>(context, listen: false).clearCart();
+    final source = Provider.of<CheckOutProvider>(context, listen: false);
+    source.clearCart();
     if (widget.id != null) {
       customer = await OrderApi().networkGet(widget.id!);
       setState(() {
@@ -103,7 +105,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
     }
     if (widget.data?.lines != null) {
       for (var i = 0; i < widget.data!.lines!.length; i++) {
-        Provider.of<CheckOutProvider>(context, listen: false).orderCart(
+        source.orderCart(
             widget.data!.lines![i], widget.data!.lines![i].quantity!);
       }
       for (var i = 0; i < widget.data!.additionalLines!.length; i++) {
@@ -117,9 +119,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
           ),
         );
       }
-      Provider.of<CheckOutProvider>(context, listen: false).additional =
-          additionalLines;
-      Provider.of<CheckOutProvider>(context, listen: false).totalAmounts(
+      source.additional = additionalLines;
+      source.totalAmounts(
         product,
         double.tryParse(shippingAmountController.text) ?? 0,
         double.tryParse(discountAmountController.text) ?? 0,
@@ -1080,13 +1081,16 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                       textColor: orderColor,
                       onChanged: (value) {
                         setState(() {
-                          shippingAmount = double.tryParse(value) ?? 0;
-                          source.shippingAmount = double.tryParse(value) ?? 0;
+                          shippingAmount =
+                              double.tryParse(Utils().parseCurrency(value)) ??
+                                  0;
+                          source.shippingAmount = shippingAmount;
                           source.totalAmounts(
                               product, shippingAmount, discountAmount);
                         });
                       },
                       controller: shippingAmountController,
+                      inputFormatters: [CurrencyInputFormatter()],
                       decoration: const InputDecoration(
                         prefixIcon: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -1118,12 +1122,15 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                     FormTextField(
                       onChanged: (value) {
                         setState(() {
-                          discountAmount = double.tryParse(value) ?? 0;
-                          source.discountAmount = double.tryParse(value) ?? 0;
+                          discountAmount =
+                              double.tryParse(Utils().parseCurrency(value)) ??
+                                  0;
+                          source.discountAmount = discountAmount;
                           source.totalAmounts(
                               product, shippingAmount, discountAmount);
                         });
                       },
+                      inputFormatters: [CurrencyInputFormatter()],
                       controller: discountAmountController,
                       name: 'discountAmount',
                       textAlign: TextAlign.end,

@@ -1,5 +1,6 @@
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/providers/invoice_provider.dart';
+import 'package:dehub/utils/currency_formatter.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -36,9 +37,9 @@ class _AddRowState extends State<InvoiceAddRow> {
   String dropdownValue = "Ширхэг";
   Invoice row = Invoice();
   TextEditingController quantityController = TextEditingController();
-  TextEditingController priceController = TextEditingController();
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   double? totalAmount;
+  String price = '';
 
   List<String> list = <String>[
     "Хувиар",
@@ -54,7 +55,6 @@ class _AddRowState extends State<InvoiceAddRow> {
 
   @override
   void dispose() {
-    priceController.dispose();
     quantityController.dispose();
     super.dispose();
   }
@@ -65,6 +65,7 @@ class _AddRowState extends State<InvoiceAddRow> {
       try {
         row = Invoice.fromJson(fbKey.currentState!.value);
         row.unit = dropdownValue;
+        row.price = double.parse(price);
         source.additionalRow(row, widget.discountAmount, widget.shippingAmount);
         Navigator.of(context).pop();
       } catch (e) {
@@ -77,7 +78,7 @@ class _AddRowState extends State<InvoiceAddRow> {
     double price;
     double quantity;
 
-    price = double.tryParse(priceController.text) ?? 0;
+    price = double.tryParse(this.price) ?? 0;
     quantity = double.tryParse(quantityController.text) ?? 0;
 
     setState(() {
@@ -228,12 +229,14 @@ class _AddRowState extends State<InvoiceAddRow> {
               ),
               FormTextField(
                 onChanged: (value) {
+                  setState(() {
+                    price = Utils().parseCurrency(value);
+                  });
                   getTotalAmount();
                 },
-                controller: priceController,
                 textColor: invoiceColor,
                 textAlign: TextAlign.end,
-                name: 'price',
+                name: 'priceValue',
                 inputType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: InputBorder.none,
@@ -260,6 +263,7 @@ class _AddRowState extends State<InvoiceAddRow> {
                     ],
                   ),
                 ),
+                inputFormatters: [CurrencyInputFormatter()],
                 validator: FormBuilderValidators.compose([
                   FormBuilderValidators.required(
                     errorText: 'Нэгж үнэ оруулна уу',

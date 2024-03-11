@@ -219,72 +219,78 @@ class _HarahState extends State<Harah> {
       useSafeArea: true,
       backgroundColor: white,
       context: context,
-      builder: (context) => SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
-        child: Container(
-          color: white,
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: Row(
+      builder: (context) => Container(
+        height: MediaQuery.of(context).size.height * 0.9,
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Container(
+                padding: const EdgeInsets.only(right: 15, bottom: 10, left: 15),
+                color: transparent,
+                child: SvgPicture.asset(
+                  'assets/svg/close.svg',
+                  colorFilter: const ColorFilter.mode(grey2, BlendMode.srcIn),
+                  height: 20,
+                ),
+              ),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
                   children: [
-                    SvgPicture.asset(
-                      'assets/svg/close.svg',
-                      colorFilter:
-                          const ColorFilter.mode(grey2, BlendMode.srcIn),
-                      height: 20,
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    INVOICEPDF(
+                        lines: widget.invoice.lines!, data: widget.invoice),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(width: 0.5, color: grey3),
+                          ),
+                          child: const Icon(
+                            Icons.share_outlined,
+                            color: grey3,
+                            size: 20,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(width: 0.5, color: grey3),
+                          ),
+                          child: SvgPicture.asset(
+                            'assets/svg/save1.svg',
+                            colorFilter:
+                                const ColorFilter.mode(grey3, BlendMode.srcIn),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 50,
                     ),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              INVOICEPDF(lines: widget.invoice.lines!, data: widget.invoice),
-              const SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      border: Border.all(width: 0.5, color: grey3),
-                    ),
-                    child: const Icon(
-                      Icons.share_outlined,
-                      color: grey3,
-                      size: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 25,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      border: Border.all(width: 0.5, color: grey3),
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/svg/save1.svg',
-                      colorFilter:
-                          const ColorFilter.mode(grey3, BlendMode.srcIn),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 200,
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

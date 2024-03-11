@@ -152,6 +152,12 @@ class HttpRequestFinance {
         debugPrint(e.toString());
       }
 
+      // if (ex.response?.statusCode == 401 &&
+      //     currentRouteName != '/FinancingLogin') {
+      //   locator<NavigationService>()
+      //       .pushNamed(routeName: FinancingLogin.routeName);
+      // }
+
       HttpHandler? error =
           HttpHandler(statusCode: ex.response?.statusCode).handle(ex.response);
 

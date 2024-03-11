@@ -209,12 +209,12 @@ void main() async {
 }
 
 GetIt locator = GetIt.instance;
+String currentRouteName = '';
 
 class MyApp extends StatelessWidget {
   static const routeName = '/MyApp';
   const MyApp({super.key});
   static DialogService? dialogService = locator<DialogService>();
-  static String currentRouteName = '';
 
   @override
   Widget build(BuildContext context) {

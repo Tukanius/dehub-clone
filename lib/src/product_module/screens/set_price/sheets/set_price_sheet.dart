@@ -3,6 +3,7 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
+import 'package:dehub/utils/currency_formatter.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -185,7 +186,9 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
                           child: FormTextField(
                             onChanged: (value) {
                               setState(() {
-                                customPrice = double.tryParse(value) ?? 0;
+                                customPrice = double.tryParse(
+                                        Utils().parseCurrency(value)) ??
+                                    0;
                               });
                             },
                             inputType: TextInputType.number,
@@ -195,6 +198,7 @@ class _SetPriceSheetState extends State<SetPriceSheet> with AfterLayoutMixin {
                                 ? widget.data.customPrice.toString()
                                 : '',
                             name: 'price',
+                            inputFormatters: [CurrencyInputFormatter()],
                             decoration: const InputDecoration(
                               border: InputBorder.none,
                               fillColor: white,

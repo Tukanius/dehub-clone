@@ -16,4 +16,8 @@ class Utils {
 
     return result;
   }
+
+  String parseCurrency(String value) {
+    return value.replaceAll(RegExp(r'[^0-9.]'), '');
+  }
 }

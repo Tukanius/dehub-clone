@@ -61,25 +61,14 @@ class _InvoiceConditionCardState extends State<InvoiceConditionCard>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        widget.data?.termRule != null
-                            ? Text(
-                                '${widget.data?.termRule}',
-                                style: const TextStyle(
-                                  color: networkColor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )
-                            : widget.data?.name != null
-                                ? Text(
-                                    '${widget.data?.name}',
-                                    style: const TextStyle(
-                                      color: networkColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  )
-                                : Text('${widget.data?.description}'),
+                        Text(
+                          '${widget.data?.termRule ?? widget.data?.name ?? widget.data?.description}',
+                          style: const TextStyle(
+                            color: networkColor,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         const SizedBox(
                           height: 5,
                         ),

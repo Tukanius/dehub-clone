@@ -805,9 +805,9 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Row(
+              Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                     flex: 7,
                     child: Text(
                       'Бараа ажил, үйлчилгээний үнэ:',
@@ -820,8 +820,8 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      '141,000₮',
-                      style: TextStyle(
+                      '${Utils().formatCurrency((widget.lines.fold(0.0, (previousValue, element) => previousValue + element.price!).toString()))}₮',
+                      style: const TextStyle(
                         fontSize: 7,
                       ),
                       textAlign: TextAlign.end,
@@ -832,9 +832,9 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
               const SizedBox(
                 height: 7,
               ),
-              const Row(
+              Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                     flex: 7,
                     child: Text(
                       'Нэмэгдсэн өртгийн албан татвар:',
@@ -847,8 +847,8 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      '12,818₮',
-                      style: TextStyle(
+                      '${Utils().formatCurrency((widget.lines.fold(0.0, (previousValue, element) => previousValue + element.vatAmount!).toString()))}₮',
+                      style: const TextStyle(
                         fontSize: 7,
                       ),
                       textAlign: TextAlign.end,
@@ -859,9 +859,9 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
               const SizedBox(
                 height: 7,
               ),
-              const Row(
+              Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                     flex: 7,
                     child: Text(
                       'Нийслэл хотын албан татвар:',
@@ -874,8 +874,8 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      '0₮',
-                      style: TextStyle(
+                      '${Utils().formatCurrency((widget.lines.fold(0.0, (previousValue, element) => previousValue + element.taxAmount!).toString()))}₮',
+                      style: const TextStyle(
                         fontSize: 7,
                       ),
                       textAlign: TextAlign.end,

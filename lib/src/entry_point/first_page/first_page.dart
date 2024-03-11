@@ -206,26 +206,27 @@ class FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 15),
-                                        child: user.currentBusiness?.type ==
-                                                "SUPPLIER"
-                                            ? const Text(
-                                                "Өнөөдөр хүлээлгэн өгөх",
-                                                style: TextStyle(
-                                                  color: buttonColor,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              )
-                                            : const Text(
-                                                "Өнөөдөр хүлээн авах",
-                                                style: TextStyle(
-                                                  color: buttonColor,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              )),
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 15),
+                                      child: user.currentBusiness?.type ==
+                                              "SUPPLIER"
+                                          ? const Text(
+                                              "Өнөөдөр хүлээлгэн өгөх",
+                                              style: TextStyle(
+                                                color: buttonColor,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            )
+                                          : const Text(
+                                              "Өнөөдөр хүлээн авах",
+                                              style: TextStyle(
+                                                color: buttonColor,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                    ),
                                     const SizedBox(
                                       height: 15,
                                     ),

@@ -15,6 +15,7 @@ import 'package:dehub/src/invoice_module/screens/new_invoice/add_row/invoice_add
 import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/customer_choose.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/harah/harah.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/sector-choose/sector_choose.dart';
+import 'package:dehub/utils/currency_formatter.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -45,7 +46,7 @@ class NewInvoice extends StatefulWidget {
 class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController discountController = TextEditingController();
-  TextEditingController shippingController = TextEditingController();
+  String shippingAmount = '';
   User user = User();
   bool isLoading = true;
   var productKey = GlobalKey();
@@ -72,7 +73,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
       source.sectorChoose(Invoice(branch: widget.data!.senderBranch!));
       source.products = widget.data!.lines!;
       source.additionalLines = widget.data!.additionalLines!;
-      shippingController.text = widget.data!.shippingAmount != 0
+      shippingAmount = widget.data!.shippingAmount != 0
           ? widget.data!.shippingAmount!.toInt().toString()
           : '';
       discountController.text = widget.data!.discountValue!.toInt().toString();
@@ -85,8 +86,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                   : "Сонгох",
           widget.data!.discountAmount.toString(),
           widget.data!.shippingAmount.toString());
-      source.totalAmountInvoice(
-          discountController.text, shippingController.text);
+      source.totalAmountInvoice(discountController.text, shippingAmount);
     }
     setState(() {
       isLoading = false;
@@ -323,7 +323,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                           Navigator.of(context).pushNamed(
                             AddProduct.routeName,
                             arguments: AddProductArguments(
-                              shippingAmount: shippingController.text,
+                              shippingAmount: shippingAmount,
                               discountAmount: discountController.text,
                               businessId: invoice.newInvoice.partner!.id!,
                             ),
@@ -375,12 +375,10 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                             (item) => InvoiceProductCard(
                               readOnly: false,
                               discountAmount: discountController.text,
-                              shippingAmount: shippingController.text,
+                              shippingAmount: shippingAmount,
                               closeClick: () {
-                                invoice.removeCart(
-                                    item,
-                                    discountController.text,
-                                    shippingController.text);
+                                invoice.removeCart(item,
+                                    discountController.text, shippingAmount);
                               },
                               data: item,
                               onClick: () {
@@ -408,7 +406,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                           InvoiceAddRow.routeName,
                           arguments: InvoiceAddRowArguments(
                               discountAmount: discountController.text,
-                              shippingAmount: shippingController.text),
+                              shippingAmount: shippingAmount),
                         );
                       },
                       child: Container(
@@ -433,7 +431,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       children: invoice.additionalLines
                           .map(
                             (e) => InvoiceAdditionalLine(
-                              shippingAmount: shippingController.text,
+                              shippingAmount: shippingAmount,
                               discountAmount: discountController.text,
                               newInvoice: true,
                               index: invoice.additionalLines.indexOf(e),
@@ -468,10 +466,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                           Expanded(
                             child: DropdownButtonFormField(
                               onChanged: (value) {
-                                invoice.discountType(
-                                    value.toString(),
-                                    discountController.text,
-                                    shippingController.text);
+                                invoice.discountType(value.toString(),
+                                    discountController.text, shippingAmount);
                               },
                               dropdownColor: white,
                               borderRadius: BorderRadius.circular(10),
@@ -537,7 +533,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       readOnly: invoice.newInvoice.discountType == "Сонгох",
                       onChanged: (value) {
                         invoice.totalAmountInvoice(
-                            discountController.text, shippingController.text);
+                            discountController.text, shippingAmount);
                       },
                       name: 'discountAmount',
                       inputType: TextInputType.number,
@@ -616,14 +612,20 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                     ),
                     FormTextField(
                       onChanged: (value) {
+                        setState(() {
+                          shippingAmount = Utils().parseCurrency(value);
+                        });
                         invoice.totalAmountInvoice(
-                            discountController.text, shippingController.text);
+                            discountController.text, shippingAmount);
                       },
+                      inputFormatters: [
+                        CurrencyInputFormatter(),
+                      ],
                       textColor: orderColor,
-                      controller: shippingController,
                       name: "shippingAmount",
                       textAlign: TextAlign.end,
-                      inputType: TextInputType.number,
+                      inputType:
+                          const TextInputType.numberWithOptions(decimal: true),
                       decoration: InputDecoration(
                         prefixIcon: Container(
                           padding: const EdgeInsets.only(
@@ -734,9 +736,8 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                     vatAmount: invoice.totalVatAmount,
                                     taxAmount: invoice.totalTaxAmount,
                                     totalAmount: invoice.totalAmount,
-                                    shippingAmount: double.tryParse(
-                                            shippingController.text) ??
-                                        0,
+                                    shippingAmount:
+                                        double.tryParse(shippingAmount) ?? 0,
                                     discountAmount: double.tryParse(
                                             discountController.text) ??
                                         0,
@@ -901,7 +902,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                 ? "AMOUNT"
                 : null,
         discountValue: double.tryParse(discountController.text),
-        shippingAmount: double.tryParse(shippingController.text),
+        shippingAmount: double.tryParse(shippingAmount),
       );
       if (widget.data == null) {
         await InvoiceApi().createInvoice(asdf);

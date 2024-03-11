@@ -1,6 +1,7 @@
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/finance_provider.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/password_recovery/password_recovery.dart';
@@ -16,7 +17,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:after_layout/after_layout.dart';
 
 class FinancingLogin extends StatefulWidget {
-  static const routeName = 'FinancingLogin';
+  static const routeName = '/FinancingLogin';
   const FinancingLogin({super.key});
 
   @override
@@ -51,8 +52,8 @@ class _FinancingLoginState extends State<FinancingLogin> with AfterLayoutMixin {
   afterFirstLayout(BuildContext context) async {
     try {
       final source = Provider.of<FinanceProvider>(context, listen: false);
-      await Provider.of<UserProvider>(context, listen: false)
-          .financeMe(source.url);
+      await Provider.of<GeneralProvider>(context, listen: false)
+          .financeInit(source.url, false);
       await Navigator.of(context).pushNamed(FinancingPage.routeName);
       setState(() {
         isLoading = false;

@@ -34,7 +34,7 @@ class _AddRowState extends State<OrderAddRow> {
   String dropdownValue1 = "Сонгох";
   Order row = Order();
   TextEditingController quantityController = TextEditingController();
-  TextEditingController priceController = TextEditingController();
+  String price = '';
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   double? totalAmount;
 
@@ -53,7 +53,6 @@ class _AddRowState extends State<OrderAddRow> {
 
   @override
   void dispose() {
-    priceController.dispose();
     quantityController.dispose();
     super.dispose();
   }
@@ -62,6 +61,7 @@ class _AddRowState extends State<OrderAddRow> {
     if (fbKey.currentState!.saveAndValidate()) {
       row = Order.fromJson(fbKey.currentState!.value);
       row.unit = dropdownValue1;
+      row.price = double.parse(price);
       row.discountType = dropdownValue == "Хувиар"
           ? "PERCENT"
           : dropdownValue == "Дүнгээр"
@@ -76,7 +76,7 @@ class _AddRowState extends State<OrderAddRow> {
     double price;
     double quantity;
     try {
-      price = double.parse(priceController.text);
+      price = double.parse(this.price);
     } catch (e) {
       price = 0;
     }
@@ -262,11 +262,16 @@ class _AddRowState extends State<OrderAddRow> {
                   height: 3,
                 ),
                 FormTextField(
-                  onChanged: (_) => getTotalAmount(),
-                  controller: priceController,
+                  onChanged: (_) {
+                    getTotalAmount();
+                    setState(() {
+                      price = Utils().parseCurrency(_);
+                    });
+                  },
+                  inputFormatters: [CurrencyInputFormatter()],
                   textColor: orderColor,
                   textAlign: TextAlign.end,
-                  name: 'price',
+                  name: 'priceValue',
                   inputType: TextInputType.number,
                   decoration: const InputDecoration(
                     border: InputBorder.none,
@@ -343,139 +348,139 @@ class _AddRowState extends State<OrderAddRow> {
                 const SizedBox(
                   height: 3,
                 ),
-                Container(
-                  color: white,
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Expanded(
-                        child: Text(
-                          'Хөнгөлөлт',
-                        ),
-                      ),
-                      Expanded(
-                        child: DropdownButtonFormField(
-                          onChanged: (value) {
-                            setState(() {
-                              dropdownValue = "$value";
-                            });
-                          },
-                          dropdownColor: white,
-                          borderRadius: BorderRadius.circular(10),
-                          isExpanded: false,
-                          hint: const SizedBox(
-                            width: 135,
-                            child: Text(
-                              "Сонгох",
-                              style: TextStyle(color: orderColor, fontSize: 14),
-                              textAlign: TextAlign.end,
-                            ),
-                          ),
-                          icon: const Icon(
-                            Icons.arrow_forward_ios,
-                            size: 12,
-                            color: orderColor,
-                          ),
-                          decoration: const InputDecoration(
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 15),
-                            hintStyle:
-                                TextStyle(color: orderColor, fontSize: 14),
-                            filled: true,
-                            fillColor: white,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                          items: list
-                              .map(
-                                (item) => DropdownMenuItem(
-                                  enabled: true,
-                                  value: item,
-                                  child: SizedBox(
-                                    width: 130,
-                                    child: Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Text(
-                                        item,
-                                        style: const TextStyle(
-                                          color: orderColor,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 3,
-                ),
-                FormTextField(
-                  inputFormatters: [
-                    CurrencyInputFormatter(),
-                  ],
-                  maxLenght: dropdownValue == 'Хувиар'
-                      ? 2
-                      : dropdownValue == "Сонгох"
-                          ? 1
-                          : null,
-                  showCounter: false,
-                  textColor: orderColor,
-                  textAlign: TextAlign.end,
-                  name: 'discountValue',
-                  inputType: TextInputType.number,
-                  decoration: InputDecoration(
-                    prefixIcon: Container(
-                      padding: const EdgeInsets.only(
-                        bottom: 15,
-                        left: 15,
-                        top: 15,
-                      ),
-                      child: const Text(
-                        'Хөнгөлөлтийн дүн',
-                        style: TextStyle(color: dark),
-                      ),
-                    ),
-                    suffixIcon: dropdownValue == 'Хувиар'
-                        ? const Icon(
-                            Icons.percent,
-                            size: 15,
-                            color: orderColor,
-                          )
-                        : dropdownValue == 'Дүнгээр'
-                            ? Container(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 15),
-                                child: const Text(
-                                  '₮',
-                                  style: TextStyle(
-                                    color: orderColor,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
-                            : null,
-                    fillColor: white,
-                    filled: true,
-                    contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
-                    hintStyle: const TextStyle(color: orderColor),
-                    hintText: 'Дүн оруулна уу',
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
+                // Container(
+                //   color: white,
+                //   padding: const EdgeInsets.only(left: 15),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       const Expanded(
+                //         child: Text(
+                //           'Хөнгөлөлт',
+                //         ),
+                //       ),
+                //       Expanded(
+                //         child: DropdownButtonFormField(
+                //           onChanged: (value) {
+                //             setState(() {
+                //               dropdownValue = "$value";
+                //             });
+                //           },
+                //           dropdownColor: white,
+                //           borderRadius: BorderRadius.circular(10),
+                //           isExpanded: false,
+                //           hint: const SizedBox(
+                //             width: 135,
+                //             child: Text(
+                //               "Сонгох",
+                //               style: TextStyle(color: orderColor, fontSize: 14),
+                //               textAlign: TextAlign.end,
+                //             ),
+                //           ),
+                //           icon: const Icon(
+                //             Icons.arrow_forward_ios,
+                //             size: 12,
+                //             color: orderColor,
+                //           ),
+                //           decoration: const InputDecoration(
+                //             contentPadding:
+                //                 EdgeInsets.symmetric(horizontal: 15),
+                //             hintStyle:
+                //                 TextStyle(color: orderColor, fontSize: 14),
+                //             filled: true,
+                //             fillColor: white,
+                //             border: OutlineInputBorder(
+                //               borderSide: BorderSide.none,
+                //             ),
+                //             enabledBorder: OutlineInputBorder(
+                //               borderSide: BorderSide.none,
+                //             ),
+                //           ),
+                //           items: list
+                //               .map(
+                //                 (item) => DropdownMenuItem(
+                //                   enabled: true,
+                //                   value: item,
+                //                   child: SizedBox(
+                //                     width: 130,
+                //                     child: Align(
+                //                       alignment: Alignment.centerRight,
+                //                       child: Text(
+                //                         item,
+                //                         style: const TextStyle(
+                //                           color: orderColor,
+                //                           fontSize: 14,
+                //                         ),
+                //                       ),
+                //                     ),
+                //                   ),
+                //                 ),
+                //               )
+                //               .toList(),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 3,
+                // ),
+                // FormTextField(
+                //   inputFormatters: [
+                //     CurrencyInputFormatter(),
+                //   ],
+                //   maxLenght: dropdownValue == 'Хувиар'
+                //       ? 2
+                //       : dropdownValue == "Сонгох"
+                //           ? 1
+                //           : null,
+                //   showCounter: false,
+                //   textColor: orderColor,
+                //   textAlign: TextAlign.end,
+                //   name: 'discountValue',
+                //   inputType: TextInputType.number,
+                //   decoration: InputDecoration(
+                //     prefixIcon: Container(
+                //       padding: const EdgeInsets.only(
+                //         bottom: 15,
+                //         left: 15,
+                //         top: 15,
+                //       ),
+                //       child: const Text(
+                //         'Хөнгөлөлтийн дүн',
+                //         style: TextStyle(color: dark),
+                //       ),
+                //     ),
+                //     suffixIcon: dropdownValue == 'Хувиар'
+                //         ? const Icon(
+                //             Icons.percent,
+                //             size: 15,
+                //             color: orderColor,
+                //           )
+                //         : dropdownValue == 'Дүнгээр'
+                //             ? Container(
+                //                 padding:
+                //                     const EdgeInsets.symmetric(vertical: 15),
+                //                 child: const Text(
+                //                   '₮',
+                //                   style: TextStyle(
+                //                     color: orderColor,
+                //                   ),
+                //                   textAlign: TextAlign.center,
+                //                 ),
+                //               )
+                //             : null,
+                //     fillColor: white,
+                //     filled: true,
+                //     contentPadding: const EdgeInsets.symmetric(
+                //         horizontal: 15, vertical: 15),
+                //     hintStyle: const TextStyle(color: orderColor),
+                //     hintText: 'Дүн оруулна уу',
+                //     border: const OutlineInputBorder(
+                //       borderSide: BorderSide.none,
+                //     ),
+                //   ),
+                // ),
                 Container(
                   margin:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -507,27 +512,27 @@ class _AddRowState extends State<OrderAddRow> {
                     ],
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 3),
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Нийт тоо ширхэг',
-                        style: TextStyle(color: buttonColor),
-                      ),
-                      Text(
-                        '... ширхэг',
-                        style: TextStyle(
-                          color: orderColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // Container(
+                //   margin: const EdgeInsets.only(bottom: 3),
+                //   color: white,
+                //   padding:
+                //       const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                //   child: const Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Text(
+                //         'Нийт тоо ширхэг',
+                //         style: TextStyle(color: buttonColor),
+                //       ),
+                //       Text(
+                //         '... ширхэг',
+                //         style: TextStyle(
+                //           color: orderColor,
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 const SizedBox(
                   height: 70,
                 ),

@@ -265,7 +265,7 @@ class _OnboardTabState extends State<OnboardTab> {
                   fillColor: white,
                   filled: true,
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                   isDense: true,
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,

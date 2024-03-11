@@ -44,7 +44,7 @@ class FinanceApi extends HttpRequestFinance {
   }
 
   Future<General> init(String host, bool handler) async {
-    var res = await get(host, '/general/init', handler: true);
+    var res = await get(host, '/general/init', handler: handler);
     return General.fromJson(res as Map<String, dynamic>);
   }
 

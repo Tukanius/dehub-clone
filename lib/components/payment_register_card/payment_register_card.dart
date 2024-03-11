@@ -1,5 +1,6 @@
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/invoice.dart';
+import 'package:dehub/utils/currency_formatter.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -192,16 +193,20 @@ class _PaymentRegisterCardState extends State<PaymentRegisterCard> {
                     child: FormTextField(
                       textAlign: TextAlign.end,
                       controller: controller,
+                      readOnly: differential() == 0,
                       name: 'asdf',
                       inputType:
                           const TextInputType.numberWithOptions(decimal: true),
                       onChanged: (value) {
                         setState(() {
-                          registered = double.tryParse(value) ?? 0;
+                          registered =
+                              double.tryParse(Utils().parseCurrency(value)) ??
+                                  0;
                         });
-                        widget.data.amount = double.tryParse(value) ?? 0;
+                        widget.data.amount = registered;
                         widget.listenController.changeVariable('asdf');
                       },
+                      inputFormatters: [CurrencyInputFormatter()],
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
@@ -222,17 +227,19 @@ class _PaymentRegisterCardState extends State<PaymentRegisterCard> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      if (widget.data.amountToPay! < differential()) {
-                        setState(() {
-                          registered = widget.data.amountToPay!;
-                          controller.text =
-                              widget.data.amountToPay!.toInt().toString();
-                        });
-                      } else {
-                        setState(() {
-                          registered = differential();
-                          controller.text = differential().toInt().toString();
-                        });
+                      if (differential() > 0) {
+                        if (widget.data.amountToPay! < differential()) {
+                          setState(() {
+                            registered = widget.data.amountToPay!;
+                            controller.text =
+                                widget.data.amountToPay!.toInt().toString();
+                          });
+                        } else {
+                          setState(() {
+                            controller.text = differential().toInt().toString();
+                            registered = differential();
+                          });
+                        }
                       }
                       widget.listenController.changeVariable('asdf');
                     },

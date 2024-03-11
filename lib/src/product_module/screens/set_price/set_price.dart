@@ -12,6 +12,8 @@ import 'package:dehub/src/product_module/screens/set_price/sheets/quantity_sheet
 import 'package:dehub/src/product_module/screens/set_price/sheets/set_price_sheet.dart';
 import 'package:dehub/src/product_module/screens/set_price/sheets/tax_sheet.dart';
 import 'package:dehub/src/product_module/screens/set_price/sheets/vat_sheet.dart';
+import 'package:dehub/utils/currency_formatter.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -49,6 +51,7 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
   General general = General();
   List<InventoryGoods> tiers = [];
   bool isLoading = true;
+  String standartPrice = '';
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -359,9 +362,13 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                         textAlign: TextAlign.end,
                         name: 'standardPrice',
                         onChanged: (value) {
+                          setState(() {
+                            standartPrice = Utils().parseCurrency(value);
+                          });
                           source.product.standardPrice =
-                              double.tryParse(value) ?? 0;
+                              double.tryParse(standartPrice) ?? 0;
                         },
+                        inputFormatters: [CurrencyInputFormatter()],
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           fillColor: white,

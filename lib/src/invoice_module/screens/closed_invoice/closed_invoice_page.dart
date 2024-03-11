@@ -10,6 +10,7 @@ import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/invoice_status.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/src/invoice_module/screens/invoice_detail_page/invoice_detail_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -214,6 +215,17 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
                                                     startAnimation: true,
                                                     index: 0,
                                                     data: item,
+                                                    onClick: () {
+                                                      Navigator.of(context)
+                                                          .pushNamed(
+                                                        InvoiceDetailPage
+                                                            .routeName,
+                                                        arguments:
+                                                            InvoiceDetailPageArguments(
+                                                          id: item.id!,
+                                                        ),
+                                                      );
+                                                    },
                                                   ),
                                                 )
                                                 .toList(),

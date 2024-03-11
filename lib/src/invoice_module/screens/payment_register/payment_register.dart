@@ -13,6 +13,7 @@ import 'package:dehub/providers/invoice_provider.dart';
 import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/invoice_module/screens/sheets/business_select_sheet.dart';
 import 'package:dehub/src/invoice_module/screens/sheets/select_payment_method.dart';
+import 'package:dehub/utils/currency_formatter.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -225,9 +226,12 @@ class PaymentRegisterState extends State<PaymentRegister>
                               name: "totalAmount",
                               onChanged: (value) {
                                 setState(() {
-                                  received = double.tryParse(value) ?? 0;
+                                  received = double.tryParse(
+                                          Utils().parseCurrency(value)) ??
+                                      0;
                                 });
                               },
+                              inputFormatters: [CurrencyInputFormatter()],
                               decoration: const InputDecoration(
                                 hintText: 'Энд оруулна уу',
                                 hintStyle: TextStyle(color: invoiceColor),

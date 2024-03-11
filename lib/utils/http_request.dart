@@ -3,6 +3,7 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/services/dialog.dart';
 import 'package:dehub/services/navigation.dart';
+import 'package:dehub/src/splash/splash_page.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,7 +13,6 @@ import 'package:path_provider/path_provider.dart';
 import 'http_handler.dart';
 import '../main.dart';
 // import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:dehub/src/auth/login_page.dart';
 
 class HttpRequest {
   static const host = 'http://dev-de-dehub.zto.mn/2fa';
@@ -161,8 +161,10 @@ class HttpRequest {
       //   debugPrint(e.toString());
       // }
 
-      if (ex.response?.statusCode == 401) {
-        locator<NavigationService>().pushNamed(routeName: LoginPage.routeName);
+      if (ex.response?.statusCode == 401 &&
+          currentRouteName != '/loginpage' &&
+          currentRouteName != '/splashpage') {
+        locator<NavigationService>().pushNamed(routeName: SplashPage.routeName);
       }
 
       HttpHandler? error =
