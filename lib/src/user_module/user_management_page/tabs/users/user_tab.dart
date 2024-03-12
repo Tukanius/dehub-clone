@@ -106,7 +106,7 @@ class _UsersTabState extends State<UsersTab> with AfterLayoutMixin {
             ),
             body: Refresher(
               refreshController: refreshController,
-              onLoading: onLoading,
+              onLoading: users.rows!.length == users.count ? null : onLoading,
               onRefresh: onRefresh,
               color: userColor,
               child: SingleChildScrollView(

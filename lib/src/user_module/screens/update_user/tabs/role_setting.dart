@@ -98,7 +98,7 @@ class _RoleSettingState extends State<RoleSetting> with AfterLayoutMixin {
             )
           : Refresher(
               refreshController: refreshController,
-              onLoading: onLoading,
+              onLoading: roles.rows!.length == roles.count ? null : onLoading,
               onRefresh: onRefresh,
               color: userColor,
               child: SingleChildScrollView(

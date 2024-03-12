@@ -52,11 +52,11 @@ class _ClientStaffsState extends State<ClientStaffs> with AfterLayoutMixin {
 
   onChange(String query) async {
     if (timer != null) timer!.cancel();
-    timer = Timer(const Duration(milliseconds: 400), () {
+    timer = Timer(const Duration(milliseconds: 400), () async {
       setState(() {
         isLoading = true;
       });
-      list(page, limit, query);
+      await list(page, limit, query);
     });
   }
 
@@ -112,7 +112,9 @@ class _ClientStaffsState extends State<ClientStaffs> with AfterLayoutMixin {
               : Expanded(
                   child: Refresher(
                     refreshController: refreshController,
-                    onLoading: _onLoading,
+                    onLoading: network.rows!.length == network.count
+                        ? null
+                        : _onLoading,
                     onRefresh: _onRefresh,
                     color: networkColor,
                     child: SingleChildScrollView(

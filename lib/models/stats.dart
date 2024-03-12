@@ -5,8 +5,12 @@ class Stats {
   String? name;
   double? amount;
   double? percent;
+  double? changedAmount;
+  double? changedCount;
 
   Stats({
+    this.changedAmount,
+    this.changedCount,
     this.percent,
     this.amount,
     this.image,

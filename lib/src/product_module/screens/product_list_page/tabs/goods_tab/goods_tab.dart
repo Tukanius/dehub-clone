@@ -108,7 +108,9 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
                 )
               : Refresher(
                   refreshController: refreshController,
-                  onLoading: _onLoading,
+                  onLoading: inventory.rows!.length == inventory.count
+                      ? null
+                      : _onLoading,
                   onRefresh: _onRefresh,
                   color: productColor,
                   child: SingleChildScrollView(

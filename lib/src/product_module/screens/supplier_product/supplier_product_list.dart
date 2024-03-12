@@ -243,7 +243,9 @@ class _SupplierProductListState extends State<SupplierProductList>
               : Expanded(
                   child: Refresher(
                     refreshController: refreshController,
-                    onLoading: _onLoading,
+                    onLoading: inventory.rows!.length == inventory.count
+                        ? null
+                        : _onLoading,
                     onRefresh: _onRefresh,
                     color: productColor,
                     child: inventory.rows!.isNotEmpty

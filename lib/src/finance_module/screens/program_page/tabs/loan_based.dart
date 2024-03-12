@@ -71,7 +71,7 @@ class _LoanBasedState extends State<LoanBased> with AfterLayoutMixin {
           )
         : Refresher(
             color: source.currentColor,
-            onLoading: onLoading,
+            onLoading: finance.rows!.length == finance.count ? null : onLoading,
             onRefresh: onRefresh,
             refreshController: refreshController,
             child: SingleChildScrollView(

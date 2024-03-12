@@ -71,7 +71,9 @@ class _SettlementTabState extends State<SettlementTab> with AfterLayoutMixin {
           )
         : Refresher(
             refreshController: refreshController,
-            onLoading: onLoading,
+            onLoading: settlements.rows!.length == settlements.count
+                ? null
+                : onLoading,
             onRefresh: onRefresh,
             color: source.currentColor,
             child: SingleChildScrollView(

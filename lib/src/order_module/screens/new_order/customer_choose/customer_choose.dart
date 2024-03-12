@@ -112,7 +112,9 @@ class _OrderCustomerChooseState extends State<OrderCustomerChoose>
                 Expanded(
                   child: Refresher(
                     refreshController: refreshController,
-                    onLoading: _onLoading,
+                    onLoading: customer.rows!.length == customer.count
+                        ? null
+                        : _onLoading,
                     onRefresh: _onRefresh,
                     color: orderColor,
                     child: SingleChildScrollView(

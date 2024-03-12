@@ -106,18 +106,6 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                   color: black, fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ),
-          Container(
-            margin: const EdgeInsets.only(bottom: 10),
-            height: 120,
-            child: ListView.builder(
-              padding: const EdgeInsets.only(left: 15),
-              scrollDirection: Axis.horizontal,
-              itemCount: reviewData.length,
-              itemBuilder: (context, index) => StatsCard(
-                data: reviewData[index],
-              ),
-            ),
-          ),
           SizedBox(
             height: 100,
             child: ListView(
@@ -157,15 +145,19 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                   svgColor: invoiceColor,
                   svg: 'assets/svg/report_off.svg',
                 ),
-                // DashboardCard(
-                //   onClick: () {},
-                //   boxColor: invoiceColor.withOpacity(0.1),
-                //   padding: 8,
-                //   labelText: 'Буцаалтын нэхэмжлэх',
-                //   svgColor: invoiceColor,
-                //   svg: 'assets/svg/return.svg',
-                // ),
               ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 10),
+            height: 120,
+            child: ListView.builder(
+              padding: const EdgeInsets.only(left: 15),
+              scrollDirection: Axis.horizontal,
+              itemCount: reviewData.length,
+              itemBuilder: (context, index) => StatsCard(
+                data: reviewData[index],
+              ),
             ),
           ),
           const SizedBox(

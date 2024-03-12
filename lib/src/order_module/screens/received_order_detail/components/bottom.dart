@@ -134,7 +134,8 @@ class _BottomState extends State<Bottom> {
                         onSubmit(
                             false, "Татгалзах", (approve) => review(false));
                       },
-                      child: SizedBox(
+                      child: Container(
+                        color: transparent,
                         height: 38,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,7 +161,8 @@ class _BottomState extends State<Bottom> {
                       onTap: () {
                         onSubmit(true, "SO үүсгэх", (approve) => review(true));
                       },
-                      child: SizedBox(
+                      child: Container(
+                        color: transparent,
                         height: 38,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -196,7 +198,8 @@ class _BottomState extends State<Bottom> {
                             onSubmit(false, "Захиалга цуцлах",
                                 (approve) => respond(false));
                           },
-                          child: SizedBox(
+                          child: Container(
+                            color: transparent,
                             height: 38,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -223,7 +226,8 @@ class _BottomState extends State<Bottom> {
                             onSubmit(true, "Захиалга зөвшөөрөх",
                                 (approve) => respond(true));
                           },
-                          child: SizedBox(
+                          child: Container(
+                            color: transparent,
                             height: 38,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -259,7 +263,8 @@ class _BottomState extends State<Bottom> {
                                 onSubmit(false, "Татгалзах",
                                     (approve) => review(false));
                               },
-                              child: SizedBox(
+                              child: Container(
+                                color: transparent,
                                 height: 38,
                                 child: Column(
                                   mainAxisAlignment:
@@ -287,7 +292,8 @@ class _BottomState extends State<Bottom> {
                                 onSubmit(true, "SO үүсгэх",
                                     (approve) => review(true));
                               },
-                              child: SizedBox(
+                              child: Container(
+                                color: transparent,
                                 height: 38,
                                 child: Column(
                                   mainAxisAlignment:
@@ -327,7 +333,8 @@ class _BottomState extends State<Bottom> {
                                       (approve) => respond(false),
                                     );
                                   },
-                                  child: SizedBox(
+                                  child: Container(
+                                    color: transparent,
                                     height: 40,
                                     child: Column(
                                       mainAxisAlignment:
@@ -355,7 +362,8 @@ class _BottomState extends State<Bottom> {
                                     onSubmit(true, "Захиалга зөвшөөрөх",
                                         (approve) => respond(true));
                                   },
-                                  child: SizedBox(
+                                  child: Container(
+                                    color: transparent,
                                     height: 40,
                                     child: Column(
                                       mainAxisAlignment:
@@ -393,7 +401,8 @@ class _BottomState extends State<Bottom> {
                                       (approve) => create(),
                                     );
                                   },
-                                  child: SizedBox(
+                                  child: Container(
+                                    color: transparent,
                                     height: 38,
                                     child: Column(
                                       mainAxisAlignment:

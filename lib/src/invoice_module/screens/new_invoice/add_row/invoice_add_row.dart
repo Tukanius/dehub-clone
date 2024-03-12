@@ -75,14 +75,9 @@ class _AddRowState extends State<InvoiceAddRow> {
   }
 
   void getTotalAmount() {
-    double price;
-    double quantity;
-
-    price = double.tryParse(this.price) ?? 0;
-    quantity = double.tryParse(quantityController.text) ?? 0;
-
     setState(() {
-      totalAmount = quantity * price;
+      totalAmount = (double.tryParse(price) ?? 0) *
+          (double.tryParse(quantityController.text) ?? 0);
     });
   }
 

@@ -1,6 +1,8 @@
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/providers/checkout_provider.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -37,6 +39,7 @@ class OrderProductCard extends StatefulWidget {
 class _OrderProductCardState extends State<OrderProductCard> {
   TextEditingController quantityController = TextEditingController();
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
+  General general = General();
   int newValue = 0;
 
   removeCart(int? quantity) {
@@ -99,8 +102,15 @@ class _OrderProductCardState extends State<OrderProductCard> {
     }
   }
 
+  discountType() {
+    final res = general.discountTypes!
+        .firstWhere((element) => element.code == widget.data.discountType);
+    return res;
+  }
+
   @override
   Widget build(BuildContext context) {
+    general = Provider.of<GeneralProvider>(context, listen: true).orderGeneral;
     if (widget.data.quantity == null) {
       quantityController.text = '0';
     } else {
@@ -261,134 +271,127 @@ class _OrderProductCardState extends State<OrderProductCard> {
               height: 5,
             ),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Нэгж',
-                      style: TextStyle(
-                        color: coolGrey,
-                        fontSize: 12,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Нэгж',
+                        style: TextStyle(
+                          color: coolGrey,
+                          fontSize: 12,
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 3,
-                    ),
-                    widget.data.unit != null
-                        ? Text(
-                            '${widget.data.unit}',
-                            style: const TextStyle(
-                              color: orderColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                      const SizedBox(
+                        height: 3,
+                      ),
+                      widget.data.unit != null
+                          ? Text(
+                              '${widget.data.unit}',
+                              style: const TextStyle(
+                                color: orderColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            )
+                          : const Text(
+                              '-',
+                              style: TextStyle(
+                                color: orderColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
-                          )
-                        : const Text(
-                            '-',
-                            style: TextStyle(
-                              color: orderColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                    const SizedBox(
-                      height: 3,
-                    ),
-                    const Row(
+                      const SizedBox(
+                        height: 3,
+                      ),
+                      Text(
+                        '${widget.data.unitConvertValue} ш',
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Нэгж үнэ',
+                        style: TextStyle(
+                          color: coolGrey,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 3,
+                      ),
+                      Text(
+                        '${Utils().formatCurrency(widget.data.price.toString())}₮',
+                        style: const TextStyle(
+                          color: orderColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      // Text(
+                      //   '${widget.data.unitConvertValue} ш',
+                      //   style: const TextStyle(
+                      //     color: dark,
+                      //     fontSize: 16,
+                      //     fontWeight: FontWeight.w500,
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                ),
+                if (widget.data.discountType != null)
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'Солих',
+                        const Text(
+                          'Хөнгөлөлт',
                           style: TextStyle(
-                            color: orderColor,
+                            color: coolGrey,
                             fontSize: 12,
                           ),
                         ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: orderColor,
-                          size: 12,
+                        const SizedBox(
+                          height: 3,
+                        ),
+                        Text(
+                          '${widget.data.discountValue?.toInt()} ${discountType().symbol}',
+                          style: const TextStyle(
+                            color: orderColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 7),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: grey3.withOpacity(0.3),
+                            ),
+                            borderRadius: BorderRadius.circular(5),
+                            color: const Color(0xffEBFAFA),
+                          ),
+                          child: Text(
+                            discountType().name,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: grey2,
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Нэгж үнэ',
-                      style: TextStyle(
-                        color: coolGrey,
-                        fontSize: 12,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 3,
-                    ),
-                    Text(
-                      '${Utils().formatCurrency(widget.data.price.toString())}₮',
-                      style: const TextStyle(
-                        color: orderColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      '${widget.data.unitConvertValue} ш',
-                      style: const TextStyle(
-                        color: dark,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Хөнгөлөлт',
-                      style: TextStyle(
-                        color: coolGrey,
-                        fontSize: 12,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 3,
-                    ),
-                    const Text(
-                      '0₮',
-                      style: TextStyle(
-                        color: orderColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 7),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: grey3.withOpacity(0.3),
-                        ),
-                        borderRadius: BorderRadius.circular(5),
-                        color: const Color(0xffEBFAFA),
-                      ),
-                      child: const Text(
-                        'дүн',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: grey2,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
               ],
             ),
             const Divider(),
@@ -530,7 +533,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                       )
                     : Expanded(
                         child: Text(
-                          '${widget.data.quantity} ширхэг',
+                          '${widget.data.quantity! * widget.data.unitConvertValue!} ширхэг',
                           style: const TextStyle(
                             color: grey2,
                             fontWeight: FontWeight.w600,

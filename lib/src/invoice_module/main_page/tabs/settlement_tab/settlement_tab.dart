@@ -78,7 +78,9 @@ class _SettlementTabState extends State<SettlementTab> with AfterLayoutMixin {
           )
         : Refresher(
             refreshController: refreshController,
-            onLoading: onLoading,
+            onLoading: settlements.rows!.length == settlements.count
+                ? null
+                : onLoading,
             onRefresh: onRefresh,
             color: invoiceColor,
             child: SingleChildScrollView(
@@ -180,6 +182,7 @@ class _SettlementTabState extends State<SettlementTab> with AfterLayoutMixin {
               Expanded(
                 child: CupertinoDatePicker(
                   initialDateTime: DateTime.parse("$date-01"),
+                  maximumDate: DateTime.now(),
                   mode: CupertinoDatePickerMode.monthYear,
                   onDateTimeChanged: (DateTime newDate) {
                     setState(() {

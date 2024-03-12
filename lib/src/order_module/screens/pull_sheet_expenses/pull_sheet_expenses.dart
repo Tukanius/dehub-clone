@@ -86,22 +86,8 @@ class _PullSheetExpensesState extends State<PullSheetExpenses> {
                       ),
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        children: widget.data.pullSheetLines!
-                            .map(
-                              (e) => OrderGoodsInfo(
-                                data: widget.data.pullSheetLines,
-                              ),
-                            )
-                            .toList(),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
+                  OrderGoodsInfo(
+                    data: widget.data.pullSheetLines,
                   ),
                   Container(
                     margin:

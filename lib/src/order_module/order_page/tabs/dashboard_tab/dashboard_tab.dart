@@ -1,5 +1,7 @@
+import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/dashboard_card/dashboard_card.dart';
 import 'package:dehub/components/pie_chart/pie_chart.dart';
+import 'package:dehub/components/stast_card/stats_card.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/index_provider.dart';
@@ -11,10 +13,9 @@ import 'package:dehub/src/order_module/screens/order_delivery/order_delivery.dar
 import 'package:dehub/src/order_module/screens/order_shipping/order_shipping.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:intl/intl.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class DashboardTab extends StatefulWidget {
   const DashboardTab({super.key});
@@ -25,7 +26,7 @@ class DashboardTab extends StatefulWidget {
 
 class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
   User user = User();
-
+  Order dashboard = Order();
   Map<String, double> data = {};
   List<Order> legend = [];
   Order confirmed = Order();
@@ -46,8 +47,15 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
     pieRed,
   ];
 
+  List<String> svgs = [
+    'assets/svg/income_review.svg',
+    'assets/svg/expenditure_review.svg',
+    'assets/svg/finance_review.svg',
+    'assets/svg/paid_review.svg',
+  ];
+
   @override
-  afterFirstLayout(BuildContext context) {
+  afterFirstLayout(BuildContext context) async {
     Map<String, double> pieData = {};
     pieChart.forEach((key, value) {
       pieData[key] = double.parse(value.toString());
@@ -58,6 +66,12 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
         ),
       );
     });
+    dashboard = await OrderApi().dashboard(
+      DateFormat('yyyy-MM-dd').format(DateTime.now()),
+    );
+    for (var i = 0; i < dashboard.numberSurvey!.length; i++) {
+      dashboard.numberSurvey![i].image = svgs[i];
+    }
     setState(() {
       data = pieData;
       isLoading = false;
@@ -153,9 +167,6 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
               ],
             ),
           ),
-          const SizedBox(
-            height: 25,
-          ),
           isLoading == true
               ? const Center(
                   child: CircularProgressIndicator(
@@ -165,6 +176,21 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      height: 120,
+                      child: ListView.builder(
+                        padding: const EdgeInsets.only(left: 15),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: dashboard.numberSurvey?.length,
+                        itemBuilder: (context, index) => StatsCard(
+                          data: dashboard.numberSurvey![index],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -220,121 +246,95 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                     const SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(left: 15),
-                          child: const Text(
-                            'Захиалгын дүн',
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 15),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 15),
+                      decoration: BoxDecoration(
+                        color: white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Сүүлд хүргэсэн',
                             style: TextStyle(
-                              color: black,
-                              fontSize: 16,
                               fontWeight: FontWeight.w500,
+                              fontSize: 16,
                             ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            index.indexChange(2);
-                          },
-                          child: Container(
-                            color: transparent,
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: const Row(
-                              children: [
-                                Text(
-                                  "Бүгдийг",
-                                  style: TextStyle(
-                                    color: orderColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
+                          const Divider(),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  image: const DecorationImage(
+                                    image: AssetImage(
+                                      'images/golomt.png',
+                                    ),
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 10,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Expanded(
+                                          child: Text(
+                                            'MIAT Mongolian Airlines',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          DateFormat('yyyy-MM-dd')
+                                              .format(DateTime.now()),
+                                          style: const TextStyle(
+                                            color: orderColor,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 3,
+                                    ),
+                                    const Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            'PR-100022',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12,
+                                              color: orderColor,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          '20,000₮',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: orderColor,
-                                  size: 16,
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        const Icon(
-                          Icons.calendar_today,
-                          color: grey,
-                          size: 18,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '${DateFormat("yyyy-MM-dd").format(DateTime.now())} - ',
-                          style: const TextStyle(
-                            color: grey,
-                            fontSize: 12,
-                          ),
-                        ),
-                        const Icon(
-                          Icons.calendar_today,
-                          color: grey,
-                          size: 18,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          DateFormat("yyyy-MM-dd").format(DateTime.now()),
-                          style: const TextStyle(
-                            color: grey,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      height: 180,
-                      padding: const EdgeInsets.all(10),
-                      margin: const EdgeInsets.symmetric(horizontal: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: white,
-                      ),
-                      child: SfCartesianChart(
-                        series: <ChartSeries>[
-                          BarSeries<Order, String>(
-                            borderRadius: BorderRadius.circular(5),
-                            pointColorMapper: (datum, index) =>
-                                datum.name == "Зөвшөөрсөн"
-                                    ? networkDashboard2
-                                    : datum.name == "Илгээсэн"
-                                        ? orderColor
-                                        : grey2,
-                            dataSource: legend,
-                            xValueMapper: (gdp, _) => gdp.profileName,
-                            yValueMapper: (gdp, _) => gdp.count,
-                          )
                         ],
-                        primaryXAxis: CategoryAxis(),
                       ),
                     ),
                     const SizedBox(

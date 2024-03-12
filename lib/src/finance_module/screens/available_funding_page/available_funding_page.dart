@@ -120,7 +120,9 @@ class _AvailableFundingPageState extends State<AvailableFundingPage>
                   )
                 : Refresher(
                     refreshController: refreshController,
-                    onLoading: onLoading,
+                    onLoading: finance.rows!.length == finance.count
+                        ? null
+                        : onLoading,
                     onRefresh: onRefresh,
                     color: source.currentColor,
                     child: SingleChildScrollView(

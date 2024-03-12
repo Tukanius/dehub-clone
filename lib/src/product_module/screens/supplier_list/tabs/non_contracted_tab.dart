@@ -91,7 +91,9 @@ class _NonContractedTabState extends State<NonContractedTab>
             : Expanded(
                 child: Refresher(
                   refreshController: refreshController,
-                  onLoading: _onLoading,
+                  onLoading: suppliers.rows!.length == suppliers.count
+                      ? null
+                      : _onLoading,
                   onRefresh: _onRefresh,
                   color: productColor,
                   child: SingleChildScrollView(

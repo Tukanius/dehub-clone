@@ -1,7 +1,10 @@
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/order.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class DeliveryManagementCard extends StatefulWidget {
   final Function()? onClick;
@@ -19,8 +22,18 @@ class DeliveryManagementCard extends StatefulWidget {
 }
 
 class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
+  General general = General();
+
+  status() {
+    final res = general.deliveryNoteStatus!.firstWhere(
+        (element) => element.code == widget.data.deliveryNoteStatus);
+    return res;
+  }
+
   @override
   Widget build(BuildContext context) {
+    general = Provider.of<GeneralProvider>(context, listen: true).orderGeneral;
+
     return Container(
       padding: const EdgeInsets.all(15),
       color: white,
@@ -113,14 +126,21 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: grey2)),
-                    child: const Text(
-                      'ДРАФТ',
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        color: Color(int.parse(status().color.substring(1, 7),
+                                radix: 16) +
+                            0xff000000),
+                      ),
+                    ),
+                    child: Text(
+                      '${status().name}',
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w500,
-                        color: grey2,
+                        color: Color(int.parse(status().color.substring(1, 7),
+                                radix: 16) +
+                            0xff000000),
                       ),
                     ),
                   ),

@@ -113,7 +113,7 @@ class _PriceTabState extends State<PriceTab> with AfterLayoutMixin {
                   )
                 : const SizedBox(),
             body: Refresher(
-              onLoading: onLoading,
+              onLoading: goods.rows!.length == goods.count ? null : onLoading,
               color: productColor,
               refreshController: refreshController,
               onRefresh: onRefresh,

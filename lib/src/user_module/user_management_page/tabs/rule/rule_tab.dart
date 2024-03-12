@@ -65,7 +65,7 @@ class _RuleTabState extends State<RuleTab> with AfterLayoutMixin {
           )
         : Refresher(
             refreshController: refreshController,
-            onLoading: onLoading,
+            onLoading: rules.rows!.length == rules.count ? null : onLoading,
             onRefresh: onRefresh,
             color: userColor,
             child: SingleChildScrollView(

@@ -94,7 +94,9 @@ class InboxTabState extends State<InboxTab>
             : Expanded(
                 child: Refresher(
                   refreshController: refreshController,
-                  onLoading: _onLoading,
+                  onLoading: invitation.rows!.length == invitation.count
+                      ? null
+                      : _onLoading,
                   onRefresh: _onRefresh,
                   color: networkColor,
                   child: SingleChildScrollView(

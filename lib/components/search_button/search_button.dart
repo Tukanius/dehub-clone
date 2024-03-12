@@ -35,7 +35,7 @@ class _SearchButtonState extends State<SearchButton> {
               margin: const EdgeInsets.only(left: 15, right: 5),
               height: 30,
               child: FormTextField(
-                textColor: widget.textColor ?? invoiceColor,
+                textColor: widget.textColor ?? black,
                 controller: textController,
                 name: 'query',
                 onChanged: (value) {

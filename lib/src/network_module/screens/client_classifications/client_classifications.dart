@@ -107,7 +107,9 @@ class _ClientClassificationsState extends State<ClientClassifications>
                 Expanded(
                   child: Refresher(
                     refreshController: refreshController,
-                    onLoading: _onLoading,
+                    onLoading: business.rows!.length == business.count
+                        ? null
+                        : _onLoading,
                     onRefresh: _onRefresh,
                     color: networkColor,
                     child: SingleChildScrollView(

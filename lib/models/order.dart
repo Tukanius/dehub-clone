@@ -1,3 +1,5 @@
+import 'package:dehub/models/stats.dart';
+
 part '../parts/order.dart';
 
 class Order {
@@ -210,8 +212,14 @@ class Order {
   List<Order>? buyers;
   List<Order>? suppliers;
   bool? isDropshipping;
+  List<Stats>? numberSurvey;
+  double? byPieAmount;
+  List<Order>? recentDelivered;
 
   Order({
+    this.numberSurvey,
+    this.byPieAmount,
+    this.recentDelivered,
     this.isDropshipping,
     this.isLoadable,
     this.buyers,

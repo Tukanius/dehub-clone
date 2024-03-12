@@ -71,7 +71,7 @@ class _SupplyChainState extends State<SupplyChain> with AfterLayoutMixin {
           )
         : Refresher(
             color: source.currentColor,
-            onLoading: onLoading,
+            onLoading: finance.rows!.length == finance.count ? null : onLoading,
             onRefresh: onRefresh,
             refreshController: refreshController,
             child: SingleChildScrollView(

@@ -112,7 +112,8 @@ class _WarehousesTabState extends State<WarehousesTab> with AfterLayoutMixin {
             )
           : Refresher(
               refreshController: refreshController,
-              onLoading: onLoading,
+              onLoading:
+                  warehouse.rows!.length == warehouse.count ? null : onLoading,
               onRefresh: onRefresh,
               color: partnerColor,
               child: SingleChildScrollView(

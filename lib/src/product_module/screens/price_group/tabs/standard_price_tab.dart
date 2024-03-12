@@ -65,7 +65,7 @@ class _StandardPriceTabState extends State<StandardPriceTab>
           )
         : Refresher(
             refreshController: refreshController,
-            onLoading: onLoading,
+            onLoading: prices.rows!.length == prices.count ? null : onLoading,
             onRefresh: onRefresh,
             color: productColor,
             child: SingleChildScrollView(

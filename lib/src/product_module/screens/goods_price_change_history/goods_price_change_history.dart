@@ -95,7 +95,8 @@ class _GoodsPriceChangeHistoryState extends State<GoodsPriceChangeHistory>
             )
           : Refresher(
               refreshController: refreshController,
-              onLoading: onLoading,
+              onLoading:
+                  history.rows!.length == history.count ? null : onLoading,
               onRefresh: onRefresh,
               color: productColor,
               child: SingleChildScrollView(

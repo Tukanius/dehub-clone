@@ -115,7 +115,9 @@ class _AccountSettingState extends State<AccountSetting> with AfterLayoutMixin {
               : Expanded(
                   child: Refresher(
                     refreshController: refreshController,
-                    onLoading: _onLoading,
+                    onLoading: network.rows!.length == network.count
+                        ? null
+                        : _onLoading,
                     onRefresh: _onRefresh,
                     color: networkColor,
                     child: SingleChildScrollView(

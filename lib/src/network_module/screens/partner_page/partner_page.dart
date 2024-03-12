@@ -87,7 +87,9 @@ class _NetworkPartnerPageState extends State<NetworkPartnerPage>
             )
           : Refresher(
               refreshController: refreshController,
-              onLoading: onLoading,
+              onLoading: businessNetwork.rows!.length == businessNetwork.count
+                  ? null
+                  : onLoading,
               onRefresh: onRefresh,
               color: networkColor,
               child: SingleChildScrollView(

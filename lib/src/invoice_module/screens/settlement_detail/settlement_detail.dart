@@ -319,7 +319,8 @@ class _SettlementDetailState extends State<SettlementDetail>
               },
               body: Refresher(
                 color: invoiceColor,
-                onLoading: onLoading,
+                onLoading:
+                    invoices.rows!.length == invoices.count ? null : onLoading,
                 refreshController: refreshController,
                 child: SingleChildScrollView(
                   child: Column(

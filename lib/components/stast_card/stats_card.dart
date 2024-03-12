@@ -20,7 +20,7 @@ class _StatsCardState extends State<StatsCard> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(right: 15),
-      width: 230,
+      width: 250,
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -34,6 +34,7 @@ class _StatsCardState extends State<StatsCard> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SvgPicture.asset(
                 '${widget.data.image}',
@@ -42,18 +43,22 @@ class _StatsCardState extends State<StatsCard> {
               const SizedBox(
                 width: 5,
               ),
-              Text(
-                '${widget.data.name}',
-                style: const TextStyle(
-                  color: grey,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 12,
+              Expanded(
+                child: Text(
+                  '${widget.data.name}',
+                  style: const TextStyle(
+                    color: grey,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                  ),
                 ),
               )
             ],
           ),
           Text(
-            '${Utils().formatCurrency(widget.data.amount.toString())}₮',
+            widget.data.amount != null
+                ? '${Utils().formatCurrency(widget.data.amount.toString())}₮'
+                : '${Utils().formatCurrency(widget.data.changedAmount.toString())}₮',
             style: const TextStyle(
               color: dark,
               fontSize: 16,
@@ -78,15 +83,20 @@ class _StatsCardState extends State<StatsCard> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
                   border: Border.all(
-                    color: widget.data.percent! > 0 ? neonGreen : red,
+                    color: widget.data.changedCount == null ||
+                            widget.data.changedCount! > 0
+                        ? neonGreen
+                        : red,
                   ),
-                  color: widget.data.percent! > 0
+                  color: widget.data.changedCount == null ||
+                          widget.data.changedCount! > 0
                       ? neonGreen.withOpacity(0.3)
                       : red.withOpacity(0.3),
                 ),
                 child: Row(
                   children: [
-                    widget.data.percent! > 0
+                    widget.data.changedCount == null ||
+                            widget.data.changedCount! > 0
                         ? const Icon(
                             Icons.arrow_upward,
                             color: neonGreen,
@@ -101,9 +111,14 @@ class _StatsCardState extends State<StatsCard> {
                       width: 5,
                     ),
                     Text(
-                      '${widget.data.percent?.toInt()}%',
+                      widget.data.changedCount != null
+                          ? '${widget.data.changedCount?.toInt()}%'
+                          : '0%',
                       style: TextStyle(
-                        color: widget.data.percent! > 0 ? neonGreen : red,
+                        color: widget.data.changedCount == null ||
+                                widget.data.changedCount! > 0
+                            ? neonGreen
+                            : red,
                         fontSize: 10,
                       ),
                     )

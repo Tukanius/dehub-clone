@@ -306,7 +306,9 @@ class PaymentRegisterState extends State<PaymentRegister>
                     Expanded(
                       child: Refresher(
                         refreshController: refreshController,
-                        onLoading: onLoading,
+                        onLoading: invoices.rows!.length == invoices.count
+                            ? null
+                            : onLoading,
                         color: invoiceColor,
                         child: SingleChildScrollView(
                           child: Column(

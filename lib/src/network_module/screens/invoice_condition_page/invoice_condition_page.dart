@@ -209,7 +209,9 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
                     Expanded(
                       child: Refresher(
                         refreshController: refreshController,
-                        onLoading: _onLoading,
+                        onLoading: reference.rows!.length == reference.count
+                            ? null
+                            : _onLoading,
                         onRefresh: _onRefresh,
                         color: networkColor,
                         child: SingleChildScrollView(

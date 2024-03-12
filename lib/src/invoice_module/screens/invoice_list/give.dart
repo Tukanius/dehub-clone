@@ -258,7 +258,9 @@ class _GivePageState extends State<GivePage>
               : Expanded(
                   child: Refresher(
                     refreshController: _refreshController,
-                    onLoading: _onLoading,
+                    onLoading: invoice.rows!.length == invoice.count
+                        ? null
+                        : _onLoading,
                     onRefresh: _onRefresh,
                     color: invoiceColor,
                     child: SingleChildScrollView(

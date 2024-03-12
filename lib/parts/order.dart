@@ -9,6 +9,17 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     buyers: json['buyers'] != null
         ? (json['buyers'] as List).map((e) => Order.fromJson(e)).toList()
         : null,
+    numberSurvey: json['numberSurvey'] != null
+        ? (json['numberSurvey'] as List).map((e) => Stats.fromJson(e)).toList()
+        : null,
+    byPieAmount: json['discountValue'] != null
+        ? double.parse(json['discountValue'].toString())
+        : null,
+    recentDelivered: json['recentDelivered'] != null
+        ? (json['recentDelivered'] as List)
+            .map((e) => Order.fromJson(e))
+            .toList()
+        : null,
     suppliers: json['suppliers'] != null
         ? (json['suppliers'] as List).map((e) => Order.fromJson(e)).toList()
         : null,
@@ -492,6 +503,15 @@ Map<String, dynamic> _$OrderToJson(Order instance) {
   if (instance.minQuantity != null) json['minQuantity'] = instance.minQuantity;
   if (instance.isDropshipping != null) {
     json['isDropshipping'] = instance.isDropshipping;
+  }
+  if (instance.numberSurvey != null) {
+    json['numberSurvey'] = instance.numberSurvey;
+  }
+  if (instance.byPieAmount != null) {
+    json['byPieAmount'] = instance.byPieAmount;
+  }
+  if (instance.recentDelivered != null) {
+    json['recentDelivered'] = instance.recentDelivered;
   }
   if (instance.isLoadable != null) json['isLoadable'] = instance.isLoadable;
   if (instance.availableQuantity != null) {

@@ -267,4 +267,10 @@ class OrderApi extends HttpRequest {
         await post('/order/dropshipping', "ORDER", true, data: data.toJson());
     return Order.fromJson(res as Map<String, dynamic>);
   }
+
+  Future<Order> dashboard(String date) async {
+    var res =
+        await get('/dashboard/main?date=$date&pieFilter=WEEK', "ORDER", true);
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
 }

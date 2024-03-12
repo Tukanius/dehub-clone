@@ -108,7 +108,9 @@ class _DeliveryState extends State<Delivery> with AfterLayoutMixin {
               Expanded(
                 child: Refresher(
                   refreshController: refreshController,
-                  onLoading: _onLoading,
+                  onLoading: delivery.rows!.length == delivery.count
+                      ? null
+                      : _onLoading,
                   onRefresh: _onRefresh,
                   color: orderColor,
                   child: SingleChildScrollView(

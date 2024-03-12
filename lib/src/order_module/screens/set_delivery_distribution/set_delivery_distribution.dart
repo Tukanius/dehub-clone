@@ -130,22 +130,6 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                         '${widget.data.order?.receiverBranch?.branchAddress}',
                     secondTextColor: orderColor,
                   ),
-                  const FieldCard(
-                    color: white,
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    labelText: "Бүсчлэл",
-                    secondText: '-',
-                    secondTextColor: orderColor,
-                  ),
-                  const FieldCard(
-                    color: white,
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    labelText: "Чиглэл",
-                    secondText: '-',
-                    secondTextColor: orderColor,
-                  ),
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),

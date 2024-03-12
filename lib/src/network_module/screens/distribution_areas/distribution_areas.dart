@@ -119,7 +119,9 @@ class _DistributionAreasState extends State<DistributionAreas>
               : Expanded(
                   child: Refresher(
                     refreshController: refreshController,
-                    onLoading: _onLoading,
+                    onLoading: network.rows!.length == network.count
+                        ? null
+                        : _onLoading,
                     onRefresh: _onRefresh,
                     color: networkColor,
                     child: SingleChildScrollView(

@@ -23,8 +23,7 @@ class ShipmentDistributionCard extends StatefulWidget {
 }
 
 class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
-  DateTime? date;
-  bool dateValidate = false;
+  DateTime date = DateTime.now();
 
   onSubmit() async {
     Order data = Order();
@@ -253,14 +252,6 @@ class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      setState(() {
-                        if (date == null) {
-                          date = DateTime.now();
-                          setState(() {
-                            dateValidate = false;
-                          });
-                        }
-                      });
                       showCupertinoModalPopup(
                         context: context,
                         builder: (context) {
@@ -307,15 +298,12 @@ class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 3),
                       decoration: BoxDecoration(
-                        border: Border.all(color: dateValidate ? red : grey),
+                        border: Border.all(color: grey),
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Text(
-                        date != null
-                            ? DateFormat("yyyy-MM-dd").format(date!)
-                            : "Өдөр сонгох",
-                        style: TextStyle(
-                            fontSize: 12, color: dateValidate ? red : grey2),
+                        DateFormat("yyyy-MM-dd").format(date),
+                        style: const TextStyle(fontSize: 12, color: grey2),
                       ),
                     ),
                   ),
@@ -331,14 +319,7 @@ class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
           alignment: Alignment.centerRight,
           child: GestureDetector(
             onTap: () {
-              if (date == null) {
-                setState(() {
-                  dateValidate = true;
-                  showCustomDialog(context, 'Өдөр сонгоно уу', false);
-                });
-              } else {
-                onSubmit();
-              }
+              onSubmit();
             },
             child: Container(
               width: 150,

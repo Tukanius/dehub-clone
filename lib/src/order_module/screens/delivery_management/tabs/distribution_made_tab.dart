@@ -84,7 +84,8 @@ class _DistributionMadeTabState extends State<DistributionMadeTab>
               Expanded(
                 child: Refresher(
                   refreshController: refreshController,
-                  onLoading: _onLoading,
+                  onLoading:
+                      order.rows!.length == order.count ? null : _onLoading,
                   onRefresh: _onRefresh,
                   color: orderColor,
                   child: SingleChildScrollView(

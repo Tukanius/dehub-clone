@@ -116,7 +116,8 @@ class _BranchesTabState extends State<BranchesTab> with AfterLayoutMixin {
             )
           : Refresher(
               refreshController: refreshController,
-              onLoading: onLoading,
+              onLoading:
+                  branches.rows!.length == branches.count ? null : onLoading,
               onRefresh: onRefresh,
               color: partnerColor,
               child: SingleChildScrollView(

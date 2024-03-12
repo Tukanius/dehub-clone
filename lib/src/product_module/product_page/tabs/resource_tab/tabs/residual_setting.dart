@@ -66,7 +66,8 @@ class _ResidualSettingState extends State<ResidualSetting>
           )
         : Refresher(
             refreshController: refreshController,
-            onLoading: onLoading,
+            onLoading:
+                adjustment.rows!.length == adjustment.count ? null : onLoading,
             onRefresh: onRefresh,
             color: productColor,
             child: SingleChildScrollView(

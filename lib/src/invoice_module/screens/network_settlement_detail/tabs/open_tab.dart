@@ -77,7 +77,7 @@ class _OpenTabState extends State<OpenTab> with AfterLayoutMixin {
           )
         : Refresher(
             refreshController: refreshController,
-            onLoading: onLoading,
+            onLoading: invoice.rows!.length == invoice.count ? null : onLoading,
             onRefresh: onRefresh,
             color: invoiceColor,
             child: SingleChildScrollView(

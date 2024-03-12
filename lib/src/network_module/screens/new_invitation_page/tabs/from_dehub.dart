@@ -81,7 +81,8 @@ class _FromDehubTabState extends State<FromDehubTab> with AfterLayoutMixin {
           )
         : Refresher(
             refreshController: refreshController,
-            onLoading: _onLoading,
+            onLoading:
+                business.rows!.length == business.count ? null : _onLoading,
             onRefresh: _onRefresh,
             color: networkColor,
             child: SingleChildScrollView(

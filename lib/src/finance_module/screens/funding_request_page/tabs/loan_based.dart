@@ -35,7 +35,7 @@ class _LoanBasedState extends State<LoanBased> with AfterLayoutMixin {
     });
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       limit += 10;
     });
@@ -46,7 +46,7 @@ class _LoanBasedState extends State<LoanBased> with AfterLayoutMixin {
     });
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -81,8 +81,9 @@ class _LoanBasedState extends State<LoanBased> with AfterLayoutMixin {
               Expanded(
                 child: Refresher(
                   refreshController: refreshController,
-                  onLoading: _onLoading,
-                  onRefresh: _onRefresh,
+                  onLoading:
+                      finance.rows!.length == finance.count ? null : onLoading,
+                  onRefresh: onRefresh,
                   color: source.currentColor,
                   child: SingleChildScrollView(
                     child: finance.rows!.isEmpty

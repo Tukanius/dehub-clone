@@ -67,7 +67,8 @@ class _InvestmentTabState extends State<InvestmentTab> with AfterLayoutMixin {
           )
         : Refresher(
             refreshController: refreshController,
-            onLoading: onLoading,
+            onLoading:
+                limitUsage.rows!.length == limitUsage.count ? null : onLoading,
             onRefresh: onRefresh,
             color: source.currentColor,
             child: SingleChildScrollView(

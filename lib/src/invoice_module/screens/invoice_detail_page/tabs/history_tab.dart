@@ -76,7 +76,7 @@ class _HistoryTabState extends State<HistoryTab> with AfterLayoutMixin {
           )
         : Refresher(
             refreshController: refreshController,
-            onLoading: onLoading,
+            onLoading: history.rows!.length == history.count ? null : onLoading,
             onRefresh: onRefresh,
             color: invoiceColor,
             child: history.rows!.isNotEmpty

@@ -89,7 +89,8 @@ class AddBankAccountPageState extends State<AddBankAccountPage>
             )
           : Refresher(
               refreshController: refreshController,
-              onLoading: _onLoading,
+              onLoading:
+                  payment.rows!.length == payment.count ? null : _onLoading,
               onRefresh: _onRefresh,
               color: paymentColor,
               child: payment.rows!.isNotEmpty

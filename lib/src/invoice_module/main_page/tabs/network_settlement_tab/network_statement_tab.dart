@@ -103,7 +103,8 @@ class _NetworkSettlementTabState extends State<NetworkSettlementTab>
             : Expanded(
                 child: Refresher(
                   refreshController: refreshController,
-                  onLoading: _onLoading,
+                  onLoading:
+                      invoice.rows!.length == invoice.count ? null : _onLoading,
                   onRefresh: _onRefresh,
                   color: invoiceColor,
                   child: SingleChildScrollView(

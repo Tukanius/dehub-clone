@@ -76,7 +76,7 @@ class _PendingTabState extends State<PendingTab> with AfterLayoutMixin {
             ),
           )
         : Refresher(
-            onRefresh: onRefresh,
+            onRefresh: invoice.rows!.length == invoice.count ? null : onLoading,
             onLoading: onLoading,
             color: invoiceColor,
             refreshController: refreshController,
