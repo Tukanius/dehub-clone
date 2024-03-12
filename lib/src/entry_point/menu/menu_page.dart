@@ -1,14 +1,12 @@
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/change_password/change_password.dart';
-import 'package:dehub/src/entry_point/menu/suppliers/suppliers_page.dart';
 import 'package:dehub/src/auth/pin_code/new_pin.dart';
 import 'package:dehub/src/auth/pin_code/pin_code.dart';
 import 'package:dehub/src/splash/splash_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class MenuPage extends StatefulWidget {
@@ -105,165 +103,6 @@ class _MenuPageState extends State<MenuPage> {
                                     ),
                                   ],
                                 )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 50, left: 15),
-                            child: const Text(
-                              'Захиалга',
-                              style: TextStyle(
-                                color: white,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 18),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/svg/pie.svg',
-                                      colorFilter: const ColorFilter.mode(
-                                          white, BlendMode.srcIn),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    const Text(
-                                      'Тайлан, дашбоард',
-                                      style:
-                                          TextStyle(fontSize: 14, color: white),
-                                    ),
-                                  ],
-                                ),
-                                const Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 16,
-                                  color: white,
-                                ),
-                              ],
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context)
-                                  .pushNamed(SuppliersPage.routeName);
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 16, horizontal: 18),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        'assets/svg/apartment.svg',
-                                        colorFilter: const ColorFilter.mode(
-                                            white, BlendMode.srcIn),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      user.currentBusiness?.type == "BUYER"
-                                          ? const Text(
-                                              'Ханган нийлүүлэгчид',
-                                              style: TextStyle(
-                                                  fontSize: 14, color: white),
-                                            )
-                                          : const Text(
-                                              'Худалдан авагчид',
-                                              style: TextStyle(
-                                                  fontSize: 14, color: white),
-                                            )
-                                    ],
-                                  ),
-                                  const Icon(
-                                    Icons.arrow_forward_ios,
-                                    size: 16,
-                                    color: white,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 18),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.add_shopping_cart,
-                                        color: white,
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Expanded(
-                                        child: user.currentBusiness?.type ==
-                                                "SUPPLIER"
-                                            ? const Text(
-                                                'Борлуулалтын захиалга',
-                                                style: TextStyle(
-                                                    fontSize: 14, color: white),
-                                              )
-                                            : const Text(
-                                                'Худалдан авалтын захиалга',
-                                                style: TextStyle(
-                                                    fontSize: 14, color: white),
-                                              ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 16,
-                                  color: white,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 18),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/svg/huleen_avsan.svg',
-                                      colorFilter: const ColorFilter.mode(
-                                          white, BlendMode.srcIn),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    const Text(
-                                      'Хүлээн авсан захиалгууд',
-                                      style:
-                                          TextStyle(fontSize: 14, color: white),
-                                    ),
-                                  ],
-                                ),
-                                const Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 16,
-                                  color: white,
-                                ),
                               ],
                             ),
                           ),

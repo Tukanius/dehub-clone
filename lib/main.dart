@@ -169,8 +169,6 @@ import 'package:dehub/src/network_module/screens/distribution_areas/set_distribu
 import 'package:dehub/src/network_module/screens/payment_terms/set_payment_term/set_payment_term.dart';
 import 'package:dehub/src/network_module/screens/payment_terms/set_payment_term_detail/set_payment_term_detail.dart';
 import 'package:dehub/src/network_module/screens/payment_terms/payment_terms.dart';
-import 'package:dehub/src/entry_point/menu/shopping/shopping_page.dart';
-import 'package:dehub/src/entry_point/menu/suppliers/suppliers_page.dart';
 import 'package:dehub/src/product_module/screens/set_price/set_price.dart';
 import 'package:dehub/src/product_module/screens/set_price_group/set_price_group.dart';
 import 'package:dehub/src/product_module/screens/set_warehouse/set_warehouse.dart';
@@ -1316,14 +1314,6 @@ class MyApp extends StatelessWidget {
                   case LinkAccountPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return const LinkAccountPage();
-                    });
-                  case SuppliersPage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return const SuppliersPage();
-                    });
-                  case ShoppingPage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return const ShoppingPage();
                     });
                   case InventoryBrand.routeName:
                     return MaterialPageRoute(builder: (context) {
