@@ -3,7 +3,7 @@ import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/general_provider.dart';
-import 'package:dehub/src/product_module/screens/change_standard_price/components/standard_price_card.dart';
+import 'package:dehub/src/product_module/components/standard_price_card/standard_price_card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';

@@ -1,5 +1,5 @@
 import 'package:dehub/api/finance_api.dart';
-import 'package:dehub/components/avaible_funding_card/requested_funding_card.dart';
+import 'package:dehub/src/finance_module/components/avaible_funding_card/requested_funding_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';

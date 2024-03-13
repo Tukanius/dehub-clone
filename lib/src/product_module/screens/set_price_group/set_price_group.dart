@@ -7,7 +7,7 @@ import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/loading_provider.dart';
-import 'package:dehub/src/product_module/product_page/tabs/price_tab/components/price_setting_card.dart';
+import 'package:dehub/src/product_module/components/price_setting_card/price_setting_card.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';

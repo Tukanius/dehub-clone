@@ -1,7 +1,7 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/controller/listen.dart';
-import 'package:dehub/components/dropshipping_card/dropshipping_card.dart';
+import 'package:dehub/src/order_module/components/dropshipping_card/dropshipping_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/order_module/screens/received_order_detail/received_order_detail.dart';

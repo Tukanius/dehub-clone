@@ -1,7 +1,7 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/not_found/not_found.dart';
-import 'package:dehub/components/partner_cards/partner_card.dart';
+import 'package:dehub/src/network_module/components/partner_cards/partner_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/network_module/screens/partner_page/partner_detail_page/partner_detail_page.dart';

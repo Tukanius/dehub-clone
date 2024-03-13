@@ -1,5 +1,5 @@
 import 'package:dehub/api/order_api.dart';
-import 'package:dehub/components/chat_card/chat_card.dart';
+import 'package:dehub/src/order_module/components/chat_card/chat_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/result.dart';
@@ -39,7 +39,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
   bool isLoading = true;
   User user = User();
   TextEditingController chatController = TextEditingController();
-  Result conversationList = Result(count: 0, rows: []);
+  Result conversations = Result(count: 0, rows: []);
   Order chat = Order();
   bool isSubmit = false;
   RefreshController refreshController = RefreshController();
@@ -49,7 +49,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
-    conversationList =
+    conversations =
         await OrderApi().conversationList('${widget.data.id}', limit);
     get = await OrderApi().deliveryNoteGet(widget.data.id!);
     setState(() {
@@ -61,12 +61,9 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
     setState(() {
       limit += 10;
     });
-    conversationList =
+    conversations =
         await OrderApi().conversationList('${widget.data.id}', limit);
     refreshController.loadComplete();
-    setState(() {
-      isLoading = false;
-    });
   }
 
   void _onRefresh() async {
@@ -74,12 +71,9 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
     setState(() {
       isLoading = true;
     });
-    conversationList =
+    conversations =
         await OrderApi().conversationList('${widget.data.id}', limit);
     refreshController.refreshCompleted();
-    setState(() {
-      isLoading = false;
-    });
   }
 
   void sendChat() async {
@@ -93,7 +87,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
           chat.deliveryNoteId = widget.data.id;
           chat.image = '';
           await OrderApi().createConversation(chat);
-          conversationList =
+          conversations =
               await OrderApi().conversationList('${widget.data.id}', 10);
           chatController.text = '';
           setState(() {
@@ -114,7 +108,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
         chat.deliveryNoteId = widget.data.id;
         chat.image = '';
         await OrderApi().createConversation(chat);
-        conversationList =
+        conversations =
             await OrderApi().conversationList('${widget.data.id}', 10);
         chatController.text = '';
         setState(() {
@@ -171,7 +165,10 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                   Expanded(
                     child: Refresher(
                       refreshController: refreshController,
-                      onLoading: _onLoading,
+                      onLoading:
+                          conversations.rows!.length == conversations.count
+                              ? null
+                              : _onLoading,
                       onRefresh: _onRefresh,
                       color: orderColor,
                       child: SingleChildScrollView(
@@ -547,7 +544,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  if (conversationList.rows!.isNotEmpty)
+                                  if (conversations.rows!.isNotEmpty)
                                     Container(
                                       margin: const EdgeInsets.only(
                                           top: 15, bottom: 5),
@@ -566,7 +563,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                           ),
                                         )
                                       : Column(
-                                          children: conversationList.rows!
+                                          children: conversations.rows!
                                               .map(
                                                 (data) => ChatCard(
                                                   isOwnChat:

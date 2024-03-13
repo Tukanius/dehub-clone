@@ -4,7 +4,7 @@ import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
-import 'package:dehub/components/supplier_card/supplier_card.dart';
+import 'package:dehub/src/invoice_module/components/supplier_card/supplier_card.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/invoice_provider.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/salbar_songoh.dart';

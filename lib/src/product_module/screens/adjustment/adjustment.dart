@@ -11,7 +11,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:dehub/src/product_module/product_page/tabs/resource_tab/components/product_card.dart';
+import 'package:dehub/src/product_module/components/resource_product_card/product_card.dart';
 import 'package:provider/provider.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';

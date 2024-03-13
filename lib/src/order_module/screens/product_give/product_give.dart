@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:dehub/api/order_api.dart';
-import 'package:dehub/components/shipment_product_card/shipment_product_card.dart';
+import 'package:dehub/src/order_module/components/shipment_product_card/shipment_product_card.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/loading_provider.dart';

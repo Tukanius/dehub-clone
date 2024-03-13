@@ -2,7 +2,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/partner_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/src/partner_module/partner_page/tabs/businesses/components/business_card.dart';
+import 'package:dehub/src/partner_module/components/business_card/business_card.dart';
 import 'package:dehub/src/partner_module/screens/update_business/update_business.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,5 @@
 import 'package:dehub/api/payment_api.dart';
-import 'package:dehub/components/bank_account_card/bank_account_card.dart';
+import 'package:dehub/src/payment_module/components/bank_account_card/bank_account_card.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';

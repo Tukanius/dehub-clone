@@ -132,8 +132,8 @@ class _SetPaymentTermCardState extends State<SetPaymentTermCard> {
                         children: [
                           SvgPicture.asset(
                             'assets/svg/note.svg',
-                            colorFilter:
-                                const ColorFilter.mode(networkColor, BlendMode.srcIn),
+                            colorFilter: const ColorFilter.mode(
+                                networkColor, BlendMode.srcIn),
                           ),
                           const SizedBox(
                             width: 5,

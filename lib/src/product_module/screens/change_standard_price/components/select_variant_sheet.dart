@@ -1,7 +1,7 @@
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/src/product_module/screens/change_standard_price/components/standard_price_card.dart';
+import 'package:dehub/src/product_module/components/standard_price_card/standard_price_card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 

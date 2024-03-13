@@ -6,7 +6,7 @@ import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/src/invoice_module/screens/invoice_transaction/components/history_card.dart';
+import 'package:dehub/src/invoice_module/components/invoice_transaction_card/history_card.dart';
 import 'package:dehub/src/invoice_module/screens/transaction_detail/transaction_detail.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';

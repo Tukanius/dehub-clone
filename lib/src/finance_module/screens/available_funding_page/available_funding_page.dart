@@ -11,7 +11,7 @@ import 'package:dehub/api/finance_api.dart';
 import 'package:dehub/models/result.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:dehub/components/refresher/refresher.dart';
-import 'package:dehub/components/avaible_funding_card/avaible_funding_card.dart';
+import 'package:dehub/src/finance_module/components/avaible_funding_card/avaible_funding_card.dart';
 import 'package:dehub/src/finance_module/screens/avaible_funding_detail/avaible_funding_detail_page.dart';
 
 class AvailableFundingPageArguments {

@@ -5,7 +5,7 @@ import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/loading_provider.dart';
-import 'package:dehub/src/partner_module/partner_page/tabs/warehouses/components/warehouse_card.dart';
+import 'package:dehub/src/partner_module/components/warehouse_card/warehouse_card.dart';
 import 'package:dehub/src/partner_module/screens/warehouse_create/warehouse_create.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';

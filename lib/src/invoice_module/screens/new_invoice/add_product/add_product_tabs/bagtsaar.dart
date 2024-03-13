@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/controller/listen.dart';
-import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
+import 'package:dehub/src/invoice_module/components/invoice_product_card/invoice_product_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/invoice_provider.dart';

@@ -8,7 +8,7 @@ import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/product_module/screens/change_standard_price/components/select_variant_sheet.dart';
-import 'package:dehub/src/product_module/screens/change_standard_price/components/standard_price_card.dart';
+import 'package:dehub/src/product_module/components/standard_price_card/standard_price_card.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';

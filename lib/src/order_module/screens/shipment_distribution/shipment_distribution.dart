@@ -1,6 +1,6 @@
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
-import 'package:dehub/components/shipment_distribution_card/shipment_distribution_card.dart';
+import 'package:dehub/src/order_module/components/shipment_distribution_card/shipment_distribution_card.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';

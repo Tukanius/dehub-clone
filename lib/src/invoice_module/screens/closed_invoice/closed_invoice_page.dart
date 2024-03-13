@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:dehub/components/invoice_card/invoice_card.dart';
+import 'package:dehub/src/invoice_module/components/invoice_card/invoice_card.dart';
 import 'package:dehub/api/invoice_api.dart';
-import 'package:dehub/components/invoice_empty/invoice_empty.dart';
+import 'package:dehub/src/invoice_module/components/invoice_empty/invoice_empty.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/general.dart';

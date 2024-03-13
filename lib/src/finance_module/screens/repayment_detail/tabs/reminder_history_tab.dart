@@ -1,7 +1,7 @@
 import 'package:dehub/api/finance_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/providers/finance_provider.dart';
-import 'package:dehub/src/finance_module/screens/repayment_detail/components/reminder_history_card.dart';
+import 'package:dehub/src/finance_module/components/reminder_history_card/reminder_history_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';

@@ -1,5 +1,5 @@
 import 'package:dehub/components/not_found/not_found.dart';
-import 'package:dehub/components/staffs_card/staffs_card.dart';
+import 'package:dehub/src/network_module/components/staffs_card/staffs_card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 

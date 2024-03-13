@@ -2,7 +2,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/controller/listen.dart';
-import 'package:dehub/components/order_branch_card/order_branch_card.dart';
+import 'package:dehub/src/order_module/components/order_branch_card/order_branch_card.dart';
 import 'package:dehub/models/result.dart';
 // import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';

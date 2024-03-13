@@ -1,6 +1,6 @@
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/controller/listen.dart';
-import 'package:dehub/components/order_customer_card/order_customer_card.dart';
+import 'package:dehub/src/order_module/components/order_customer_card/order_customer_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';

@@ -215,8 +215,17 @@ class Order {
   List<Stats>? numberSurvey;
   double? byPieAmount;
   List<Order>? recentDelivered;
+  List<Order>? byPie;
+
+  double? ordersCount;
+  double? amount;
+  String? color;
 
   Order({
+    this.color,
+    this.amount,
+    this.ordersCount,
+    this.byPie,
     this.numberSurvey,
     this.byPieAmount,
     this.recentDelivered,

@@ -1,5 +1,5 @@
 import 'package:dehub/api/order_api.dart';
-import 'package:dehub/components/delivery_management_card/delivery_management_card.dart';
+import 'package:dehub/src/order_module/components/delivery_management_card/delivery_management_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';

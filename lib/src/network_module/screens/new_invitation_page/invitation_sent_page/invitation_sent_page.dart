@@ -1,7 +1,7 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
-import 'package:dehub/components/partner_cards/business_suggest_card.dart';
+import 'package:dehub/src/network_module/components/partner_cards/business_suggest_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/business.dart';
 import 'package:dehub/models/result.dart';

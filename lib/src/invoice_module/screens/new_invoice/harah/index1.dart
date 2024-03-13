@@ -1,4 +1,4 @@
-import 'package:dehub/components/goods_info_card/goods_info_card.dart';
+import 'package:dehub/src/invoice_module/components/goods_info_card/goods_info_card.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';

@@ -5,7 +5,7 @@ import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/result.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:dehub/components/not_found/not_found.dart';
-import 'package:dehub/components/partner_cards/invitation_card.dart';
+import 'package:dehub/src/network_module/components/partner_cards/invitation_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/src/network_module/screens/invitation_detail_page/invitation_detail_page.dart';

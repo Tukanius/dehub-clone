@@ -5,7 +5,7 @@ import 'package:dehub/src/product_module/screens/set_price/set_price.dart';
 import 'package:dehub/src/product_module/screens/set_warehouse/set_warehouse.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:dehub/api/inventory_api.dart';
-import 'package:dehub/components/goods_card/goods_card.dart';
+import 'package:dehub/src/product_module/components/goods_card/goods_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';

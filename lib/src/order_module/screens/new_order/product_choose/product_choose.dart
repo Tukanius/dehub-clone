@@ -4,7 +4,7 @@ import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/close_button/close_button.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
-import 'package:dehub/components/order_product_card/order_product_card.dart';
+import 'package:dehub/src/order_module/components/order_product_card/order_product_card.dart';
 import 'package:dehub/components/scaffold_messenger/scaffold_messenger.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/result.dart';

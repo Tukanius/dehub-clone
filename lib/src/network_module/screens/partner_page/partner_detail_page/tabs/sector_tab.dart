@@ -1,4 +1,4 @@
-import 'package:dehub/components/branch_card/branch_card.dart';
+import 'package:dehub/src/network_module/components/branch_card/branch_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';

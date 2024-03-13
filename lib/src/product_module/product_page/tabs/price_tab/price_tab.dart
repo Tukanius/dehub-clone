@@ -4,7 +4,7 @@ import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/src/product_module/product_page/tabs/price_tab/components/price_setting_card.dart';
+import 'package:dehub/src/product_module/components/price_setting_card/price_setting_card.dart';
 import 'package:dehub/src/product_module/screens/set_price_group/set_price_group.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';

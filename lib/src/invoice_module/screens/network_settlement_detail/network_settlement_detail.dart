@@ -1,6 +1,6 @@
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/models/invoice.dart';
-import 'package:dehub/src/invoice_module/screens/network_settlement_detail/components/partner_card.dart';
+import 'package:dehub/src/invoice_module/components/network_settlement_card/partner_card.dart';
 import 'package:dehub/src/invoice_module/screens/network_settlement_detail/tabs/closed_tab.dart';
 import 'package:dehub/src/invoice_module/screens/network_settlement_detail/tabs/pending_tab.dart';
 import 'package:dehub/src/invoice_module/screens/network_settlement_detail/tabs/open_tab.dart';

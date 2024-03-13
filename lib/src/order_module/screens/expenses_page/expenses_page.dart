@@ -1,5 +1,5 @@
 import 'package:dehub/api/order_api.dart';
-import 'package:dehub/components/goods_info_card/order_goods_info_card.dart';
+import 'package:dehub/src/order_module/components/goods_info_card/order_goods_info_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';

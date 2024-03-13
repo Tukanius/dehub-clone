@@ -9,12 +9,20 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     buyers: json['buyers'] != null
         ? (json['buyers'] as List).map((e) => Order.fromJson(e)).toList()
         : null,
+    byPie: json['byPie'] != null
+        ? (json['byPie'] as List).map((e) => Order.fromJson(e)).toList()
+        : null,
     numberSurvey: json['numberSurvey'] != null
         ? (json['numberSurvey'] as List).map((e) => Stats.fromJson(e)).toList()
         : null,
-    byPieAmount: json['discountValue'] != null
-        ? double.parse(json['discountValue'].toString())
+    byPieAmount: json['byPieAmount'] != null
+        ? double.parse(json['byPieAmount'].toString())
         : null,
+    ordersCount: json['ordersCount'] != null
+        ? double.parse(json['ordersCount'].toString())
+        : null,
+    amount:
+        json['amount'] != null ? double.parse(json['amount'].toString()) : null,
     recentDelivered: json['recentDelivered'] != null
         ? (json['recentDelivered'] as List)
             .map((e) => Order.fromJson(e))
@@ -57,6 +65,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         ? json['supplierBusinessId'] as String
         : null,
     salesType: json['salesType'] != null ? json['salesType'] as String : null,
+    color: json['color'] != null ? json['color'] as String : null,
     type: json['type'] != null ? json['type'] as String : null,
     isDefault: json['isDefault'] != null ? json['isDefault'] as bool : null,
     isDropshipping:
@@ -501,11 +510,18 @@ Map<String, dynamic> _$OrderToJson(Order instance) {
   Map<String, dynamic> json = {};
 
   if (instance.minQuantity != null) json['minQuantity'] = instance.minQuantity;
+  if (instance.color != null) json['color'] = instance.color;
   if (instance.isDropshipping != null) {
     json['isDropshipping'] = instance.isDropshipping;
   }
   if (instance.numberSurvey != null) {
     json['numberSurvey'] = instance.numberSurvey;
+  }
+  if (instance.ordersCount != null) {
+    json['ordersCount'] = instance.ordersCount;
+  }
+  if (instance.amount != null) {
+    json['amount'] = instance.amount;
   }
   if (instance.byPieAmount != null) {
     json['byPieAmount'] = instance.byPieAmount;
@@ -856,6 +872,7 @@ Map<String, dynamic> _$OrderToJson(Order instance) {
   if (instance.partnerId != null) json['partnerId'] = instance.partnerId;
   if (instance.regNumber != null) json['regNumber'] = instance.regNumber;
   if (instance.partnerName != null) json['partnerName'] = instance.partnerName;
+  if (instance.byPie != null) json['byPie'] = instance.byPie;
   if (instance.partnerNameEng != null) {
     json['partnerNameEng'] = instance.partnerNameEng;
   }

@@ -3,7 +3,7 @@ import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
-import 'package:dehub/components/sector_card/sector_card.dart';
+import 'package:dehub/src/invoice_module/components/sector_card/sector_card.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/invoice_provider.dart';

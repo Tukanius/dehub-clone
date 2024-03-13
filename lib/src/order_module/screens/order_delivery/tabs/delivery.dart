@@ -1,4 +1,4 @@
-import 'package:dehub/components/delivery_card/delivery_card.dart';
+import 'package:dehub/src/order_module/components/delivery_card/delivery_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';

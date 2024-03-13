@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/search_button/search_button.dart';
-import 'package:dehub/components/set_payment_term_card/set_payment_term_card.dart';
+import 'package:dehub/src/network_module/components/set_payment_term_card/set_payment_term_card.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/src/network_module/screens/payment_terms/set_payment_term_detail/set_payment_term_detail.dart';

@@ -9,7 +9,7 @@ import 'package:dehub/models/result.dart';
 import 'package:dehub/src/user_module/screens/create_user/create_user.dart';
 import 'package:dehub/src/user_module/screens/invitation_send/invitation_send.dart';
 import 'package:dehub/src/user_module/screens/update_user/update_user_page.dart';
-import 'package:dehub/src/user_module/user_management_page/tabs/users/components/user_card.dart';
+import 'package:dehub/src/user_module/components/user_card/user_card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';

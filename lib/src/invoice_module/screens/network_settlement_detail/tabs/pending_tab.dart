@@ -4,7 +4,7 @@ import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/result.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import '../components/invoice_card.dart';
+import '../../../components/network_settlement_card/invoice_card.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_transaction/invoice_transaction.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';

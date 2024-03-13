@@ -1,6 +1,6 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/order_api.dart';
-import 'package:dehub/components/back_order_card/back_order_card.dart';
+import 'package:dehub/src/order_module/components/back_order_card/back_order_card.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/result.dart';

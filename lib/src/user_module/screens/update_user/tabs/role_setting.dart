@@ -7,7 +7,7 @@ import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/src/user_module/screens/role_assign/role_assign.dart';
-import 'package:dehub/src/user_module/screens/update_user/components/role_card.dart';
+import 'package:dehub/src/user_module/components/role_card/role_card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -1,7 +1,7 @@
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/field_card/field_card.dart';
-import 'package:dehub/components/invoice_additional_line/invoice_additional_line.dart';
-import 'package:dehub/components/invoice_product_card/invoice_product_card.dart';
+import 'package:dehub/src/invoice_module/components/invoice_additional_line/invoice_additional_line.dart';
+import 'package:dehub/src/invoice_module/components/invoice_product_card/invoice_product_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';

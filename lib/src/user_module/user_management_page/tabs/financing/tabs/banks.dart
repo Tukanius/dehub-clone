@@ -1,6 +1,6 @@
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/src/user_module/screens/finance_request/finance_request.dart';
-import 'package:dehub/src/user_module/user_management_page/tabs/financing/components/bank_card.dart';
+import 'package:dehub/src/user_module/components/bank_card/bank_card.dart';
 import 'package:flutter/material.dart';
 import 'package:dehub/api/user_api.dart';
 import 'package:dehub/models/result.dart';

@@ -1,7 +1,7 @@
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
-import 'package:dehub/components/order_product_card/order_product_card.dart';
+import 'package:dehub/src/order_module/components/order_product_card/order_product_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/order.dart';

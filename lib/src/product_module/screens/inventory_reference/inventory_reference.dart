@@ -1,4 +1,4 @@
-import 'package:dehub/components/inventory_reference_card/inventory_reference_card.dart';
+import 'package:dehub/src/product_module/components/inventory_reference_card/inventory_reference_card.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/adjustment_note/adjustment_note.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/brand/brand.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/classification/inventory_classification.dart';

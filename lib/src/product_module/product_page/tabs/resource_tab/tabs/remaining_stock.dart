@@ -4,7 +4,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:after_layout/after_layout.dart';
-import '../components/product_card.dart';
+import '../../../../components/resource_product_card/product_card.dart';
 
 class RemainingStock extends StatefulWidget {
   const RemainingStock({super.key});

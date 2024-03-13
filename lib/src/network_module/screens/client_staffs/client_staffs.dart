@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
-import 'package:dehub/components/client_staff_card/client_staff_card.dart';
+import 'package:dehub/src/network_module/components/client_staff_card/client_staff_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';

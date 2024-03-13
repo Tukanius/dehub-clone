@@ -3,7 +3,7 @@ import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/finance_provider.dart';
-import 'package:dehub/src/finance_module/financing_page/tabs/settlement_tab/components/settlement_card.dart';
+import 'package:dehub/src/finance_module/components/settlement_card/settlement_card.dart';
 import 'package:dehub/src/finance_module/screens/settlement_respond/settlement_respond.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';

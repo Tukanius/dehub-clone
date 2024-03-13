@@ -2,11 +2,11 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart' as chart;
 
-class PieChart extends StatefulWidget {
+class NetworkPieChart extends StatefulWidget {
   final Map<String, double> data;
   final List<Color> colorList;
   final List legend;
-  const PieChart({
+  const NetworkPieChart({
     super.key,
     required this.legend,
     required this.colorList,
@@ -14,10 +14,10 @@ class PieChart extends StatefulWidget {
   });
 
   @override
-  State<PieChart> createState() => PieChartState();
+  State<NetworkPieChart> createState() => NetworkPieChartState();
 }
 
-class PieChartState extends State<PieChart> {
+class NetworkPieChartState extends State<NetworkPieChart> {
   @override
   Widget build(BuildContext context) {
     return Container(

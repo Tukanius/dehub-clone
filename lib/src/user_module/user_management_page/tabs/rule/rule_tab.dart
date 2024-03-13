@@ -3,7 +3,7 @@ import 'package:dehub/api/user_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/src/user_module/user_management_page/tabs/rule/components/approval_rule_card.dart';
+import 'package:dehub/src/user_module/components/approval_rule_card/approval_rule_card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';

@@ -1,6 +1,6 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
-import 'package:dehub/components/partner_cards/invitation_card.dart';
+import 'package:dehub/src/network_module/components/partner_cards/invitation_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/network_module/screens/sent_invitation_detail/sent_invitation_detail_page.dart';

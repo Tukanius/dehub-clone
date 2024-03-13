@@ -3,7 +3,7 @@ import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/components/inventory_supplier_card/inventory_supplier_card.dart';
+import 'package:dehub/src/product_module/components/inventory_supplier_card/inventory_supplier_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/src/product_module/screens/supplier_product/supplier_product_list.dart';
 import 'package:flutter/material.dart';

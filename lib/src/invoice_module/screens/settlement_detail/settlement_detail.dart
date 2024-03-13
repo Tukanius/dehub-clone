@@ -8,7 +8,7 @@ import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/src/invoice_module/screens/settlement_detail/components/settlement_invoice_card.dart';
+import 'package:dehub/src/invoice_module/components/settlement_invoice_card/settlement_invoice_card.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';

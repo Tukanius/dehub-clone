@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:dehub/components/product_card/grid_view_product_card.dart';
-import 'package:dehub/components/product_card/product_card.dart';
+import 'package:dehub/src/product_module/components/product_card/grid_view_product_card.dart';
+import 'package:dehub/src/product_module/components/product_card/product_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';

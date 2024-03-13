@@ -7,7 +7,7 @@ import 'package:dehub/src/invoice_module/screens/invoice_transaction/invoice_tra
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import '../components/invoice_card.dart';
+import '../../../components/network_settlement_card/invoice_card.dart';
 import 'package:after_layout/after_layout.dart';
 
 class ClosedTab extends StatefulWidget {

@@ -2,7 +2,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
-import 'package:dehub/components/payment_register_card/payment_register_card.dart';
+import 'package:dehub/src/invoice_module/components/payment_register_card/payment_register_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';

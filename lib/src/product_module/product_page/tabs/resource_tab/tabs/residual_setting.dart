@@ -1,7 +1,7 @@
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/src/product_module/product_page/tabs/resource_tab/components/adjustment_card.dart';
+import 'package:dehub/src/product_module/components/adjustment_card/adjustment_card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';

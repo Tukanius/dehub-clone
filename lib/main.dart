@@ -75,21 +75,17 @@ import 'package:dehub/src/invoice_module/screens/invoice_list/give.dart';
 import 'package:dehub/src/network_module/screens/category_page/add_category.dart';
 import 'package:dehub/src/network_module/screens/direction_page/add_direction.dart';
 import 'package:dehub/src/network_module/screens/direction_page/direction_detail_page.dart';
-import 'package:dehub/src/network_module/screens/direction_page/direction_page.dart';
 import 'package:dehub/src/network_module/screens/invoice_condition_page/invoice_condition_detail_page.dart';
 import 'package:dehub/src/network_module/screens/invoice_condition_page/invoice_condition_page.dart';
 import 'package:dehub/src/network_module/screens/invoice_condition_page/new_condition_page.dart';
 import 'package:dehub/src/network_module/screens/category_page/category_detail_page.dart';
-import 'package:dehub/src/network_module/screens/category_page/category_page.dart';
 import 'package:dehub/src/network_module/screens/rank_page/add_rank.dart';
 import 'package:dehub/src/network_module/screens/rank_page/rank_detail_page.dart';
-import 'package:dehub/src/network_module/screens/rank_page/rank_page.dart';
 import 'package:dehub/src/network_module/screens/reference_information_page/reference_information_page.dart';
 import 'package:dehub/src/network_module/screens/partner_page/partner_detail_page/partner_detail_page.dart';
 import 'package:dehub/src/network_module/screens/partner_page/partner_page.dart';
 import 'package:dehub/src/network_module/screens/zoning_page/add_zoning.dart';
 import 'package:dehub/src/network_module/screens/zoning_page/zoning_detail_page.dart';
-import 'package:dehub/src/network_module/screens/zoning_page/zoning_page.dart';
 import 'package:dehub/src/network_module/screens/new_invitation_page/invitation_sent_page/invitation_sent_page.dart';
 import 'package:dehub/src/network_module/screens/new_invitation_page/new_invitation_page.dart';
 import 'package:dehub/src/network_module/screens/invitation_detail_page/invitation_detail_page.dart';
@@ -767,10 +763,6 @@ class MyApp extends StatelessWidget {
                       return ClientClassificationDetail(
                         id: arguments.id,
                       );
-                    });
-                  case ZoningPage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return const ZoningPage();
                     });
                   case ClientClassifications.routeName:
                     return MaterialPageRoute(builder: (context) {
@@ -1754,10 +1746,6 @@ class MyApp extends StatelessWidget {
                         data: arguments.data,
                       );
                     });
-                  case CategoryPage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return const CategoryPage();
-                    });
                   case CategoryDetailPage.routeName:
                     CategoryDetailPageArguments arguments =
                         settings.arguments as CategoryDetailPageArguments;
@@ -1783,10 +1771,6 @@ class MyApp extends StatelessWidget {
                         id: arguments.id,
                       );
                     });
-                  case DirectionPage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return const DirectionPage();
-                    });
                   case RankDetailPage.routeName:
                     RankDetailPageArguments arguments =
                         settings.arguments as RankDetailPageArguments;
@@ -1798,10 +1782,6 @@ class MyApp extends StatelessWidget {
                   case CheckBiometric.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return const CheckBiometric();
-                    });
-                  case RankPage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return const RankPage();
                     });
                   case ProductListPage.routeName:
                     return MaterialPageRoute(builder: (context) {

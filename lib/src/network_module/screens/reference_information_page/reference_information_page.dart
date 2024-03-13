@@ -1,7 +1,7 @@
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/dashboard_card/dashboard_card.dart';
-import 'package:dehub/components/reference_information_card/reference_information_card.dart';
+import 'package:dehub/src/network_module/components/reference_information_card/reference_information_card.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';

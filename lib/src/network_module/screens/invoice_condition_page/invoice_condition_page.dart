@@ -2,7 +2,7 @@ import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/controller/listen.dart';
-import 'package:dehub/components/invoice_condition_card/invoice_condition_card.dart';
+import 'package:dehub/src/product_module/components/invoice_condition_card/invoice_condition_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/reference_information.dart';
 import 'package:dehub/models/result.dart';

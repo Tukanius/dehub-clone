@@ -15,7 +15,7 @@ import 'package:dehub/src/partner_module/screens/branch_create/tabs/sheets/suppl
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import '../components/picture_form.dart';
+import '../../../components/picture_form/picture_form.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';

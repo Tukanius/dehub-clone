@@ -3,7 +3,7 @@ import 'package:dehub/api/user_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/user_module/screens/finance_role_assign/finance_role_assign.dart';
-import 'package:dehub/src/user_module/user_management_page/tabs/financing/components/finance_role_card.dart';
+import 'package:dehub/src/user_module/components/finance_role_card/finance_role_card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 

@@ -2,7 +2,7 @@ import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/src/invoice_module/screens/invoice_detail_page/components/history_card.dart';
+import 'package:dehub/src/invoice_module/components/history_card/history_card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';

@@ -4,7 +4,7 @@ import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/partner_provider.dart';
-import 'package:dehub/src/partner_module/screens/branch_create/components/picture_form.dart';
+import 'package:dehub/src/partner_module/components/picture_form/picture_form.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';

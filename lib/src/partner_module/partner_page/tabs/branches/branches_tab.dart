@@ -2,7 +2,7 @@ import 'package:dehub/api/partner_api.dart';
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/src/partner_module/screens/branch_create/branch_create.dart';
-import './components/branch_card.dart';
+import '../../../components/branch_card/branch_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';

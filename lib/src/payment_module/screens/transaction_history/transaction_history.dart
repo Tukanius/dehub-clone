@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/api/payment_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
-import 'package:dehub/components/transaction_information_card/transaction_information_card.dart';
+import 'package:dehub/src/payment_module/components/transaction_information_card/transaction_information_card.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/payment_module/screens/transaction_detail_page/transaction_detail_page.dart';
 import 'package:after_layout/after_layout.dart';

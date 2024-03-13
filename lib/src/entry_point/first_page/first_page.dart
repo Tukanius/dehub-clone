@@ -1,9 +1,8 @@
 import 'package:dehub/api/invoice_api.dart';
-import 'package:dehub/components/invoice_card/invoice_card.dart';
+import 'package:dehub/src/invoice_module/components/invoice_card/invoice_card.dart';
 import 'package:dehub/components/modules_card/modules_card.dart';
 import 'package:dehub/components/schedule_card/schedule_card.dart';
 // import 'package:dehub/components/start_dialog/start_dialog.dart';
-import 'package:dehub/components/take_give_card/take_give_card.dart';
 import 'package:dehub/components/tutorial_card/tutorial_card.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
@@ -229,49 +228,6 @@ class FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                     ),
                                     const SizedBox(
                                       height: 15,
-                                    ),
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: [
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          isLoading == true
-                                              ? Row(
-                                                  children: [1, 2, 3, 4, 5, 6]
-                                                      .map(
-                                                        (e) => Container(
-                                                          margin:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  horizontal:
-                                                                      3),
-                                                          child: SkeletonAvatar(
-                                                            style:
-                                                                SkeletonAvatarStyle(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          100),
-                                                              height: 50,
-                                                              width: 50,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      )
-                                                      .toList(),
-                                                )
-                                              : Row(
-                                                  children: filtered
-                                                      .map(
-                                                        (e) =>
-                                                            const TakeGiveCard(),
-                                                      )
-                                                      .toList(),
-                                                ),
-                                        ],
-                                      ),
                                     ),
                                   ],
                                 ),
