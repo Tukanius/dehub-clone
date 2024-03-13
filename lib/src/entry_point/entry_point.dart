@@ -90,7 +90,9 @@ class _EntryPointState extends State<EntryPoint>
                           animationController.reverse();
                         });
                       },
-                      child: const FirstPage(),
+                      child: FirstPage(
+                        isSideMenuClosed: isSideMenuClosed,
+                      ),
                     ),
                   ),
                 ),

@@ -66,7 +66,6 @@ import 'package:dehub/src/debt_module/debt_page/debt_page.dart';
 import 'package:dehub/src/auth/enter_phone_page/enter_phone_page.dart';
 import 'package:dehub/src/order_module/screens/expenses_page/expenses_page.dart';
 import 'package:dehub/src/finance_module/financing_page/financing_page.dart';
-import 'package:dehub/src/entry_point/first_page/first_page.dart';
 import 'package:dehub/src/finance_module/screens/funding_request_detail/funding_request_detail_page.dart';
 import 'package:dehub/src/invoice_module/screens/closed_invoice/closed_invoice_page.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/add_product/add_product.dart';
@@ -731,10 +730,6 @@ class MyApp extends StatelessWidget {
                   case NetworkPartnerPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return const NetworkPartnerPage();
-                    });
-                  case FirstPage.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return const FirstPage();
                     });
                   case NewInvitationPage.routeName:
                     return MaterialPageRoute(builder: (context) {

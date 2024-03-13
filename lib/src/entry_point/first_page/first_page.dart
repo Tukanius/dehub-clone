@@ -22,8 +22,10 @@ import 'package:skeletons/skeletons.dart';
 
 class FirstPage extends StatefulWidget {
   static const routeName = '/firstpage';
+  final bool isSideMenuClosed;
   const FirstPage({
     super.key,
+    required this.isSideMenuClosed,
   });
 
   @override
@@ -81,317 +83,331 @@ class FirstPageState extends State<FirstPage> with AfterLayoutMixin {
       onPopInvoked: (shouldPop) async {
         await showMyDialog();
       },
-      child: Scaffold(
-        backgroundColor: backgroundColor,
-        body: SingleChildScrollView(
-          physics: const ClampingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
+      child: Stack(
+        children: [
+          Scaffold(
+            backgroundColor: backgroundColor,
+            body: SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.only(bottom: 50, top: 30),
-                    width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(15),
-                        bottomRight: Radius.circular(15),
-                      ),
-                      color: buttonColor,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(top: 15),
-                          padding: const EdgeInsets.only(top: 15, bottom: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Row(
+                  Stack(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(bottom: 50, top: 30),
+                        width: MediaQuery.of(context).size.width,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(15),
+                            bottomRight: Radius.circular(15),
+                          ),
+                          color: buttonColor,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(top: 15),
+                              padding:
+                                  const EdgeInsets.only(top: 15, bottom: 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  SvgPicture.asset(
-                                    'assets/svg/notification.svg',
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/svg/notification.svg',
+                                      ),
+                                      const SizedBox(
+                                        width: 15,
+                                      ),
+                                      Container(
+                                        margin:
+                                            const EdgeInsets.only(right: 20),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.of(context).pushNamed(
+                                              ProfilePage.routeName,
+                                              arguments: ProfilePageArguments(
+                                                index: 0,
+                                              ),
+                                            );
+                                          },
+                                          child: Container(
+                                            decoration: const BoxDecoration(),
+                                            child: user.avatar == null ||
+                                                    user.avatar == ''
+                                                ? const CircleAvatar(
+                                                    backgroundColor: grey,
+                                                    radius: 14,
+                                                    backgroundImage: AssetImage(
+                                                        'images/avatar.png'),
+                                                  )
+                                                : CircleAvatar(
+                                                    backgroundColor: grey,
+                                                    radius: 14,
+                                                    backgroundImage:
+                                                        NetworkImage(
+                                                            '${user.avatar}'),
+                                                  ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            Text(
+                              user.currentBusiness?.partner?.businessName ??
+                                  "${user.lastName?[0]}. ${user.firstName}",
+                              style: const TextStyle(
+                                color: white,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "${user.currentBusiness?.type ?? user.loginType}: ",
+                                  style: const TextStyle(
+                                    color: Color(0xffFEBC11),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  user.currentBusiness?.profileName ?? "-",
+                                  style: const TextStyle(
+                                    color: white,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      const ModulesCard(),
+                    ],
+                  ),
+                  user.currentBusiness?.type == "BUYER" ||
+                          user.currentBusiness?.type == "SUPPLIER"
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            filtered.isEmpty
+                                ? const SizedBox()
+                                : Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15),
+                                    color: white,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 15),
+                                          child: user.currentBusiness?.type ==
+                                                  "SUPPLIER"
+                                              ? const Text(
+                                                  "Өнөөдөр хүлээлгэн өгөх",
+                                                  style: TextStyle(
+                                                    color: buttonColor,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                )
+                                              : const Text(
+                                                  "Өнөөдөр хүлээн авах",
+                                                  style: TextStyle(
+                                                    color: buttonColor,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                        ),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              color: white,
+                              padding: const EdgeInsets.symmetric(vertical: 15),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                            'assets/svg/dot-calendar.svg'),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        const Text(
+                                          '2023-03-23',
+                                          style: TextStyle(
+                                            color: buttonColor,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   const SizedBox(
-                                    width: 15,
+                                    height: 12,
                                   ),
-                                  Container(
-                                    margin: const EdgeInsets.only(right: 20),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context).pushNamed(
-                                          ProfilePage.routeName,
-                                          arguments: ProfilePageArguments(
-                                            index: 0,
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        decoration: const BoxDecoration(),
-                                        child: user.avatar == null ||
-                                                user.avatar == ''
-                                            ? const CircleAvatar(
-                                                backgroundColor: grey,
-                                                radius: 14,
-                                                backgroundImage: AssetImage(
-                                                    'images/avatar.png'),
-                                              )
-                                            : CircleAvatar(
-                                                backgroundColor: grey,
-                                                radius: 14,
-                                                backgroundImage: NetworkImage(
-                                                    '${user.avatar}'),
-                                              ),
+                                  const Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      ScheduleCard(
+                                        count: 5,
+                                        labelText: 'Нээлттэй нэхэмжлэх',
                                       ),
-                                    ),
+                                      ScheduleCard(
+                                        count: 15,
+                                        labelText: 'Батлах хүлээж буй',
+                                      ),
+                                      ScheduleCard(
+                                        count: 345,
+                                        labelText: 'Хугацаа хэтэрсэн',
+                                      ),
+                                    ],
                                   ),
                                 ],
-                              )
-                            ],
-                          ),
-                        ),
-                        Text(
-                          user.currentBusiness?.partner?.businessName ??
-                              "${user.lastName?[0]}. ${user.firstName}",
-                          style: const TextStyle(
-                            color: white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "${user.currentBusiness?.type ?? user.loginType}: ",
-                              style: const TextStyle(
-                                color: Color(0xffFEBC11),
-                                fontWeight: FontWeight.w500,
                               ),
                             ),
-                            Text(
-                              user.currentBusiness?.profileName ?? "-",
-                              style: const TextStyle(
-                                color: white,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  const ModulesCard(),
-                ],
-              ),
-              user.currentBusiness?.type == "BUYER" ||
-                      user.currentBusiness?.type == "SUPPLIER"
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        filtered.isEmpty
-                            ? const SizedBox()
-                            : Container(
-                                width: MediaQuery.of(context).size.width,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 15),
-                                color: white,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 15),
-                                      child: user.currentBusiness?.type ==
-                                              "SUPPLIER"
-                                          ? const Text(
-                                              "Өнөөдөр хүлээлгэн өгөх",
-                                              style: TextStyle(
-                                                color: buttonColor,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            )
-                                          : const Text(
-                                              "Өнөөдөр хүлээн авах",
-                                              style: TextStyle(
-                                                color: buttonColor,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                    ),
-                                    const SizedBox(
-                                      height: 15,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          color: white,
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          child: Column(
-                            children: [
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 15),
-                                child: Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                        'assets/svg/dot-calendar.svg'),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    const Text(
-                                      '2023-03-23',
+                            if (invoice.rows!.isNotEmpty)
+                              Column(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 15, horizontal: 15),
+                                    child: const Text(
+                                      'Батлах хүлээж буй',
                                       style: TextStyle(
                                         color: buttonColor,
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              const Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  ScheduleCard(
-                                    count: 5,
-                                    labelText: 'Нээлттэй нэхэмжлэх',
                                   ),
-                                  ScheduleCard(
-                                    count: 15,
-                                    labelText: 'Батлах хүлээж буй',
-                                  ),
-                                  ScheduleCard(
-                                    count: 345,
-                                    labelText: 'Хугацаа хэтэрсэн',
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Text(
+                                      DateFormat("yyyy-MM-dd")
+                                          .format(DateTime.now()),
+                                      style: const TextStyle(
+                                        color: blue,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                        ),
-                        if (invoice.rows!.isNotEmpty)
-                          Column(
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            isLoading == true
+                                ? SkeletonAvatar(
+                                    style: SkeletonAvatarStyle(
+                                      height: 100,
+                                      width: MediaQuery.of(context).size.width,
+                                    ),
+                                  )
+                                : Column(
+                                    children: invoice.rows!
+                                        .map(
+                                          (e) => InvoiceCard(
+                                            startAnimation: startAnimation,
+                                            index: invoice.rows!.indexOf(e),
+                                            data: e,
+                                          ),
+                                        )
+                                        .toList(),
+                                  ),
+                            const SizedBox(
+                              height: 50,
+                            ),
+                          ],
+                        )
+                      : Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Column(
                             children: [
-                              Container(
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 15),
+                              const Text(
+                                'DeHUB платформд тавтай морил!',
+                                style: TextStyle(
+                                  color: buttonColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              SvgPicture.asset('assets/svg/new-player.svg'),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text(
+                                'Та партнерийн тохиргоогоо бүрэн гүйцэт хийнэ үү',
+                                style: TextStyle(color: buttonColor),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width,
                                 child: const Text(
-                                  'Батлах хүлээж буй',
+                                  'Заавартай танилцах',
                                   style: TextStyle(
                                     color: buttonColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
                                   ),
+                                  textAlign: TextAlign.left,
                                 ),
                               ),
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 15),
-                                child: Text(
-                                  DateFormat("yyyy-MM-dd")
-                                      .format(DateTime.now()),
-                                  style: const TextStyle(
-                                    color: blue,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const TutorialCard(),
+                              const SizedBox(
+                                height: 50,
                               ),
                             ],
                           ),
-                        const SizedBox(
-                          height: 15,
                         ),
-                        isLoading == true
-                            ? SkeletonAvatar(
-                                style: SkeletonAvatarStyle(
-                                  height: 100,
-                                  width: MediaQuery.of(context).size.width,
-                                ),
-                              )
-                            : Column(
-                                children: invoice.rows!
-                                    .map(
-                                      (e) => InvoiceCard(
-                                        startAnimation: startAnimation,
-                                        index: invoice.rows!.indexOf(e),
-                                        data: e,
-                                      ),
-                                    )
-                                    .toList(),
-                              ),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                      ],
-                    )
-                  : Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Column(
-                        children: [
-                          const Text(
-                            'DeHUB платформд тавтай морил!',
-                            style: TextStyle(
-                              color: buttonColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          SvgPicture.asset('assets/svg/new-player.svg'),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const Text(
-                            'Та партнерийн тохиргоогоо бүрэн гүйцэт хийнэ үү',
-                            style: TextStyle(color: buttonColor),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: const Text(
-                              'Заавартай танилцах',
-                              style: TextStyle(
-                                color: buttonColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const TutorialCard(),
-                          const SizedBox(
-                            height: 50,
-                          ),
-                        ],
-                      ),
-                    ),
-            ],
+                ],
+              ),
+            ),
           ),
-        ),
+          if (widget.isSideMenuClosed == false)
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              color: transparent,
+            ),
+        ],
       ),
     );
   }
