@@ -4,6 +4,7 @@ import 'package:dehub/api/auth_api.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/auth/camera_page/camera_page.dart';
 import 'package:dehub/src/profile/components/card.dart';
 import 'package:dehub/src/profile/components/editing_information.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -83,8 +84,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
               style: TextStyle(color: grey2, fontFamily: 'Montserrat'),
             ),
             onPressed: () {
-              Navigator.of(context).pop();
-              getImage(ImageSource.camera);
+              // Navigator.of(context).pop();
+              // getImage(ImageSource.camera);
+              Navigator.of(context).pushNamed(CameraPage.routeName);
             },
           ),
         ],

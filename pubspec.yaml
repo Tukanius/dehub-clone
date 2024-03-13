@@ -67,6 +67,7 @@ dependencies:
   flutter_file_downloader: ^1.1.4
   carousel_slider: ^4.2.1
   path_provider: ^2.1.2
+  camera: ^0.10.5+9
 
 dev_dependencies:
   flutter_test:

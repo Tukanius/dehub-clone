@@ -10,6 +10,7 @@ import 'package:dehub/providers/order_provider.dart';
 import 'package:dehub/providers/partner_provider.dart';
 import 'package:dehub/providers/user_module_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/auth/camera_page/camera_page.dart';
 import 'package:dehub/src/auth/password_recovery/password_recovery.dart';
 import 'package:dehub/src/entry_point/finance_entry/finance_entry.dart';
 import 'package:dehub/src/finance_module/screens/available_funding_page/available_funding_page.dart';
@@ -287,6 +288,10 @@ class MyApp extends StatelessWidget {
                   case PriceGroupPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return const PriceGroupPage();
+                    });
+                  case CameraPage.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return const CameraPage();
                     });
                   case OrderCustomers.routeName:
                     return MaterialPageRoute(builder: (context) {
