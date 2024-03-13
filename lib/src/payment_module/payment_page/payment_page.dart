@@ -38,7 +38,6 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
     HomePageTab(),
     DashboardTab(),
     AddBankAccountPage(),
-    Text('1'),
   ];
 
   void ontappedItem(int index) {
@@ -58,10 +57,10 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
       appBar: AppBar(
         leadingWidth: 100,
         elevation: 0,
-        backgroundColor: selectedIndex != 3 ? backgroundColor : paymentColor,
-        surfaceTintColor: selectedIndex != 3 ? backgroundColor : paymentColor,
-        leading: CustomBackButton(
-          color: selectedIndex != 3 ? paymentColor : backgroundColor,
+        backgroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
+        leading: const CustomBackButton(
+          color: paymentColor,
         ),
         title: selectedIndex == 0
             ? FormTextField(
@@ -84,8 +83,9 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                   child: SvgPicture.asset(
                     'assets/svg/grid.svg',
                     colorFilter: ColorFilter.mode(
-                        selectedIndex != 3 ? paymentColor : white,
-                        BlendMode.srcIn),
+                      selectedIndex != 3 ? paymentColor : white,
+                      BlendMode.srcIn,
+                    ),
                   ),
                 )
               : selectedIndex == 2
@@ -97,16 +97,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                             .pushNamed(LinkAccountPage.routeName);
                       },
                     )
-                  : selectedIndex == 3
-                      ? AddButton(
-                          color: paymentColor,
-                          addColor: white,
-                          onClick: () {
-                            Navigator.of(context)
-                                .pushNamed(LinkAccountPage.routeName);
-                          },
-                        )
-                      : const SizedBox(),
+                  : const SizedBox(),
         ],
       ),
       body: isLoading == true
@@ -206,31 +197,31 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
             ),
             label: '',
           ),
-          BottomNavigationBarItem(
-            icon: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: selectedIndex == 3 ? paymentColor : white,
-                  ),
-                  padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
-                  child: SvgPicture.asset(
-                    'assets/svg/grid2.svg',
-                    colorFilter: ColorFilter.mode(
-                        selectedIndex == 3 ? white : paymentColor,
-                        BlendMode.srcIn),
-                  ),
-                ),
-                if (selectedIndex != 3)
-                  const Text(
-                    'Тооцоо',
-                    style: TextStyle(color: paymentColor, fontSize: 12),
-                  ),
-              ],
-            ),
-            label: '',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Column(
+          //     children: [
+          //       Container(
+          //         decoration: BoxDecoration(
+          //           shape: BoxShape.circle,
+          //           color: selectedIndex == 3 ? paymentColor : white,
+          //         ),
+          //         padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
+          //         child: SvgPicture.asset(
+          //           'assets/svg/grid2.svg',
+          //           colorFilter: ColorFilter.mode(
+          //               selectedIndex == 3 ? white : paymentColor,
+          //               BlendMode.srcIn),
+          //         ),
+          //       ),
+          //       if (selectedIndex != 3)
+          //         const Text(
+          //           'Тооцоо',
+          //           style: TextStyle(color: paymentColor, fontSize: 12),
+          //         ),
+          //     ],
+          //   ),
+          //   label: '',
+          // ),
         ],
       ),
     );

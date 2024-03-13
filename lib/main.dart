@@ -1,3 +1,4 @@
+import 'package:dehub/components/full_picture/full_picture.dart';
 import 'package:dehub/providers/checkout_provider.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
@@ -878,6 +879,24 @@ class MyApp extends StatelessWidget {
 
                         return SlideTransition(
                           position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
+                  case FullPicture.routeName:
+                    FullPictureArguments arguments =
+                        settings.arguments as FullPictureArguments;
+                    return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          FullPicture(
+                        pictures: arguments.pictures,
+                        initialPage: arguments.initialPage,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          // position: animation.drive(tween),
+                          opacity: animation,
                           child: child,
                         );
                       },

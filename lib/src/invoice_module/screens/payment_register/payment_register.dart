@@ -63,10 +63,10 @@ class PaymentRegisterState extends State<PaymentRegister>
       invoices = await InvoiceApi().historyInvoiceList(
         ResultArguments(filter: filter, offset: offset),
       );
-      loading.loading(false);
       setState(() {
         selected = [];
       });
+      loading.loading(false);
     } catch (e) {
       loading.loading(false);
     }

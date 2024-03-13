@@ -10,8 +10,6 @@ class Test extends StatefulWidget {
 }
 
 class _TestState extends State<Test> with AfterLayoutMixin {
-  bool isExpanded = false;
-
   @override
   afterFirstLayout(BuildContext context) async {}
 
@@ -20,40 +18,76 @@ class _TestState extends State<Test> with AfterLayoutMixin {
     return Scaffold(
       backgroundColor: grey,
       appBar: AppBar(),
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          AnimatedPositioned(
-            curve: Curves.ease,
-            duration: const Duration(milliseconds: 500),
-            bottom: isExpanded ? 50 : 100,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: black,
-              ),
-              height: 500,
-              width: isExpanded ? 350 : 300,
-            ),
-          ),
-          AnimatedPositioned(
-            curve: Curves.ease,
-            bottom: isExpanded ? 150 : 100,
-            duration: const Duration(milliseconds: 500),
-            child: GestureDetector(
-              onTap: () {},
-              onPanUpdate: onPanUpdate,
-              child: Container(
-                height: 500,
-                width: 300,
+      body: const SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            Card(),
+            Card(),
+            Card(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Card extends StatefulWidget {
+  const Card({super.key});
+
+  @override
+  State<Card> createState() => _CardState();
+}
+
+class _CardState extends State<Card> {
+  bool isExpanded = false;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          isExpanded = !isExpanded;
+        });
+      },
+      child: SizedBox(
+        height: 600,
+        width: 350,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            AnimatedPositioned(
+              curve: Curves.ease,
+              duration: const Duration(milliseconds: 500),
+              bottom: isExpanded ? 80 : 100,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: white,
+                  color: black,
+                ),
+                height: 400,
+                width: isExpanded ? 350 : 300,
+              ),
+            ),
+            AnimatedPositioned(
+              curve: Curves.ease,
+              bottom: isExpanded ? 130 : 100,
+              duration: const Duration(milliseconds: 500),
+              child: GestureDetector(
+                onTap: () {},
+                onPanUpdate: onPanUpdate,
+                child: Container(
+                  height: 400,
+                  width: 300,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: white,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

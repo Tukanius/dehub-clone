@@ -77,7 +77,7 @@ class _ClosedTabState extends State<ClosedTab> with AfterLayoutMixin {
           )
         : Refresher(
             refreshController: refreshController,
-            onLoading: onLoading,
+            onLoading: invoice.count == invoice.rows!.length ? null : onLoading,
             onRefresh: onRefresh,
             color: invoiceColor,
             child: SingleChildScrollView(

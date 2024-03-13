@@ -1,7 +1,7 @@
 import 'package:dehub/components/field_card/field_card.dart';
+import 'package:dehub/components/full_picture/full_picture.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:dehub/widgets/dialog_manager/image_dialog.dart';
 import 'package:flutter/material.dart';
 
 class BasicInformationTab extends StatefulWidget {
@@ -345,12 +345,20 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
                         ),
                         child: GestureDetector(
                           onTap: () {
-                            showDialog(
-                              barrierDismissible: true,
-                              context: context,
-                              builder: (context) {
-                                return ImageDialog(link: e);
-                              },
+                            // showDialog(
+                            //   barrierDismissible: true,
+                            //   context: context,
+                            //   builder: (context) {
+                            //     return ImageDialog(link: e);
+                            //   },
+                            // );
+                            Navigator.of(context).pushNamed(
+                              FullPicture.routeName,
+                              arguments: FullPictureArguments(
+                                pictures: widget.data.detailImages!,
+                                initialPage:
+                                    widget.data.detailImages!.indexOf(e),
+                              ),
                             );
                           },
                           child: ClipRRect(
