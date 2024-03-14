@@ -109,15 +109,7 @@ class _PaymentApprovalPageState extends State<PaymentApprovalPage> {
         backgroundColor: invoiceColor,
         surfaceTintColor: invoiceColor,
         elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: white,
-          ),
-        ),
+        iconTheme: const IconThemeData(color: white),
       ),
       body: SingleChildScrollView(
         child: Column(

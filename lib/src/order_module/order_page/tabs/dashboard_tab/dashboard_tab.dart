@@ -4,7 +4,7 @@ import 'package:dehub/components/pie_chart/order_pie_chart.dart';
 import 'package:dehub/components/stats_card/stats_card.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
-import 'package:dehub/providers/index_provider.dart';
+import 'package:dehub/providers/main_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/order_module/screens/customers/customers.dart';
 import 'package:dehub/src/order_module/screens/delivery_management/delivery_management.dart';
@@ -73,7 +73,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
-    final index = Provider.of<IndexProvider>(context, listen: true);
+    final index = Provider.of<MainProvider>(context, listen: true);
     return NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
         return <Widget>[

@@ -1,6 +1,7 @@
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/utils/http_request.dart';
+import 'package:dio/dio.dart';
 
 class OrderApi extends HttpRequest {
   Future<Result> networkList(ResultArguments resultArguments) async {
@@ -271,6 +272,17 @@ class OrderApi extends HttpRequest {
   Future<Order> dashboard(String date) async {
     var res =
         await get('/dashboard/main?date=$date&pieFilter=WEEK', "ORDER", true);
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
+
+  upload(String path) async {
+    String fileName = path.split('/').last;
+    FormData formData = FormData.fromMap({
+      'file': await MultipartFile.fromFile(path, filename: fileName),
+    });
+    var res =
+        await post('/media/file/order/upload', "MEDIA", true, data: formData);
+
     return Order.fromJson(res as Map<String, dynamic>);
   }
 }

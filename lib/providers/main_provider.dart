@@ -1,8 +1,11 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 
-class IndexProvider extends ChangeNotifier {
+class MainProvider extends ChangeNotifier {
   int selectedIndex = 1;
   int newProductIndex = 0;
+  File? file;
+
   indexChange(index) {
     selectedIndex = index;
     notifyListeners();
@@ -10,6 +13,16 @@ class IndexProvider extends ChangeNotifier {
 
   newProductIndexChange(int index) {
     newProductIndex = index;
+    notifyListeners();
+  }
+
+  image(File data) {
+    file = data;
+    notifyListeners();
+  }
+
+  clearData() {
+    file = null;
     notifyListeners();
   }
 }

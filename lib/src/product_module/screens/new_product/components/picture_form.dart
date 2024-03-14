@@ -1,3 +1,5 @@
+import 'package:dehub/providers/main_provider.dart';
+import 'package:dehub/src/auth/camera_page/camera_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
@@ -23,26 +25,20 @@ class _ProductPictureFormState extends State<ProductPictureForm> {
   XFile? bannerImage;
   final ImagePicker imagePicker = ImagePicker();
 
-  getImage(ImageSource imageSource, bool isProfile) async {
+  getImage(ImageSource imageSource) async {
     XFile? file = await picker.pickImage(
         source: imageSource, imageQuality: 40, maxHeight: 1024);
     final source = Provider.of<InventoryProvider>(context, listen: false);
     if (file != null) {
-      if (isProfile == true) {
-        setState(() {
-          isLoading = true;
-        });
-        user = await InventoryApi().upload(file);
-        source.profileImage(user.url.toString());
-        setState(() {
-          source.profileValidate = false;
-          isLoading = false;
-        });
-      } else {
-        banner = await InventoryApi().upload(bannerImage!);
-        Provider.of<InventoryProvider>(context, listen: false)
-            .bannerImages(banner.url.toString());
-      }
+      setState(() {
+        isLoading = true;
+      });
+      user = await InventoryApi().upload(file.path);
+      source.profileImage(user.url.toString());
+      setState(() {
+        source.profileValidate = false;
+        isLoading = false;
+      });
     }
   }
 
@@ -50,7 +46,7 @@ class _ProductPictureFormState extends State<ProductPictureForm> {
     final List<XFile> selectedImages = await imagePicker.pickMultiImage();
     if (selectedImages.isNotEmpty) {
       for (var i = 0; i < selectedImages.length; i++) {
-        banner = await InventoryApi().upload(selectedImages[i]);
+        banner = await InventoryApi().upload(selectedImages[i].path);
         Provider.of<InventoryProvider>(context, listen: false)
             .bannerImages(banner.url.toString());
       }
@@ -58,8 +54,21 @@ class _ProductPictureFormState extends State<ProductPictureForm> {
   }
 
   @override
+  void initState() {
+    final image = Provider.of<MainProvider>(context, listen: false);
+    final source = Provider.of<InventoryProvider>(context, listen: false);
+    image.addListener(() async {
+      user = await InventoryApi().upload(image.file!.path);
+      source.profileImage(user.url!);
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final source = Provider.of<InventoryProvider>(context, listen: true);
+    Provider.of<MainProvider>(context, listen: true);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -190,7 +199,7 @@ class _ProductPictureFormState extends State<ProductPictureForm> {
           children: [
             GestureDetector(
               onTap: () {
-                getImage(ImageSource.gallery, true);
+                getImage(ImageSource.gallery);
               },
               child: Container(
                 color: transparent,
@@ -214,7 +223,7 @@ class _ProductPictureFormState extends State<ProductPictureForm> {
             ),
             GestureDetector(
               onTap: () {
-                getImage(ImageSource.camera, true);
+                Navigator.of(context).pushNamed(CameraPage.routeName);
               },
               child: Container(
                 color: transparent,
@@ -348,7 +357,7 @@ class _ProductPictureFormState extends State<ProductPictureForm> {
               child: Container(
                 color: transparent,
                 padding: const EdgeInsets.only(
-                    left: 15, right: 7.5, top: 10, bottom: 10),
+                    left: 15, right: 15, top: 10, bottom: 10),
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   height: 36,
@@ -359,30 +368,6 @@ class _ProductPictureFormState extends State<ProductPictureForm> {
                   ),
                   child: SvgPicture.asset(
                     'assets/svg/image_upload.svg',
-                    colorFilter:
-                        const ColorFilter.mode(productColor, BlendMode.srcIn),
-                  ),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                getImage(ImageSource.camera, false);
-              },
-              child: Container(
-                color: transparent,
-                padding: const EdgeInsets.only(
-                    right: 15, left: 7.5, bottom: 10, top: 10),
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  height: 36,
-                  width: 36,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: const Color(0xffEAECEE),
-                  ),
-                  child: SvgPicture.asset(
-                    'assets/svg/camera_plus.svg',
                     colorFilter:
                         const ColorFilter.mode(productColor, BlendMode.srcIn),
                   ),

@@ -2,7 +2,6 @@ import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/utils/http_request.dart';
 import 'package:dio/dio.dart';
-import 'package:image_picker/image_picker.dart';
 
 class UserApi extends HttpRequest {
   String type = "USER";
@@ -21,10 +20,10 @@ class UserApi extends HttpRequest {
     return User.fromJson(res as Map<String, dynamic>);
   }
 
-  upload(XFile file) async {
-    String fileName = file.path.split('/').last;
+  upload(String path) async {
+    String fileName = path.split('/').last;
     FormData formData = FormData.fromMap({
-      'file': await MultipartFile.fromFile(file.path, filename: fileName),
+      'file': await MultipartFile.fromFile(path, filename: fileName),
     });
     var res =
         await post('/media/file/user/upload', "MEDIA", true, data: formData);

@@ -70,15 +70,7 @@ class AccountStatementState extends State<AccountStatement>
         elevation: 0,
         backgroundColor: white,
         surfaceTintColor: white,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            color: paymentColor,
-          ),
-        ),
+        iconTheme: const IconThemeData(color: paymentColor),
         title: const Text(
           'Дансны хуулга',
           style: TextStyle(color: paymentColor, fontSize: 18),

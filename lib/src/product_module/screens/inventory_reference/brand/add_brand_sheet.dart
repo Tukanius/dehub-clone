@@ -45,7 +45,7 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
       setState(() {
         isFileEmpty = false;
       });
-      upload = await InventoryApi().upload(file);
+      upload = await InventoryApi().upload(file.path);
       setState(() {
         isLoading = false;
       });
@@ -111,7 +111,8 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: const ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter:
+                          const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),

@@ -56,7 +56,7 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
       setState(() {
         isFileEmpty = false;
       });
-      upload = await InventoryApi().upload(file);
+      upload = await InventoryApi().upload(file.path);
       setState(() {
         isLoading = false;
       });
@@ -130,7 +130,8 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
                     color: transparent,
                     child: SvgPicture.asset(
                       'assets/svg/square-x.svg',
-                      colorFilter: const ColorFilter.mode(grey2, BlendMode.srcIn),
+                      colorFilter:
+                          const ColorFilter.mode(grey2, BlendMode.srcIn),
                     ),
                   ),
                 ),

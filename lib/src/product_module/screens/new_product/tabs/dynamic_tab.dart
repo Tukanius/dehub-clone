@@ -1,7 +1,7 @@
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/inventory_goods.dart';
-import 'package:dehub/providers/index_provider.dart';
+import 'package:dehub/providers/main_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/product_module/screens/new_product/components/check_box_field.dart';
@@ -70,7 +70,7 @@ class _DynamicTabState extends State<DynamicTab> {
             widget.id == null ? res.product.id! : widget.id!);
       }
       loading.loading(false);
-      await Provider.of<IndexProvider>(context, listen: false)
+      await Provider.of<MainProvider>(context, listen: false)
           .newProductIndexChange(2);
     } catch (e) {
       loading.loading(false);

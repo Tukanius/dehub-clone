@@ -1,8 +1,12 @@
 import 'dart:io';
 import 'package:dehub/api/auth_api.dart';
+import 'package:dehub/api/order_api.dart';
+import 'package:dehub/api/user_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/main_provider.dart';
+import 'package:dehub/src/auth/camera_page/camera_page.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -12,6 +16,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:provider/provider.dart';
 
 class AddAttachmentArguments {
   ListenController pickedFile;
@@ -87,7 +92,7 @@ class _AddAttachmentState extends State<AddAttachment> {
       setState(() {
         isFileEmpty = false;
       });
-      user = await AuthApi().upload(file, 'order');
+      user = await OrderApi().upload(file.path);
       setState(() {
         isLoading = false;
       });
@@ -174,7 +179,7 @@ class _AddAttachmentState extends State<AddAttachment> {
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  getImage(ImageSource.camera);
+                  camera();
                 },
               ),
             ],
@@ -208,162 +213,183 @@ class _AddAttachmentState extends State<AddAttachment> {
     );
   }
 
+  camera() {
+    Navigator.of(context).pushNamed(CameraPage.routeName);
+  }
+
+  @override
+  void initState() {
+    final image = Provider.of<MainProvider>(context, listen: false);
+    image.addListener(() async {
+      user = await UserApi().upload(image.file!.path);
+      setState(() {
+        fileName = image.file!.path;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: AppBar(
-        backgroundColor: white,
-        surfaceTintColor: white,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: orderColor),
-        title: const Text(
-          'Файлын нэр',
-          style: TextStyle(
-            color: buttonColor,
-            fontSize: 16,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: backgroundColor,
+        appBar: AppBar(
+          backgroundColor: white,
+          surfaceTintColor: white,
+          elevation: 0,
+          iconTheme: const IconThemeData(color: orderColor),
+          title: const Text(
+            'Файлын нэр',
+            style: TextStyle(
+              color: buttonColor,
+              fontSize: 16,
+            ),
           ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 5,
-              ),
-              FormBuilder(
-                key: fbKey,
-                child: Column(
-                  children: [
-                    FormTextField(
-                      controller: nameController,
-                      textColor: orderColor,
-                      textAlign: TextAlign.end,
-                      name: 'name',
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        fillColor: white,
-                        filled: true,
-                        hintText: 'Энд оруулна уу',
-                        hintStyle: TextStyle(
-                          color: orderColor,
-                        ),
-                        prefixIcon: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              'Нэр',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(
-                            errorText: 'Нэр оруулна уу'),
-                      ]),
-                    ),
-                    Container(
-                      color: white,
-                      padding: const EdgeInsets.all(15),
-                      child: FormTextField(
-                        controller: controller,
-                        textAlign: TextAlign.left,
-                        name: 'description',
-                        maxLines: 5,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 5,
+                ),
+                FormBuilder(
+                  key: fbKey,
+                  child: Column(
+                    children: [
+                      FormTextField(
+                        controller: nameController,
+                        textColor: orderColor,
+                        textAlign: TextAlign.end,
+                        name: 'name',
                         decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.zero,
-                          ),
+                          border: InputBorder.none,
                           fillColor: white,
                           filled: true,
+                          hintText: 'Энд оруулна уу',
                           hintStyle: TextStyle(
                             color: orderColor,
+                          ),
+                          prefixIcon: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Нэр',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(
-                              errorText: 'Тайлбар оруулна уу'),
+                              errorText: 'Нэр оруулна уу'),
                         ]),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  showOptions();
-                },
-                child: Container(
-                  margin: const EdgeInsets.only(bottom: 3),
-                  color: white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Файл сонгох',
-                        style: TextStyle(color: buttonColor),
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'Сонгох',
-                            style: TextStyle(
+                      Container(
+                        color: white,
+                        padding: const EdgeInsets.all(15),
+                        child: FormTextField(
+                          controller: controller,
+                          textAlign: TextAlign.left,
+                          name: 'description',
+                          maxLines: 5,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.zero,
+                            ),
+                            fillColor: white,
+                            filled: true,
+                            hintStyle: TextStyle(
                               color: orderColor,
                             ),
                           ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios,
-                            color: orderColor,
-                            size: 14,
-                          )
-                        ],
-                      )
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                                errorText: 'Тайлбар оруулна уу'),
+                          ]),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              ),
-              if (isFileEmpty == true)
-                const Row(
-                  children: [
-                    SizedBox(
-                      width: 15,
+                GestureDetector(
+                  onTap: () {
+                    showOptions();
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 3),
+                    color: white,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 15),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Файл сонгох',
+                          style: TextStyle(color: buttonColor),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'Сонгох',
+                              style: TextStyle(
+                                color: orderColor,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color: orderColor,
+                              size: 14,
+                            )
+                          ],
+                        )
+                      ],
                     ),
-                    Text(
-                      'Файл сонгоно уу',
-                      style: TextStyle(color: red),
-                    ),
-                  ],
+                  ),
                 ),
-              if (user.url != null) Text('$fileName')
-            ],
-          ),
-          Container(
-            margin: const EdgeInsets.only(bottom: 70, right: 15, left: 15),
-            child: CustomButton(
-              labelColor: orderColor,
-              onClick: onSubmit,
-              labelText: "Болсон. Нэмье",
+                if (isFileEmpty == true)
+                  const Row(
+                    children: [
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text(
+                        'Файл сонгоно уу',
+                        style: TextStyle(color: red),
+                      ),
+                    ],
+                  ),
+                if (user.url != null) Text('$fileName')
+              ],
             ),
-          )
-        ],
+            Container(
+              margin: const EdgeInsets.only(bottom: 70, right: 15, left: 15),
+              child: CustomButton(
+                labelColor: orderColor,
+                onClick: onSubmit,
+                labelText: "Болсон. Нэмье",
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

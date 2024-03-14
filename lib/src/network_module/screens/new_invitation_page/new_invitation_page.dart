@@ -22,15 +22,7 @@ class _NewInvitationPageState extends State<NewInvitationPage> {
           elevation: 3,
           backgroundColor: white,
           surfaceTintColor: white,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(
-              Icons.arrow_back_ios_new,
-              color: networkColor,
-            ),
-          ),
+          iconTheme: const IconThemeData(color: networkColor),
           title: const Text(
             'Худалдан авагч урих',
             style: TextStyle(

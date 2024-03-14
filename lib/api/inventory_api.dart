@@ -4,7 +4,6 @@ import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/utils/http_request.dart';
 import 'package:dehub/models/result.dart';
-import 'package:image_picker/image_picker.dart';
 
 class InventoryApi extends HttpRequest {
   Future<Result> listGoods(String businessId) async {
@@ -246,10 +245,10 @@ class InventoryApi extends HttpRequest {
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
   }
 
-  upload(XFile file) async {
-    String fileName = file.path.split('/').last;
+  upload(String path) async {
+    String fileName = path.split('/').last;
     FormData formData = FormData.fromMap({
-      'file': await MultipartFile.fromFile(file.path, filename: fileName),
+      'file': await MultipartFile.fromFile(path, filename: fileName),
     });
     var res = await post('/media/file/inventory/upload', "MEDIA", true,
         data: formData);

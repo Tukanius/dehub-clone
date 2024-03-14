@@ -166,15 +166,7 @@ class _GivePageState extends State<GivePage>
         elevation: 0,
         backgroundColor: white,
         surfaceTintColor: white,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            color: invoiceColor,
-          ),
-        ),
+        iconTheme: const IconThemeData(color: invoiceColor),
         actions: [
           if (user.currentBusiness?.type == "SUPPLIER")
             AddButton(

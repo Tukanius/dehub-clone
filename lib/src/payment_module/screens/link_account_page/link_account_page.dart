@@ -117,15 +117,7 @@ class LinkAccountPageState extends State<LinkAccountPage> {
           elevation: 0,
           backgroundColor: backgroundColor,
           surfaceTintColor: backgroundColor,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(
-              Icons.arrow_back_ios_new,
-              color: paymentColor,
-            ),
-          ),
+          iconTheme: const IconThemeData(color: paymentColor),
           title: const Text(
             'Данс холбох',
             style: TextStyle(

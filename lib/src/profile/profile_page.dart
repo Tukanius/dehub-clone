@@ -77,12 +77,6 @@ class _ProfilePageState extends State<ProfilePage>
           backgroundColor: grey2,
           surfaceTintColor: grey2,
           iconTheme: const IconThemeData(color: white),
-          leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(Icons.arrow_back_ios_new),
-          ),
           elevation: 0,
           centerTitle: false,
           actions: [

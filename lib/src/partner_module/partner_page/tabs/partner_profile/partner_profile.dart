@@ -51,7 +51,7 @@ class _PartnerProfileState extends State<PartnerProfile> with AfterLayoutMixin {
           isFileEmpty = false;
         });
         loading.loading(true);
-        user = await PartnerApi().upload(file);
+        user = await PartnerApi().upload(file.path);
         await PartnerApi().logoUpdate(Partner(logo: user.url));
         await Provider.of<UserProvider>(context, listen: false)
             .partnerMe(false);

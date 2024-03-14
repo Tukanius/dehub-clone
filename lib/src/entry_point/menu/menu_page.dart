@@ -29,8 +29,8 @@ class _MenuPageState extends State<MenuPage> {
     try {
       loading.loading(true);
       await Provider.of<UserProvider>(context, listen: false).logout();
-      await Navigator.of(context).pushNamed(SplashPage.routeName);
       loading.loading(false);
+      await Navigator.of(context).pushNamed(SplashPage.routeName);
     } catch (e) {
       loading.loading(false);
     }

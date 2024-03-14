@@ -1,4 +1,3 @@
-import 'package:image_picker/image_picker.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/utils/http_request.dart';
 import 'package:dio/dio.dart';
@@ -97,13 +96,13 @@ class AuthApi extends HttpRequest {
     return User.fromJson(res as Map<String, dynamic>);
   }
 
-  upload(XFile file, String type) async {
-    String fileName = file.path.split('/').last;
+  upload(String path) async {
+    String fileName = path.split('/').last;
     FormData formData = FormData.fromMap({
-      'file': await MultipartFile.fromFile(file.path, filename: fileName),
+      'file': await MultipartFile.fromFile(path, filename: fileName),
     });
     var res =
-        await post('/media/file/$type/upload', "MEDIA", true, data: formData);
+        await post('/media/file/auth/upload', "MEDIA", true, data: formData);
 
     return User.fromJson(res as Map<String, dynamic>);
   }

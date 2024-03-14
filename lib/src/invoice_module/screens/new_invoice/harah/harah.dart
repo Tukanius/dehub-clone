@@ -47,15 +47,7 @@ class _HarahState extends State<Harah> {
         surfaceTintColor: invoiceColor,
         elevation: 0,
         centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: white,
-          ),
-        ),
+        iconTheme: const IconThemeData(color: white),
         automaticallyImplyLeading: false,
         title: widget.invoice.refCode == null
             ? const Text(

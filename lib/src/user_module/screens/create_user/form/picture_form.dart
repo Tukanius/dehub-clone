@@ -20,9 +20,9 @@ class _UserPictureFormState extends State<UserPictureForm> {
   User banner = User();
   XFile? bannerImage;
   final ImagePicker imagePicker = ImagePicker();
+  User user = User();
 
   getImage(ImageSource imageSource, String style) async {
-    User user = User();
     XFile? file = await picker.pickImage(
         source: imageSource, imageQuality: 40, maxHeight: 1024);
     final source = Provider.of<UserModuleProvider>(context, listen: false);
@@ -30,7 +30,7 @@ class _UserPictureFormState extends State<UserPictureForm> {
       setState(() {
         isLoading = true;
       });
-      user = await UserApi().upload(file);
+      user = await UserApi().upload(file.path);
       if (style == "PROFILE") {
         source.profileImage(user.url.toString());
       } else if (style == "FRONT") {

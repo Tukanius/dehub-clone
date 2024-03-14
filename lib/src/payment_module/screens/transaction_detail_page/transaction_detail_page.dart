@@ -44,15 +44,7 @@ class TransactionDetailPageState extends State<TransactionDetailPage>
         elevation: 0,
         backgroundColor: white,
         surfaceTintColor: white,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            color: paymentColor,
-          ),
-        ),
+        iconTheme: const IconThemeData(color: paymentColor),
         // bottom: PreferredSize(
         //   child: Container(
         //     margin: const EdgeInsets.symmetric(horizontal: 5),

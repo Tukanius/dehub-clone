@@ -117,15 +117,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
           backgroundColor: invoiceColor,
           surfaceTintColor: invoiceColor,
           elevation: 0,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              color: white,
-            ),
-          ),
+          iconTheme: const IconThemeData(color: white),
           title: Text(
             widget.data == null ? 'Шинэ нэхэмжлэл' : "Нэхэмжлэх засах",
             style: const TextStyle(

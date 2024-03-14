@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dehub/api/auth_api.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/loading_provider.dart';
+import 'package:dehub/providers/main_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/camera_page/camera_page.dart';
 import 'package:dehub/src/profile/components/card.dart';
@@ -52,7 +53,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
         image = File(file.path);
         isLoading = true;
       });
-      result = await AuthApi().upload(file, 'auth');
+      result = await AuthApi().upload(file.path);
       await AuthApi().avatar(
         User(avatar: result.url.toString()),
       );
@@ -84,9 +85,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
               style: TextStyle(color: grey2, fontFamily: 'Montserrat'),
             ),
             onPressed: () {
-              // Navigator.of(context).pop();
-              // getImage(ImageSource.camera);
-              Navigator.of(context).pushNamed(CameraPage.routeName);
+              Navigator.of(context).pop();
+              camera();
             },
           ),
         ],
@@ -94,9 +94,28 @@ class _PersonalInfoState extends State<PersonalInfo> {
     );
   }
 
+  camera() {
+    Navigator.of(context).pushNamed(CameraPage.routeName);
+  }
+
+  @override
+  void initState() {
+    final image = Provider.of<MainProvider>(context, listen: false);
+    image.addListener(() async {
+      result = await AuthApi().upload(image.file!.path);
+      await AuthApi().avatar(
+        User(avatar: result.url.toString()),
+      );
+      await Provider.of<UserProvider>(context, listen: false).me(true);
+      setState(() {});
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).user;
+    Provider.of<MainProvider>(context, listen: true);
     return isLoading == true
         ? const Center(
             child: CircularProgressIndicator(

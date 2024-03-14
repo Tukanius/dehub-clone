@@ -2,7 +2,7 @@ import 'package:dehub/components/full_picture/full_picture.dart';
 import 'package:dehub/providers/checkout_provider.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
-import 'package:dehub/providers/index_provider.dart';
+import 'package:dehub/providers/main_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/providers/invoice_provider.dart';
 import 'package:dehub/providers/loading_provider.dart';
@@ -222,7 +222,7 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (_) => UserProvider()),
           ChangeNotifierProvider(create: (_) => GeneralProvider()),
-          ChangeNotifierProvider(create: (_) => IndexProvider()),
+          ChangeNotifierProvider(create: (_) => MainProvider()),
           ChangeNotifierProvider(create: (_) => CheckOutProvider()),
           ChangeNotifierProvider(create: (_) => FinanceProvider()),
           ChangeNotifierProvider(create: (_) => InventoryProvider()),

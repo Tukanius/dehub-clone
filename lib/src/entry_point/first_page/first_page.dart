@@ -1,4 +1,5 @@
 import 'package:dehub/api/invoice_api.dart';
+import 'package:dehub/api/user_api.dart';
 import 'package:dehub/src/invoice_module/components/invoice_card/invoice_card.dart';
 import 'package:dehub/components/modules_card/modules_card.dart';
 import 'package:dehub/components/schedule_card/schedule_card.dart';
@@ -73,6 +74,10 @@ class FirstPageState extends State<FirstPage> with AfterLayoutMixin {
       await list(page, limit);
       for (var i = 0; i < invoice.rows!.length; i++) {}
     }
+  }
+
+  onSubmit(String path) async {
+    await UserApi().upload(path);
   }
 
   @override

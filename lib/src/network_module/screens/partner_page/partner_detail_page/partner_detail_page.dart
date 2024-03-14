@@ -48,15 +48,7 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
         backgroundColor: backgroundColor,
         surfaceTintColor: backgroundColor,
         elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            color: networkColor,
-          ),
-        ),
+        iconTheme: const IconThemeData(color: networkColor),
         title: const Text(
           'Харилцагч бизнес',
           style: TextStyle(
