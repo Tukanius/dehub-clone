@@ -122,21 +122,25 @@ class _InvoiceCardState extends State<InvoiceCard> {
                         children: [
                           widget.data.paidDate == null
                               ? Text(
-                                  DateFormat("yyyy-MM-dd HH:mm").format(widget.data.createdAt!),
+                                  DateFormat("yyyy-MM-dd HH:mm")
+                                      .format(widget.data.createdAt!),
                                   style: const TextStyle(
                                     fontSize: 12,
                                     color: grey2,
                                   ),
                                 )
                               : Text(
-                                  DateFormat("yyyy-MM-dd HH:mm").format(widget.data.paidDate!),
+                                  DateFormat("yyyy-MM-dd HH:mm")
+                                      .format(widget.data.paidDate!),
                                   style: const TextStyle(
                                     fontSize: 12,
                                     color: grey2,
                                   ),
                                 ),
                           Text(
-                            "Төлөх огноо: ${DateFormat("yyyy-MM-dd").format(widget.data.paymentDate!)}",
+                            widget.data.paymentDate != null
+                                ? "Төлөх огноо: ${DateFormat("yyyy-MM-dd").format(widget.data.paymentDate!)}"
+                                : "Төлөх огноо: -",
                             style: const TextStyle(
                               fontSize: 12,
                               color: grey2,
@@ -229,18 +233,27 @@ class _InvoiceCardState extends State<InvoiceCard> {
                               color: depBrown,
                             ),
                           ),
-                          widget.data.paidDate == null
-                              ? Text(
-                                  '${widget.data.paymentDate?.difference(DateTime.now()).inDays}',
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: grey2,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                )
-                              : Text(
-                                  '${widget.data.paymentDate?.difference(widget.data.paidDate!).inDays}',
-                                  style: const TextStyle(
+                          widget.data.paymentDate != null
+                              ? widget.data.paidDate == null
+                                  ? Text(
+                                      '${widget.data.paymentDate?.difference(DateTime.now()).inDays}',
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        color: grey2,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    )
+                                  : Text(
+                                      '${widget.data.paymentDate?.difference(widget.data.paidDate!).inDays}',
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        color: grey2,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    )
+                              : const Text(
+                                  '-',
+                                  style: TextStyle(
                                     fontSize: 12,
                                     color: grey2,
                                     fontWeight: FontWeight.w600,

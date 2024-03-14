@@ -51,7 +51,7 @@ class _MenuPageState extends State<MenuPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(right: 50, top: 30),
+                  margin: const EdgeInsets.only(right: 50),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -189,7 +189,10 @@ class _MenuPageState extends State<MenuPage> {
                             ),
                             const Text(
                               'Хэрэглэгчийн төлөв: ',
-                              style: TextStyle(color: white),
+                              style: TextStyle(
+                                color: white,
+                                fontSize: 12,
+                              ),
                             ),
                             const SizedBox(
                               height: 5,
@@ -203,7 +206,10 @@ class _MenuPageState extends State<MenuPage> {
                                   horizontal: 10, vertical: 3),
                               child: const Text(
                                 'Идэвхтэй',
-                                style: TextStyle(color: white),
+                                style: TextStyle(
+                                  color: white,
+                                  fontSize: 12,
+                                ),
                               ),
                             ),
                             const SizedBox(
@@ -211,7 +217,10 @@ class _MenuPageState extends State<MenuPage> {
                             ),
                             const Text(
                               'И-мэйл баталгаажилт: ',
-                              style: TextStyle(color: white),
+                              style: TextStyle(
+                                color: white,
+                                fontSize: 12,
+                              ),
                             ),
                             const SizedBox(
                               height: 5,
@@ -227,7 +236,10 @@ class _MenuPageState extends State<MenuPage> {
                                   horizontal: 10, vertical: 3),
                               child: Text(
                                 user.isEmailVerified == true ? 'Тийм' : "Үгүй",
-                                style: const TextStyle(color: white),
+                                style: const TextStyle(
+                                  color: white,
+                                  fontSize: 12,
+                                ),
                               ),
                             ),
                             const SizedBox(
@@ -235,7 +247,10 @@ class _MenuPageState extends State<MenuPage> {
                             ),
                             const Text(
                               'Утас баталгаажилт: ',
-                              style: TextStyle(color: white),
+                              style: TextStyle(
+                                color: white,
+                                fontSize: 12,
+                              ),
                             ),
                             const SizedBox(
                               height: 5,
@@ -251,7 +266,10 @@ class _MenuPageState extends State<MenuPage> {
                                   horizontal: 10, vertical: 3),
                               child: Text(
                                 user.isPhoneVerified == true ? 'Тийм' : "Үгүй",
-                                style: const TextStyle(color: white),
+                                style: const TextStyle(
+                                  color: white,
+                                  fontSize: 12,
+                                ),
                               ),
                             ),
                             const SizedBox(
@@ -259,7 +277,10 @@ class _MenuPageState extends State<MenuPage> {
                             ),
                             const Text(
                               'ДАН систем баталгаажилт: ',
-                              style: TextStyle(color: white),
+                              style: TextStyle(
+                                color: white,
+                                fontSize: 12,
+                              ),
                             ),
                             const SizedBox(
                               height: 5,
@@ -275,7 +296,10 @@ class _MenuPageState extends State<MenuPage> {
                                   horizontal: 10, vertical: 3),
                               child: Text(
                                 user.isDanVerified == true ? 'Тийм' : "Үгүй",
-                                style: const TextStyle(color: white),
+                                style: const TextStyle(
+                                  color: white,
+                                  fontSize: 12,
+                                ),
                               ),
                             ),
                           ],
@@ -351,9 +375,6 @@ class _MenuPageState extends State<MenuPage> {
                           ],
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
                     ),
                     GestureDetector(
                       onTap: () {
