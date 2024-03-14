@@ -603,6 +603,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                       color: white,
                     ),
                     FormTextField(
+                      autoFocus: false,
                       onChanged: (value) {
                         setState(() {
                           shippingAmount = Utils().parseCurrency(value);

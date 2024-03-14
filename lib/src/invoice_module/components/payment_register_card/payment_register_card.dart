@@ -115,7 +115,9 @@ class _PaymentRegisterCardState extends State<PaymentRegisterCard> {
               children: [
                 Expanded(
                   child: Text(
-                    'Төлөх: ${DateFormat('yyyy-MM-dd').format(widget.data.paymentDate!)}',
+                    widget.data.paymentDate != null
+                        ? 'Төлөх: ${DateFormat('yyyy-MM-dd').format(widget.data.paymentDate!)}'
+                        : 'Төлөх: -',
                     style: const TextStyle(
                       color: grey2,
                       fontSize: 12,

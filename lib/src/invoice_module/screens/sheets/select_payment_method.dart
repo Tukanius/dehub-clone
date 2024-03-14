@@ -36,7 +36,7 @@ class SelectPaymentMethodState extends State<SelectPaymentMethod> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: general.paymentMethod!
                 .where((element) =>
-                    element.code != "BANK_CARD" && element.code != "SOCIAL_PAY")
+                    element.code == "CASH" || element.code == "BARTER")
                 .map(
                   (e) => InkWell(
                     onTap: () {

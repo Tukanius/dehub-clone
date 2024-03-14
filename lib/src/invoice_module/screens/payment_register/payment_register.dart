@@ -109,6 +109,7 @@ class PaymentRegisterState extends State<PaymentRegister>
         List<Invoice> selectedList = [];
         loading.loading(true);
         Invoice data = Invoice.fromJson(fbkey.currentState!.value);
+        data.totalAmount = received;
         data.receiverBusinessId = source.invoice.id;
         data.paymentMethod = source.invoice.paymentMethod;
         for (var data in selected) {
@@ -223,7 +224,7 @@ class PaymentRegisterState extends State<PaymentRegister>
                               inputType: TextInputType.number,
                               fontSize: 14,
                               textAlign: TextAlign.end,
-                              name: "totalAmount",
+                              name: "asdf",
                               onChanged: (value) {
                                 setState(() {
                                   received = double.tryParse(

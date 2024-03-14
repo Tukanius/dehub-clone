@@ -63,22 +63,12 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
         elevation: 0,
         backgroundColor: selectedIndex == 2 ? white : backgroundColor,
         surfaceTintColor: selectedIndex == 2 ? white : backgroundColor,
-        leading: selectedIndex == 2
-            ? GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: Container(
-                  color: transparent,
-                  child: const Icon(
-                    Icons.arrow_back_ios_new,
-                    color: invoiceColor,
-                  ),
-                ),
-              )
-            : const CustomBackButton(
+        leading: selectedIndex != 2
+            ? const CustomBackButton(
                 color: invoiceColor,
-              ),
+              )
+            : null,
+        iconTheme: const IconThemeData(color: invoiceColor),
         title: selectedIndex == 0
             ? FormTextField(
                 inputType: TextInputType.text,
