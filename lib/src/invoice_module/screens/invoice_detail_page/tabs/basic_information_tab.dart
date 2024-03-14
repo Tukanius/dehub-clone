@@ -70,7 +70,6 @@ class _BasicInformationTabState extends State<BasicInformationTab>
     general = Provider.of<GeneralProvider>(context, listen: false).general;
     user = Provider.of<UserProvider>(context, listen: false).invoiceMe;
     return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
       child: Container(
         child: isLoading == true
             ? Container(

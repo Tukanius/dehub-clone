@@ -412,7 +412,9 @@ class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
                             borderColor: networkColor,
                             labelColor: backgroundColor,
                             textColor: networkColor,
-                            onClick: () {},
+                            onClick: () {
+                              Navigator.of(context).pop();
+                            },
                             labelText: "Буцах",
                           ),
                         ),

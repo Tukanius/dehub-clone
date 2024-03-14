@@ -12,6 +12,7 @@ import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/invoice_module/screens/invoice_detail_page/invoice_detail_page.dart';
 import 'package:dehub/src/profile/profile_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -85,9 +86,6 @@ class FirstPageState extends State<FirstPage> with AfterLayoutMixin {
     user = Provider.of<UserProvider>(context, listen: true).user;
     return PopScope(
       canPop: false,
-      onPopInvoked: (shouldPop) async {
-        await showMyDialog();
-      },
       child: Stack(
         children: [
           Scaffold(
@@ -344,6 +342,15 @@ class FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                             startAnimation: startAnimation,
                                             index: invoice.rows!.indexOf(e),
                                             data: e,
+                                            onClick: () {
+                                              Navigator.of(context).pushNamed(
+                                                InvoiceDetailPage.routeName,
+                                                arguments:
+                                                    InvoiceDetailPageArguments(
+                                                  id: e.id,
+                                                ),
+                                              );
+                                            },
                                           ),
                                         )
                                         .toList(),
@@ -416,34 +423,4 @@ class FirstPageState extends State<FirstPage> with AfterLayoutMixin {
       ),
     );
   }
-
-  Future<bool?> showMyDialog() => showDialog<bool>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Та Апп-аас гарах гэж байна'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context, false);
-              },
-              child: const Text('Болих'),
-            ),
-            TextButton(
-              style: ButtonStyle(
-                overlayColor: MaterialStatePropertyAll(
-                  red.withOpacity(0.1),
-                ),
-              ),
-              onPressed: () {
-                Navigator.pop(context, true);
-                Navigator.pop(context, true);
-              },
-              child: const Text(
-                'Гарах',
-                style: TextStyle(color: red),
-              ),
-            ),
-          ],
-        ),
-      );
 }

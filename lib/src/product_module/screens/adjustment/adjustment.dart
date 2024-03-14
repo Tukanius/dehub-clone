@@ -356,11 +356,13 @@ class _AdjustmentState extends State<Adjustment> with AfterLayoutMixin {
                                     ),
                                     Expanded(
                                       child: CustomButton(
-                                        onClick: () {},
+                                        onClick: () {
+                                          Navigator.of(context).pop();
+                                        },
                                         labelText: 'Буцах',
                                         borderColor: productColor,
                                         textColor: productColor,
-                                        labelColor: backgroundColor,
+                                        labelColor: white,
                                       ),
                                     ),
                                     const SizedBox(

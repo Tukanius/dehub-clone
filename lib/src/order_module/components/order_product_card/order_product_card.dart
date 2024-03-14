@@ -20,8 +20,10 @@ class OrderProductCard extends StatefulWidget {
   final List<Order>? package;
   final bool? isPackage;
   final ListenController? listenController;
+  final Function()? checkbox;
   const OrderProductCard({
     this.listenController,
+    this.checkbox,
     this.onCloseClick,
     this.list,
     this.isPackage,
@@ -253,15 +255,8 @@ class _OrderProductCardState extends State<OrderProductCard> {
                         activeColor: orderColor,
                         value: widget.list?.contains(widget.data),
                         onChanged: (value) {
-                          if (widget.list!.contains(widget.data)) {
-                            setState(() {
-                              widget.list!.removeWhere(
-                                  (element) => element.id == widget.data.id);
-                            });
-                          } else {
-                            setState(() {
-                              widget.list!.add(widget.data);
-                            });
+                          if (widget.checkbox != null) {
+                            widget.checkbox!();
                           }
                         },
                       ),

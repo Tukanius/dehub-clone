@@ -85,9 +85,6 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
       },
       child: PopScope(
         canPop: false,
-        onPopInvoked: (didPop) {
-          showMyDialog();
-        },
         child: Scaffold(
           backgroundColor: backgroundColor,
           body: SingleChildScrollView(
@@ -441,34 +438,6 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
     );
   }
 
-  Future<bool?> showMyDialog() => showDialog<bool>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Та Апп-аас гарах гэж байна'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context, false);
-              },
-              child: const Text('Болих'),
-            ),
-            TextButton(
-              style: ButtonStyle(
-                overlayColor: MaterialStatePropertyAll(
-                  red.withOpacity(0.1),
-                ),
-              ),
-              onPressed: () {
-                Navigator.pop(context, true);
-              },
-              child: const Text(
-                'Гарах',
-                style: TextStyle(color: red),
-              ),
-            ),
-          ],
-        ),
-      );
   void _performLogin(BuildContext context) async {
     final String code;
     final String username;

@@ -269,7 +269,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           ),
                           GestureDetector(
                             onTap: () {
-                              index.indexChange(2);
+                              index.indexChange(3);
                             },
                             child: Container(
                               color: transparent,
@@ -429,7 +429,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           ),
                           GestureDetector(
                             onTap: () {
-                              index.indexChange(2);
+                              index.indexChange(3);
                             },
                             child: Container(
                               color: transparent,

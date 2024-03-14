@@ -35,12 +35,12 @@ class _CustomButtonState extends State<CustomButton> {
     return Center(
       child: SizedBox(
         height: 48,
-        width: 360,
+        width: MediaQuery.of(context).size.width - 30,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
             foregroundColor: Colors.grey,
-            backgroundColor: widget.labelColor,
+            backgroundColor: widget.labelColor ?? white,
             side: BorderSide(color: widget.borderColor ?? transparent),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5),

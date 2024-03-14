@@ -32,6 +32,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
   User user = User();
   General general = General();
   bool value = false;
+  bool startAnimation = false;
 
   invoiceStatus() {
     final result = general.invoiceStatus!
@@ -64,6 +65,16 @@ class _InvoiceCardState extends State<InvoiceCard> {
   }
 
   @override
+  void initState() {
+    Future.delayed(const Duration(milliseconds: 100), () {
+      setState(() {
+        startAnimation = true;
+      });
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).invoiceMe;
     general =
@@ -75,7 +86,7 @@ class _InvoiceCardState extends State<InvoiceCard> {
         duration: Duration(milliseconds: 300 + (widget.index * 200)),
         curve: Curves.ease,
         transform: Matrix4.translationValues(
-          widget.startAnimation ? 0 : MediaQuery.of(context).size.width,
+          startAnimation ? 0 : MediaQuery.of(context).size.width,
           0,
           0,
         ),

@@ -82,7 +82,6 @@ class DehubNetworkState extends State<DehubNetwork> with AfterLayoutMixin {
             onRefresh: _onRefresh,
             color: networkColor,
             child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(

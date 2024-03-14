@@ -124,7 +124,6 @@ class InvitationDetailPageState extends State<InvitationDetailPage>
               ),
             )
           : SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

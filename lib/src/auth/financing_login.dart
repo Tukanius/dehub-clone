@@ -77,7 +77,6 @@ class _FinancingLoginState extends State<FinancingLogin> with AfterLayoutMixin {
         backgroundColor: source.currentColor,
         body: SafeArea(
           child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
                 GestureDetector(

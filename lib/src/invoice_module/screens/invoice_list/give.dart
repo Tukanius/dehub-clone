@@ -62,6 +62,7 @@ class _GivePageState extends State<GivePage>
   void _onRefresh() async {
     setState(() {
       isLoading = true;
+      startAnimation = false;
       page = 1;
       groupItems = {};
     });

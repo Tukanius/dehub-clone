@@ -253,7 +253,9 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
                             textColor: black,
                             labelColor: white,
                             labelText: 'Буцах',
-                            onClick: () {},
+                            onClick: () {
+                              Navigator.of(context).pop();
+                            },
                           ),
                         ),
                         const SizedBox(

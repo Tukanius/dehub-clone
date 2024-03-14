@@ -30,7 +30,6 @@ class _InvoiceTabState extends State<InvoiceTab> {
     general =
         Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
     return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

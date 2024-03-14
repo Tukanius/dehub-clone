@@ -74,7 +74,7 @@ class _MenuPageState extends State<MenuPage> {
                                     backgroundColor: grey,
                                   ),
                             const SizedBox(
-                              width: 5,
+                              height: 5,
                             ),
                             user.lastName != null
                                 ? Text(

@@ -616,6 +616,20 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                         }
                                       }
                                     },
+                                    checkbox: () {
+                                      if (possible) {
+                                        if (splitList.contains(data)) {
+                                          setState(() {
+                                            splitList.removeWhere((element) =>
+                                                element.id == data.id);
+                                          });
+                                        } else {
+                                          setState(() {
+                                            splitList.add(data);
+                                          });
+                                        }
+                                      }
+                                    },
                                     readOnly: true,
                                     data: data,
                                     list: possible ? splitList : null,
@@ -668,28 +682,35 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                               const SizedBox(
                                                 height: 5,
                                               ),
-                                              item.description != null
-                                                  ? Text(
-                                                      '${item.description}',
-                                                      style: const TextStyle(
-                                                        color: coolGrey,
-                                                        fontSize: 12,
-                                                      ),
-                                                    )
-                                                  : const Text(
-                                                      '-',
-                                                      style: TextStyle(
-                                                        color: coolGrey,
-                                                        fontSize: 12,
-                                                      ),
-                                                    ),
+                                              Text(
+                                                item.description ?? '-',
+                                                style: const TextStyle(
+                                                  color: coolGrey,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
                                             ],
                                           ),
-                                          Text(
-                                            '${Utils().formatCurrency(item.totalAmount.toString())}₮',
-                                            style: const TextStyle(
-                                              color: orderColor,
-                                            ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                '${item.quantity}${item.unit?[0].toLowerCase()} x ${Utils().formatCurrency("${item.price}")}₮',
+                                                style: const TextStyle(
+                                                  color: buttonColor,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                '${Utils().formatCurrency(item.totalAmount.toString())}₮',
+                                                style: const TextStyle(
+                                                  color: orderColor,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
@@ -933,7 +954,11 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                       listenController: widget.listenController,
                       id: widget.id,
                       order: order,
-                    )
+                    ),
+                  if (splitList.isNotEmpty)
+                    const SizedBox(
+                      height: 70,
+                    ),
                 ],
               ),
       ),
@@ -941,39 +966,39 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
   }
 
   Widget attachmentCard(Order data, Function() onClick) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 3),
-      color: white,
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '${data.name}',
-                style: const TextStyle(
-                  color: buttonColor,
-                  fontWeight: FontWeight.w500,
+    return GestureDetector(
+      onTap: onClick,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 3),
+        color: white,
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${data.name}',
+                  style: const TextStyle(
+                    color: buttonColor,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                '${data.description}',
-                style: const TextStyle(
-                  color: coolGrey,
-                  fontSize: 12,
+                const SizedBox(
+                  height: 5,
                 ),
-              ),
-            ],
-          ),
-          GestureDetector(
-            onTap: onClick,
-            child: Container(
+                Text(
+                  '${data.description}',
+                  style: const TextStyle(
+                    color: coolGrey,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+            Container(
               padding: const EdgeInsets.only(left: 10, bottom: 10),
               color: transparent,
               child: const Row(
@@ -996,8 +1021,8 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

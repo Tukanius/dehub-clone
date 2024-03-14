@@ -79,7 +79,6 @@ class _InvoiceTabState extends State<InvoiceTab> {
       });
     }
     return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

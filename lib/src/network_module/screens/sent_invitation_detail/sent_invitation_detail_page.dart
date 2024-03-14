@@ -128,7 +128,6 @@ class SentInvitationDetailState extends State<SentInvitationDetail>
               ),
             )
           : SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
