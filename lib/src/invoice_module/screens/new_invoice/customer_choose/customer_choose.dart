@@ -17,12 +17,6 @@ class CustomerChoose extends StatefulWidget {
 }
 
 class _CustomerChooseState extends State<CustomerChoose> {
-  // @override
-  // void initState() {
-  //   widget.listenController.addListener(() {});
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Container(

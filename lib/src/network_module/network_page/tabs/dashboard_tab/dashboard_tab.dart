@@ -9,7 +9,7 @@ import 'package:dehub/src/network_module/screens/client_staffs/client_staffs.dar
 import 'package:dehub/src/network_module/screens/payment_terms/payment_terms.dart';
 import 'package:dehub/src/network_module/screens/partner_page/partner_page.dart';
 import 'package:dehub/components/dashboard_card/dashboard_card.dart';
-import 'package:dehub/components/pie_chart/network_pie_chart.dart';
+import 'package:dehub/components/pie_chart/pie_chart.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/business_api.dart';
@@ -349,10 +349,11 @@ class DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                     const SizedBox(
                       height: 10,
                     ),
-                    NetworkPieChart(
+                    PieChart(
                       legend: dummyLegend,
                       colorList: colorList,
                       data: dummy,
+                      module: "NETWORK",
                     ),
                     const SizedBox(
                       height: 10,
@@ -441,10 +442,11 @@ class DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                             const SizedBox(
                               height: 10,
                             ),
-                            NetworkPieChart(
+                            PieChart(
                               legend: legend,
                               colorList: colorList,
                               data: data,
+                              module: "NETWORK",
                             ),
                             const SizedBox(
                               height: 10,

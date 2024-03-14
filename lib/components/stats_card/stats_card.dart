@@ -56,9 +56,7 @@ class _StatsCardState extends State<StatsCard> {
             ],
           ),
           Text(
-            widget.data.amount != null
-                ? '${Utils().formatCurrency(widget.data.amount.toString())}₮'
-                : '${Utils().formatCurrency(widget.data.changedAmount.toString())}₮',
+            '${Utils().formatCurrency("${widget.data.amount ?? widget.data.changedAmount}")}₮',
             style: const TextStyle(
               color: dark,
               fontSize: 16,
@@ -84,29 +82,31 @@ class _StatsCardState extends State<StatsCard> {
                   borderRadius: BorderRadius.circular(100),
                   border: Border.all(
                     color: widget.data.changedCount == null ||
-                            widget.data.changedCount! > 0
+                            widget.data.changedCount! >= 0
                         ? neonGreen
                         : red,
                   ),
                   color: widget.data.changedCount == null ||
-                          widget.data.changedCount! > 0
+                          widget.data.changedCount! >= 0
                       ? neonGreen.withOpacity(0.3)
                       : red.withOpacity(0.3),
                 ),
                 child: Row(
                   children: [
                     widget.data.changedCount == null ||
-                            widget.data.changedCount! > 0
-                        ? const Icon(
-                            Icons.arrow_upward,
-                            color: neonGreen,
-                            size: 10,
-                          )
-                        : const Icon(
-                            Icons.arrow_downward,
-                            color: red,
-                            size: 10,
-                          ),
+                            widget.data.changedCount! == 0
+                        ? const SizedBox()
+                        : widget.data.changedCount! > 0
+                            ? const Icon(
+                                Icons.arrow_upward,
+                                color: neonGreen,
+                                size: 10,
+                              )
+                            : const Icon(
+                                Icons.arrow_downward,
+                                color: red,
+                                size: 10,
+                              ),
                     const SizedBox(
                       width: 5,
                     ),
@@ -116,7 +116,7 @@ class _StatsCardState extends State<StatsCard> {
                           : '0%',
                       style: TextStyle(
                         color: widget.data.changedCount == null ||
-                                widget.data.changedCount! > 0
+                                widget.data.changedCount! >= 0
                             ? neonGreen
                             : red,
                         fontSize: 10,

@@ -101,7 +101,7 @@ class _EntryPointState extends State<EntryPoint>
                 ),
               ),
               AnimatedPositioned(
-                duration: const Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 400),
                 left: isSideMenuClosed ? 0 : 220,
                 top: MediaQuery.of(context).size.height /
                         MediaQuery.of(context).size.width +

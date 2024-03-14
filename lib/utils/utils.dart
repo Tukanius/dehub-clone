@@ -7,7 +7,7 @@ class Utils {
       return result = '0';
     }
     if (value == null || value == 'null') {
-      return result = '-';
+      return result = '0';
     }
     var formattedNumber =
         NumberFormat("#,###", "en_US").format(double.parse(value.toString()));

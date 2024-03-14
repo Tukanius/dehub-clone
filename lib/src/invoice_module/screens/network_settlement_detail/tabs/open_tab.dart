@@ -37,16 +37,6 @@ class _OpenTabState extends State<OpenTab> with AfterLayoutMixin {
     refreshController.loadComplete();
   }
 
-  onRefresh() async {
-    await Future.delayed(const Duration(milliseconds: 1000));
-    setState(() {
-      isLoading = true;
-      limit = 10;
-    });
-    await list(page, limit);
-    refreshController.refreshCompleted();
-  }
-
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
     Filter filter = Filter(businessId: widget.data.id, type: "CONFIRMED");
@@ -78,7 +68,6 @@ class _OpenTabState extends State<OpenTab> with AfterLayoutMixin {
         : Refresher(
             refreshController: refreshController,
             onLoading: invoice.rows!.length == invoice.count ? null : onLoading,
-            onRefresh: onRefresh,
             color: invoiceColor,
             child: SingleChildScrollView(
               child: invoice.rows!.isNotEmpty

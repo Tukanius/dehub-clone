@@ -200,7 +200,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                     // SizedBox(
                     //   height: 10,
                     // ),
-                    // NetworkPieChart(legend: legend, colorList: colorList, data: data),
+                    // PieChart(legend: legend, colorList: colorList, data: data),
                     const SizedBox(
                       height: 10,
                     ),

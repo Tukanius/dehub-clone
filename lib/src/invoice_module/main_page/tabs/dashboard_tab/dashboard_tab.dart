@@ -1,6 +1,6 @@
 import 'package:dehub/components/dashboard_card/dashboard_card.dart';
 import 'package:dehub/components/stats_card/stats_card.dart';
-import 'package:dehub/components/pie_chart/network_pie_chart.dart';
+import 'package:dehub/components/pie_chart/pie_chart.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/stats.dart';
 import 'package:dehub/models/user.dart';
@@ -223,8 +223,12 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                     const SizedBox(
                       height: 10,
                     ),
-                    NetworkPieChart(
-                        legend: legend, colorList: colorList, data: data),
+                    PieChart(
+                      legend: legend,
+                      colorList: colorList,
+                      data: data,
+                      module: "INVOICE",
+                    ),
                     const SizedBox(
                       height: 10,
                     ),

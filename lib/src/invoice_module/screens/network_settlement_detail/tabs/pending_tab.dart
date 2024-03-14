@@ -37,16 +37,6 @@ class _PendingTabState extends State<PendingTab> with AfterLayoutMixin {
     refreshController.loadComplete();
   }
 
-  onRefresh() async {
-    await Future.delayed(const Duration(milliseconds: 1000));
-    setState(() {
-      isLoading = true;
-      limit = 10;
-    });
-    await list(page, limit);
-    refreshController.refreshCompleted();
-  }
-
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
     Filter filter = Filter(businessId: widget.data.id, type: "PENDING");
@@ -76,7 +66,6 @@ class _PendingTabState extends State<PendingTab> with AfterLayoutMixin {
             ),
           )
         : Refresher(
-            onRefresh: onRefresh,
             onLoading: invoice.rows!.length == invoice.count ? null : onLoading,
             color: invoiceColor,
             refreshController: refreshController,

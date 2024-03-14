@@ -1,23 +1,26 @@
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart' as chart;
 
-class NetworkPieChart extends StatefulWidget {
+class PieChart extends StatefulWidget {
   final Map<String, double> data;
   final List<Color> colorList;
   final List legend;
-  const NetworkPieChart({
+  final String module;
+  const PieChart({
     super.key,
+    required this.module,
     required this.legend,
     required this.colorList,
     required this.data,
   });
 
   @override
-  State<NetworkPieChart> createState() => NetworkPieChartState();
+  State<PieChart> createState() => PieChartState();
 }
 
-class NetworkPieChartState extends State<NetworkPieChart> {
+class PieChartState extends State<PieChart> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -77,18 +80,22 @@ class NetworkPieChartState extends State<NetworkPieChart> {
                           width: 10,
                         ),
                         Expanded(
-                          flex: 4,
+                          flex: 6,
                           child: Text(
-                            '${data.count}',
+                            widget.module == "ORDER"
+                                ? '${Utils().formatCurrency("${data.amount}")}₮'
+                                : '${data.count}',
                             style: const TextStyle(
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
                         Expanded(
-                          flex: 3,
+                          flex: 2,
                           child: Text(
-                            '${(100 * data.count / widget.legend.fold(0, (previousValue, element) => previousValue + element.count!)).toStringAsFixed(1)}%',
+                            widget.module == "ORDER"
+                                ? '${data.ordersCount.toInt()}'
+                                : '${(100 * data.count / widget.legend.fold(0, (previousValue, element) => previousValue + element.count!)).toStringAsFixed(1)}%',
                             style: const TextStyle(
                               color: grey,
                               fontSize: 12,
@@ -100,9 +107,11 @@ class NetworkPieChartState extends State<NetworkPieChart> {
                           width: 15,
                         ),
                         Expanded(
-                          flex: 11,
+                          flex: 10,
                           child: Text(
-                            '${data.profileName}',
+                            widget.module == "ORDER"
+                                ? '${data.name}'
+                                : '${data.profileName}',
                             style: const TextStyle(
                               fontSize: 12,
                               color: grey2,

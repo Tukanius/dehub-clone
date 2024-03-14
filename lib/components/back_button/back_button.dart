@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -24,10 +26,15 @@ class _CustomBackButtonState extends State<CustomBackButton> {
         padding: const EdgeInsets.only(left: 15),
         child: Row(
           children: [
-            Icon(
-              Icons.arrow_back_ios_new,
-              color: widget.color,
-            ),
+            Platform.isIOS
+                ? Icon(
+                    Icons.arrow_back_ios_new,
+                    color: widget.color,
+                  )
+                : Icon(
+                    Icons.arrow_back,
+                    color: widget.color,
+                  ),
             const SizedBox(
               width: 5,
             ),

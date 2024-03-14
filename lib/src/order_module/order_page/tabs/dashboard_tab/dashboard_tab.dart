@@ -1,6 +1,6 @@
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/dashboard_card/dashboard_card.dart';
-import 'package:dehub/components/pie_chart/order_pie_chart.dart';
+import 'package:dehub/components/pie_chart/pie_chart.dart';
 import 'package:dehub/components/stats_card/stats_card.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
@@ -33,15 +33,54 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
   bool isLoading = true;
   PageController pageController = PageController();
   int currentPage = 0;
-
+  List<Order> legend = [
+    Order(
+      name: 'ТОП 500',
+      ordersCount: 1,
+      amount: 13000,
+    ),
+    Order(
+      name: 'ТОП 300',
+      ordersCount: 1,
+      amount: 25000,
+    ),
+    Order(
+      name: 'ТОП 200',
+      ordersCount: 1,
+      amount: 8000,
+    ),
+    Order(
+      name: 'ТОП 100',
+      ordersCount: 1,
+      amount: 27000,
+    ),
+    Order(
+      name: 'ТОП 50',
+      ordersCount: 1,
+      amount: 10000,
+    ),
+  ];
   List<Color> colorList = [];
-
+  List<Color> dummyColorList = [
+    const Color(0xff15CAB8),
+    const Color(0xff44A6E9),
+    const Color(0xffFEC600),
+    const Color(0xffFF8548),
+    const Color(0xffE2362F),
+  ];
   List<String> svgs = [
     'assets/svg/income_review.svg',
     'assets/svg/expenditure_review.svg',
     'assets/svg/finance_review.svg',
     'assets/svg/paid_review.svg',
   ];
+  Map<String, double> dummyPie = {
+    "ТОП 500": 13000,
+    "ТОП 300": 25000,
+    "ТОП 200": 8000,
+    "ТОП 100": 27000,
+    "ТОП 50": 10000,
+  };
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -304,11 +343,12 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                       const SizedBox(
                         height: 10,
                       ),
-                      if (data.isNotEmpty)
-                        OrderPieChart(
-                            legend: dashboard.byPie!,
-                            colorList: colorList,
-                            data: data),
+                      PieChart(
+                        legend: legend,
+                        colorList: dummyColorList,
+                        data: dummyPie,
+                        module: 'ORDER',
+                      ),
                       const SizedBox(
                         height: 10,
                       ),
@@ -465,10 +505,12 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         height: 10,
                       ),
                       if (data.isNotEmpty)
-                        OrderPieChart(
-                            legend: dashboard.byPie!,
-                            colorList: colorList,
-                            data: data),
+                        PieChart(
+                          legend: dashboard.byPie!,
+                          colorList: colorList,
+                          data: data,
+                          module: "ORDER",
+                        ),
                       const SizedBox(
                         height: 10,
                       ),

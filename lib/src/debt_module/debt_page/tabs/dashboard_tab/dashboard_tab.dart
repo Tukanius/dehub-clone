@@ -1,5 +1,5 @@
 import 'package:dehub/components/dashboard_card/dashboard_card.dart';
-import 'package:dehub/components/pie_chart/network_pie_chart.dart';
+import 'package:dehub/components/pie_chart/pie_chart.dart';
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -173,8 +173,12 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                     const SizedBox(
                       height: 10,
                     ),
-                    NetworkPieChart(
-                        legend: legend, colorList: colorList, data: data),
+                    PieChart(
+                      legend: legend,
+                      colorList: colorList,
+                      data: data,
+                      module: "DEBT",
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
