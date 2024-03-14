@@ -1,4 +1,4 @@
-import 'package:dehub/providers/main_provider.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/src/auth/camera_page/camera_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,6 +24,7 @@ class _ProductPictureFormState extends State<ProductPictureForm> {
   InventoryGoods banner = InventoryGoods();
   XFile? bannerImage;
   final ImagePicker imagePicker = ImagePicker();
+  ListenController listenController = ListenController();
 
   getImage(ImageSource imageSource) async {
     XFile? file = await picker.pickImage(
@@ -55,10 +56,9 @@ class _ProductPictureFormState extends State<ProductPictureForm> {
 
   @override
   void initState() {
-    final image = Provider.of<MainProvider>(context, listen: false);
     final source = Provider.of<InventoryProvider>(context, listen: false);
-    image.addListener(() async {
-      user = await InventoryApi().upload(image.file!.path);
+    listenController.addListener(() async {
+      user = await InventoryApi().upload(listenController.value!);
       source.profileImage(user.url!);
       setState(() {});
     });
@@ -68,7 +68,6 @@ class _ProductPictureFormState extends State<ProductPictureForm> {
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<InventoryProvider>(context, listen: true);
-    Provider.of<MainProvider>(context, listen: true);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -223,7 +222,11 @@ class _ProductPictureFormState extends State<ProductPictureForm> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.of(context).pushNamed(CameraPage.routeName);
+                Navigator.of(context).pushNamed(
+                  CameraPage.routeName,
+                  arguments:
+                      CameraPageArguments(listenController: listenController),
+                );
               },
               child: Container(
                 color: transparent,

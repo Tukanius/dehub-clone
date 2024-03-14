@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:dehub/api/auth_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/loading_provider.dart';
-import 'package:dehub/providers/main_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/camera_page/camera_page.dart';
 import 'package:dehub/src/profile/components/card.dart';
@@ -35,6 +35,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   String? imageName;
   User result = User();
   bool edit = false;
+  ListenController listenController = ListenController();
 
   danVerify() async {
     final loading = Provider.of<LoadingProvider>(context, listen: false);
@@ -95,14 +96,16 @@ class _PersonalInfoState extends State<PersonalInfo> {
   }
 
   camera() {
-    Navigator.of(context).pushNamed(CameraPage.routeName);
+    Navigator.of(context).pushNamed(
+      CameraPage.routeName,
+      arguments: CameraPageArguments(listenController: listenController),
+    );
   }
 
   @override
   void initState() {
-    final image = Provider.of<MainProvider>(context, listen: false);
-    image.addListener(() async {
-      result = await AuthApi().upload(image.file!.path);
+    listenController.addListener(() async {
+      result = await AuthApi().upload(listenController.value!);
       await AuthApi().avatar(
         User(avatar: result.url.toString()),
       );
@@ -115,7 +118,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).user;
-    Provider.of<MainProvider>(context, listen: true);
     return isLoading == true
         ? const Center(
             child: CircularProgressIndicator(

@@ -1,7 +1,7 @@
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
-import 'package:dehub/providers/main_provider.dart';
+import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/order_module/order_page/tabs/customer_order/customer_order.dart';
 import 'package:dehub/src/order_module/order_page/tabs/order_tab/order_tab.dart';
@@ -27,7 +27,7 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
-    await Provider.of<MainProvider>(context, listen: false).indexChange(1);
+    await Provider.of<IndexProvider>(context, listen: false).indexChange(1);
     await Provider.of<GeneralProvider>(context, listen: false).orderInit(true);
     await Provider.of<UserProvider>(context, listen: false).order(true);
     setState(() {
@@ -47,7 +47,7 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    final index = Provider.of<MainProvider>(context, listen: true);
+    final index = Provider.of<IndexProvider>(context, listen: true);
     user = Provider.of<UserProvider>(context, listen: true).orderMe;
     return Scaffold(
       backgroundColor: backgroundColor,

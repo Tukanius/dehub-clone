@@ -1,6 +1,6 @@
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/inventory_goods.dart';
-import 'package:dehub/providers/main_provider.dart';
+import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/product_module/screens/new_product/components/brand_form.dart';
@@ -116,7 +116,7 @@ class _MainTabState extends State<MainTab> {
       await Provider.of<InventoryProvider>(context, listen: false)
           .id(res.id.toString());
       loading.loading(false);
-      await Provider.of<MainProvider>(context, listen: false)
+      await Provider.of<IndexProvider>(context, listen: false)
           .newProductIndexChange(1);
     } catch (e) {
       loading.loading(false);

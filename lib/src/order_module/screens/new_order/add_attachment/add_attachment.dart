@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:dehub/api/auth_api.dart';
 import 'package:dehub/api/order_api.dart';
@@ -5,7 +6,6 @@ import 'package:dehub/api/user_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
-import 'package:dehub/providers/main_provider.dart';
 import 'package:dehub/src/auth/camera_page/camera_page.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -16,7 +16,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:provider/provider.dart';
 
 class AddAttachmentArguments {
   ListenController pickedFile;
@@ -50,6 +49,7 @@ class _AddAttachmentState extends State<AddAttachment> {
   File? image;
   TextEditingController controller = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  ListenController listenController = ListenController();
 
   void pickFile() async {
     try {
@@ -214,16 +214,18 @@ class _AddAttachmentState extends State<AddAttachment> {
   }
 
   camera() {
-    Navigator.of(context).pushNamed(CameraPage.routeName);
+    Navigator.of(context).pushNamed(
+      CameraPage.routeName,
+      arguments: CameraPageArguments(listenController: listenController),
+    );
   }
 
   @override
   void initState() {
-    final image = Provider.of<MainProvider>(context, listen: false);
-    image.addListener(() async {
-      user = await UserApi().upload(image.file!.path);
+    listenController.addListener(() async {
+      user = await UserApi().upload(listenController.value!);
       setState(() {
-        fileName = image.file!.path;
+        fileName = listenController.value!;
       });
     });
     super.initState();

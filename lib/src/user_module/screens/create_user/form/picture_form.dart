@@ -1,4 +1,6 @@
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/providers/user_module_provider.dart';
+import 'package:dehub/src/auth/camera_page/camera_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,12 +22,15 @@ class _UserPictureFormState extends State<UserPictureForm> {
   User banner = User();
   XFile? bannerImage;
   final ImagePicker imagePicker = ImagePicker();
-  User user = User();
+  ListenController image = ListenController();
+  ListenController image1 = ListenController();
+  ListenController image2 = ListenController();
 
   getImage(ImageSource imageSource, String style) async {
     XFile? file = await picker.pickImage(
         source: imageSource, imageQuality: 40, maxHeight: 1024);
     final source = Provider.of<UserModuleProvider>(context, listen: false);
+    User user = User();
     if (file != null) {
       setState(() {
         isLoading = true;
@@ -42,6 +47,25 @@ class _UserPictureFormState extends State<UserPictureForm> {
         isLoading = false;
       });
     }
+  }
+
+  @override
+  void initState() {
+    final source = Provider.of<UserModuleProvider>(context, listen: false);
+    User user = User();
+    image.addListener(() async {
+      user = await UserApi().upload(image.value!);
+      source.profileImage(user.url.toString());
+    });
+    image1.addListener(() async {
+      user = await UserApi().upload(image1.value!);
+      source.cardFront(user.url.toString());
+    });
+    image2.addListener(() async {
+      user = await UserApi().upload(image2.value!);
+      source.cardBack(user.url.toString());
+    });
+    super.initState();
   }
 
   @override
@@ -187,7 +211,10 @@ class _UserPictureFormState extends State<UserPictureForm> {
             ),
             GestureDetector(
               onTap: () {
-                getImage(ImageSource.camera, "PROFILE");
+                Navigator.of(context).pushNamed(
+                  CameraPage.routeName,
+                  arguments: CameraPageArguments(listenController: image),
+                );
               },
               child: Container(
                 color: transparent,
@@ -281,7 +308,10 @@ class _UserPictureFormState extends State<UserPictureForm> {
             ),
             GestureDetector(
               onTap: () {
-                getImage(ImageSource.camera, "FRONT");
+                Navigator.of(context).pushNamed(
+                  CameraPage.routeName,
+                  arguments: CameraPageArguments(listenController: image1),
+                );
               },
               child: Container(
                 color: transparent,
@@ -375,7 +405,10 @@ class _UserPictureFormState extends State<UserPictureForm> {
             ),
             GestureDetector(
               onTap: () {
-                getImage(ImageSource.camera, "BACK");
+                Navigator.of(context).pushNamed(
+                  CameraPage.routeName,
+                  arguments: CameraPageArguments(listenController: image2),
+                );
               },
               child: Container(
                 color: transparent,

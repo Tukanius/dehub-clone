@@ -1,7 +1,7 @@
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/providers/general_provider.dart';
-import 'package:dehub/providers/main_provider.dart';
+import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/network_module/network_page/tabs/inbox_tab/inbox_tab.dart';
 import 'package:dehub/src/network_module/screens/new_invitation_page/new_invitation_page.dart';
@@ -28,7 +28,7 @@ class NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
-    await Provider.of<MainProvider>(context, listen: false).indexChange(1);
+    await Provider.of<IndexProvider>(context, listen: false).indexChange(1);
     await Provider.of<UserProvider>(context, listen: false).businessMe(true);
     await Provider.of<GeneralProvider>(context, listen: false)
         .businessInit(true);
@@ -46,7 +46,7 @@ class NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    final index = Provider.of<MainProvider>(context, listen: true);
+    final index = Provider.of<IndexProvider>(context, listen: true);
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(

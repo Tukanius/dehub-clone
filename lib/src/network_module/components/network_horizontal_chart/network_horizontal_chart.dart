@@ -1,5 +1,5 @@
 import 'package:dehub/models/business.dart';
-import 'package:dehub/providers/main_provider.dart';
+import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -24,7 +24,7 @@ class NetworkHorizontalChart extends StatefulWidget {
 class _NetworkHorizontalChartState extends State<NetworkHorizontalChart> {
   @override
   Widget build(BuildContext context) {
-    final selectedIndex = Provider.of<MainProvider>(context, listen: true);
+    final selectedIndex = Provider.of<IndexProvider>(context, listen: true);
     return Column(
       children: [
         Row(

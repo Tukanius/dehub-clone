@@ -1,14 +1,24 @@
 import 'dart:io';
 import 'package:camera/camera.dart';
-import 'package:dehub/providers/main_provider.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
+
+class CameraPageArguments {
+  ListenController listenController;
+  CameraPageArguments({
+    required this.listenController,
+  });
+}
 
 class CameraPage extends StatefulWidget {
   static const routeName = '/CameraPage';
-  const CameraPage({super.key});
+  final ListenController listenController;
+  const CameraPage({
+    super.key,
+    required this.listenController,
+  });
 
   @override
   State<CameraPage> createState() => _CameraPageState();
@@ -48,7 +58,6 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   Widget build(BuildContext context) {
-    final picture = Provider.of<MainProvider>(context, listen: true);
     if (cameraController.value.isInitialized) {
       return Scaffold(
         floatingActionButton: status == "TAP"
@@ -158,7 +167,7 @@ class _CameraPageState extends State<CameraPage> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        picture.image(image!);
+                        widget.listenController.changeVariable(image!.path);
                         Navigator.of(context).pop();
                       },
                       style: ElevatedButton.styleFrom(

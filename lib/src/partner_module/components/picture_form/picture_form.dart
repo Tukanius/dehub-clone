@@ -1,6 +1,6 @@
 import 'package:dehub/api/partner_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/partner.dart';
-import 'package:dehub/providers/main_provider.dart';
 import 'package:dehub/providers/partner_provider.dart';
 import 'package:dehub/src/auth/camera_page/camera_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -27,6 +27,7 @@ class _PartnerPictureFormState extends State<PartnerPictureForm> {
   Partner banner = Partner();
   XFile? bannerImage;
   final ImagePicker imagePicker = ImagePicker();
+  ListenController listenController = ListenController();
 
   getImage(ImageSource imageSource) async {
     XFile? file = await picker.pickImage(
@@ -57,10 +58,9 @@ class _PartnerPictureFormState extends State<PartnerPictureForm> {
 
   @override
   void initState() {
-    final image = Provider.of<MainProvider>(context, listen: false);
     final source = Provider.of<PartnerProvider>(context, listen: false);
-    image.addListener(() async {
-      user = await PartnerApi().upload(image.file!.path);
+    listenController.addListener(() async {
+      user = await PartnerApi().upload(listenController.value!);
       source.profileImage(user.url!);
     });
     super.initState();
@@ -69,7 +69,6 @@ class _PartnerPictureFormState extends State<PartnerPictureForm> {
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<PartnerProvider>(context, listen: true);
-    Provider.of<MainProvider>(context, listen: true);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -211,7 +210,11 @@ class _PartnerPictureFormState extends State<PartnerPictureForm> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.of(context).pushNamed(CameraPage.routeName);
+                Navigator.of(context).pushNamed(
+                  CameraPage.routeName,
+                  arguments:
+                      CameraPageArguments(listenController: listenController),
+                );
               },
               child: Container(
                 color: transparent,

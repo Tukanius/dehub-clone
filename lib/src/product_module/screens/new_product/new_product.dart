@@ -1,6 +1,6 @@
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/models/inventory_goods.dart';
-import 'package:dehub/providers/main_provider.dart';
+import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/src/product_module/screens/new_product/tabs/dynamic_tab.dart';
 import 'package:dehub/src/product_module/screens/new_product/tabs/main_tab.dart';
@@ -39,10 +39,10 @@ class _NewProductState extends State<NewProduct>
   bool isLoading = true;
 
   @override
-  afterFirstLayout(BuildContext context) {
-    Provider.of<MainProvider>(context, listen: false)
+  afterFirstLayout(BuildContext context) async {
+    await Provider.of<IndexProvider>(context, listen: false)
         .newProductIndexChange(widget.initialIndex);
-    Provider.of<InventoryProvider>(context, listen: false).clearData();
+    await Provider.of<InventoryProvider>(context, listen: false).clearData();
     setState(() {
       isLoading = false;
     });
@@ -58,7 +58,7 @@ class _NewProductState extends State<NewProduct>
   @override
   Widget build(BuildContext context) {
     tabController.index =
-        Provider.of<MainProvider>(context, listen: true).newProductIndex;
+        Provider.of<IndexProvider>(context, listen: true).newProductIndex;
 
     return Scaffold(
       backgroundColor: backgroundColor,
