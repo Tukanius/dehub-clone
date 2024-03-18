@@ -1,5 +1,7 @@
 import 'package:after_layout/after_layout.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/order_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/order_module/order_page/tabs/customer_order/tabs/back_order.dart';
 import 'package:dehub/src/order_module/order_page/tabs/customer_order/tabs/received_tab.dart';
 import 'package:dehub/src/order_module/screens/create_back_order/create_back_order.dart';
@@ -19,6 +21,7 @@ class _CustomerOrderState extends State<CustomerOrder>
     with SingleTickerProviderStateMixin, AfterLayoutMixin {
   late TabController tabController;
   bool isLoading = true;
+  User user = User();
 
   @override
   void initState() {
@@ -30,8 +33,8 @@ class _CustomerOrderState extends State<CustomerOrder>
   }
 
   @override
-  afterFirstLayout(BuildContext context) {
-    Provider.of<OrderProvider>(context, listen: false).clearData();
+  afterFirstLayout(BuildContext context) async {
+    await Provider.of<OrderProvider>(context, listen: false).clearData();
     setState(() {
       isLoading = false;
     });
@@ -40,26 +43,11 @@ class _CustomerOrderState extends State<CustomerOrder>
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<OrderProvider>(context, listen: true);
+    user = Provider.of<UserProvider>(context, listen: true).orderMe;
     return Scaffold(
-      floatingActionButton: tabController.index == 0
-          ? source.backorderList.isEmpty
-              ? FloatingActionButton(
-                  shape: const CircleBorder(),
-                  backgroundColor: orderColor,
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(
-                      NewOrder.routeName,
-                      arguments: NewOrderArguments(
-                        id: null,
-                      ),
-                    );
-                  },
-                  child: const Icon(
-                    Icons.add,
-                    color: white,
-                  ),
-                )
-              : GestureDetector(
+      floatingActionButton: user.currentBusiness?.type == "SUPPLIER"
+          ? source.backorderList.isNotEmpty
+              ? GestureDetector(
                   onTap: () {
                     Navigator.of(context).pushNamed(
                       CreateBackOrder.routeName,
@@ -92,55 +80,73 @@ class _CustomerOrderState extends State<CustomerOrder>
                     ),
                   ),
                 )
-          : null,
-      backgroundColor: backgroundColor,
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverToBoxAdapter(
-              child: Material(
+              : null
+          : FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                  NewOrder.routeName,
+                  arguments: NewOrderArguments(data: null, id: null),
+                );
+              },
+              backgroundColor: orderColor,
+              shape: const CircleBorder(),
+              child: const Icon(
+                Icons.add,
                 color: white,
-                child: TabBar(
-                  controller: tabController,
-                  overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
-                  indicatorColor: orderColor,
-                  unselectedLabelColor: buttonColor,
-                  labelColor: orderColor,
-                  labelStyle: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w500),
-                  tabs: [
-                    Container(
-                      alignment: Alignment.center,
-                      height: 45,
-                      child: const Text(
-                        'Хүлээн авсан',
-                        style: TextStyle(fontFamily: 'Montserrat'),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      height: 45,
-                      child: const Text(
-                        'Багцалж илгээсэн',
-                        style: TextStyle(fontFamily: 'Montserrat'),
-                      ),
-                    ),
-                  ],
-                ),
               ),
             ),
-          ];
-        },
-        body: isLoading == true
-            ? const SizedBox()
-            : TabBarView(
-                controller: tabController,
-                children: const [
-                  ReceivedTab(),
-                  BackOrder(),
-                ],
-              ),
-      ),
+      backgroundColor: backgroundColor,
+      body: user.currentBusiness?.type == "SUPPLIER"
+          ? NestedScrollView(
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                return <Widget>[
+                  SliverToBoxAdapter(
+                    child: Material(
+                      color: white,
+                      child: TabBar(
+                        controller: tabController,
+                        overlayColor:
+                            MaterialStatePropertyAll(Colors.grey.shade100),
+                        indicatorColor: orderColor,
+                        unselectedLabelColor: buttonColor,
+                        labelColor: orderColor,
+                        labelStyle: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                        tabs: [
+                          Container(
+                            alignment: Alignment.center,
+                            height: 45,
+                            child: const Text(
+                              'Хүлээн авсан',
+                              style: TextStyle(fontFamily: 'Montserrat'),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            height: 45,
+                            child: const Text(
+                              'Багцалж илгээсэн',
+                              style: TextStyle(fontFamily: 'Montserrat'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ];
+              },
+              body: isLoading == true
+                  ? const SizedBox()
+                  : TabBarView(
+                      controller: tabController,
+                      children: const [
+                        ReceivedTab(),
+                        BackOrder(),
+                      ],
+                    ),
+            )
+          : const ReceivedTab(),
     );
   }
 }

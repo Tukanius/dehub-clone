@@ -133,9 +133,10 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
             ),
           ),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: splitList.isNotEmpty
             ? Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
                     onTap: splitCreate,

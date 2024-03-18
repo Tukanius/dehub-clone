@@ -77,7 +77,7 @@ class PieChartState extends State<PieChart> {
                           ),
                         ),
                         const SizedBox(
-                          width: 10,
+                          width: 5,
                         ),
                         Expanded(
                           flex: 6,
@@ -87,11 +87,15 @@ class PieChartState extends State<PieChart> {
                                 : '${data.count}',
                             style: const TextStyle(
                               fontWeight: FontWeight.w500,
+                              fontSize: 12,
                             ),
                           ),
                         ),
+                        const SizedBox(
+                          width: 3,
+                        ),
                         Expanded(
-                          flex: 2,
+                          flex: 3,
                           child: Text(
                             widget.module == "ORDER"
                                 ? '${data.ordersCount.toInt()}'
@@ -104,7 +108,7 @@ class PieChartState extends State<PieChart> {
                           ),
                         ),
                         const SizedBox(
-                          width: 15,
+                          width: 5,
                         ),
                         Expanded(
                           flex: 10,

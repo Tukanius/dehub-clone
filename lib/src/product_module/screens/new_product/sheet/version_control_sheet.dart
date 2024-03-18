@@ -24,11 +24,11 @@ class _VersionControlSheetState extends State<VersionControlSheet>
   generateValues() {
     final source = Provider.of<InventoryProvider>(context, listen: false);
     generate(int index, List<InventoryGoods> combination) {
-      if (index == source.product.values?.length) {
+      if (index == source.values.length) {
         options.add(List.from(combination));
         return;
       }
-      for (var element in source.product.values![index].values!) {
+      for (var element in source.values[index].values!) {
         combination.add(element);
         generate(index + 1, combination);
         combination.removeLast();

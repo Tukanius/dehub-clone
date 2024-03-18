@@ -48,7 +48,6 @@ class _HarahState extends State<Harah> {
         elevation: 0,
         centerTitle: true,
         iconTheme: const IconThemeData(color: white),
-        automaticallyImplyLeading: false,
         title: widget.invoice.refCode == null
             ? const Text(
                 '-',

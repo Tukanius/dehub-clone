@@ -331,7 +331,15 @@ class InventoryProvider extends ChangeNotifier {
   }
 
   select(InventoryGoods data) {
-    values.add(data);
+    int index =
+        product.values!.indexWhere((element) => element.name == data.name);
+    if (index < 0) {
+      values.add(data);
+    }
+    notifyListeners();
+  }
+
+  createVariant() {
     product.values = values;
     notifyListeners();
   }

@@ -200,6 +200,7 @@ class _GivePageState extends State<GivePage>
                           setState(() {
                             selectedStatus = general.invoiceStatus?[index].code;
                             isLoading = true;
+                            startAnimation = false;
                             page = 1;
                             groupItems = {};
                           });

@@ -127,9 +127,9 @@ class _NetworkHorizontalChartState extends State<NetworkHorizontalChart> {
             series: <ChartSeries>[
               BarSeries<Business, String>(
                 borderRadius: BorderRadius.circular(5),
-                pointColorMapper: (datum, index) => datum.name == "Зөвшөөрсөн"
+                pointColorMapper: (datum, index) => index == 1
                     ? networkDashboard2
-                    : datum.name == "Илгээсэн"
+                    : index == 0
                         ? networkColor
                         : grey2,
                 dataSource: widget.data.stats!,

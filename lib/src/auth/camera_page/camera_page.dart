@@ -112,9 +112,7 @@ class _CameraPageState extends State<CameraPage> {
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                              image: AssetImage(
-                                'images/logo.png',
-                              ),
+                              image: AssetImage('images/logo.png'),
                             ),
                           ),
                         ),

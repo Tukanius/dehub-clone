@@ -37,7 +37,7 @@ class PaymentRegisterState extends State<PaymentRegister>
   bool isLoading = true;
   General general = General();
   int page = 1;
-  int limit = 10;
+  int limit = 50;
   Result invoices = Result(rows: [], count: 0);
   List<Invoice> selected = [];
   double received = 0;

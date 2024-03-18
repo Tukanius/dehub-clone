@@ -20,7 +20,6 @@ import 'package:after_layout/after_layout.dart';
 
 class DashboardTab extends StatefulWidget {
   const DashboardTab({super.key});
-
   @override
   State<DashboardTab> createState() => _DashboardTabState();
 }
@@ -81,7 +80,6 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
     "ТОП 100": 27000,
     "ТОП 50": 10000,
   };
-
   @override
   afterFirstLayout(BuildContext context) async {
     Map<String, double> pieData = {};
@@ -94,9 +92,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
             dashboard.byPie![i].amount!.toDouble();
         colorList.add(
           Color(
-            int.parse(dashboard.byPie![i].color!.substring(1, 7), radix: 16) +
-                0xff000000,
-          ),
+              int.parse(dashboard.byPie![i].color!.substring(1, 7), radix: 16) +
+                  0xff000000),
         );
       });
     }
@@ -183,25 +180,18 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         svgColor: buttonColor,
                         svg: 'assets/svg/zahialga.svg',
                       ),
-                      DashboardCard(
-                        onClick: () {
-                          Navigator.of(context)
-                              .pushNamed(DropshipOrder.routeName);
-                        },
-                        boxColor: orderColor.withOpacity(0.2),
-                        padding: 7,
-                        labelText: 'Dropship захиалга',
-                        svgColor: buttonColor,
-                        svg: 'assets/svg/box.svg',
-                      ),
-                      DashboardCard(
-                        onClick: () {},
-                        boxColor: orderColor.withOpacity(0.2),
-                        padding: 10,
-                        labelText: 'Лавлах мэдээлэл',
-                        svgColor: buttonColor,
-                        svg: 'assets/svg/map.svg',
-                      ),
+                      if (user.currentBusiness?.type == "SUPPLIER")
+                        DashboardCard(
+                          onClick: () {
+                            Navigator.of(context)
+                                .pushNamed(DropshipOrder.routeName);
+                          },
+                          boxColor: orderColor.withOpacity(0.2),
+                          padding: 7,
+                          labelText: 'Dropship захиалга',
+                          svgColor: buttonColor,
+                          svg: 'assets/svg/box.svg',
+                        ),
                     ],
                   ),
                 ),

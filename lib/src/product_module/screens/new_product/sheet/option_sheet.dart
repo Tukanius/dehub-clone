@@ -114,8 +114,7 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
                             ),
                           ),
                         ),
-                        source.product.values!.isEmpty ||
-                                source.product.values == null
+                        source.values.isEmpty
                             ? Container(
                                 padding: const EdgeInsets.all(15),
                                 width: MediaQuery.of(context).size.width,
@@ -126,7 +125,7 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
                                 ),
                               )
                             : Column(
-                                children: source.product.values!
+                                children: source.values
                                     .map(
                                       (data) => Container(
                                         color: white,
@@ -174,9 +173,8 @@ class _OptionSheetState extends State<OptionSheet> with AfterLayoutMixin {
                                             ),
                                             GestureDetector(
                                               onTap: () {
-                                                int index = source
-                                                    .product.values!
-                                                    .indexOf(data);
+                                                int index =
+                                                    source.values.indexOf(data);
                                                 source.remove(index);
                                               },
                                               child: Container(

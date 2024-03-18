@@ -42,7 +42,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
     final loading = Provider.of<LoadingProvider>(context, listen: false);
     List<InventoryGoods> additionalUnits = [];
     try {
-      if (data.supplierTypeName != null) {
+      if (data.supplierTypeName != null && data.baseUnitId != null) {
         if (fbKey.currentState!.saveAndValidate()) {
           loading.loading(true);
           InventoryGoods form =
@@ -95,11 +95,17 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
             );
           }
         }
-      } else {
+      } else if (data.supplierTypeName == null) {
         customScaffoldMessenger(
           context,
           color: productColor,
           labelText: 'Ханган нийлүүлэгч сонгоно уу!',
+        );
+      } else {
+        customScaffoldMessenger(
+          context,
+          color: productColor,
+          labelText: 'Үндсэн хэмжих нэгж сонгоно уу!',
         );
       }
     } catch (e) {
@@ -680,7 +686,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                       .toList(),
                 ),
               const SizedBox(
-                height: 80,
+                height: 50,
               ),
               Row(
                 children: [
@@ -688,6 +694,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                     width: 25,
                   ),
                   Expanded(
+                    flex: 4,
                     child: CustomButton(
                       borderColor: productColor,
                       onClick: () {
@@ -702,6 +709,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                     width: 15,
                   ),
                   Expanded(
+                    flex: 6,
                     child: CustomButton(
                       onClick: () {
                         onSubmit(true);
