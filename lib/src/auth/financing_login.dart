@@ -366,16 +366,3 @@ class _FinancingLoginState extends State<FinancingLogin> with AfterLayoutMixin {
     );
   }
 }
-
-String? validateEmail(String value, context) {
-  RegExp regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-  if (value.isEmpty) {
-    return 'И-Мейлээ оруулна уу';
-  } else {
-    if (!regex.hasMatch(value)) {
-      return 'И-Мейлээ шалгана уу';
-    } else {
-      return null;
-    }
-  }
-}

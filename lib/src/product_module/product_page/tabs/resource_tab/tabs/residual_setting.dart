@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/product_module/components/adjustment_card/adjustment_card.dart';
@@ -71,13 +72,18 @@ class _ResidualSettingState extends State<ResidualSetting>
             onRefresh: onRefresh,
             color: productColor,
             child: SingleChildScrollView(
-              child: Column(
-                children: adjustment.rows!
-                    .map(
-                      (e) => AdjustmentCard(data: e),
+              child: adjustment.rows!.isNotEmpty
+                  ? Column(
+                      children: adjustment.rows!
+                          .map(
+                            (e) => AdjustmentCard(data: e),
+                          )
+                          .toList(),
                     )
-                    .toList(),
-              ),
+                  : const NotFound(
+                      module: "INVENTORY",
+                      labelText: 'Хоосон байна',
+                    ),
             ),
           );
   }

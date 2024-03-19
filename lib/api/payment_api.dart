@@ -49,4 +49,13 @@ class PaymentApi extends HttpRequest {
     var res = await get('/transaction/$id', "PAYMENT", true, handler: true);
     return Payment.fromJson(res as Map<String, dynamic>);
   }
+
+  Future<Payment> dashboard(
+      String startDate, String endDate, String structureMonth) async {
+    var res = await get(
+        '/dashboard?startDate=$startDate&endDate=$endDate&structureMonth=$structureMonth',
+        'PAYMENT',
+        true);
+    return Payment.fromJson(res as Map<String, dynamic>);
+  }
 }

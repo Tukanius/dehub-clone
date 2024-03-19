@@ -123,9 +123,8 @@ class _SettlementCardState extends State<SettlementCard> {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Column(
                 children: [
-                  const Divider(
-                    color: grey2,
-                    thickness: 0.5,
+                  const SizedBox(
+                    height: 5,
                   ),
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

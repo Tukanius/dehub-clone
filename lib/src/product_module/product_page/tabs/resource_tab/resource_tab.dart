@@ -18,59 +18,59 @@ class _ResourceTabState extends State<ResourceTab>
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
+    tabController.addListener(() {
+      setState(() {});
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TabBar(
-          controller: tabController,
-          labelColor: productColor,
-          unselectedLabelColor: grey2,
-          isScrollable: true,
-          indicatorColor: productColor,
-          tabAlignment: TabAlignment.start,
-          overlayColor: MaterialStatePropertyAll(Colors.grey.shade200),
-          tabs: const [
-            Tab(
-              text: 'Үлдэгдэл нөөц',
-            ),
-            Tab(
-              text: 'Үлдэгдэл тохиргоо',
-            ),
-          ],
-        ),
-        Expanded(
-          child: TabBarView(
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      floatingActionButton: tabController.index == 1
+          ? FloatingActionButton(
+              shape: const CircleBorder(),
+              backgroundColor: productColor,
+              onPressed: () {
+                Navigator.of(context).pushNamed(Adjustment.routeName);
+              },
+              child: const Icon(
+                Icons.add,
+                color: white,
+              ),
+            )
+          : null,
+      body: Column(
+        children: [
+          TabBar(
             controller: tabController,
-            children: [
-              const RemainingStock(),
-              Stack(
-                children: [
-                  const ResidualSetting(),
-                  Positioned(
-                    bottom: 20,
-                    right: 20,
-                    child: FloatingActionButton(
-                      shape: const CircleBorder(),
-                      backgroundColor: productColor,
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(Adjustment.routeName);
-                      },
-                      child: const Icon(
-                        Icons.add,
-                        color: white,
-                      ),
-                    ),
-                  ),
-                ],
+            labelColor: productColor,
+            unselectedLabelColor: grey2,
+            isScrollable: true,
+            indicatorColor: productColor,
+            tabAlignment: TabAlignment.start,
+            overlayColor: MaterialStatePropertyAll(Colors.grey.shade200),
+            tabs: const [
+              Tab(
+                text: 'Үлдэгдэл нөөц',
+              ),
+              Tab(
+                text: 'Үлдэгдэл тохиргоо',
               ),
             ],
           ),
-        ),
-      ],
+          Expanded(
+            child: TabBarView(
+              controller: tabController,
+              children: const [
+                RemainingStock(),
+                ResidualSetting(),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -84,7 +84,9 @@ class PieChartState extends State<PieChart> {
                           child: Text(
                             widget.module == "ORDER"
                                 ? '${Utils().formatCurrency("${data.amount}")}₮'
-                                : '${data.count}',
+                                : widget.module == "PAYMENT"
+                                    ? '${Utils().formatCurrency("${data.amount}")}₮'
+                                    : '${data.count}',
                             style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
@@ -99,7 +101,9 @@ class PieChartState extends State<PieChart> {
                           child: Text(
                             widget.module == "ORDER"
                                 ? '${data.ordersCount.toInt()}'
-                                : '${(100 * data.count / widget.legend.fold(0, (previousValue, element) => previousValue + element.count!)).toStringAsFixed(1)}%',
+                                : widget.module == "PAYMENT"
+                                    ? "${data.percent}%"
+                                    : '${(100 * data.count / widget.legend.fold(0, (previousValue, element) => previousValue + element.count!)).toStringAsFixed(1)}%',
                             style: const TextStyle(
                               color: grey,
                               fontSize: 12,
@@ -115,7 +119,9 @@ class PieChartState extends State<PieChart> {
                           child: Text(
                             widget.module == "ORDER"
                                 ? '${data.name}'
-                                : '${data.profileName}',
+                                : widget.module == "PAYMENT"
+                                    ? "${data.name}"
+                                    : '${data.profileName}',
                             style: const TextStyle(
                               fontSize: 12,
                               color: grey2,

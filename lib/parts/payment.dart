@@ -3,11 +3,25 @@ part of '../models/payment.dart';
 Payment _$PaymentFromJson(Map<String, dynamic> json) {
   return Payment(
     count: json['count'] != null ? int.parse(json['count'].toString()) : null,
+    incomeAmount: json['incomeAmount'] != null
+        ? int.parse(json['incomeAmount'].toString())
+        : null,
+    outcomeAmount: json['outcomeAmount'] != null
+        ? int.parse(json['outcomeAmount'].toString())
+        : null,
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => Payment.fromJson(e)).toList()
         : null,
     values: json['values'] != null
         ? (json['values'] as List).map((e) => Payment.fromJson(e)).toList()
+        : null,
+    byInterval: json['byInterval'] != null
+        ? (json['byInterval'] as List).map((e) => Payment.fromJson(e)).toList()
+        : null,
+    revenueStructure: json['revenueStructure'] != null
+        ? (json['revenueStructure'] as List)
+            .map((e) => Payment.fromJson(e))
+            .toList()
         : null,
     id: json['id'] != null ? json['id'] as String : null,
     createdAt: json['createdAt'] != null
@@ -28,6 +42,7 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
     businessId:
         json['businessId'] != null ? json['businessId'] as String : null,
     inOutType: json['inOutType'] != null ? json['inOutType'] as String : null,
+    date: json['date'] != null ? json['date'] as String : null,
     regUserId: json['regUserId'] != null ? json['regUserId'] as String : null,
     bankName: json['bankName'] != null ? json['bankName'] as String : null,
     number: json['number'] != null ? json['number'] as String : null,
@@ -126,6 +141,9 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
     paymentFee: json['paymentFee'] != null
         ? double.parse(json['paymentFee'].toString())
         : null,
+    percent: json['percent'] != null
+        ? double.parse(json['percent'].toString())
+        : null,
     hasBankTrxFee:
         json['hasBankTrxFee'] != null ? json['hasBankTrxFee'] as bool : null,
     bankTrxFee: json['bankTrxFee'] != null
@@ -150,6 +168,17 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$PaymentToJson(Payment instance) {
   Map<String, dynamic> json = {};
+  if (instance.byInterval != null) json['byInterval'] = instance.byInterval;
+  if (instance.incomeAmount != null) {
+    json['incomeAmount'] = instance.incomeAmount;
+  }
+  if (instance.outcomeAmount != null) {
+    json['outcomeAmount'] = instance.outcomeAmount;
+  }
+  if (instance.date != null) json['date'] = instance.date;
+  if (instance.revenueStructure != null) {
+    json['revenueStructure'] = instance.revenueStructure;
+  }
   if (instance.requestId != null) json['requestId'] = instance.requestId;
   if (instance.clientId != null) json['clientId'] = instance.clientId;
   if (instance.responseType != null) {
@@ -230,6 +259,7 @@ Map<String, dynamic> _$PaymentToJson(Payment instance) {
     json['hasBankTrxFee'] = instance.hasBankTrxFee;
   }
   if (instance.bankTrxFee != null) json['bankTrxFee'] = instance.bankTrxFee;
+  if (instance.percent != null) json['percent'] = instance.percent;
   if (instance.totalAmount != null) json['totalAmount'] = instance.totalAmount;
   if (instance.tranId != null) json['tranId'] = instance.tranId;
   if (instance.tranDate != null) json['tranDate'] = instance.tranDate;

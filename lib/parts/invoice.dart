@@ -37,6 +37,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
         : null,
     configType:
         json['configType'] != null ? json['configType'] as String : null,
+    orderSalesCode: json['orderSalesCode'] != null
+        ? json['orderSalesCode'] as String
+        : null,
     updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
     logType: json['logType'] != null ? json['logType'] as String : null,
     trxRefCode:
@@ -424,6 +427,9 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
 
   if (instance.paymentRefCode != null) {
     json['paymentRefCode'] = instance.paymentRefCode;
+  }
+  if (instance.orderSalesCode != null) {
+    json['orderSalesCode'] = instance.orderSalesCode;
   }
   if (instance.numberOfInv != null) {
     json['numberOfInv'] = instance.numberOfInv;

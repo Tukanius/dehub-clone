@@ -4,6 +4,7 @@ import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/auth/otp_page/otp_page.dart';
 import 'package:dehub/utils/is_device_size.dart';
+import 'package:dehub/utils/validations.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -385,7 +386,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         validator: FormBuilderValidators.compose(
                           [
                             (value) {
-                              return validateName(value.toString(), context);
+                              return validateCryllic(value.toString(), context);
                             }
                           ],
                         ),
@@ -435,7 +436,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         validator: FormBuilderValidators.compose([
                           (value) {
-                            return validateName(value.toString(), context);
+                            return validateCryllic(value.toString(), context);
                           }
                         ]),
                       ),
@@ -562,44 +563,5 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
-  }
-}
-
-String? validateEmail(String value, context) {
-  RegExp regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-  if (value.isEmpty) {
-    return 'И-Мейлээ оруулна уу';
-  } else {
-    if (!regex.hasMatch(value)) {
-      return 'И-Мейлээ шалгана уу';
-    } else {
-      return null;
-    }
-  }
-}
-
-String? validateName(String name, BuildContext context) {
-  RegExp isValidName = RegExp(r'(^[а-яА-ЯӨөҮүЁёӨө -]+$)');
-  if (name.isEmpty) {
-    return "Нэр оруулна уу";
-  } else {
-    if (!isValidName.hasMatch(name)) {
-      return "Зөвхөн крилл үсэг ашиглана";
-    } else {
-      return null;
-    }
-  }
-}
-
-String? validatePhone(String value, context) {
-  RegExp regex = RegExp(r'[(9|8]{1}[0-9]{7}$');
-  if (value.isEmpty) {
-    return 'Утасны дугаараа оруулна уу';
-  } else {
-    if (!regex.hasMatch(value)) {
-      return 'Утасны дугаараа шалгана уу';
-    } else {
-      return null;
-    }
   }
 }

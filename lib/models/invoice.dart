@@ -187,8 +187,10 @@ class Invoice {
   String? trxRefCode;
   List<Invoice>? invoices;
   String? logType;
+  String? orderSalesCode;
 
   Invoice({
+    this.orderSalesCode,
     this.logType,
     this.invoices,
     this.trxRefCode,

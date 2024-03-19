@@ -1,8 +1,10 @@
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
+import 'package:dehub/models/payment_method.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_payment/payment_approval_page.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_payment/qpay_page.dart';
+import 'package:dehub/utils/utils.dart';
 // import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -47,9 +49,15 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
   String? selectedValue;
   String? selectedMethod;
   Invoice selectedBank = Invoice();
+  General general = General();
+  List<PaymentMethod> methods = [];
+  GlobalKey<FormBuilderState> fbkey = GlobalKey<FormBuilderState>();
 
   @override
   afterFirstLayout(BuildContext context) {
+    methods = general.paymentMethod!
+        .where((element) => element.code == "B2B" || element.code == "QPAY")
+        .toList();
     setState(() {
       isLoading = false;
     });
@@ -62,39 +70,43 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
   }
 
   onSubmit() {
-    selectedMethod == "B2B"
-        ? Navigator.of(context).pushNamed(PaymentApprovalPage.routeName,
-            arguments: PaymentApprovalPageArguments(
-              data: widget.data,
-              amount: double.parse(textController.text),
-            ))
-        : Navigator.of(context).pushNamed(
-            QpayPage.routeName,
-            arguments: QpayPageArguments(
-              color: invoiceColor,
-              data: Invoice(
-                invoiceId: widget.data.id,
-                invoiceRefCode: widget.data.refCode,
-                receiverBusinessId: widget.data.type == "PURCHASE"
-                    ? widget.data.receiverBusinessId
-                    : widget.data.senderBusinessId,
-                description: widget.data.refCode,
-                creditAccountId: widget.data.receiverAcc?.id,
-                creditAccountBank: widget.data.receiverAcc?.bankName,
-                creditAccountName: widget.data.receiverAcc?.name,
-                creditAccountNumber: widget.data.receiverAcc?.number,
-                creditAccountCurrency: widget.data.receiverAcc?.currency,
-                debitAccountId: widget.data.senderAcc?.id,
-                debitAccountBank: widget.data.senderAcc?.bankName,
-                debitAccountName: widget.data.senderAcc?.name,
-                debitAccountNumber: widget.data.senderAcc?.number,
-                debitAccountCurrency: widget.data.senderAcc?.currency,
-              ),
-            ),
-          );
+    if (selectedMethod == "B2B") {
+      if (fbkey.currentState!.saveAndValidate()) {
+        Navigator.of(context).pushNamed(
+          PaymentApprovalPage.routeName,
+          arguments: PaymentApprovalPageArguments(
+            data: widget.data,
+            amount: double.parse(textController.text),
+          ),
+        );
+      }
+    } else {
+      Navigator.of(context).pushNamed(
+        QpayPage.routeName,
+        arguments: QpayPageArguments(
+          color: invoiceColor,
+          data: Invoice(
+            invoiceId: widget.data.id,
+            invoiceRefCode: widget.data.refCode,
+            receiverBusinessId: widget.data.type == "PURCHASE"
+                ? widget.data.receiverBusinessId
+                : widget.data.senderBusinessId,
+            description: widget.data.refCode,
+            creditAccountId: widget.data.receiverAcc?.id,
+            creditAccountBank: widget.data.receiverAcc?.bankName,
+            creditAccountName: widget.data.receiverAcc?.name,
+            creditAccountNumber: widget.data.receiverAcc?.number,
+            creditAccountCurrency: widget.data.receiverAcc?.currency,
+            debitAccountId: widget.data.senderAcc?.id,
+            debitAccountBank: widget.data.senderAcc?.bankName,
+            debitAccountName: widget.data.senderAcc?.name,
+            debitAccountNumber: widget.data.senderAcc?.number,
+            debitAccountCurrency: widget.data.senderAcc?.currency,
+          ),
+        ),
+      );
+    }
   }
-
-  General general = General();
 
   @override
   Widget build(BuildContext context) {
@@ -157,23 +169,22 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                     color: white,
                     padding: const EdgeInsets.symmetric(
                         vertical: 15, horizontal: 15),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Нэхэмжлэх үлдэгдэл',
+                        const Text(
+                          'Батлагдсан дүн',
                         ),
                         Row(
                           children: [
                             Text(
-                              // '${Utils().formatCurrency(widget.data.amountToPay.toString())}',
-                              '',
-                              style: TextStyle(color: invoiceColor),
+                              '${Utils().formatCurrency(widget.data.confirmedAmount.toString())}₮',
+                              style: const TextStyle(color: invoiceColor),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
-                            Icon(
+                            const Icon(
                               Icons.arrow_forward_ios,
                               size: 12,
                             )
@@ -185,23 +196,22 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                   Container(
                     color: white,
                     padding: const EdgeInsets.all(15),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Төлбөл зохих',
                         ),
                         Row(
                           children: [
                             Text(
-                              // '${Utils().formatCurrency(widget.data.amountToPay.toString())}',
-                              '',
-                              style: TextStyle(color: invoiceColor),
+                              '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
+                              style: const TextStyle(color: invoiceColor),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
-                            Icon(
+                            const Icon(
                               Icons.arrow_forward_ios,
                               size: 12,
                             )
@@ -238,7 +248,7 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                               width: 10,
                             ),
                             Text(
-                              '${widget.data.receiverBusiness?.profileName}',
+                              '${widget.data.senderBusiness?.profileName}',
                               style: const TextStyle(color: invoiceColor),
                             ),
                           ],
@@ -265,7 +275,7 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                         Row(
                           children: [
                             Text(
-                              '${widget.data.receiverAcc?.number}',
+                              '${widget.data.senderAcc?.number}',
                               style: const TextStyle(color: invoiceColor),
                             ),
                             const SizedBox(
@@ -330,59 +340,36 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          items: general.paymentMethod!
+                          items: methods
                               .map(
                                 (item) => DropdownMenuItem(
                                   value: item.code,
                                   child: Row(
                                     children: [
                                       item.code == "B2B"
-                                          ? const SizedBox()
-                                          : item.code == "QPAY"
-                                              ? Container(
-                                                  margin: const EdgeInsets.only(
-                                                    right: 10,
-                                                  ),
-                                                  height: 20,
-                                                  width: 20,
-                                                  child: const Image(
-                                                    image: AssetImage(
-                                                      'images/qpay_logo.png',
-                                                    ),
-                                                  ),
-                                                )
-                                              : item.code == "SOCIAL_PAY"
-                                                  ? Container(
-                                                      margin:
-                                                          const EdgeInsets.only(
-                                                        right: 10,
-                                                      ),
-                                                      height: 20,
-                                                      width: 20,
-                                                      child: const Image(
-                                                        image: AssetImage(
-                                                          'images/social_pay_logo.png',
-                                                        ),
-                                                      ),
-                                                    )
-                                                  : item.code == "BANK_CARD"
-                                                      ? Container(
-                                                          margin:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                                  right: 10),
-                                                          child:
-                                                              SvgPicture.asset(
-                                                            'assets/svg/bank_card.svg',
-                                                            colorFilter:
-                                                                const ColorFilter
-                                                                    .mode(
-                                                                    invoiceColor,
-                                                                    BlendMode
-                                                                        .srcIn),
-                                                          ),
-                                                        )
-                                                      : const SizedBox(),
+                                          ? Container(
+                                              margin: const EdgeInsets.only(
+                                                  right: 10),
+                                              child: SvgPicture.asset(
+                                                'assets/svg/bank_card.svg',
+                                                colorFilter:
+                                                    const ColorFilter.mode(
+                                                        invoiceColor,
+                                                        BlendMode.srcIn),
+                                              ),
+                                            )
+                                          : Container(
+                                              margin: const EdgeInsets.only(
+                                                right: 10,
+                                              ),
+                                              height: 20,
+                                              width: 20,
+                                              child: const Image(
+                                                image: AssetImage(
+                                                  'images/qpay_logo.png',
+                                                ),
+                                              ),
+                                            ),
                                       Text(
                                         '${item.name}',
                                         style: const TextStyle(fontSize: 14),
@@ -633,23 +620,26 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                         ),
                         Container(
                           margin: const EdgeInsets.symmetric(horizontal: 15),
-                          child: FormTextField(
-                            name: "amount",
-                            inputType: TextInputType.number,
-                            controller: textController,
-                            decoration: const InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 15),
-                              border: OutlineInputBorder(),
-                              fillColor: Colors.white,
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: invoiceColor),
+                          child: FormBuilder(
+                            key: fbkey,
+                            child: FormTextField(
+                              name: "amount",
+                              inputType: TextInputType.number,
+                              controller: textController,
+                              decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 15),
+                                border: OutlineInputBorder(),
+                                fillColor: Colors.white,
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: invoiceColor),
+                                ),
                               ),
+                              validators: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(
+                                    errorText: 'Төлбөрийн дүн оруулна уу')
+                              ]),
                             ),
-                            validators: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(
-                                  errorText: 'Төлбөрийн дүн оруулна уу')
-                            ]),
                           ),
                         ),
                         Row(
@@ -685,16 +675,14 @@ class _InvoicePaymentPageState extends State<InvoicePaymentPage>
                   const SizedBox(
                     height: 40,
                   ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    child: CustomButton(
+                  if (selectedMethod != null)
+                    CustomButton(
                       labelColor: invoiceColor,
                       labelText: 'Төлбөр зөвшөөрөх',
                       onClick: () {
                         onSubmit();
                       },
                     ),
-                  ),
                   const SizedBox(
                     height: 50,
                   ),

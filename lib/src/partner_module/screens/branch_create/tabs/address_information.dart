@@ -339,7 +339,7 @@ class _AddressInformationState extends State<AddressInformation>
                         name: 'branchAddress',
                         maxLines: 3,
                         initialValue: widget.data?.branchAddress ?? '',
-                        inputType: TextInputType.number,
+                        inputType: TextInputType.text,
                         decoration: InputDecoration(
                           hintText: 'Хаягийн дэлгэрэнгүй',
                           border: OutlineInputBorder(

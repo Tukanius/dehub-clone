@@ -1,4 +1,5 @@
 import 'package:dehub/models/user.dart';
+import 'package:dehub/utils/validations.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
@@ -140,7 +141,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
               filled: true,
             ),
             validator: FormBuilderValidators.compose(
-              [(value) => registerValidate(value.toString(), context)],
+              [(value) => registerNoValidate(value.toString(), context)],
             ),
           ),
           Container(
@@ -208,45 +209,5 @@ class _CreateUserFormState extends State<CreateUserForm> {
         ],
       ),
     );
-  }
-}
-
-String? validateEmail(String value, context) {
-  RegExp regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-  if (value.isEmpty) {
-    return 'И-Мейлээ оруулна уу';
-  } else {
-    if (!regex.hasMatch(value)) {
-      return 'И-Мейлээ шалгана уу';
-    } else {
-      return null;
-    }
-  }
-}
-
-String? registerValidate(String value, context) {
-  RegExp regex = RegExp(r'^[А-Яа-я|Үү|Өө|Ёё]{2}\d{8}$');
-  if (value.isEmpty) {
-    return 'Регистр оруулна уу';
-  } else {
-    if (!regex.hasMatch(value)) {
-      return 'Регистр шалгана уу';
-    } else {
-      return null;
-    }
-  }
-}
-
-String? validateCryllic(String name, BuildContext context) {
-  String pattern = r'(^[а-яА-ЯӨөҮүЁёӨө -]+$)';
-  RegExp isValidName = RegExp(pattern);
-  if (name.isEmpty) {
-    return "Заавал оруулна";
-  } else {
-    if (!isValidName.hasMatch(name)) {
-      return "Зөвхөн крилл үсэг ашиглана";
-    } else {
-      return null;
-    }
   }
 }

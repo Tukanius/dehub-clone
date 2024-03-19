@@ -1,4 +1,3 @@
-import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
@@ -112,12 +111,7 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
                         BlendMode.srcIn),
                   ),
                 )
-              : selectedIndex == 3
-                  ? const AddButton(
-                      color: white,
-                      addColor: invoiceColor,
-                    )
-                  : const SizedBox(),
+              : const SizedBox(),
         ],
       ),
       body: isLoading == true

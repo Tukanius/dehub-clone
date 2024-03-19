@@ -12,6 +12,7 @@ import 'package:dehub/providers/partner_provider.dart';
 import 'package:dehub/src/partner_module/screens/branch_create/tabs/sheets/buyer_select.dart';
 import 'package:dehub/src/partner_module/screens/branch_create/tabs/sheets/select_branch_type.dart';
 import 'package:dehub/src/partner_module/screens/branch_create/tabs/sheets/supplier_select.dart';
+import 'package:dehub/utils/validations.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -108,6 +109,12 @@ class _MainInformationState extends State<MainInformation>
           showCustomDialog(
             context,
             '5 болон түүнээс доош зураг оруулах боломжтой',
+            false,
+          );
+        } else if (source.partner.profileBanners!.isEmpty) {
+          showCustomDialog(
+            context,
+            'Баннер зураг дор хаяж 1 байх ёстой',
             false,
           );
         } else {
@@ -575,33 +582,5 @@ class _MainInformationState extends State<MainInformation>
         ),
       ),
     );
-  }
-}
-
-String? validateCryllic(String name, BuildContext context) {
-  String pattern = r'(^[а-яА-ЯӨөҮүЁёӨө -]+$)';
-  RegExp isValidName = RegExp(pattern);
-  if (name.isEmpty) {
-    return "Заавал оруулна";
-  } else {
-    if (!isValidName.hasMatch(name)) {
-      return "Зөвхөн крилл үсэг ашиглана";
-    } else {
-      return null;
-    }
-  }
-}
-
-String? englishValidate(String name, BuildContext context) {
-  String pattern = r'^[a-zA-Z -]+$';
-  RegExp isValidName = RegExp(pattern);
-  if (name.isEmpty) {
-    return "Заавал оруулна";
-  } else {
-    if (!isValidName.hasMatch(name)) {
-      return "Зөвхөн англи үсэг ашиглана";
-    } else {
-      return null;
-    }
   }
 }

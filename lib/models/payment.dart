@@ -68,14 +68,25 @@ class Payment {
   String? inOutType;
   DateTime? header;
   List<Payment>? values;
-
   String? requestId;
   String? clientId;
   String? responseType;
   String? redirectUri;
   Uri? url;
+  List<Payment>? byInterval;
+  List<Payment>? revenueStructure;
+  double? percent;
+  String? date; //Must be string
+  int? incomeAmount;
+  int? outcomeAmount;
 
   Payment({
+    this.outcomeAmount,
+    this.incomeAmount,
+    this.date,
+    this.percent,
+    this.byInterval,
+    this.revenueStructure,
     this.requestId,
     this.clientId,
     this.responseType,

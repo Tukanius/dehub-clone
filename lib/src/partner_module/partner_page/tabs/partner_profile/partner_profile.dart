@@ -141,41 +141,53 @@ class _PartnerProfileState extends State<PartnerProfile> with AfterLayoutMixin {
                                 height: 5,
                               ),
                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
                                     child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         const Icon(
                                           Icons.mail_outline,
                                           color: grey2,
                                           size: 14,
                                         ),
-                                        Text(
-                                          '${user.partner?.email}',
-                                          style: const TextStyle(
-                                            color: grey2,
-                                            fontSize: 12,
+                                        Expanded(
+                                          child: Text(
+                                            '${user.partner?.email}',
+                                            style: const TextStyle(
+                                              color: grey2,
+                                              fontSize: 12,
+                                            ),
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      const Icon(
-                                        Icons.phone_outlined,
-                                        color: grey2,
-                                        size: 14,
-                                      ),
-                                      Text(
-                                        '${user.partner?.phone}',
-                                        style: const TextStyle(
-                                          color: grey2,
-                                          fontSize: 12,
+                                  Expanded(
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            '${user.partner?.phone}',
+                                            style: const TextStyle(
+                                              color: grey2,
+                                              fontSize: 12,
+                                            ),
+                                            textAlign: TextAlign.end,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                        const Icon(
+                                          Icons.phone_outlined,
+                                          color: grey2,
+                                          size: 14,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -183,6 +195,7 @@ class _PartnerProfileState extends State<PartnerProfile> with AfterLayoutMixin {
                                 height: 5,
                               ),
                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
                                     child: Row(
@@ -209,19 +222,24 @@ class _PartnerProfileState extends State<PartnerProfile> with AfterLayoutMixin {
                                   ),
                                   Expanded(
                                     child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
+                                        Expanded(
+                                          child: Text(
+                                            '${user.user?.employeeUnit?.name}',
+                                            style: const TextStyle(
+                                              color: grey2,
+                                              fontSize: 12,
+                                            ),
+                                            textAlign: TextAlign.end,
+                                          ),
+                                        ),
                                         const Icon(
                                           Icons.person_outline_outlined,
                                           color: grey2,
                                           size: 16,
-                                        ),
-                                        Text(
-                                          '${user.user?.employeeUnit?.name}',
-                                          style: const TextStyle(
-                                            color: grey2,
-                                            fontSize: 12,
-                                          ),
                                         ),
                                       ],
                                     ),

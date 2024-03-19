@@ -118,7 +118,7 @@ class PartnerProvider extends ChangeNotifier {
     buyers = [];
     suppliers = [];
     createdBranch = Partner();
-    partner = Partner();
+    partner = Partner(profileBanners: []);
     notifyListeners();
   }
 

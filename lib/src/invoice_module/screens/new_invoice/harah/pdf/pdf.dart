@@ -1,10 +1,8 @@
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/user.dart';
-import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class INVOICEPDF extends StatefulWidget {
   final Invoice data;
@@ -48,7 +46,6 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserProvider>(context, listen: true).orderMe;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 25),
       margin: const EdgeInsets.symmetric(horizontal: 15),
@@ -119,9 +116,9 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                           const SizedBox(
                             height: 5,
                           ),
-                          const Row(
+                          Row(
                             children: [
-                              Expanded(
+                              const Expanded(
                                 child: Text(
                                   'Захиалга №',
                                   style: TextStyle(
@@ -131,8 +128,8 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                               ),
                               Expanded(
                                 child: Text(
-                                  'INV-23492374',
-                                  style: TextStyle(
+                                  widget.data.orderSalesCode ?? '-',
+                                  style: const TextStyle(
                                     color: invoiceColor,
                                     fontSize: 7,
                                   ),
@@ -221,13 +218,6 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
           ),
           const SizedBox(
             height: 10,
-          ),
-          const Text(
-            'ДДТД: Энд ебаримт холбогдохоор код гарах байх',
-            style: TextStyle(fontSize: 7),
-          ),
-          const SizedBox(
-            height: 2,
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -820,7 +810,7 @@ class _INVOICEPDFState extends State<INVOICEPDF> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      '${Utils().formatCurrency((widget.lines.fold(0.0, (previousValue, element) => previousValue + element.price!).toString()))}₮',
+                      '${Utils().formatCurrency((widget.lines.fold(0.0, (previousValue, element) => previousValue + (element.quantity! * element.price!)).toString()))}₮',
                       style: const TextStyle(
                         fontSize: 7,
                       ),

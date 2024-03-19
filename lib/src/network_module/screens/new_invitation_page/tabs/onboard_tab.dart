@@ -4,6 +4,7 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/models/zip_codes.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/loading_provider.dart';
+import 'package:dehub/utils/validations.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dehub/components/field_card/field_card.dart';
@@ -1293,32 +1294,6 @@ class _OnboardTabState extends State<OnboardTab> {
   }
 }
 
-String? validateEmail(String value, context) {
-  RegExp regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-  if (value.isEmpty) {
-    return 'И-Мейлээ оруулна уу';
-  } else {
-    if (!regex.hasMatch(value)) {
-      return 'И-Мейлээ шалгана уу';
-    } else {
-      return null;
-    }
-  }
-}
-
-String? validatePhone(String value, context) {
-  RegExp regex = RegExp(r'[(9|8]{1}[0-9]{7}$');
-  if (value.isEmpty) {
-    return 'Утасны дугаараа оруулна уу';
-  } else {
-    if (!regex.hasMatch(value)) {
-      return 'Утасны дугаараа шалгана уу';
-    } else {
-      return null;
-    }
-  }
-}
-
 String? validateRegNumber(String value, context) {
   RegExp regex = RegExp(r'^\d{7}$');
   if (value.isEmpty) {
@@ -1326,20 +1301,6 @@ String? validateRegNumber(String value, context) {
   } else {
     if (!regex.hasMatch(value)) {
       return "Регистерийн дугаар буруу байна";
-    } else {
-      return null;
-    }
-  }
-}
-
-String? validateCryllic(String value, context) {
-  String pattern = r'(^[а-яА-ЯӨөҮүЁёӨө -]+$)';
-  RegExp isValidName = RegExp(pattern);
-  if (value.isEmpty) {
-    return "Заавал оруулна";
-  } else {
-    if (!isValidName.hasMatch(value)) {
-      return "Зөвхөн крилл үсэг ашиглана";
     } else {
       return null;
     }

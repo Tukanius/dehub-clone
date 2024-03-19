@@ -141,7 +141,9 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         },
                         boxColor: orderColor.withOpacity(0.2),
                         padding: 9,
-                        labelText: 'Гэрээт харилцагч',
+                        labelText: user.currentBusiness?.type == "SUPPLIER"
+                            ? 'Гэрээт харилцагч'
+                            : 'Гэрээт нийлүүлэгч',
                         svgColor: buttonColor,
                         svg: 'assets/svg/order_customer.svg',
                       ),

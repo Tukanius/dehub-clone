@@ -42,7 +42,8 @@ class _InvoiceCardState extends State<InvoiceCard> {
     return GestureDetector(
       onTap: widget.onClick,
       child: AnimatedContainer(
-        padding: const EdgeInsets.only(right: 15),
+        padding:
+            const EdgeInsets.only(right: 15, left: 15, top: 15, bottom: 15),
         duration: Duration(milliseconds: 300 + (widget.index * 200)),
         curve: Curves.ease,
         transform: Matrix4.translationValues(
@@ -52,221 +53,180 @@ class _InvoiceCardState extends State<InvoiceCard> {
         ),
         color: white,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Checkbox(
-                  side: MaterialStateBorderSide.resolveWith(
-                    (states) => const BorderSide(
-                      color: invoiceColor,
-                      width: 2,
-                    ),
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  activeColor: invoiceColor,
-                  value: value,
-                  onChanged: (value1) {
-                    setState(() {
-                      value = value1!;
-                    });
-                  },
-                ),
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: [
-                      const SizedBox(
-                        height: 15,
+                      SvgPicture.asset(
+                        'assets/svg/inv.svg',
+                        colorFilter: const ColorFilter.mode(
+                            invoiceColor, BlendMode.srcIn),
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/svg/inv.svg',
-                                  colorFilter: const ColorFilter.mode(
-                                      invoiceColor, BlendMode.srcIn),
-                                ),
-                                Text(
-                                  '  ${widget.data.refCode}',
-                                  style: const TextStyle(
-                                    color: invoiceColor,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
-                              style: const TextStyle(
-                                color: grey2,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                              ),
-                              textAlign: TextAlign.end,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          widget.data.paidDate == null
-                              ? Text(
-                                  DateFormat("yyyy-MM-dd HH:mm")
-                                      .format(widget.data.createdAt!),
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: grey2,
-                                  ),
-                                )
-                              : Text(
-                                  DateFormat("yyyy-MM-dd HH:mm")
-                                      .format(widget.data.paidDate!),
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: grey2,
-                                  ),
-                                ),
-                          Text(
-                            widget.data.paymentDate != null
-                                ? "Төлөх огноо: ${DateFormat("yyyy-MM-dd").format(widget.data.paymentDate!)}"
-                                : "Төлөх огноо: -",
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: grey2,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          widget.data.respondText != null
-                              ? Text(
-                                  '${widget.data.respondText}',
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: invoiceColor,
-                                  ),
-                                )
-                              : const Text(
-                                  '-',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: invoiceColor,
-                                  ),
-                                ),
-                          Text(
-                            'Баталсан: ${Utils().formatCurrency(widget.data.confirmedAmount.toString())}₮',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: grey2,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Төлсөн: ${Utils().formatCurrency(widget.data.paidAmount.toString())}₮',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: grey2,
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              const Text(
-                                'Хугацаа: ',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: grey2,
-                                ),
-                              ),
-                              Text(
-                                '${overdueStatus().name}',
-                                style: TextStyle(
-                                  color: Color(
-                                    int.parse(
-                                            overdueStatus()
-                                                .color
-                                                .substring(1, 7),
-                                            radix: 16) +
-                                        0xff000000,
-                                  ),
-                                  fontSize: 12,
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            'Үлдсэн хоног: ',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: depBrown,
-                            ),
-                          ),
-                          widget.data.paymentDate != null
-                              ? widget.data.paidDate == null
-                                  ? Text(
-                                      '${widget.data.paymentDate?.difference(DateTime.now()).inDays}',
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        color: grey2,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    )
-                                  : Text(
-                                      '${widget.data.paymentDate?.difference(widget.data.paidDate!).inDays}',
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        color: grey2,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    )
-                              : const Text(
-                                  '-',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: grey2,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 15,
+                      Text(
+                        '  ${widget.data.refCode}',
+                        style: const TextStyle(
+                          color: invoiceColor,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ],
                   ),
                 ),
+                Expanded(
+                  child: Text(
+                    '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
+                    style: const TextStyle(
+                      color: grey2,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
+                    textAlign: TextAlign.end,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                widget.data.paidDate == null
+                    ? Text(
+                        DateFormat("yyyy-MM-dd HH:mm")
+                            .format(widget.data.createdAt!),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: grey2,
+                        ),
+                      )
+                    : Text(
+                        DateFormat("yyyy-MM-dd HH:mm")
+                            .format(widget.data.paidDate!),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: grey2,
+                        ),
+                      ),
+                Text(
+                  widget.data.paymentDate != null
+                      ? "Төлөх огноо: ${DateFormat("yyyy-MM-dd").format(widget.data.paymentDate!)}"
+                      : "Төлөх огноо: -",
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: grey2,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                widget.data.respondText != null
+                    ? Text(
+                        '${widget.data.respondText}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: invoiceColor,
+                        ),
+                      )
+                    : const Text(
+                        '-',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: invoiceColor,
+                        ),
+                      ),
+                Text(
+                  'Баталсан: ${Utils().formatCurrency(widget.data.confirmedAmount.toString())}₮',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: grey2,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Төлсөн: ${Utils().formatCurrency(widget.data.paidAmount.toString())}₮',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: grey2,
+                  ),
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      'Хугацаа: ',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: grey2,
+                      ),
+                    ),
+                    Text(
+                      '${overdueStatus().name}',
+                      style: TextStyle(
+                        color: Color(
+                          int.parse(overdueStatus().color.substring(1, 7),
+                                  radix: 16) +
+                              0xff000000,
+                        ),
+                        fontSize: 12,
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              children: [
+                const Text(
+                  'Үлдсэн хоног: ',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: depBrown,
+                  ),
+                ),
+                widget.data.paymentDate != null
+                    ? widget.data.paidDate == null
+                        ? Text(
+                            '${widget.data.paymentDate?.difference(DateTime.now()).inDays}',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: grey2,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          )
+                        : Text(
+                            '${widget.data.paymentDate?.difference(widget.data.paidDate!).inDays}',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: grey2,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          )
+                    : const Text(
+                        '-',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: grey2,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
               ],
             ),
           ],

@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -80,16 +81,21 @@ class _RemainingStockState extends State<RemainingStock> with AfterLayoutMixin {
                     ),
                   ),
                 ),
-                Column(
-                  children: stock.rows!
-                      .map(
-                        (data) => ProductCard(
-                          border: false,
-                          data: data,
-                        ),
+                stock.rows!.isNotEmpty
+                    ? Column(
+                        children: stock.rows!
+                            .map(
+                              (data) => ProductCard(
+                                border: false,
+                                data: data,
+                              ),
+                            )
+                            .toList(),
                       )
-                      .toList(),
-                ),
+                    : const NotFound(
+                        module: "INVENTORY",
+                        labelText: "Хоосон байна",
+                      ),
               ],
             ),
           );

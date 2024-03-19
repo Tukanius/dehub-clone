@@ -38,10 +38,11 @@ class _PriceSettingCardState extends State<PriceSettingCard> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                widget.data.url == null
+                widget.data.logo != null
                     ? CircleAvatar(
                         radius: 20,
-                        backgroundImage: NetworkImage(widget.data.logo!),
+                        backgroundImage:
+                            NetworkImage(widget.data.logo.toString()),
                       )
                     : const CircleAvatar(
                         radius: 20,
@@ -240,12 +241,19 @@ class _PriceSettingCardState extends State<PriceSettingCard> {
                       ? Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CircleAvatar(
-                              radius: 14,
-                              backgroundImage: NetworkImage(
-                                "${widget.data.coBusinessFinStaffs?.first.avatar}",
-                              ),
-                            ),
+                            widget.data.coBusinessFinStaffs?.first.avatar !=
+                                    null
+                                ? CircleAvatar(
+                                    radius: 14,
+                                    backgroundImage: NetworkImage(
+                                      "${widget.data.coBusinessFinStaffs?.first.avatar}",
+                                    ),
+                                  )
+                                : const CircleAvatar(
+                                    radius: 14,
+                                    backgroundImage:
+                                        AssetImage('images/avatar.png'),
+                                  ),
                             const SizedBox(
                               width: 3,
                             ),
@@ -254,14 +262,18 @@ class _PriceSettingCardState extends State<PriceSettingCard> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    '${widget.data.coBusinessFinStaffs?.first.firstName}',
+                                    widget.data.coBusinessFinStaffs?.first
+                                            .firstName ??
+                                        '-',
                                     style: const TextStyle(
                                       color: grey2,
                                       fontSize: 10,
                                     ),
                                   ),
                                   Text(
-                                    '${widget.data.coBusinessFinStaffs?.first.email}',
+                                    widget.data.coBusinessFinStaffs?.first
+                                            .email ??
+                                        '-',
                                     style: const TextStyle(
                                       color: grey2,
                                       fontSize: 10,

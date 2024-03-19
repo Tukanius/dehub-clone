@@ -287,7 +287,7 @@ class _SettlementDetailState extends State<SettlementDetail>
                               '${Utils().formatCurrency("${settlement.lastAmount}")}₮',
                           secondTextColor: invoiceColor,
                         ),
-                        if (settlement.settlementStatus != "CONFIRMED")
+                        if (settlement.settlementStatus != null)
                           Align(
                             alignment: Alignment.centerRight,
                             child: GestureDetector(

@@ -78,7 +78,8 @@ class _GivePageState extends State<GivePage>
     if (index! < 0) {
       general.invoiceStatus?.insert(0, filterAll);
     }
-    general.invoiceStatus?.removeWhere((element) => element.code == "CLOSED");
+    general.invoiceStatus?.removeWhere(
+        (element) => element.code == "CLOSED" || element.code == "RETURNED");
     await list(page, limit, '', selectedStatus!);
   }
 

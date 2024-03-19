@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/order_module/components/order_customer_card/order_customer_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
@@ -9,6 +11,7 @@ import 'package:dehub/src/order_module/screens/new_order/new_order.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class OrderCustomers extends StatefulWidget {
@@ -28,6 +31,7 @@ class OrderCustomersState extends State<OrderCustomers> with AfterLayoutMixin {
   Timer? timer;
   bool isSubmit = false;
   bool startAnimation = false;
+  User user = User();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -82,6 +86,7 @@ class OrderCustomersState extends State<OrderCustomers> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).orderMe;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -89,9 +94,11 @@ class OrderCustomersState extends State<OrderCustomers> with AfterLayoutMixin {
         backgroundColor: white,
         surfaceTintColor: white,
         iconTheme: const IconThemeData(color: orderColor),
-        title: const Text(
-          'Харилцагчийн жагсаалт',
-          style: TextStyle(
+        title: Text(
+          user.currentBusiness?.type == "SUPPLIER"
+              ? 'Харилцагчийн жагсаалт'
+              : 'Нийлүүлэгчийн жагсаалт',
+          style: const TextStyle(
             color: buttonColor,
             fontSize: 17,
             fontWeight: FontWeight.w500,

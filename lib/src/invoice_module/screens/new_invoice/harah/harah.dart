@@ -144,7 +144,13 @@ class _HarahState extends State<Harah> {
                   if (widget.isNewInvoice == false)
                     GestureDetector(
                       onTap: () {
-                        pdf();
+                        showModalBottomSheet(
+                          backgroundColor: transparent,
+                          isScrollControlled: true,
+                          useSafeArea: true,
+                          context: context,
+                          builder: (context) => pdf(),
+                        );
                       },
                       child: Container(
                         margin: const EdgeInsets.symmetric(horizontal: 15),
@@ -205,34 +211,34 @@ class _HarahState extends State<Harah> {
     );
   }
 
-  pdf() {
-    showModalBottomSheet(
-      useSafeArea: true,
-      backgroundColor: white,
-      context: context,
-      builder: (context) => Container(
-        height: MediaQuery.of(context).size.height * 0.9,
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Container(
-                padding: const EdgeInsets.only(right: 15, bottom: 10, left: 15),
-                color: transparent,
-                child: SvgPicture.asset(
-                  'assets/svg/close.svg',
-                  colorFilter: const ColorFilter.mode(grey2, BlendMode.srcIn),
-                  height: 20,
+  Widget pdf() => DraggableScrollableSheet(
+        initialChildSize: 0.9,
+        minChildSize: 0.5,
+        maxChildSize: 0.9,
+        builder: (context, scrollController) => Container(
+          color: backgroundColor,
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Container(
+                    padding:
+                        const EdgeInsets.only(right: 15, bottom: 10, left: 15),
+                    color: transparent,
+                    child: SvgPicture.asset(
+                      'assets/svg/close.svg',
+                      colorFilter:
+                          const ColorFilter.mode(grey2, BlendMode.srcIn),
+                      height: 20,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
+                Column(
                   children: [
                     const SizedBox(
                       height: 10,
@@ -279,13 +285,11 @@ class _HarahState extends State<Harah> {
                     ),
                   ],
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 
   Widget sendSheet() => DraggableScrollableSheet(
         initialChildSize: 1,

@@ -7,7 +7,6 @@ import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/camera_page/camera_page.dart';
 import 'package:dehub/src/profile/components/card.dart';
-import 'package:dehub/src/profile/components/editing_information.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +72,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
           CupertinoActionSheetAction(
             child: const Text(
               'Зургийн сангаас',
-              style: TextStyle(color: grey2, fontFamily: 'Montserrat'),
+              style: TextStyle(color: menuBack, fontFamily: 'Montserrat'),
             ),
             onPressed: () {
               Navigator.of(context).pop();
@@ -83,7 +82,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
           CupertinoActionSheetAction(
             child: const Text(
               'Зураг авах',
-              style: TextStyle(color: grey2, fontFamily: 'Montserrat'),
+              style: TextStyle(color: menuBack, fontFamily: 'Montserrat'),
             ),
             onPressed: () {
               Navigator.of(context).pop();
@@ -121,7 +120,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
     return isLoading == true
         ? const Center(
             child: CircularProgressIndicator(
-              color: grey2,
+              color: menuBack,
             ),
           )
         : SingleChildScrollView(
@@ -239,12 +238,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      EditingInformation(
-                        edit: edit,
-                        name: "registerNo",
+                      InformationCard(
                         paddingVertical: 5,
-                        labelText: 'Регистр №',
-                        value: user.registerNo,
+                        labelText: 'Хэрэглэгчийн нэр',
+                        value: user.username,
                       ),
                       InformationCard(
                         paddingVertical: 5,
@@ -258,7 +255,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       ),
                       InformationCard(
                         paddingVertical: 5,
-                        labelText: 'Ургын овог',
+                        labelText: 'Ургийн овог',
                         value: user.familyName,
                       ),
                       InformationCard(

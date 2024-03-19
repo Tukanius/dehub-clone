@@ -6,6 +6,7 @@ import 'package:dehub/providers/partner_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/sheets/select_department_unit.dart';
 import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/sheets/select_employee_unit.dart';
+import 'package:dehub/utils/validations.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
@@ -376,19 +377,5 @@ class _AdminUserFormState extends State<AdminUserForm> {
         ),
       ],
     );
-  }
-}
-
-String? validateCryllic(String name, BuildContext context) {
-  String pattern = r'(^[а-яА-ЯӨөҮүЁёӨө -]+$)';
-  RegExp isValidName = RegExp(pattern);
-  if (name.isEmpty) {
-    return "Заавал оруулна";
-  } else {
-    if (!isValidName.hasMatch(name)) {
-      return "Зөвхөн крилл үсэг ашиглана";
-    } else {
-      return null;
-    }
   }
 }

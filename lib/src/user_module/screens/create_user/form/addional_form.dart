@@ -6,6 +6,7 @@ import 'package:dehub/providers/user_module_provider.dart';
 import 'package:dehub/src/user_module/screens/create_user/sheets/select_department_unit.dart';
 import 'package:dehub/src/user_module/screens/create_user/sheets/select_departmentsub_unit.dart';
 import 'package:dehub/src/user_module/screens/create_user/sheets/select_employee_unit.dart';
+import 'package:dehub/utils/validations.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
@@ -244,14 +245,5 @@ class _AdditionalFormState extends State<AdditionalForm> {
         ],
       ),
     );
-  }
-}
-
-String? validateEmail(String value, context) {
-  RegExp regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-  if (!regex.hasMatch(value) && value.isNotEmpty) {
-    return 'И-Мейлээ шалгана уу';
-  } else {
-    return null;
   }
 }

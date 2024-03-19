@@ -74,8 +74,8 @@ class _ProfilePageState extends State<ProfilePage>
       child: Scaffold(
         backgroundColor: const Color(0xffF5F5F5),
         appBar: AppBar(
-          backgroundColor: grey2,
-          surfaceTintColor: grey2,
+          backgroundColor: menuBack,
+          surfaceTintColor: menuBack,
           iconTheme: const IconThemeData(color: white),
           elevation: 0,
           centerTitle: false,
@@ -131,7 +131,7 @@ class _ProfilePageState extends State<ProfilePage>
         body: isLoading == true
             ? const Center(
                 child: CircularProgressIndicator(
-                  color: grey2,
+                  color: menuBack,
                 ),
               )
             : Column(
@@ -155,7 +155,8 @@ class _ProfilePageState extends State<ProfilePage>
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(100),
                               border: Border.all(color: grey3, width: 0.5),
-                              color: tabController.index == 0 ? grey2 : white,
+                              color:
+                                  tabController.index == 0 ? menuBack : white,
                             ),
                             child: SvgPicture.asset(
                               'assets/svg/bx_user-circle.svg',
@@ -176,7 +177,8 @@ class _ProfilePageState extends State<ProfilePage>
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(100),
                               border: Border.all(color: grey3, width: 0.5),
-                              color: tabController.index == 1 ? grey2 : white,
+                              color:
+                                  tabController.index == 1 ? menuBack : white,
                             ),
                             child: SvgPicture.asset(
                               'assets/svg/hospital.svg',
@@ -197,8 +199,9 @@ class _ProfilePageState extends State<ProfilePage>
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
                                 border: Border.all(color: grey3, width: 0.5),
-                                color:
-                                    tabController.index == 2 ? grey2 : white),
+                                color: tabController.index == 2
+                                    ? menuBack
+                                    : white),
                             child: SvgPicture.asset(
                               'assets/svg/settings.svg',
                               colorFilter: ColorFilter.mode(
