@@ -1,8 +1,10 @@
 import 'package:dehub/api/payment_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/payment.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/src/payment_module/sheets/update_account_sheet.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -35,6 +37,7 @@ class BankAccountDetailState extends State<BankAccountDetail>
   Payment get = Payment();
   General general = General();
   bool isLoading = true;
+  ListenController listenController = ListenController();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -49,6 +52,17 @@ class BankAccountDetailState extends State<BankAccountDetail>
         .firstWhere((element) => element.code == get.currency)
         .name;
     return res;
+  }
+
+  @override
+  void initState() {
+    listenController.addListener(() async {
+      var res = await PaymentApi().bankAccountGet(widget.id);
+      setState(() {
+        get = res;
+      });
+    });
+    super.initState();
   }
 
   @override
@@ -112,30 +126,43 @@ class BankAccountDetailState extends State<BankAccountDetail>
                       ),
                     ),
                   ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 12),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Дансны товч нэр',
-                          style: TextStyle(color: dark),
+                  GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) => UpdateAccountSheet(
+                          shortName: get.shortName!,
+                          isDefault: get.isDefault ?? false,
+                          id: get.id!,
+                          listenController: listenController,
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              '${get.shortName}',
-                              style: const TextStyle(color: paymentColor),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            SvgPicture.asset('assets/svg/edit.svg'),
-                          ],
-                        ),
-                      ],
+                      );
+                    },
+                    child: Container(
+                      color: white,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Дансны товч нэр',
+                            style: TextStyle(color: dark),
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                '${get.shortName}',
+                                style: const TextStyle(color: paymentColor),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              SvgPicture.asset('assets/svg/edit.svg'),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   FieldCard(

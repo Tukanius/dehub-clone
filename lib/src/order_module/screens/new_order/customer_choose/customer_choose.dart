@@ -58,7 +58,7 @@ class _OrderCustomerChooseState extends State<OrderCustomerChoose>
     });
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       limit += 10;
     });
@@ -69,7 +69,7 @@ class _OrderCustomerChooseState extends State<OrderCustomerChoose>
     });
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -114,8 +114,8 @@ class _OrderCustomerChooseState extends State<OrderCustomerChoose>
                     refreshController: refreshController,
                     onLoading: customer.rows!.length == customer.count
                         ? null
-                        : _onLoading,
-                    onRefresh: _onRefresh,
+                        : onLoading,
+                    onRefresh: onRefresh,
                     color: orderColor,
                     child: SingleChildScrollView(
                       child: Column(

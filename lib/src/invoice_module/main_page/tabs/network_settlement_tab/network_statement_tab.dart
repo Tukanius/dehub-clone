@@ -50,7 +50,7 @@ class _NetworkSettlementTabState extends State<NetworkSettlementTab>
     list(page, limit, '');
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       limit += 10;
     });
@@ -61,7 +61,7 @@ class _NetworkSettlementTabState extends State<NetworkSettlementTab>
     });
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -104,8 +104,8 @@ class _NetworkSettlementTabState extends State<NetworkSettlementTab>
                 child: Refresher(
                   refreshController: refreshController,
                   onLoading:
-                      invoice.rows!.length == invoice.count ? null : _onLoading,
-                  onRefresh: _onRefresh,
+                      invoice.rows!.length == invoice.count ? null : onLoading,
+                  onRefresh: onRefresh,
                   color: invoiceColor,
                   child: SingleChildScrollView(
                     child: invoice.rows!.isNotEmpty

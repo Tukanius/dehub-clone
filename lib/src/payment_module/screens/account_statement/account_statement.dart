@@ -9,6 +9,7 @@ import 'package:dehub/models/result.dart';
 import 'package:dehub/src/payment_module/screens/transaction_detail_page/transaction_detail_page.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AccountStatementArguments {
   Payment data;
@@ -36,8 +37,8 @@ class AccountStatementState extends State<AccountStatement>
     end: DateTime.now(),
   );
   int currentIndex = 0;
-  Result transaction = Result(rows: [], count: 0);
   bool isLoading = true;
+  Payment payment = Payment(rows: [], count: 0);
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -52,8 +53,12 @@ class AccountStatementState extends State<AccountStatement>
       startDate: startDate,
       endDate: endDate,
     );
-    transaction = await PaymentApi()
+
+    payment = await PaymentApi()
         .accountStatement(ResultArguments(filter: filter, offset: offset));
+    if (payment.url != null) {
+      await launchUrl(payment.url!);
+    }
     setState(() {
       isLoading = false;
     });
@@ -147,10 +152,10 @@ class AccountStatementState extends State<AccountStatement>
                     ),
                   ),
                 )
-              : transaction.rows!.isNotEmpty
+              : payment.rows!.isNotEmpty
                   ? SingleChildScrollView(
                       child: Column(
-                        children: transaction.rows!
+                        children: payment.rows!
                             .map(
                               (data) => Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,7 +164,7 @@ class AccountStatementState extends State<AccountStatement>
                                     margin: const EdgeInsets.symmetric(
                                         horizontal: 15, vertical: 10),
                                     child: Text(DateFormat("yyyy-MM-dd")
-                                        .format(data.createdAt)),
+                                        .format(data.createdAt!)),
                                   ),
                                   TransactionInformationCard(
                                     startAnimation: true,

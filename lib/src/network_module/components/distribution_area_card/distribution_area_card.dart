@@ -146,15 +146,16 @@ class _DistributionAreaCardState extends State<DistributionAreaCard> {
                             child: RichText(
                               text: TextSpan(
                                 style: const TextStyle(
-                                    color: grey2,
-                                    fontSize: 12,
-                                    fontFamily: 'Montserrat'),
+                                  color: grey2,
+                                  fontSize: 12,
+                                  fontFamily: 'Montserrat',
+                                ),
                                 children: [
                                   widget.data?.businessStaff?.lastName != null
                                       ? TextSpan(
                                           text:
-                                              '${widget.data?.businessStaff?.lastName}')
-                                      : const TextSpan(text: '-'),
+                                              '${widget.data?.businessStaff?.lastName?[0]}. ')
+                                      : const TextSpan(text: ''),
                                   widget.data?.businessStaff?.firstName != null
                                       ? TextSpan(
                                           text:

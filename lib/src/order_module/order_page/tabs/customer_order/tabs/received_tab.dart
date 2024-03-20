@@ -58,7 +58,7 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
     await list(page, limit);
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       page += 1;
     });
@@ -69,7 +69,7 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
     });
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -140,8 +140,8 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
             : Expanded(
                 child: Refresher(
                   refreshController: refreshController,
-                  onLoading: _onLoading,
-                  onRefresh: _onRefresh,
+                  onLoading: onLoading,
+                  onRefresh: onRefresh,
                   color: orderColor,
                   child: groupedList.isNotEmpty
                       ? SingleChildScrollView(

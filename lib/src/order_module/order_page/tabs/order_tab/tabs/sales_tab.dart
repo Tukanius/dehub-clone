@@ -94,7 +94,7 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
     groupedList = group;
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       page += 1;
     });
@@ -102,7 +102,7 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
     refreshController.loadComplete();
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -116,107 +116,114 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).orderMe;
-    return Column(
-      children: [
-        const SearchButton(
-          color: orderColor,
-          textColor: orderColor,
-        ),
-        isLoading == true
-            ? const Center(
-                child: CircularProgressIndicator(
-                  color: orderColor,
-                ),
-              )
-            : Expanded(
-                child: Refresher(
-                  refreshController: refreshController,
-                  onLoading: _onLoading,
-                  onRefresh: _onRefresh,
-                  color: orderColor,
-                  child: groupedList.isNotEmpty
-                      ? SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Column(
-                                children: groupedList
-                                    .map(
-                                      (data) => Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          AnimatedContainer(
-                                            curve: Curves.ease,
-                                            transform:
-                                                Matrix4.translationValues(
-                                                    startAnimation
-                                                        ? 0
-                                                        : -MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
-                                                    0,
-                                                    0),
-                                            duration: Duration(
-                                              milliseconds: 300 +
-                                                  (groupedList.indexOf(data) *
-                                                      300),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Column(
+        children: [
+          const SearchButton(
+            color: orderColor,
+            textColor: orderColor,
+          ),
+          isLoading == true
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: orderColor,
+                  ),
+                )
+              : Expanded(
+                  child: Refresher(
+                    refreshController: refreshController,
+                    onLoading: onLoading,
+                    onRefresh: onRefresh,
+                    color: orderColor,
+                    child: groupedList.isNotEmpty
+                        ? SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Column(
+                                  children: groupedList
+                                      .map(
+                                        (data) => Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            AnimatedContainer(
+                                              curve: Curves.ease,
+                                              transform:
+                                                  Matrix4.translationValues(
+                                                      startAnimation
+                                                          ? 0
+                                                          : -MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                      0,
+                                                      0),
+                                              duration: Duration(
+                                                milliseconds: 300 +
+                                                    (groupedList.indexOf(data) *
+                                                        300),
+                                              ),
+                                              margin: const EdgeInsets.only(
+                                                  left: 15,
+                                                  bottom: 10,
+                                                  top: 10),
+                                              child: Text(
+                                                DateFormat("yyyy-MM-dd")
+                                                    .format(data.header!),
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    color: grey2),
+                                              ),
                                             ),
-                                            margin: const EdgeInsets.only(
-                                                left: 15, bottom: 10, top: 10),
-                                            child: Text(
-                                              DateFormat("yyyy-MM-dd")
-                                                  .format(data.header!),
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  color: grey2),
-                                            ),
-                                          ),
-                                          Column(
-                                            children: data.values!
-                                                .map(
-                                                  (item) => SalesOrderCard(
-                                                    index: order.rows!
-                                                        .indexOf(item),
-                                                    startAnimation:
-                                                        startAnimation,
-                                                    onClick: () {
-                                                      Navigator.of(context)
-                                                          .pushNamed(
-                                                        ReceivedOrderDetail
-                                                            .routeName,
-                                                        arguments:
-                                                            ReceivedOrderDetailArguments(
-                                                          listenController:
-                                                              listenController,
-                                                          id: item.id!,
-                                                        ),
-                                                      );
-                                                    },
-                                                    data: item,
-                                                  ),
-                                                )
-                                                .toList(),
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                    .toList(),
-                              )
-                            ],
+                                            Column(
+                                              children: data.values!
+                                                  .map(
+                                                    (item) => SalesOrderCard(
+                                                      index: order.rows!
+                                                          .indexOf(item),
+                                                      startAnimation:
+                                                          startAnimation,
+                                                      onClick: () {
+                                                        Navigator.of(context)
+                                                            .pushNamed(
+                                                          ReceivedOrderDetail
+                                                              .routeName,
+                                                          arguments:
+                                                              ReceivedOrderDetailArguments(
+                                                            listenController:
+                                                                listenController,
+                                                            id: item.id!,
+                                                          ),
+                                                        );
+                                                      },
+                                                      data: item,
+                                                    ),
+                                                  )
+                                                  .toList(),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                      .toList(),
+                                )
+                              ],
+                            ),
+                          )
+                        : const NotFound(
+                            module: "ORDER",
+                            labelText: "Захиалга олдсонгүй",
                           ),
-                        )
-                      : const NotFound(
-                          module: "ORDER",
-                          labelText: "Захиалга олдсонгүй",
-                        ),
+                  ),
                 ),
-              ),
-      ],
+        ],
+      ),
     );
   }
 }

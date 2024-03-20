@@ -67,7 +67,7 @@ class OrderCustomersState extends State<OrderCustomers> with AfterLayoutMixin {
     });
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       limit += 10;
     });
@@ -75,7 +75,7 @@ class OrderCustomersState extends State<OrderCustomers> with AfterLayoutMixin {
     refreshController.loadComplete();
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -131,8 +131,8 @@ class OrderCustomersState extends State<OrderCustomers> with AfterLayoutMixin {
                   child: Refresher(
                     refreshController: refreshController,
                     onLoading:
-                        order.rows!.length == order.count ? null : _onLoading,
-                    onRefresh: _onRefresh,
+                        order.rows!.length == order.count ? null : onLoading,
+                    onRefresh: onRefresh,
                     color: orderColor,
                     child: SingleChildScrollView(
                       child: isSubmit == false

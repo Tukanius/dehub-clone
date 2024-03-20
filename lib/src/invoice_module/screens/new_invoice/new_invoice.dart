@@ -531,7 +531,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                         invoice.totalAmountInvoice(
                             discountAmount, shippingAmount);
                       },
-                      name: 'discountAmount',
+                      name: 'a',
                       inputType: TextInputType.number,
                       decoration: InputDecoration(
                         prefixIcon: Container(
@@ -748,62 +748,71 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
                                 ),
                               );
                             },
-                            child: const Column(
-                              children: [
-                                Icon(
-                                  Icons.visibility_outlined,
-                                  color: white,
-                                  size: 20,
-                                ),
-                                Text(
-                                  'Харах',
-                                  style: TextStyle(
+                            child: Container(
+                              color: transparent,
+                              child: const Column(
+                                children: [
+                                  Icon(
+                                    Icons.visibility_outlined,
                                     color: white,
-                                    fontSize: 10,
+                                    size: 20,
                                   ),
-                                )
-                              ],
+                                  Text(
+                                    'Харах',
+                                    style: TextStyle(
+                                      color: white,
+                                      fontSize: 10,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                           GestureDetector(
                             onTap: () {
                               validateCheck(false);
                             },
-                            child: Column(
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/svg/save.svg',
-                                  height: 20,
-                                ),
-                                const Text(
-                                  'Хадгалах',
-                                  style: TextStyle(
-                                    color: white,
-                                    fontSize: 10,
+                            child: Container(
+                              color: transparent,
+                              child: Column(
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/svg/save.svg',
+                                    height: 20,
                                   ),
-                                )
-                              ],
+                                  const Text(
+                                    'Хадгалах',
+                                    style: TextStyle(
+                                      color: white,
+                                      fontSize: 10,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                           GestureDetector(
                             onTap: () {
                               validateCheck(true);
                             },
-                            child: const Column(
-                              children: [
-                                Icon(
-                                  Icons.send,
-                                  color: white,
-                                  size: 20,
-                                ),
-                                Text(
-                                  'Илгээх',
-                                  style: TextStyle(
+                            child: Container(
+                              color: transparent,
+                              child: const Column(
+                                children: [
+                                  Icon(
+                                    Icons.send,
                                     color: white,
-                                    fontSize: 10,
+                                    size: 20,
                                   ),
-                                )
-                              ],
+                                  Text(
+                                    'Илгээх',
+                                    style: TextStyle(
+                                      color: white,
+                                      fontSize: 10,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                           GestureDetector(
@@ -905,7 +914,7 @@ class _NewInvoiceState extends State<NewInvoice> with AfterLayoutMixin {
             : invoice.newInvoice.discountType == "Дүнгээр"
                 ? "AMOUNT"
                 : null,
-        discountValue: double.tryParse(discountController.text),
+        discountValue: double.tryParse(discountAmount),
         shippingAmount: double.tryParse(shippingAmount),
       );
       if (widget.data == null) {

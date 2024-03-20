@@ -51,7 +51,7 @@ class AddBankAccountPageState extends State<AddBankAccountPage>
     list(page, limit);
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -69,7 +69,7 @@ class AddBankAccountPageState extends State<AddBankAccountPage>
     super.initState();
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       limit += 10;
@@ -90,8 +90,8 @@ class AddBankAccountPageState extends State<AddBankAccountPage>
           : Refresher(
               refreshController: refreshController,
               onLoading:
-                  payment.rows!.length == payment.count ? null : _onLoading,
-              onRefresh: _onRefresh,
+                  payment.rows!.length == payment.count ? null : onLoading,
+              onRefresh: onRefresh,
               color: paymentColor,
               child: payment.rows!.isNotEmpty
                   ? SingleChildScrollView(

@@ -53,7 +53,7 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
     });
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -87,7 +87,7 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
     groupedList = group;
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       page += 1;
     });
@@ -122,8 +122,8 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
               Expanded(
                 child: Refresher(
                   refreshController: refreshController,
-                  onLoading: _onLoading,
-                  onRefresh: _onRefresh,
+                  onLoading: onLoading,
+                  onRefresh: onRefresh,
                   color: orderColor,
                   child: SingleChildScrollView(
                     child: groupedList.isNotEmpty

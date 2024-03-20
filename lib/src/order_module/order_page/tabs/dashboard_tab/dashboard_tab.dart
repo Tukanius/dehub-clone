@@ -80,6 +80,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
     "ТОП 100": 27000,
     "ТОП 50": 10000,
   };
+
   @override
   afterFirstLayout(BuildContext context) async {
     Map<String, double> pieData = {};
@@ -506,110 +507,113 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                       const SizedBox(
                         height: 10,
                       ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 15),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 15),
-                        decoration: BoxDecoration(
-                          color: white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Сүүлд хүргэсэн',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
+                      if (dashboard.recentDelivered!.isNotEmpty)
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 15),
+                          padding: const EdgeInsets.only(
+                              left: 20, right: 20, top: 15, bottom: 5),
+                          decoration: BoxDecoration(
+                            color: white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Сүүлд хүргэсэн',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                ),
                               ),
-                            ),
-                            const Divider(),
-                            Column(
-                              children: dashboard.recentDelivered!
-                                  .map(
-                                    (data) => Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          height: 40,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            image: DecorationImage(
-                                              image: NetworkImage(
-                                                '${data.receiverBusiness?.logo}',
+                              const Divider(),
+                              Column(
+                                children: dashboard.recentDelivered!
+                                    .map(
+                                      (data) => Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            margin: const EdgeInsets.only(
+                                                bottom: 10),
+                                            height: 40,
+                                            width: 40,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              image: DecorationImage(
+                                                image: NetworkImage(
+                                                  '${data.receiverBusiness?.logo}',
+                                                ),
+                                                fit: BoxFit.cover,
                                               ),
-                                              fit: BoxFit.cover,
                                             ),
                                           ),
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      '${data.receiverBusiness?.profileName}',
-                                                      style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500,
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                        '${data.receiverBusiness?.profileName}',
+                                                        style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  Text(
-                                                    DateFormat('yyyy-MM-dd')
-                                                        .format(data
-                                                            .deliveredDate!),
-                                                    style: const TextStyle(
-                                                      color: orderColor,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                height: 3,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      '${data.receiverBusiness?.refCode}',
+                                                    Text(
+                                                      DateFormat('yyyy-MM-dd')
+                                                          .format(data
+                                                              .deliveredDate!),
                                                       style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 12,
                                                         color: orderColor,
                                                       ),
+                                                    )
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  height: 3,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                        '${data.receiverBusiness?.refCode}',
+                                                        style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 12,
+                                                          color: orderColor,
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Text(
-                                                    '${Utils().formatCurrency("${data.orderAmount}")}₮',
-                                                    style: const TextStyle(
-                                                      fontSize: 12,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ],
+                                                    Text(
+                                                      '${Utils().formatCurrency("${data.orderAmount}")}₮',
+                                                      style: const TextStyle(
+                                                        fontSize: 12,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                  .toList(),
-                            )
-                          ],
+                                        ],
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
                       const SizedBox(
                         height: 10,
                       ),

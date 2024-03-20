@@ -24,7 +24,7 @@ class PieChartState extends State<PieChart> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 15),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 32),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
@@ -80,7 +80,7 @@ class PieChartState extends State<PieChart> {
                           width: 5,
                         ),
                         Expanded(
-                          flex: 6,
+                          flex: 8,
                           child: Text(
                             widget.module == "ORDER"
                                 ? '${Utils().formatCurrency("${data.amount}")}₮'
@@ -102,7 +102,7 @@ class PieChartState extends State<PieChart> {
                             widget.module == "ORDER"
                                 ? '${data.ordersCount.toInt()}'
                                 : widget.module == "PAYMENT"
-                                    ? "${data.percent}%"
+                                    ? "${data.percent.toInt()}%"
                                     : '${(100 * data.count / widget.legend.fold(0, (previousValue, element) => previousValue + element.count!)).toStringAsFixed(1)}%',
                             style: const TextStyle(
                               color: grey,

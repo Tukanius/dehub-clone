@@ -41,7 +41,7 @@ class DehubNetworkState extends State<DehubNetwork> with AfterLayoutMixin {
     });
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       limit += 10;
     });
@@ -52,7 +52,7 @@ class DehubNetworkState extends State<DehubNetwork> with AfterLayoutMixin {
     });
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -78,8 +78,8 @@ class DehubNetworkState extends State<DehubNetwork> with AfterLayoutMixin {
         : Refresher(
             refreshController: refreshController,
             onLoading:
-                invitation.rows!.length == invitation.count ? null : _onLoading,
-            onRefresh: _onRefresh,
+                invitation.rows!.length == invitation.count ? null : onLoading,
+            onRefresh: onRefresh,
             color: networkColor,
             child: SingleChildScrollView(
               child: Container(

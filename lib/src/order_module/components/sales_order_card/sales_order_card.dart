@@ -107,6 +107,9 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                     ],
                   ),
                 ),
+                const SizedBox(
+                  width: 10,
+                ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

@@ -51,7 +51,7 @@ class _GivePageState extends State<GivePage>
   String search = '';
   InvoiceStatus filterAll = InvoiceStatus(code: '', name: 'Бүгд');
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       page += 1;
     });
@@ -59,7 +59,7 @@ class _GivePageState extends State<GivePage>
     _refreshController.loadComplete();
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     setState(() {
       isLoading = true;
       startAnimation = false;
@@ -255,8 +255,8 @@ class _GivePageState extends State<GivePage>
                     refreshController: _refreshController,
                     onLoading: invoice.rows!.length == invoice.count
                         ? null
-                        : _onLoading,
-                    onRefresh: _onRefresh,
+                        : onLoading,
+                    onRefresh: onRefresh,
                     color: invoiceColor,
                     child: SingleChildScrollView(
                       child: groupedList.isEmpty

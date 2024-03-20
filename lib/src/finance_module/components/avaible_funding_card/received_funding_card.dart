@@ -134,58 +134,91 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                 ),
                 Row(
                   children: [
-                    const Text(
-                      'Хүсэлтийн дүн: ',
-                      style: TextStyle(
-                        color: Color(0xff555555),
-                        fontSize: 12,
-                      ),
+                    Row(
+                      children: [
+                        const Text(
+                          'Хүсэлтийн дүн: ',
+                          style: TextStyle(
+                            color: Color(0xff555555),
+                            fontSize: 12,
+                          ),
+                        ),
+                        Text(
+                          '${Utils().formatCurrency((widget.data.lbfRequest?.requestedAmount ?? widget.data.requestedAmount).toString()) + symbol()}',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      '${Utils().formatCurrency((widget.data.lbfRequest?.requestedAmount ?? widget.data.requestedAmount).toString()) + symbol()}',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/svg/inv.svg',
+                            colorFilter: const ColorFilter.mode(
+                                buttonColor, BlendMode.srcIn),
+                          ),
+                          const SizedBox(
+                            width: 3,
+                          ),
+                          Text(
+                            '${widget.data.invoiceRef ?? widget.data.invRefCode}',
+                            style: const TextStyle(
+                              color: dark,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
+                    )
                   ],
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      widget.data.totalScfFeeAmount != null
-                          ? 'Нийт шимтгэл: ${Utils().formatCurrency(widget.data.totalScfFeeAmount.toString()) + symbol()}'
-                          : '',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Color(0xff555555),
+                    Expanded(
+                      child: Text(
+                        widget.data.totalScfFeeAmount != null
+                            ? 'Нийт шимтгэл: ${Utils().formatCurrency(widget.data.totalScfFeeAmount.toString()) + symbol()}'
+                            : '',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Color(0xff555555),
+                        ),
                       ),
                     ),
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/svg/inv.svg',
-                          colorFilter: const ColorFilter.mode(
-                              buttonColor, BlendMode.srcIn),
-                        ),
-                        const SizedBox(
-                          width: 3,
-                        ),
-                        Text(
-                          '${widget.data.invoiceRef ?? widget.data.invRefCode}',
-                          style: const TextStyle(
-                            color: dark,
-                            fontWeight: FontWeight.w600,
+                    Material(
+                      borderRadius: BorderRadius.circular(5),
+                      color: white,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(5),
+                        onTap: () {},
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: source.currentColor, width: 1.3),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: SvgPicture.asset(
+                            'assets/svg/payment.svg',
+                            colorFilter: ColorFilter.mode(
+                              source.currentColor,
+                              BlendMode.srcIn,
+                            ),
                           ),
                         ),
-                      ],
-                    )
+                      ),
+                    ),
                   ],
-                )
+                ),
               ],
             ),
           ),

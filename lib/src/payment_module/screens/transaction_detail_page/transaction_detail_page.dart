@@ -1,8 +1,14 @@
 import 'package:dehub/api/payment_api.dart';
+import 'package:dehub/components/field_card/field_card.dart';
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/payment.dart';
+import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class TransactionDetailPageArguments {
   Payment data;
@@ -26,6 +32,7 @@ class TransactionDetailPage extends StatefulWidget {
 class TransactionDetailPageState extends State<TransactionDetailPage>
     with AfterLayoutMixin {
   Payment payment = Payment();
+  General general = General();
   bool isLoading = true;
 
   @override
@@ -36,8 +43,34 @@ class TransactionDetailPageState extends State<TransactionDetailPage>
     });
   }
 
+  transactionType() {
+    final res = general.transactionTypes!
+        .firstWhere((element) => element.code == payment.type);
+    return res.name;
+  }
+
+  paymentMethod() {
+    final res = general.paymentMethod!
+        .firstWhere((element) => element.code == payment.paymentMethod);
+    return res.name;
+  }
+
+  currency() {
+    final res = general.currencies!
+        .firstWhere((element) => element.code == payment.creditAccountCurrency);
+    return res.name;
+  }
+
+  bankName() {
+    final res = general.bankNames!
+        .firstWhere((element) => element.code == payment.account?.bankName);
+    return res.name;
+  }
+
   @override
   Widget build(BuildContext context) {
+    general =
+        Provider.of<GeneralProvider>(context, listen: true).paymentGeneral;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -64,220 +97,129 @@ class TransactionDetailPageState extends State<TransactionDetailPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Center(
-                    child: Text(
-                      '521****513',
-                      style: TextStyle(
-                        color: grey2,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Center(
-                    child: Text(
-                      'Голомт банк',
-                      style: TextStyle(
-                        color: grey2,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Divider(
-                    endIndent: 20,
-                    indent: 20,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 12),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Гүйлгээний лавлах',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          'Transref#',
-                          style: TextStyle(
-                              color: grey2,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
+                  // const Center(
+                  //   child: Text(
+                  //     '521****513',
+                  //     style: TextStyle(
+                  //       color: grey2,
+                  //       fontSize: 24,
+                  //       fontWeight: FontWeight.w500,
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
+                  // const Center(
+                  //   child: Text(
+                  //     'Голомт банк',
+                  //     style: TextStyle(
+                  //       color: grey2,
+                  //       fontSize: 15,
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
+                  // const Divider(
+                  //   endIndent: 20,
+                  //   indent: 20,
+                  // ),
                   const SizedBox(
                     height: 5,
                   ),
-                  Container(
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 12,
+                    labelText: 'Гүйлгээний лавлах',
+                    secondText: '${payment.refCode}',
+                    labelTextColor: dark,
+                    secondTextColor: grey2,
+                    secondTextFontWeight: FontWeight.w500,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 12),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Огноо, цаг',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '2023-01-23 12:23 PM',
-                          style: TextStyle(
-                              color: grey2,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
+                    marginBottom: 5,
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 12,
+                    labelText: 'Огноо, цаг',
+                    secondText: DateFormat('yyyy-MM-dd HH:mm')
+                        .format(payment.createdAt!),
+                    labelTextColor: dark,
+                    secondTextColor: grey2,
+                    secondTextFontWeight: FontWeight.w500,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 12),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Гүйлгээний төрөл',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          'B2B нэхэмжлэх',
-                          style: TextStyle(
-                              color: grey2,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
+                    marginBottom: 5,
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 12,
+                    labelText: 'Гүйлгээний төрөл',
+                    secondText: "${transactionType()}",
+                    labelTextColor: dark,
+                    secondTextColor: grey2,
+                    secondTextFontWeight: FontWeight.w500,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 12),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Төлбөрийн хэрэгсэл',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          'DeHUB B2B',
-                          style: TextStyle(
-                              color: grey2,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
+                    marginBottom: 5,
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 12,
+                    labelText: 'Төлбөрийн хэрэгсэл',
+                    secondText: "${paymentMethod()}",
+                    labelTextColor: dark,
+                    secondTextColor: grey2,
+                    secondTextFontWeight: FontWeight.w500,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 12),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Гүйлгээний дүн',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '30,000.00 ₮',
-                          style: TextStyle(color: red),
-                        ),
-                      ],
-                    ),
+                    marginBottom: 5,
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 12,
+                    labelText: 'Гүйлгээний дүн',
+                    secondText:
+                        '${Utils().formatCurrency("${payment.amount}")}₮',
+                    labelTextColor: dark,
+                    secondTextColor:
+                        payment.inOutType == "DEBIT" ? neonGreen : red,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 12),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Валют',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          'Төгрөг',
-                          style: TextStyle(
-                              color: grey2,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
+                    marginBottom: 5,
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 12,
+                    labelText: 'Валют',
+                    secondText: "${currency()}",
+                    labelTextColor: dark,
+                    secondTextColor: grey2,
+                    secondTextFontWeight: FontWeight.w500,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 12),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Гүйлгээний утга',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          'Амжилттай',
-                          style: TextStyle(color: neonGreen),
-                        ),
-                      ],
-                    ),
+                    marginBottom: 5,
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 12,
+                    labelText: 'Гүйлгээний утга',
+                    secondText: "${payment.description}",
+                    labelTextColor: dark,
+                    secondTextColor: neonGreen,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 12),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Гүйлгээ хийсэн',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          'B.Bolormaa',
-                          style: TextStyle(color: neonGreen),
-                        ),
-                      ],
-                    ),
+                    marginBottom: 5,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 12,
+                    labelText: 'Гүйлгээ хийсэн',
+                    secondText:
+                        "${payment.payerUser?.lastName?[0]}. ${payment.payerUser?.firstName}",
+                    labelTextColor: dark,
+                    secondTextColor: neonGreen,
+                    color: white,
+                    marginBottom: 5,
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(
@@ -288,68 +230,35 @@ class TransactionDetailPageState extends State<TransactionDetailPage>
                           TextStyle(color: grey3, fontWeight: FontWeight.w600),
                     ),
                   ),
-                  Container(
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 12,
+                    labelText: 'Дансны дугаар',
+                    secondText: "${payment.account?.number}",
+                    labelTextColor: dark,
+                    secondTextColor: neonGreen,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 12),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Дансны дугаар',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          '32332094823',
-                          style: TextStyle(color: neonGreen),
-                        ),
-                      ],
-                    ),
+                    marginBottom: 5,
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 12,
+                    labelText: 'Дансны нэр',
+                    secondText: "${payment.account?.name}",
+                    labelTextColor: dark,
+                    secondTextColor: neonGreen,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 12),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Дансны нэр',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          'Гүрүн трэйд ХХК',
-                          style: TextStyle(color: neonGreen),
-                        ),
-                      ],
-                    ),
+                    marginBottom: 5,
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 12,
+                    labelText: 'Банкны нэр',
+                    secondText: "${bankName()}",
+                    labelTextColor: dark,
+                    secondTextColor: neonGreen,
                     color: white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 12),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Банкны нэр',
-                          style: TextStyle(color: dark),
-                        ),
-                        Text(
-                          'Голомт банк',
-                          style: TextStyle(color: neonGreen),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
+                    marginBottom: 5,
                   ),
                   const SizedBox(
                     height: 50,

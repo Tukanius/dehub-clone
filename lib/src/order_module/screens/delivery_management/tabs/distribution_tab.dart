@@ -24,8 +24,9 @@ class _DistributionTabState extends State<DistributionTab>
   RefreshController refreshController = RefreshController();
   Result order = Result(count: 0, rows: []);
   bool isLoading = true;
+  bool startAnimation = false;
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       limit += 10;
     });
@@ -36,7 +37,7 @@ class _DistributionTabState extends State<DistributionTab>
     });
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -53,6 +54,11 @@ class _DistributionTabState extends State<DistributionTab>
         ResultArguments(filter: filter, offset: offset));
     setState(() {
       isLoading = false;
+    });
+    Future.delayed(const Duration(milliseconds: 100), () {
+      setState(() {
+        startAnimation = true;
+      });
     });
   }
 
@@ -85,8 +91,8 @@ class _DistributionTabState extends State<DistributionTab>
                 child: Refresher(
                   refreshController: refreshController,
                   onLoading:
-                      order.rows!.length == order.count ? null : _onLoading,
-                  onRefresh: _onRefresh,
+                      order.rows!.length == order.count ? null : onLoading,
+                  onRefresh: onRefresh,
                   color: orderColor,
                   child: SingleChildScrollView(
                     child: order.rows!.isNotEmpty
@@ -96,6 +102,8 @@ class _DistributionTabState extends State<DistributionTab>
                                   (data) => Column(
                                     children: [
                                       DeliveryManagementCard(
+                                        startAnimation: startAnimation,
+                                        index: order.rows!.indexOf(data),
                                         data: data,
                                         isFinished: false,
                                         onClick: () {

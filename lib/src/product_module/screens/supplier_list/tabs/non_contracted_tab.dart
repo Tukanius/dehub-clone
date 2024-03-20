@@ -42,7 +42,7 @@ class _NonContractedTabState extends State<NonContractedTab>
     });
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       limit += 10;
     });
@@ -53,7 +53,7 @@ class _NonContractedTabState extends State<NonContractedTab>
     });
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -93,8 +93,8 @@ class _NonContractedTabState extends State<NonContractedTab>
                   refreshController: refreshController,
                   onLoading: suppliers.rows!.length == suppliers.count
                       ? null
-                      : _onLoading,
-                  onRefresh: _onRefresh,
+                      : onLoading,
+                  onRefresh: onRefresh,
                   color: productColor,
                   child: SingleChildScrollView(
                     child: Column(

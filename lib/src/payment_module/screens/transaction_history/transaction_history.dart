@@ -78,7 +78,7 @@ class TransactionHistoryState extends State<TransactionHistory>
     });
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       page += 1;
     });
@@ -90,7 +90,7 @@ class TransactionHistoryState extends State<TransactionHistory>
     });
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -245,8 +245,8 @@ class TransactionHistoryState extends State<TransactionHistory>
               : Expanded(
                   child: Refresher(
                     refreshController: _refreshController,
-                    onLoading: _onLoading,
-                    onRefresh: _onRefresh,
+                    onLoading: onLoading,
+                    onRefresh: onRefresh,
                     color: networkColor,
                     child: SingleChildScrollView(
                       child: groupedList.isNotEmpty

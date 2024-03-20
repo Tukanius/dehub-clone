@@ -57,7 +57,7 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
     });
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       page += 1;
     });
@@ -68,7 +68,7 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
     });
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -168,8 +168,8 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
                 Expanded(
                   child: Refresher(
                     refreshController: refreshController,
-                    onLoading: _onLoading,
-                    onRefresh: _onRefresh,
+                    onLoading: onLoading,
+                    onRefresh: onRefresh,
                     color: invoiceColor,
                     child: SingleChildScrollView(
                       child: groupedList.isEmpty

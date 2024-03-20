@@ -39,10 +39,10 @@ class PaymentApi extends HttpRequest {
     return Result.fromJson(res, Payment.fromJson);
   }
 
-  Future<Result> accountStatement(ResultArguments resultArguments) async {
+  Future<Payment> accountStatement(ResultArguments resultArguments) async {
     var res = await get('/transaction/account', "PAYMENT", true,
         data: resultArguments.toJson());
-    return Result.fromJson(res, Payment.fromJson);
+    return Payment.fromJson(res);
   }
 
   Future<Payment> transactionGet(String id) async {
@@ -50,12 +50,18 @@ class PaymentApi extends HttpRequest {
     return Payment.fromJson(res as Map<String, dynamic>);
   }
 
-  Future<Payment> dashboard(
-      String startDate, String endDate, String structureMonth) async {
+  Future<Payment> dashboard(String startDate, String endDate,
+      String structureMonth, String date) async {
     var res = await get(
-        '/dashboard?startDate=$startDate&endDate=$endDate&structureMonth=$structureMonth',
+        '/dashboard/main?startDate=$startDate&endDate=$endDate&structureMonth=$structureMonth&date=$date',
         'PAYMENT',
         true);
+    return Payment.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Payment> bankAccountUpdate(Payment data, String id) async {
+    var res =
+        await put('/bank_account/$id', "PAYMENT", true, data: data.toJson());
     return Payment.fromJson(res as Map<String, dynamic>);
   }
 }

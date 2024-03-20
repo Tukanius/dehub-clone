@@ -120,8 +120,15 @@ class Result {
   int? count = 0;
   int? notSeen = 0;
   String? excelUrl;
+  String? url;
 
-  Result({this.rows, this.count, this.notSeen, this.excelUrl});
+  Result({
+    this.rows,
+    this.count,
+    this.notSeen,
+    this.excelUrl,
+    this.url,
+  });
 
   factory Result.fromJson(dynamic json, Function fromJson) =>
       _$ResultFromJson(json, fromJson);

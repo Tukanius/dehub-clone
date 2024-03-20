@@ -160,9 +160,19 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                           ),
                         ),
                         if (index.selectedIndex != 0)
-                          const Text(
-                            'Нүүр',
-                            style: TextStyle(color: orderColor, fontSize: 12),
+                          const Column(
+                            children: [
+                              Text(
+                                'Нүүр',
+                                style:
+                                    TextStyle(color: orderColor, fontSize: 12),
+                              ),
+                              Text(
+                                ' ',
+                                style:
+                                    TextStyle(color: orderColor, fontSize: 12),
+                              ),
+                            ],
                           ),
                       ],
                     ),
@@ -189,9 +199,17 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                         ),
                       ),
                       if (index.selectedIndex != 1)
-                        const Text(
-                          'Дашбоард',
-                          style: TextStyle(color: orderColor, fontSize: 12),
+                        const Column(
+                          children: [
+                            Text(
+                              'Дашбоард',
+                              style: TextStyle(color: orderColor, fontSize: 12),
+                            ),
+                            Text(
+                              ' ',
+                              style: TextStyle(color: orderColor, fontSize: 12),
+                            ),
+                          ],
                         ),
                     ],
                   ),
@@ -217,9 +235,17 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                         ),
                       ),
                       if (index.selectedIndex != 2)
-                        const Text(
-                          'Харилцагч',
-                          style: TextStyle(color: orderColor, fontSize: 12),
+                        const Column(
+                          children: [
+                            Text(
+                              'Харилцагч',
+                              style: TextStyle(color: orderColor, fontSize: 12),
+                            ),
+                            Text(
+                              'захиалга',
+                              style: TextStyle(color: orderColor, fontSize: 12),
+                            ),
+                          ],
                         ),
                     ],
                   ),
@@ -247,9 +273,19 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                           ),
                         ),
                         if (index.selectedIndex != 3)
-                          const Text(
-                            'Захиалга',
-                            style: TextStyle(color: orderColor, fontSize: 12),
+                          const Column(
+                            children: [
+                              Text(
+                                'Борлуулалт',
+                                style:
+                                    TextStyle(color: orderColor, fontSize: 12),
+                              ),
+                              Text(
+                                'захиалга',
+                                style:
+                                    TextStyle(color: orderColor, fontSize: 12),
+                              ),
+                            ],
                           ),
                       ],
                     ),

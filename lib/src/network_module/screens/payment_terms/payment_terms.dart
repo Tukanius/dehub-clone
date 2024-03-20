@@ -63,7 +63,7 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
     });
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       limit += 10;
     });
@@ -71,7 +71,7 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
     refreshController.loadComplete();
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -121,8 +121,8 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
                     refreshController: refreshController,
                     onLoading: network.rows!.length == network.count
                         ? null
-                        : _onLoading,
-                    onRefresh: _onRefresh,
+                        : onLoading,
+                    onRefresh: onRefresh,
                     color: networkColor,
                     child: SingleChildScrollView(
                       child: network.rows!.isNotEmpty

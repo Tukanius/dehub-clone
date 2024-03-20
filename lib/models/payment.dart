@@ -1,3 +1,5 @@
+import 'package:dehub/models/stats.dart';
+
 part '../parts/payment.dart';
 
 class Payment {
@@ -30,7 +32,7 @@ class Payment {
   String? firstName;
   String? lastName;
   String? accountName;
-  Payment? type;
+  String? type;
   String? transactionStatus;
   String? paymentId;
   String? paymentRefCode;
@@ -79,8 +81,18 @@ class Payment {
   String? date; //Must be string
   int? incomeAmount;
   int? outcomeAmount;
+  Payment? payerUser;
+  Payment? payerBusiness;
+  Payment? account;
+  List<Stats>? numberSurvey;
+  String? image;
 
   Payment({
+    this.image,
+    this.numberSurvey,
+    this.account,
+    this.payerUser,
+    this.payerBusiness,
     this.outcomeAmount,
     this.incomeAmount,
     this.date,

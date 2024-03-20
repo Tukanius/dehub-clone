@@ -12,6 +12,9 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => Payment.fromJson(e)).toList()
         : null,
+    numberSurvey: json['numberSurvey'] != null
+        ? (json['numberSurvey'] as List).map((e) => Stats.fromJson(e)).toList()
+        : null,
     values: json['values'] != null
         ? (json['values'] as List).map((e) => Payment.fromJson(e)).toList()
         : null,
@@ -37,6 +40,7 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
         ? DateTime.parse(json['deletedAt'].toString())
         : null,
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
+    image: json['image'] != null ? json['image'] as String : null,
     accountName:
         json['accountName'] != null ? json['accountName'] as String : null,
     businessId:
@@ -56,12 +60,21 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
     business: json['business'] != null
         ? Payment.fromJson(json['business'] as Map<String, dynamic>)
         : null,
+    payerBusiness: json['payerBusiness'] != null
+        ? Payment.fromJson(json['payerBusiness'] as Map<String, dynamic>)
+        : null,
+    payerUser: json['payerUser'] != null
+        ? Payment.fromJson(json['payerUser'] as Map<String, dynamic>)
+        : null,
     regNumber: json['regNumber'] != null ? json['regNumber'] as String : null,
     refCode: json['refCode'] != null ? json['refCode'] as String : null,
     profileName:
         json['profileName'] != null ? json['profileName'] as String : null,
     partner: json['partner'] != null
         ? Payment.fromJson(json['partner'] as Map<String, dynamic>)
+        : null,
+    account: json['account'] != null
+        ? Payment.fromJson(json['account'] as Map<String, dynamic>)
         : null,
     businessName:
         json['businessName'] != null ? json['businessName'] as String : null,
@@ -71,9 +84,7 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
     avatar: json['avatar'] != null ? json['avatar'] as String : null,
     firstName: json['firstName'] != null ? json['firstName'] as String : null,
     lastName: json['lastName'] != null ? json['lastName'] as String : null,
-    // type: json['type'] != null
-    //     ? Payment.fromJson(json['type'] as Map<String, dynamic>)
-    //     : null,
+    type: json['type'] != null ? json['type'] as String : null,
     transactionStatus: json['transactionStatus'] != null
         ? json['transactionStatus'] as String
         : null,
@@ -169,6 +180,14 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$PaymentToJson(Payment instance) {
   Map<String, dynamic> json = {};
   if (instance.byInterval != null) json['byInterval'] = instance.byInterval;
+  if (instance.account != null) json['account'] = instance.account;
+  if (instance.payerUser != null) json['payerUser'] = instance.payerUser;
+  if (instance.payerBusiness != null) {
+    json['payerBusiness'] = instance.payerBusiness;
+  }
+  if (instance.numberSurvey != null) {
+    json['numberSurvey'] = instance.numberSurvey;
+  }
   if (instance.incomeAmount != null) {
     json['incomeAmount'] = instance.incomeAmount;
   }
@@ -180,6 +199,7 @@ Map<String, dynamic> _$PaymentToJson(Payment instance) {
     json['revenueStructure'] = instance.revenueStructure;
   }
   if (instance.requestId != null) json['requestId'] = instance.requestId;
+  if (instance.image != null) json['image'] = instance.image;
   if (instance.clientId != null) json['clientId'] = instance.clientId;
   if (instance.responseType != null) {
     json['responseType'] = instance.responseType;

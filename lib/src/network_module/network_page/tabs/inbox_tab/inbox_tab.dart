@@ -48,7 +48,7 @@ class InboxTabState extends State<InboxTab>
     });
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       limit += 10;
     });
@@ -56,7 +56,7 @@ class InboxTabState extends State<InboxTab>
     refreshController.loadComplete();
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -96,8 +96,8 @@ class InboxTabState extends State<InboxTab>
                   refreshController: refreshController,
                   onLoading: invitation.rows!.length == invitation.count
                       ? null
-                      : _onLoading,
-                  onRefresh: _onRefresh,
+                      : onLoading,
+                  onRefresh: onRefresh,
                   color: networkColor,
                   child: SingleChildScrollView(
                     child: invitation.rows!.isNotEmpty

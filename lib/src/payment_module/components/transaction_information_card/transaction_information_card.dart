@@ -1,5 +1,6 @@
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/payment.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -28,6 +29,7 @@ class TransactionInformationCard extends StatefulWidget {
 class TransactionInformationCardState
     extends State<TransactionInformationCard> {
   General general = General();
+  User user = User();
 
   getCurrency() {
     String? res;
@@ -43,6 +45,12 @@ class TransactionInformationCardState
           .symbol;
     }
     return res;
+  }
+
+  inOutType() {
+    int index = general.bankAccounts!.indexWhere(
+        (element) => element.number == widget.data?.debitAccountNumber);
+    return index;
   }
 
   @override
@@ -102,8 +110,7 @@ class TransactionInformationCardState
                   '${Utils().formatCurrency(widget.data?.amount.toString())} ${getCurrency()}',
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      color:
-                          widget.data?.inOutType == "DEBIT" ? neonGreen : red),
+                      color: inOutType() > -1 ? neonGreen : red),
                 )
               ],
             )

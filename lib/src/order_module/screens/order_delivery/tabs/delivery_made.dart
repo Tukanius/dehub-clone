@@ -66,7 +66,7 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
     });
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       limit += 10;
     });
@@ -77,7 +77,7 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
     });
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -116,8 +116,8 @@ class _DeliveryMadeState extends State<DeliveryMade> with AfterLayoutMixin {
               Expanded(
                 child: Refresher(
                   refreshController: refreshController,
-                  onLoading: _onLoading,
-                  onRefresh: _onRefresh,
+                  onLoading: onLoading,
+                  onRefresh: onRefresh,
                   color: orderColor,
                   child: SingleChildScrollView(
                     child: isSubmit == true

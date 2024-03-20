@@ -73,6 +73,22 @@ class InvitationCardState extends State<InvitationCard> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            if (business.logo != null)
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: grey,
+                  image: DecorationImage(
+                    image: NetworkImage('${business.logo}'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                height: 30,
+                width: 30,
+              ),
+            const SizedBox(
+              width: 5,
+            ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -42,7 +42,7 @@ class _ContractedTabState extends State<ContractedTab> with AfterLayoutMixin {
     });
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       limit += 10;
     });
@@ -50,7 +50,7 @@ class _ContractedTabState extends State<ContractedTab> with AfterLayoutMixin {
     refreshController.loadComplete();
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -96,8 +96,8 @@ class _ContractedTabState extends State<ContractedTab> with AfterLayoutMixin {
                   refreshController: refreshController,
                   onLoading: suppliers.rows!.length == suppliers.count
                       ? null
-                      : _onLoading,
-                  onRefresh: _onRefresh,
+                      : onLoading,
+                  onRefresh: onRefresh,
                   color: productColor,
                   child: SingleChildScrollView(
                     child: Column(

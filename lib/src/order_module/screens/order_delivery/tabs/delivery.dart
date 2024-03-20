@@ -39,7 +39,7 @@ class _DeliveryState extends State<Delivery> with AfterLayoutMixin {
     list(page, limit, '');
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       limit += 10;
     });
@@ -50,7 +50,7 @@ class _DeliveryState extends State<Delivery> with AfterLayoutMixin {
     });
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -110,8 +110,8 @@ class _DeliveryState extends State<Delivery> with AfterLayoutMixin {
                   refreshController: refreshController,
                   onLoading: delivery.rows!.length == delivery.count
                       ? null
-                      : _onLoading,
-                  onRefresh: _onRefresh,
+                      : onLoading,
+                  onRefresh: onRefresh,
                   color: orderColor,
                   child: SingleChildScrollView(
                     child: delivery.rows!.isNotEmpty

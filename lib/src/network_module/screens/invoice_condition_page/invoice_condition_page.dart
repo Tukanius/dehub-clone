@@ -111,7 +111,7 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
     });
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       limit += 10;
     });
@@ -122,7 +122,7 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
     });
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -211,8 +211,8 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
                         refreshController: refreshController,
                         onLoading: reference.rows!.length == reference.count
                             ? null
-                            : _onLoading,
-                        onRefresh: _onRefresh,
+                            : onLoading,
+                        onRefresh: onRefresh,
                         color: networkColor,
                         child: SingleChildScrollView(
                           child: Column(

@@ -65,7 +65,7 @@ class _InventoryItemTypeState extends State<InventoryItemType>
     });
   }
 
-  void _onLoading() async {
+  void onLoading() async {
     setState(() {
       page += 1;
     });
@@ -73,7 +73,7 @@ class _InventoryItemTypeState extends State<InventoryItemType>
     refreshController.loadComplete();
   }
 
-  void _onRefresh() async {
+  void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       isLoading = true;
@@ -146,8 +146,8 @@ class _InventoryItemTypeState extends State<InventoryItemType>
             )
           : Refresher(
               refreshController: refreshController,
-              onLoading: _onLoading,
-              onRefresh: _onRefresh,
+              onLoading: onLoading,
+              onRefresh: onRefresh,
               color: productColor,
               child: SingleChildScrollView(
                 child: Column(

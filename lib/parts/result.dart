@@ -20,6 +20,7 @@ Result _$ResultFromJson(dynamic res, Function fromJson) {
           .toList(),
       count: json['count'] as int?,
       excelUrl: json['excelUrl'] as String?,
+      url: json['url'] as String?,
     );
   }
 }
@@ -28,6 +29,7 @@ Map<String, dynamic> _$ResultToJson(Result instance) => <String, dynamic>{
       'rows': instance.rows,
       'count': instance.count,
       'excelUrl': instance.excelUrl,
+      'url': instance.url,
     };
 
 Map<String, dynamic> _$ResultArgumentToJson(ResultArguments? instance) {
