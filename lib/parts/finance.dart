@@ -90,6 +90,8 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
     shortName: json['shortName'] != null ? json['shortName'] as String : null,
     programStatus:
         json['programStatus'] != null ? json['programStatus'] as String : null,
+    lbfRequestId:
+        json['lbfRequestId'] != null ? json['lbfRequestId'] as String : null,
     username: json['username'] != null ? json['username'] as String : null,
     number: json['number'] != null ? json['number'] as String : null,
     repaymentStatus: json['repaymentStatus'] != null
@@ -658,6 +660,9 @@ Map<String, dynamic> _$FinanceToJson(Finance instance) {
   }
   if (instance.paidInvCount != null) {
     json['paidInvCount'] = instance.paidInvCount;
+  }
+  if (instance.lbfRequestId != null) {
+    json['lbfRequestId'] = instance.lbfRequestId;
   }
 
   if (instance.link != null) json['link'] = instance.link;

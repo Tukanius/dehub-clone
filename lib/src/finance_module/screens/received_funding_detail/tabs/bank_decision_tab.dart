@@ -61,40 +61,40 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
               ),
             ),
           ),
-          Container(
-            color: white,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Олголтын шийдвэр',
-                  style: TextStyle(color: dark),
-                ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Color(int.parse(
-                                requestStatus().color.substring(1, 7),
-                                radix: 16) +
-                            0xff000000)
-                        .withOpacity(0.2),
-                  ),
-                  child: Text(
-                    '${requestStatus().name}',
-                    style: TextStyle(
-                      color: Color(int.parse(
-                              requestStatus().color.substring(1, 7),
-                              radix: 16) +
-                          0xff000000),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // Container(
+          //   color: white,
+          //   padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       const Text(
+          //         'Олголтын шийдвэр',
+          //         style: TextStyle(color: dark),
+          //       ),
+          //       Container(
+          //         padding:
+          //             const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+          //         decoration: BoxDecoration(
+          //           borderRadius: BorderRadius.circular(5),
+          //           color: Color(int.parse(
+          //                       requestStatus().color.substring(1, 7),
+          //                       radix: 16) +
+          //                   0xff000000)
+          //               .withOpacity(0.2),
+          //         ),
+          //         child: Text(
+          //           '${requestStatus().name}',
+          //           style: TextStyle(
+          //             color: Color(int.parse(
+          //                     requestStatus().color.substring(1, 7),
+          //                     radix: 16) +
+          //                 0xff000000),
+          //           ),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
@@ -130,15 +130,15 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
                 '${Utils().formatCurrency(widget.data.bankFeeAmount.toString()) + symbol()}',
             secondTextColor: source.currentColor,
           ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            color: white,
-            labelText: 'Олгосон огноо, цаг',
-            secondText: DateFormat("yyyy-MM-dd HH:mm")
-                .format(widget.data.disbursedDate!),
-            secondTextColor: source.currentColor,
-          ),
+          // FieldCard(
+          //   paddingHorizontal: 15,
+          //   paddingVertical: 10,
+          //   color: white,
+          //   labelText: 'Олгосон огноо, цаг',
+          //   secondText: DateFormat("yyyy-MM-dd HH:mm")
+          //       .format(widget.data.disbursedDate!),
+          //   secondTextColor: source.currentColor,
+          // ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: const Text(
@@ -194,11 +194,11 @@ class _BankDecisionTabState extends State<BankDecisionTab> {
             paddingVertical: 10,
             color: white,
             labelText: 'Эргэн төлөх огноо',
-            secondText: user.currentBusiness?.type == "SUPPLIER"
-                ? DateFormat("yyyy-MM-dd HH: mm")
-                    .format(widget.data.invPaymentDate!)
-                : DateFormat("yyyy-MM-dd HH: mm").format(
-                    widget.data.invPaymentDate!.add(
+            secondText: widget.data.invoice != null
+                ? DateFormat("yyyy-MM-dd HH:mm")
+                    .format(widget.data.invoice!.paymentDate!)
+                : DateFormat("yyyy-MM-dd HH:mm").format(
+                    widget.data.repaymentDate!.add(
                       Duration(days: widget.data.product!.buyerTerm!.toInt()),
                     ),
                   ),

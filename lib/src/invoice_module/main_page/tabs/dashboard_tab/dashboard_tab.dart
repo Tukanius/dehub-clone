@@ -1,8 +1,8 @@
+import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/dashboard_card/dashboard_card.dart';
 import 'package:dehub/components/stats_card/stats_card.dart';
 import 'package:dehub/components/pie_chart/pie_chart.dart';
 import 'package:dehub/models/invoice.dart';
-import 'package:dehub/models/stats.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/invoice_module/screens/closed_invoice/closed_invoice_page.dart';
@@ -25,17 +25,8 @@ class DashBoardTab extends StatefulWidget {
 class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
   User user = User();
   Map<String, double> data = {};
-  List<Invoice> legend = [];
-  Invoice confirmed = Invoice();
+  Invoice dashboard = Invoice(numberSurvey: []);
   bool isLoading = true;
-  Map<String, dynamic> pieChart = {
-    "Хугацаандаа": 3,
-    "1-3 хоног": 3,
-    "3-30 хоног": 3,
-    "31-60 хоног": 3,
-    "61-90 хоног": 3,
-    "> 90 хоног": 3,
-  };
   List<Color> colorList = [
     neonGreen,
     pieYellow,
@@ -46,130 +37,117 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
   ];
 
   @override
-  afterFirstLayout(BuildContext context) {
+  afterFirstLayout(BuildContext context) async {
+    dashboard = await InvoiceApi().dashboard(
+      DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      DateFormat('yyyy-MM-dd')
+          .format(DateTime.now().subtract(const Duration(days: 5))),
+      DateFormat('yyyy-MM-dd').format(DateTime.now()),
+    );
+    for (var i = 0; i < dashboard.numberSurvey!.length; i++) {
+      dashboard.numberSurvey?[i].image = svgs[i];
+      dashboard.numberSurvey?[i].changedCount =
+          dashboard.numberSurvey?[i].changedAmount;
+    }
     Map<String, double> pieData = {};
-    pieChart.forEach((key, value) {
-      pieData[key] = double.parse(value.toString());
-      legend.add(
-        Invoice(
-          count: value,
-          profileName: key,
-        ),
-      );
-    });
+    for (var data in dashboard.overdue!) {
+      pieData[data.name!] = data.amountToPay!;
+    }
     setState(() {
       data = pieData;
       isLoading = false;
     });
   }
 
-  List<Stats> reviewData = [
-    Stats(
-      image: 'assets/svg/income_review.svg',
-      name: 'ОРЛОГЫН ГҮЙЛГЭЭ ДҮН',
-      amount: 238232000,
-      percent: 12,
-    ),
-    Stats(
-      image: 'assets/svg/expenditure_review.svg',
-      name: 'ЗАРЛАГЫН ГҮЙЛГЭЭ ДҮН',
-      amount: 238232000,
-      percent: -12,
-    ),
-    Stats(
-      image: 'assets/svg/finance_review.svg',
-      name: 'САНХҮҮЖИЛТ АВСАН',
-      amount: 238232000,
-      percent: 12,
-    ),
-    Stats(
-      image: 'assets/svg/paid_review.svg',
-      name: 'САНХҮҮЖИЛТ ТӨЛСӨН',
-      amount: 238232000,
-      percent: -12,
-    ),
+  List<String> svgs = [
+    'assets/svg/income_review.svg',
+    'assets/svg/expenditure_review.svg',
+    'assets/svg/finance_review.svg',
+    'assets/svg/paid_review.svg',
   ];
 
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).invoiceMe;
 
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-            child: const Text(
-              'Нэхэмжлэх удирдлага',
-              style: TextStyle(
-                  color: black, fontSize: 24, fontWeight: FontWeight.bold),
+    return isLoading == true
+        ? const Center(
+            child: CircularProgressIndicator(
+              color: invoiceColor,
             ),
-          ),
-          SizedBox(
-            height: 100,
-            child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              scrollDirection: Axis.horizontal,
+          )
+        : SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                DashboardCard(
-                  onClick: () {
-                    Navigator.of(context).pushNamed(GivePage.routeName);
-                  },
-                  boxColor: invoiceColor.withOpacity(0.1),
-                  padding: 10,
-                  labelText: 'Нээлттэй нэхэмжлэх',
-                  svgColor: invoiceColor,
-                  svg: 'assets/svg/take_invoice.svg',
-                ),
-                if (user.currentBusiness?.type == "SUPPLIER")
-                  DashboardCard(
-                    onClick: () {
-                      Navigator.of(context)
-                          .pushNamed(PaymentRegister.routeName);
-                    },
-                    boxColor: invoiceColor.withOpacity(0.1),
-                    padding: 10,
-                    labelText: 'Төлөлт бүртгэх',
-                    svgColor: invoiceColor,
-                    svg: 'assets/svg/closed_invoice.svg',
+                Container(
+                  margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
+                  child: const Text(
+                    'Нэхэмжлэх удирдлага',
+                    style: TextStyle(
+                        color: black,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
                   ),
-                DashboardCard(
-                  onClick: () {
-                    Navigator.of(context)
-                        .pushNamed(ClosedInvoicePage.routeName);
-                  },
-                  boxColor: invoiceColor.withOpacity(0.1),
-                  padding: 8,
-                  labelText: 'Хаагдсан нэхэмжлэх',
-                  svgColor: invoiceColor,
-                  svg: 'assets/svg/report_off.svg',
                 ),
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 10),
-            height: 120,
-            child: ListView.builder(
-              padding: const EdgeInsets.only(left: 15),
-              scrollDirection: Axis.horizontal,
-              itemCount: reviewData.length,
-              itemBuilder: (context, index) => StatsCard(
-                data: reviewData[index],
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 25,
-          ),
-          isLoading == true
-              ? const Center(
-                  child: CircularProgressIndicator(
-                    color: invoiceColor,
+                SizedBox(
+                  height: 100,
+                  child: ListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      DashboardCard(
+                        onClick: () {
+                          Navigator.of(context).pushNamed(GivePage.routeName);
+                        },
+                        boxColor: invoiceColor.withOpacity(0.1),
+                        padding: 10,
+                        labelText: 'Нээлттэй нэхэмжлэх',
+                        svgColor: invoiceColor,
+                        svg: 'assets/svg/take_invoice.svg',
+                      ),
+                      if (user.currentBusiness?.type == "SUPPLIER")
+                        DashboardCard(
+                          onClick: () {
+                            Navigator.of(context)
+                                .pushNamed(PaymentRegister.routeName);
+                          },
+                          boxColor: invoiceColor.withOpacity(0.1),
+                          padding: 10,
+                          labelText: 'Төлөлт бүртгэх',
+                          svgColor: invoiceColor,
+                          svg: 'assets/svg/closed_invoice.svg',
+                        ),
+                      DashboardCard(
+                        onClick: () {
+                          Navigator.of(context)
+                              .pushNamed(ClosedInvoicePage.routeName);
+                        },
+                        boxColor: invoiceColor.withOpacity(0.1),
+                        padding: 8,
+                        labelText: 'Хаагдсан нэхэмжлэх',
+                        svgColor: invoiceColor,
+                        svg: 'assets/svg/report_off.svg',
+                      ),
+                    ],
                   ),
-                )
-              : Column(
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  height: 120,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.only(left: 15),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: dashboard.numberSurvey!.length,
+                    itemBuilder: (context, index) => StatsCard(
+                      data: dashboard.numberSurvey![index],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
@@ -223,12 +201,13 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                     const SizedBox(
                       height: 10,
                     ),
-                    PieChart(
-                      legend: legend,
-                      colorList: colorList,
-                      data: data,
-                      module: "INVOICE",
-                    ),
+                    if (data.isNotEmpty)
+                      PieChart(
+                        legend: dashboard.overdue!,
+                        colorList: colorList,
+                        data: data,
+                        module: "INVOICE",
+                      ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -342,18 +321,21 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                       ),
                       child: SfCartesianChart(
                         series: <ChartSeries>[
-                          BarSeries<Invoice, String>(
+                          ColumnSeries<Invoice, String>(
                             borderRadius: BorderRadius.circular(5),
                             pointColorMapper: (datum, index) =>
-                                datum.name == "Зөвшөөрсөн"
-                                    ? networkDashboard2
-                                    : datum.name == "Илгээсэн"
-                                        ? invoiceColor
-                                        : grey2,
-                            dataSource: legend,
-                            xValueMapper: (gdp, _) => gdp.profileName,
-                            yValueMapper: (gdp, _) => gdp.count,
-                          )
+                                invoiceColor.withOpacity(0.5),
+                            dataSource: dashboard.confirmed!,
+                            xValueMapper: (gdp, _) => gdp.date,
+                            yValueMapper: (gdp, _) => gdp.confirmedAmount,
+                          ),
+                          ColumnSeries<Invoice, String>(
+                            borderRadius: BorderRadius.circular(5),
+                            pointColorMapper: (datum, index) => invoiceColor,
+                            dataSource: dashboard.confirmed!,
+                            xValueMapper: (gdp, _) => gdp.date,
+                            yValueMapper: (gdp, _) => gdp.paidAmount,
+                          ),
                         ],
                         primaryXAxis: CategoryAxis(),
                       ),
@@ -363,8 +345,8 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                     )
                   ],
                 ),
-        ],
-      ),
-    );
+              ],
+            ),
+          );
   }
 }

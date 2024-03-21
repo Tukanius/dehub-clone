@@ -419,11 +419,52 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
     lastAmount: json['lastAmount'] != null
         ? double.parse('${json['lastAmount']}')
         : null,
+    numberSurvey: json['numberSurvey'] != null
+        ? (json['numberSurvey'] as List).map((e) => Stats.fromJson(e)).toList()
+        : null,
+    confirmed: json['confirmed'] != null
+        ? (json['confirmed'] as List).map((e) => Invoice.fromJson(e)).toList()
+        : null,
+    overdue: json['overdue'] != null
+        ? (json['overdue'] as List).map((e) => Invoice.fromJson(e)).toList()
+        : null,
+    changedAmount: json['firstAmount'] != null
+        ? double.parse('${json['firstAmount']}')
+        : null,
+    date: json['date'] != null ? json['date'] as String : null,
+    invoiceCount: json['invoiceCount'] != null
+        ? int.parse('${json['invoiceCount']}')
+        : null,
+    businessCount: json['businessCount'] != null
+        ? int.parse('${json['businessCount']}')
+        : null,
+    averageAmount: json['averageAmount'] != null
+        ? double.parse('${json['averageAmount']}')
+        : null,
   );
 }
 
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   Map<String, dynamic> json = {};
+
+  if (instance.numberSurvey != null) {
+    json['numberSurvey'] = instance.numberSurvey;
+  }
+  if (instance.confirmed != null) json['confirmed'] = instance.confirmed;
+  if (instance.overdue != null) json['overdue'] = instance.overdue;
+  if (instance.changedAmount != null) {
+    json['changedAmount'] = instance.changedAmount;
+  }
+  if (instance.date != null) json['date'] = instance.date;
+  if (instance.invoiceCount != null) {
+    json['invoiceCount'] = instance.invoiceCount;
+  }
+  if (instance.businessCount != null) {
+    json['businessCount'] = instance.businessCount;
+  }
+  if (instance.averageAmount != null) {
+    json['averageAmount'] = instance.averageAmount;
+  }
 
   if (instance.paymentRefCode != null) {
     json['paymentRefCode'] = instance.paymentRefCode;

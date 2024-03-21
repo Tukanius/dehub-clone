@@ -65,43 +65,49 @@ class _SupplierLedState extends State<SupplierLed> with AfterLayoutMixin {
   Widget build(BuildContext context) {
     final source = Provider.of<FinanceProvider>(context, listen: true);
 
-    return Refresher(
-      refreshController: refreshController,
-      onLoading: finance.rows!.length == finance.count ? null : onLoading,
-      onRefresh: onRefresh,
-      color: source.currentColor,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 25,
+    return isLoading == true
+        ? Center(
+            child: CircularProgressIndicator(
+              color: source.currentColor,
             ),
-            finance.rows!.isNotEmpty
-                ? Column(
-                    children: finance.rows!
-                        .map(
-                          (data) => RePaymentCard(
-                            repayment: false,
-                            data: data,
-                            onClick: () {
-                              Navigator.of(context).pushNamed(
-                                RePaymentDetail.routeName,
-                                arguments: RePaymentDetailArguments(
-                                  id: data.id,
-                                ),
-                              );
-                            },
-                          ),
-                        )
-                        .toList(),
-                  )
-                : const NotFound(
-                    module: "FINANCE",
-                    labelText: 'Хоосон байна',
+          )
+        : Refresher(
+            refreshController: refreshController,
+            onLoading: finance.rows!.length == finance.count ? null : onLoading,
+            onRefresh: onRefresh,
+            color: source.currentColor,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 25,
                   ),
-          ],
-        ),
-      ),
-    );
+                  finance.rows!.isNotEmpty
+                      ? Column(
+                          children: finance.rows!
+                              .map(
+                                (data) => RePaymentCard(
+                                  repayment: false,
+                                  data: data,
+                                  onClick: () {
+                                    Navigator.of(context).pushNamed(
+                                      RePaymentDetail.routeName,
+                                      arguments: RePaymentDetailArguments(
+                                        id: data.id,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              )
+                              .toList(),
+                        )
+                      : const NotFound(
+                          module: "FINANCE",
+                          labelText: 'Хоосон байна',
+                        ),
+                ],
+              ),
+            ),
+          );
   }
 }

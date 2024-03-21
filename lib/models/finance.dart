@@ -245,8 +245,10 @@ class Finance {
   Finance? supplierAccount;
   Finance? supplierFinUser;
   Finance? buyerFinUser;
+  String? lbfRequestId;
 
   Finance({
+    this.lbfRequestId,
     this.scfProgram,
     this.scfProduct,
     this.buyerFinUser,

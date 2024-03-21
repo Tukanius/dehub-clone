@@ -495,7 +495,7 @@ class _CompromisePageState extends State<CompromisePage> {
                           Navigator.of(context).pop();
                         },
                         borderColor: source.currentColor,
-                        labelColor: backgroundColor,
+                        labelColor: white,
                         labelText: 'Буцах',
                         textColor: source.currentColor,
                       ),

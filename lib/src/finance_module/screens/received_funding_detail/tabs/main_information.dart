@@ -57,40 +57,40 @@ class _MainInformationTabState extends State<MainInformationTab> {
             secondTextColor: source.currentColor,
             color: white,
           ),
-          Container(
-            color: white,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Хүсэлт төлөв',
-                  style: TextStyle(color: dark),
-                ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Color(int.parse(
-                                requestStatus().color.substring(1, 7),
-                                radix: 16) +
-                            0xff000000)
-                        .withOpacity(0.2),
-                  ),
-                  child: Text(
-                    '${requestStatus().name}',
-                    style: TextStyle(
-                      color: Color(int.parse(
-                              requestStatus().color.substring(1, 7),
-                              radix: 16) +
-                          0xff000000),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // Container(
+          //   color: white,
+          //   padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       const Text(
+          //         'Хүсэлт төлөв',
+          //         style: TextStyle(color: dark),
+          //       ),
+          //       Container(
+          //         padding:
+          //             const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+          //         decoration: BoxDecoration(
+          //           borderRadius: BorderRadius.circular(5),
+          //           color: Color(int.parse(
+          //                       requestStatus().color.substring(1, 7),
+          //                       radix: 16) +
+          //                   0xff000000)
+          //               .withOpacity(0.2),
+          //         ),
+          //         child: Text(
+          //           '${requestStatus().name}',
+          //           style: TextStyle(
+          //             color: Color(int.parse(
+          //                     requestStatus().color.substring(1, 7),
+          //                     radix: 16) +
+          //                 0xff000000),
+          //           ),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
@@ -108,15 +108,15 @@ class _MainInformationTabState extends State<MainInformationTab> {
             secondTextColor: source.currentColor,
             color: white,
           ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Санхүүжилт хоног',
-            secondText:
-                '${widget.data.invPaymentDate!.difference(widget.data.disbursedDate!).inDays} хоног',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
+          // FieldCard(
+          //   paddingHorizontal: 15,
+          //   paddingVertical: 10,
+          //   labelText: 'Санхүүжилт хоног',
+          //   secondText:
+          //       '${widget.data.invoice?.paymentDate!.difference(widget.data.disbursedDate!).inDays} хоног',
+          //   secondTextColor: source.currentColor,
+          //   color: white,
+          // ),
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
@@ -150,7 +150,8 @@ class _MainInformationTabState extends State<MainInformationTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Хөтөлбөрийн код',
-            secondText: '${widget.data.program?.refCode}',
+            secondText:
+                '${widget.data.lbfProgram?.refCode ?? widget.data.program?.refCode}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -158,7 +159,8 @@ class _MainInformationTabState extends State<MainInformationTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Хөтөлбөрийн нэр',
-            secondText: '${widget.data.program?.name}',
+            secondText:
+                '${widget.data.lbfProgram?.name ?? widget.data.program?.name}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -166,7 +168,8 @@ class _MainInformationTabState extends State<MainInformationTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Бүтээгдэхүүн код',
-            secondText: '${widget.data.product?.refCode}',
+            secondText:
+                '${widget.data.lbfProduct?.refCode ?? widget.data.product?.refCode}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -174,7 +177,8 @@ class _MainInformationTabState extends State<MainInformationTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Бүтээгдэхүүн нэр',
-            secondText: '${widget.data.product?.name}',
+            secondText:
+                '${widget.data.lbfProduct?.name ?? widget.data.product?.name}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -226,7 +230,7 @@ class _MainInformationTabState extends State<MainInformationTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Нэхэмжлэх код',
-            secondText: '${widget.data.invRefCode}',
+            secondText: '${widget.data.invoice?.refCode}',
             secondTextColor: source.currentColor,
             onClick: () {},
             color: white,
@@ -235,8 +239,11 @@ class _MainInformationTabState extends State<MainInformationTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Илгээсэн огноо, цаг',
-            secondText: DateFormat("yyyy-MM-dd HH:mm")
-                .format(widget.data.invCreatedAt!),
+            secondText: widget.data.invoice != null
+                ? DateFormat("yyyy-MM-dd HH:mm")
+                    .format(widget.data.invoice!.createdAt!)
+                : DateFormat("yyyy-MM-dd HH:mm")
+                    .format(widget.data.invCreatedAt!),
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -244,8 +251,11 @@ class _MainInformationTabState extends State<MainInformationTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Баталсан огноо, цаг',
-            secondText: DateFormat("yyyy-MM-dd HH:mm")
-                .format(widget.data.invConfirmedDate!),
+            secondText: widget.data.invoice != null
+                ? DateFormat("yyyy-MM-dd HH:mm")
+                    .format(widget.data.invoice!.confirmedDate!)
+                : DateFormat("yyyy-MM-dd HH:mm")
+                    .format(widget.data.invConfirmedDate!),
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -253,7 +263,8 @@ class _MainInformationTabState extends State<MainInformationTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Худалдан авагч код',
-            secondText: '${widget.data.invReceiverBusiness?.refCode}',
+            secondText:
+                '${widget.data.invoice?.buyer?.refCode ?? widget.data.invReceiverBusiness?.refCode}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -261,7 +272,8 @@ class _MainInformationTabState extends State<MainInformationTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Худалдан авагч нэр',
-            secondText: '${widget.data.invReceiverBusiness?.profileName}',
+            secondText:
+                '${widget.data.invoice?.buyer?.profileName ?? widget.data.invReceiverBusiness?.profileName}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -269,7 +281,9 @@ class _MainInformationTabState extends State<MainInformationTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Санхүү ажилтан утас',
-            secondText: '${widget.data.finUser?.phone}',
+            secondText: widget.data.invoice?.buyerFinUser?.phone ??
+                widget.data.finUser?.phone ??
+                '-',
             secondTextColor: source.currentColor,
             color: white,
           ),

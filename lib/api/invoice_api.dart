@@ -141,4 +141,13 @@ class InvoiceApi extends HttpRequest {
     var res = await post('/invoice/history', type, true, data: data.toJson());
     return Invoice.fromJson(res as Map<String, dynamic>);
   }
+
+  Future<Invoice> dashboard(
+      String date, String startDate, String endDate) async {
+    var res = await get(
+        '/dashboard/main?date=$date&confirmedStartDate=$startDate&confirmedEndDate=$endDate',
+        type,
+        true);
+    return Invoice.fromJson(res as Map<String, dynamic>);
+  }
 }

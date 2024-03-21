@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:dehub/models/qpay_urls.dart';
+import 'package:dehub/models/stats.dart';
 part '../parts/invoice.dart';
 
 class Invoice {
@@ -188,8 +189,24 @@ class Invoice {
   List<Invoice>? invoices;
   String? logType;
   String? orderSalesCode;
+  List<Stats>? numberSurvey;
+  List<Invoice>? confirmed;
+  List<Invoice>? overdue;
+  double? changedAmount;
+  String? date;
+  int? invoiceCount;
+  int? businessCount;
+  double? averageAmount;
 
   Invoice({
+    this.numberSurvey,
+    this.confirmed,
+    this.overdue,
+    this.changedAmount,
+    this.invoiceCount,
+    this.businessCount,
+    this.averageAmount,
+    this.date,
     this.orderSalesCode,
     this.logType,
     this.invoices,
