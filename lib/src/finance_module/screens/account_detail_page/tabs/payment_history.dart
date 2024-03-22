@@ -1,3 +1,4 @@
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/finance_provider.dart';
@@ -36,124 +37,129 @@ class _PaymentHistoryState extends State<PaymentHistory> {
     final source = Provider.of<FinanceProvider>(context, listen: true);
     general =
         Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
-    return SingleChildScrollView(
-      child: Column(
-        children: widget.data
-            .map(
-              (data) => Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                color: white,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            '${data.payerAccName}',
-                            style: TextStyle(
-                              color: source.currentColor,
-                              fontWeight: FontWeight.w600,
-                            ),
+    return widget.data.isNotEmpty
+        ? SingleChildScrollView(
+            child: Column(
+              children: widget.data
+                  .map(
+                    (data) => Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      color: white,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  '${data.payerAccName}',
+                                  style: TextStyle(
+                                    color: source.currentColor,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  '${data.refCode}',
+                                  textAlign: TextAlign.end,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            '${data.refCode}',
-                            textAlign: TextAlign.end,
+                          const SizedBox(
+                            height: 5,
                           ),
-                        ),
-                      ],
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Төлсөн данс: ${data.payerAccNum}',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: grey2,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'Данс: ${data.accountNum}',
+                                  textAlign: TextAlign.end,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: grey2,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Эхний дүн: ${Utils().formatCurrency("${data.firstAmount}") + currency().symbol}',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: grey2,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'Эцсийн дүн: ${Utils().formatCurrency("${data.lastAmount}") + currency().symbol}',
+                                  textAlign: TextAlign.end,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: grey2,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Төлсөн: ${DateFormat('yyyy-MM-dd').format(data.createdAt!)}',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: grey2,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'Дүн: ${Utils().formatCurrency("${data.amount}") + currency().symbol}',
+                                  textAlign: TextAlign.end,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: grey2,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Төлсөн данс: ${data.payerAccNum}',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: grey2,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            'Данс: ${data.accountNum}',
-                            textAlign: TextAlign.end,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: grey2,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Эхний дүн: ${Utils().formatCurrency("${data.firstAmount}") + currency().symbol}',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: grey2,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            'Эцсийн дүн: ${Utils().formatCurrency("${data.lastAmount}") + currency().symbol}',
-                            textAlign: TextAlign.end,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: grey2,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Төлсөн: ${DateFormat('yyyy-MM-dd').format(data.createdAt!)}',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: grey2,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            'Дүн: ${Utils().formatCurrency("${data.amount}") + currency().symbol}',
-                            textAlign: TextAlign.end,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: grey2,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            )
-            .toList(),
-      ),
-    );
+                  )
+                  .toList(),
+            ),
+          )
+        : const NotFound(
+            module: "FINANCE",
+            labelText: 'Төлөлтийн түүх хоосон байна',
+          );
   }
 }

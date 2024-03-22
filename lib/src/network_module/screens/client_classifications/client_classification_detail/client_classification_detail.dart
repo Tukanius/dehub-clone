@@ -12,16 +12,20 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class ClientClassificationDetailArguments {
   String id;
+  ListenController listenController;
   ClientClassificationDetailArguments({
     required this.id,
+    required this.listenController,
   });
 }
 
 class ClientClassificationDetail extends StatefulWidget {
-  final String id;
   static const routeName = '/ClientClassificationDetail';
+  final String id;
+  final ListenController listenController;
   const ClientClassificationDetail({
     super.key,
+    required this.listenController,
     required this.id,
   });
 
@@ -35,7 +39,6 @@ class _ClientClassificationDetailState extends State<ClientClassificationDetail>
   bool isLoading = true;
   BusinessNetwork get = BusinessNetwork();
   TextEditingController controller = TextEditingController();
-  ListenController listenController = ListenController();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -47,7 +50,7 @@ class _ClientClassificationDetailState extends State<ClientClassificationDetail>
 
   @override
   void initState() {
-    listenController.addListener(() async {
+    widget.listenController.addListener(() async {
       setState(() {
         isLoading = true;
       });
@@ -155,7 +158,7 @@ class _ClientClassificationDetailState extends State<ClientClassificationDetail>
                       Navigator.of(context).pushNamed(
                         SetClientClassification.routeName,
                         arguments: SetClientClassificationArguments(
-                          listenController: listenController,
+                          listenController: widget.listenController,
                           id: widget.id,
                         ),
                       );

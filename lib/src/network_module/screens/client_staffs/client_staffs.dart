@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/src/network_module/components/client_staff_card/client_staff_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
@@ -28,6 +29,7 @@ class _ClientStaffsState extends State<ClientStaffs> with AfterLayoutMixin {
   Result network = Result(count: 0, rows: []);
   Timer? timer;
   RefreshController refreshController = RefreshController();
+  ListenController listenController = ListenController();
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -75,6 +77,17 @@ class _ClientStaffsState extends State<ClientStaffs> with AfterLayoutMixin {
     });
     await list(page, limit, '');
     refreshController.refreshCompleted();
+  }
+
+  @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        isLoading = true;
+      });
+      await list(page, limit, '');
+    });
+    super.initState();
   }
 
   @override
@@ -131,6 +144,8 @@ class _ClientStaffsState extends State<ClientStaffs> with AfterLayoutMixin {
                                               arguments:
                                                   ClientStaffDetailArguments(
                                                 id: data.id,
+                                                listenController:
+                                                    listenController,
                                               ),
                                             );
                                           },

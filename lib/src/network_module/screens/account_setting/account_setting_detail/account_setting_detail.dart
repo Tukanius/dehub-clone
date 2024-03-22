@@ -17,16 +17,20 @@ import 'package:provider/provider.dart';
 
 class AccountSettingDetailArguments {
   String id;
+  ListenController listenController;
   AccountSettingDetailArguments({
     required this.id,
+    required this.listenController,
   });
 }
 
 class AccountSettingDetail extends StatefulWidget {
-  final String id;
   static const routeName = '/AccountSettingDetail';
+  final String id;
+  final ListenController listenController;
   const AccountSettingDetail({
     super.key,
+    required this.listenController,
     required this.id,
   });
 
@@ -38,7 +42,6 @@ class _ResponsibleStaffDetailState extends State<AccountSettingDetail>
     with AfterLayoutMixin {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   BusinessNetwork business = BusinessNetwork();
-  ListenController listenController = ListenController();
   bool isLoading = true;
   User user = User();
   General general = General();
@@ -53,7 +56,7 @@ class _ResponsibleStaffDetailState extends State<AccountSettingDetail>
 
   @override
   void initState() {
-    listenController.addListener(() async {
+    widget.listenController.addListener(() async {
       setState(() {
         isLoading = true;
       });
@@ -198,7 +201,7 @@ class _ResponsibleStaffDetailState extends State<AccountSettingDetail>
                       Navigator.of(context).pushNamed(
                         SetAccount.routeName,
                         arguments: SetAccountArguments(
-                          listenController: listenController,
+                          listenController: widget.listenController,
                           id: widget.id,
                         ),
                       );

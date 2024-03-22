@@ -459,6 +459,7 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return AccountSettingDetail(
                         id: arguments.id,
+                        listenController: arguments.listenController,
                       );
                     });
                   case PinConfirmation.routeName:
@@ -480,6 +481,7 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return ClientStaffDetail(
                         id: arguments.id,
+                        listenController: arguments.listenController,
                       );
                     });
                   case ClientStaffs.routeName:
@@ -492,6 +494,7 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return SetPaymentTermDetail(
                         id: arguments.id,
+                        listenController: arguments.listenController,
                       );
                     });
                   case CustomerChoose.routeName:
@@ -786,6 +789,7 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return ClientClassificationDetail(
                         id: arguments.id,
+                        listenController: arguments.listenController,
                       );
                     });
                   case ClientClassifications.routeName:
@@ -832,6 +836,7 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return DistributionAreaDetail(
                         id: arguments.id,
+                        listenController: arguments.listenController,
                       );
                     });
                   case DistributionAreas.routeName:

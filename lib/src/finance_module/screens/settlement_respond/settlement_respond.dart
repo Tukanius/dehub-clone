@@ -1,5 +1,8 @@
+import 'package:dehub/api/finance_api.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/providers/finance_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -27,6 +30,22 @@ class SettlementRespond extends StatefulWidget {
 }
 
 class _SettlementRespondState extends State<SettlementRespond> {
+  onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
+    final source = Provider.of<FinanceProvider>(context, listen: false);
+    try {
+      loading.loading(true);
+      await FinanceApi().settlementRespond(source.url, widget.data.id!);
+      loading.loading(false);
+      showCustomDialog(context, 'Амжилттай тооцоо зөвшөөрлөө', true,
+          onPressed: () {
+        Navigator.of(context).pop();
+      });
+    } catch (e) {
+      loading.loading(false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<FinanceProvider>(context, listen: true);
@@ -58,6 +77,7 @@ class _SettlementRespondState extends State<SettlementRespond> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               margin: const EdgeInsets.symmetric(vertical: 10),
@@ -139,9 +159,13 @@ class _SettlementRespondState extends State<SettlementRespond> {
                   Expanded(
                     flex: 4,
                     child: CustomButton(
-                      onClick: () {},
-                      labelText: 'Дэлгэрэнгүй',
-                      labelColor: source.currentColor,
+                      onClick: () {
+                        Navigator.of(context).pop();
+                      },
+                      labelText: 'Буцах',
+                      borderColor: source.currentColor,
+                      labelColor: white,
+                      textColor: source.currentColor,
                     ),
                   ),
                   const SizedBox(
@@ -150,7 +174,7 @@ class _SettlementRespondState extends State<SettlementRespond> {
                   Expanded(
                     flex: 6,
                     child: CustomButton(
-                      onClick: () {},
+                      onClick: onSubmit,
                       labelText: 'Тооцоо зөвшөөрөх',
                       labelColor: source.currentColor,
                     ),
@@ -159,8 +183,168 @@ class _SettlementRespondState extends State<SettlementRespond> {
               ),
             ),
             const SizedBox(
-              height: 50,
+              height: 25,
             ),
+            Container(
+              margin: const EdgeInsets.only(left: 10),
+              child: RichText(
+                text: TextSpan(
+                  style: const TextStyle(
+                    color: black,
+                    fontSize: 14,
+                    fontFamily: 'Montserrat',
+                  ),
+                  children: [
+                    const TextSpan(
+                      text: 'Тооцоо эхлэх огноо: ',
+                    ),
+                    TextSpan(
+                      text: DateFormat('yyyy-MM-dd')
+                          .format(widget.data.sentDate!),
+                      style: TextStyle(
+                        color: source.currentColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 10),
+              child: RichText(
+                text: TextSpan(
+                  style: const TextStyle(
+                    color: black,
+                    fontSize: 14,
+                    fontFamily: 'Montserrat',
+                  ),
+                  children: [
+                    const TextSpan(
+                      text: 'Тооцоо дуусах огноо: ',
+                    ),
+                    TextSpan(
+                      text: DateFormat('yyyy-MM-dd')
+                          .format(widget.data.sentDate!),
+                      style: TextStyle(
+                        color: source.currentColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            Container(
+              padding: const EdgeInsets.only(right: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    children: [
+                      const Expanded(
+                        flex: 8,
+                        child: Text(
+                          'Эхний үлдэгдэл: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: Text(
+                          "${Utils().formatCurrency("${widget.data.firstAmount}")}₮",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      const Expanded(
+                        flex: 8,
+                        child: Text(
+                          'Тухайн сард нэмэгдсэн: ',
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: Text(
+                          "${Utils().formatCurrency("${widget.data.confirmedAmount}")}₮",
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      const Expanded(
+                        flex: 8,
+                        child: Text(
+                          'Тухайн сард хасагдсан: ',
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: Text(
+                          "${Utils().formatCurrency("0")}₮",
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      const Expanded(
+                        flex: 8,
+                        child: Text(
+                          'Эцсийн үлдэгдэл: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: Text(
+                          "${Utils().formatCurrency("${widget.data.lastAmount}")}₮",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),

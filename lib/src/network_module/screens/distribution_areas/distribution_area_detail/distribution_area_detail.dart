@@ -16,16 +16,20 @@ import 'package:provider/provider.dart';
 
 class DistributionAreaDetailArguments {
   String id;
+  ListenController listenController;
   DistributionAreaDetailArguments({
     required this.id,
+    required this.listenController,
   });
 }
 
 class DistributionAreaDetail extends StatefulWidget {
-  final String id;
   static const routeName = '/DistributionAreaDetail';
+  final String id;
+  final ListenController listenController;
   const DistributionAreaDetail({
     super.key,
+    required this.listenController,
     required this.id,
   });
 
@@ -38,7 +42,6 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
   TextEditingController textController = TextEditingController();
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   BusinessNetwork business = BusinessNetwork();
-  ListenController listenController = ListenController();
   bool isLoading = true;
   User user = User();
 
@@ -52,7 +55,7 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
 
   @override
   void initState() {
-    listenController.addListener(() async {
+    widget.listenController.addListener(() async {
       setState(() {
         isLoading = true;
       });
@@ -199,7 +202,7 @@ class _DistributionAreaDetailState extends State<DistributionAreaDetail>
                       Navigator.of(context)
                           .pushNamed(SetDistributionArea.routeName,
                               arguments: SetDistributionAreaArguments(
-                                listenController: listenController,
+                                listenController: widget.listenController,
                                 id: widget.id,
                               ));
                     },

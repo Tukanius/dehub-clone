@@ -16,16 +16,20 @@ import 'package:provider/provider.dart';
 
 class ClientStaffDetailArguments {
   String id;
+  ListenController listenController;
   ClientStaffDetailArguments({
     required this.id,
+    required this.listenController,
   });
 }
 
 class ClientStaffDetail extends StatefulWidget {
   final String id;
   static const routeName = '/ClientStaffDetail';
+  final ListenController listenController;
   const ClientStaffDetail({
     super.key,
+    required this.listenController,
     required this.id,
   });
 
@@ -38,7 +42,6 @@ class _ResponsibleStaffDetailState extends State<ClientStaffDetail>
   TextEditingController textController = TextEditingController();
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   BusinessNetwork business = BusinessNetwork();
-  ListenController listenController = ListenController();
   bool isLoading = true;
   User user = User();
 
@@ -52,7 +55,7 @@ class _ResponsibleStaffDetailState extends State<ClientStaffDetail>
 
   @override
   void initState() {
-    listenController.addListener(() async {
+    widget.listenController.addListener(() async {
       setState(() {
         isLoading = true;
       });
@@ -194,11 +197,13 @@ class _ResponsibleStaffDetailState extends State<ClientStaffDetail>
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushNamed(SetClientStaff.routeName,
-                          arguments: SetClientStaffArguments(
-                            listenController: listenController,
-                            id: widget.id,
-                          ));
+                      Navigator.of(context).pushNamed(
+                        SetClientStaff.routeName,
+                        arguments: SetClientStaffArguments(
+                          listenController: widget.listenController,
+                          id: widget.id,
+                        ),
+                      );
                     },
                     child: Container(
                       margin: EdgeInsets.only(

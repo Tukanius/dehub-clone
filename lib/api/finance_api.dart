@@ -155,4 +155,9 @@ class FinanceApi extends HttpRequestFinance {
     var res = await put(host, '/lbf/account/pay', data: data.toJson());
     return Finance.fromJson(res as Map<String, dynamic>);
   }
+
+  settlementRespond(String host, String id) async {
+    var res = await put(host, '/settlement/$id/respond');
+    return Finance.fromJson(res as Map<String, dynamic>);
+  }
 }

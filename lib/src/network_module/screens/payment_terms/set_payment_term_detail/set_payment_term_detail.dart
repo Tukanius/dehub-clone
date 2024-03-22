@@ -16,16 +16,20 @@ import 'package:intl/intl.dart';
 
 class SetPaymentTermDetailArguments {
   String id;
+  ListenController listenController;
   SetPaymentTermDetailArguments({
     required this.id,
+    required this.listenController,
   });
 }
 
 class SetPaymentTermDetail extends StatefulWidget {
-  final String id;
   static const routeName = '/SetPaymentTermDetail';
+  final String id;
+  final ListenController listenController;
   const SetPaymentTermDetail({
     super.key,
+    required this.listenController,
     required this.id,
   });
 
@@ -36,7 +40,6 @@ class SetPaymentTermDetail extends StatefulWidget {
 class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
     with AfterLayoutMixin {
   BusinessNetwork business = BusinessNetwork();
-  ListenController listenController = ListenController();
   bool isLoading = true;
   General general = General();
   Result configType = Result(count: 0, rows: []);
@@ -51,7 +54,7 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
 
   @override
   void initState() {
-    listenController.addListener(() async {
+    widget.listenController.addListener(() async {
       setState(() {
         isLoading = true;
       });
@@ -223,8 +226,10 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                     paddingVertical: 10,
                     labelText: 'Эхлэл огноо',
                     secondTextColor: networkColor,
-                    secondText:
-                        business.paymentTerm?.startDate != null ? DateFormat("yyyy-MM-dd").format(business.paymentTerm!.startDate!) : '-',
+                    secondText: business.paymentTerm?.startDate != null
+                        ? DateFormat("yyyy-MM-dd")
+                            .format(business.paymentTerm!.startDate!)
+                        : '-',
                     labelTextColor: dark,
                   ),
                   FieldCard(
@@ -233,8 +238,10 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                     paddingVertical: 10,
                     labelText: 'Дуусах огноо',
                     secondTextColor: networkColor,
-                    secondText:
-                        business.paymentTerm?.endDate != null ? DateFormat("yyyy-MM-dd").format(business.paymentTerm!.endDate!) : '-',
+                    secondText: business.paymentTerm?.endDate != null
+                        ? DateFormat("yyyy-MM-dd")
+                            .format(business.paymentTerm!.endDate!)
+                        : '-',
                     labelTextColor: dark,
                   ),
                   GestureDetector(
@@ -242,7 +249,9 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                       Navigator.of(context).pushNamed(
                         SetPaymentTerm.routeName,
                         arguments: SetPaymentTermArguments(
-                            id: widget.id, listenController: listenController),
+                          id: widget.id,
+                          listenController: widget.listenController,
+                        ),
                       );
                     },
                     child: Container(
@@ -267,8 +276,8 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                           ),
                           SvgPicture.asset(
                             'assets/svg/edit.svg',
-                            colorFilter:
-                                const ColorFilter.mode(networkColor, BlendMode.srcIn),
+                            colorFilter: const ColorFilter.mode(
+                                networkColor, BlendMode.srcIn),
                           ),
                         ],
                       ),

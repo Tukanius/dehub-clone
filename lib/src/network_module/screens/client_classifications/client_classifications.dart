@@ -1,4 +1,5 @@
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/src/network_module/components/client_classification_card/client_classification_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
@@ -30,6 +31,7 @@ class _ClientClassificationsState extends State<ClientClassifications>
   RefreshController refreshController = RefreshController();
   bool startAnimation = false;
   User user = User();
+  ListenController listenController = ListenController();
 
   list(page, limit, String value) async {
     Offset offset = Offset(page: page, limit: limit);
@@ -71,6 +73,17 @@ class _ClientClassificationsState extends State<ClientClassifications>
     await list(page, limit, '');
     refreshController.refreshCompleted();
     isLoading = false;
+  }
+
+  @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        isLoading = true;
+      });
+      await list(page, limit, '');
+    });
+    super.initState();
   }
 
   @override
@@ -127,6 +140,8 @@ class _ClientClassificationsState extends State<ClientClassifications>
                                                 arguments:
                                                     ClientClassificationDetailArguments(
                                                   id: data.id,
+                                                  listenController:
+                                                      listenController,
                                                 ),
                                               );
                                             }

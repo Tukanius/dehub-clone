@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +32,7 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
   bool isLoading = true;
   Result network = Result(rows: [], count: 0);
   RefreshController refreshController = RefreshController();
+  ListenController listenController = ListenController();
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -78,6 +80,17 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
     });
     await list(page, limit, '');
     refreshController.refreshCompleted();
+  }
+
+  @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        isLoading = true;
+      });
+      await list(page, limit, '');
+    });
+    super.initState();
   }
 
   @override
@@ -142,6 +155,8 @@ class _PaymentTermsState extends State<PaymentTerms> with AfterLayoutMixin {
                                                     arguments:
                                                         SetPaymentTermDetailArguments(
                                                       id: data.id,
+                                                      listenController:
+                                                          listenController,
                                                     ),
                                                   );
                                                 }

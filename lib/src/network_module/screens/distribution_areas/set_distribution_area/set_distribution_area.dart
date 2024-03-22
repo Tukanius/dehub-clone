@@ -325,6 +325,8 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: parentList
+                            .where(
+                                (element) => element.parentId == areaRegionId)
                             .map(
                               (e) => GestureDetector(
                                 onTap: () {

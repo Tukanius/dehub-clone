@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/src/network_module/components/account_setting_card/account_setting_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
@@ -27,6 +28,7 @@ class _AccountSettingState extends State<AccountSetting> with AfterLayoutMixin {
   Result network = Result(count: 0, rows: []);
   RefreshController refreshController = RefreshController();
   Timer? timer;
+  ListenController listenController = ListenController();
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -78,6 +80,17 @@ class _AccountSettingState extends State<AccountSetting> with AfterLayoutMixin {
     await list(page, limit, '');
     refreshController.refreshCompleted();
     isLoading = false;
+  }
+
+  @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        isLoading = true;
+      });
+      await list(page, limit, '');
+    });
+    super.initState();
   }
 
   @override
@@ -134,6 +147,8 @@ class _AccountSettingState extends State<AccountSetting> with AfterLayoutMixin {
                                               arguments:
                                                   AccountSettingDetailArguments(
                                                 id: data.id,
+                                                listenController:
+                                                    listenController,
                                               ),
                                             );
                                           },

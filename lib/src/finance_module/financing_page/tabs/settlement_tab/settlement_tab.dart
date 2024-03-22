@@ -8,6 +8,7 @@ import 'package:dehub/src/finance_module/screens/settlement_respond/settlement_r
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:intl/intl.dart';
@@ -21,7 +22,7 @@ class SettlementTab extends StatefulWidget {
 }
 
 class _SettlementTabState extends State<SettlementTab> with AfterLayoutMixin {
-  String date = DateFormat('yyyy-MM').format(DateTime.now());
+  String? date;
   int page = 1;
   int limit = 10;
   bool isLoading = true;
@@ -49,7 +50,7 @@ class _SettlementTabState extends State<SettlementTab> with AfterLayoutMixin {
   list(page, limit, date) async {
     final source = Provider.of<FinanceProvider>(context, listen: false);
     Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(month: date);
+    Filter filter = Filter(month: date ?? '');
     settlements = await FinanceApi().settlementList(
         source.url, ResultArguments(filter: filter, offset: offset));
     setState(() {
@@ -96,9 +97,9 @@ class _SettlementTabState extends State<SettlementTab> with AfterLayoutMixin {
                             monthPick();
                           },
                           child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 15),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
+                            margin: const EdgeInsets.only(left: 15),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            height: 34,
                             decoration: BoxDecoration(
                               color: transparent,
                               borderRadius: BorderRadius.circular(5),
@@ -106,9 +107,36 @@ class _SettlementTabState extends State<SettlementTab> with AfterLayoutMixin {
                                 color: grey2.withOpacity(0.5),
                               ),
                             ),
-                            child: Text(date),
+                            child: Center(
+                              child: Text(date ?? "Сар сонгох"),
+                            ),
                           ),
                         ),
+                        if (date != null)
+                          GestureDetector(
+                            onTap: () async {
+                              setState(() {
+                                date = null;
+                                isLoading = true;
+                              });
+                              await list(page, limit, date);
+                            },
+                            child: Container(
+                              height: 34,
+                              width: 34,
+                              margin: const EdgeInsets.only(left: 5),
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(
+                                  color: grey2.withOpacity(0.5),
+                                ),
+                              ),
+                              child: SvgPicture.asset(
+                                'assets/svg/remove.svg',
+                              ),
+                            ),
+                          ),
                       ],
                     ),
                   ),
@@ -185,7 +213,9 @@ class _SettlementTabState extends State<SettlementTab> with AfterLayoutMixin {
               ),
               Expanded(
                 child: CupertinoDatePicker(
-                  initialDateTime: DateTime.parse("$date-01"),
+                  initialDateTime: DateTime.parse(date != null
+                      ? "$date-01"
+                      : DateFormat('yyyy-MM-dd').format(DateTime.now())),
                   mode: CupertinoDatePickerMode.monthYear,
                   onDateTimeChanged: (DateTime newDate) {
                     setState(() {

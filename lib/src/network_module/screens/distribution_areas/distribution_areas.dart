@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:dehub/api/business_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/src/network_module/components/distribution_area_card/distribution_area_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
@@ -33,6 +34,7 @@ class _DistributionAreasState extends State<DistributionAreas>
   Result network = Result(count: 0, rows: []);
   Timer? timer;
   User user = User();
+  ListenController listenController = ListenController();
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -80,6 +82,17 @@ class _DistributionAreasState extends State<DistributionAreas>
     });
     await list(page, limit, '');
     refreshController.refreshCompleted();
+  }
+
+  @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        isLoading = true;
+      });
+      await list(page, limit, '');
+    });
+    super.initState();
   }
 
   @override
@@ -142,6 +155,8 @@ class _DistributionAreasState extends State<DistributionAreas>
                                                     arguments:
                                                         DistributionAreaDetailArguments(
                                                       id: data.id,
+                                                      listenController:
+                                                          listenController,
                                                     ),
                                                   );
                                                 }
