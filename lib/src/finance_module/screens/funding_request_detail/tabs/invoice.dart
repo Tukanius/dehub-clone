@@ -23,6 +23,29 @@ class InvoiceTab extends StatefulWidget {
 
 class _InvoiceTabState extends State<InvoiceTab> {
   General general = General();
+  Finance buyer = Finance();
+  Finance supplier = Finance();
+
+  @override
+  void initState() {
+    final source = Provider.of<FinanceProvider>(context, listen: false);
+    if (source.type == 'scf' && widget.data.type == "SUPPLIER") {
+      supplier = widget.data.requestedBusiness!;
+      buyer = widget.data.invReceiverBusiness!;
+      supplier.finUser = widget.data.requestedFinUser;
+      buyer.finUser = widget.data.finUser;
+      supplier.supplierAccount = widget.data.requestedBusinessAcc;
+      buyer.buyerAccount = widget.data.invReceiverBusinessAcc;
+    } else if (source.type == 'scf' && widget.data.type == "BUYER") {
+      buyer = widget.data.requestedBusiness!;
+      supplier = widget.data.invReceiverBusiness!;
+      buyer.finUser = widget.data.requestedFinUser;
+      supplier.finUser = widget.data.finUser;
+      buyer.supplierAccount = widget.data.requestedBusinessAcc;
+      supplier.buyerAccount = widget.data.invReceiverBusinessAcc;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +71,8 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Нэхэмжлэх дугаар',
-            secondText: '${widget.data.invoice?.refCode}',
+            secondText:
+                '${widget.data.invoice?.refCode ?? widget.data.invRefCode}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -56,7 +80,8 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Илгээсэн ажилтан',
-            secondText: '${widget.data.invoice?.senderUser?.firstName}',
+            secondText:
+                '${widget.data.invoice?.senderUser?.firstName ?? widget.data.invSenderUser?.firstName}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -64,15 +89,19 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Илгээсэн огноо, цаг',
-            secondText: DateFormat("yyyy-MM-dd HH:mm")
-                .format(widget.data.invoice!.createdAt!),
+            secondText: widget.data.invoice != null
+                ? DateFormat("yyyy-MM-dd HH:mm")
+                    .format(widget.data.invoice!.createdAt!)
+                : DateFormat("yyyy-MM-dd HH:mm")
+                    .format(widget.data.invCreatedAt!),
             color: white,
           ),
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Баталсан ажилтан',
-            secondText: '${widget.data.invoice?.confirmedUser?.firstName}',
+            secondText:
+                '${widget.data.invoice?.confirmedUser?.firstName ?? widget.data.invConfirmedUser?.firstName}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -80,8 +109,11 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Баталсан огноо, цаг',
-            secondText: DateFormat('yyyy-MM-dd HH:mm')
-                .format(widget.data.invoice!.confirmedDate!),
+            secondText: widget.data.invoice != null
+                ? DateFormat('yyyy-MM-dd HH:mm')
+                    .format(widget.data.invoice!.confirmedDate!)
+                : DateFormat('yyyy-MM-dd HH:mm')
+                    .format(widget.data.invCreatedAt!),
             color: white,
           ),
           FieldCard(
@@ -89,7 +121,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingVertical: 10,
             labelText: 'Баталсан дүн',
             secondText:
-                '${Utils().formatCurrency(widget.data.invoice?.confirmedAmount.toString())}',
+                '${Utils().formatCurrency("${widget.data.invoice?.confirmedAmount ?? widget.data.invConfirmedAmount}") + currency()}',
             color: white,
             secondTextColor: source.currentColor,
           ),
@@ -98,7 +130,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingVertical: 10,
             labelText: 'Төлсөн дүн',
             secondText:
-                '${Utils().formatCurrency(widget.data.invoice?.paidAmount.toString()) + currency()}',
+                '${Utils().formatCurrency("${widget.data.invoice?.paidAmount ?? widget.data.invPaidAmount}") + currency()}',
             color: white,
             secondTextColor: source.currentColor,
           ),
@@ -107,7 +139,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingVertical: 10,
             labelText: 'Үлдэгдэл төлбөр',
             secondText:
-                '${Utils().formatCurrency(widget.data.invoice?.amountToPay.toString()) + currency()}',
+                '${Utils().formatCurrency("${widget.data.invoice?.amountToPay ?? widget.data.invAmountToPay}") + currency()}',
             color: white,
             secondTextColor: source.currentColor,
             secondTextFontWeight: FontWeight.w500,
@@ -204,7 +236,8 @@ class _InvoiceTabState extends State<InvoiceTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Төлбөрийн нөхцөл',
-            secondText: '${widget.data.invoice?.paymentTermDesc}',
+            secondText:
+                '${widget.data.invoice?.paymentTermDesc ?? widget.data.invPaymentTermDesc}',
             color: white,
             secondTextColor: source.currentColor,
           ),
@@ -219,8 +252,11 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  DateFormat("yyyy-MM-dd")
-                      .format(widget.data.invoice!.paymentDate!),
+                  widget.data.invoice != null
+                      ? DateFormat("yyyy-MM-dd")
+                          .format(widget.data.invoice!.paymentDate!)
+                      : DateFormat("yyyy-MM-dd")
+                          .format(widget.data.invPaymentDate!),
                   style: TextStyle(color: source.currentColor, fontSize: 18),
                 ),
               ],
@@ -298,8 +334,9 @@ class _InvoiceTabState extends State<InvoiceTab> {
                       style: const TextStyle(fontFamily: 'Montserrat'),
                       children: [
                         TextSpan(
-                          text:
-                              "${widget.data.invoice?.buyer?.partner?.refCode}, ",
+                          text: source.type == "lbf"
+                              ? "${widget.data.invoice?.buyer?.partner?.refCode}, "
+                              : "${buyer.partner?.refCode}, ",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
@@ -307,8 +344,9 @@ class _InvoiceTabState extends State<InvoiceTab> {
                           ),
                         ),
                         TextSpan(
-                          text:
-                              "${widget.data.invoice?.buyer?.partner?.businessName}",
+                          text: source.type == "lbf"
+                              ? "${widget.data.invoice?.buyer?.partner?.businessName}"
+                              : "${buyer.partner?.businessName}",
                           style: const TextStyle(color: grey2, fontSize: 18),
                         ),
                       ],
@@ -329,7 +367,9 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  '${widget.data.invoice?.buyer?.regNumber}',
+                  source.type == 'lbf'
+                      ? '${widget.data.invoice?.buyer?.regNumber}'
+                      : '${buyer.regNumber}',
                   style: TextStyle(color: source.currentColor, fontSize: 18),
                 ),
               ],
@@ -359,14 +399,18 @@ class _InvoiceTabState extends State<InvoiceTab> {
                       ),
                       children: [
                         TextSpan(
-                          text: '${widget.data.invoice?.buyer?.refCode}, ',
+                          text: source.type == 'lbf'
+                              ? '${widget.data.invoice?.buyer?.refCode}, '
+                              : '${buyer.refCode}, ',
                           style: TextStyle(
                             decoration: TextDecoration.underline,
                             color: source.currentColor,
                           ),
                         ),
                         TextSpan(
-                          text: widget.data.invoice?.buyer?.profileName,
+                          text: source.type == 'lbf'
+                              ? widget.data.invoice?.buyer?.profileName
+                              : buyer.profileName,
                           style: const TextStyle(
                             decoration: TextDecoration.underline,
                             color: grey2,
@@ -395,7 +439,9 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  '${widget.data.invoice?.buyerAccount?.number}',
+                  source.type == 'lbf'
+                      ? '${widget.data.invoice?.buyerAccount?.number}'
+                      : '${buyer.buyerAccount?.number}',
                   style: TextStyle(color: source.currentColor),
                 ),
               ],
@@ -412,7 +458,9 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  '${widget.data.invoice?.buyerAccount?.name}',
+                  source.type == 'lbf'
+                      ? '${widget.data.invoice?.buyerAccount?.name}'
+                      : "${buyer.buyerAccount?.name}",
                   style: TextStyle(color: source.currentColor),
                 ),
               ],
@@ -429,7 +477,9 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  '${widget.data.invoice?.buyerFinUser?.firstName}',
+                  source.type == 'lbf'
+                      ? '${widget.data.invoice?.buyerFinUser?.firstName}'
+                      : '${buyer.finUser?.firstName}',
                   style: TextStyle(color: source.currentColor),
                 ),
               ],
@@ -488,8 +538,9 @@ class _InvoiceTabState extends State<InvoiceTab> {
                       style: const TextStyle(fontFamily: 'Montserrat'),
                       children: [
                         TextSpan(
-                          text:
-                              "${widget.data.invoice?.supplier?.partner?.refCode}, ",
+                          text: source.type == 'lbf'
+                              ? "${widget.data.invoice?.supplier?.partner?.refCode}, "
+                              : "${supplier.partner?.refCode}, ",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
@@ -497,8 +548,9 @@ class _InvoiceTabState extends State<InvoiceTab> {
                           ),
                         ),
                         TextSpan(
-                          text:
-                              "${widget.data.invoice?.supplier?.partner?.businessName}",
+                          text: source.type == 'lbf'
+                              ? "${widget.data.invoice?.supplier?.partner?.businessName}"
+                              : "${supplier.partner?.businessName}",
                           style: const TextStyle(color: grey2, fontSize: 18),
                         ),
                       ],
@@ -519,7 +571,9 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  '${widget.data.invoice?.supplier?.regNumber}',
+                  source.type == 'lbf'
+                      ? '${widget.data.invoice?.supplier?.regNumber}'
+                      : '${supplier.regNumber}',
                   style: TextStyle(color: source.currentColor, fontSize: 18),
                 ),
               ],
@@ -548,14 +602,18 @@ class _InvoiceTabState extends State<InvoiceTab> {
                       ),
                       children: [
                         TextSpan(
-                          text: '${widget.data.invoice?.supplier?.refCode}, ',
+                          text: source.type == 'lbf'
+                              ? '${widget.data.invoice?.supplier?.refCode}, '
+                              : '${supplier.refCode}, ',
                           style: TextStyle(
                             decoration: TextDecoration.underline,
                             color: source.currentColor,
                           ),
                         ),
                         TextSpan(
-                          text: widget.data.invoice?.supplier?.profileName,
+                          text: source.type == 'lbf'
+                              ? widget.data.invoice?.supplier?.profileName
+                              : supplier.profileName,
                           style: const TextStyle(
                             decoration: TextDecoration.underline,
                             color: grey2,
@@ -584,7 +642,9 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  '${widget.data.invoice?.supplierAccount?.number}',
+                  source.type == "lbf"
+                      ? '${widget.data.invoice?.supplierAccount?.number}'
+                      : '${supplier.supplierAccount?.number}',
                   style: TextStyle(color: source.currentColor),
                 ),
               ],
@@ -601,7 +661,9 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  '${widget.data.invoice?.supplierAccount?.name}',
+                  source.type == 'lbf'
+                      ? '${widget.data.invoice?.supplierAccount?.name}'
+                      : '${supplier.supplierAccount?.name}',
                   style: TextStyle(color: source.currentColor),
                 ),
               ],
@@ -618,7 +680,9 @@ class _InvoiceTabState extends State<InvoiceTab> {
                   style: TextStyle(color: dark),
                 ),
                 Text(
-                  '${widget.data.invoice?.supplierFinUser?.firstName}',
+                  source.type == 'lbf'
+                      ? '${widget.data.invoice?.supplierFinUser?.firstName}'
+                      : '${supplier.finUser?.firstName}',
                   style: TextStyle(color: source.currentColor),
                 ),
               ],
@@ -648,17 +712,30 @@ class _InvoiceTabState extends State<InvoiceTab> {
   }
 
   invoicePaymentStatus() {
-    final res = general.invoicePaymentStatus!
-        .firstWhere(
-            (element) => element.code == widget.data.invoice?.paymentStatus)
-        .name;
-    return res;
+    if (widget.data.invoice != null) {
+      final res = general.invoicePaymentStatus!
+          .firstWhere(
+              (element) => element.code == widget.data.invoice?.paymentStatus)
+          .name;
+      return res;
+    } else {
+      final res = general.invoicePaymentStatus!
+          .firstWhere((element) => element.code == widget.data.invPaymentStatus)
+          .name;
+      return res;
+    }
   }
 
   invoiceOverdueStatus() {
-    final res = general.invoiceOverdueStatus!.firstWhere(
-        (element) => element.code == widget.data.invoice?.overdueStatus);
-    return res;
+    if (widget.data.invoice != null) {
+      final res = general.invoiceOverdueStatus!.firstWhere(
+          (element) => element.code == widget.data.invoice?.overdueStatus);
+      return res;
+    } else {
+      final res = general.invoiceOverdueStatus!.firstWhere(
+          (element) => element.code == widget.data.invOverdueStatus);
+      return res;
+    }
   }
 
   invoicePaymentStatusColor(bool opacity) {
@@ -691,7 +768,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
 
   invoiceStatusColor(bool opacity) {
     if (opacity == false) {
-      switch (widget.data.invStatus) {
+      switch (widget.data.invStatus ?? widget.data.invoice?.invoiceStatus) {
         case "DRAFT":
           return grey;
         case "SENT":
@@ -709,7 +786,7 @@ class _InvoiceTabState extends State<InvoiceTab> {
         default:
       }
     } else {
-      switch (widget.data.invStatus) {
+      switch (widget.data.invStatus ?? widget.data.invoice?.invoiceStatus) {
         case "DRAFT":
           return grey.withOpacity(0.2);
         case "SENT":
@@ -730,8 +807,14 @@ class _InvoiceTabState extends State<InvoiceTab> {
   }
 
   invoiceStatus() {
-    final res = general.invoiceStatus!.firstWhere(
-        (element) => element.code == widget.data.invoice?.invoiceStatus);
-    return res;
+    if (widget.data.invoice != null) {
+      final res = general.invoiceStatus!.firstWhere(
+          (element) => element.code == widget.data.invoice?.invoiceStatus);
+      return res;
+    } else {
+      final res = general.invoiceStatus!
+          .firstWhere((element) => element.code == widget.data.invStatus);
+      return res;
+    }
   }
 }

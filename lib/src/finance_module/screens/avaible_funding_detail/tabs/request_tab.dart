@@ -79,7 +79,7 @@ class _RequestTabState extends State<RequestTab> {
   @override
   void initState() {
     final source = Provider.of<FinanceProvider>(context, listen: false);
-    if (source.type == "BUYER_LED") {
+    if (source.type == "SCF") {
       if (widget.data.program != null) {
         if (widget.userType == "SUPPLIER") {
           feePerDay = (widget.data.program!.product!.suppFee! /
@@ -218,7 +218,7 @@ class _RequestTabState extends State<RequestTab> {
                 ],
               ),
             ),
-            if (source.type == "BUYER_LED")
+            if (source.type == "SCF")
               Column(
                 children: [
                   FieldCard(
@@ -296,7 +296,7 @@ class _RequestTabState extends State<RequestTab> {
               secondText: 'Төгрөг',
               secondTextColor: source.currentColor,
             ),
-            if (source.type == "BUYER_LED")
+            if (source.type == "SCF")
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

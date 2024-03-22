@@ -88,7 +88,6 @@ class _SupplyChainState extends State<SupplyChain> with AfterLayoutMixin {
                       children: finance.rows!
                           .map(
                             (data) => ReceivedFundingCard(
-                              type: 'scf',
                               data: data,
                               onClick: () {
                                 source.productType('scf');

@@ -1,3 +1,4 @@
+import 'package:dehub/models/bank_accounts.dart';
 import 'package:dehub/models/finance.dart';
 import 'package:flutter/material.dart';
 
@@ -47,6 +48,11 @@ class FinanceProvider extends ChangeNotifier {
 
   contractAgreement(bool value) {
     finance.isApproved = value;
+    notifyListeners();
+  }
+
+  bankAccountSelect(BankAccounts data) {
+    finance.account = data;
     notifyListeners();
   }
 

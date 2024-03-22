@@ -12,12 +12,10 @@ class ReceivedFundingCard extends StatefulWidget {
   final Finance data;
   final Function()? onClick;
   final Function()? paymentClick;
-  final String type;
   const ReceivedFundingCard({
     super.key,
     this.onClick,
     this.paymentClick,
-    required this.type,
     required this.data,
   });
 
@@ -196,7 +194,7 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                         ),
                       ),
                     ),
-                    if (widget.type == "lbf")
+                    if (widget.paymentClick != null)
                       Material(
                         borderRadius: BorderRadius.circular(5),
                         color: white,

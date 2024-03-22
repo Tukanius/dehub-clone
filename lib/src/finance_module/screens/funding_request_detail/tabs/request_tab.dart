@@ -58,9 +58,15 @@ class _RequestTabState extends State<RequestTab> {
   }
 
   overdue() {
-    final res = general.invoiceOverdueStatus!.firstWhere(
-        (element) => element.code == widget.data.invoice?.overdueStatus);
-    return res;
+    if (widget.data.invoice != null) {
+      final res = general.invoiceOverdueStatus!.firstWhere(
+          (element) => element.code == widget.data.invoice?.overdueStatus);
+      return res;
+    } else {
+      final res = general.invoiceOverdueStatus!.firstWhere(
+          (element) => element.code == widget.data.invOverdueStatus);
+      return res;
+    }
   }
 
   @override
@@ -154,9 +160,8 @@ class _RequestTabState extends State<RequestTab> {
             onClick: () {},
             paddingVertical: 10,
             labelText: 'Хөтөлбөрийн нэр',
-            secondText: source.type == "lbf"
-                ? '${widget.data.lbfProgram?.name}'
-                : "${widget.data.scfProgram?.name}",
+            secondText:
+                '${widget.data.lbfProgram?.name ?? widget.data.program?.name}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -165,9 +170,8 @@ class _RequestTabState extends State<RequestTab> {
             onClick: () {},
             paddingVertical: 10,
             labelText: 'Бүтээгдэхүүн',
-            secondText: source.type == "lbf"
-                ? '${widget.data.lbfProduct?.name}'
-                : "${widget.data.scfProduct?.name}",
+            secondText:
+                '${widget.data.lbfProduct?.name ?? widget.data.product?.name}',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -271,23 +275,25 @@ class _RequestTabState extends State<RequestTab> {
             secondTextColor: source.currentColor,
             color: white,
           ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Санхүүжилт хоног',
-            secondText: '${widget.data.product?.buyerTerm?.toInt()} хоног',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Шимтгэл тооцсон хувь',
-            secondText:
-                '${widget.data.calculatedFeePercent?.toStringAsFixed(6)}%',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
+          if (source.type == 'scf')
+            FieldCard(
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              labelText: 'Санхүүжилт хоног',
+              secondText: '${widget.data.product?.buyerTerm?.toInt()} хоног',
+              secondTextColor: source.currentColor,
+              color: white,
+            ),
+          if (source.type == 'scf')
+            FieldCard(
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              labelText: 'Шимтгэл тооцсон хувь',
+              secondText:
+                  '${widget.data.calculatedFeePercent?.toStringAsFixed(6)}%',
+              secondTextColor: source.currentColor,
+              color: white,
+            ),
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
@@ -388,8 +394,7 @@ class _RequestTabState extends State<RequestTab> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Ху.Хэтрэлт алданги',
-            secondText:
-                '${Utils().formatCurrency(widget.data.penaltyPercent.toString())}%',
+            secondText: '${widget.data.penaltyPercent?.toInt()}%',
             secondTextColor: source.currentColor,
             color: white,
           ),
@@ -409,30 +414,33 @@ class _RequestTabState extends State<RequestTab> {
             secondTextColor: source.currentColor,
             color: white,
           ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Нэхэмжлэх хугацаа',
-            secondText: "${widget.data.invConfirmedDays?.toInt()} хоног",
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Хугацааны Min шалгуур',
-            secondText: '${widget.data.minDays?.toInt()} хоног',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Хугацааны Max шалгуур',
-            secondText: '${widget.data.maxDays?.toInt()} хоног',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
+          if (source.type == 'scf')
+            FieldCard(
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              labelText: 'Нэхэмжлэх хугацаа',
+              secondText: "${widget.data.invConfirmedDays?.toInt()} хоног",
+              secondTextColor: source.currentColor,
+              color: white,
+            ),
+          if (source.type == 'scf')
+            FieldCard(
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              labelText: 'Хугацааны Min шалгуур',
+              secondText: '${widget.data.minDays?.toInt()} хоног',
+              secondTextColor: source.currentColor,
+              color: white,
+            ),
+          if (source.type == 'scf')
+            FieldCard(
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              labelText: 'Хугацааны Max шалгуур',
+              secondText: '${widget.data.maxDays?.toInt()} хоног',
+              secondTextColor: source.currentColor,
+              color: white,
+            ),
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
@@ -476,7 +484,8 @@ class _RequestTabState extends State<RequestTab> {
             secondTextColor: source.currentColor,
             color: white,
           ),
-          if (widget.data.requestFiles != null)
+          if (widget.data.requestFiles != null &&
+              widget.data.requestFiles!.isNotEmpty)
             Container(
               margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
               child: const Text(
@@ -488,7 +497,8 @@ class _RequestTabState extends State<RequestTab> {
                 ),
               ),
             ),
-          if (widget.data.requestFiles != null)
+          if (widget.data.requestFiles != null &&
+              widget.data.requestFiles!.isNotEmpty)
             Column(
               children: widget.data.requestFiles!
                   .map(
@@ -534,9 +544,16 @@ class _RequestTabState extends State<RequestTab> {
   }
 
   requestStatus() {
-    final res = general.scfRequestStatus!
-        .firstWhere((element) => element.code == widget.data.lbfRequestStatus);
-    return res;
+    final source = Provider.of<FinanceProvider>(context, listen: false);
+    if (source.type == "lbf") {
+      final res = general.scfRequestStatus!.firstWhere(
+          (element) => element.code == widget.data.lbfRequestStatus);
+      return res;
+    } else {
+      final res = general.scfRequestStatus!
+          .firstWhere((element) => element.code == widget.data.requestStatus);
+      return res;
+    }
   }
 
   requestType() {

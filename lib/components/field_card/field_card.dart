@@ -81,41 +81,48 @@ class _FieldCardState extends State<FieldCard> {
               child: Row(
                 children: [
                   Expanded(
-                    child:
-                        widget.secondText != 'null' && widget.secondText != null
-                            ? Text(
-                                '${widget.secondText}',
-                                style: TextStyle(
-                                  color: widget.validate == true
-                                      ? red
-                                      : widget.secondTextColor,
-                                  fontSize: widget.fontSize ?? widget.fontSize,
-                                  fontWeight: widget.fontWeight ??
-                                      (widget.secondTextFontWeight ??
-                                          FontWeight.normal),
-                                ),
-                                textAlign: TextAlign.end,
-                              )
-                            : Text(
-                                '-',
-                                style: TextStyle(
-                                  color: widget.secondTextColor,
-                                  fontSize: widget.fontSize ?? widget.fontSize,
-                                  fontWeight: widget.fontWeight ??
-                                      (widget.secondTextFontWeight ??
-                                          FontWeight.normal),
-                                ),
-                                textAlign: TextAlign.end,
-                              ),
-                  ),
-                  if (widget.thirdText != null)
-                    Text(
-                      '${widget.thirdText}',
-                      style: TextStyle(
-                          color: widget.thirdTextColor,
-                          fontWeight: widget.secondTextFontWeight ??
-                              widget.secondTextFontWeight),
+                    child: RichText(
+                      textAlign: TextAlign.end,
+                      text: TextSpan(
+                        style: TextStyle(
+                          fontSize: widget.fontSize ?? 14,
+                          fontFamily: 'Montserrat',
+                        ),
+                        children: [
+                          TextSpan(
+                            text: widget.secondText != null &&
+                                    widget.secondText != "null"
+                                ? widget.secondText
+                                : '-',
+                            style: TextStyle(
+                              color: widget.validate == true
+                                  ? red
+                                  : widget.secondTextColor ?? black,
+                              fontWeight: widget.fontWeight ??
+                                  (widget.secondTextFontWeight ??
+                                      FontWeight.normal),
+                            ),
+                          ),
+                          TextSpan(
+                            text: widget.thirdText ?? '',
+                            style: TextStyle(
+                              color: widget.thirdTextColor ?? black,
+                              fontWeight: widget.secondTextFontWeight ??
+                                  FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
+                  ),
+                  // if (widget.thirdText != null)
+                  //   Text(
+                  //     '${widget.thirdText}',
+                  //     style: TextStyle(
+                  //         color: widget.thirdTextColor,
+                  //         fontWeight: widget.secondTextFontWeight ??
+                  //             widget.secondTextFontWeight),
+                  //   ),
                   SizedBox(
                     width: widget.onClick == null ? 0 : 10,
                   ),

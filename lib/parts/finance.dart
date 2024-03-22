@@ -9,6 +9,9 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => Finance.fromJson(e)).toList()
         : null,
+    payments: json['payments'] != null
+        ? (json['payments'] as List).map((e) => Finance.fromJson(e)).toList()
+        : null,
     urls: json['urls'] != null
         ? (json['urls'] as List).map((e) => Urls.fromJson(e)).toList()
         : null,
@@ -53,6 +56,9 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         ? json['buyerPenaltyType'] as String
         : null,
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
+    lbfAccount:
+        json['lbfAccount'] != null ? json['lbfAccount'] as String : null,
+    accountId: json['accountId'] != null ? json['accountId'] as String : null,
     invoiceRef:
         json['invoiceRef'] != null ? json['invoiceRef'] as String : null,
     lbfProgramId:
@@ -93,6 +99,8 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
     lbfRequestId:
         json['lbfRequestId'] != null ? json['lbfRequestId'] as String : null,
     username: json['username'] != null ? json['username'] as String : null,
+    accountNumber:
+        json['accountNumber'] != null ? json['accountNumber'] as String : null,
     number: json['number'] != null ? json['number'] as String : null,
     repaymentStatus: json['repaymentStatus'] != null
         ? json['repaymentStatus'] as String
@@ -441,6 +449,9 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
     program: json['program'] != null
         ? Finance.fromJson(json['program'] as Map<String, dynamic>)
         : null,
+    account: json['account'] != null
+        ? BankAccounts.fromJson(json['account'] as Map<String, dynamic>)
+        : null,
     scfProgram: json['scfProgram'] != null
         ? Finance.fromJson(json['scfProgram'] as Map<String, dynamic>)
         : null,
@@ -628,16 +639,35 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
     paidInvCount: json['paidInvCount'] != null
         ? double.parse(json['paidInvCount'].toString())
         : null,
+    payerAccName:
+        json['payerAccName'] != null ? json['payerAccName'] as String : null,
+    payerAccNum:
+        json['payerAccNum'] != null ? json['payerAccNum'] as String : null,
+    accountNum:
+        json['accountNum'] != null ? json['accountNum'] as String : null,
   );
 }
 
 Map<String, dynamic> _$FinanceToJson(Finance instance) {
   Map<String, dynamic> json = {};
+  if (instance.payerAccName != null) {
+    json['payerAccName'] = instance.payerAccName;
+  }
+  if (instance.payerAccNum != null) json['payerAccNum'] = instance.payerAccNum;
+  if (instance.accountNum != null) json['accountNum'] = instance.accountNum;
   if (instance.firstAmount != null) json['firstAmount'] = instance.firstAmount;
+  if (instance.payments != null) json['payments'] = instance.payments;
   if (instance.supplierAccount != null) {
     json['supplierAccount'] = instance.supplierAccount;
   }
+  if (instance.lbfAccount != null) {
+    json['lbfAccount'] = instance.lbfAccount;
+  }
+  if (instance.accountId != null) {
+    json['accountId'] = instance.accountId;
+  }
   if (instance.scfProgram != null) json['scfProgram'] = instance.scfProgram;
+  if (instance.account != null) json['account'] = instance.account;
   if (instance.scfProduct != null) json['scfProduct'] = instance.scfProduct;
   if (instance.buyerAccount != null) {
     json['buyerAccount'] = instance.buyerAccount;
@@ -664,7 +694,9 @@ Map<String, dynamic> _$FinanceToJson(Finance instance) {
   if (instance.lbfRequestId != null) {
     json['lbfRequestId'] = instance.lbfRequestId;
   }
-
+  if (instance.accountNumber != null) {
+    json['accountNumber'] = instance.accountNumber;
+  }
   if (instance.link != null) json['link'] = instance.link;
   if (instance.subLimit != null) json['subLimit'] = instance.subLimit;
   if (instance.buyer != null) json['buyer'] = instance.buyer;

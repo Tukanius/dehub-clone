@@ -58,6 +58,7 @@ class _FundingRequestDetailPageState extends State<FundingRequestDetailPage>
             Navigator.of(context).pop();
           },
           child: Container(
+            color: transparent,
             margin: const EdgeInsets.only(left: 15),
             child: Row(
               children: [
@@ -102,7 +103,7 @@ class _FundingRequestDetailPageState extends State<FundingRequestDetailPage>
                 indicatorColor: source.currentColor,
                 labelColor: source.currentColor,
                 unselectedLabelColor: grey2,
-                tabs: source.type == "BUYER_LED"
+                tabs: source.type == "scf"
                     ? [
                         Container(
                           alignment: Alignment.center,

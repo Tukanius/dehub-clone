@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:dehub/models/bank_accounts.dart';
 import 'package:dehub/models/qpay_urls.dart';
 part '../parts/finance.dart';
 
@@ -246,8 +247,24 @@ class Finance {
   Finance? supplierFinUser;
   Finance? buyerFinUser;
   String? lbfRequestId;
+  BankAccounts? account;
+  String? lbfAccount;
+  String? accountId;
+  String? accountNumber;
+  List<Finance>? payments;
+  String? payerAccName;
+  String? payerAccNum;
+  String? accountNum;
 
   Finance({
+    this.payerAccName,
+    this.payerAccNum,
+    this.accountNum,
+    this.payments,
+    this.accountNumber,
+    this.accountId,
+    this.lbfAccount,
+    this.account,
     this.lbfRequestId,
     this.scfProgram,
     this.scfProduct,

@@ -4,7 +4,8 @@ import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/finance_provider.dart';
-import 'package:dehub/src/finance_module/screens/received_funding_detail/received_funding_detail_page.dart';
+import 'package:dehub/src/finance_module/screens/account_detail_page/account_detail_page.dart';
+import 'package:dehub/src/finance_module/screens/payment_received_funds/payment_received_funds.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -87,18 +88,22 @@ class _LoanBasedState extends State<LoanBased> with AfterLayoutMixin {
                       children: finance.rows!
                           .map(
                             (data) => ReceivedFundingCard(
-                              type: 'lbf',
                               data: data,
                               onClick: () {
                                 source.productType('lbf');
                                 Navigator.of(context).pushNamed(
-                                  ReceivedFundingDetailPage.routeName,
-                                  arguments: ReceivedFundingDetailPageArguments(
-                                    id: data.lbfRequestId,
-                                  ),
+                                  AccountDetailPage.routeName,
+                                  arguments: AccountDetailPageArguments(
+                                      id: data.lbfRequestId),
                                 );
                               },
-                              paymentClick: () {},
+                              paymentClick: () {
+                                Navigator.of(context).pushNamed(
+                                  PaymentReceivedFunds.routeName,
+                                  arguments: PaymentReceivedFundsArguments(
+                                      id: data.lbfRequestId),
+                                );
+                              },
                             ),
                           )
                           .toList(),

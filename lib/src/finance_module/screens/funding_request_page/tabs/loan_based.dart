@@ -59,8 +59,8 @@ class _LoanBasedState extends State<LoanBased> with AfterLayoutMixin {
   @override
   afterFirstLayout(BuildContext context) async {
     final source = Provider.of<FinanceProvider>(context, listen: false);
-    source.clearData();
-    list(page, limit, '');
+    await source.clearData();
+    await list(page, limit, '');
   }
 
   @override

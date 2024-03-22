@@ -13,10 +13,12 @@ import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/camera_page/camera_page.dart';
 import 'package:dehub/src/auth/password_recovery/password_recovery.dart';
 import 'package:dehub/src/entry_point/finance_entry/finance_entry.dart';
+import 'package:dehub/src/finance_module/screens/account_detail_page/account_detail_page.dart';
 import 'package:dehub/src/finance_module/screens/available_funding_page/available_funding_page.dart';
 import 'package:dehub/src/finance_module/screens/compromise_page/compromise_page.dart';
 import 'package:dehub/src/finance_module/screens/finance_qpay/finance_qpay.dart';
 import 'package:dehub/src/finance_module/screens/payment_page/payment_page.dart';
+import 'package:dehub/src/finance_module/screens/payment_received_funds/payment_received_funds.dart';
 import 'package:dehub/src/finance_module/screens/recalled_page/recalled_page.dart';
 import 'package:dehub/src/finance_module/screens/settlement_respond/settlement_respond.dart';
 import 'package:dehub/src/invoice_module/screens/payment_register/payment_register.dart';
@@ -266,6 +268,23 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return ChangeStandardPrice(
                         type: arguments.type,
+                      );
+                    });
+                  case AccountDetailPage.routeName:
+                    AccountDetailPageArguments arguments =
+                        settings.arguments as AccountDetailPageArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return AccountDetailPage(
+                        id: arguments.id,
+                      );
+                    });
+                  case PaymentReceivedFunds.routeName:
+                    PaymentReceivedFundsArguments arguments =
+                        settings.arguments as PaymentReceivedFundsArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return PaymentReceivedFunds(
+                        id: arguments.id,
+                        data: arguments.data,
                       );
                     });
                   case CreateBackOrder.routeName:

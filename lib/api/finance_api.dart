@@ -150,4 +150,9 @@ class FinanceApi extends HttpRequestFinance {
     var res = await post(host, '/auth/otp/verify', data: data.toJson());
     return User.fromJson(res as Map<String, dynamic>);
   }
+
+  Future<Finance> lbfPay(Finance data, String host) async {
+    var res = await put(host, '/lbf/account/pay', data: data.toJson());
+    return Finance.fromJson(res as Map<String, dynamic>);
+  }
 }
